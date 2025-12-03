@@ -15,10 +15,10 @@ export const EmptyMessage = (props: Props) => {
 		<Alert
 			type='info'
 			showIcon={true}
-			message={
+			title={
 				<div className='empty-message'>
-					Looking for something specific? If it's homebrew, make sure you've included the sourcebook it's in.
-					<Divider type='vertical' />
+					Looking for something specific? If it's third-party or homebrew, make sure you've included the sourcebook it's in.
+					<Divider orientation='vertical' />
 					<Button type='primary' onClick={() => navigation.goToHeroEdit(props.hero.id, 'start')}>
 						Click Here
 					</Button>

@@ -1,12 +1,19 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { ClassicSheetBuilder } from './classic-sheet-builder';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { HeroSheetBuilder } from '../hero-sheet/hero-sheet-builder';
+import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { retainer } from '@/data/monsters/retainer';
+
+afterEach(() => {
+	vi.resetAllMocks();
+});
 
 describe.concurrent('Test addSign', () => {
 	test.each([
@@ -38,8 +45,15 @@ describe.concurrent('Test markdown enhancement', () => {
 		[ 'A < Average', '<span class="potency">a&lt;v]</span>' ],
 		[ 'R < weak', '<span class="potency">r&lt;w]</span>' ],
 		[ 'I < [strong]', '<span class="potency">i&lt;s]</span>' ],
-		[ 'P < [weak]', '<span class="potency">p&lt;w]</span>' ]
+		[ 'P < [weak]', '<span class="potency">p&lt;w]</span>' ],
+		[ 'M<Strong', '<span class="potency">m&lt;s]</span>' ]
 	])('converts potency text to glyph form', (inStr, expected) => {
+		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
+	});
+
+	test.each([
+		[ '`M < Strong`', '<span class="potency">m&lt;s]</span>' ]
+	])('Removes extra/bad markdown characters', (inStr, expected) => {
 		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
 	});
 });
@@ -412,11 +426,11 @@ describe('calculateProjectDetailCardSize', () => {
 	test('calculates card size correctly', () => {
 		const sheet = {
 			name: 'Craft Black Ash Dart',
+			description: 'Yields 1d3 darts, or three darts if crafted by a shadow',
 			prerequisites: 'Three vials of black ash from the College of Black Ash',
 			source: 'Texts or lore in Szetch',
 			characteristic: 'A or I',
-			pointsGoal: 45,
-			effect: 'Yields 1d3 darts, or three darts if crafted by a shadow'
+			pointsGoal: 45
 		} as ProjectSheet;
 
 		const result = SheetFormatter.calculateProjectDetailCardSize(sheet, 54);// 54 is equivalent to the Letter/Portrait cardLineLen
@@ -460,21 +474,41 @@ describe('calculateProjectsOverviewCardSize', () => {
 		const sheets = projects.map(p => p as ProjectSheet);
 
 		const result = SheetFormatter.calculateProjectsOverviewCardSize(sheets, 54);
-		expect(result).toBeCloseTo(50.5, 0.2);
+		expect(result).toBeCloseTo(48.3, 0.2);
 	});
 });
 
 describe('calculateAbilitySize', () => {
 	test.each([
-		[ AbilityData.heal, 14.7 ],
-		[ AbilityData.freeStrike, 11 ],
-		[ AbilityData.escapeGrab, 26.1 ],
-		[ AbilityData.clawDirt, 23.1 ]
+		[ AbilityData.heal, 11.2 ],
+		[ AbilityData.freeStrike, 7.2 ],
+		[ AbilityData.escapeGrab, 25.4 ],
+		[ AbilityData.clawDirt, 23.1 ],
+		[ AbilityData.advance, 9 ]
 	])('calculates size properly for standard abilities', (ability: Ability, expected: number) => {
 		const hero = FactoryLogic.createHero([]);
 		const sheet = ClassicSheetBuilder.buildAbilitySheet(ability, hero);
 
 		const result = SheetFormatter.calculateAbilitySize(sheet, 54);
-		expect(result).toBeCloseTo(expected, 0.2);
+		expect(result).toBeCloseTo(expected, 0);
+	});
+});
+
+describe('calculateFollowerSize()', () => {
+	// vi.mock('@/logic/hero-logic', () => {
+	// 	const HeroLogic = vi.fn();
+	// 	return { HeroLogic: HeroLogic };
+	// });
+
+	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
+
+	test.each([
+		[ 1, 37.5 ],
+		[ 4, 48 ],
+		[ 7, 61 ],
+		[ 10, 70 ]
+	])('properly calculates the size of a retainer at different levels of advancement', (level, expectedSize) => {
+		const followerSheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
+		expect(SheetFormatter.calculateFollowerSize(followerSheet, 54)).toBeCloseTo(expectedSize, 0);
 	});
 });

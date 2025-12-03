@@ -1113,9 +1113,8 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Meddling Butler',
 		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old, trusted, and extremely irritating family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
 		features: [
-			FactoryLogic.feature.createCompanion({
-				id: 'comp-meddlingButler-b',
-				type: 'retainer'
+			FactoryLogic.feature.createRetainer({
+				id: 'comp-meddlingButler-b'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-meddlingButler-d',
@@ -1446,12 +1445,11 @@ You can’t take this complication if you can’t be made dazed.`,
 					id: 'comp-rogueTalent-b',
 					name: 'Telekinetic Grasp',
 					description: 'You reach out with your mind to move a creature or object.',
-					type: FactoryLogic.type.createManeuver(),
+					type: FactoryLogic.type.createManeuver({ qualifiers: [ 'can be used as a ranged free strike' ], freeStrike: true }),
 					keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One creature or object',
 					sections: [
-						FactoryLogic.createAbilitySectionText('Note: you can use this ability as a ranged free strike.'),
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Intuition, Characteristic.Presence ],

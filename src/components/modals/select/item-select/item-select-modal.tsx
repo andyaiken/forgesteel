@@ -74,7 +74,7 @@ export const ItemSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='item-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Expander title='Filter'>
 							<div className='item-type-filter-panel'>
 								{
@@ -120,7 +120,7 @@ export const ItemSelectModal = (props: Props) => {
 										/>
 									]}
 								>
-									<ItemPanel item={item} options={props.options} wielder={props.hero} mode={PanelMode.Full} />
+									<ItemPanel item={item} sourcebooks={props.sourcebooks} options={props.options} wielder={props.hero} mode={PanelMode.Full} />
 								</Expander>
 							))
 						}

@@ -1,4 +1,5 @@
 export interface Tip {
-	image: string;
 	content: string;
+	image: string;
+	isNew: boolean;
 };

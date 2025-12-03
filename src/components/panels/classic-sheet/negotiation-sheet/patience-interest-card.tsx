@@ -1,4 +1,4 @@
-import { LabeledBooleanField } from '../components/labeled-field';
+import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { NegotiationSheet } from '@/models/classic-sheets/negotiation-sheet';
 import { useMemo } from 'react';
 

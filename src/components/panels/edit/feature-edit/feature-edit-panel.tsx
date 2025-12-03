@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '@/enums/ability-keyword';
@@ -29,11 +29,11 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
@@ -160,6 +160,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const setAbilityCost = (value: number | 'signature') => {
 			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
 			copy.cost = value;
+			copy.allowAnySource = value === 0;
 			setData(copy);
 		};
 
@@ -184,12 +185,6 @@ export const FeatureEditPanel = (props: Props) => {
 		const setRepeatable = (value: boolean) => {
 			const copy = Utils.copy(feature.data) as FeatureMaliceData;
 			copy.repeatable = value;
-			setData(copy);
-		};
-
-		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
-			const copy = Utils.copy(feature.data) as FeatureCompanionData;
-			copy.type = value;
 			setData(copy);
 		};
 
@@ -756,7 +751,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.AbilityCost: {
 				const data = feature.data as FeatureAbilityCostData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Keywords</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -765,15 +760,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.keywords}
 							onChange={setKeywords}
 						/>
@@ -785,7 +771,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.AbilityDamage: {
 				const data = feature.data as FeatureAbilityDamageData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Keywords</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -794,15 +780,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.keywords}
 							onChange={setKeywords}
 						/>
@@ -816,15 +793,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.valueCharacteristics}
 							onChange={setValueCharacteristics}
 						/>
@@ -834,7 +802,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.AbilityDistance: {
 				const data = feature.data as FeatureAbilityDistanceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Keywords</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -843,15 +811,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.keywords}
 							onChange={setKeywords}
 						/>
@@ -865,15 +824,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.valueCharacteristics}
 							onChange={setValueCharacteristics}
 						/>
@@ -883,7 +833,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.AddOn: {
 				const data = feature.data as FeatureAddOnData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Category</HeaderText>
 						<Segmented
 							name='categorytypes'
@@ -904,7 +854,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.AncestryFeatureChoice: {
 				const data = feature.data as FeatureAncestryFeatureChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Source</HeaderText>
 						<Toggle label='Current ancestry' value={data.source.current} onChange={setSourceCurrent} />
 						<Toggle label='Former ancestry' value={data.source.former} onChange={setSourceFormer} />
@@ -916,22 +866,13 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Bonus: {
 				const data = feature.data as FeatureBonusData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Field</HeaderText>
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
 							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.field}
 							onChange={setField}
 						/>
@@ -945,15 +886,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.valueCharacteristics}
 							onChange={setValueCharacteristics}
 						/>
@@ -963,7 +895,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.CharacteristicBonus: {
 				const data = feature.data as FeatureCharacteristicBonusData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Characteristic</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -980,7 +912,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Choice: {
 				const data = feature.data as FeatureChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
 								<Button type='text' icon={<PlusOutlined />} onClick={() => addChoice(data)} />
@@ -999,7 +931,7 @@ export const FeatureEditPanel = (props: Props) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<FeatureEditPanel
 											feature={option.feature}
 											sourcebooks={props.sourcebooks}
@@ -1025,42 +957,42 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.ClassAbility: {
 				const data = feature.data as FeatureClassAbilityData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Class</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText>Ability Options</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							options={[
+								{ value: 'signature', label: 'Choose a signature ability' },
+								{ value: 3, label: 'Choose a 3pt ability' },
+								{ value: 5, label: 'Choose a 5pt ability' },
+								{ value: 7, label: 'Choose a 7pt ability' },
+								{ value: 9, label: 'Choose a 9pt ability' },
+								{ value: 11, label: 'Choose a 11pt ability' },
+								{ value: 1, label: 'Choose a 1pt ability' },
+								{ value: 2, label: 'Choose a 2pt ability' },
+								{ value: 4, label: 'Choose a 4pt ability' },
+								{ value: 6, label: 'Choose a 6pt ability' },
+								{ value: 8, label: 'Choose a 8pt ability' },
+								{ value: 10, label: 'Choose a 10pt ability' },
+								{ value: 12, label: 'Choose a 12pt ability' },
+								{ value: 0, label: 'Choose any ability defined in the class' }
+							]}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={feature.data.cost}
+							onChange={setAbilityCost}
+						/>
 						<Select
 							style={{ width: '100%' }}
 							allowClear={!!data.classID}
 							placeholder='Select class'
-							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
+							options={[
+								{ value: '', label: 'From your class' },
+								...SourcebookLogic.getClasses(props.sourcebooks).map(o => ({ value: o.id, label: `From the ${o.name}` }))
+							]}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={data.classID || ''}
 							onChange={setAbilityClassID}
 						/>
-						<HeaderText>Signature / Cost</HeaderText>
-						<Flex align='center' justify='center'>
-							<Segmented<'signature' | number>
-								options={[
-									{ value: 'signature', label: 'Signature' },
-									{ value: 3, label: '3pts' },
-									{ value: 5, label: '5pts' },
-									{ value: 7, label: '7pts' },
-									{ value: 9, label: '9pts' },
-									{ value: 11, label: '11pts' },
-									{ value: 0, label: 'Other' }
-								]}
-								value={feature.data.cost}
-								onChange={setAbilityCost}
-							/>
-						</Flex>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 						<HeaderText>Minimum Level</HeaderText>
@@ -1068,25 +1000,10 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
-			case FeatureType.Companion: {
-				const data = feature.data as FeatureCompanionData;
-				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Companion Type</HeaderText>
-						<Segmented
-							name='companiontypes'
-							block={true}
-							options={[ 'companion', 'mount', 'retainer' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-							value={data.type}
-							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
-						/>
-					</Space>
-				);
-			}
 			case FeatureType.ConditionImmunity: {
 				const data = feature.data as FeatureConditionImmunityData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Conditions</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1095,15 +1012,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.conditions}
 							onChange={conditions => setConditions(conditions)}
 						/>
@@ -1113,7 +1021,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.DamageModifier: {
 				const data = feature.data as FeatureDamageModifierData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
 								<Button type='text' icon={<PlusOutlined />} onClick={() => addDamageModifier(data)} />
@@ -1124,22 +1032,13 @@ export const FeatureEditPanel = (props: Props) => {
 						{
 							data.modifiers.map((mod, n) => (
 								<Expander key={n} title='Damage Modifier'>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<HeaderText>{FormatLogic.getDamageModifier(mod)}</HeaderText>
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Damage type'
 											options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.value
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
 											value={mod.damageType}
 											onChange={value => setDamageModifierDamageType(data, n, value)}
 										/>
@@ -1148,15 +1047,6 @@ export const FeatureEditPanel = (props: Props) => {
 											placeholder='Modifier type'
 											options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ value: o }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.value
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
 											value={mod.type}
 											onChange={value => setDamageModifierType(data, n, value)}
 										/>
@@ -1167,15 +1057,6 @@ export const FeatureEditPanel = (props: Props) => {
 											mode='multiple'
 											options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.value
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
 											value={mod.valueCharacteristics}
 											onChange={value => setDamageModifierValueCharacteristics(data, n, value)}
 										/>
@@ -1197,7 +1078,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Domain: {
 				const data = feature.data as FeatureDomainData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Characteristic</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1223,7 +1104,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.DomainFeature: {
 				const data = feature.data as FeatureDomainFeatureData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Level</HeaderText>
 						<NumberSpin min={1} value={data.level} onChange={setLevel} />
 						<HeaderText>Count</HeaderText>
@@ -1249,7 +1130,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.HeroicResource: {
 				const data = feature.data as FeatureHeroicResourceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Type</HeaderText>
 						<Segmented
 							name='resourcetypes'
@@ -1276,7 +1157,7 @@ export const FeatureEditPanel = (props: Props) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteResourceGain(data, n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<HeaderText>Tag</HeaderText>
 										<Input
 											placeholder='Tag'
@@ -1312,14 +1193,14 @@ export const FeatureEditPanel = (props: Props) => {
 						<Divider />
 						<Toggle label='Can be negative' value={data.canBeNegative} onChange={setCanBeNegative} />
 						<HeaderText>Details</HeaderText>
-						<MultiLine value={data.details} onChange={setDetails} />
+						<MarkdownEditor value={data.details} onChange={setDetails} />
 					</Space>
 				);
 			}
 			case FeatureType.HeroicResourceGain: {
 				const data = feature.data as FeatureHeroicResourceGainData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
 							placeholder='Tag'
@@ -1358,7 +1239,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.ItemChoice: {
 				const data = feature.data as FeatureItemChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1368,15 +1249,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.types}
 							onChange={setItemTypes}
 						/>
@@ -1387,10 +1259,9 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
-				const types = SourcebookLogic.getKitTypes(props.sourcebooks);
-				const options = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
+				const options = Collections.sort(Collections.distinct(SourcebookLogic.getKits(props.sourcebooks).map(k => k.type), x => x), x => x).map(type => ({ value: type, label: !type ? 'Standard' : type }));
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1400,15 +1271,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={options}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.types}
 							onChange={setKitTypes}
 						/>
@@ -1420,7 +1282,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Language: {
 				const data = feature.data as FeatureLanguageData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Language</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1429,15 +1291,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.language || ''}
 							onChange={setLanguage}
 						/>
@@ -1452,7 +1305,7 @@ export const FeatureEditPanel = (props: Props) => {
 				const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Options</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1462,15 +1315,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.options}
 							onChange={setLanguageOptions}
 						/>
@@ -1484,15 +1328,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={sortedLanguages.map(option => ({ value: option.name }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.selected}
 							onChange={setLanguageSelected}
 						/>
@@ -1502,14 +1337,14 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Malice: {
 				const data = feature.data as FeatureMaliceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Echelon</HeaderText>
 						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
 						<HeaderText>Cost</HeaderText>
 						<NumberSpin min={1} value={data.cost} onChange={setCost} />
 						<Toggle label='Allow extra' value={data.repeatable === true} onChange={setRepeatable} />
 						<HeaderText>Sections</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								data.sections.map((section, n) => (
 									<Expander
@@ -1521,15 +1356,15 @@ export const FeatureEditPanel = (props: Props) => {
 											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMaliceSection(data, n); }} />
 										]}
 									>
-										<Space direction='vertical' style={{ width: '100%' }}>
+										<Space orientation='vertical' style={{ width: '100%' }}>
 											{
 												(typeof section === 'string') ?
 													<div>
 														<HeaderText>Text</HeaderText>
-														<MultiLine value={section} onChange={value => setMaliceSectionText(data, n, value)} />
+														<MarkdownEditor value={section} onChange={value => setMaliceSectionText(data, n, value)} />
 													</div>
 													:
-													<Space direction='vertical' style={{ width: '100%' }}>
+													<Space orientation='vertical' style={{ width: '100%' }}>
 														<HeaderText>Power Roll</HeaderText>
 														<Select
 															style={{ width: '100%' }}
@@ -1538,15 +1373,6 @@ export const FeatureEditPanel = (props: Props) => {
 															mode='multiple'
 															options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-															showSearch={true}
-															filterOption={(input, option) => {
-																const strings = option ?
-																	[
-																		option.value
-																	]
-																	: [];
-																return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-															}}
 															value={section.characteristic}
 															onChange={value => setMaliceSectionPowerRollCharacteristics(data, n, value)}
 														/>
@@ -1593,7 +1419,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.MaliceAbility: {
 				const data = feature.data as FeatureMaliceAbilityData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Echelon</HeaderText>
 						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
 						<Expander title={data.ability.name || 'Unnamed Ability'}>
@@ -1608,7 +1434,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.MovementMode: {
 				const data = feature.data as FeatureMovementModeData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Mode</HeaderText>
 						<Input
 							status={data.mode === '' ? 'warning' : ''}
@@ -1623,7 +1449,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Multiple: {
 				const data = feature.data as FeatureMultipleData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
 								<Button type='text' icon={<PlusOutlined />} onClick={() => addMultipleFeature(data)} />
@@ -1663,7 +1489,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.PackageContent: {
 				const data = feature.data as FeaturePackageData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
 							status={data.tag === '' ? 'warning' : ''}
@@ -1678,7 +1504,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Perk: {
 				const data = feature.data as FeaturePerkData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Lists</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1688,15 +1514,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.lists}
 							onChange={setPerkLists}
 						/>
@@ -1708,7 +1525,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Proficiency: {
 				const data = feature.data as FeatureProficiencyData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Weapons</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1717,15 +1534,6 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.weapons}
 							onChange={setProficiencyWeapons}
 						/>
@@ -1738,14 +1546,6 @@ export const FeatureEditPanel = (props: Props) => {
 							options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.armor}
 							onChange={setProficiencyArmor}
 						/>
@@ -1755,7 +1555,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.SaveThreshold: {
 				const data = feature.data as FeatureSaveThresholdData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Save Threshold</HeaderText>
 						<NumberSpin min={1} value={data.value} onChange={setSaveThreshold} />
 					</Space>
@@ -1764,7 +1564,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Size: {
 				const data = feature.data as FeatureSizeData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Size</HeaderText>
 						<NumberSpin min={1} value={data.size.value} onChange={setSizeValue} />
 						{
@@ -1795,7 +1595,7 @@ export const FeatureEditPanel = (props: Props) => {
 				const sortedSkills = Collections.sort(distinctSkills, s => s.name);
 
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Options</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -1804,15 +1604,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.options}
 							onChange={setSkillOptions}
 						/>
@@ -1824,15 +1615,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.listOptions}
 							onChange={setSkillListOptions}
 						/>
@@ -1846,15 +1628,6 @@ export const FeatureEditPanel = (props: Props) => {
 							mode='multiple'
 							options={sortedSkills.map(option => ({ value: option.name }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.selected}
 							onChange={setSkillSelected}
 						/>
@@ -1864,7 +1637,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Speed: {
 				const data = feature.data as FeatureSpeedData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Speed</HeaderText>
 						<NumberSpin min={1} value={data.speed} onChange={setSpeed} />
 					</Space>
@@ -1873,7 +1646,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Summon: {
 				const data = feature.data as FeatureSummonData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
 								<Button type='text' icon={<PlusOutlined />} onClick={() => addSummon(data)} />
@@ -1917,7 +1690,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.SummonChoice: {
 				const data = feature.data as FeatureSummonChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
 								<Button type='text' icon={<PlusOutlined />} onClick={() => addSummonChoice(data)} />
@@ -1963,7 +1736,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.TaggedFeature: {
 				const data = feature.data as FeatureTaggedFeatureData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
 							status={data.tag === '' ? 'warning' : ''}
@@ -1986,7 +1759,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.TaggedFeatureChoice: {
 				const data = feature.data as FeatureTaggedFeatureChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
 							status={data.tag === '' ? 'warning' : ''}
@@ -2006,7 +1779,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.TitleChoice: {
 				const data = feature.data as FeatureTitleChoiceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
@@ -2014,46 +1787,6 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 		}
 	};
-
-	const featureTypes = [
-		FeatureType.Text,
-		FeatureType.Ability,
-		FeatureType.AbilityCost,
-		FeatureType.AbilityDamage,
-		FeatureType.AbilityDistance,
-		FeatureType.AncestryChoice,
-		FeatureType.AncestryFeatureChoice,
-		FeatureType.Bonus,
-		FeatureType.CharacteristicBonus,
-		FeatureType.Choice,
-		FeatureType.ClassAbility,
-		FeatureType.Companion,
-		FeatureType.ConditionImmunity,
-		FeatureType.DamageModifier,
-		FeatureType.Domain,
-		FeatureType.DomainFeature,
-		FeatureType.Follower,
-		FeatureType.HeroicResource,
-		FeatureType.HeroicResourceGain,
-		FeatureType.ItemChoice,
-		FeatureType.Kit,
-		FeatureType.Language,
-		FeatureType.LanguageChoice,
-		FeatureType.MovementMode,
-		FeatureType.Multiple,
-		FeatureType.Package,
-		FeatureType.PackageContent,
-		FeatureType.Perk,
-		FeatureType.Proficiency,
-		FeatureType.SaveThreshold,
-		FeatureType.Size,
-		FeatureType.SkillChoice,
-		FeatureType.Speed,
-		FeatureType.Summon,
-		FeatureType.TaggedFeature,
-		FeatureType.TaggedFeatureChoice,
-		FeatureType.TitleChoice
-	];
 
 	return (
 		<ErrorBoundary>
@@ -2074,7 +1807,7 @@ export const FeatureEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine value={feature.description} onChange={setDescription} />
+									<MarkdownEditor value={feature.description} onChange={setDescription} />
 								</div>
 							)
 						},
@@ -2084,7 +1817,7 @@ export const FeatureEditPanel = (props: Props) => {
 							children: (
 								<div>
 									{
-										(props.allowedTypes || featureTypes).length !== 1 ?
+										(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
 											<>
 												<HeaderText>Feature Type</HeaderText>
 												<Flex align='center' justify='space-between'>
@@ -2106,15 +1839,6 @@ export const FeatureEditPanel = (props: Props) => {
 													placeholder='Select list'
 													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
 													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-													showSearch={true}
-													filterOption={(input, option) => {
-														const strings = option ?
-															[
-																option.value
-															]
-															: [];
-														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-													}}
 													value={(feature as Perk).list}
 													onChange={setList}
 												/>
@@ -2128,9 +1852,9 @@ export const FeatureEditPanel = (props: Props) => {
 					]}
 				/>
 			</div>
-			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
+			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} size={500}>
 				<FeatureTypeSelectModal
-					types={props.allowedTypes || featureTypes}
+					types={props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()}
 					onSelect={type => { setType(type); setTypeSelectorVisible(false); }}
 					onClose={() => setTypeSelectorVisible(false)}
 				/>

@@ -1,5 +1,3 @@
-import { Button, Popover } from 'antd';
-import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { Career } from '@/models/career';
@@ -26,7 +24,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
-import { SourcebookElementKind } from '@/models/sourcebook';
+import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '@/models/terrain';
@@ -37,20 +35,21 @@ import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel
 import './element-modal.scss';
 
 interface Props {
-	kind: SourcebookElementKind;
+	category: string;
 	element: Element;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
-	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 
 export const ElementModal = (props: Props) => {
 	const getPanel = () => {
-		switch (props.kind) {
+		switch (props.category) {
 			case 'ancestry':
 				return (
 					<AncestryPanel
 						ancestry={props.element as Ancestry}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -59,6 +58,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<CareerPanel
 						career={props.element as Career}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -67,6 +67,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<ClassPanel
 						heroClass={props.element as HeroClass}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -75,6 +76,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<ComplicationPanel
 						complication={props.element as Complication}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -83,6 +85,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<CulturePanel
 						culture={props.element as Culture}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -91,6 +94,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<DomainPanel
 						domain={props.element as Domain}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -99,6 +103,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<ImbuementPanel
 						imbuement={props.element as Imbuement}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -107,6 +112,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<ItemPanel
 						item={props.element as Item}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -115,6 +121,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<KitPanel
 						kit={props.element as Kit}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -123,6 +130,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<MonsterGroupPanel
 						monsterGroup={props.element as MonsterGroup}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -131,6 +139,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<PerkPanel
 						perk={props.element as Perk}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -139,6 +148,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<SubclassPanel
 						subclass={props.element as SubClass}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -148,6 +158,7 @@ export const ElementModal = (props: Props) => {
 					<TerrainPanel
 						terrain={props.element as Terrain}
 						showCustomizations={true}
+						sourcebooks={props.sourcebooks}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -155,6 +166,7 @@ export const ElementModal = (props: Props) => {
 				return (
 					<TitlePanel
 						title={props.element as Title}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
@@ -164,25 +176,6 @@ export const ElementModal = (props: Props) => {
 
 	return (
 		<Modal
-			toolbar={
-				<>
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.export('image')}>Export As Image</Button>
-								<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.export('json')}>Export As Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
-							<DownOutlined />
-						</Button>
-					</Popover>
-				</>
-			}
 			content={
 				<div className='element-modal'>
 					{getPanel()}

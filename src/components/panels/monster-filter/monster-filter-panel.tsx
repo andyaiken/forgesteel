@@ -15,6 +15,8 @@ interface Props {
 	monsterFilter: MonsterFilter;
 	monsters: Monster[];
 	includeNameFilter: boolean;
+	includeOrgFilter: boolean;
+	includeEVFilter: boolean;
 	onChange: (monsterFilter: MonsterFilter) => void;
 }
 
@@ -69,7 +71,7 @@ export const MonsterFilterPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='monster-filter-panel'>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						props.includeNameFilter ?
 							<Input
@@ -87,15 +89,6 @@ export const MonsterFilterPanel = (props: Props) => {
 						placeholder='Keywords'
 						options={keywords.map(k => ({ label: k, value: k }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
 						value={props.monsterFilter.keywords}
 						onChange={setFilterKeywords}
 					/>
@@ -106,37 +99,23 @@ export const MonsterFilterPanel = (props: Props) => {
 						placeholder='Role'
 						options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
 						value={props.monsterFilter.roles}
 						onChange={setFilterRoles}
 					/>
-					<Select
-						style={{ width: '100%' }}
-						mode='multiple'
-						allowClear={true}
-						placeholder='Organization'
-						options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(r => ({ label: r, value: r }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
-						value={props.monsterFilter.organizations}
-						onChange={setFilterOrganizations}
-					/>
+					{
+						props.includeOrgFilter ?
+							<Select
+								style={{ width: '100%' }}
+								mode='multiple'
+								allowClear={true}
+								placeholder='Organization'
+								options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(r => ({ label: r, value: r }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={props.monsterFilter.organizations}
+								onChange={setFilterOrganizations}
+							/>
+							: null
+					}
 					<Toggle label='Filter by size' value={props.monsterFilter.size.length > 0} onChange={value => setFilterSize(value ? [ 1, 2 ] : [])} />
 					{
 						props.monsterFilter.size.length > 0 ?
@@ -167,18 +146,24 @@ export const MonsterFilterPanel = (props: Props) => {
 							</>
 							: null
 					}
-					<Toggle label='Filter by EV' value={props.monsterFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
 					{
-						props.monsterFilter.ev.length > 0 ?
+						props.includeEVFilter ?
 							<>
-								<Slider
-									range={{ draggableTrack: true }}
-									min={0}
-									max={maxEV}
-									value={props.monsterFilter.ev}
-									onChange={setFilterEV}
-								/>
-								<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
+								<Toggle label='Filter by EV' value={props.monsterFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
+								{
+									props.monsterFilter.ev.length > 0 ?
+										<>
+											<Slider
+												range={{ draggableTrack: true }}
+												min={0}
+												max={maxEV}
+												value={props.monsterFilter.ev}
+												onChange={setFilterEV}
+											/>
+											<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
+										</>
+										: null
+								}
 							</>
 							: null
 					}

@@ -39,12 +39,15 @@ import { Monster } from '@/models/monster';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { ProjectLogic } from '@/logic/project-logic';
 import { RulesPage } from '@/enums/rules-page';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -101,12 +104,6 @@ export const HeroPanel = (props: Props) => {
 		const onShowVitals = () => {
 			if (props.onShowState) {
 				props.onShowState(HeroStatePage.Vitals);
-			}
-		};
-
-		const onShowProjects = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Projects);
 			}
 		};
 
@@ -299,7 +296,7 @@ export const HeroPanel = (props: Props) => {
 								:
 								<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
 									<HeaderText>Triggered Actions</HeaderText>
-									<Space direction='vertical'>
+									<Space orientation='vertical'>
 										{triggers.map(t => getTrigger(t.ability))}
 									</Space>
 								</div>
@@ -367,32 +364,6 @@ export const HeroPanel = (props: Props) => {
 							:
 							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
 					}
-					{
-						props.hero.state.projects.length > 0 ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onShowProjects}>
-									<div>Projects: <b>{props.hero.state.projects.map(p => p.name).join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onShowProjects}>
-									<HeaderText>Projects</HeaderText>
-									{
-										props.hero.state.projects.map(p => (
-											<Flex key={p.id} align='center' justify='space-between' gap={10}>
-												<div className='ds-text compact-text'>{p.name}</div>
-												{
-													p.progress ?
-														<div className='ds-text compact-text'>
-															{p.goal > 0 ? `${Math.round(100 * p.progress.points / p.goal)}%` : `${p.goal}`}
-														</div>
-														: null
-												}
-											</Flex>
-										))
-									}
-								</div>
-							: null
-					}
 				</div>
 			</ErrorBoundary>
 		);
@@ -401,7 +372,7 @@ export const HeroPanel = (props: Props) => {
 	const getStatsSection = () => {
 		const useRows = props.options.compactView;
 
-		const xpSuffix = HeroLogic.canLevelUp(props.hero) ? <ArrowUpOutlined /> : undefined;
+		const xpSuffix = HeroLogic.canLevelUp(props.hero, props.options) ? <ArrowUpOutlined /> : undefined;
 
 		const size = HeroLogic.getSize(props.hero);
 		const sizeSuffix = size.mod || undefined;
@@ -568,6 +539,12 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const onSelectProject = () => {
+			if (props.onShowState) {
+				props.onShowState(HeroStatePage.Projects);
+			}
+		};
+
 		let incitingIncident: Element | null = null;
 		if (props.hero.career) {
 			incitingIncident = props.hero.career.incitingIncidents.selected;
@@ -723,6 +700,23 @@ export const HeroPanel = (props: Props) => {
 									<HeaderText>Complication</HeaderText>
 									<Field label='Complication' value={props.hero.complication.name} />
 								</div>
+							:
+							null
+					}
+					{
+						props.hero.state.projects.length > 0 ?
+							props.hero.state.projects.map(project =>
+								useRows ?
+									<div key={project.id} className='selectable-row clickable' onClick={onSelectProject}>
+										<div>Project: <b>{project.name}</b></div>
+									</div>
+									:
+									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
+										<HeaderText>Project</HeaderText>
+										<Field label='Project' value={project.name} />
+										{project.progress ? <Field label='State' value={ProjectLogic.getStatus(project)} /> : null}
+									</div>
+							)
 							:
 							null
 					}
@@ -919,6 +913,7 @@ export const HeroPanel = (props: Props) => {
 
 		const companions = HeroLogic.getCompanions(props.hero);
 		const followers = HeroLogic.getFollowers(props.hero);
+		const retainers = HeroLogic.getRetainers(props.hero);
 		const summons = HeroLogic.getSummons(props.hero);
 
 		return (
@@ -937,7 +932,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} options={props.options} />
+													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -967,6 +962,27 @@ export const HeroPanel = (props: Props) => {
 							: null
 					}
 					{
+						retainers.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Retainers</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										retainers.map(monster =>
+											useRows ?
+												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
+													<div>Companion: <b>{monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
+													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
 						summons.length > 0 ?
 							<>
 								<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
@@ -979,7 +995,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
-													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+													<MonsterPanel monster={summon.monster} summon={summon.info} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -1028,7 +1044,7 @@ export const HeroPanel = (props: Props) => {
 			tabs.push('Free Strikes');
 		}
 
-		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getSummons(props.hero).length;
+		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length;
 		if (retinue > 0) {
 			tabs.push('Retinue');
 		}
@@ -1155,8 +1171,9 @@ export const HeroPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='hero-panel' id={props.hero.id}>
+			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
 				<div className='hero-main-section'>
+					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>
 						{
 							props.options.singlePage ?

@@ -80,7 +80,7 @@ export const NegotiationRunPanel = (props: Props) => {
 					</div>
 				</div>
 				<Divider />
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Expander title='Uncovering Motivations'>
 						<Markdown
 							text={`

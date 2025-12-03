@@ -11,22 +11,28 @@ export const playtest: Sourcebook = {
 	name: 'Playtest',
 	description: 'Unreleased game content.',
 	type: SourcebookType.Official,
+	adventures: [],
 	ancestries: [],
-	cultures: [],
 	careers: [],
 	classes: [
 		beastheart,
 		summoner
 	],
-	subclasses: [],
 	complications: [],
+	cultures: [],
 	domains: [],
+	encounters: [],
+	imbuements: [],
+	items: [],
 	kits: [
 		KitData.outrider,
 		KitData.predator,
 		KitData.stormcrow,
 		KitData.warBeast
 	],
+	monsterGroups: [],
+	montages: [],
+	negotiations: [],
 	perks: [
 		PerkData.bornTracker,
 		PerkData.rideAlong,
@@ -37,6 +43,10 @@ export const playtest: Sourcebook = {
 		PerkData.youCanPetThem,
 		PerkData.trainedThief
 	],
+	projects: [],
+	subclasses: [],
+	tacticalMaps: [],
+	terrain: [],
 	titles: [
 		TitleData.safeguarded,
 		TitleData.summonerSuccessor,
@@ -44,11 +54,6 @@ export const playtest: Sourcebook = {
 		TitleData.delegator,
 		TitleData.highSummoner
 	],
-	items: [],
-	imbuements: [],
-	monsterGroups: [],
 	skills: [],
-	languages: [],
-	projects: [],
-	terrain: []
+	languages: []
 };

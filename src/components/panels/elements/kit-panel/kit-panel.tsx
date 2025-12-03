@@ -7,23 +7,37 @@ import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 
 import './kit-panel.scss';
 
 interface Props {
 	kit: Kit;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
 export const KitPanel = (props: Props) => {
+	const tags = [];
+	if (props.kit.type) {
+		tags.push(props.kit.type);
+	}
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getKitSourcebook(props.sourcebooks, props.kit)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
-				<HeaderText level={1} tags={props.kit.type ? [ props.kit.type ] : []}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
+			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('kit', props.kit.id) : undefined}>
+				<HeaderText level={1} tags={tags}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				<Markdown text={props.kit.description} />
 				{
 					props.mode === PanelMode.Full ?

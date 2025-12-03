@@ -35,7 +35,7 @@ export const EncounterToolsModal = (props: Props) => {
 				if (monster) {
 					monsters.push({
 						monster: monster,
-						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)
+						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
 					});
 				}
 			}
@@ -49,7 +49,7 @@ export const EncounterToolsModal = (props: Props) => {
 					<Alert
 						type='info'
 						showIcon={true}
-						message='This list provides useful information to help you choose the minis you will need to run this encounter.'
+						title='This list provides useful information to help you choose the minis you will need to run this encounter.'
 					/>
 					{
 						Collections.sort(monsters, data => data.monster.name).map(data => {

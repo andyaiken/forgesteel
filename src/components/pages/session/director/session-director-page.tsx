@@ -1,8 +1,8 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, ReadOutlined } from '@ant-design/icons';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
-import { Collections } from '@/utils/collections';
 import { Counter } from '@/models/counter';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -22,9 +22,9 @@ import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/neg
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { Playbook } from '@/models/playbook';
-import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMap } from '@/models/tactical-map';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
@@ -38,8 +38,7 @@ import './session-director-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	playbook: Playbook;
-	session: Playbook;
+	session: Session;
 	options: Options;
 	highlightAbout: boolean;
 	showReference: () => void;
@@ -64,7 +63,7 @@ interface Props {
 export const SessionDirectorPage = (props: Props) => {
 	const navigation = useNavigation();
 	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
-		const options = PlaybookLogic.getContentOptions(props.session);
+		const options = AdventureLogic.getContentOptions(props.session);
 		return options.length > 0 ? options[0].id : null;
 	});
 	const [ startElement, setStartElement ] = useState<string>('encounter');
@@ -73,7 +72,7 @@ export const SessionDirectorPage = (props: Props) => {
 	useTitle('Session');
 
 	const getSelector = () => {
-		const options = PlaybookLogic.getContentOptions(props.session).map(o => {
+		const options = AdventureLogic.getContentOptions(props.session).map(o => {
 			return {
 				value: o.id,
 				label: o.name
@@ -176,7 +175,7 @@ export const SessionDirectorPage = (props: Props) => {
 			}
 		}
 
-		const options = PlaybookLogic.getContentOptions(props.session);
+		const options = AdventureLogic.getContentOptions(props.session);
 		if (options.length === 0) {
 			return (
 				<Empty text='Nothing is currently in progress.' />
@@ -247,20 +246,20 @@ export const SessionDirectorPage = (props: Props) => {
 		switch (startElement) {
 			case 'encounter':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your encounters:</div>
 						{
-							Collections.sort(props.playbook.encounters, e => e.name).map(e => (
+							SourcebookLogic.getEncounters(props.sourcebooks).map(e => (
 								<Button key={e.id} block={true} onClick={() => startEncounter(e)}>{e.name || 'Unnamed Encounter'}</Button>
 							))
 						}
 						{
-							props.playbook.encounters.length === 0 ?
+							SourcebookLogic.getEncounters(props.sourcebooks).length === 0 ?
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any encounters.'
-									action={<Button type='text' title='Encounters' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('encounter')} />}
+									title='You have not created any encounters.'
+									action={<Button type='text' title='Encounters' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('encounter')} />}
 								/>
 								: null
 						}
@@ -276,20 +275,20 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'montage':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your montages:</div>
 						{
-							Collections.sort(props.playbook.montages, m => m.name).map(m => (
+							SourcebookLogic.getMontages(props.sourcebooks).map(m => (
 								<Button key={m.id} block={true} onClick={() => startMontage(m)}>{m.name || 'Unnamed Montage'}</Button>
 							))
 						}
 						{
-							props.playbook.montages.length === 0 ?
+							SourcebookLogic.getMontages(props.sourcebooks).length === 0 ?
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any montages.'
-									action={<Button type='text' title='Montages' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('montage')} />}
+									title='You have not created any montages.'
+									action={<Button type='text' title='Montages' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('montage')} />}
 								/>
 								: null
 						}
@@ -305,20 +304,20 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'negotiation':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your negotiations:</div>
 						{
-							Collections.sort(props.playbook.negotiations, n => n.name).map(n => (
+							SourcebookLogic.getNegotiations(props.sourcebooks).map(n => (
 								<Button key={n.id} block={true} onClick={() => startNegotiation(n)}>{n.name || 'Unnamed Negotiation'}</Button>
 							))
 						}
 						{
-							props.playbook.negotiations.length === 0 ?
+							SourcebookLogic.getNegotiations(props.sourcebooks).length === 0 ?
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any negotiations.'
-									action={<Button type='text' title='Negotiations' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('negotiation')} />}
+									title='You have not created any negotiations.'
+									action={<Button type='text' title='Negotiations' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('negotiation')} />}
 								/>
 								: null
 						}
@@ -334,20 +333,20 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'map':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your maps:</div>
 						{
-							Collections.sort(props.playbook.tacticalMaps, m => m.name).map(tm => (
+							SourcebookLogic.getTacticalMaps(props.sourcebooks).map(tm => (
 								<Button key={tm.id} block={true} onClick={() => startMap(tm)}>{tm.name || 'Unnamed Map'}</Button>
 							))
 						}
 						{
-							props.playbook.tacticalMaps.length === 0 ?
+							SourcebookLogic.getTacticalMaps(props.sourcebooks).length === 0 ?
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any maps.'
-									action={<Button type='text' title='Maps' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('tactical-map')} />}
+									title='You have not created any maps.'
+									action={<Button type='text' title='Maps' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('tactical-map')} />}
 								/>
 								: null
 						}
@@ -355,7 +354,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'counter':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Create a new counter:</div>
 						<Input
 							placeholder='Counter Name'

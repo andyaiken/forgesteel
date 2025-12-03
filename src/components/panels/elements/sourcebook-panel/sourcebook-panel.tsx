@@ -1,5 +1,6 @@
 import { Button, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -10,9 +11,8 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
-import { Markdown } from '@/components/controls/markdown/markdown';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -27,15 +27,22 @@ const getSourcebookContent = (sourcebook: Sourcebook) => {
 		<>
 			<Markdown text={sourcebook.description} />
 			{
-				elementCount < 3 ?
+				elementCount > 3 ?
 					<div className='ds-text'>
-						{elementCount} elements
+						{elementCount} elements, including:
 					</div>
-					:
-					<div className='ds-text'>
-						{elementCount} elements, including {SourcebookLogic.getExampleContent(sourcebook).join(', ')}
-					</div>
+					: null
 			}
+			<ul>
+				{
+					SourcebookLogic.getExampleContent(sourcebook)
+						.map(x => (
+							<li key={x.element.id}>
+								{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
+							</li>
+						))
+				}
+			</ul>
 		</>
 	);
 };
@@ -49,6 +56,7 @@ export const SourcebookPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='sourcebook-panel' id={props.sourcebook.id}>
 				<HeaderText
+					level={1}
 					tags={[ props.sourcebook.type ]}
 				>
 					{props.sourcebook.name || 'Unnamed Sourcebook'}
@@ -187,18 +195,20 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		};
 
 		content = (
-			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
-				<Input
-					status={sourcebook.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={sourcebook.name}
-					onChange={e => setName(e.target.value)}
-				/>
+			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={sourcebook.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={sourcebook.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<Expander title='Description'>
 					<HeaderText>Description</HeaderText>
-					<MultiLine value={sourcebook.description} onChange={setDescription} />
+					<MarkdownEditor value={sourcebook.description} onChange={setDescription} />
 				</Expander>
 				<Expander title='Languages'>
 					<HeaderText
@@ -206,7 +216,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 					>
 						Languages
 					</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.languages.map((lang, n) => (
 								<Expander
@@ -218,16 +228,18 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<Input
-											status={lang.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setLanguageName(n, NameGenerator.generateName())} />}
-											value={lang.name}
-											onChange={e => setLanguageName(n, e.target.value)}
-										/>
-										<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										<Space.Compact style={{ width: '100%' }}>
+											<Input
+												status={lang.name === '' ? 'warning' : ''}
+												placeholder='Name'
+												allowClear={true}
+												value={lang.name}
+												onChange={e => setLanguageName(n, e.target.value)}
+											/>
+											<Button icon={<ThunderboltOutlined />} onClick={() => setLanguageName(n, NameGenerator.generateName())} />
+										</Space.Compact>
+										<MarkdownEditor placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
 										<Segmented
 											block={true}
 											options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
@@ -241,16 +253,6 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 											placeholder='Select related languages'
 											options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 											optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.label,
-														option.desc
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
 											value={lang.related}
 											onChange={value => setLanguageRelated(n, value)}
 										/>
@@ -271,7 +273,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 					>
 						Skills
 					</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.skills.map((skill, n) => (
 								<Expander
@@ -283,16 +285,18 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<Input
-											status={skill.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setSkillName(n, NameGenerator.generateName())} />}
-											value={skill.name}
-											onChange={e => setSkillName(n, e.target.value)}
-										/>
-										<MultiLine placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										<Space.Compact style={{ width: '100%' }}>
+											<Input
+												status={skill.name === '' ? 'warning' : ''}
+												placeholder='Name'
+												allowClear={true}
+												value={skill.name}
+												onChange={e => setSkillName(n, e.target.value)}
+											/>
+											<Button icon={<ThunderboltOutlined />} onClick={() => setSkillName(n, NameGenerator.generateName())} />
+										</Space.Compact>
+										<MarkdownEditor placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Skill List'
@@ -331,7 +335,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
 			);
 			buttons.push(
-				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.export([ sourcebook.id ], sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook', 'json')} />
+				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
 			);
 			buttons.push(
 				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={() => props.onDelete(sourcebook)} />
@@ -341,7 +345,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='sourcebook-panel' id={sourcebook.id}>
+			<div className='sourcebook-panel' id={SheetFormatter.getPageId('sourcebook', sourcebook.id)}>
 				<HeaderText
 					tags={[ sourcebook.type ]}
 					extra={<Flex>{buttons}</Flex>}

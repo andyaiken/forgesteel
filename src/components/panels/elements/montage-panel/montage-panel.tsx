@@ -1,8 +1,7 @@
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Flex, Segmented, Space } from 'antd';
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -11,6 +10,10 @@ import { MontageLogic } from '@/logic/montage-logic';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
@@ -19,14 +22,13 @@ import './montage-panel.scss';
 interface Props {
 	montage: Montage;
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
 	options: Options;
 	mode?: PanelMode;
 }
 
 export const MontagePanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -44,7 +46,7 @@ export const MontagePanel = (props: Props) => {
 						value={(
 							<Space>
 								{MontageLogic.getSuccessLimit(props.montage, props.heroes, props.options)}
-								<CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} />
+								<CheckIcon state='success' />
 							</Space>
 						)}
 					/>
@@ -54,7 +56,7 @@ export const MontagePanel = (props: Props) => {
 						value={(
 							<Space>
 								{MontageLogic.getFailureLimit(props.montage, props.heroes, props.options)}
-								<CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								<CheckIcon state='failure' />
 							</Space>
 						)}
 					/>
@@ -116,61 +118,49 @@ export const MontagePanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'outcomes':
-					content = getOutcomes();
-					break;
-				default:
-					content = getSection(props.montage.sections.find(s => s.id === page) as MontageSection);
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							...props.montage.sections.map(s => ({ value: s.id, label: s.name })),
-							{ value: 'outcomes', label: 'Outcomes' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'outcomes':
+				content = getOutcomes();
+				break;
+			default:
+				content = getSection(props.montage.sections.find(s => s.id === page) as MontageSection);
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				<HeaderText level={1}>Outcomes</HeaderText>
-				{
-					props.montage.sections.map(s => {
-						return (
-							<>
-								<HeaderText>{s.name}</HeaderText>
-								{getSection(s)}
-							</>
-						);
-					})
-				}
-				{getOutcomes()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						...props.montage.sections.map(s => ({ value: s.id, label: s.name })),
+						{ value: 'outcomes', label: 'Outcomes' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getMontageSourcebook(props.sourcebooks, props.montage)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='montage-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.montage.name || 'Unnamed Montage'}
 				</HeaderText>
 				<Markdown text={props.montage.description} />
@@ -180,8 +170,8 @@ export const MontagePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='montage-panel' id={props.montage.id}>
-				<HeaderText level={1}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
+			<div className='montage-panel' id={SheetFormatter.getPageId('montage', props.montage.id)}>
+				<HeaderText level={1} tags={tags}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
 				{getContent()}
 			</div>
 		</ErrorBoundary>

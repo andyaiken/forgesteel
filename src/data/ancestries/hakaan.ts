@@ -1,5 +1,7 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 
 export const hakaan: Ancestry = {
@@ -67,5 +69,6 @@ Additionally, when your Stamina reaches the negative of your winded value and yo
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', CultureType.Ancestral, EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor, 'Vhoric')
 };

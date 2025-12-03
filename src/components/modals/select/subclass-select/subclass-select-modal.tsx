@@ -68,14 +68,14 @@ export const SubClassSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='subclass-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							subClasses.map(sc => (
 								<SelectablePanel
 									key={sc.id}
 									onSelect={() => props.onSelect(sc)}
 								>
-									<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+									<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 								</SelectablePanel>
 							))
 						}
@@ -88,14 +88,14 @@ export const SubClassSelectModal = (props: Props) => {
 							customSubclasses.length > 0 ?
 								<>
 									<Divider />
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											customSubclasses.map(sc => (
 												<SelectablePanel
 													key={sc.id}
 													onSelect={() => props.onSelect(sc)}
 												>
-													<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+													<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 												</SelectablePanel>
 											))
 										}
@@ -108,11 +108,11 @@ export const SubClassSelectModal = (props: Props) => {
 								<>
 									<Divider />
 									<Expander title='From other classes'>
-										<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+										<Space orientation='vertical' style={{ width: '100%' }}>
 											<Alert
 												type='warning'
 												showIcon={true}
-												message='Selecting a subclass from a different class is typically against the rules.'
+												title='Selecting a subclass from a different class is typically against the rules.'
 											/>
 											{
 												otherSubclasses.map(sc => (
@@ -120,7 +120,7 @@ export const SubClassSelectModal = (props: Props) => {
 														key={sc.id}
 														onSelect={() => props.onSelect(sc)}
 													>
-														<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 													</SelectablePanel>
 												))
 											}

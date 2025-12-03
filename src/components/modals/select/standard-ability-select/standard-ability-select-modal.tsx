@@ -38,7 +38,7 @@ export const StandardAbilitySelectModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='standard-ability-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							Collections
 								.distinct(AbilityData.standardAbilities.map(a => a.type.usage), usage => usage)

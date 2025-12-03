@@ -8,6 +8,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -16,6 +17,7 @@ import './kit-select-modal.scss';
 interface Props {
 	kits: Kit[];
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (kits: Kit) => void;
@@ -46,14 +48,14 @@ export const KitSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='kit-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							kits.map(k => (
 								<SelectablePanel
 									key={k.id}
 									onSelect={() => props.onSelect(k)}
 								>
-									<KitPanel kit={k} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+									<KitPanel kit={k} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

@@ -26,7 +26,7 @@ export const Expander = (props: Props) => {
 					}
 				]}
 				defaultActiveKey={props.expandedByDefault ? '1' : undefined}
-				expandIconPosition='end'
+				expandIconPlacement='end'
 			/>
 		</ErrorBoundary>
 	);

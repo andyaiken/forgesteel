@@ -1,8 +1,6 @@
-import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { AncestryData } from '@/data/ancestry-data';
-import { CultureType } from '@/enums/culture-type';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { LanguageType } from '@/enums/language-type';
+import { MonsterData } from '@/data/monster-data';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -12,35 +10,36 @@ export const orden: Sourcebook = {
 	name: 'Orden',
 	description: 'The default setting for Draw Steel.',
 	type: SourcebookType.Official,
+	adventures: [],
 	ancestries: [
 		AncestryData.hakaan,
 		AncestryData.memonek,
 		AncestryData.timeRaider
 	],
-	cultures: [
-		FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic, 'Anjali'),
-		FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial, 'Vastariax'),
-		FactoryLogic.createCulture('Dwarf', 'Secluded, bureaucratic, creative.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.creative, 'Zaliac'),
-		FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial, 'Yllyric'),
-		FactoryLogic.createCulture('High Elf', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial, 'Hyrallic'),
-		FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', CultureType.Ancestral, EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor, 'Vhoric'),
-		FactoryLogic.createCulture('Human', 'Urban, communal, labor.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor, 'Vaslorian'),
-		FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic, 'Axiomatic'),
-		FactoryLogic.createCulture('Orc', 'Wilderness, communal, creative.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.creative, 'Kalliac'),
-		FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative, 'Khoursirian'),
-		FactoryLogic.createCulture('Time Raider', 'Nomadic, communal, martial.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.martial, 'Voll')
-	],
 	careers: [],
 	classes: [],
-	subclasses: [],
 	complications: [],
+	cultures: [],
 	domains: [],
-	kits: [],
-	perks: [],
-	titles: [],
-	items: [],
+	encounters: [],
 	imbuements: [],
-	monsterGroups: [],
+	items: [],
+	kits: [],
+	monsterGroups: [
+		MonsterData.ajax,
+		MonsterData.countRhodar,
+		MonsterData.lordSyuul,
+		MonsterData.warDog,
+		MonsterData.xorannox
+	],
+	montages: [],
+	negotiations: [],
+	perks: [],
+	projects: [],
+	subclasses: [],
+	tacticalMaps: [],
+	terrain: [],
+	titles: [],
 	skills: [
 		{
 			name: 'Timescape',
@@ -305,7 +304,5 @@ export const orden: Sourcebook = {
 			type: LanguageType.Dead,
 			related: [ 'Hyrallic', 'Yllyric' ]
 		}
-	],
-	projects: [],
-	terrain: []
+	]
 };

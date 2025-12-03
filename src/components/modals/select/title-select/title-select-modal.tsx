@@ -8,6 +8,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
@@ -18,6 +19,7 @@ import './title-select-modal.scss';
 interface Props {
 	titles: Title[];
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (title: Title) => void;
@@ -69,14 +71,14 @@ export const TitleSelectModal = (props: Props) => {
 				<div className='title-select-modal'>
 					{
 						selectedTitle === null ?
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									titles.map(t => (
 										<SelectablePanel
 											key={t.id}
 											onSelect={() => selectTitle(t)}
 										>
-											<TitlePanel title={t} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+											<TitlePanel title={t} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} options={props.options} />
 										</SelectablePanel>
 									))
 								}
@@ -87,14 +89,14 @@ export const TitleSelectModal = (props: Props) => {
 								}
 							</Space>
 							:
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<SelectablePanel action={{ label: 'Unselect', onClick: () => setSelectedTitle(null) }}>
-									<TitlePanel title={selectedTitle} hero={props.hero} options={props.options} />
+									<TitlePanel title={selectedTitle} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>
 								<Alert
 									type='info'
 									showIcon={true}
-									message='This title has multiple options; choose one of them.'
+									title='This title has multiple options; choose one of them.'
 								/>
 								{
 									selectedTitle.features.map(f => (

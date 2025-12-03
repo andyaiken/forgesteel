@@ -55,7 +55,7 @@ export const TerrainFilterPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='terrain-filter-panel'>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						props.includeNameFilter ?
 							<Input
@@ -73,15 +73,6 @@ export const TerrainFilterPanel = (props: Props) => {
 						placeholder='Role'
 						options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
 						value={props.terrainFilter.roles}
 						onChange={setFilterRoles}
 					/>
@@ -93,14 +84,6 @@ export const TerrainFilterPanel = (props: Props) => {
 						options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
 						value={props.terrainFilter.terrainRoles}
 						onChange={setFilterTerrainRoles}
 					/>

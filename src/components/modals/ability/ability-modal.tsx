@@ -10,10 +10,10 @@ import { DieRollPanel } from '@/components/panels/die-roll/die-roll-panel';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroLogic } from '@/logic/hero-logic';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { RollLogic } from '@/logic/roll-logic';
@@ -217,14 +217,14 @@ export const AbilityModal = (props: Props) => {
 								onChange={e => setName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine value={customization?.description || ''} onChange={setDescription} />
+							<MarkdownEditor value={customization?.description || ''} onChange={setDescription} />
 						</Expander>
 						<Expander title='Notes'>
 							<HeaderText>Notes</HeaderText>
-							<MultiLine value={customization?.notes || ''} onChange={setNotes} />
+							<MarkdownEditor value={customization?.notes || ''} onChange={setNotes} />
 						</Expander>
 						<Expander title='Modifiers'>
-							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<NumberSpin
 									disabled={!hasRange}
 									label='Distance'
@@ -244,7 +244,7 @@ export const AbilityModal = (props: Props) => {
 						{
 							props.ability.sections.some(s => (s.type === 'roll')) ?
 								<Expander title='Power Roll'>
-									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Select
 											style={{ width: '100%' }}
 											allowClear={true}

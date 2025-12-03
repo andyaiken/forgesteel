@@ -1,12 +1,11 @@
+import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Feature } from '@/models/feature';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -41,25 +40,27 @@ export const CultureEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={culture.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={culture.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={culture.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={culture.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={culture.description} onChange={setDescription} />
+				<MarkdownEditor value={culture.description} onChange={setDescription} />
 			</Space>
 		);
 	};
 
 	const getDetailsEditSection = () => {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Segmented
 					block={true}
 					options={[ CultureType.Ancestral, CultureType.Professional ]}
@@ -77,16 +78,6 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select language'
 					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.language.data.selected.length > 0 ? culture.language.data.selected[0] : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
@@ -102,23 +93,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select environment'
 					options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.environment ? culture.environment.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const env = EnvironmentData.getEnvironments().find(e => e.id === value);
-						if (env) {
-							const envCopy = Utils.copy(env) as Feature;
-							copy.environment = envCopy;
-						}
+						copy.environment = env ? Utils.copy(env) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}
@@ -130,23 +109,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select organization'
 					options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.organization ? culture.organization.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const org = OrganizationData.getOrganizations().find(o => o.id === value);
-						if (org) {
-							const orgCopy = Utils.copy(org) as Feature;
-							copy.organization = orgCopy;
-						}
+						copy.organization = org ? Utils.copy(org) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}
@@ -158,23 +125,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select upbringing'
 					options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.upbringing ? culture.upbringing.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const ub = UpbringingData.getUpbringings().find(u => u.id === value);
-						if (ub) {
-							const ubCopy = Utils.copy(ub) as Feature;
-							copy.upbringing = ubCopy;
-						}
+						copy.upbringing = ub ? Utils.copy(ub) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}

@@ -1,6 +1,8 @@
 import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -9,12 +11,8 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Markdown } from '@/components/controls/markdown/markdown';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
-import { Playbook } from '@/models/playbook';
-import { PlaybookLogic } from '@/logic/playbook-logic';
 import { Plot } from '@/models/plot';
 import { PlotEditPanel } from '@/components/panels/edit/plot-edit/plot-edit-panel';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
@@ -26,7 +24,6 @@ import './adventure-edit-panel.scss';
 
 interface Props {
 	adventure: Adventure;
-	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
@@ -40,7 +37,7 @@ export const AdventureEditPanel = (props: Props) => {
 
 	const addPlotPoint = (previousID?: string) => {
 		const copy = Utils.copy(adventure);
-		const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+		const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 		if (currentPlotCopy) {
 			const plot = FactoryLogic.createAdventurePlot();
@@ -68,7 +65,7 @@ export const AdventureEditPanel = (props: Props) => {
 
 	const deletePlotPoint = (id: string) => {
 		const copy = Utils.copy(adventure);
-		const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+		const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 		if (currentPlotCopy) {
 			currentPlotCopy.plots = currentPlotCopy.plots.filter(p => p.id !== id);
@@ -188,7 +185,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '1',
 						label: 'Adventure',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Name</HeaderText>
 								<Input
 									status={adventure.name === '' ? 'warning' : ''}
@@ -198,7 +195,7 @@ export const AdventureEditPanel = (props: Props) => {
 									onChange={e => setName(e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine value={adventure.description} onChange={setDescription} />
+								<MarkdownEditor value={adventure.description} onChange={setDescription} />
 							</Space>
 						)
 					},
@@ -206,7 +203,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '2',
 						label: 'Party',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Party</HeaderText>
 								<NumberSpin label='Number of Heroes' min={1} value={adventure.party.count} onChange={setCount} />
 								<NumberSpin label='Hero Level' min={1} max={10} value={adventure.party.level} onChange={setLevel} />
@@ -217,7 +214,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '3',
 						label: 'Sections',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText
 									extra={
 										<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
@@ -237,7 +234,7 @@ export const AdventureEditPanel = (props: Props) => {
 											]}
 										>
 											<HeaderText>Section</HeaderText>
-											<Space direction='vertical' style={{ width: '100%' }}>
+											<Space orientation='vertical' style={{ width: '100%' }}>
 												<Input
 													status={section.name === '' ? 'warning' : ''}
 													placeholder='Name'
@@ -245,7 +242,7 @@ export const AdventureEditPanel = (props: Props) => {
 													value={section.name}
 													onChange={e => setSectionName(n, e.target.value)}
 												/>
-												<MultiLine placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
+												<MarkdownEditor placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
 											</Space>
 										</Expander>
 									))
@@ -262,7 +259,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '4',
 						label: 'Plot Points',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText
 									extra={
 										<Button type='text' icon={<PlusOutlined />} onClick={() => addPlotPoint()} />
@@ -303,7 +300,7 @@ export const AdventureEditPanel = (props: Props) => {
 	const getPlotEditor = (plot: Plot) => {
 		const changePlotPoint = (plot: Plot) => {
 			const copy = Utils.copy(adventure);
-			const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+			const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 			if (currentPlotCopy) {
 				const index = currentPlotCopy.plots.findIndex(p => p.id === plot.id);
@@ -327,7 +324,6 @@ export const AdventureEditPanel = (props: Props) => {
 				key={plot.id}
 				plot={plot}
 				adventure={adventure}
-				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
 				options={props.options}
@@ -356,6 +352,7 @@ export const AdventureEditPanel = (props: Props) => {
 				<div className='plot-workspace'>
 					<PlotGraphPanel
 						label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						tags={[]}
 						plot={currentPlot}
 						adventure={adventure}
 						selectedPlot={selectedPlot || undefined}

@@ -9,7 +9,7 @@ import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { Playbook } from '@/models/playbook';
+import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
@@ -19,8 +19,7 @@ import './session-player-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	playbook: Playbook;
-	session: Playbook;
+	session: Session;
 	options: Options;
 	highlightAbout: boolean;
 	showReference: () => void;

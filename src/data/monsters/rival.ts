@@ -67,7 +67,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			cost: 5,
 			icon: StatBlockIcon.Area,
 			sections: [
-				'One rival pulls out a magic consumable and hurls it, targeting a 5 × 1 line within 1 square of them or a 3 cube within 10 squares of them. Each enemy in the area makes an Agility test. The rival chooses a damage type and a condition for the outcome of the test from one of the following pairs: sonic damage and dazed, poison damange and weakened, or fire damage and frightened.',
+				'One rival pulls out a magic consumable and hurls it, targeting a 5 × 1 line within 1 square of them or a 3 cube within 10 squares of them. Each enemy in the area makes an Agility test. The rival chooses a damage type and a condition for the outcome of the test from one of the following pairs: sonic damage and dazed, poison damage and weakened, or fire damage and frightened.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '11 damage; the condition affects the target (save ends)',
@@ -339,7 +339,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 					ability: FactoryLogic.createAbility({
 						id: 'rival-1st-4-feature-2',
 						name: 'Numb',
-						type: FactoryLogic.type.createMain(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object',

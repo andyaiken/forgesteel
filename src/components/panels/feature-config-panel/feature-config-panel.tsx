@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureRetainerData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -37,8 +37,6 @@ import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
-import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
@@ -46,6 +44,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PerkSelectModal } from '@/components/modals/select/perk-select/perk-select-modal';
+import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -64,7 +63,7 @@ interface Props {
 	feature: Feature | Perk;
 	options: Options;
 	hero: Hero;
-	sourcebooks?: Sourcebook[];
+	sourcebooks: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 	onDelete?: () => void;
 }
@@ -94,7 +93,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	// #region Selection
 
 	const getSelectionAncestryChoice = (data: FeatureAncestryChoiceData) => {
-		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks || []);
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks);
 		const sortedAncestries = Collections.sort(ancestries, a => a.name);
 
 		if (sortedAncestries.length === 0) {
@@ -104,7 +103,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
 					status={!data.selected ? 'warning' : ''}
@@ -112,20 +111,10 @@ export const FeatureConfigPanel = (props: Props) => {
 					placeholder='Select an ancestry'
 					options={sortedAncestries.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = Utils.copy(data);
-						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks || []).find(a => a.id === value) || null;
+						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks).find(a => a.id === value) || null;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
 						}
@@ -149,9 +138,9 @@ export const FeatureConfigPanel = (props: Props) => {
 						</Flex>
 						: null
 				}
-				<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} size={500}>
 					<Modal
-						content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedAncestry(null)}
 					/>
 				</Drawer>
@@ -200,7 +189,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
 					status={!data.selected ? 'warning' : ''}
@@ -208,16 +197,6 @@ export const FeatureConfigPanel = (props: Props) => {
 					placeholder='Select a feature from an ancestry'
 					options={sortedFeatures.map(f => ({ label: f.name, value: f.id, desc: f.description || f.type, disabled: currentFeatureIDs.includes(f.id) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = Utils.copy(data);
@@ -285,7 +264,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<div className='ds-text'>
 					{
 						showCosts ?
@@ -328,7 +307,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					))
 				}
 				{pointsLeft > 0 ? getAddButton() : null}
-				<Drawer open={choiceSelectorOpen} onClose={() => setChoiceSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={choiceSelectorOpen} onClose={() => setChoiceSelectorOpen(false)} closeIcon={null} size={500}>
 					<FeatureSelectModal
 						features={sortedOptions}
 						hero={props.hero}
@@ -345,7 +324,7 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setChoiceSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedFeature} onClose={() => setSelectedFeature(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedFeature} onClose={() => setSelectedFeature(null)} closeIcon={null} size={500}>
 					<Modal
 						content={selectedFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedFeature} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedFeature(null)}
@@ -396,7 +375,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<div className='ds-text'>
 					Choose {data.count > 1 ? data.count : 'a'} {data.cost === 'signature' ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
 				</div>
@@ -437,7 +416,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					})
 				}
 				{data.selectedIDs.length < data.count ? getAddButton() : null}
-				<Drawer open={abilitySelectorOpen} onClose={() => setAbilitySelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={abilitySelectorOpen} onClose={() => setAbilitySelectorOpen(false)} closeIcon={null} size={500}>
 					<AbilitySelectModal
 						abilities={sortedAbilities}
 						hero={props.hero}
@@ -453,7 +432,7 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setAbilitySelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedAbility} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedAbility} onClose={() => setSelectedAbility(null)} closeIcon={null} size={500}>
 					{selectedAbility ? <AbilityModal ability={selectedAbility} hero={props.hero} onClose={() => setSelectedAncestry(null)} /> : null}
 				</Drawer>
 			</Space>
@@ -469,14 +448,8 @@ export const FeatureConfigPanel = (props: Props) => {
 			}
 		};
 
-		const choices = data.selected && data.selected.retainer ?
-			data.selected.retainer.featuresByLevel
-				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
-				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
-			: [];
-
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					data.selected ?
 						<Flex className='selection-box' align='center' gap={10}>
@@ -511,70 +484,29 @@ export const FeatureConfigPanel = (props: Props) => {
 				{
 					data.selected ?
 						<Expander title='Customize'>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<div>
-									<HeaderText>Name</HeaderText>
-									<Input
-										status={data.selected.name === '' ? 'warning' : ''}
-										placeholder='Name'
-										allowClear={true}
-										addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-										value={data.selected.name}
-										onChange={e => setName(e.target.value)}
-									/>
-								</div>
-								{
-									choices.map(lvl => (
-										<FeatureConfigPanel
-											key={lvl.level}
-											feature={lvl.feature}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											setData={(fID, d) => {
-												const dataCopy = Utils.copy(data);
-												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
-													if (l.feature.id === fID) {
-														l.feature.data = d;
-													}
-												});
-												if (props.setData) {
-													props.setData(props.feature.id, dataCopy);
-												}
-											}}
-										/>
-									))
-								}
-							</Space>
+							<HeaderText>Name</HeaderText>
+							<Space.Compact style={{ width: '100%' }}>
+								<Input
+									status={data.selected.name === '' ? 'warning' : ''}
+									placeholder='Name'
+									allowClear={true}
+									value={data.selected.name}
+									onChange={e => setName(e.target.value)}
+								/>
+								<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+							</Space.Compact>
 						</Expander>
 						: null
 				}
-				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} size={500}>
 					<MonsterSelectModal
-						monsters={
-							SourcebookLogic
-								.getMonsterGroups(props.sourcebooks || [])
-								.flatMap(g => g.monsters)
-								.filter(m => {
-									switch (data.type) {
-										case 'mount':
-											return m.role.type === MonsterRoleType.Mount;
-										case 'retainer':
-											return m.role.organization === MonsterOrganizationType.Retainer;
-									}
-									return true;
-								})
-						}
-						subset={((data.type === 'mount') || (data.type === 'retainer')) ? data.type : undefined}
+						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							setMonsterSelectorOpen(false);
 
 							const monsterCopy = Utils.copy(monster) as Monster;
-							if (monsterCopy.retainer) {
-								// Retainers match hero level
-								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
-							}
 							const dataCopy = Utils.copy(data);
 							dataCopy.selected = monsterCopy;
 							if (props.setData) {
@@ -584,8 +516,8 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setMonsterSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
+					{selectedMonster ? <MonsterModal monster={selectedMonster} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -606,7 +538,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
@@ -659,9 +591,9 @@ export const FeatureConfigPanel = (props: Props) => {
 						</Flex>
 					))
 				}
-				<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} size={500}>
 					<Modal
-						content={selectedDomain ? <DomainPanel domain={selectedDomain} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedDomain ? <DomainPanel domain={selectedDomain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedDomain(null)}
 					/>
 				</Drawer>
@@ -686,13 +618,13 @@ export const FeatureConfigPanel = (props: Props) => {
 				<Alert
 					type='info'
 					showIcon={true}
-					message='Choose a domain to enable this feature.'
+					title='Choose a domain to enable this feature.'
 				/>
 			);
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
@@ -703,16 +635,6 @@ export const FeatureConfigPanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -759,7 +681,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(item => (
@@ -795,7 +717,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					))
 				}
 				{data.selected.length < data.count ? getAddButton() : null}
-				<Drawer open={itemSelectorOpen} onClose={() => setItemSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={itemSelectorOpen} onClose={() => setItemSelectorOpen(false)} closeIcon={null} size={500}>
 					<ItemSelectModal
 						types={data.types}
 						sourcebooks={props.sourcebooks}
@@ -815,9 +737,9 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setItemSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} size={500}>
 					<Modal
-						content={selectedItem ? <ItemPanel item={selectedItem} options={props.options} /> : null}
+						content={selectedItem ? <ItemPanel item={selectedItem} sourcebooks={props.sourcebooks} options={props.options} /> : null}
 						onClose={() => setSelectedItem(null)}
 					/>
 				</Drawer>
@@ -853,7 +775,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(kit => (
@@ -889,10 +811,11 @@ export const FeatureConfigPanel = (props: Props) => {
 					))
 				}
 				{data.selected.length < data.count ? getAddButton() : null}
-				<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} size={500}>
 					<KitSelectModal
 						kits={sortedKits}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={kit => {
 							setKitSelectorOpen(false);
@@ -908,9 +831,9 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setKitSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} size={500}>
 					<Modal
-						content={selectedKit ? <KitPanel kit={selectedKit} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedKit(null)}
 					/>
 				</Drawer>
@@ -939,7 +862,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((language, n) => {
@@ -972,7 +895,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					})
 				}
 				{(data.selected.length < data.count) || (data.count === -1) ? getAddButton() : null}
-				<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} size={500}>
 					<LanguageSelectModal
 						languages={sortedLanguages}
 						onSelect={l => {
@@ -1020,7 +943,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(perk => (
@@ -1056,10 +979,11 @@ export const FeatureConfigPanel = (props: Props) => {
 					))
 				}
 				{data.selected.length < data.count ? getAddButton() : null}
-				<Drawer open={perkSelectorOpen} onClose={() => setPerkSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={perkSelectorOpen} onClose={() => setPerkSelectorOpen(false)} closeIcon={null} size={500}>
 					<PerkSelectModal
 						perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={perk => {
 							setPerkSelectorOpen(false);
@@ -1073,11 +997,131 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setPerkSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} size={500}>
 					<Modal
-						content={selectedPerk ? <PerkPanel perk={selectedPerk} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedPerk ? <PerkPanel perk={selectedPerk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedPerk(null)}
 					/>
+				</Drawer>
+			</Space>
+		);
+	};
+
+	const getSelectionRetainer = (data: FeatureRetainerData) => {
+		const setName = (value: string) => {
+			const dataCopy = Utils.copy(data);
+			dataCopy.selected!.name = value;
+			if (props.setData) {
+				props.setData(props.feature.id, dataCopy);
+			}
+		};
+
+		const choices = data.selected && data.selected.retainer ?
+			data.selected.retainer.featuresByLevel
+				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
+				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
+			: [];
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{
+					data.selected ?
+						<Flex className='selection-box' align='center' gap={10}>
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={data.selected}
+							/>
+							<div style={{ flex: '0 0 auto' }}>
+								<Button
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedMonster(data.selected)}
+								/>
+								<Button
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = null;
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</div>
+						</Flex>
+						:
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+				}
+				{
+					data.selected ?
+						<Expander title='Customize'>
+							<Space orientation='vertical' style={{ width: '100%' }}>
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Space.Compact style={{ width: '100%' }}>
+										<Input
+											status={data.selected.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											value={data.selected.name}
+											onChange={e => setName(e.target.value)}
+										/>
+										<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+									</Space.Compact>
+								</div>
+								{
+									choices.map(lvl => (
+										<FeatureConfigPanel
+											key={lvl.level}
+											feature={lvl.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={(fID, d) => {
+												const dataCopy = Utils.copy(data);
+												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
+													if (l.feature.id === fID) {
+														l.feature.data = d;
+													}
+												});
+												if (props.setData) {
+													props.setData(props.feature.id, dataCopy);
+												}
+											}}
+										/>
+									))
+								}
+							</Space>
+						</Expander>
+						: null
+				}
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} size={500}>
+					<RetainerSelectModal
+						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelect={monster => {
+							setMonsterSelectorOpen(false);
+
+							const monsterCopy = Utils.copy(monster) as Monster;
+							if (monsterCopy.retainer) {
+								// Retainers match hero level
+								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
+							}
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected = monsterCopy;
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setMonsterSelectorOpen(false)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
+					{selectedMonster ? <MonsterModal monster={selectedMonster} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -1104,7 +1148,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((skill, n) => {
@@ -1151,7 +1195,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					})
 				}
 				{(data.selected.length < data.count) || (data.count === -1) ? getAddButton() : null}
-				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} size={500}>
 					<SkillSelectModal
 						skills={sortedSkills}
 						sourcebooks={props.sourcebooks}
@@ -1173,7 +1217,7 @@ export const FeatureConfigPanel = (props: Props) => {
 
 	const getSelectionSummonChoice = (data: FeatureSummonChoiceData) => {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					!data.selected ?
 						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
@@ -1216,10 +1260,11 @@ export const FeatureConfigPanel = (props: Props) => {
 						</Button>
 						: null
 				}
-				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} size={500}>
 					<SummonSelectModal
 						summons={data.options}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={summon => {
 							setMonsterSelectorOpen(false);
@@ -1233,8 +1278,8 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setMonsterSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} width='500px'>
-					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
+				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} size={500}>
+					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -1260,7 +1305,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		const sortedFeatures = Collections.sort(features, f => f.name);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					sortedFeatures.length > 0 ?
@@ -1273,16 +1318,6 @@ export const FeatureConfigPanel = (props: Props) => {
 							placeholder={data.count === 1 ? 'Select a feature' : 'Select features'}
 							options={sortedFeatures.map(f => ({ label: f.name, value: f.id, desc: f.description || f.type, disabled: currentTaggedFeatureIDs.includes(f.id) }))}
 							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label,
-										option.desc
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
 							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 							onChange={value => {
 								let ids: string[] = [];
@@ -1343,7 +1378,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(t => {
@@ -1390,10 +1425,11 @@ export const FeatureConfigPanel = (props: Props) => {
 					})
 				}
 				{data.selected.length < data.count ? getAddButton() : null}
-				<Drawer open={titleSelectorOpen} onClose={() => setTitleSelectorOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={titleSelectorOpen} onClose={() => setTitleSelectorOpen(false)} closeIcon={null} size={500}>
 					<TitleSelectModal
 						titles={[ customTitle, ...sortedTitles ]}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={title => {
 							setTitleSelectorOpen(false);
@@ -1407,13 +1443,14 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setTitleSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} size={500}>
 					<Modal
 						content={
 							selectedTitle ?
 								<TitlePanel
 									title={selectedTitle}
 									options={props.options}
+									sourcebooks={props.sourcebooks}
 									mode={PanelMode.Full}
 									onChange={title => {
 										const dataCopy = Utils.copy(data);
@@ -1459,6 +1496,8 @@ export const FeatureConfigPanel = (props: Props) => {
 				return getSelectionLanguageChoice(props.feature.data);
 			case FeatureType.Perk:
 				return getSelectionPerk(props.feature.data);
+			case FeatureType.Retainer:
+				return getSelectionRetainer(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getSelectionSkillChoice(props.feature.data);
 			case FeatureType.SummonChoice:

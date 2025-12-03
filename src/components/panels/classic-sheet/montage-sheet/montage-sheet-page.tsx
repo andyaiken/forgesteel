@@ -43,7 +43,7 @@ export const MontageSheetPage = (props: Props) => {
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('montage', montage.id, 'main')}>
+				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('montage', montage.id)}>
 					<MontageHeaderCard montage={montage} options={props.options} />
 
 					<div className='tests-difficulty card'>

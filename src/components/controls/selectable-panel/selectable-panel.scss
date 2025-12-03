@@ -1,7 +1,7 @@
 .selectable-panel {
 	position: relative;
 	width: 100%;
-	border: 1px solid rgba(5, 5, 5, 0.06);
+	border: 1px solid transparent;
 	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 	border-radius: 10px;
 	padding: 10px 20px 20px 20px;
@@ -11,9 +11,12 @@
 
 	&.selectable {
 		cursor: pointer;
+
+		&:hover {
+			background: rgb(230, 244, 255);
+		}
 	}
 
-	&.selectable:hover,
 	&.selected {
 		border-color: rgb(22, 119, 255);
 		background: rgb(230, 244, 255);
@@ -53,7 +56,7 @@ html[data-theme="dark"] {
 	
 		&.selectable:hover,
 		&.selected {
-			background: rgb(60, 60, 60);
+			background: rgb(80, 80, 80);
 		}
 	}
 }

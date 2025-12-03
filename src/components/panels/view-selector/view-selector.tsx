@@ -25,7 +25,7 @@ export const ViewSelector = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<Flex gap={3} className='view-selector'>
+			<Flex className='view-selector'>
 				<Segmented
 					options={[
 						createOption('modern', 'Interactive View (for on screen use)', <DesktopOutlined />),
@@ -39,7 +39,7 @@ export const ViewSelector = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={
-								<Space direction='vertical'>
+								<Space orientation='vertical'>
 									<Button block={true} onClick={() => props.onChange('abilities')}>
 										Standard Abilities
 									</Button>
@@ -49,7 +49,7 @@ export const ViewSelector = (props: Props) => {
 								</Space>
 							}
 						>
-							<Button icon={<DownOutlined />} />
+							<Button icon={<DownOutlined />} style={{ borderColor: 'transparent', backgroundColor: '#f5f5f5' }} />
 						</Popover>
 						: null
 				}

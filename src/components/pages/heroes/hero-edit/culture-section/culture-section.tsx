@@ -60,20 +60,27 @@ export const CultureSection = (props: CultureSectionProps) => {
 		props.selectCulture(copy);
 	};
 
-	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
+	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ]
+		.map(Utils.copy)
+		.filter(c => matchElement(c, props.searchTerm));
+	const optionsYourAncestry = cultures.filter(c => c.id === (props.hero.ancestry?.culture?.id || '')).map(c => (
+		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+		</SelectablePanel>
+	));
 	const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 	const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 	const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -93,17 +100,19 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<SelectablePanel key='bespoke'>
 					<HeaderText>Bespoke Culture</HeaderText>
 					<div className='ds-text'>Choose a name for your culture.</div>
-					<Input
-						status={props.hero.culture.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-						value={props.hero.culture.name}
-						onChange={e => setName(e.target.value)}
-					/>
+					<Space.Compact style={{ width: '100%' }}>
+						<Input
+							status={props.hero.culture.name === '' ? 'warning' : ''}
+							placeholder='Name'
+							allowClear={true}
+							value={props.hero.culture.name}
+							onChange={e => setName(e.target.value)}
+						/>
+						<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+					</Space.Compact>
 					<Divider />
 					<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.hero.culture.environment ?
 								<Flex className='selection-box' align='center' gap={10}>
@@ -191,7 +200,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					props.hero.culture && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='culture-selected'>
 							<SelectablePanel>
-								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
+								<CulturePanel culture={props.hero.culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -199,14 +208,36 @@ export const CultureSection = (props: CultureSectionProps) => {
 				{
 					!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length > 0) ?
 						<div className='hero-edit-content-column list' id='culture-list'>
-							<HeaderText level={1}>Ancestral Cultures</HeaderText>
-							<div className='grid'>
-								{optionsAncestral}
-							</div>
-							<HeaderText level={1}>Professional Cultures</HeaderText>
-							<div className='grid'>
-								{optionsProfessional}
-							</div>
+							{
+								optionsYourAncestry.length > 0 ?
+									<>
+										<HeaderText level={1}>Your Ancestry</HeaderText>
+										<div className='grid'>
+											{optionsYourAncestry}
+										</div>
+									</>
+									: null
+							}
+							{
+								optionsAncestral.length > 0 ?
+									<>
+										<HeaderText level={1}>Ancestral Cultures</HeaderText>
+										<div className='grid'>
+											{optionsAncestral}
+										</div>
+									</>
+									: null
+							}
+							{
+								optionsProfessional.length > 0 ?
+									<>
+										<HeaderText level={1}>Professional Cultures</HeaderText>
+										<div className='grid'>
+											{optionsProfessional}
+										</div>
+									</>
+									: null
+							}
 							<HeaderText level={1}>Bespoke Cultures</HeaderText>
 							<div className='grid'>
 								{optionsBespoke}
@@ -230,7 +261,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 						: null
 				}
 			</div>
-			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} width='500px'>
+			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}
@@ -241,7 +272,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					onClose={() => setShowEnvironment(false)}
 				/>
 			</Drawer>
-			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} width='500px'>
+			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}
@@ -252,7 +283,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					onClose={() => setShowOrganization(false)}
 				/>
 			</Drawer>
-			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} width='500px'>
+			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}

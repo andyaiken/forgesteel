@@ -29,6 +29,11 @@ export class FeatureUpdateLogic {
 					feature.data.minLevel = 1;
 				}
 				break;
+			case FeatureType.Companion:
+				if (feature.data.selected && feature.data.selected.retainer) {
+					(feature as Feature).type = FeatureType.Retainer;
+				}
+				break;
 			case FeatureType.DamageModifier:
 				feature.data.modifiers.forEach(dm => {
 					if (dm.valueCharacteristics === undefined) {

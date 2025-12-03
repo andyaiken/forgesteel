@@ -1,4 +1,6 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 
@@ -13,8 +15,6 @@ export const human: Ancestry = {
 				name: 'Detect the Supernatural',
 				description: 'You open your awareness to detect supernatural creatures and phenomena.',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another world within 5 squares, even if you don’t have line of effect to that object or creature. You know if you’re detecting an item or a creature, and you know the nature of any creature you detect.')
 				]
@@ -47,8 +47,6 @@ export const human: Ancestry = {
 							name: 'Resist the Unnatural',
 							description: 'Your instinctive resilience protects you from injuries beyond the routine.',
 							type: FactoryLogic.type.createTrigger('You take damage that isn’t untyped'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You halve the damage.')
 							]
@@ -63,8 +61,6 @@ export const human: Ancestry = {
 							name: 'Determination',
 							description: 'A tolerance for pain and dsitress allows you to push through difficult situations.',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You immediately end one of the frightened, slowed, or weakened conditions on yourself.')
 							]
@@ -86,5 +82,6 @@ export const human: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Human', 'Urban, communal, labor.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor, 'Vaslorian')
 };

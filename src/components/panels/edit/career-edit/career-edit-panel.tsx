@@ -13,7 +13,7 @@ import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -48,18 +48,20 @@ export const CareerEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={career.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={career.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={career.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={career.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={career.description} onChange={setDescription} />
+				<MarkdownEditor value={career.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -102,7 +104,7 @@ export const CareerEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
@@ -178,7 +180,7 @@ export const CareerEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addIncident} />

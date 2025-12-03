@@ -1,0 +1,21 @@
+.markdown-editor {
+	border: 1px solid #d9d9d9;
+ 	border-radius: 5px;
+ 	background-color: rgb(255, 255, 255);
+
+	.markdown-editor-toolbar {
+		border-radius: 5px 5px 0 0;
+		background: #f5f5f5;
+		border-bottom: 1px solid #d9d9d9;
+	}
+}
+
+html[data-theme="dark"] {
+	.markdown-editor {
+		background-color: rgb(0, 0, 0);
+
+		._code_1tncs_52 {
+			background-color: rgb(100, 100, 100);
+		}
+	}	
+}

@@ -8,7 +8,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
@@ -46,18 +46,20 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={negotiation.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={negotiation.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={negotiation.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={negotiation.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={negotiation.description} onChange={setDescription} />
+				<MarkdownEditor value={negotiation.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -87,7 +89,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Attitude</HeaderText>
 				<Select
 					style={{ width: '100%' }}
@@ -154,7 +156,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addMotivation} />
@@ -174,26 +176,16 @@ export const NegotiationEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Motivation</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Select
 									style={{ width: '100%' }}
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									showSearch={true}
-									filterOption={(input, option) => {
-										const strings = option ?
-											[
-												option.label,
-												option.desc
-											]
-											: [];
-										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-									}}
 									value={m.trait}
 									onChange={t => setMotivationTrait(n, t)}
 								/>
-								<MultiLine placeholder='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
+								<MarkdownEditor placeholder='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -249,7 +241,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addPitfall} />
@@ -269,26 +261,16 @@ export const NegotiationEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Pitfall</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Select
 									style={{ width: '100%' }}
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									showSearch={true}
-									filterOption={(input, option) => {
-										const strings = option ?
-											[
-												option.label,
-												option.desc
-											]
-											: [];
-										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-									}}
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
 								/>
-								<MultiLine placeholder='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
+								<MarkdownEditor placeholder='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -311,7 +293,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					negotiation.outcomes.map((o, n) => (
 						<Expander
@@ -319,7 +301,7 @@ export const NegotiationEditPanel = (props: Props) => {
 							title={n}
 						>
 							<HeaderText>Outcome {n}</HeaderText>
-							<MultiLine value={o} onChange={value => setOutcome(n, value)} />
+							<MarkdownEditor value={o} onChange={value => setOutcome(n, value)} />
 						</Expander>
 					))
 				}

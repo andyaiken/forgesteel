@@ -5,54 +5,62 @@
 .terrain-label,
 .fixture-label {
 	margin: 5px 0;
-	border-radius: 5px;
-	padding: 5px 10px;
+	border-radius: 10px;
+	padding: 0 10px;
 	color: rgb(0, 0, 0);
 	background-color: colors.$monster-default;
-	border: 1px solid color.scale(colors.$monster-default, $lightness: -20%);
 
 	&.ambusher {
-		background-color: colors.$monster-ambusher;
-		border-color: color.scale(colors.$monster-ambusher, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-ambusher, $lightness: 10%), color.scale(colors.$monster-ambusher, $lightness: -10%));
 	}
 
 	&.artillery {
-		background-color: colors.$monster-artillery;
-		border-color: color.scale(colors.$monster-artillery, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-artillery, $lightness: 10%), color.scale(colors.$monster-artillery, $lightness: -10%));
 	}
 
 	&.brute {
-		background-color: colors.$monster-brute;
-		border-color: color.scale(colors.$monster-brute, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-brute, $lightness: 10%), color.scale(colors.$monster-brute, $lightness: -10%));
 	}
 
 	&.controller {
-		background-color: colors.$monster-controller;
-		border-color: color.scale(colors.$monster-controller, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-controller, $lightness: 10%), color.scale(colors.$monster-controller, $lightness: -10%));
 	}
 
 	&.defender {
-		background-color: colors.$monster-defender;
-		border-color: color.scale(colors.$monster-defender, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-defender, $lightness: 10%), color.scale(colors.$monster-defender, $lightness: -10%));
 	}
 
 	&.harrier {
-		background-color: colors.$monster-harrier;
-		border-color: color.scale(colors.$monster-harrier, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-harrier, $lightness: 10%), color.scale(colors.$monster-harrier, $lightness: -10%));
 	}
 
 	&.hexer {
-		background-color: colors.$monster-hexer;
-		border-color: color.scale(colors.$monster-hexer, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-hexer, $lightness: 10%), color.scale(colors.$monster-hexer, $lightness: -10%));
 	}
 
 	&.mount {
-		background-color: colors.$monster-mount;
-		border-color: color.scale(colors.$monster-mount, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-mount, $lightness: 10%), color.scale(colors.$monster-mount, $lightness: -10%));
 	}
 
 	&.support {
-		background-color: colors.$monster-support;
-		border-color: color.scale(colors.$monster-support, $lightness: -20%);
+		background: linear-gradient(color.scale(colors.$monster-support, $lightness: 10%), color.scale(colors.$monster-support, $lightness: -10%));
 	}
+
+	.ds-text {
+		color: rgba(0, 0, 0, 0.88) !important;
+	}
+
+	.field {
+		.field-label {
+			color: rgb(0, 0, 0) !important;
+		}
+
+		.field-value {
+			color: rgba(0, 0, 0, 0.88) !important;
+		}
+	}
+}
+
+.monster-label {
+	padding: 10px 15px 0 15px;
 }

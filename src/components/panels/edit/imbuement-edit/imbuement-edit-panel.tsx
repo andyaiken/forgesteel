@@ -1,4 +1,4 @@
-import { Input, Select, Space, Tabs } from 'antd';
+import { Button, Input, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -6,7 +6,7 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Imbuement } from '@/models/imbuement';
 import { ItemType } from '@/enums/item-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -46,18 +46,20 @@ export const ImbuementEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={imbuement.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={imbuement.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={imbuement.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={imbuement.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={imbuement.description} onChange={setDescription} />
+				<MarkdownEditor value={imbuement.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -78,7 +80,7 @@ export const ImbuementEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Level</HeaderText>
 				<NumberSpin min={1} max={9} steps={[ 4 ]} value={imbuement.level} onChange={setLevel} />
 				<HeaderText>Item Type</HeaderText>
@@ -87,15 +89,6 @@ export const ImbuementEditPanel = (props: Props) => {
 					placeholder='Type'
 					options={[ ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={imbuement.type}
 					onChange={setType}
 				/>
@@ -121,7 +114,7 @@ export const ImbuementEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Toggle label='Can be crafted' value={!!imbuement.crafting} onChange={setCraftable} />
 				{
 					imbuement.crafting ?
@@ -145,7 +138,7 @@ export const ImbuementEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>
 					Feature
 				</HeaderText>

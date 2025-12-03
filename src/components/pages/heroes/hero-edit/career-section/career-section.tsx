@@ -50,7 +50,7 @@ export const CareerSection = (props: Props) => {
 	const careers = SourcebookLogic.getCareers(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const options = careers.map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
-			<CareerPanel career={c} options={props.options} />
+			<CareerPanel career={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -107,7 +107,7 @@ export const CareerSection = (props: Props) => {
 					props.hero.career && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='career-selected'>
 							<SelectablePanel>
-								<CareerPanel career={props.hero.career} options={props.options} mode={PanelMode.Full} />
+								<CareerPanel career={props.hero.career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -135,7 +135,7 @@ export const CareerSection = (props: Props) => {
 						: null
 				}
 			</div>
-			<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} width='500px'>
+			<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} size={500}>
 				<ElementSelectModal
 					elements={props.hero.career ? props.hero.career.incitingIncidents.options : []}
 					onSelect={e => {

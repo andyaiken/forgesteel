@@ -4,6 +4,10 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
+		if (options.xpPerLevel === undefined) {
+			options.xpPerLevel = 16;
+		}
+
 		if (options.singlePage === undefined) {
 			options.singlePage = false;
 		}
@@ -52,14 +56,6 @@ export class OptionsUpdateLogic {
 			options.pageOrientation = 'portrait';
 		}
 
-		if (options.showInteractivePanels === undefined) {
-			options.showInteractivePanels = true;
-		}
-
-		if (options.showMonsterGroups === undefined) {
-			options.showMonsterGroups = true;
-		}
-
 		if (options.similarLevel === undefined) {
 			options.similarLevel = true;
 		}
@@ -74,10 +70,6 @@ export class OptionsUpdateLogic {
 
 		if (options.similarSize === undefined) {
 			options.similarSize = true;
-		}
-
-		if (options.minionCount === undefined) {
-			options.minionCount = 4;
 		}
 
 		if (options.party === undefined) {

@@ -27,7 +27,7 @@ export const ProjectSelectModal = (props: Props) => {
 			name: 'Custom Project',
 			isCustom: true
 		}),
-		...SourcebookLogic.getProjects(props.sourcebooks)
+		...SourcebookLogic.getProjects(props.sourcebooks, true, true)
 	]
 		.filter(item => Utils.textMatches([
 			item.name,
@@ -50,14 +50,14 @@ export const ProjectSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='project-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							projects.map(project => (
 								<SelectablePanel
 									key={project.id}
 									onSelect={() => props.onSelect(project)}
 								>
-									<ProjectPanel project={project} />
+									<ProjectPanel project={project} sourcebooks={props.sourcebooks} />
 								</SelectablePanel>
 							))
 						}

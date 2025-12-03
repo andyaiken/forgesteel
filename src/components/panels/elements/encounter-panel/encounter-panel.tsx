@@ -8,7 +8,6 @@ import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficul
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -22,8 +21,10 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { useState } from 'react';
 
@@ -40,8 +41,6 @@ interface Props {
 
 export const EncounterPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -72,7 +71,7 @@ export const EncounterPanel = (props: Props) => {
 									:
 									<HeaderText>Monsters</HeaderText>
 							}
-							<Space direction='vertical'>
+							<Space orientation='vertical'>
 								{
 									group.slots.map(slot => {
 										const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
@@ -80,7 +79,7 @@ export const EncounterPanel = (props: Props) => {
 											return null;
 										}
 
-										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
+										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
 
 										return (
 											<div key={slot.id} className='encounter-slot'>
@@ -103,7 +102,7 @@ export const EncounterPanel = (props: Props) => {
 					props.encounter.terrain.length > 0 ?
 						<SelectablePanel key='terrain' style={{ paddingTop: '0' }}>
 							<HeaderText>Terrain</HeaderText>
-							<Space direction='vertical'>
+							<Space orientation='vertical'>
 								{
 									props.encounter.terrain.map(slot => {
 										const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
@@ -146,6 +145,7 @@ export const EncounterPanel = (props: Props) => {
 										key={monster.id}
 										monster={monster}
 										monsterGroup={monsterGroup}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
 										mode={PanelMode.Full}
 									/>
@@ -164,6 +164,7 @@ export const EncounterPanel = (props: Props) => {
 										key={terrain.id}
 										terrain={terrain}
 										upgradeIDs={slot.upgradeIDs}
+										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -183,7 +184,7 @@ export const EncounterPanel = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					monsterGroups.filter(group => group.malice.length > 0).map(group => {
 						let maxEchelon = 1;
@@ -224,68 +225,59 @@ export const EncounterPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'groups':
-					content = getEncounterGroups();
-					break;
-				case 'statblocks':
-					content = getStatBlocks();
-					break;
-				case 'malice':
-					content = getMalice();
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'groups', label: 'Groups' },
-							{ value: 'statblocks', label: 'Stat Blocks' },
-							{ value: 'malice', label: 'Malice' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'groups':
+				content = getEncounterGroups();
+				break;
+			case 'statblocks':
+				content = getStatBlocks();
+				break;
+			case 'malice':
+				content = getMalice();
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				<HeaderText level={1}>Encounter Groups</HeaderText>
-				{getEncounterGroups()}
-				<HeaderText level={1}>Stat Blocks</HeaderText>
-				{getStatBlocks()}
-				{getMalice()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						{ value: 'groups', label: 'Groups' },
+						{ value: 'statblocks', label: 'Stat Blocks' },
+						{ value: 'malice', label: 'Malice' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
 	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+	tags.push(difficulty);
 
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='encounter-panel compact'>
 				<HeaderText
 					level={1}
-					tags={[ difficulty ]}
-					extra={
-						props.showTools ?
-							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
-							: null
-					}
+					tags={tags}
 				>
 					{props.encounter.name || 'Unnamed Encounter'}
 				</HeaderText>
@@ -296,10 +288,10 @@ export const EncounterPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='encounter-panel' id={props.encounter.id}>
+			<div className='encounter-panel' id={SheetFormatter.getPageId('encounter', props.encounter.id)}>
 				<HeaderText
 					level={1}
-					tags={[ difficulty ]}
+					tags={tags}
 					extra={
 						props.showTools ?
 							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />

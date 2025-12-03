@@ -1,4 +1,4 @@
-import { Alert, Input, Space } from 'antd';
+import { Input, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -13,6 +13,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { Options } from '@/models/options';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -20,7 +21,7 @@ import './monster-select-modal.scss';
 
 interface Props {
 	monsters: Monster[];
-	subset?: 'mount' | 'retainer';
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
@@ -54,21 +55,15 @@ export const MonsterSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='monster-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						{
-							props.subset ?
-								<Alert
-									showIcon={true}
-									message={`Showing only ${props.subset}s.`}
-								/>
-								: null
-						}
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Expander title='Filter'>
 							<HeaderText>Filter</HeaderText>
 							<MonsterFilterPanel
 								monsterFilter={filter}
 								monsters={props.monsters}
 								includeNameFilter={false}
+								includeOrgFilter={true}
+								includeEVFilter={true}
 								onChange={setFilter}
 							/>
 						</Expander>
@@ -78,7 +73,7 @@ export const MonsterSelectModal = (props: Props) => {
 									key={m.id}
 									onSelect={() => props.onSelect(m)}
 								>
-									<MonsterPanel monster={m} options={props.options} />
+									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>
 							))
 						}

@@ -2,10 +2,9 @@ import { PanelWidth } from '@/enums/panel-width';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export interface Options {
-	// General
-	showInteractivePanels: boolean;
 	// Hero
 	shownStandardAbilities: string[];
+	xpPerLevel: number;
 	// Hero: Modern Sheet
 	singlePage: boolean;
 	separateInventoryFeatures: boolean;
@@ -22,15 +21,12 @@ export interface Options {
 	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	pageOrientation: 'portrait' | 'landscape';
-	// Library
-	showMonsterGroups: boolean;
 	// Monster Builder
 	similarLevel: boolean;
 	similarRole: boolean;
 	similarOrganization: boolean;
 	similarSize: boolean;
 	// Encounter
-	minionCount: number;
 	party: string;
 	// Encounter: Running
 	showDefeatedCombatants: boolean;
@@ -41,6 +37,5 @@ export interface Options {
 	heroVictories: number;
 	// Tactical Map
 	gridSize: number;
-	// Player View
 	playerGridSize: number;
 }

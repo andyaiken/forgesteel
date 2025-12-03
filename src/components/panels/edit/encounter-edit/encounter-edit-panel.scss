@@ -8,8 +8,8 @@
 		flex: 1 1 0;
 		overflow-y: auto;
 
-		.group-row,
-		.terrain-container-row {
+		.encounter-group-panel,
+		.encounter-terrain-panel {
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
@@ -19,27 +19,64 @@
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
-				padding: 10px 20px 20px 20px;
+				padding: 10px;
 				display: flex;
 				flex-direction: row;
-				gap: 20px;
+				align-items: center;
+				gap: 10px;
+				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
 				.content {
 					flex: 1 1 0;
 					border-right: 1px solid rgb(220, 220, 220);
-					padding-right: 20px;
+					padding-right: 10px;
 				}
 
 				.actions {
-					margin-top: 5px;
-					flex: 0 0 130px;
-					display: flex;
-					flex-direction: column;
-					gap: 5px;
+					flex: 0 0 120px;
+				}
+			}
 
-					.ant-divider {
-						margin: 4px 0 15px 0;
-						border-block-start-width: 5px;
+			.drag-target {
+				position: relative;
+				padding: 5px;
+				border: 1px solid transparent;
+				border-radius: 15px;
+
+				.drop-info-container {
+					opacity: 1 !important;
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					.drop-info {
+						background: white;
+						padding: 5px 10px;
+						border-radius: 5px;
+						box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+					}
+				}
+
+				&.drag-highlight {
+					background-color: rgb(230, 244, 255);
+
+					.ant-space {
+						opacity: 0.2;
+					}
+
+					&.drag-over {
+						border-color: rgb(22, 119, 255);
+
+						.drop-info-container {
+							.drop-info {
+								font-weight: 600;
+							}
+						}
 					}
 				}
 			}
@@ -50,47 +87,52 @@
 		flex: 1 1 0;
 		overflow-y: auto;
 		padding: 0 5px;
+	}
+}
 
-		.monster-row,
-		.terrain-row {
-			border: 1px solid rgb(220, 220, 220);
-			border-radius: 10px;
-			background-color: rgba(255, 255, 255);
-			padding: 5px 10px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
+.monster-list-item,
+.terrain-list-item {
+	border: 1px solid rgb(220, 220, 220);
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255);
+	padding: 5px 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 
-			.monster-panel,
-			.terrain-panel {
-				flex: 1 1 0;
-			}
+	.info-container {
+		flex: 1 1 0;
+		cursor: grab;
+		touch-action: none;
+	}
 
-			.actions {
-				margin-top: 10px;
-				flex: 0 0 130px;
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
-			}
+	.add-btn {
+		border: none;
+	}
 
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.05);
-			}
-		}
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.05);
 	}
 }
 
 html[data-theme="dark"] {
 	.encounter-edit-panel {
 		.encounter-workspace-column {
-			.group-row,
-			.terrain-container-row {
+			.encounter-group-panel,
+			.encounter-terrain-panel {
 				.slot-row,
 				.terrain-row {
 					background-color: rgba(0, 0, 0);
 					color: rgba(255, 255, 255, 0.88);
+				}
+
+				&.drag-target {
+					background: rgb(80, 80, 80);
+				}
+
+				&.drag-over {
+					border-color: rgb(217, 217, 217);
 				}
 			}
 		}
@@ -99,12 +141,12 @@ html[data-theme="dark"] {
 			.filter-button {
 				color: rgba(255, 255, 255, 0.88);
 			}
+		}
 
-			.monster-row,
-			.terrain-row {
-				background-color: rgba(0, 0, 0);
-				color: rgba(255, 255, 255, 0.88);
-			}
+		.monster-list-item,
+		.terrain-list-item {
+			background-color: rgba(0, 0, 0);
+			color: rgba(255, 255, 255, 0.88);
 		}
 	}
 }

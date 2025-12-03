@@ -184,7 +184,6 @@ export interface ProjectSheet {
 	id: string;
 	name: string;
 	description: string,
-	effect: string,
 	assignee: string;
 	characteristic: string;
 	prerequisites: string,

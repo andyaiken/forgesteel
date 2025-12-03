@@ -9,10 +9,12 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { Item } from '@/models/item';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
+import { ProjectLogic } from '@/logic/project-logic';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { ProjectSelectModal } from '@/components/modals/select/project-select/project-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
@@ -41,7 +43,6 @@ export const ProjectsPanel = (props: Props) => {
 
 	const addProject = (project: Project) => {
 		const projectCopy = Utils.copy(project);
-		projectCopy.id = Utils.guid();
 		projectCopy.progress = FactoryLogic.createProjectProgress();
 
 		const copy = Utils.copy(hero);
@@ -74,9 +75,17 @@ export const ProjectsPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const addItemAndDeleteProject = (item: Item, project: Project) => {
+		const copy = Utils.copy(hero);
+		copy.state.inventory.push(item);
+		copy.state.projects = copy.state.projects.filter(p => p.id !== project.id);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
 	return (
 		<ErrorBoundary>
-			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
+			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
@@ -97,6 +106,7 @@ export const ProjectsPanel = (props: Props) => {
 						<Expander
 							key={project.id}
 							title={project.name}
+							tags={[ ProjectLogic.getStatus(project) ]}
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
@@ -106,8 +116,10 @@ export const ProjectsPanel = (props: Props) => {
 							<ProjectPanel
 								project={project}
 								hero={hero}
+								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 								onChange={changeProject}
+								addItemAndDeleteProject={addItemAndDeleteProject}
 							/>
 						</Expander>
 					))
@@ -117,7 +129,7 @@ export const ProjectsPanel = (props: Props) => {
 						<Empty text='You have no projects underway.' />
 						: null
 				}
-				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
+				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} size={500}>
 					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>

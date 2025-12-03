@@ -16,13 +16,13 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -79,18 +79,20 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={monster.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={setRandomName} />}
-					value={monster.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={monster.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={monster.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={setRandomName} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={monster.description} onChange={setDescription} />
+				<MarkdownEditor value={monster.description} onChange={setDescription} />
 				<HeaderText>Portrait</HeaderText>
 				{
 					monster.picture ?
@@ -228,7 +230,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Keywords</HeaderText>
 				<Input
 					placeholder='Keywords'
@@ -357,7 +359,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Size</HeaderText>
 				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
 				{
@@ -484,7 +486,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					[
 						Characteristic.Might,
@@ -493,7 +495,7 @@ export const MonsterEditPanel = (props: Props) => {
 						Characteristic.Intuition,
 						Characteristic.Presence
 					].map(ch => (
-						<Space direction='vertical' style={{ width: '100%' }} key={ch}>
+						<Space orientation='vertical' style={{ width: '100%' }} key={ch}>
 							<HeaderText>{ch}</HeaderText>
 							<NumberSpin
 								min={-5}
@@ -594,7 +596,7 @@ export const MonsterEditPanel = (props: Props) => {
 		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
@@ -634,7 +636,7 @@ export const MonsterEditPanel = (props: Props) => {
 					props.similarMonsters.length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>Features from Similar Monsters</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Segmented
 									name='categories'
 									block={true}
@@ -690,14 +692,14 @@ export const MonsterEditPanel = (props: Props) => {
 		}));
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>With Captain</HeaderText>
-				<MultiLine value={monster.withCaptain} onChange={setWithCaptain} />
+				<MarkdownEditor value={monster.withCaptain} onChange={setWithCaptain} />
 				{
 					props.similarMonsters.length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>With Captain</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									options.map((opt, n) => (
 										<Button key={n} block={true} onClick={() => setWithCaptain(opt.text)}>
@@ -733,7 +735,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					monster.retainer && monster.retainer.level4 ?
 						<Expander

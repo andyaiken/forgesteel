@@ -1,5 +1,4 @@
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -8,8 +7,10 @@ import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
@@ -24,8 +25,6 @@ interface Props {
 
 export const NegotiationPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -82,75 +81,57 @@ export const NegotiationPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'motivations':
-					content = getMotivations();
-					break;
-				case 'pitfalls':
-					content = getPitfalls();
-					break;
-				case 'languages':
-					content = getLanguages();
-					break;
-				case 'outcomes':
-					content = getOutcomes();
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'motivations', label: 'Motivations' },
-							{ value: 'pitfalls', label: 'Pitfalls' },
-							{ value: 'languages', label: 'Languages' },
-							{ value: 'outcomes', label: 'Outcomes' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'motivations':
+				content = getMotivations();
+				break;
+			case 'pitfalls':
+				content = getPitfalls();
+				break;
+			case 'languages':
+				content = getLanguages();
+				break;
+			case 'outcomes':
+				content = getOutcomes();
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				<div className='negotiation-content'>
-					<div>
-						<HeaderText>Motivations</HeaderText>
-						{getMotivations()}
-					</div>
-					<div>
-						<HeaderText>Pitfalls</HeaderText>
-						{getPitfalls()}
-					</div>
-					<div>
-						<HeaderText>Languages</HeaderText>
-						{getLanguages()}
-					</div>
-					<div>
-						<HeaderText>Outcomes</HeaderText>
-						{getOutcomes()}
-					</div>
-				</div>
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						{ value: 'motivations', label: 'Motivations' },
+						{ value: 'pitfalls', label: 'Pitfalls' },
+						{ value: 'languages', label: 'Languages' },
+						{ value: 'outcomes', label: 'Outcomes' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, props.negotiation)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='negotiation-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.negotiation.name || 'Unnamed Negotiation'}
 				</HeaderText>
 				<Markdown text={props.negotiation.description} />
@@ -160,8 +141,8 @@ export const NegotiationPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='negotiation-panel' id={props.negotiation.id}>
-				<HeaderText level={1}>
+			<div className='negotiation-panel' id={SheetFormatter.getPageId('negotiation', props.negotiation.id)}>
+				<HeaderText level={1} tags={tags}>
 					{props.negotiation.name || 'Unnamed Negotiation'}
 				</HeaderText>
 				{getContent()}

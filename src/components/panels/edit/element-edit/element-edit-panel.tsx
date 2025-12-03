@@ -2,7 +2,7 @@ import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Input } from 'antd';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -42,7 +42,7 @@ export const ElementEditPanel = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={element.description} onChange={setDescription} />
+				<MarkdownEditor value={element.description} onChange={setDescription} />
 			</div>
 		</ErrorBoundary>
 	);

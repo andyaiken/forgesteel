@@ -1,5 +1,6 @@
 import { Element } from '@/models/element';
 import { PowerRoll } from '@/models/power-roll';
+import { SourcebookElementKind } from '@/models/sourcebook';
 
 export interface PlotContentText {
 	id: string;
@@ -24,18 +25,11 @@ export interface PlotContentRoll {
 export interface PlotContentReference {
 	id: string;
 	contentType: 'reference';
-	type: 'encounter' | 'montage' | 'negotiation' | 'map';
+	type: SourcebookElementKind;
 	contentID: string;
 }
 
-export interface PlotContentElement {
-	id: string;
-	contentType: 'element';
-	type: 'follower' | 'item' | 'monster' | 'title';
-	content: Element;
-}
-
-export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference | PlotContentElement;
+export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference;
 
 export interface PlotLink {
 	id: string;

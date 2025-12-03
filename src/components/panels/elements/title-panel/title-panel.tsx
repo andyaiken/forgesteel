@@ -1,16 +1,18 @@
 import { Button, Input } from 'antd';
 import { CheckCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Markdown } from '@/components/controls/markdown/markdown';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -19,9 +21,9 @@ import './title-panel.scss';
 
 interface Props {
 	title: Title;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	onChange?: (title: Title) => void;
 }
@@ -56,14 +58,24 @@ export const TitlePanel = (props: Props) => {
 		}
 	};
 
+	const tags = [ `Echelon ${title.echelon}` ];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getTitleSourcebook(props.sourcebooks, title)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? title.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('title', title.id) : undefined}>
 				<HeaderText
 					level={1}
-					tags={[ `Echelon ${title.echelon}` ]}
+					tags={tags}
 					extra={
-						editable ? <Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} /> : null
+						editable ?
+							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+							: null
 					}
 				>
 					{title.name || 'Unnamed Title'}
@@ -83,7 +95,7 @@ export const TitlePanel = (props: Props) => {
 									onChange={e => setFeatureName(e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine value={selectedFeature.description} onChange={setFeatureDescription} />
+								<MarkdownEditor value={selectedFeature.description} onChange={setFeatureDescription} />
 							</div>
 							:
 							<div className='features'>

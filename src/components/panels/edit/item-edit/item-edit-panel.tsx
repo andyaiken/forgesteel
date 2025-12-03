@@ -16,7 +16,7 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Project } from '@/models/project';
@@ -54,18 +54,20 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={item.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={item.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={item.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={item.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={item.description} onChange={setDescription} />
+				<MarkdownEditor value={item.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -93,22 +95,13 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Item Type</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Type'
 					options={[ ItemType.Artifact, ItemType.Consumable, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={item.type}
 					onChange={setType}
 				/>
@@ -120,20 +113,11 @@ export const ItemEditPanel = (props: Props) => {
 					allowClear={true}
 					options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={item.keywords}
 					onChange={setKeywords}
 				/>
 				<HeaderText>Effect</HeaderText>
-				<MultiLine value={item.effect} onChange={setEffect} />
+				<MarkdownEditor value={item.effect} onChange={setEffect} />
 			</Space>
 		);
 	};
@@ -192,7 +176,7 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					item.featuresByLevel.map(lvl => (
 						<div key={lvl.level}>
@@ -203,7 +187,7 @@ export const ItemEditPanel = (props: Props) => {
 							>
 								Level {lvl.level.toString()}
 							</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
 										<Expander
@@ -256,7 +240,7 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Toggle label='Can be crafted' value={!!item.crafting} onChange={setCraftable} />
 				{
 					item.crafting ?

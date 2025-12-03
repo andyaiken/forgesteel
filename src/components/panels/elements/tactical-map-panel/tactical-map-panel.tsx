@@ -21,15 +21,16 @@ import { MapTilePanel } from '@/components/panels/elements/tactical-map-panel/ma
 import { MapWallPanel } from '@/components/panels/elements/tactical-map-panel/map-wall/map-wall';
 import { MapWallVertexPanel } from '@/components/panels/elements/tactical-map-panel/map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from '@/components/panels/elements/tactical-map-panel/map-zone/map-zone';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Radial } from '@/components/controls/radial/radial';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
@@ -61,7 +62,7 @@ interface Props {
 	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
-	sourcebooks?: Sourcebook[];
+	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	updateMap?: (map: TacticalMap) => void;
 	updateHero?: (hero: Hero) => void;
@@ -575,7 +576,7 @@ export const TacticalMapPanel = (props: Props) => {
 					value={editMode}
 					onChange={changeEditMode}
 				/>
-				<Divider type='vertical' />
+				<Divider orientation='vertical' />
 				{
 					editMode === TacticalMapEditMode.Map ?
 						<Button disabled={map.items.length === 0} icon={<RotateRightOutlined />} onClick={rotateMap}>Rotate</Button>
@@ -595,7 +596,7 @@ export const TacticalMapPanel = (props: Props) => {
 				}
 				{
 					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) || (editMode === TacticalMapEditMode.Minis) ?
-						<Divider type='vertical' />
+						<Divider orientation='vertical' />
 						: null
 				}
 				{
@@ -949,7 +950,7 @@ export const TacticalMapPanel = (props: Props) => {
 									item.content.type === 'link' ?
 										<Popover
 											content={
-												<Space direction='vertical' style={{ width: '100%' }}>
+												<Space orientation='vertical' style={{ width: '100%' }}>
 													<Input
 														placeholder={item.content.isVideo ? 'URL of video' : 'URL of image'}
 														allowClear={true}
@@ -1083,7 +1084,7 @@ export const TacticalMapPanel = (props: Props) => {
 					}
 					<Popover
 						content={
-							<MultiLine
+							<MarkdownEditor
 								placeholder='Notes'
 								value={(item as MapTile | MapWall | MapZone | MapMini).notes}
 								onChange={setNotes}
@@ -1106,7 +1107,7 @@ export const TacticalMapPanel = (props: Props) => {
 						<div>
 							Select a square to place this mini
 						</div>
-						<Divider type='vertical' />
+						<Divider orientation='vertical' />
 						<Button icon={<CloseOutlined />} onClick={() => setSelectedMini(null)}>
 							Cancel
 						</Button>
@@ -1240,12 +1241,12 @@ export const TacticalMapPanel = (props: Props) => {
 						value={miniSource}
 						onChange={setMiniSource}
 					/>
-					<Divider type='vertical' />
+					<Divider orientation='vertical' />
 					{
 						tokens.length > 0 ?
 							<>
 								{tokens}
-								<Divider type='vertical' />
+								<Divider orientation='vertical' />
 								<Button onClick={scatterMinis}>Scatter</Button>
 							</>
 							:
@@ -1519,7 +1520,7 @@ export const TacticalMapPanel = (props: Props) => {
 		<ErrorBoundary>
 			{getTopToolbar()}
 			<div
-				id={map.id}
+				id={SheetFormatter.getPageId('tactical-map', map.id)}
 				className={'tactical-map-panel ' + props.display}
 				style={{ width: widthInPixels + 'px', height: heightInPixels + 'px' }}
 			>
@@ -1534,13 +1535,14 @@ export const TacticalMapPanel = (props: Props) => {
 				</div>
 			</div>
 			{getBottomToolbar()}
-			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
 				{
 					selectedMonster ?
 						<MonsterModal
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.encounter}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
@@ -1584,7 +1586,7 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} size={500}>
 				{
 					selectedHero ?
 						<HeroStateModal

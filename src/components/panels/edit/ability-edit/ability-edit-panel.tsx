@@ -12,7 +12,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -383,7 +383,7 @@ export const AbilityEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine value={ability.description} onChange={setDescription} />
+									<MarkdownEditor value={ability.description} onChange={setDescription} />
 								</div>
 							)
 						},
@@ -393,7 +393,7 @@ export const AbilityEditPanel = (props: Props) => {
 							children: (
 								<div>
 									<HeaderText>Type</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Select usage type'
@@ -450,15 +450,6 @@ export const AbilityEditPanel = (props: Props) => {
 										allowClear={true}
 										options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-										showSearch={true}
-										filterOption={(input, option) => {
-											const strings = option ?
-												[
-													option.value
-												]
-												: [];
-											return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-										}}
 										value={ability.keywords}
 										onChange={setKeywords}
 									/>
@@ -469,7 +460,7 @@ export const AbilityEditPanel = (props: Props) => {
 									>
 										Distance
 									</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											ability.distance.map((distance, n) => (
 												<Expander
@@ -481,7 +472,7 @@ export const AbilityEditPanel = (props: Props) => {
 														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
 													]}
 												>
-													<Space direction='vertical' style={{ width: '100%' }}>
+													<Space orientation='vertical' style={{ width: '100%' }}>
 														<HeaderText>Distance Type</HeaderText>
 														<Select
 															style={{ width: '100%' }}
@@ -612,7 +603,7 @@ export const AbilityEditPanel = (props: Props) => {
 									>
 										Sections
 									</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											ability.sections.map((section, n) => (
 												<Expander
@@ -626,15 +617,15 @@ export const AbilityEditPanel = (props: Props) => {
 												>
 													{
 														section.type === 'text' ?
-															<Space direction='vertical' style={{ width: '100%' }}>
+															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Text</HeaderText>
-																<MultiLine value={section.text} onChange={value => setTextSectionText(n, value)} />
+																<MarkdownEditor value={section.text} onChange={value => setTextSectionText(n, value)} />
 															</Space>
 															: null
 													}
 													{
 														section.type === 'field' ?
-															<Space direction='vertical' style={{ width: '100%' }}>
+															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Name</HeaderText>
 																<Input
 																	status={section.name === '' ? 'warning' : ''}
@@ -644,7 +635,7 @@ export const AbilityEditPanel = (props: Props) => {
 																	onChange={e => setFieldSectionName(n, e.target.value)}
 																/>
 																<HeaderText>Effect</HeaderText>
-																<MultiLine value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
+																<MarkdownEditor value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
 																<HeaderText>Cost</HeaderText>
 																<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
 																<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />
@@ -653,7 +644,7 @@ export const AbilityEditPanel = (props: Props) => {
 													}
 													{
 														section.type === 'roll' ?
-															<Space direction='vertical' style={{ width: '100%' }}>
+															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Characteristics / Bonus</HeaderText>
 																<Select
 																	style={{ width: '100%' }}
@@ -672,7 +663,7 @@ export const AbilityEditPanel = (props: Props) => {
 																		<Alert
 																			type='warning'
 																			showIcon={true}
-																			message='A roll must have either (a) at least one characteristic or (b) a set bonus.'
+																			title='A roll must have either (a) at least one characteristic or (b) a set bonus.'
 																		/>
 																		: null
 																}
@@ -703,7 +694,7 @@ export const AbilityEditPanel = (props: Props) => {
 													}
 													{
 														section.type === 'package' ?
-															<Space direction='vertical' style={{ width: '100%' }}>
+															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Tag</HeaderText>
 																<Input
 																	status={section.tag === '' ? 'warning' : ''}

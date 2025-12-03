@@ -1,6 +1,8 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
+import { CultureType } from '@/enums/culture-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -75,8 +77,6 @@ If the surface you are flattened against is destroyed, this ability ends and you
 							name: 'Reactive Tumble',
 							description: 'Staying light on your feet lets you quickly get back into position.',
 							type: FactoryLogic.type.createTrigger('Whenever you are force moved', { free: true }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You shift 1 square after the forced movement is resolved.')
 							]
@@ -105,5 +105,6 @@ If the surface you are flattened against is destroyed, this ability ends and you
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 4
+	ancestryPoints: 4,
+	culture: FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative, 'Khoursirian')
 };

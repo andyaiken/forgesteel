@@ -10,6 +10,7 @@ import { PerkList } from '@/enums/perk-list';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -18,6 +19,7 @@ import './perk-select-modal.scss';
 interface Props {
 	perks: Perk[];
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (perk: Perk) => void;
@@ -56,12 +58,12 @@ export const PerkSelectModal = (props: Props) => {
 							}
 
 							return (
-								<Space key={list} direction='vertical' style={{ width: '100%' }}>
+								<Space key={list} orientation='vertical' style={{ width: '100%' }}>
 									<HeaderText level={1}>{list}</HeaderText>
 									{
 										subset.map((p, n) => (
 											<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
-												<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+												<PerkPanel perk={p} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 											</SelectablePanel>
 										))
 									}

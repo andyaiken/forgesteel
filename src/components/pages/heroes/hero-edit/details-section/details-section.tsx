@@ -1,4 +1,4 @@
-import { Alert, AutoComplete, Button, Divider, Flex, Input, Upload } from 'antd';
+import { Alert, AutoComplete, Button, Divider, Flex, Input, Space, Upload } from 'antd';
 import { DownloadOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -37,14 +37,16 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 		<div className='hero-edit-content details-section'>
 			<div className='hero-edit-content-column single-column choices' id='details-main'>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={props.hero.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => props.setName(NameGenerator.generateName())} />}
-					value={props.hero.name}
-					onChange={e => props.setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={props.hero.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={props.hero.name}
+						onChange={e => props.setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => props.setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Portrait</HeaderText>
 				{
 					props.hero.picture ?
@@ -82,13 +84,11 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 					placeholder='Folder'
 					onSelect={value => props.setFolder(value)}
 					onChange={value => props.setFolder(value)}
-					showSearch={true}
-					filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
 				/>
 				<Alert
 					type='info'
 					showIcon={true}
-					message='You can add your hero to a folder to group it with other heroes.'
+					title='You can add your hero to a folder to group it with other heroes.'
 				/>
 				<Divider />
 				<Expander title='Language Choices'>

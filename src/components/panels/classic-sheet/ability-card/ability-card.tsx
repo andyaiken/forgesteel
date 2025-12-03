@@ -26,6 +26,31 @@ export const AbilityCard = (props: Props) => {
 		}
 	};
 
+	const getStatsSection = () => {
+		return (
+			<div className='stats'>
+				<div className='keywords-action-type'>
+					<div className='keywords'>{ability.keywords}</div>
+					<div className='action-type'>{ability.actionType}</div>
+				</div>
+				<div className='distance-target'>
+					<div className='distance'>
+						{ability.distance?.length ?
+							<img src={distanceIcon} alt='Distance' />
+							: undefined }
+						<span>{ability.distance}</span>
+					</div>
+					<div className='target'>
+						{ability.target?.length ?
+							<img src={targetIcon} alt='Target' />
+							: undefined }
+						<span>{ability.target}</span>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
 	const getPowerRollSection = () => {
 		if (ability.hasPowerRoll) {
 			return (
@@ -51,6 +76,17 @@ export const AbilityCard = (props: Props) => {
 							</span>
 						</div>
 					</div>
+					{
+						ability.rollBonuses ?
+							<div className='roll-bonuses'>
+								{ability.rollBonuses.map(bonus => (
+									<p key={bonus.name}>
+										<strong>{bonus.name}</strong>: {bonus.tier1} | {bonus.tier2} | {bonus.tier3} {bonus.type} damage
+									</p>
+								))}
+							</div>
+							: null
+					}
 				</div>
 			);
 		}
@@ -69,7 +105,7 @@ export const AbilityCard = (props: Props) => {
 			return (
 				<div className='effect'>
 					{
-						!ability.effect.startsWith('##') ?
+						!(ability.effect.startsWith('##') || ability.isNotTrueAbility) ?
 							<h4>Effect:</h4>
 							: null
 					}
@@ -101,24 +137,7 @@ export const AbilityCard = (props: Props) => {
 				{ability.description?.length ?
 					<p className='description'>{ability.description}</p>
 					: undefined }
-				<div className='stats'>
-					<div className='keywords-action-type'>
-						<div className='keywords'>{ability.keywords}</div>
-						<div className='action-type'>{ability.actionType}</div>
-					</div>
-					<div className='distance-target'>
-						<div className='distance'>
-							{ability.distance?.length ?
-								<img src={distanceIcon} alt='Distance' />
-								: undefined }
-							<span>{ability.distance}</span>
-						</div>
-						<div className='target'>
-							<img src={targetIcon} alt='Target' />
-							<span>{ability.target}</span>
-						</div>
-					</div>
-				</div>
+				{getStatsSection()}
 				{ability.qualifiers?.map((q, i) => {
 					return (<div className='action-qualifier' key={`qualifier-${i}`}>{q}</div>);
 				})}

@@ -1,4 +1,4 @@
-import { Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -6,7 +6,7 @@ import { Follower } from '@/models/follower';
 import { FollowerLogic } from '@/logic/follower-logic';
 import { FollowerType } from '@/enums/follower-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -42,18 +42,20 @@ export const FollowerEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={follower.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={follower.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={follower.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={follower.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={follower.description} onChange={setDescription} />
+				<MarkdownEditor value={follower.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -105,7 +107,7 @@ export const FollowerEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Type</HeaderText>
 				<Segmented
 					block={true}
@@ -135,16 +137,6 @@ export const FollowerEditPanel = (props: Props) => {
 					placeholder='Skills'
 					options={FollowerLogic.getSkillOptions(follower.type, props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={follower.skills}
 					onChange={setFollowerSkills}
 				/>
@@ -157,16 +149,6 @@ export const FollowerEditPanel = (props: Props) => {
 					placeholder='Languages'
 					options={FollowerLogic.getLanguageOptions(props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={follower.languages}
 					onChange={setFollowerLanguages}
 				/>

@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
@@ -29,7 +29,10 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 
 import './feature-panel.scss';
@@ -77,6 +80,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<AncestryPanel
 				ancestry={data.selected}
+				sourcebooks={props.sourcebooks || []}
 				options={props.options}
 			/>
 		);
@@ -107,7 +111,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationChoice = (data: FeatureChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+				<Space orientation='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
 					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 				</Space>
 			);
@@ -128,9 +132,13 @@ export const FeaturePanel = (props: Props) => {
 							`Choose ${data.count} of the following options:`
 					}
 				</div>
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
-				</Space>
+				{
+					data.options.map(o => (
+						<div key={o.feature.id} className='container'>
+							<FeaturePanel feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
+						</div>
+					))
+				}
 			</div>
 		);
 	};
@@ -139,7 +147,7 @@ export const FeaturePanel = (props: Props) => {
 		if ((data.selectedIDs.length > 0) && props.hero && props.hero.class) {
 			const abilities = props.hero.class.abilities.filter(a => a.cost === data.cost) || [];
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selectedIDs.map(id => {
 							const ability = abilities.find(a => a.id === id) as Ability;
@@ -152,10 +160,18 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		let className = '';
+		if (data.classID && props.sourcebooks) {
+			const heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === data.classID);
+			if (heroClass && heroClass.name) {
+				className = heroClass.name;
+			}
+		}
+
 		if (!props.feature.description) {
 			return (
 				<div className='ds-text'>
-					Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
+					Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}{className ? ` from the ${className}` : ''}.
 				</div>
 			);
 		}
@@ -167,12 +183,12 @@ export const FeaturePanel = (props: Props) => {
 		if (data.selected === null) {
 			return (
 				<div className='ds-text'>
-					Choose a {data.type}.
+					Choose a monster.
 				</div>
 			);
 		}
 
-		return <MonsterPanel monster={data.selected} options={props.options} />;
+		return <MonsterPanel monster={data.selected} sourcebooks={props.sourcebooks || []} options={props.options} />;
 	};
 
 	const getInformationConditionImmunity = (data: FeatureConditionImmunityData) => {
@@ -196,9 +212,9 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationDomain = (data: FeatureDomainData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(d => <DomainPanel key={d.id} domain={d} options={props.options} />)
+						data.selected.map(d => <DomainPanel key={d.id} domain={d} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -220,7 +236,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (!props.feature.description) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
 					}
@@ -281,9 +297,9 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationItemChoice = (data: FeatureItemChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(i => <ItemPanel key={i.id} item={i} options={props.options} />)
+						data.selected.map(i => <ItemPanel key={i.id} item={i} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -311,9 +327,9 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(k => <KitPanel key={k.id} kit={k} options={props.options} />)
+						data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -383,9 +399,13 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={props.mode} />)}
-				</Space>
+				{
+					data.features.map(f => (
+						<div key={f.id} className='container'>
+							<FeaturePanel feature={f} options={props.options} mode={props.mode} />
+						</div>
+					))
+				}
 			</div>
 		);
 	};
@@ -416,9 +436,9 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationPerk = (data: FeaturePerkData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} />)
+						data.selected.map(p => <PerkPanel key={p.id} perk={p} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -442,6 +462,18 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getInformationRetainer = (data: FeatureRetainerData) => {
+		if (data.selected === null) {
+			return (
+				<div className='ds-text'>
+					Choose a retainer.
+				</div>
+			);
+		}
+
+		return <MonsterPanel monster={data.selected} sourcebooks={props.sourcebooks || []} options={props.options} />;
+	};
+
 	const getInformationSaveThreshold = (data: FeatureSaveThresholdData) => {
 		if (!props.feature.description) {
 			return (
@@ -453,13 +485,9 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSize = (data: FeatureSizeData) => {
-		if (!props.feature.description) {
-			return (
-				<Field label='Size' value={FormatLogic.getSize(data.size)} />
-			);
-		}
-
-		return null;
+		return (
+			<Field label='Size' value={FormatLogic.getSize(data.size)} />
+		);
 	};
 
 	const getInformationSkillChoice = (data: FeatureSkillChoiceData) => {
@@ -489,20 +517,16 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSpeed = (data: FeatureSpeedData) => {
-		if (!props.feature.description) {
-			return (
-				<Field label='Speed' value={data.speed} />
-			);
-		}
-
-		return null;
+		return (
+			<Field label='Speed' value={data.speed} />
+		);
 	};
 
 	const getInformationSummon = (data: FeatureSummonData) => {
 		if (data.summons.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
@@ -513,8 +537,8 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationSummonChoice = (data: FeatureSummonChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
@@ -523,8 +547,8 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<>
 					<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 					</Space>
 				</>
 			);
@@ -542,7 +566,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationTaggedFeatureChoice = (data: FeatureTaggedFeatureChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
 					}
@@ -562,9 +586,9 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationTitleChoice = (data: FeatureTitleChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(t => <TitlePanel key={t.id} title={t} options={props.options} />)
+						data.selected.map(t => <TitlePanel key={t.id} title={t} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -635,6 +659,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationPerk(props.feature.data);
 			case FeatureType.Proficiency:
 				return getInformationProficiency(props.feature.data);
+			case FeatureType.Retainer:
+				return getInformationRetainer(props.feature.data);
 			case FeatureType.SaveThreshold:
 				return getInformationSaveThreshold(props.feature.data);
 			case FeatureType.Size:
@@ -663,13 +689,20 @@ export const FeaturePanel = (props: Props) => {
 	const getTags = () => {
 		const tags = [];
 
-		if (props.source) {
-			tags.push(props.source);
-		}
-
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
+			if (props.sourcebooks && (props.sourcebooks.length > 0)) {
+				const sourcebookType = SourcebookLogic.getPerkSourcebook(props.sourcebooks, props.feature as Perk)?.type || SourcebookType.Official;
+				if (sourcebookType !== SourcebookType.Official) {
+					tags.push(sourcebookType);
+				}
+			}
+
 			tags.push(list);
+		}
+
+		if (props.source) {
+			tags.push(props.source);
 		}
 
 		if (props.feature.type === FeatureType.AddOn) {
@@ -740,7 +773,7 @@ export const FeaturePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('feaure', props.feature.id) : undefined} style={props.style}>
 				<HeaderText
 					ribbon={
 						props.cost === 'signature' ?

@@ -14,9 +14,9 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -56,18 +56,20 @@ export const TerrainEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={terrain.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={terrain.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={terrain.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={terrain.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={terrain.description} onChange={setDescription} />
+				<MarkdownEditor value={terrain.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -155,21 +157,12 @@ export const TerrainEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Category</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					options={[ TerrainCategory.SupernaturalObject, TerrainCategory.Environmental, TerrainCategory.Fieldwork, TerrainCategory.Mechanism, TerrainCategory.PowerFixture, TerrainCategory.SiegeEngine ].map(c => ({ label: c, value: c }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={terrain.category}
 					onChange={setCategory}
 				/>
@@ -185,16 +178,6 @@ export const TerrainEditPanel = (props: Props) => {
 					style={{ width: '100%' }}
 					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(type => ({ label: type, value: type, desc: MonsterLogic.getRoleTypeDescription(type) }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={terrain.role.type}
 					onChange={setRoleType}
 				/>
@@ -202,15 +185,6 @@ export const TerrainEditPanel = (props: Props) => {
 					style={{ width: '100%' }}
 					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(type => ({ label: type, value: type }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={terrain.role.terrainType}
 					onChange={setTerrainRoleType}
 				/>
@@ -311,7 +285,7 @@ export const TerrainEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addDamageMod} />
@@ -344,15 +318,6 @@ export const TerrainEditPanel = (props: Props) => {
 								placeholder='Damage type'
 								options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
 								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.value
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
 								value={dm.damageType}
 								onChange={value => setDamageType(n, value)}
 							/>
@@ -436,7 +401,7 @@ export const TerrainEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
@@ -455,7 +420,7 @@ export const TerrainEditPanel = (props: Props) => {
 								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(sectionIndex); }} />
 							]}
 						>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									section.content.map((feature, contentIndex) => (
 										<Expander
@@ -610,7 +575,7 @@ export const TerrainEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addUpgrade} />
@@ -629,7 +594,7 @@ export const TerrainEditPanel = (props: Props) => {
 								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteUpgrade(upgradeIndex); }} />
 							]}
 						>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Label</HeaderText>
 								<Input
 									status={upgrade.label === '' ? 'warning' : ''}
@@ -639,7 +604,7 @@ export const TerrainEditPanel = (props: Props) => {
 									onChange={e => setUpgradeLabel(upgradeIndex, e.target.value)}
 								/>
 								<HeaderText>Text</HeaderText>
-								<MultiLine value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
+								<MarkdownEditor value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
 								<HeaderText>Cost</HeaderText>
 								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
 								<HeaderText
@@ -660,7 +625,7 @@ export const TerrainEditPanel = (props: Props) => {
 												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteUpgradeSection(upgradeIndex, sectionIndex); }} />
 											]}
 										>
-											<Space direction='vertical' style={{ width: '100%' }}>
+											<Space orientation='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
 														<Button type='text' icon={<PlusOutlined />} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)} />

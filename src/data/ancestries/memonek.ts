@@ -1,5 +1,7 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 
 export const memonek: Ancestry = {
@@ -60,8 +62,6 @@ export const memonek: Ancestry = {
 							name: 'Keeper of Order',
 							description: 'Your connection to Axiom, the plane of Uttermost Law, allows you to manage chaos around you.',
 							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', { free: true }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You can remove an edge or a bane on the roll, turn a double edge into an edge, or turn a double bane into a bane. You can only use this benefit once per round.')
 							]
@@ -91,5 +91,6 @@ export const memonek: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 4
+	ancestryPoints: 4,
+	culture: FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic, 'Axiomatic')
 };

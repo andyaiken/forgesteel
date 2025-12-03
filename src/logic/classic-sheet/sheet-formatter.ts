@@ -33,7 +33,7 @@ import triggerIcon from '@/assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
 	// #region Text & Feature Manipulation
-	static getPageId = (kind: string, id: string, key: string) => {
+	static getPageId = (kind: string, id: string, key: string = 'main') => {
 		return `${kind}-${id}-page-${key}`;
 	};
 
@@ -121,7 +121,8 @@ export class SheetFormatter {
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
 			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
-			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`);
+			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`)
+			.replace(/[`]/g, '');
 		return text;
 	};
 
@@ -643,7 +644,7 @@ export class SheetFormatter {
 			size += this.countLines(`Languages: ${follower.languages?.join(', ')}`, lineWidth);
 			size += 0.5;
 		} else {
-			size = 22; // name, stats, characteristics, stamina
+			size = 21.5; // name, stats, characteristics, stamina
 			follower.abilities?.forEach(ability => {
 				size += this.calculateAbilityComponentSize(ability, lineWidth) + 1;
 			});
@@ -667,7 +668,7 @@ export class SheetFormatter {
 
 	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number): number => {
 		let size = 0;
-		size = 12; // name, stats, characteristics
+		size = 12.5; // name, stats, characteristics
 		monster.abilities?.forEach(ability => {
 			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
 		});
@@ -675,7 +676,7 @@ export class SheetFormatter {
 			size += this.calculateFeatureSize(f, null, lineWidth, false);
 		});
 		// ability/feature dividers
-		size += 0.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
 		return size;
 	};
 
@@ -689,7 +690,7 @@ export class SheetFormatter {
 
 	// COMPACT Ability display - e.g. for Retainers & Monsters
 	static calculateAbilityComponentSize = (ability: AbilitySheet, lineWidth: number): number => {
-		let size = 2; // name, usage
+		let size = 1.5; // name, usage
 		size += this.countLines(`${ability.keywords} ${ability.actionType}`, lineWidth);
 		size += this.countLines(`${ability.distance} ${ability.target}`, lineWidth);
 
@@ -702,6 +703,9 @@ export class SheetFormatter {
 			size += this.countLines(ability.trigger, lineWidth);
 
 		if (ability.effect) {
+			if (ability.hasPowerRoll) {
+				size += 0.5; // extra padding when effect follows power roll
+			}
 			const effectSize = this.countLines(ability.effect, lineWidth);
 			size += effectSize;
 		}
@@ -722,13 +726,13 @@ export class SheetFormatter {
 
 	static calculateProjectComponentSize = (project: ProjectSheet, lineWidth: number): number => {
 		let size = 0;
+		size += this.countLines(project.description, lineWidth, 0);
 		size += this.countLines(`Item Prerequisite ${project.prerequisites}`, lineWidth);
 		size += 1.8; // Prerequisites box
 		size += this.countLines(`Project Source ${project.source}`, lineWidth);
 		size += 1.8; // Source box
 		size += this.countLines(`Project Roll Characteristic ${project.characteristic}`, lineWidth);
 		size += 1; // points goal
-		size += this.countLines(project.effect, lineWidth, 0);
 		return size;
 	};
 
@@ -749,7 +753,7 @@ export class SheetFormatter {
 		if (ability) {
 			size += 4; // title
 			size += this.countLines(ability.description, lineWidth);
-			size += 2.5; // keywords, distance, etc
+			size += ability.isNotTrueAbility ? 1 : 2.5; // keywords, distance, etc
 			size += ability.hasPowerRoll ? 2 : 0;
 			if (ability.hasPowerRoll) {
 				size += 0.3 + this.countLines(ability.rollT1Effect, rollLineLen);
@@ -763,7 +767,7 @@ export class SheetFormatter {
 					size += 0.5; // extra padding when effect follows power roll
 				}
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				size += 2 + effectSize;
+				size += (ability.isNotTrueAbility ? 0 : 1.5) + effectSize;
 			}
 		}
 		return size;

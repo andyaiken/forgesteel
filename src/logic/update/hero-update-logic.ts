@@ -13,6 +13,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
@@ -34,6 +35,8 @@ export class HeroUpdateLogic {
 		if (hero.settingIDs === undefined) {
 			hero.settingIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
 		}
+
+		hero.settingIDs = hero.settingIDs.map(id => id === '' ? SourcebookData.core.id : id);
 
 		if (hero.ancestry) {
 			hero.ancestry.features
@@ -257,7 +260,7 @@ export class HeroUpdateLogic {
 		try {
 			if (original.culture) {
 				const id = original.culture.id;
-				const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
+				const culture = SourcebookLogic.getCultures(sourcebooks, true).find(c => c.id === id);
 				if (culture) {
 					hero.culture = Utils.copy(culture);
 				}
@@ -318,6 +321,22 @@ export class HeroUpdateLogic {
 				if (complication) {
 					hero.complication = Utils.copy(complication);
 				}
+			}
+		} catch (ex) {
+			console.error(ex);
+		}
+
+		try {
+			if (hero.state.inventory) {
+				hero.state.inventory = hero.state.inventory.map(origItem => {
+					const id = origItem.id;
+					const item = SourcebookLogic.getItems(sourcebooks).find(itm => itm.id === id);
+					if (item) {
+						return Utils.copy(item);
+					} else {
+						return origItem;
+					}
+				});
 			}
 		} catch (ex) {
 			console.error(ex);
@@ -547,13 +566,15 @@ export class HeroUpdateLogic {
 				case FeatureType.TitleChoice: {
 					const oFeature = originalFeature as FeatureTitleChoice;
 
-					const selectedIDs = oFeature.data.selected.map(p => p.id);
-					feature.data.selected = SourcebookLogic.getTitles(sourcebooks)
-						.filter(t => selectedIDs.includes(t.id))
-						.map(t => Utils.copy(t));
-					feature.data.selected.forEach(title => {
-						const originalTitle = oFeature.data.selected.find(t => t.id === title.id);
-						title.selectedFeatureID = originalTitle ? originalTitle.selectedFeatureID : '';
+					feature.data.selected = oFeature.data.selected.map(oTitle => {
+						const title = SourcebookLogic.getTitles(sourcebooks).find(t => t.id === oTitle.id);
+						if (title) {
+							const copy = Utils.copy(title);
+							copy.selectedFeatureID = oTitle.selectedFeatureID;
+							return copy;
+						}
+
+						return oTitle;
 					});
 					break;
 				}

@@ -1,0 +1,24 @@
+.backup-page {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.backup-page-content {
+		height: 100%;
+		background-color: rgb(230, 230, 230);
+		padding: 50px;
+		display: flex;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		gap: 10px;
+		overflow-y: auto;
+	}
+}
+
+html[data-theme="dark"] {
+	.backup-page {
+		.backup-page-content {
+			background-color: rgb(55, 55, 55);
+		}
+	}
+}

@@ -1,11 +1,11 @@
 import { Negotiation } from '@/models/negotiation';
-import { NegotiationArgumentsCard } from './negotiation-arguments-card';
-import { NegotiationHeaderCard } from './negotiation-header';
-import { NegotiationNpcCard } from './negotiation-npc-card';
-import { NegotiationResponsesCard } from './negotiation-responses-card';
+import { NegotiationArgumentsCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-arguments-card';
+import { NegotiationHeaderCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-header';
+import { NegotiationNpcCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-npc-card';
+import { NegotiationResponsesCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-responses-card';
 import { NegotiationSheetBuilder } from '@/logic/playbook-sheets/negotiation-sheet-builder';
 import { Options } from '@/models/options';
-import { PatienceInterestCard } from './patience-interest-card';
+import { PatienceInterestCard } from '@/components/panels/classic-sheet/negotiation-sheet/patience-interest-card';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
 
@@ -39,7 +39,7 @@ export const NegotiationSheetPage = (props: Props) => {
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id, 'main')}>
+				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id)}>
 					<NegotiationHeaderCard negotiation={negotiation} />
 					<PatienceInterestCard negotiation={negotiation} />
 					<NegotiationNpcCard negotiation={negotiation} />

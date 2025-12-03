@@ -92,7 +92,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Dragon', 'Elemental' ],
-			encounterValue: 40,
+			encounterValue: 48,
 			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(8, 'fly'),
 			stamina: 250,
@@ -194,12 +194,12 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-10',
 						name: 'Thorny Scales',
-						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the dragon with a melee strike.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the dragon with a melee strike.', { free: true }),
 						cost: 1,
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The dragon makes a free strike against the target, and if the target has m<2], they are bleeding until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The dragon makes a free strike against the target, and if the target has M<2, they are bleeding until the end of their next turn.')
 						]
 					})
 				}),

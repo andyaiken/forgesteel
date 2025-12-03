@@ -1,10 +1,10 @@
 import { Button, Flex } from 'antd';
 import { LoginOutlined, LogoutOutlined, PartitionOutlined } from '@ant-design/icons';
 import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { PlaybookLogic } from '@/logic/playbook-logic';
 import { Plot } from '@/models/plot';
 import { ReactNode } from 'react';
 
@@ -12,6 +12,7 @@ import './plot-graph-panel.scss';
 
 interface Props {
 	label: string;
+	tags: string[];
 	plot: Plot;
 	adventure: Adventure;
 	selectedPlot?: Plot;
@@ -59,7 +60,7 @@ export const PlotGraphPanel = (props: Props) => {
 		return rows;
 	};
 
-	const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, props.plot.id);
+	const parentPlot = AdventureLogic.getPlotPointParent(props.adventure.plot, props.plot.id);
 
 	const rowHeight = 80;
 
@@ -172,6 +173,7 @@ export const PlotGraphPanel = (props: Props) => {
 					<HeaderText
 						level={1}
 						style={{ margin: '0' }}
+						tags={props.tags}
 						extra={
 							<Flex gap={5}>
 								{canGoOut ? <Button type='text' icon={<LogoutOutlined rotate={210} />} onClick={() => openPlotPoint(parentPlot)} /> : null}

@@ -62,7 +62,7 @@ export const SkillSelectModal = (props: Props) => {
 							}
 
 							return (
-								<Space key={list} direction='vertical' style={{ width: '100%' }}>
+								<Space key={list} orientation='vertical' style={{ width: '100%' }}>
 									<HeaderText level={1}>{list}</HeaderText>
 									{
 										subset.map((s, n) => (
@@ -81,7 +81,7 @@ export const SkillSelectModal = (props: Props) => {
 							<>
 								<Divider />
 								<Expander title='Other skills'>
-									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											otherSkills.map((s, n) => (
 												<SelectablePanel key={n} onSelect={() => props.onSelect(s)}>
@@ -97,7 +97,7 @@ export const SkillSelectModal = (props: Props) => {
 					}
 					<Divider />
 					<Expander title='Add a custom skill'>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Custom Skill</HeaderText>
 							<Input
 								placeholder='Custom Skill Name'

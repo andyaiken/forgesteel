@@ -1,12 +1,11 @@
 import { ConditionEndType, ConditionType } from '@/enums/condition-type';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Segmented, Space } from 'antd';
 import { Condition } from '@/models/condition';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
-import { Markdown } from '@/components/controls/markdown/markdown';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -42,10 +41,10 @@ export const ConditionPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='condition-panel'>
-				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
+				<Space orientation='vertical' style={{ width: '100%', margin: '5px 0' }}>
 					{
 						condition.type === ConditionType.Custom ?
-							<MultiLine placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+							<MarkdownEditor placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
 							: null
 					}
 					{

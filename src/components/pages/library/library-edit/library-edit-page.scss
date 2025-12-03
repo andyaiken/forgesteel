@@ -23,6 +23,14 @@
 			.edit-header-section {
 				padding: 10px 0 0 0;
 			}
+
+			.adventure-container {
+				overflow-y: hidden;
+			}
+
+			.tactical-map-container {
+				overflow: auto;
+			}
 		}
 
 		.preview-column {
@@ -45,12 +53,6 @@ html[data-theme="dark"] {
 	.library-edit-page {
 		.library-edit-page-content {
 			background-color: rgb(55, 55, 55);
-
-			.edit-column {
-				.random-btn {
-					color: rgba(255, 255, 255, 0.88);
-				}
-			}
 		}
 	}
 }

@@ -2,6 +2,9 @@ import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ancestry } from '@/models/ancestry';
 import { Collections } from '@/utils/collections';
+import { Culture } from '@/models/culture';
+import { CultureEditPanel } from '@/components/panels/edit/culture-edit/culture-edit-panel';
+import { CultureType } from '@/enums/culture-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -11,11 +14,12 @@ import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -47,18 +51,20 @@ export const AncestryEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={ancestry.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={ancestry.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact style={{ width: '100%' }}>
+					<Input
+						status={ancestry.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={ancestry.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={ancestry.description} onChange={setDescription} />
+				<MarkdownEditor value={ancestry.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -101,7 +107,7 @@ export const AncestryEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
@@ -148,9 +154,37 @@ export const AncestryEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Ancestry Points</HeaderText>
 				<NumberSpin min={1} value={ancestry.ancestryPoints} onChange={setPoints} />
+			</Space>
+		);
+	};
+
+	const getCultureEditSection = () => {
+		const setHasCulture = (value: boolean) => {
+			const copy = Utils.copy(ancestry);
+			copy.culture = value ? FactoryLogic.createCulture(ancestry.name, '', CultureType.Ancestral) : undefined;
+			setAncestry(copy);
+			props.onChange(copy);
+		};
+
+		const setCulture = (value: Culture) => {
+			const copy = Utils.copy(ancestry);
+			copy.culture = value;
+			setAncestry(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<HeaderText>Culture</HeaderText>
+				<Toggle label='Include a culture' value={!!ancestry.culture} onChange={setHasCulture} />
+				{
+					ancestry.culture ?
+						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} onChange={setCulture} />
+						: null
+				}
 			</Space>
 		);
 	};
@@ -174,6 +208,11 @@ export const AncestryEditPanel = (props: Props) => {
 							key: '3',
 							label: 'Ancestry Points',
 							children: getAncestryPointsEditSection()
+						},
+						{
+							key: '4',
+							label: 'Culture',
+							children: getCultureEditSection()
 						}
 					]}
 				/>

@@ -1,5 +1,7 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 
@@ -73,5 +75,6 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Dwarf', 'Secluded, bureaucratic, creative.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.creative, 'Zaliac')
 };

@@ -1,7 +1,9 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { CultureType } from '@/enums/culture-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -224,10 +226,20 @@ As a maneuver, you can recite the following oath. Until the start of your next t
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'dragon-knight-feature-2-11',
 						name: 'Wings',
-						description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone. While using your wings to fly at 1st, 2nd, and 3rd level, you have damage weakness 5.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'dragon-knight-feature-2-11a',
+								name: 'Wings',
+								description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone. While using your wings to fly at 1st, 2nd, and 3rd level, you have damage weakness 5.'
+							}),
+							FactoryLogic.feature.createMovementMode({
+								id: 'dragon-knight-feature-2-11b',
+								mode: 'Fly'
+							})
+						]
 					}),
 					value: 2
 				}
@@ -235,5 +247,6 @@ As a maneuver, you can recite the following oath. Until the start of your next t
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial, 'Vastariax')
 };

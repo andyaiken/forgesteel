@@ -13,6 +13,7 @@ import { AttitudeType } from '@/enums/attitude-type';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
 import { DamageType } from '@/enums/damage-type';
@@ -40,7 +41,7 @@ import { KitWeapon } from '@/enums/kit-weapon';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterRole } from '@/models/monster-roll';
+import { MonsterRole } from '@/models/monster-role';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterState } from '@/models/monster-state';
 import { Negotiation } from '@/models/negotiation';
@@ -52,6 +53,7 @@ import { Playbook } from '@/models/playbook';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
 import { RetainerLogic } from '@/logic/retainer-logic';
+import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
@@ -61,6 +63,7 @@ import { SubClass } from '@/models/subclass';
 import { Summon } from '@/models/summon';
 import { TerrainCategory } from '@/enums/terrain-category';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Tip } from '@/models/tip';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
@@ -126,23 +129,28 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			type: SourcebookType.Homebrew,
+			adventures: [],
 			ancestries: [],
-			cultures: [],
 			careers: [],
 			classes: [],
-			subclasses: [],
-			domains: [],
-			kits: [],
 			complications: [],
-			perks: [],
-			titles: [],
-			items: [],
+			cultures: [],
+			domains: [],
+			encounters: [],
 			imbuements: [],
+			items: [],
+			kits: [],
 			monsterGroups: [],
-			skills: [],
-			languages: [],
+			montages: [],
+			negotiations: [],
+			perks: [],
 			projects: [],
-			terrain: []
+			subclasses: [],
+			tacticalMaps: [],
+			terrain: [],
+			titles: [],
+			skills: [],
+			languages: []
 		};
 	};
 
@@ -152,8 +160,17 @@ export class FactoryLogic {
 			encounters: [],
 			montages: [],
 			negotiations: [],
-			tacticalMaps: [],
+			tacticalMaps: []
+		};
+	};
+
+	static createSession = (): Session => {
+		return {
 			counters: [],
+			encounters: [],
+			montages: [],
+			negotiations: [],
+			tacticalMaps: [],
 			playerViewID: null
 		};
 	};
@@ -440,7 +457,6 @@ export class FactoryLogic {
 		source?: string,
 		characteristic?: Characteristic[],
 		goal?: number,
-		effect?: string,
 		isCustom?: boolean
 	}): Project => {
 		return {
@@ -451,7 +467,6 @@ export class FactoryLogic {
 			source: data.source || '',
 			characteristic: data.characteristic || [ Characteristic.Reason ],
 			goal: data.goal || 0,
-			effect: data.effect || '',
 			isCustom: data.isCustom ?? false,
 			progress: null
 		};
@@ -1003,8 +1018,20 @@ export class FactoryLogic {
 		};
 	};
 
+	static createTip = (data: { content: string, image: string, isNew?: boolean }): Tip => {
+		return {
+			content: data.content,
+			image: data.image,
+			isNew: data.isNew || false
+		};
+	};
+
 	static createOptions = (): Options => {
 		return {
+			// Hero
+			shownStandardAbilities: [],
+			xpPerLevel: 16,
+			// Hero: Modern Sheet
 			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: true,
@@ -1012,8 +1039,7 @@ export class FactoryLogic {
 			showSources: true,
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,
-			shownStandardAbilities: [],
-			// Classic Sheet
+			// Hero: Classic Sheet
 			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
@@ -1021,26 +1047,31 @@ export class FactoryLogic {
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',
-			// Library
-			showInteractivePanels: true,
-			showMonsterGroups: true,
 			// Monster Builder
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
 			// Encounter
-			minionCount: 4,
 			party: '',
-			// Encounter Difficulty
+			// Encounter: Running
+			showDefeatedCombatants: false,
+			// Encounter / Montage Difficulty
 			heroParty: '',
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
-			showDefeatedCombatants: false,
 			// Tactical Map
 			gridSize: 50,
 			playerGridSize: 50
+		};
+	};
+
+	static createConnectionSettings = (): ConnectionSettings => {
+		return {
+			useWarehouse: false,
+			warehouseHost: '',
+			warehouseToken: ''
 		};
 	};
 

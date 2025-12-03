@@ -67,7 +67,6 @@
 		.hero-edit-content {
 			flex: 1 1 0;
 			display: flex;
-			gap: 20px;
 			overflow: hidden;
 
 			.hero-edit-content-column {
@@ -116,27 +115,6 @@
 					background-color: rgb(245, 245, 245);
 					border-radius: 10px;
 				}
-
-				.characteristic-row {
-					display: flex;
-					gap: 10px;
-
-					.characteristic-item {
-						flex: 1 1 0;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-
-						&.characteristic-heading {
-							margin-top: 10px;
-							font-size: 16px;
-						}
-					}
-				}
-
-				.random-btn {
-					color: rgba(0, 0, 0, 0.88);
-				}
 			}
 		}
 	}
@@ -151,14 +129,6 @@ html[data-theme="dark"] {
 				.hero-edit-content-column {
 					&.choices {
 						background-color: rgb(10, 10, 10);
-					}
-
-					.characteristic-heading {
-						color: rgba(255, 255, 255, 0.88);
-					}
-
-					.random-btn {
-						color: rgba(255, 255, 255, 0.88);
 					}
 				}
 			}

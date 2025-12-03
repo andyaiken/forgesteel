@@ -1,4 +1,4 @@
-import { Alert, Drawer, Flex, Tag } from 'antd';
+import { Alert, Drawer } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -24,6 +24,10 @@ import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SummoningInfo } from '@/models/summon';
 
@@ -33,6 +37,7 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	summon?: SummoningInfo;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	mode?: PanelMode;
 	style?: CSSProperties;
@@ -57,47 +62,51 @@ export const MonsterPanel = (props: Props) => {
 	const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 	const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
+	const tags = [];
+	if (props.summon && props.summon.isSignature) {
+		tags.push('Signature');
+	}
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getMonsterSourcebook(props.sourcebooks, props.monster)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
+	let rightOfTags = null;
+	if (props.summon) {
+		if (props.summon.cost > 0) {
+			rightOfTags = (
+				<div className='ds-text'>
+					{`${props.summon.cost} essence ${props.summon.count === 1 ? 'per minion summoned' : `for ${props.summon.count} minions`}`}
+				</div>
+			);
+		}
+	} else {
+		if (props.monster.role.organization === MonsterOrganizationType.Minion) {
+			rightOfTags = (
+				<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+			);
+		} else if (props.monster.encounterValue > 0) {
+			rightOfTags = (
+				<Field label='EV' value={props.monster.encounterValue} />
+			);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'monster-panel' : 'monster-panel compact'} id={props.mode === PanelMode.Full ? props.monster.id : undefined} style={props.style}>
+			<div className={props.mode === PanelMode.Full ? 'monster-panel' : 'monster-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('monster', props.monster.id) : undefined} style={props.style}>
 				<HeaderText
 					level={1}
 					ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}
-					tags={props.summon && props.summon.isSignature ? [ 'Signature' ] : []}
+					tags={tags}
 					extra={props.extra}
 				>
 					{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
 				</HeaderText>
-				<MonsterLabel monster={props.monster} />
+				<MonsterLabel monster={props.monster} extra={rightOfTags} />
 				<Markdown text={props.monster.description} />
-				<Flex align='center' justify='space-between'>
-					<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-					{
-						!props.summon ?
-							<Field
-								label='EV'
-								value={
-									props.monster.role.organization === MonsterOrganizationType.Minion ?
-										`${props.monster.encounterValue} for ${props.options.minionCount} minions`
-										:
-										((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
-								}
-							/>
-							: null
-					}
-					{
-						props.summon && (props.summon.cost > 0) ?
-							<div className='ds-text'>
-								{
-									props.summon.count === 1 ?
-										`${props.summon.cost} essence per minion summoned`
-										:
-										`${props.summon.cost} essence for ${props.summon.count} minions`
-								}
-							</div>
-							: null
-					}
-				</Flex>
 				{
 					props.mode === PanelMode.Full ?
 						<>
@@ -113,7 +122,7 @@ export const MonsterPanel = (props: Props) => {
 									<Alert
 										type='warning'
 										showIcon={true}
-										message={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is ${MonsterLogic.getCombatState(props.monster)}.`}
+										title={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is ${MonsterLogic.getCombatState(props.monster)}.`}
 									/>
 									: null
 							}
@@ -218,7 +227,7 @@ export const MonsterPanel = (props: Props) => {
 						</>
 						: null
 				}
-				<Drawer open={selectedAbility !== null} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
+				<Drawer open={selectedAbility !== null} onClose={() => setSelectedAbility(null)} closeIcon={null} size={500}>
 					{
 						selectedAbility ?
 							<AbilityModal

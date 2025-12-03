@@ -1,6 +1,9 @@
-import { Button, Drawer, Flex, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Flex, Select, Slider, Space, Tabs } from 'antd';
 import { CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
+import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { Adventure } from '@/models/adventure';
+import { AdventureEditPanel } from '@/components/panels/edit/adventure-edit/adventure-edit-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
@@ -9,6 +12,7 @@ import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { CareerEditPanel } from '@/components/panels/edit/career-edit/career-edit-panel';
 import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
+import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ClassEditPanel } from '@/components/panels/edit/class-edit/class-edit-panel';
 import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
 import { Collections } from '@/utils/collections';
@@ -23,6 +27,8 @@ import { DomainEditPanel } from '@/components/panels/edit/domain-edit/domain-edi
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
+import { Encounter } from '@/models/encounter';
+import { EncounterEditPanel } from '@/components/panels/edit/encounter-edit/encounter-edit-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -48,6 +54,12 @@ import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-pa
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
+import { Montage } from '@/models/montage';
+import { MontageEditPanel } from '@/components/panels/edit/montage-edit/montage-edit-panel';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -57,9 +69,13 @@ import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { SubClassEditPanel } from '@/components/panels/edit/subclass-edit/subclass-edit-panel';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Terrain } from '@/models/terrain';
 import { TerrainEditPanel } from '@/components/panels/edit/terrain-edit/terrain-edit-panel';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
@@ -69,7 +85,6 @@ import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
-import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
 
 import './library-edit-page.scss';
@@ -84,6 +99,7 @@ interface Props {
 	showAbout: () => void;
 	showSettings: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
+	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
@@ -94,6 +110,9 @@ export const LibraryEditPage = (props: Props) => {
 		const sourcebook = props.sourcebooks.find(s => s.id === sourcebookID)!;
 		let original: Element;
 		switch (kind!) {
+			case 'adventure':
+				original = sourcebook.adventures.find(e => e.id === elementID)!;
+				break;
 			case 'ancestry':
 				original = sourcebook.ancestries.find(e => e.id === elementID)!;
 				break;
@@ -112,6 +131,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'domain':
 				original = sourcebook.domains.find(e => e.id === elementID)!;
 				break;
+			case 'encounter':
+				original = sourcebook.encounters.find(e => e.id === elementID)!;
+				break;
 			case 'item':
 				original = sourcebook.items.find(e => e.id === elementID)!;
 				break;
@@ -124,6 +146,12 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				original = sourcebook.monsterGroups.find(e => e.id === elementID)!;
 				break;
+			case 'montage':
+				original = sourcebook.montages.find(e => e.id === elementID)!;
+				break;
+			case 'negotiation':
+				original = sourcebook.negotiations.find(e => e.id === elementID)!;
+				break;
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
 				break;
@@ -132,6 +160,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'subclass':
 				original = sourcebook.subclasses.find(e => e.id === elementID)!;
+				break;
+			case 'tactical-map':
+				original = sourcebook.tacticalMaps.find(e => e.id === elementID)!;
 				break;
 			case 'terrain':
 				original = sourcebook.terrain.find(e => e.id === elementID)!;
@@ -159,11 +190,9 @@ export const LibraryEditPage = (props: Props) => {
 			if (subElementID) {
 				return 'Monster Builder';
 			}
-
-			return 'Monster Group Builder';
 		}
 
-		return `${Format.capitalize(kind!)} Builder`;
+		return `${Format.capitalize(kind!.split('-').join(' '))} Builder`;
 	};
 
 	useTitle(getSubheader());
@@ -187,7 +216,121 @@ export const LibraryEditPage = (props: Props) => {
 		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
 	};
 
-	const getSuggestedStatsSection = (monster: Monster) => {
+	const getKitTuningSection = (kit: Kit) => {
+		const powerA: { name: string, value: number }[] = [];
+		const powerB: { name: string, value: number }[] = [];
+
+		powerA.push({ name: 'Stamina', value: Math.floor(kit.stamina / 3) });
+
+		powerA.push({ name: 'Disengage', value: kit.disengage });
+
+		powerA.push({ name: 'Speed', value: kit.speed > 0 ? 1 + kit.speed : 0 });
+
+		powerA.push({ name: 'Stability', value: kit.stability > 0 ? 1 + kit.stability : 0 });
+
+		powerB.push({ name: 'Melee Distance', value: 2 * kit.meleeDistance });
+
+		const minMeleeDamage = kit.meleeDamage ? Math.min(kit.meleeDamage.tier1, kit.meleeDamage.tier2, kit.meleeDamage.tier3) : 0;
+		let powerMeleeDamage = minMeleeDamage;
+		if (kit.meleeDamage && (kit.meleeDamage.tier3 - minMeleeDamage >= 4)) {
+			powerMeleeDamage += 2;
+		}
+		powerB.push({ name: 'Melee Damage', value: powerMeleeDamage });
+
+		let powerRange = 0;
+		if (kit.rangedDistance >= 5) {
+			powerRange += 1;
+		}
+		if (kit.rangedDistance >= 7) {
+			powerRange += 1;
+		}
+		if (kit.rangedDistance >= 10) {
+			powerRange += 1;
+		}
+		powerB.push({ name: 'Ranged Distance', value: powerRange });
+
+		const minRangedDamage = kit.rangedDamage ? Math.min(kit.rangedDamage.tier1, kit.rangedDamage.tier2, kit.rangedDamage.tier3) : 0;
+		let powerRangedDamage = minRangedDamage;
+		if (kit.rangedDamage && (kit.rangedDamage.tier3 - minRangedDamage >= 4)) {
+			powerRangedDamage += 2;
+		}
+		powerB.push({ name: 'Ranged Damage', value: powerRangedDamage });
+
+		const power = Collections.sum([ ...powerA, ...powerB ], p => p.value);
+
+		const constraints: { name: string, value: boolean }[] = [];
+		const gear: { name: string, value: boolean }[] = [];
+
+		constraints.push({ name: 'Kit power value = 8', value: power === 8 });
+		constraints.push({ name: 'Stamina max +12', value: kit.stamina <= 12 });
+		constraints.push({ name: 'Ranged distance max +10', value: kit.rangedDistance <= 10 });
+		constraints.push({ name: 'Disengage max +1', value: kit.disengage <= 1 });
+		constraints.push({ name: 'Speed max +3', value: kit.speed <= 3 });
+		constraints.push({ name: 'Stability max +3', value: kit.stability <= 3 });
+		constraints.push({ name: 'Has disengage OR stability', value: ((kit.disengage > 0) && (kit.stability === 0)) || ((kit.disengage === 0) && (kit.stability < 0)) });
+
+		gear.push({ name: 'Light Armor', value: kit.stamina >= 3 });
+		gear.push({ name: 'Light Armor + Shield', value: kit.stamina >= 6 });
+		gear.push({ name: 'Medium Armor', value: kit.stamina >= 6 });
+		gear.push({ name: 'Medium Armor + Shield', value: kit.stamina >= 9 });
+		gear.push({ name: 'Heavy Armor', value: (kit.stamina >= 9) && (kit.stability >= 1) });
+		gear.push({ name: 'Heavy Armor + Shield', value: (kit.stamina >= 12) && (kit.stability >= 1) });
+		gear.push({ name: 'Light Weapon (melee)', value: minMeleeDamage >= 1 });
+		gear.push({ name: 'Medium Weapon (melee)', value: minMeleeDamage >= 2 });
+		gear.push({ name: 'Heavy Weapon (melee)', value: !!kit.meleeDamage && (kit.meleeDamage.tier3 >= 4) });
+		gear.push({ name: 'Light Weapon (ranged)', value: minRangedDamage >= 1 });
+		gear.push({ name: 'Medium Weapon (ranged)', value: minRangedDamage >= 2 });
+		gear.push({ name: 'Heavy Weapon (ranged)', value: !!kit.rangedDamage && (kit.rangedDamage.tier3 >= 4) });
+
+		const marks: Record<string | number, ReactNode> = {};
+		marks[8] = <div className='ds-text dimmed-text small-text'>Target: 8</div>;
+
+		return (
+			<div>
+				<HeaderText>Power</HeaderText>
+				<Slider
+					range={true}
+					marks={marks}
+					min={0}
+					max={16}
+					value={[ power ]}
+					styles={{
+						track: {
+							background: 'transparent'
+						}
+					}}
+					tooltip={{ open: false }}
+				/>
+				<div className='ds-text'>
+					The power level of a kit should be <b>8</b>. The calculation takes a number of kit statistics into account, listed below.
+				</div>
+				<StatsRow>
+					{powerA.map((p, n) => <Field key={n} orientation='vertical' label={p.name} value={p.value} />)}
+				</StatsRow>
+				<StatsRow>
+					{powerB.map((p, n) => <Field key={n} orientation='vertical' label={p.name} value={p.value} />)}
+				</StatsRow>
+				<HeaderText>Constraints</HeaderText>
+				{
+					constraints.map((c, n) => (
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
+							<div style={{ fontWeight: c.value ? '400' : '600', opacity: c.value ? '0.5' : '1' }}>{c.name}</div>
+						</CheckLabel>
+					))
+				}
+				<HeaderText>Suggested Proficiencies</HeaderText>
+				{
+					gear.map((c, n) => (
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
+							<div style={{ fontWeight: c.value ? '600' : '400', opacity: c.value ? '1' : '0.5' }}>{c.name}</div>
+						</CheckLabel>
+					))
+				}
+			</div>
+		);
+	};
+
+	const getMonsterStatsSection = (monster: Monster) => {
 		const stats = MonsterLogic.getSuggestedStats(monster);
 
 		return (
@@ -211,18 +354,18 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
-		const monsters = getSimilarMonsters(monster);
+		const similarMonsters = getSimilarMonsters(monster);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Expander title='Modify This List'>
-					<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+					<Space orientation='vertical' style={{ paddingTop: '15px', width: '100%' }}>
 						<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
 						<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
 					</Space>
 				</Expander>
 				{
-					monsters.map(m => {
+					similarMonsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
 						if (!monsterGroup) {
 							return null;
@@ -250,6 +393,7 @@ export const LibraryEditPage = (props: Props) => {
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
+									sourcebooks={props.sourcebooks}
 									options={props.options}
 								/>
 							</SelectablePanel>
@@ -257,13 +401,14 @@ export const LibraryEditPage = (props: Props) => {
 					})
 				}
 				{
-					monsters.length === 0 ?
+					similarMonsters.length === 0 ?
 						<Empty text='No similar monsters.' />
 						: null
 				}
-				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} size={500}>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							const copy = Utils.copy(scratchpadMonsters) as Monster[];
@@ -323,6 +468,18 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getEditSection = () => {
 		switch (kind) {
+			case 'adventure':
+				return (
+					<div className='adventure-container'>
+						<AdventureEditPanel
+							adventure={element as Adventure}
+							sourcebooks={props.sourcebooks}
+							heroes={props.heroes}
+							options={props.options}
+							onChange={applyChanges}
+						/>
+					</div>
+				);
 			case 'ancestry':
 				return (
 					<AncestryEditPanel
@@ -405,6 +562,18 @@ export const LibraryEditPage = (props: Props) => {
 						onChange={applyChanges}
 					/>
 				);
+			case 'encounter':
+				return (
+					<EncounterEditPanel
+						encounter={element as Encounter}
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+						showMonster={props.showMonster}
+						showTerrain={props.showTerrain}
+					/>
+				);
 			case 'subclass':
 				return (
 					<SubClassEditPanel
@@ -480,6 +649,21 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'montage':
+				return (
+					<MontageEditPanel
+						montage={element as Montage}
+						onChange={applyChanges}
+					/>
+				);
+			case 'negotiation':
+				return (
+					<NegotiationEditPanel
+						negotiation={element as Negotiation}
+						sourcebooks={props.sourcebooks}
+						onChange={applyChanges}
+					/>
+				);
 			case 'perk':
 				return (
 					<FeatureEditPanel
@@ -498,6 +682,19 @@ export const LibraryEditPage = (props: Props) => {
 						includeNameAndDescription={true}
 						onChange={applyChanges}
 					/>
+				);
+			case 'tactical-map':
+				return (
+					<div className='tactical-map-container'>
+						<TacticalMapPanel
+							map={element as TacticalMap}
+							display={TacticalMapDisplayType.DirectorEdit}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+							updateMap={applyChanges}
+						/>
+					</div>
 				);
 			case 'terrain':
 				return (
@@ -553,27 +750,21 @@ export const LibraryEditPage = (props: Props) => {
 		switch (kind) {
 			case 'ancestry':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<AncestryPanel ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'culture':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<CulturePanel culture={element as Culture} options={props.options} mode={PanelMode.Full} />
+					<SelectablePanel>
+						<AncestryPanel ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<CareerPanel career={element as Career} options={props.options} mode={PanelMode.Full} />
+					<SelectablePanel>
+						<CareerPanel career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ClassPanel heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} />
+						<SelectablePanel>
+							<ClassPanel heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				} else {
@@ -581,94 +772,85 @@ export const LibraryEditPage = (props: Props) => {
 					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 					return (
-						<SelectablePanel key={`${subclass.id}-${revision}`}>
-							<SubclassPanel subclass={subclass} options={props.options} mode={PanelMode.Full} />
+						<SelectablePanel>
+							<SubclassPanel subclass={subclass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<ComplicationPanel complication={element as Complication} options={props.options} mode={PanelMode.Full} />
+					<SelectablePanel>
+						<ComplicationPanel complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'culture':
+				return (
+					<SelectablePanel>
+						<CulturePanel culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<DomainPanel domain={element as Domain} options={props.options} mode={PanelMode.Full} />
+					<SelectablePanel>
+						<DomainPanel domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
-				);
-			case 'kit':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<KitPanel kit={element as Kit} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'perk':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'project':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<ProjectPanel project={element as Project} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'subclass':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'terrain':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'title':
-				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
-						<TitlePanel title={element as Title} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'item':
-				return (
-					<>
-						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
-						{
-							(element as Item).crafting ?
-								<SelectablePanel>
-									<ProjectPanel project={(element as Item).crafting!} mode={PanelMode.Full} />
-								</SelectablePanel>
-								: null
-						}
-					</>
 				);
 			case 'imbuement':
 				return (
 					<>
-						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
+						<SelectablePanel>
+							<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Imbuement).crafting ?
 								<SelectablePanel>
-									<ProjectPanel project={(element as Imbuement).crafting!} mode={PanelMode.Full} />
+									<ProjectPanel project={(element as Imbuement).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>
 								: null
 						}
 					</>
 				);
+			case 'item':
+				return (
+					<>
+						<SelectablePanel>
+							<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+						</SelectablePanel>
+						{
+							(element as Item).crafting ?
+								<SelectablePanel>
+									<ProjectPanel project={(element as Item).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								</SelectablePanel>
+								: null
+						}
+					</>
+				);
+			case 'kit':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<KitPanel kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									</SelectablePanel>
+								)
+							},
+							{
+								key: '2',
+								label: 'Tuning',
+								children: getKitTuningSection(element as Kit)
+							}
+						]}
+					/>
+				);
 			case 'monster-group':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={`${element.id}-${revision}`}>
-							<MonsterGroupPanel monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} />
+						<SelectablePanel>
+							<MonsterGroupPanel monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				} else {
@@ -682,15 +864,15 @@ export const LibraryEditPage = (props: Props) => {
 									key: '1',
 									label: 'Preview',
 									children: (
-										<SelectablePanel key={`${monster.id}-${revision}`}>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+										<SelectablePanel>
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
 								},
 								{
 									key: '2',
 									label: 'Suggested Statistics',
-									children: getSuggestedStatsSection(monster)
+									children: getMonsterStatsSection(monster)
 								},
 								{
 									key: '3',
@@ -701,6 +883,59 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'montage':
+				return (
+					<SelectablePanel>
+						<MontagePanel
+							montage={element as Montage}
+							heroes={props.heroes}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</SelectablePanel>
+				);
+			case 'negotiation':
+				return (
+					<SelectablePanel>
+						<NegotiationPanel
+							negotiation={element as Negotiation}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</SelectablePanel>
+				);
+			case 'perk':
+				return (
+					<SelectablePanel>
+						<PerkPanel perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'project':
+				return (
+					<SelectablePanel>
+						<ProjectPanel project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'subclass':
+				return (
+					<SelectablePanel>
+						<SubclassPanel subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'terrain':
+				return (
+					<SelectablePanel>
+						<TerrainPanel terrain={element as Terrain} showCustomizations={true} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'title':
+				return (
+					<SelectablePanel>
+						<TitlePanel title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 		}
 
 		return null;
@@ -723,10 +958,14 @@ export const LibraryEditPage = (props: Props) => {
 							{getEditHeaderSection()}
 							{getEditSection()}
 						</div>
-						<div className='preview-column'>
-							{getPreviewHeaderSection()}
-							{getPreview()}
-						</div>
+						{
+							(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
+								<div className='preview-column'>
+									{getPreviewHeaderSection()}
+									{getPreview()}
+								</div>
+								: null
+						}
 					</div>
 				</ErrorBoundary>
 				<AppFooter

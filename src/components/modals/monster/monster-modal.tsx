@@ -1,5 +1,5 @@
-import { Button, Divider, Flex, Input, Popover, Segmented, Space } from 'antd';
-import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Divider, Flex, Input, Segmented, Space } from 'antd';
+import { EditFilled, EditOutlined } from '@ant-design/icons';
 import { Encounter } from '@/models/encounter';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
@@ -12,6 +12,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -23,9 +24,9 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
 	summon?: SummoningInfo;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
-	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
 	updateEncounter?: (encounter: Encounter) => void;
 }
@@ -93,13 +94,14 @@ export const MonsterModal = (props: Props) => {
 						monster={monster}
 						monsterGroup={props.monsterGroup}
 						summon={props.summon}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
 			case 'Malice':
 				return (
-					<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+					<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
 						{
 							MonsterLogic.getMaliceOptions(monster, props.monsterGroup)
 								.map(malice => (
@@ -143,25 +145,6 @@ export const MonsterModal = (props: Props) => {
 									onChange={setPage}
 								/>
 							</Flex>
-							: null
-					}
-					{
-						props.export ?
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Button onClick={() => props.export!('image')}>Export As Image</Button>
-										<Button onClick={() => props.export!('pdf')}>Export As PDF</Button>
-										<Button onClick={() => props.export!('json')}>Export as Data</Button>
-									</div>
-								)}
-							>
-								<Button icon={<UploadOutlined />}>
-									Export
-									<DownOutlined />
-								</Button>
-							</Popover>
 							: null
 					}
 				</>

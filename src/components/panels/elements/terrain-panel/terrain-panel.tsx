@@ -12,6 +12,10 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { TerrainLabel } from '@/components/panels/monster-label/monster-label';
 import { TerrainLogic } from '@/logic/terrain-logic';
@@ -23,6 +27,7 @@ interface Props {
 	terrain: Terrain;
 	upgradeIDs?: string[];
 	showCustomizations?: boolean;
+	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	style?: CSSProperties;
 	extra?: ReactNode;
@@ -68,14 +73,23 @@ export const TerrainPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, terrain)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	const immunities = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Immunity);
 	const weaknesses = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Weakness);
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? terrain.id : undefined} style={props.style}>
+			<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('terrain', terrain.id) : undefined} style={props.style}>
 				<HeaderText
 					level={1}
+					tags={tags}
 					extra={props.extra}
 				>
 					{terrain.name || 'Unnamed Ancestry'}

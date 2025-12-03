@@ -1,6 +1,7 @@
 import { Button, Flex, Space } from 'antd';
-import { CheckCircleFilled, CheckOutlined, CloseCircleFilled, CloseOutlined, EllipsisOutlined, SyncOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, SyncOutlined } from '@ant-design/icons';
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -65,15 +66,15 @@ export const MontageRunPanel = (props: Props) => {
 			const icons = [];
 
 			for (let n = 0; n < challenge.successes; ++n) {
-				icons.push(<CheckCircleFilled key={`s${n}`} style={{ color: 'rgb(0, 120, 0)' }} />);
+				icons.push(<CheckIcon key={`success-${n}`} state='success' />);
 			}
 
 			for (let n = 0; n < challenge.failures; ++n) {
-				icons.push(<CloseCircleFilled key={`f${n}`} style={{ color: 'rgb(200, 0, 0)' }} />);
+				icons.push(<CheckIcon key={`failure-${n}`} state='failure' />);
 			}
 
 			while (icons.length < challenge.uses) {
-				icons.push(<EllipsisOutlined key={`x${icons.length}`} />);
+				icons.push(<CheckIcon key={`pending-${icons.length}`} />);
 			}
 
 			return icons;
@@ -118,7 +119,7 @@ export const MontageRunPanel = (props: Props) => {
 						value={(
 							<Space>
 								{successes}
-								<CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} />
+								<CheckIcon state='success' />
 							</Space>
 						)}
 					/>
@@ -128,7 +129,7 @@ export const MontageRunPanel = (props: Props) => {
 						value={(
 							<Space>
 								{failures}
-								<CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								<CheckIcon state='failure' />
 							</Space>
 						)}
 					/>
@@ -175,7 +176,7 @@ export const MontageRunPanel = (props: Props) => {
 						value={(
 							<Space>
 								{successes} / {successLimit}
-								<CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} />
+								<CheckIcon state='success' />
 							</Space>
 						)}
 					/>
@@ -185,7 +186,7 @@ export const MontageRunPanel = (props: Props) => {
 						value={(
 							<Space>
 								{failures} / {failureLimit}
-								<CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								<CheckIcon state='failure' />
 							</Space>
 						)}
 					/>

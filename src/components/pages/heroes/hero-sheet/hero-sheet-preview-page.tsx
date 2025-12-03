@@ -7,6 +7,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { ComplicationCard } from '@/components/panels/classic-sheet/complication-card/complication-card';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
@@ -300,8 +301,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						onChange={includedStandardAbilitiesChanged}
 						options={standardAbilityOptions}
 					/>
-					<Divider>Layout</Divider>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText level={3}>Layout</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Segmented
 							name='pagesize'
 							block={true}

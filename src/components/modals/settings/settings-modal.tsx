@@ -1,12 +1,14 @@
-import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Button, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
+import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -29,6 +31,8 @@ interface Props {
 	errors: Event[];
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
+	connectionSettings: ConnectionSettings;
+	setConnectionSettings: (settings: ConnectionSettings) => void
 	clearErrors: () => void;
 	onClose: () => void;
 }
@@ -53,7 +57,7 @@ export const SettingsModal = (props: Props) => {
 	const getAppearance = () => {
 		return (
 			<Expander title='Appearance'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Segmented
 						block={true}
 						value={themeMode}
@@ -70,6 +74,12 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getHeroesGeneral = () => {
+		const setXPPerLevel = (value: number) => {
+			const copy = Utils.copy(options);
+			copy.xpPerLevel = value;
+			props.setOptions(copy);
+		};
+
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
@@ -106,7 +116,8 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - General'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					<NumberSpin label='XP per level' min={1} value={options.xpPerLevel} onChange={setXPPerLevel} />
 					<div>
 						<LabelControl
 							label='Show standard abilities'
@@ -130,7 +141,7 @@ export const SettingsModal = (props: Props) => {
 						}
 					</div>
 				</Space>
-				<Drawer open={showAbilitySelector} onClose={closeStandardAbilitiesModal} closeIcon={null} width='500px'>
+				<Drawer open={showAbilitySelector} onClose={closeStandardAbilitiesModal} closeIcon={null} size={500}>
 					<StandardAbilitySelectModal
 						abilityIDs={options.shownStandardAbilities}
 						onSelect={setShownStandardAbilities}
@@ -193,7 +204,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - Interactive View'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 					<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
@@ -217,7 +228,7 @@ export const SettingsModal = (props: Props) => {
 						}
 					/>
 					<div>
-						<Divider>View</Divider>
+						<HeaderText level={3}>View</HeaderText>
 						<Toggle label='Single page' value={options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={options.compactView} onChange={setCompactView} />
 					</div>
@@ -257,7 +268,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - Classic View'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
@@ -342,7 +353,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Classic View'>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<LabelControl
 						label='Page size'
 						control={
@@ -422,29 +433,12 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Monster Builder'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<div className='ds-text'>Show data from similar monsters using these fields:</div>
 					<Toggle label='Monster level' value={options.similarLevel} onChange={setSimilarLevel} />
 					<Toggle label='Monster role' value={options.similarRole} onChange={setSimilarRole} />
 					<Toggle label='Monster organization' value={options.similarOrganization} onChange={setSimilarOrganization} />
 					<Toggle label='Monster size' value={options.similarSize} onChange={setSimilarSize} />
-				</Space>
-			</Expander>
-		);
-	};
-
-	const getEncounterBuilder = () => {
-		const setMinionCount = (value: number) => {
-			const copy = Utils.copy(options);
-			copy.minionCount = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Encounter Builder'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					<NumberSpin label='Minions per group' min={1} value={options.minionCount} onChange={setMinionCount} />
 				</Space>
 			</Expander>
 		);
@@ -472,7 +466,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Encounter Runner'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Show defeated combatants' value={options.showDefeatedCombatants} onChange={setShowDefeatedCombatants} />
 					{
 						parties.length > 0 ?
@@ -532,7 +526,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Encounter / Montage Difficulty'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<LabelControl
 						label='Calculate difficulty based on these heroes'
 						control={
@@ -577,7 +571,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Tactical Maps'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<NumberSpin label='Director Map Grid Size' min={5} steps={[ 5 ]} value={options.gridSize} onChange={setGridSize} />
 					<NumberSpin label='Player Map Grid Size' min={5} steps={[ 5 ]} value={options.playerGridSize} onChange={setPlayerGridSize} />
 				</Space>
@@ -588,7 +582,7 @@ export const SettingsModal = (props: Props) => {
 	const getFeatureFlags = () => {
 		return (
 			<Expander title='Feature Flags'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Flex align='center' justify='space-between' gap={10}>
 						<Input
 							placeholder='Enter a feature flag code'
@@ -638,31 +632,17 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getFeatureFlagControls = () => {
-		const flags = [
-			FeatureFlags.interactiveContent
-		];
-		if (!flags.some(f => FeatureFlags.hasFlag(f.code))) {
-			return null;
+	const getConnectionSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
+			return (
+				<Expander title='Forge Steel Warehouse'>
+					<FsWarehouseConnectionSettingsPanel
+						connectionSettings={props.connectionSettings}
+						setConnectionSettings={props.setConnectionSettings}
+					/>
+				</Expander>
+			);
 		}
-
-		const setShowInteractivePanels = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.showInteractivePanels = value;
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Features'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					{
-						FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
-							<Toggle label='Show content interactively' value={options.showInteractivePanels} onChange={setShowInteractivePanels} />
-							: null
-					}
-				</Space>
-			</Expander>
-		);
 	};
 
 	const getErrors = () => {
@@ -720,7 +700,7 @@ export const SettingsModal = (props: Props) => {
 					<DangerButton key='clear' mode='clear' onConfirm={clearErrors} />
 				]}
 			>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{props.errors.map(getError)}
 				</Space>
 			</Expander>
@@ -731,14 +711,13 @@ export const SettingsModal = (props: Props) => {
 		switch (page) {
 			case 'Settings':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getAppearance()}
 						{getHeroesGeneral()}
 						{getHeroesInteractive()}
 						{getHeroesClassic()}
 						{getClassicView()}
 						{getMonsterBuilder()}
-						{getEncounterBuilder()}
 						{getEncounterRunner()}
 						{getDifficulty()}
 						{getTacticalMaps()}
@@ -746,9 +725,9 @@ export const SettingsModal = (props: Props) => {
 				);
 			case 'Admin':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
-						{getFeatureFlagControls()}
+						{getConnectionSettings()}
 						{getErrors()}
 					</Space>
 				);

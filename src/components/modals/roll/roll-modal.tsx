@@ -62,7 +62,7 @@ export const RollModal = (props: Props) => {
 									key={n}
 									type='warning'
 									showIcon={true}
-									message={<div><b>{warn.label}</b>: {warn.text}</div>}
+									title={<div><b>{warn.label}</b>: {warn.text}</div>}
 								/>
 							))
 						}
@@ -119,7 +119,7 @@ export const RollModal = (props: Props) => {
 			case 'Saving Throw':
 				return (
 					<>
-						<DieRollPanel type='Saving Throw' modifiers={[ saveBonus, modifier ]} rollState={rollState} hero={props.hero} onRollStateChange={setRollState} />
+						<DieRollPanel type='Saving Throw' modifiers={[ saveBonus ]} rollState={rollState} hero={props.hero} onRollStateChange={setRollState} />
 					</>
 				);
 		}

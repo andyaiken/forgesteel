@@ -9,6 +9,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
@@ -19,6 +20,7 @@ import './summon-select-modal.scss';
 interface Props {
 	summons: Summon[];
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (summon: Summon) => void;
@@ -50,14 +52,14 @@ export const SummonSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='summon-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sortedSummons.map(s => (
 								<SelectablePanel
 									key={s.id}
 									onSelect={() => props.onSelect(s)}
 								>
-									<MonsterPanel monster={SummonLogic.getSummonedMonster(s.monster, props.hero)} summon={s.info} options={props.options} mode={PanelMode.Full} />
+									<MonsterPanel monster={SummonLogic.getSummonedMonster(s.monster, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

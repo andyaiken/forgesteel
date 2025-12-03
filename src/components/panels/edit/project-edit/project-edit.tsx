@@ -2,7 +2,7 @@ import { Input, Select } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Project } from '@/models/project';
 import { Utils } from '@/utils/utils';
@@ -61,13 +61,6 @@ export const ProjectEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setEffect = (value: string) => {
-		const copy = Utils.copy(project);
-		copy.effect = value;
-		setProject(copy);
-		props.onChange(copy);
-	};
-
 	return (
 		<ErrorBoundary>
 			<div className='project-edit-panel'>
@@ -83,7 +76,7 @@ export const ProjectEditPanel = (props: Props) => {
 								onChange={e => setName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine value={project.description} onChange={setDescription} />
+							<MarkdownEditor value={project.description} onChange={setDescription} />
 						</>
 						: null
 				}
@@ -108,22 +101,11 @@ export const ProjectEditPanel = (props: Props) => {
 					mode='multiple'
 					options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={project.characteristic}
 					onChange={setCharacteristic}
 				/>
 				<HeaderText>Goal</HeaderText>
 				<NumberSpin min={0} max={500} steps={[ 5 ]} value={project.goal} onChange={setGoal} />
-				<HeaderText>Effect</HeaderText>
-				<MultiLine value={project.effect} onChange={setEffect} />
 			</div>
 		</ErrorBoundary>
 	);

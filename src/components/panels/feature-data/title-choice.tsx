@@ -15,7 +15,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Title } from '@/models/title';
-import { TitlePanel } from '../elements/title-panel/title-panel';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { TitleSelectModal } from '@/components/modals/select/title-select/title-select-modal';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';

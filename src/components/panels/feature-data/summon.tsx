@@ -10,7 +10,7 @@ import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterPanel } from '../elements/monster-panel/monster-panel';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';

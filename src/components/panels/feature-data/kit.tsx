@@ -8,7 +8,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Kit } from '@/models/kit';
-import { KitPanel } from '../elements/kit-panel/kit-panel';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { KitSelectModal } from '@/components/modals/select/kit-select/kit-select-modal';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';

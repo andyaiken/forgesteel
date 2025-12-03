@@ -2,7 +2,7 @@ import { Feature, FeatureFixtureData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
 import { Fixture } from '@/models/fixture';
 import { FixtureEditPanel } from '@/components/panels/edit/fixture-edit/fixture-edit-panel';
-import { FixturePanel } from '../elements/fixture-panel/fixture-panel';
+import { FixturePanel } from '@/components/panels/elements/fixture-panel/fixture-panel';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

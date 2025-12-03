@@ -3,7 +3,7 @@ import { Feature, FeatureDomainData } from '@/models/feature';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { Domain } from '@/models/domain';
-import { DomainPanel } from '../elements/domain-panel/domain-panel';
+import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { Field } from '@/components/controls/field/field';

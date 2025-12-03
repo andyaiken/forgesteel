@@ -1,7 +1,7 @@
 {
-  "For Players": "Per i Giocatori",
-  "Prev Tip": "Sugg. Precedente",
-  "Next Tip": "Sugg. Successivo",
+  "forPlayers": "Per i Giocatori",
+  "prevTip": "Sugg. Precedente",
+  "nextTip": "Sugg. Successivo",
   "theRightPlace": "Se sei un giocatore di <b>DRAW STEEL</b>, sei nel posto giusto.",
   "heroScreenDescription": "Nella schermata <b>EROI</b> puoi creare facilmente i tuoi personaggi; il creatore di eroi ti guida passo dopo passo nel processo.",
   "appUses": "Puoi utilizzare l'app per tenere traccia della stamina, delle condizioni, delle ondate e così via del tuo eroe.",

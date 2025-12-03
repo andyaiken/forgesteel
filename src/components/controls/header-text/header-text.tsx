@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
+import { Flex, Tag } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Tag } from 'antd';
 
 import './header-text.scss';
 
@@ -26,9 +26,9 @@ export const HeaderText = (props: Props) => {
 					<div className='header-text'>{props.children}</div>
 					{
 						props.tags ?
-							<div className='header-tags'>
+							<Flex gap={5}>
 								{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
-							</div>
+							</Flex>
 							: null
 					}
 				</div>

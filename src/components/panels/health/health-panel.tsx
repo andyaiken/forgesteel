@@ -732,9 +732,9 @@ const HealthPanel = (props: Props) => {
 					}
 					{
 						tags.length > 0 ?
-							<div>
+							<Flex gap={5}>
 								{tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)}
-							</div>
+							</Flex>
 							: null
 					}
 				</div>

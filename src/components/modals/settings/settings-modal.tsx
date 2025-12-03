@@ -3,12 +3,12 @@ import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, 
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
-import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -636,7 +636,7 @@ export const SettingsModal = (props: Props) => {
 		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
 			return (
 				<Expander title='Forge Steel Warehouse'>
-					<FsWarehouseConnectionSettingsPanel
+					<ConnectionSettingsPanel
 						connectionSettings={props.connectionSettings}
 						setConnectionSettings={props.setConnectionSettings}
 					/>

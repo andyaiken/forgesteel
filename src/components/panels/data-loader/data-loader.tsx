@@ -3,13 +3,13 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { ConnectionSettingsPanel } from '../connection-settings/connection-settings-panel';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Format } from '@/utils/format';
-import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
@@ -291,7 +291,7 @@ export const DataLoader = (props: Props) => {
 									title='Update Warehouse settings below, if necessary.'
 								/>
 								<Expander title='Forge Steel Warehouse Settings'>
-									<FsWarehouseConnectionSettingsPanel
+									<ConnectionSettingsPanel
 										connectionSettings={connectionSettings}
 										setConnectionSettings={persistConnectionSettings}
 									/>

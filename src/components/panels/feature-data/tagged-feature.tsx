@@ -2,7 +2,7 @@ import { Feature, FeatureTaggedFeatureData } from '@/models/feature';
 import { Input, Space } from 'antd';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';

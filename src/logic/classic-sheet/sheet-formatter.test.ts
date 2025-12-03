@@ -5,7 +5,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
-import { HeroSheetBuilder } from '../hero-sheet/hero-sheet-builder';
+import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';

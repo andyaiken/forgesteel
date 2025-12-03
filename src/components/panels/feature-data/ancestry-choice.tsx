@@ -1,7 +1,7 @@
 import { Button, Drawer, Flex, Select, Space } from 'antd';
 import { Feature, FeatureAncestryChoiceData } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
-import { AncestryPanel } from '../elements/ancestry-panel/ancestry-panel';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Field } from '@/components/controls/field/field';

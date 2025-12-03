@@ -12,7 +12,7 @@ import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PowerRoll } from '@/models/power-roll';
-import { PowerRollPanel } from '../power-roll/power-roll-panel';
+import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';

@@ -2,7 +2,7 @@ import { Feature, FeatureTaggedFeatureChoiceData } from '@/models/feature';
 import { Input, Select, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';

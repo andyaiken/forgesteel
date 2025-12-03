@@ -15,7 +15,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
-import { PerkPanel } from '../elements/perk-panel/perk-panel';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PerkSelectModal } from '@/components/modals/select/perk-select/perk-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';

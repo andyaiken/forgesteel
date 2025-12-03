@@ -1,6 +1,6 @@
 import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureDomainFeatureData } from '@/models/feature';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';

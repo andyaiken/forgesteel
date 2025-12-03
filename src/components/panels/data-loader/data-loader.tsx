@@ -3,7 +3,7 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { ConnectionSettingsPanel } from '../connection-settings/connection-settings-panel';
+import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
 import { Expander } from '@/components/controls/expander/expander';

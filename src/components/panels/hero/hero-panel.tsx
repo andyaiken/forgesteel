@@ -788,15 +788,16 @@ export const HeroPanel = (props: Props) => {
 										useRows ?
 											getRow(f)
 											:
-											<FeaturePanel
-												key={f.feature.id}
-												feature={f.feature}
-												source={props.options.showSources ? f.source : undefined}
-												options={props.options}
-												hero={props.hero}
-												sourcebooks={props.sourcebooks}
-												mode={PanelMode.Full}
-											/>
+											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
+												<FeaturePanel
+													feature={f.feature}
+													source={props.options.showSources ? f.source : undefined}
+													options={props.options}
+													hero={props.hero}
+													sourcebooks={props.sourcebooks}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
 									)
 								}
 							</div>

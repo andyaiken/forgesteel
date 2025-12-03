@@ -3,7 +3,7 @@ import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Feature, FeatureClassAbilityData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
-import { AbilityPanel } from '../elements/ability-panel/ability-panel';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';

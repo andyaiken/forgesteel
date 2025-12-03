@@ -7,7 +7,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureSelectModal } from '@/components/modals/select/feature-select/feature-select-modal';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';

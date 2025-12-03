@@ -6,7 +6,7 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
-import { ItemPanel } from '../elements/item-panel/item-panel';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
 import { Markdown } from '@/components/controls/markdown/markdown';

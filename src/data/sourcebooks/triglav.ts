@@ -929,11 +929,11 @@ For each condition the target suffers from, treat the thirst spent on this abili
 							description: `
 You specialize in attacking from hiding, and lurking in the shadows for your prey whets your appetite for violence. While you have concealment, you gain an edge on strikes and on the Grab maneuver against creatures that would take a bane on strikes made against creatures with concealment. Against such creatures, this edge replaces the edge granted by being hidden. Additionally, whenever you grab a creature, you can use a free triggered action to move up to half your speed or to move the grabbed creature into an unoccupied space adjacent to you.
 
-# Shadow Damage
+### Shadow Damage
 
 The nature of each Shrouded Lurker's shadow magic is unique to them. Some manipulate shadows that cut like razors, while others use shadows that burn like fire, corrupt flesh, or are as cold as the void between the stars. Choose one of the following damage types: cold, corruption, fire or untyped. Whenever an ability says it deals shadow damage, it deals the chosen damage type. You can change the chosen damage type as a respite activity or as a part of changing your kit as a respite activity. Additionally, whenever you deal shadow damage, you ignore an amount of immunity to the chosen damage type equal to your highest characteristic score.
 
-# Shroud Effects
+### Shroud Effects
 
 Some of your abilities have a shroud effect entry. Whenever you use a shroud ability, the ability gains extra effects specified in the shroud entry if you have concealment when using the ability.`
 						}),
@@ -1185,15 +1185,15 @@ Virulence Effects
 
 Some of your abilities have a virulence effect entry. Whenever you use a virulence ability, the ability gains extra effects specified in the virulence entry if your virulence is equal to or greater than the number in the virulence entry. For example, an ability with "Virulence 3" would gain extra effects if your virulence is equal to or greater than 3.
 
-# Infected
+### Infected
 
 Some of your abilities and features can make creatures infected. Infected is a special effect that indicates a creature is affected by your spores. You and your allies are considered to be infected outside of combat. At the start of any combat encounter, you and your non-minion allies within 5 squares of you become infected. You can target your allies with abilities that can make creatures infected as if they were enemies. If you do, they can ignore the ability's damage and other negative effects and just become infected. An infected creature stops being infected at the end of the encounter. If a creature would become infected from a different source than your abilities and features, the infection is separate from yours.
 
-# Spore Cloud
+### Spore Cloud
 
 During combat, you emanate a visible 1 aura of infectious spores. Each creature who enters the area for the first time in a combat round or starts their turn there becomes infected. You can activate and deactivate the aura at will (no action required). Your virulence is treated as 1 higher against creatures in the area. This can make a virulence effect entry affect those creatures even when your virulence wouldn't otherwise be high enough. Outside of combat, the aura remains dormant.
 
-# Spore Keyword
+### Spore Keyword
 
 Some of your abilities have the Spore keyword. Abilities with the Spore keyword don't need line of effect to affect a target within distance.`
 						}),
@@ -1538,7 +1538,7 @@ const mangler: Kit = {
 	id: 'kit-mangler',
 	name: 'Mangler',
 	description: `
-* By Triglav Games*
+*By Triglav Games*
 
 You are all muscle, no finesse. You focus on being as brutal as possible for you know there is no better enemy than a dead and mutilated one. Your clawed hands usually just graze your opponents, but once you land a solid hit, you mercilessly maim your prey.`,
 	type: '',
@@ -1677,13 +1677,14 @@ As a nocturnal predator, you embrace the shadows as they embrace you. You have a
 	data: null
 };
 
-export const triglavPrerelease: Sourcebook = {
-	id: 'triglav-prerelease',
-	name: 'Triglav Games (pre-release)',
-	description: 'Third-party content from Triglav Games (pre-release).',
+export const triglav: Sourcebook = {
+	id: 'triglav',
+	name: 'Triglav Games',
+	description: 'Third-party content from Triglav Games.',
 	type: SourcebookType.ThirdParty,
 	adventures: [],
 	ancestries: [
+		boggit,
 		vampireAncestry
 	],
 	careers: [],
@@ -1711,37 +1712,6 @@ export const triglavPrerelease: Sourcebook = {
 		nightSpeech,
 		oneWithTheShadows
 	],
-	projects: [],
-	subclasses: [],
-	tacticalMaps: [],
-	terrain: [],
-	titles: [],
-	skills: [],
-	languages: []
-};
-
-export const triglav: Sourcebook = {
-	id: 'triglav',
-	name: 'Triglav Games',
-	description: 'Third-party content from Triglav Games.',
-	type: SourcebookType.ThirdParty,
-	adventures: [],
-	ancestries: [
-		boggit
-	],
-	careers: [],
-	classes: [],
-	complications: [],
-	cultures: [],
-	domains: [],
-	encounters: [],
-	imbuements: [],
-	items: [],
-	kits: [],
-	monsterGroups: [],
-	montages: [],
-	negotiations: [],
-	perks: [],
 	projects: [],
 	subclasses: [],
 	tacticalMaps: [],

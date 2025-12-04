@@ -18,21 +18,15 @@ export class FeatureFlags {
 		description: 'Access to the Playtest sourcebook'
 	};
 
-	static community: FeatureFlag = {
+	static communityPreRelease: FeatureFlag = {
 		code: Utils.hashCode('community'),
 		description: 'Access to the (pre-release) Community sourcebook'
-	};
-
-	static vampire: FeatureFlag = {
-		code: Utils.hashCode('Max Schreck'),
-		description: 'Access to the (pre-release) Triglav sourcebook'
 	};
 
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
-		FeatureFlags.community,
-		FeatureFlags.vampire
+		FeatureFlags.communityPreRelease
 	];
 
 	// #endregion

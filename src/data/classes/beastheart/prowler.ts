@@ -266,5 +266,6 @@ While on Quintessence, the target takes 5 cold damage, 5 fire damage, 5 lightnin
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

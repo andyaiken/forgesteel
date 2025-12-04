@@ -15,7 +15,20 @@
 		gap: 20px;
 	}
 
+	.subclass-abilities-grid {
+		padding-top: 15px;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+	}
+
 	.subclass-features-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.subclass-abilities-list {
 		display: flex;
 		flex-direction: column;
 		gap: 5px;

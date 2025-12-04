@@ -181,5 +181,6 @@ As a maneuver, a creature can consume a Life Fruit or feed it to an adjacent wil
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -230,5 +230,6 @@ export const paragon: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

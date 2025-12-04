@@ -288,5 +288,6 @@ Your companion’s transformation lasts until the start of your next turn. At th
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

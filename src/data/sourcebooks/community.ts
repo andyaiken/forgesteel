@@ -305,6 +305,7 @@ const scion: HeroClass = {
 You were deemed worthy of a secret Art unknown to most, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of balance: a harmonious alignment of movement, feeling, and intent.
 
 As a scion, you move with purpose - each strike empowered to suit the moment, whether to wound, disrupt, or disable, your flexibility is unmatched. At the height of your mastery, you are the eye of the storm: utterly calm, yet entirely devastating.`,
+	type: 'standard',
 	subclassName: 'Art',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -919,6 +920,7 @@ You cannot use *Enweave* more than twice before applying its effect to an abilit
 					features: []
 				}
 			],
+			abilities: [],
 			selected: false
 		},
 		{
@@ -1043,6 +1045,7 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 					features: []
 				}
 			],
+			abilities: [],
 			selected: false
 		},
 		{
@@ -1189,12 +1192,12 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 					features: []
 				}
 			],
+			abilities: [],
 			selected: false
 		}
 	],
 	level: 1,
-	characteristics: [],
-	type: 'standard'
+	characteristics: []
 };
 
 export const communityPrerelease: Sourcebook = {

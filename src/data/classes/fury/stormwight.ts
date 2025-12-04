@@ -281,5 +281,6 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

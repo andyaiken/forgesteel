@@ -864,5 +864,6 @@ The Celestial Attendant wants to swarm the map with pixies while limiting their 
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -313,5 +313,6 @@ Make a power roll that targets each enemy in the area.`),
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

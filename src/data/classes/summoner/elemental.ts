@@ -954,5 +954,6 @@ As a harbinger of ruin, the Dragon’s Portent has incredibly potent impact and 
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

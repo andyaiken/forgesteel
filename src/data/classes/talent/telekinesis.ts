@@ -334,5 +334,6 @@ export const telekinesis: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

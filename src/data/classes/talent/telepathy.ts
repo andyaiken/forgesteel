@@ -317,5 +317,6 @@ export const telepathy: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -235,5 +235,6 @@ export const exorcist: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

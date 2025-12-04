@@ -97,7 +97,14 @@ export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
 export interface FeatureClassAbilityData extends _FeatureData {
 	classID: string | undefined;
 	cost: number | 'signature';
-	allowAnySource: boolean;
+	source: {
+		fromClassAbilities: boolean;
+		fromSelectedSubclassAbilities: boolean;
+		fromUnselectedSubclassAbilities: boolean;
+		fromClassLevels: boolean;
+		fromSelectedSubclassLevels: boolean;
+		fromUnselectedSubclassLevels: boolean;
+	}
 	minLevel: number;
 	count: number;
 	selectedIDs: string[];

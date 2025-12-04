@@ -113,7 +113,7 @@ export class HeroLogic {
 						.find(c => c.id === feature.data.classID) || null;
 				}
 				if (heroClass) {
-					const abilities = SourcebookLogic.getAllClassAbilities(heroClass);
+					const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, feature.data.source.fromClassAbilities, feature.data.source.fromSelectedSubclassAbilities, feature.data.source.fromUnselectedSubclassAbilities, feature.data.source.fromClassLevels, feature.data.source.fromSelectedSubclassLevels, feature.data.source.fromUnselectedSubclassLevels);
 					feature.data.selectedIDs.forEach(abilityID => {
 						const ability = abilities.find(a => a.id === abilityID);
 						if (ability) {

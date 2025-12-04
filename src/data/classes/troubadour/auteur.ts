@@ -301,5 +301,6 @@ export const auteur: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

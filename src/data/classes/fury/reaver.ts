@@ -306,5 +306,6 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

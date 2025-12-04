@@ -254,5 +254,6 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

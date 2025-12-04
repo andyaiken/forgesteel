@@ -19,6 +19,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -31,8 +32,18 @@ interface InfoProps {
 }
 
 export const InfoClassAbility = (props: InfoProps) => {
-	if ((props.data.selectedIDs.length > 0) && props.hero && props.hero.class) {
-		const abilities = props.hero.class.abilities.filter(a => a.cost === props.data.cost) || [];
+	let heroClass = props.hero?.class || null;
+	if (props.data.classID && props.sourcebooks) {
+		// You get an ability from a different class
+		heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === props.data.classID) || null;
+	}
+	if (!heroClass) {
+		return null;
+	}
+
+	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels);
+
+	if (props.data.selectedIDs.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
@@ -47,18 +58,10 @@ export const InfoClassAbility = (props: InfoProps) => {
 		);
 	}
 
-	let className = '';
-	if (props.data.classID && props.sourcebooks) {
-		const heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === props.data.classID);
-		if (heroClass && heroClass.name) {
-			className = heroClass.name;
-		}
-	}
-
 	if (!props.feature.description) {
 		return (
 			<div className='ds-text'>
-				Choose {props.data.count > 1 ? props.data.count : 'a'} {(props.data.cost === 'signature') || (props.data.cost === 0) ? 'signature' : `${props.data.cost}pt`} {props.data.count > 1 ? 'abilities' : 'ability'}{className ? ` from the ${className}` : ''}.
+				Choose {props.data.count > 1 ? props.data.count : 'a'} {(props.data.cost === 'signature') || (props.data.cost === 0) ? 'signature' : `${props.data.cost}pt`} {props.data.count > 1 ? 'abilities' : 'ability'}{props.data.classID ? ` from the ${heroClass.name}` : ''}.
 			</div>
 		);
 	}
@@ -79,7 +82,6 @@ export const EditClassAbility = (props: EditProps) => {
 	const setAbilityCost = (value: number | 'signature') => {
 		const copy = Utils.copy(data);
 		copy.cost = value;
-		copy.allowAnySource = value === 0;
 		setData(copy);
 		props.setData(copy);
 	};
@@ -87,6 +89,48 @@ export const EditClassAbility = (props: EditProps) => {
 	const setAbilityClassID = (value: string) => {
 		const copy = Utils.copy(data);
 		copy.classID = value === '' ? undefined : value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setClassAbilities = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromClassAbilities = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setSelectedSubclassAbilities = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromSelectedSubclassAbilities = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setUnselectedSubclassAbilities = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromUnselectedSubclassAbilities = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setClassLevels = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromClassLevels = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setSelectedSubclassLevels = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromSelectedSubclassLevels = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setUnselectedSubclassLevels = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.source.fromUnselectedSubclassLevels = value;
 		setData(copy);
 		props.setData(copy);
 	};
@@ -124,7 +168,7 @@ export const EditClassAbility = (props: EditProps) => {
 					{ value: 8, label: 'Choose a 8pt ability' },
 					{ value: 10, label: 'Choose a 10pt ability' },
 					{ value: 12, label: 'Choose a 12pt ability' },
-					{ value: 0, label: 'Choose any ability defined in the class' }
+					{ value: 0, label: 'Choose an ability with no cost' }
 				]}
 				optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 				value={data.cost}
@@ -142,6 +186,13 @@ export const EditClassAbility = (props: EditProps) => {
 				value={data.classID || ''}
 				onChange={setAbilityClassID}
 			/>
+			<HeaderText>Ability Source</HeaderText>
+			<Toggle label='Class abilities' value={data.source.fromClassAbilities} onChange={setClassAbilities} />
+			<Toggle label='Abilities from selected subclasses' value={data.source.fromSelectedSubclassAbilities} onChange={setSelectedSubclassAbilities} />
+			<Toggle label='Abilities from unselected subclasses' value={data.source.fromUnselectedSubclassAbilities} onChange={setUnselectedSubclassAbilities} />
+			<Toggle label='Abilities from class levels' value={data.source.fromClassLevels} onChange={setClassLevels} />
+			<Toggle label='Abilities from selected subclass levels' value={data.source.fromSelectedSubclassLevels} onChange={setSelectedSubclassLevels} />
+			<Toggle label='Abilities from unselected subclass levels' value={data.source.fromUnselectedSubclassLevels} onChange={setUnselectedSubclassLevels} />
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />
 			<HeaderText>Minimum Level</HeaderText>
@@ -177,7 +228,8 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 		.filter(f => f.id !== props.feature.id)
 		.filter(f => f.type === FeatureType.ClassAbility)
 		.flatMap(f => f.data.selectedIDs);
-	const abilities = (props.data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
+
+	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels)
 		.filter(a => a.cost === props.data.cost)
 		.filter(a => a.minLevel <= props.data.minLevel)
 		.filter(a => !currentAbilityIDs.includes(a.id));

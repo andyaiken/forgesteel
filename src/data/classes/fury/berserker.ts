@@ -308,5 +308,6 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

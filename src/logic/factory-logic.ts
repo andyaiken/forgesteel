@@ -283,6 +283,7 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
+			abilities: [],
 			selected: false
 		};
 	};

@@ -115,7 +115,7 @@ export const FeatureEditPanel = (props: Props) => {
 												<Select
 													style={{ width: '100%' }}
 													placeholder='Select list'
-													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
+													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(o => ({ value: o }))}
 													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 													value={(feature as Perk).list}
 													onChange={setList}

@@ -159,5 +159,6 @@ Additionally, your Return to Formlessness ability can be used on supernatural ob
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

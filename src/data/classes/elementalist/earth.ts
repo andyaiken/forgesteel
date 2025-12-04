@@ -192,5 +192,6 @@ Additionally, as a respite activity, you can shape the mundane earth around you 
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

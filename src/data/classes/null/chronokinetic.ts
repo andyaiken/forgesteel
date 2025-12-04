@@ -245,5 +245,6 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -271,5 +271,6 @@ Additionally, you can now bring an adjacent willing creature along with you when
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

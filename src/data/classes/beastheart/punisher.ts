@@ -281,5 +281,6 @@ export const punisher: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

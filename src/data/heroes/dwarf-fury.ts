@@ -330,7 +330,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 'signature',
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -345,7 +350,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 3,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -360,7 +370,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 5,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -400,7 +415,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 7,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -501,7 +521,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 9,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -659,7 +684,12 @@ export const dwarfFury = {
 						type: 'Class Ability',
 						data: {
 							cost: 11,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -2814,6 +2844,7 @@ export const dwarfFury = {
 						]
 					}
 				],
+				abilities: [],
 				selected: true
 			},
 			{
@@ -3474,6 +3505,7 @@ export const dwarfFury = {
 						]
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -4133,6 +4165,7 @@ export const dwarfFury = {
 						]
 					}
 				],
+				abilities: [],
 				selected: false
 			}
 		],

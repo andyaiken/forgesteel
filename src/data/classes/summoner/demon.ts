@@ -893,5 +893,6 @@ The Demon Lord’s Aspect enjoys bringing the enemies in close with their append
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

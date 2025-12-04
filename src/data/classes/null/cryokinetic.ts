@@ -260,5 +260,6 @@ As your discipline grows, you strengthen the psionic power suffusing you, granti
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

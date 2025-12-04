@@ -315,5 +315,6 @@ For each combat round that has passed since this ability was last used in the cu
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

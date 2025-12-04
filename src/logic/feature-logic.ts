@@ -598,7 +598,14 @@ export class FeatureLogic {
 					classID: undefined,
 					cost: 1,
 					count: 1,
-					allowAnySource: false,
+					source: {
+						fromClassAbilities: true,
+						fromSelectedSubclassAbilities: true,
+						fromUnselectedSubclassAbilities: false,
+						fromClassLevels: false,
+						fromSelectedSubclassLevels: false,
+						fromUnselectedSubclassLevels: false
+					},
 					minLevel: 1,
 					selectedIDs: []
 				};

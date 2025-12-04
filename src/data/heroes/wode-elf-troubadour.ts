@@ -616,7 +616,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 'signature',
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -631,7 +636,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 3,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -646,7 +656,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 5,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -778,7 +793,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 7,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -961,7 +981,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 9,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -1165,7 +1190,12 @@ export const wodeElfTroubadour = {
 						type: 'Class Ability',
 						data: {
 							cost: 11,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -3333,6 +3363,7 @@ export const wodeElfTroubadour = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -4079,6 +4110,7 @@ export const wodeElfTroubadour = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -5100,6 +5132,7 @@ export const wodeElfTroubadour = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: true
 			}
 		],

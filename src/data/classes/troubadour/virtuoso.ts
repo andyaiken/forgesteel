@@ -400,5 +400,6 @@ your Routines feature.`,
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

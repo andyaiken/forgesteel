@@ -271,5 +271,6 @@ At the Director’s discretion, you and your allies can use skills from the intr
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

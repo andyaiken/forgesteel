@@ -83,7 +83,7 @@ export const EditPerk = (props: EditProps) => {
 				placeholder='Perk lists'
 				mode='multiple'
 				allowClear={true}
-				options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(option => ({ value: option }))}
+				options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(option => ({ value: option }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 				value={data.lists}
 				onChange={setPerkLists}

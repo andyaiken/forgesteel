@@ -1464,8 +1464,8 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Presence ],
 								tier1: 'You take 4 sonic damage unless you have the Performance skill.',
-								tier2: '6 sonic damage; M , [average], weakened (save ends)',
-								tier3: '10 sonic damage; M , [average], weakened and bleeding (save ends)'
+								tier2: '6 sonic damage; M < [average], weakened (save ends)',
+								tier3: '10 sonic damage; M < [average], weakened and bleeding (save ends)'
 							})
 						),
 						FactoryLogic.createAbilitySectionText('The soul of any creature killed by this ability is dragged to Hell.')

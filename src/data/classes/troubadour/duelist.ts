@@ -308,5 +308,6 @@ Additionally, when your named signature ability is the last ability you use in a
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

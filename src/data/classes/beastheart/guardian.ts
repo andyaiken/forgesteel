@@ -291,5 +291,6 @@ While teleporting after making the attack, your companion can teleport with a gr
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

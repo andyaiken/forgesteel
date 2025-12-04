@@ -289,5 +289,6 @@ export const vanguard: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

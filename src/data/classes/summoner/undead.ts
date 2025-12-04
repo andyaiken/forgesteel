@@ -959,5 +959,6 @@ The Avatar of Death weighs down their foes with conditions so their army can tak
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -266,5 +266,6 @@ If the creature is the same size as you, you can disguise yourself as them using
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

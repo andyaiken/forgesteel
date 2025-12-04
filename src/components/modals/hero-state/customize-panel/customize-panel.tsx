@@ -96,8 +96,7 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createClassAbilityChoice({
 										id: Utils.guid(),
-										cost: 'signature',
-										allowAnySource: true
+										cost: 'signature'
 									}));
 								}}
 							>
@@ -219,7 +218,7 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createPerk({
 										id: Utils.guid(),
-										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ]
 									}));
 								}}
 							>
@@ -697,7 +696,7 @@ export const CustomizePanel = (props: Props) => {
 							mode='multiple'
 							allowClear={true}
 							placeholder='List'
-							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(pl => ({ label: pl, value: pl }))}
+							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(pl => ({ label: pl, value: pl }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={feature.data.lists}
 							onChange={setPerkLists}

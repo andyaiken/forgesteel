@@ -25,6 +25,16 @@ export class FeatureUpdateLogic {
 				feature.data.options.map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
 				break;
 			case FeatureType.ClassAbility:
+				if (feature.data.source === undefined) {
+					feature.data.source = {
+						fromClassAbilities: true,
+						fromSelectedSubclassAbilities: true,
+						fromUnselectedSubclassAbilities: false,
+						fromClassLevels: false,
+						fromSelectedSubclassLevels: false,
+						fromUnselectedSubclassLevels: false
+					};
+				}
 				if (feature.data.minLevel === undefined) {
 					feature.data.minLevel = 1;
 				}

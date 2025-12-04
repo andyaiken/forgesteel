@@ -283,5 +283,6 @@ You can make this test only once for any encounter or negotiation.`
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

@@ -160,5 +160,6 @@ Additionally, your mind is connected to the mystery and helps you find the answe
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

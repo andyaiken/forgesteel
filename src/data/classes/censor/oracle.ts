@@ -222,5 +222,6 @@ when you finish a respite.
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

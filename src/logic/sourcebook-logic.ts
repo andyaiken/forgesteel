@@ -53,12 +53,8 @@ export class SourcebookLogic {
 			list.push(SourcebookData.playtest);
 		}
 
-		if (FeatureFlags.hasFlag(FeatureFlags.community.code)) {
+		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {
 			list.push(SourcebookData.communityPrerelease);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.vampire.code)) {
-			list.push(SourcebookData.triglavPrerelease);
 		}
 
 		list.push(...homebrew);

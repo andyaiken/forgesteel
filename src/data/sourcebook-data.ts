@@ -1,10 +1,10 @@
 import { community, communityPrerelease } from '@/data/sourcebooks/community';
-import { triglav, triglavPrerelease } from '@/data/sourcebooks/triglav';
 import { blacksmith } from '@/data/sourcebooks/magazine-blacksmith';
 import { core } from '@/data/sourcebooks/core';
 import { orden } from '@/data/sourcebooks/orden';
 import { playtest } from '@/data/sourcebooks/playtest';
 import { ratcatcher } from '@/data/sourcebooks/magazine-ratcatcher';
+import { triglav } from '@/data/sourcebooks/triglav';
 
 export class SourcebookData {
 	// Official
@@ -15,7 +15,6 @@ export class SourcebookData {
 	// Third Party
 	static magazineBlacksmith = blacksmith;
 	static magazineRatcatcher = ratcatcher;
-	static triglavPrerelease = triglavPrerelease;
 	static triglav = triglav;
 
 	// Community

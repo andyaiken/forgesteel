@@ -13,5 +13,20 @@ i18next.use(HttpBackend).use(initReactI18next).init({
 		loadPath: '/forgesteel/locales/{{lng}}/{{ns}}.json'
 	},
 	react: { useSuspense: false },
-	defaultNS
+	defaultNS,
+	interpolation: {
+		escapeValue: false, // not needed for react as it escapes by default
+		format: function format(value, format) {
+			switch (format) {
+				case 'lowercase':
+					return value.toLowerCase();
+				case 'uppercase':
+					return value.toUpperCase();
+				case 'titlecase':
+					return value.toLowerCase().replace(/(?:^|\s)\w/g, function (match: string) {
+						return match.toUpperCase();
+					});
+			}
+		}
+	}
 });

@@ -10,10 +10,10 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { SubClass } from '@/models/subclass';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 
-export const fey: SubClass = {
+export const circleOfSpring: SubClass = {
 	id: 'summoner-sub-3',
-	name: 'Fey Portfolio',
-	description: 'The fey garden of secretaires. Your portfolio features tiny ephemeral fey spirits surrounded by weird and powerful magic.',
+	name: 'Circle of Spring',
+	description: 'You are a feybright who beckons pixies, nixies, and sprites from Arcadia. Your portfolio features ephemeral fey spirits surrounded by weird and powerful magic.',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -21,19 +21,19 @@ export const fey: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-1',
 					name: 'Communication',
-					description: 'You can communicate with creatures that have the fey keyword even if you don’t share a language.'
+					description: 'You can communicate with creatures that have the Fey keyword even if you don’t share a language.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-3-1-2',
 					name: 'Fairy Whispers',
 					description: `
-Whenever you send a minion to perform a task for you outside of combat, they can bring back a rumor from the destination you sent them to. When the minion returns, make a **Reason** test:
+Whenever you send a minion to perform a task for you outside of combat, they can bring back a rumor from the destination to which you sent them. When the minion returns, make a **Reason test**:
 
 * **11-**: You learn an undoubtedly false common rumor.
 * **12-16**: You learn a common rumor that is most likely true.
 * **17+**: You learn an obscure rumor that could either be true or false.
 
-You gain a bane on the test for each subsequent rumor you collect in the same day or in the same location.`
+You gain a bane on the test for each subsequent rumor you collect either on the same day or in the same location.`
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'summoner-3-1-3',
@@ -47,7 +47,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 						FactoryLogic.feature.create({
 							id: 'summoner-3-1-3b',
 							name: 'Pixie Dust',
-							description: 'Whenever one of your fey minions dies within your Summoner’s Range, you can spend a Recovery to give temporary Stamina equal to your recovery value to each non-minion ally that was adjacent to your minion.'
+							description: 'Whenever one of your fey minions dies within your Summoner’s Range, you can spend a Recovery to give temporary Stamina equal to twice your Reason score to each non-minion ally adjacent to the minion when they died.'
 						})
 					]
 				}),
@@ -59,7 +59,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-1-4a',
 								name: 'Nixie Soakreed',
-								description: 'An especially tiny nixie with long hair that curls into reeds. The water they swim in tends to turn thick and cling to surfaces.',
+								description: 'These nixies are especially tiny. Their hair grows longer than their bodies and curls into reeds. The water soakreeds swim in tends to turn thick and cling to surfaces.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 								keywords: [ 'Fey' ],
@@ -74,7 +74,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4a-1',
 										name: 'Water Weird',
-										description: 'Once per turn, each nixie under your control can teleport to a body of water within 5. The soakreed can’t teleport into water their own soaking bog is currently creating.'
+										description: 'Once per turn during their move action, each nixie under your control can teleport to a body of water within 5. The soakreed can’t teleport into water created by their own soaking bog.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4a-2',
@@ -96,7 +96,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-1-4b',
 								name: 'Pixie Bellringer',
-								description: 'Glowing pixies that jingle as they fly. Historically, bellringers worked alongside bowman to ensure their arrows struck true.',
+								description: 'The bellringers are glowing pixies that jingle as they fly. Historically, these pixies worked alongside bowman to ensure their arrows struck true.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
 								keywords: [],
@@ -116,7 +116,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4b-2',
 										name: 'Fairy Chime',
-										description: 'Each ally within 1 square of a bellringer has a +1 to saving throws. Each enemy within 1 square of a bellringer has a -1 to saving throws.'
+										description: 'Each ally within 1 square of a bellringer has a +1 to saving throws. Each enemy within 1 square of a bellringer has a −1 to saving throws.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4b-3',
@@ -148,12 +148,12 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4c-1',
 										name: 'Magic Strike',
-										description: 'When the dandeknight strikes, you can choose one of the following damage types that the strike deals: acid, cold, corruption, fire, lightning, poison, or sonic.'
+										description: 'When the dandeknight strikes, you can choose one of the following damage types: acid, cold, corruption, fire, lightning, poison, or sonic. The strike deals that damage.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4c-2',
 										name: 'Staccato Swings',
-										description: 'The dandeknight makes two free strikes where they normally make one. The damage is added together and treated as a single strike if both strikes hit the same target.'
+										description: 'When the dandeknight makes a free strike, they can make two free strikes instead. The damage is added together and treated as a single strike if both strikes hit the same target.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-4c-3',
@@ -177,7 +177,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-1-5a',
 								name: 'Pixie Hydrain',
-								description: 'A pixie with a delicate array of vibrant flower petals for wings. The color drains from their wings as they call forth acid rain showers.',
+								description: 'This pixie flies on a delicate array of vibrant flower petals for wings. The color drains from their wings as they call forth acid rain showers.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 								keywords: [ 'Fey' ],
@@ -236,7 +236,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-1-5b',
 								name: 'Pixie Loftlilly',
-								description: 'Loftlillies lazily drift through the air in flower cups. They sip on toxic nectar to emit a powerful toxic haze from their skin.',
+								description: 'Loftlillies lazily drift through the air in flower cups. They sip on toxic nectar to emit a powerful haze from their skin.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 								keywords: [ 'Fey' ],
@@ -262,12 +262,12 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-5b-2',
 										name: 'Floating Toxins',
-										description: 'The area within 1 of the lo􀅌lilly causes each enemy and object with a size equal to your Reason or smaller to float 1 square off the ground. A floating enemy moves 2 additional squares from forced movement and has a bane on strikes if they can’t fly.'
+										description: 'The area within 1 square of the loftlilly causes each enemy and object with a size equal to your Reason or smaller to float 1 square off the ground until they leave the area. A floating enemy that can’t fly is unable to shift, moves 2 additional squares from forced movement, and has a bane on strikes.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-1-5b-3',
 										name: 'Minuscule',
-										description: 'The lo􀅌lilly has cover while occupying a larger creature’s space.'
+										description: 'The loftlilly has cover while occupying a larger creature’s space.'
 									})
 								]
 							}),
@@ -278,7 +278,7 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-1-5c',
 								name: 'Sprite Orchiguard',
-								description: 'A sprite surrounded by a wheel of shields. Orchiguards are usually crushed by the pressures of their own impenetrable defenses before ever being felled by enemy hands.',
+								description: 'The orchiguard is a sprite surrounded by a wheel of shields. They are usually crushed by the pressures of their own impenetrable defenses before ever being felled by enemy hands.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Fey' ],

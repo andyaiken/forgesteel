@@ -802,6 +802,17 @@ const SubclassSheet = (props: SubclassProps) => {
 						</Space>
 					))
 			}
+			{
+				props.subclass.abilities.length > 0 ?
+					<Space orientation='vertical'>
+						{
+							props.subclass.abilities.map(a => (
+								<AbilityPanel key={a.id} ability={a} mode={PanelMode.Full} />
+							))
+						}
+					</Space>
+					: null
+			}
 		</>
 	);
 };

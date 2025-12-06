@@ -6,5 +6,4 @@ export interface PowerRoll {
 	tier1: string;
 	tier2: string;
 	tier3: string;
-	crit: string;
 }

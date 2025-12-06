@@ -27,7 +27,6 @@ export class SummonLogic {
 								s.roll.tier1 = AbilityLogic.getTextEffect(s.roll.tier1, controller);
 								s.roll.tier2 = AbilityLogic.getTextEffect(s.roll.tier2, controller);
 								s.roll.tier3 = AbilityLogic.getTextEffect(s.roll.tier3, controller);
-								s.roll.crit = AbilityLogic.getTextEffect(s.roll.crit, controller);
 								break;
 							case 'text':
 								s.text = AbilityLogic.getTextEffect(s.text, controller);

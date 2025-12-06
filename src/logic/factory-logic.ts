@@ -917,8 +917,7 @@ export class FactoryLogic {
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
-			tier3: data.tier3,
-			crit: data.crit || ''
+			tier3: data.tier3
 		};
 	};
 

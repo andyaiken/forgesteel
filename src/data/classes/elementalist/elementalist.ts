@@ -193,7 +193,6 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7e',
 								name: 'Enchantment of Permanence',
-								description: 'You gain a bonus to Stamina.',
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: '',
@@ -203,7 +202,7 @@ Choose one of the following effects:
 									FactoryLogic.feature.createBonus({
 										id: '',
 										field: FeatureField.Stability,
-										valuePerEchelon: 1
+										value: 1
 									})
 								]
 							}),

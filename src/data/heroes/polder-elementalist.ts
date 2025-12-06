@@ -708,7 +708,7 @@ export const polderElementalist = {
 									feature: {
 										id: 'elementalist-1-7e',
 										name: 'Enchantment of Permanence',
-										description: 'You gain a bonus to Stamina.',
+										description: '',
 										type: 'Multiple Features',
 										data: {
 											features: [
@@ -733,11 +733,11 @@ export const polderElementalist = {
 													type: 'Bonus',
 													data: {
 														field: 'Stability',
-														value: 0,
+														value: 1,
 														valueCharacteristics: [],
 														valueCharacteristicMultiplier: 1,
 														valuePerLevel: 0,
-														valuePerEchelon: 1
+														valuePerEchelon: 0
 													}
 												}
 											]

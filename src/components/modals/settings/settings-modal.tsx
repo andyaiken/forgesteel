@@ -5,6 +5,7 @@ import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { DataService } from '@/utils/data-service';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
@@ -16,6 +17,7 @@ import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
+import { PatreonConnectPanel } from '@/components/panels/connection-settings/patreon-connect-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
@@ -32,6 +34,7 @@ interface Props {
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
+	dataService: DataService;
 	setConnectionSettings: (settings: ConnectionSettings) => void
 	clearErrors: () => void;
 	onClose: () => void;
@@ -632,7 +635,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getConnectionSettings = () => {
+	const getWarehouseSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
 			return (
 				<Expander title='Forge Steel Warehouse'>
@@ -643,6 +646,18 @@ export const SettingsModal = (props: Props) => {
 				</Expander>
 			);
 		}
+	};
+
+	const getConnectionSettings = () => {
+		return (
+			<Expander title='Connections'>
+				<PatreonConnectPanel
+					connectionSettings={props.connectionSettings}
+					setConnectionSettings={props.setConnectionSettings}
+					dataService={props.dataService}
+				/>
+			</Expander>
+		);
 	};
 
 	const getErrors = () => {
@@ -727,6 +742,7 @@ export const SettingsModal = (props: Props) => {
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
+						{getWarehouseSettings()}
 						{getConnectionSettings()}
 						{getErrors()}
 					</Space>

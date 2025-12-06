@@ -10,10 +10,10 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { SubClass } from '@/models/subclass';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 
-export const undead: SubClass = {
+export const circleOfGraves: SubClass = {
 	id: 'summoner-sub-4',
-	name: 'Undead Portfolio',
-	description: 'The undead army of necromancers. The corporeal and incorporeal creatures under your command are hardy and numerous.',
+	name: 'Circle of Graves',
+	description: 'You are a necromancer who raises undead creatures from the Necropolitan Ruin. The corporeal and incorporeal creatures under your command are hardy and many.',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -21,13 +21,13 @@ export const undead: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-1',
 					name: 'Communication',
-					description: 'You can communicate with creatures that have the undead keyword even if you don’t share a language.'
+					description: 'You can communicate with creatures that have the Undead keyword even if you don’t share a language.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-4-1-2',
-					name: 'Dead Men Do Tell Tales',
+					name: 'Dead Men Tell All Tales',
 					description: `
-You can touch a corpse of a creature that died within the past week and ask them a question. The corpse can choose to answer the question to the best of their ability. Each additional question you ask the corpse requires a Moderate Reason Test, where failure or consequence breaks your connection with the corpse permanently.
+You can touch the corpse of a creature who died within the past week and ask them a question. The corpse can choose to answer the question to the best of their ability. Each additional question you ask the corpse requires a **medium Reason test**, where failure or consequence breaks your connection with the corpse permanently.
 
 The corpse can also choose to refuse to answer or lie, especially if you were the one to kill them in the first place.`
 				}),
@@ -35,7 +35,7 @@ The corpse can also choose to refuse to answer or lie, especially if you were th
 					id: 'summoner-4-1-3',
 					name: 'Rise!',
 					description: `
-Once per round, when a creature dies within your Summoner’s Range that you didn’t sacrifice, you can use a triggered action to summon a signature undead minion in their space at no cost even if you’re at your minion maximum, but only if they can be organized into one of your squads. The new minion can’t act until the start of your next turn.
+Once per round, when a creature dies unwillingly within your Summoner’s Range, you can use a triggered action to summon a signature undead minion in their space at no cost, even if you’re at your minion maximum, but only if they can be organized into one of your squads. The new minion can’t act until the start of your next turn.
 
 This ability becomes a free triggered action if the target was a minion (either yours or an enemy).`
 				}),
@@ -47,7 +47,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-4a',
 								name: 'Husk',
-								description: 'A stiff corpse that snaps and crackles with each sudden movement. Corrosive breath endlessly billows out from their slackjawed faces.',
+								description: 'Husks have stiff corpses that snap and crackle with each sudden movement. Corrosive breath endlessly billows from their slackjawed faces.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Undead' ],
@@ -83,7 +83,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-1-4a-2',
 										name: 'Rotting Strike',
-										description: 'The husk’s melee free strikes inflict M < [weak] slowed (EoT). The potency increases by 1 for each addi􀆟onal husk adjacent to the target (maximum +2).'
+										description: 'The husk’s melee free strikes inflict M < [weak] slowed (EoT). The potency increases by 1 for each additional husk adjacent to the target (maximum +2).'
 									})
 								]
 							}),
@@ -95,7 +95,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-4b',
 								name: 'Shrieker',
-								description: 'The shrieker expresses their unending pain in a way that can be heard and felt for miles. A white hot fire rests within each of their sunken eye sockets.',
+								description: 'The shrieker expresses their unending pain in a way that can be heard and felt for miles. A white-hot fire smolders within each of their sunken eye sockets.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 								keywords: [ 'Undead' ],
@@ -143,7 +143,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-4c',
 								name: 'Skeleton',
-								description: 'Autonomous bone networks that fall short of replicating the structure they had in life. Skeleton bones are especially brittle and can splinter into huge shards when met with enough force.',
+								description: 'These autonomous bone networks fall just short of replicating the structure they had in life. Skeleton bones are especially brittle and can splinter into huge shards when met with enough force.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Undead' ],
@@ -192,7 +192,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-5a',
 								name: 'Grave Knight',
-								description: 'Zombie warriors that continue to fight after death. Any blood spilled at a grave knight’s hand runs pitch black.',
+								description: 'The grave knights are zombie warriors that continue to fight after death. Any blood spilled at a grave knight’s hand runs pitch black.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Undead' ],
@@ -243,7 +243,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-1-5a-3',
 										name: 'To the Grave',
-										description: 'When the grave knight is reduced to 0 Stamina, they make a melee free strike before being destroyed.'
+										description: 'When the grave knight is reduced to 0 Stamina, they can make a melee free strike before being destroyed.'
 									})
 								]
 							}),
@@ -254,7 +254,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-5b',
 								name: 'Stalker Shade',
-								description: 'An umbral stalker that floats free from any floor or surface. They can bend their appearance to completely vanish in the light.',
+								description: 'Shades are a form of umbral stalker that float free from any floor or surface. They can bend their appearance to completely vanish in the light.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 								keywords: [ 'Undead' ],
@@ -301,7 +301,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-1-5c',
 								name: 'Zombie Lumberer',
-								description: 'Massive, animated ogre corpses with incredible grip strength. When a lumberer falls, they’ll take anything within reach down with them.',
+								description: 'These massive, animated ogre corpses still maintain their incredible grip strength. When a lumberer falls, they’ll take anything within reach down with them.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Undead' ],
@@ -341,7 +341,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-1-5c-4',
 										name: 'Death Grasp',
-										description: 'When the lumberer is reduced to 0 Stamina, they latch onto an adjacent enemy before being destroyed. The enemy is M < [strong] restrained (EoT).'
+										description: 'When the lumberer is reduced to 0 Stamina, they can latch onto an adjacent enemy before being destroyed. The enemy is M < [strong] restrained (EoT).'
 									})
 								]
 							}),

@@ -10,10 +10,10 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { SubClass } from '@/models/subclass';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 
-export const elemental: SubClass = {
+export const circleofStorms: SubClass = {
 	id: 'summoner-sub-2',
-	name: 'Elemental Portfolio',
-	description: 'The elemental songs of the storm canters. The portfolio contains forces of nature that leave a big impact on the environment.',
+	name: 'Circle of Storms',
+	description: 'You are a storm caster who summons elementals from Quintessence. This portfolio contains forces of nature that leave a big impact on the environment.',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -21,17 +21,17 @@ export const elemental: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-1',
 					name: 'Communication',
-					description: 'You can communicate with creatures that have the elemental keyword even if you don’t share a language.'
+					description: 'You can communicate with creatures that have the Elemental keyword even if you don’t share a language.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-2-1-2',
 					name: 'Heart of Nature',
-					description: 'You can sense the presence of creatures with the elemental or dragon keywords within 1 mile of you. You can innately feel their emotions or pain, and you can’t obtain lower than a tier 2 outcome on any Intuition test made to socially interact with them.'
+					description: 'You can sense the presence of creatures with the Elemental or Dragon keywords within 1 mile of you. You can innately feel their emotions or pain, and you can’t obtain lower than a tier 2 outcome on any Intuition test made to socially interact with them.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-2-1-3',
 					name: 'Elemental Affinity',
-					description: 'Whenever you use Call Forth to summon one or more non-signature elemental minions, you can summon one bonus signature minion at no cost. You can choose between a signature minion that shares an Element keyword with the minions you summoned (such as fire, earth, or air) or an elemental mote.'
+					description: 'Whenever you use Call Forth to summon one or more non-signature elemental minions, you can summon one bonus signature minion at no cost. You can choose between a signature minion that shares an Element keyword with the minions you summoned (such as Fire, Earth, or Air) or an elemental mote.'
 				}),
 				FactoryLogic.feature.createSummon({
 					id: 'summoner-2-1-4',
@@ -41,7 +41,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-4a',
 								name: 'Elemental Mote',
-								description: 'A near-pure form of autonomous essence, just barely maintaining their form. They can shift their nature to match their surroundings.',
+								description: 'This near-pure form of autonomous essence just barely maintains their form. They can shift their nature to match their surroundings.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 								keywords: [ 'Elemental' ],
@@ -56,12 +56,15 @@ export const elemental: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-1',
 										name: 'Dweomer Burst',
-										description: 'When the mote is reduced to 0 Stamina, each enemy adjacent to the mote has a bane on their next strike.'
+										description: 'When the mote is reduced to 0 Stamina, each enemy adjacent to  the mote has a bane on their next strike.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-2',
 										name: 'Catalyst',
-										description: 'Once per turn, the mote can transform into an adjacent allied signature minion, maintaining their current Stamina. Instead, you can spend 1 essence to transform the mote into any signature minion in the elemental portfolio you don’t have. The minion must be reassigned to a new squad if their new name diﬀers from the other squad members.'
+										description: `
+Once per turn, the mote can transform into an adjacent allied signature minion, maintaining their current Stamina. The minion must be reassigned to a new squad if their new name differs from the other squad members.
+
+Alternatively, you can spend 1 essence to transform the mote into any signature minion in the elemental portfolio you don’t have, as if you summoned the new minion into the mote’s space.`
 									})
 								]
 							}),
@@ -79,7 +82,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-5a',
 								name: 'Brisk Gale',
-								description: 'The gales are twisting ribbons of cloud and debris endlessly dancing in place. They disrupt the air in the area and allow their allies to move freely.',
+								description: 'The gales are twisting ribbons of cloud and debris endlessly dancing in  place. They disrupt the air and allow their allies to move freely.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Elemental (air)' ],
@@ -100,7 +103,7 @@ export const elemental: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5a-2',
 										name: 'Whirlwind',
-										description: 'When the gale is reduced to 0 Stamina, winds whip in their space until the end of the encounter. You or any ally that enters this space or starts their turn there can immediately shift 1 (including vertically).'
+										description: 'When the gale is reduced to 0 Stamina, winds whip in their space until the end of the encounter. You or an ally that enters this space or starts their turn there can immediately shift (including vertically).'
 									})
 								]
 							}),
@@ -145,7 +148,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-5c',
 								name: 'Walking Boulder',
-								description: 'A massive clod of animated stone that rolls above smaller piles of rocks that could be perceived as ‘legs’. Boulders are good for taking up space and building barricades.',
+								description: 'These massive clods of animated stone roll upon smaller piles of rocks that could be perceived as limbs. Walking boulders are useful for taking up space and forming barricades.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Elemental (fire)' ],
@@ -165,12 +168,12 @@ export const elemental: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5c-2',
 										name: 'Obstruct',
-										description: 'The boulder obstructs line of eﬀect for enemies.'
+										description: 'The boulder obstructs line of effect for enemies'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5c-3',
 										name: 'Pile Up',
-										description: 'When the boulder is reduced to 0 Stamina, they leave behind a stone Wall equal to their size in their space until the end of the encounter.'
+										description: 'When one or more boulders is reduced to 0 Stamina, they each leave behind a stone wall equal to their size in their space until the end of the encounter.'
 									})
 								]
 							}),
@@ -188,7 +191,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-6a',
 								name: 'Crux of Ash',
-								description: 'A curtain of billowing hot ash with an avian head. They cover their victims in a burning cloak of charcoal and soot.',
+								description: 'The crux is a curtain of billowing hot ash with an avian head. They cover their victims in a burning cloak of charcoal and soot.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 								keywords: [ 'Elemental (fire, air)' ],
@@ -218,7 +221,7 @@ export const elemental: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-6a-2',
 										name: 'Soot Strike',
-										description: 'The crux’s melee free strikes M < [average] automatically hides each ally from the target until the start of the crux’s next turn, the target uses a maneuver to clear the soot, the crux takes damage, or the crux is destroyed.'
+										description: 'The crux’s melee free strikes M < [average] automatically hide each ally from the target until the start of the crux’s next turn, until the target uses a maneuver to clear the soot, until the crux takes damage, or until the crux is destroyed.'
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -226,7 +229,7 @@ export const elemental: SubClass = {
 											name: 'Ashen Cloud',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the crux is reduced to 0 Stamina, the area within 1 square of the crux is clouded by ash until it is dispersed by wind. You and any ally are concealed while occupying an aﬀected square. An enemy can’t establish line of eﬀect beyond the ash while occupying an aﬀected square.')
+												FactoryLogic.createAbilitySectionText('When the crux is reduced to 0 Stamina, the area within 1 square of the crux is clouded by ash until it is dispersed by wind. You or any ally are concealed while occupying an affected square. An enemy can’t establish line of effect beyond the ash while occupying an affected square.')
 											]
 										})
 									})
@@ -239,7 +242,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-6b',
 								name: 'Flow of Magma',
-								description: 'A long, serpentine creature of heated rock. They drool trails of lava from their fangs after biting their prey.',
+								description: 'This elemental is a long, serpentine creature of heated rock. Flows of magma drool trails of lava from their fangs after biting their prey.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Elemental (fire, earth)' ],
@@ -289,7 +292,7 @@ export const elemental: SubClass = {
 											name: 'Eruption',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The aﬀected area becomes diﬃcult terrain for enemies until the end of the encounter. An enemy that enters an aﬀected square or starts their turn there takes A < [average] 4 fire damage.')
+												FactoryLogic.createAbilitySectionText('When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A < [average] 4 fire damage.')
 											]
 										})
 									})
@@ -302,7 +305,7 @@ export const elemental: SubClass = {
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-6c',
 								name: 'Desolation of Sand',
-								description: 'The desolations have vaguely humanoid sand forms with no legs. Their glass hose “arms” shift and gristle before firing high pressure streams of sand at their foes.',
+								description: 'The desolations have vaguely humanoid sand forms with no legs. Their glass hose “arms” shift and bristle before firing high pressure streams of sand at their foes.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 								keywords: [ 'Elemental (air, earth)' ],
@@ -331,7 +334,7 @@ export const elemental: SubClass = {
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-6c-3',
-										name: 'You Can’t Fight Sand',
+										name: 'Sand Through Your Fingers',
 										description: 'The desolation doesn’t provoke opportunity attacks by moving.'
 									}),
 									FactoryLogic.feature.createAbility({
@@ -340,7 +343,7 @@ export const elemental: SubClass = {
 											name: 'Shifting Sand Pit',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the desolation is reduced to 0 Stamina, the area within 1 square of the desolation becomes diﬃcult terrain for enemies until the end of the encounter. You or any ally that enters the aﬀected area can immediately shift 3.')
+												FactoryLogic.createAbilitySectionText('When the desolation is reduced to 0 Stamina, the area within 1 square of the desolation becomes difficult terrain for enemies until the end of the encounter. You or an ally that enters the affected area can immediately shift 3.')
 											]
 										})
 									})

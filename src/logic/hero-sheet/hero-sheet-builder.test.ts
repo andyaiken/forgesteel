@@ -15,9 +15,9 @@ import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
+import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { highElfTactician } from '@/data/heroes/high-elf-tactician';
 import { retainer } from '@/data/monsters/retainer';
-import { undead } from '@/data/classes/summoner/undead';
 
 afterEach(() => {
 	vi.resetAllMocks();
@@ -30,7 +30,7 @@ describe('buildSummonSheet', () => {
 	});
 
 	test('it builds sheets for Summoner minions properly', () => {
-		const signatureMinions = undead.featuresByLevel.flatMap(fbl => fbl.features)
+		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
 		const skeleton = signatureMinions.data.options.find(o => o.id === 'summoner-4-1-4c') as Summon;
 		const summoner = FactoryLogic.createHero([]);
@@ -98,7 +98,7 @@ const mockFeatureRetainer = {
 	}
 } as FeatureRetainer;
 
-const undeadSignatureChoices = undead.featuresByLevel.find(fbl => fbl.level === 1)
+const undeadSignatureChoices = circleOfGraves.featuresByLevel.find(fbl => fbl.level === 1)
 	?.features.find(f => f.id === 'summoner-4-1-4')?.data as FeatureSummonChoiceData;
 const minionSummon1 = undeadSignatureChoices.options.find(o => o.monster.id === 'summoner-4-1-4a') as Summon;
 

@@ -9,22 +9,22 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
 import { SkillList } from '@/enums/skill-list';
-import { demon } from '@/data/classes/summoner/demon';
-import { elemental } from '@/data/classes/summoner/elemental';
-import { fey } from '@/data/classes/summoner/fey';
-import { undead } from '@/data/classes/summoner/undead';
+import { circleOfBlight } from '@/data/classes/summoner/blight';
+import { circleOfGraves } from '@/data/classes/summoner/graves';
+import { circleOfSpring } from '@/data/classes/summoner/spring';
+import { circleofStorms } from '@/data/classes/summoner/storms';
 
 export const summoner: HeroClass = {
 	id: 'class-summoner',
 	name: 'Summoner',
 	description: `
-You are the armada. The kings of old would trade their entire armies for one of your predecessors. You’ve undertaken the tradition that conjures an endless supply of warriors. You are the summoner, the mage who takes their dreams and makes them manifest.
+You are the armada. The kings of old would trade armies for your abilities. You’ve undertaken the tradition that conjures an endless supply of warriors. You are the summoner, the mage who takes their dreams and makes them manifest.
 
-You utilize minions to provide tactical positioning and reinforcement support to take the pressure off yourself and your fellow heroes. You call upon minions to trudge along perilous corridors and draw the enemy’s attention long enough for the rest of you to take the counteroffensive.
+You call forth minions to trudge fearlessly into the fray and provide support, holding the enemy at bay while you and your fellow heroes ready the counteroffensive. Your minions serve unflinchingly, unerringly, to their death or to yours.
 
 You can also take advantage of powerful magic to buff your allies, whittle down your enemies, or enlist the fallen into your ranks. And when push comes to shove, you can call upon your champion to finish the fight.`,
 	type: 'master',
-	subclassName: 'Portfolio',
+	subclassName: 'Circle',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
 		[ Characteristic.Reason ]
@@ -37,7 +37,7 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 				FactoryLogic.feature.createBonus({
 					id: 'summoner-stamina',
 					field: FeatureField.Stamina,
-					value: 18,
+					value: 15,
 					valuePerLevel: 6
 				}),
 				FactoryLogic.feature.createBonus({
@@ -56,7 +56,7 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 						},
 						{
 							tag: 'minion-death',
-							trigger: 'The first time in a round that any minion dies unwillingly within your Summoner’s Range',
+							trigger: 'The first time each round that any minion dies unwillingly within your Summoner’s Range',
 							value: '1'
 						}
 					],
@@ -76,21 +76,23 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 					id: 'summoner-1-2',
 					name: 'Minions',
 					description: `
-The creatures you control are called minions. You can summon and maintain up to a maximum of 8 minions. Your minions are considered allies at your level.
+The creatures you control are called **minions**. You can summon and maintain up to a maximum of 8 minions. Your minions are considered allies at your level.
 
-You can manage up to two squads of minions. Newly summoned minions can either be organized into a new squad or be distributed into other squads under your control. A squad can’t contain more than eight minions, and all minions in the squad must have the same name.
+You can manage up to two **squads** of minions. Newly summoned minions can either be organized into a new squad or be distributed into other squads under your control. A squad can’t contain more than eight minions, and all minions in the squad must have the same name.
 
-You have a Summoner’s Range that defines the maximum distance you can summon minions and use specific conjuring abilities. Your Summoner’s Range is equal to 5 + your Reason score. You can summon and give commands to minions while they are within line of effect. Commanding a minion to take a main action or a maneuver reveals yourself if you are hidden.
+The maximum distance that you can summon minions and use specific conjuring abilities is called your **Summoner’s Range**. Your Summoner’s Range is equal to 5 + your Reason score. You must have line of effect to summon and give commands to minions within your Summoner’s Range. Commanding a minion to take a main action or a maneuver while hidden reveals you.
 
-You have special minions at your disposal called signature minions, low cost creatures that you’ve become accustomed to summoning frequently.
+You also have special minions at your disposal called **signature minions**, low-cost creatures that you’ve become accustomed to summoning often.
 
 ### Minions in Combat
 
-**Start of Combat**: At the start of a combat encounter or some other stressful situation tracked in combat rounds (as determined by the Director), you summon two of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required).
+**Start of Combat**: At the start of a combat encounter or some other stressful situation tracked in combat rounds (as determined by the Director), you can summon up to two of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required).
 
-**Summoning**: At the start of each of your turns during combat, you summon up to three of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required). Unless an ability specifies, you can’t summon any number of new minions beyond your minion maximum until the same number of your existing minions are dismissed or destroyed.
+**Start of Turn**: At the start of each of your turns during combat, you can summon up to three of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required).
 
-**Stamina**: Minions in a squad pool their Stamina together. Whenever a minion in a squad takes damage, the squad’s Stamina pool is reduced by a number equal to the damage taken. Each time the pool is reduced by an amount equal to a single squad member’s Stamina, one minion dies (starting with the minion that took damage, followed by the next nearest minion). If there is any excess damage after all minions in the squad are dead, you take 1d6 damage. Minions can’t be winded, can’t regain Stamina, and can’t gain temporary Stamina.
+**Summoning**: Each minion is summoned on the ground unless they can fly or hover. Unless an ability specifies, you can’t summon any new minions beyond your minion maximum until the same number of existing minions are dismissed or destroyed.
+
+**Stamina**: Minions in a squad pool their Stamina together. Whenever a minion in a squad takes damage, the squad’s Stamina pool is reduced by a number equal to the damage taken. Each time the pool is reduced by an amount equal to a single squad member’s Stamina, one minion dies (starting with the minion that took damage, followed by the next nearest minion). If there is any excess damage after all minions in the squad are dead, you take damage equal to 2 + your level. Minions can’t be winded, can’t regain Stamina, and can’t gain temporary Stamina.
 
 **Area Effects**: The damage from an area effect dealt to a squad’s Stamina pool can only kill up to the minions in its area. Any excess damage is ignored.
 
@@ -98,17 +100,21 @@ You have special minions at your disposal called signature minions, low cost cre
 
 **Conditions**: You resolve any saving throws on conditions affecting one or more of your minions. Treat saving throws as if you had one instance of each condition.
 
-**Immunity and Weakness**: If a minion has either a damage immunity or a damage weakness for a source of damage, apply the effects to the minion’s squad once, even if multiple minions share the same immunity or weakness.
+**Immunity and Weakness**: If any minion in a squad has damage immunity or weakness to a particular damage type, apply that effect to the entire squad only once, regardless of how many minions share the same trait.
 
-**Actions**: Minions in a squad act together on your turn in any order, before, in-between, and/or after any of your actions. They can either take a move action and a main action (excluding Heal and Defend), a move action and a maneuver, or two move actions. Individual minions can also take opportunity attacks.
+**Actions**: Minions in a squad act together on your turn in any order, before, in-between, and/or after any of your actions. They can either take a move action and a main action (excluding Heal and Defend), a move action and a maneuver, or two move actions. Individual minions can also make opportunity attacks.
 
 **Free Strikes**: Unless otherwise specified, a minion’s free strike has a distance of Melee 1 or Ranged 5 and deals the damage value listed on the stat block. The minion can choose to deal untyped damage or the damage type next to the damage value.
 
-**Damage**: Whenever multiple minions strike the same target simultaneously, the damage is added together and treated as a single strike. Minions in a squad targeting the same target with a signature action only apply one instance of the signature action while each additional minion increases the damage by their free strike value.
+**Damage**: Whenever multiple minions strike the same target simultaneously, the damage is added together and treated as a single strike. Minions in a squad targeting the same target with a signature ability only apply one instance of the signature ability while each additional minion increases the damage by a number equal to their free strike value. 
 
-**Surges**: Your minions use your pool of Surges and can apply them to their strikes. Whenever one or more of your minions would gain a Surge during a turn, you gain one Surge instead.
+**Surges**: Your minions share your pool of surges and can apply them to their strikes. Whenever one or more of your minions would gain a surge during a turn, you gain that surge instead.
 
-**Maneuvers**: Unless otherwise specified on the minion’s stat block, a squad uses their maneuver together as a unit. If a maneuver targets a single creature, all minions in the squad target the same creature. If a maneuver requires a power roll, the result is equal to 8 + the minion’s characteristic + the number of squad members within distance of the maneuver.
+**Maneuvers**: Unless otherwise specified on the minions’ stat block, a squad uses their maneuver together as a unit. If a maneuver targets a single creature, all minions in the squad target the same creature. If a maneuver requires a power roll, the result is equal to 8 + the minions’ characteristic + the number of squad members within distance of the maneuver.
+
+**Individual Maneuvers**: An individual minion can use a maneuver to alleviate their own circumstances, such as getting up from prone or escaping a grab. If they do, they can’t take part in their squad’s main action or maneuver.
+
+**Characteristics**: Your minions have their own characteristics for the purposes of resisting potencies, maneuvers, and making tests. You use your own characteristics where a minion’s stat block refers to an R or uses a potency (such as M < [weak]). 
 
 **Unconscious**: If you are unconscious or unable to act on your turn, you can’t summon new minions. Additionally, your remaining minions can’t deal damage; they can only act to bring you to safety.
 
@@ -116,9 +122,9 @@ You have special minions at your disposal called signature minions, low cost cre
 
 ### Minions Outside of Combat
 
-You can have up to 4 minions summoned outside of combat. You can summon your signature minions at no cost. Other minions with an essence cost can be summoned as if you had spent an amount of essence on them equal to your Victories.
+While outside of combat, you can have up to 4 minions summoned without spending essence. You can freely summon your signature minions this way. For other minions, while you have a number of Victories equal to the minion’s essence cost or more, you can summon up to the set number of minions listed on their stat block.
 
-Each of your minions can be given a simple task and a destination you’ve previously been to and they’ll fulfill it to the best of their ability. Example tasks include sending messages, scouting, and carrying supplies. Your minions aren’t followers and can’t make project rolls until you can summon specialists.
+Each of your minions can be given a simple task and a destination you’ve previously visited and they’ll fulfill it to the best of their ability. Example tasks include sending messages, scouting, and carrying supplies. Your minions aren’t followers and can’t make project rolls until you can summon specialists.
 
 When combat begins, any of your minions who were summoned outside of combat finish their tasks and are then dismissed.`,
 					tag: 'minions'
@@ -129,14 +135,18 @@ When combat begins, any of your minions who were summoned outside of combat fini
 						name: 'Summoner Strike',
 						description: 'A sudden burst of energy erupts from your implement and shocks your foes’ nerves.',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a free strike' ], freeStrike: true }),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('R damage. If the target has R < weak, they are slowed (save ends).'),
+							FactoryLogic.createAbilitySectionText('R damage. If the target has R < [weak], they are slowed (save ends).'),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Special',
+								effect: 'This ability has the Charge keyword when it’s used as a melee strike.'
+							}),
 							FactoryLogic.createAbilitySectionPackage('summoner-strike')
 						]
 					})
@@ -154,13 +164,16 @@ When combat begins, any of your minions who were summoned outside of combat fini
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Reason,
-									tier1: 'Up to three targets make a free strike',
-									tier2: 'Up to five targets make a free strike',
-									tier3: 'Up to seven targets make a free strike',
-									crit: 'Each target makes a free strike'
+									tier1: 'Up to three targets each make a free strike',
+									tier2: 'Up to five targets each make a free strike',
+									tier3: 'Up to seven targets each make a free strike'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Instead of using the triggering ability, your minions act against the same creature or object you would have targeted. You have an edge on the power roll if the triggering ability was a signature ability.')
+							FactoryLogic.createAbilitySectionField({
+								name: 'Special',
+								effect: 'On a natural 19 or 20, each target makes a free strike.'
+							}),
+							FactoryLogic.createAbilitySectionText('Your minions act in place of you making a free strike or using a signature ability. If you were granted the triggered action against a specific target, your minions must strike the same target. If the triggered action granted you a signature ability, you have an edge on the power roll.')
 						]
 					})
 				}),
@@ -227,7 +240,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-1-7b',
 								name: 'Platoon Formation',
-								description: 'Whenever one of your squads uses a damaging ability, one of their targets takes an extra 3 damage.'
+								description: 'Whenever one of your squads uses a damaging ability, choose one target of that ability to take additional damage equal to your Reason score.'
 							}),
 							value: 1
 						},
@@ -235,7 +248,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-1-7c',
 								name: 'Elite Formation',
-								description: 'Each of your minions have their Stamina increased by 3.'
+								description: 'Each of your minions have their Stamina increased by 3 and their stability increased by 1.'
 							}),
 							value: 1
 						},
@@ -246,7 +259,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									FactoryLogic.feature.create({
 										id: 'summoner-1-7da',
 										name: 'Leader Formation',
-										description: 'You don’t take any excess damage after all minions in a squad are dead. If your minion is within your Summoner’s Range when they take damage, you can choose to take damage in place of the minion.'
+										description: 'You aren’t affected by excess damage after all minions in a squad are dead. If your minion is within your Summoner’s Range when they take damage, you can choose to take damage in place of the minion.'
 									}),
 									FactoryLogic.feature.createProficiency({
 										id: 'summoner-1-7db',
@@ -262,7 +275,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 				FactoryLogic.feature.createChoice({
 					id: 'summoner-1-8',
 					name: 'Tactic Call',
-					description: 'You have a quick command you can issue to your minions.',
+					description: 'You have a special command you can issue to your minions.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -274,7 +287,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									distance: [ FactoryLogic.distance.createSummoner() ],
 									target: 'Self or one ally',
 									sections: [
-										FactoryLogic.createAbilitySectionText('You command up to two of your minions to shift up their speed towards squares adjacent to the target. The target gains a surge for each of your minions adjacent to them (up to a maximum of 3 surges), which they can use on the triggering damage.'),
+										FactoryLogic.createAbilitySectionText('The target gains a surge for each of your minions adjacent to them (up to a maximum of 3 surges), which they can use on the triggering damage'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
@@ -298,7 +311,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 										FactoryLogic.createAbilitySectionText('You summon a signature minion in an unoccupied space adjacent to the target. If the target is force moved into the minion, you can choose to make the target take no damage from the collision.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Special',
-											effect: 'Instead of summoning a new minion, you can command one of your minions within distance to shift up to their speed towards a square adjacent to the target before any additional effects occur.'
+											effect: 'Instead of summoning a new minion, you can command one of your minions within distance to shift up to their speed toward a square adjacent to the target before any additional effects occur.'
 										})
 									]
 								})
@@ -335,7 +348,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									distance: [ FactoryLogic.distance.createSummoner() ],
 									target: 'Self or one ally',
 									sections: [
-										FactoryLogic.createAbilitySectionText('You command one of your minions to shift up their speed towards a square adjacent to the target. If the minion enters within distance of the strike, they become the new target of the strike.'),
+										FactoryLogic.createAbilitySectionText('If one of your minions is adjacent to the target and is within distance of the strike, they become the new target of the strike.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
@@ -887,14 +900,14 @@ Eidos remains until you spend it.`
 You can spend charges to activate one of the following effects. You can activate an effect multiple times. All charges disappear after using this ability.
 
 * **1 charge**: You or an ally within your Summoner’s Range can spend a recovery.
-* **1 charge**: You or an ally within your Summoner’s Range gains a surge.
+* **1 charge**: You or an ally within your Summoner’s Range gain a surge.
 * **2 charges**: You call forth a signature minion into an unoccupied space within your Summoner’s Range.`)
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'summoner-ability-2',
 			name: 'Explosive Parade',
-			description: 'Your minions swell with energy until they can no longer maintain their shape.',
+			description: 'Your minions swell with energy until they can no longer exist in this realm.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createSummoner() ],
@@ -910,7 +923,7 @@ You can spend charges to activate one of the following effects. You can activate
 					})
 				),
 				FactoryLogic.createAbilitySectionText(`
-The minions are summoned within distance regardless of your minion maximum and without organizing them into squads. Each newly summoned minion immediately moves up to their speed towards a creature or object.
+The minions are summoned within distance regardless of your minion maximum and without organizing them into squads. Each newly summoned minion immediately moves up to their speed toward a creature or object.
 
 If they move adjacent to their target, become targeted by an opportunity attack, or stop moving, they explode, dealing 2 damage to one adjacent creature or object and pushing them 1 square. If a target is affected by two or more minions’ explosions, the effects stack. These minions activate no effects upon death, and you gain no essence from their deaths.`),
 				FactoryLogic.createAbilitySectionField({
@@ -923,13 +936,13 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 			id: 'summoner-ability-3',
 			name: 'Distraction Tactics',
 			description: 'Your minions do the work to draw the heat away from your allies.',
-			type: FactoryLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver({ free: true }),
 			keywords: [ AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Special',
 			cost: 5,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, each minion under your control during the encounter is the target of the following effect. The target’s strikes can inflict I < [weak] taunted (EoT) to enemies. The potency increases by 1 for each minion that joined the strike.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each minion under your control during the encounter is the target of the following effect:The target’s strikes can inflict I < [weak] taunted (EoT) to enemies. The potency increases by 1 for each minion that joined the strike.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -942,7 +955,7 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 			target: 'All allies',
 			cost: 5,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The target chooses between gaining 2 surges or dealing R additional damage on their next strike.')
+				FactoryLogic.createAbilitySectionText('Each target chooses between gaining 2 surges or dealing additional damage equal to your Reason on their next strike.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -984,7 +997,7 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 						tier3: '4 + R damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('This strike deals an additional 1 damage for each minion ally adjacent to you, or 2 damage for each non-minion ally adjacent to you.')
+				FactoryLogic.createAbilitySectionText('This strike deals an additional 2 damage for each ally adjacent to you.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1213,10 +1226,10 @@ You can change the damage type to be a type that your champion deals on their st
 		})
 	],
 	subclasses: [
-		demon,
-		elemental,
-		fey,
-		undead
+		circleOfBlight,
+		circleOfGraves,
+		circleOfSpring,
+		circleofStorms
 	],
 	level: 1,
 	characteristics: []

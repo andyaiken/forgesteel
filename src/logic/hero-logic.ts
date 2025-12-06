@@ -151,6 +151,10 @@ export class HeroLogic {
 				ability.name = customization.name || ability.name;
 				ability.description = customization.description || ability.description;
 
+				if (ability.cost !== 'signature') {
+					ability.cost += customization.costModifier;
+				}
+
 				// Distance bonus / damage bonus are handled separately
 
 				if (customization.characteristic) {

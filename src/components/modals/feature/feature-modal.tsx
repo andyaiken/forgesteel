@@ -86,6 +86,7 @@ export const FeatureModal = (props: Props) => {
 			name: '',
 			description: '',
 			notes: '',
+			costModifier: 0,
 			distanceBonus: 0,
 			damageBonus: 0,
 			characteristic: null

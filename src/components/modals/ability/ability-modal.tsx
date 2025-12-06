@@ -40,6 +40,7 @@ export const AbilityModal = (props: Props) => {
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
 
+	const hasCost = props.ability.cost !== 'signature';
 	const hasRange = props.ability.distance.some(d => ![ AbilityDistanceType.Self, AbilityDistanceType.Special ].includes(d.type));
 	const hasDamage = AbilityLogic.usesDamage(props.ability);
 
@@ -103,6 +104,22 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
+	const setCost = (value: number) => {
+		const copy = Utils.copy(hero) as Hero;
+
+		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
+		if (!ac) {
+			ac = createCustomization();
+			copy.abilityCustomizations.push(ac);
+		}
+		ac.costModifier = value;
+
+		setHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
+	};
+
 	const setDistance = (value: number) => {
 		const copy = Utils.copy(hero) as Hero;
 
@@ -157,6 +174,7 @@ export const AbilityModal = (props: Props) => {
 			name: '',
 			description: '',
 			notes: '',
+			costModifier: 0,
 			distanceBonus: 0,
 			damageBonus: 0,
 			characteristic: null
@@ -225,6 +243,12 @@ export const AbilityModal = (props: Props) => {
 						</Expander>
 						<Expander title='Modifiers'>
 							<Space orientation='vertical' style={{ width: '100%' }}>
+								<NumberSpin
+									disabled={!hasCost}
+									label='Cost'
+									value={customization?.costModifier || 0}
+									onChange={setCost}
+								/>
 								<NumberSpin
 									disabled={!hasRange}
 									label='Distance'

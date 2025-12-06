@@ -10,10 +10,10 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { SubClass } from '@/models/subclass';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 
-export const demon: SubClass = {
+export const circleOfBlight: SubClass = {
 	id: 'summoner-sub-1',
-	name: 'Demon Portfolio',
-	description: 'The demon underlings of the demoniacs. This portfolio is filled with shapechanging demons that grow in hunger and power over time.',
+	name: 'Circle of Blight',
+	description: 'You are a demonologist who calls forth demons from the Abyssal Waste. Your portfolio includes shapechanging demons that grow in hunger and power over time.',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -21,20 +21,20 @@ export const demon: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-1',
 					name: 'Communication',
-					description: 'You can communicate with creatures that have the abyssal keyword even if you don’t share a language.'
+					description: 'You can communicate with creatures that have the Abyssal keyword even if you don’t share a language.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-2',
 					name: 'Soulsense',
 					description: `
-While you have line of effect to a creature with a soul, you can perceive a trail of where the creature has been in the last number of minutes equal to 5 x your level.
+While you have line of effect to a creature with a soul, you can perceive a trail of where the creature has been in the last number of minutes equal to 5 × your level.
 
-When you finish a respite, the soul trails of each creature that took the respite with you are always visible to you until your next respite.`
+When you finish a respite, you can always perceive the soul trails of each creature that took the respite with you until your next respite.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-1-1-3',
 					name: 'Death Snap',
-					description: 'Whenever one of your demon minions would unwillingly die, they can deal damage to an adjacent creature equal to their free strike value before dying.'
+					description: 'Whenever one of your demon minions would die unwillingly, they can deal damage to an adjacent creature equal to their free strike value before dying.'
 				}),
 				FactoryLogic.feature.createSummonChoice({
 					id: 'summoner-1-1-4',
@@ -44,7 +44,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-1-4a',
 								name: 'Ensnarer',
-								description: 'A vaguely humanoid form, ripped apart and distorted by a demon nestled inside. They can extend long tongues from their extensive number of orifices and drag victims in close.',
+								description: 'This vaguely humanoid form is warped and distorted by a demon nestled inside them. They extend long tongues from multiple orifices to drag victims in close.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -86,7 +86,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-1-4b',
 								name: 'Rasquine',
-								description: 'A skulking demon that shimmers in the light. They teleport into position before biting the necks of their prey.',
+								description: 'The rasquine are skulking demons that shimmer in the light. They teleport into position before biting the necks of their prey.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -111,7 +111,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-4b-2',
 										name: 'Skulker',
-										description: 'Once per turn, the rasquine can hide as a free action after teleporting.'
+										description: 'Once per turn, the rasquine can hide as a free maneuver after teleporting.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-4b-3',
@@ -128,7 +128,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-1-4c',
 								name: 'Razor',
-								description: 'A diminutive form of ruinant demon. Their bodies are swift, tumbling mounds of scarred flesh and deadly claws.',
+								description: 'Razors appear to be a diminutive variant of the ruinant demon. Their bodies are swift, tumbling mounds of scarred flesh and deadly claws.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -153,7 +153,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-4c-2',
 										name: 'Teeth!',
-										description: 'Whenever an adjacent enemy grabs the razor or uses a melee ability against them, that enemy takes 1 damage.'
+										description: 'Once per turn, whenever an adjacent enemy grabs the razor or uses a melee ability against them, that enemy takes 1 damage for each razor adjacent to them.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-4c-3',
@@ -203,7 +203,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-5a-2',
 										name: 'Splash Strike',
-										description: 'The spittlich’s ranged free strikes have a distance of 10 and deals 2 poison damage to an enemy adjacent to the target. Creatures that take poison damage can’t shift until the start of the spittlich’s next turn.'
+										description: 'The spittlich’s ranged free strikes have a distance of 10 and deal 2 poison damage to an enemy adjacent to the target. Creatures that take poison damage from this spittlich can’t shift until the start of the spittlich’s next turn.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-1-5a-3',
@@ -219,7 +219,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-1-5b',
 								name: 'Fanged Musilex',
-								description: 'A heaving, knotted mass of ensnarer bodies. A musilex is compelled to drag everything in towards their body.',
+								description: 'Ensnarers knot and twist their bodies together to form heaving, heavy musilexes. They’re compelled to drag everything in toward their body.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -260,7 +260,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-1-5c',
 								name: 'Twisted Bengrul',
-								description: 'The bengrul is an undulating heap of glass and flesh. They shatter pieces of themselves into their prey and disrupt their senses.',
+								description: 'The bengrul is an undulating heap of glass and flesh. They shatter pieces of themselves to disrupt senses and inflict grisly wounds on their prey.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 								keywords: [ 'Abyssal', 'Demon' ],

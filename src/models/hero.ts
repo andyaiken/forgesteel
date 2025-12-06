@@ -12,6 +12,7 @@ export interface AbilityCustomization {
 	name: string;
 	description: string;
 	notes: string;
+	costModifier: number;
 	distanceBonus: number;
 	damageBonus: number;
 	characteristic: Characteristic | null;

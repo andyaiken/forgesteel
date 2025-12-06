@@ -198,6 +198,10 @@ export class HeroUpdateLogic {
 		}
 
 		hero.abilityCustomizations.forEach(ac => {
+			if (ac.costModifier === undefined) {
+				ac.costModifier = 0;
+			}
+
 			if (ac.distanceBonus === undefined) {
 				ac.distanceBonus = 0;
 			}

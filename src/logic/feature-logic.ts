@@ -432,8 +432,6 @@ export class FeatureLogic {
 							s.roll.tier2 = s.roll.tier2.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
 							s.roll.tier3 = s.roll.tier3.replaceAll(fromStr, toStr);
 							s.roll.tier3 = s.roll.tier3.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
-							s.roll.crit = s.roll.crit.replaceAll(fromStr, toStr);
-							s.roll.crit = s.roll.crit.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
 							break;
 					}
 				});

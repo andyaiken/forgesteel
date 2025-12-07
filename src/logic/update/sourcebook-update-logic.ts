@@ -97,6 +97,17 @@ export class SourcebookUpdateLogic {
 		sourcebook.titles = Collections.distinct(sourcebook.titles, a => a.id);
 
 		sourcebook.adventures.forEach(a => {
+			if (a.introduction === undefined) {
+				a.introduction = [];
+			}
+
+			if (a.party === undefined) {
+				a.party = {
+					count: 4,
+					level: 1
+				};
+			}
+
 			if (a.plot === undefined) {
 				a.plot = FactoryLogic.createAdventurePlot('');
 			}

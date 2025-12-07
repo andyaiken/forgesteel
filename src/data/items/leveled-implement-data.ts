@@ -3,6 +3,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 
@@ -339,6 +340,85 @@ export class LeveledImplementData {
 		]
 	});
 
+	static fieldCommandersBaton: Item = FactoryLogic.createItem({
+		id: 'item-field-commanders-baton',
+		name: '33 Field Commanders Baton',
+		description: `
+This long, ornate rod with a silver bulb head is braided with 33 green cords. A new cord starts to grow while you wield the baton.
+
+**Special**: If you are a tactician, you can wield this implement as if it had the Light Weapon keyword. Replace any reference to magic or psionic abilities with weapon abilities.`,
+		type: ItemType.LeveledImplement,
+		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A silver ingot and a written strategy from 33 warleaders',
+			source: 'Texts or lore in Caelian',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+			goal: 450
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-1b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-field-commanders-baton-1c',
+						name: '1st Level',
+						description: 'While you wield this baton, you are imbued with the experience of the commanders who wielded it before you. On your turn, whenever you or an ally deal damage to a creature within 5 squares of you, you can immediately use your maneuver to slide the creature up to 2 squares.'
+					})
+				]
+			},
+			{
+				level: 5,
+				features: [
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-5b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-field-commanders-baton-5c',
+						name: '5th Level',
+						description: 'When you slide a creature using this ability and they end this slide adjacent to one of your allies, that ally can use the Grab or Knockback maneuver against the creature as a free triggered action.'
+					})
+				]
+			},
+			{
+				level: 9,
+				features: [
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-field-commanders-baton-9b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-field-commanders-baton-9c',
+						name: '9th Level',
+						description: 'On your turn, whenever you or an ally deal damage to a creature within 10 squares of you, you can immediately use your maneuver to slide the creature up to 3 squares, ignoring stability.'
+					})
+				]
+			}
+		]
+	});
+
 	static foesenseLenses: Item = FactoryLogic.createItem({
 		id: 'item-foesense-lenses',
 		name: 'Foesense Lenses',
@@ -409,6 +489,189 @@ export class LeveledImplementData {
 						id: 'item-foesense-lenses-9b',
 						keywords: [ AbilityKeyword.Psionic ],
 						value: 1
+					})
+				]
+			}
+		]
+	});
+
+	static rexScepter: Item = FactoryLogic.createItem({
+		id: 'item-rex-scepter',
+		name: 'Rex Scepter',
+		description: 'The rod resembles a simple tree branch. It grows and braids itself into an ornate scepter in the heat of battle.',
+		type: ItemType.LeveledImplement,
+		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A tree branch and fealty from three hundred or more sworn followers',
+			source: 'Texts or lore in Zaliac',
+			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Presence ],
+			goal: 450
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createBonus({
+						id: 'item-rex-scepter-1a',
+						field: FeatureField.Renown,
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-rex-scepter-1b',
+						name: '1st Level',
+						description: 'You can use a main action once per turn targeting a willing ally or two minions you control within 5 squares of you to make a free strike on a target within the same distance of you as a free triggered action.'
+					})
+				]
+			},
+			{
+				level: 5,
+				features: [
+					FactoryLogic.feature.createBonus({
+						id: 'item-rex-scepter-5a',
+						field: FeatureField.Renown,
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-rex-scepter-5b',
+						name: '5th Level',
+						description: 'Whenever a creature you command using the scepter makes a free strike, they gain 1 surge that can be used immediately.'
+					})
+				]
+			},
+			{
+				level: 9,
+				features: [
+					FactoryLogic.feature.createBonus({
+						id: 'item-rex-scepter-9a',
+						field: FeatureField.Renown,
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-rex-scepter-9b',
+						name: '9th Level',
+						description: 'The scepter’s main action can now be used as a maneuver.'
+					})
+				]
+			}
+		]
+	});
+
+	static sanctuaryHorn: Item = FactoryLogic.createItem({
+		id: 'item-sanctuary-horn',
+		name: 'Sanctuary Horn',
+		description: 'This spiral hunting horn is embellished with branching veins of copper across the body. The metal glows red hot as the horn is blown.',
+		type: ItemType.LeveledImplement,
+		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'The spiral shell of a fallen armory snail and whirlwinds captured from Quintessence',
+			source: 'Texts or lore in Kalliac',
+			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-sanctuary-horn-1',
+						name: '1st Level',
+						description: 'While you wield the horn, your magic and psionic strikes deal sonic damage instead of their usual damage. Additionally, you can use a maneuver once per turn to blow the horn, allowing one ally or up to two minions you control within 5 squares of you to be recalled, instantly teleporting them into unoccupied spaces adjacent to you.'
+					})
+				]
+			},
+			{
+				level: 5,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-sanctuary-horn-5',
+						name: '5th Level',
+						description: 'While you wield the horn, the area of your cube, burst, and aura magic or psionic abilities increases by 1. Additionally, whenever a creature is teleported by this horn, they can choose to either spend a Recovery or gain a surge.'
+					})
+				]
+			},
+			{
+				level: 9,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-sanctuary-horn-9',
+						name: '9th Level',
+						description: 'The horn’s area bonus increases to 2. After you blow the horn as a maneuver, you can teleport yourself, another ally, or up to two other minions you control within 5 squares of you into the space left behind by a recalled target, provided they fit into the space.'
+					})
+				]
+			}
+		]
+	});
+
+	static wandOfTheUnheardOrchestra: Item = FactoryLogic.createItem({
+		id: 'item-wand-of-the-unheard-orchestra',
+		name: 'Wand of the Unheard Orchestra',
+		description: 'This conductor’s baton has an unassuming and inornate steel body. It increases in length when it’s swung and flashes a bright light when wanded at a regular interval.',
+		type: ItemType.LeveledImplement,
+		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'An iron ingot and a singing tree’s wood found in Arcadia',
+			source: 'Texts or lore in Khelt',
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 3
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-1b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 3
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-wand-of-the-unheard-orchestra-1c',
+						name: '1st Level',
+						description: 'You can use a maneuver once per turn targeting yourself or a willing ally within 5 squares of you to use a move action as a free triggered action.'
+					})
+				]
+			},
+			{
+				level: 5,
+				features: [
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 2
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-5b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-wand-of-the-unheard-orchestra-5c',
+						name: '5th Level',
+						description: 'You and any minions you control have their speed increased by 2. Whenever you or any minions you control take the Disengage move action, they can shift 2 additional squares as part of that move action.'
+					})
+				]
+			},
+			{
+				level: 9,
+				features: [
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 3
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-wand-of-the-unheard-orchestra-9b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 3
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-wand-of-the-unheard-orchestra-9c',
+						name: '9th Level',
+						description: 'The wand’s maneuver can now be used as a free maneuver once during your turn, targeting yourself or an ally within 10 squares of you to use a move action as a free triggered action.'
 					})
 				]
 			}

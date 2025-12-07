@@ -10,7 +10,6 @@ import { DomainData } from '@/data/domain-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { ImbuedArmorData } from '@/data/imbuements/imbued-armor-data';
 import { ImbuedImplementData } from '@/data/imbuements/imbued-implement-data';
-import { ImbuedItemData } from '@/data/items/imbued-item-data';
 import { ImbuedWeaponData } from '@/data/imbuements/imbued-weapon-data';
 import { KitData } from '@/data/kit-data';
 import { LeveledArmorData } from '@/data/items/leveled-armor-data';
@@ -402,10 +401,7 @@ export const core: Sourcebook = {
 		LeveledItemData.thiefOfJoy,
 		ArtifactData.bladeOfAThousandYears,
 		ArtifactData.encepter,
-		ArtifactData.mortalCoil,
-		ImbuedItemData.imbuedArmor,
-		ImbuedItemData.imbuedImplement,
-		ImbuedItemData.imbuedWeapon
+		ArtifactData.mortalCoil
 	],
 	kits: [
 		KitData.arcaneArcher,

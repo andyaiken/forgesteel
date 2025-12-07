@@ -4,6 +4,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ImbuedItemData } from '@/data/items/imbued-item-data';
 import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemType } from '@/enums/item-type';
@@ -46,8 +47,7 @@ export const ItemSelectModal = (props: Props) => {
 		setShowTypes(types);
 	};
 
-	const items = SourcebookLogic
-		.getItems(props.sourcebooks)
+	const items = [ ...SourcebookLogic.getItems(props.sourcebooks), ImbuedItemData.imbuedArmor, ImbuedItemData.imbuedImplement, ImbuedItemData.imbuedWeapon ]
 		.filter(item => props.types.includes(item.type))
 		.filter(item => !showUsableOnly || HeroLogic.canUseItem(props.hero, item))
 		.filter(item => showTypes[item.type])

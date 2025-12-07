@@ -50,7 +50,8 @@ export class SourcebookLogic {
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
-			list.push(SourcebookData.playtest);
+			list.push(SourcebookData.patreon);
+			list.push(SourcebookData.summoner);
 		}
 
 		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {

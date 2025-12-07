@@ -32,8 +32,16 @@ import { Utils } from '@/utils/utils';
 export class LibraryLogic {
 	static getAdventures = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getAdventures(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -46,8 +54,16 @@ export class LibraryLogic {
 
 	static getAncestries = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getAncestries(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -61,8 +77,16 @@ export class LibraryLogic {
 
 	static getCareers = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getCareers(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -76,8 +100,16 @@ export class LibraryLogic {
 
 	static getClasses = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getClasses(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -94,8 +126,16 @@ export class LibraryLogic {
 
 	static getComplications = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getComplications(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -108,8 +148,16 @@ export class LibraryLogic {
 
 	static getCultures = (sourcebooks: Sourcebook[], searchTerm: string, showCulturesFromAncestries: boolean) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getCultures(sourcebooks, showCulturesFromAncestries)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -122,8 +170,16 @@ export class LibraryLogic {
 
 	static getDomains = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getDomains(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -147,6 +203,7 @@ export class LibraryLogic {
 			return SourcebookLogic
 				.getEncounters(sourcebooks)
 				.filter(item => !adventureContentIDs.includes(item.id))
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -159,8 +216,16 @@ export class LibraryLogic {
 
 	static getImbuements = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getImbuements(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -173,8 +238,16 @@ export class LibraryLogic {
 
 	static getItems = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getItems(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -189,8 +262,16 @@ export class LibraryLogic {
 
 	static getKits = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getKits(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -204,8 +285,16 @@ export class LibraryLogic {
 
 	static getMonsterGroups = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getMonsterGroups(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -219,8 +308,16 @@ export class LibraryLogic {
 
 	static getMonsters = (sourcebooks: Sourcebook[], searchTerm: string, filter: MonsterFilter) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getMonsters(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => MonsterLogic.matches(item, filter))
 				.filter(item => Utils.textMatches([
 					item.name,
@@ -278,8 +375,16 @@ export class LibraryLogic {
 
 	static getPerks = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getPerks(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -292,8 +397,16 @@ export class LibraryLogic {
 
 	static getProjects = (sourcebooks: Sourcebook[], searchTerm: string, showProjectsFromImbuements: boolean, showProjectsFromItems: boolean) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getProjects(sourcebooks, showProjectsFromImbuements, showProjectsFromItems)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -306,8 +419,16 @@ export class LibraryLogic {
 
 	static getSubclasses = (sourcebooks: Sourcebook[], searchTerm: string, showSubclassesFromClasses: boolean) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getSubclasses(sourcebooks, showSubclassesFromClasses)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -342,8 +463,16 @@ export class LibraryLogic {
 
 	static getTerrainObjects = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getTerrains(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -356,8 +485,16 @@ export class LibraryLogic {
 
 	static getTitles = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
 			return SourcebookLogic
 				.getTitles(sourcebooks)
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,

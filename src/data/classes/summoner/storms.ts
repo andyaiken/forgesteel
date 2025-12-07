@@ -364,7 +364,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 					fixture: {
 						id: 'summoner-2-fixture',
 						name: 'Primordial Crystal',
-						description: 'The storm of elements from Quintessence coalesce into a hardened, crystalline structure. It magnifies the elemental composition of any matter that passes through it, and emits supernatural colors while doing so.',
+						description: 'The storm of elements from Quintessence coalesce into a hardened, crystalline structure. It magnifies the elemental composition of any matter that passes through it and emits supernatural colors while doing so.',
 						role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.Relic),
 						baseStamina: 20,
 						size: FactoryLogic.createSize(2),
@@ -380,7 +380,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-fixture-1-2',
 										name: 'Elemental Boost',
-										description: 'When you or any ally use a ranged ability that draws a line through the crystal, the distance increases by 5.'
+										description: 'When you or an ally uses a ranged ability that draws a line through the crystal, the distance increases by 5.'
 									})
 								]
 							},
@@ -402,7 +402,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-fixture-5-1',
 										name: 'Terra Resonance',
-										description: 'You gain a surge the first time in a round an area of terrain gains a supernatural eﬀect (excluding auras) while you have line of eﬀect to the crystal. You can choose to give the surge to an ally who also has line of eﬀect to the crystal.'
+										description: 'Each round, you gain a surge the first time an area of terrain gains a supernatural effect (excluding auras) while you have line of effect to the crystal. You can choose to give the surge to an ally who also has line of effect to the crystal.'
 									})
 								]
 							},
@@ -429,7 +429,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-fixture-9-2',
 										name: 'Magnified Strike',
-										description: 'When you or any ally make a ranged strike that draws a line through the crystal, the user gains a surge which they can use on the ability.'
+										description: 'When you or an ally makes a ranged strike that draws a line through the crystal, the user gains a surge which they can use on the ability.'
 									})
 								]
 							},
@@ -481,7 +481,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 											name: 'Web',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the silk is reduced to 0 Stamina, they launch ribbons of webbing into an area equal to their size + 1 within 5 before being destroyed. The aﬀected area is considered diﬃcult terrain for enemies until the end of the encounter. An enemy that ends their turn in the webbing is M < [strong] slowed (EoT).')
+												FactoryLogic.createAbilitySectionText('When the silk is reduced to 0 Stamina, they launch ribbons of webbing into an area equal to their size + 1 within 5 before being destroyed. The affected area is considered difficult terrain for enemies until the end of the encounter. An enemy that ends their turn in the webbing is M < [strong] slowed (EoT).')
 											]
 										})
 									})
@@ -494,7 +494,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-2-2b',
 								name: 'Principle of the Swamp',
-								description: 'The manes of these equine sludge dwellers extends and hooks into things like strong, fraying arms. This allows the principle of the swamp to either pull themselves onto dry land, or pull their prey into the dank depths.',
+								description: 'The manes of these equine sludge dwellers extend and hook into things like strong, fraying arms. This allows the principle of the swamp to either pull themselves onto dry land, or pull their prey into the dank depths.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Elemental (green, water, rot)' ],
@@ -529,7 +529,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-2-2b-3',
 										name: 'Encroaching Strike',
-										description: 'The principle’s melee free strikes have a distance of R and inflict M < [strong] grabbed. The principle can have an unlimited number of creatures or objects grabbed. A creature grabbed by this strike still has their normal speed, but can’t move further away from the principle.'
+										description: 'The principle’s melee free strikes have a distance of R and inflict M < [strong] grabbed. The principle can have an unlimited number of creatures or objects grabbed. A creature grabbed by this strike still has their normal speed, but can’t move farther away from the principle.'
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -537,7 +537,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 											name: 'Sludgefoot',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the principle is reduced to 0 Stamina, the area within 1 square of the principle becomes diﬃcult terrain for enemies until the end of the encounter. An enemy that ends their turn in the aﬀected area is pulled 4 towards the center of the area.')
+												FactoryLogic.createAbilitySectionText('When the principle is reduced to 0 Stamina, the area within 1 square of the principle becomes difficult terrain for enemies until the end of the encounter. An enemy that ends their turn in the affected area is pulled 4 toward the center of the area.')
 											]
 										})
 									})
@@ -550,7 +550,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-2-2c',
 								name: 'Quiet of Snow',
-								description: 'A pure-white vulpine with six legs that freely sprints through the air. Their howls are telepathic, washing over the receivers with a strong chill and a wave of goosebumps.',
+								description: 'This elemental is a pure-white vulpine with six legs that freely sprints through the air. Their howls are telepathic, washing over the receivers with a strong chill and a wave of goosebumps.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 								keywords: [ 'Elemental (air, rot, water)' ],
@@ -603,7 +603,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-2-2c-3',
 										name: 'Cold Surge',
-										description: 'When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the aﬀected area gains a Surge.'
+										description: 'When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.'
 									})
 								]
 							}),
@@ -673,7 +673,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-5-3a-3',
 										name: 'Decentralized Segments',
-										description: 'The reaver has cover while adjacent to another reaver they were summoned with. Whenever they receive an eﬀect that allows them to move or shift outside of their move action, they share the eﬀect with each adjacent reaver they were summoned with.'
+										description: 'The reaver has cover while adjacent to another reaver they were summoned with. Whenever they receive an effect that allows them to move or shift outside of their move action, they share the effect with each adjacent reaver they were summoned with.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-2-5-3a-4',
@@ -686,7 +686,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 											name: 'Iron Barricade',
 											cost: 1,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the reaver is reduced to 0 Stamina, they create a line equal to 2 x their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally have cover and damage immunity 2 while occupying an aﬀected square.')
+												FactoryLogic.createAbilitySectionText('When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.')
 											]
 										})
 									})
@@ -699,7 +699,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-5-3b',
 								name: 'Knight of Blood',
-								description: 'A faceless suit of armor with visible rivers of deep red blood flowing throughout their being. Their blood has a powerful pull to it, causing any open wounds nearby to rip further and leak towards the knight.',
+								description: 'These faceless suits of armor have visible rivers of deep red blood flowing throughout their being. Their blood has a powerful pull to it, causing any open wounds nearby to rip deeper and leak toward the knight.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 								keywords: [ 'Elemental (earth, fire, rot, water)' ],
@@ -738,7 +738,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 											name: 'Red River',
 											cost: 2,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the knight is reduced to 0 Stamina, they move up to their speed ignoring opportunity attacks. Each square that they exit during this movement pools with blood until the end of the encounter. Each aﬀected square is considered diﬃcult terrain for enemies and deals 3 corruption damage to an enemy when they first enter it on a turn. Whenever a bleeding enemy starts their turn, they are pulled 2 towards the nearest aﬀected square, ignoring stability.')
+												FactoryLogic.createAbilitySectionText('When the knight is reduced to 0 Stamina, they move up to their speed ignoring opportunity attacks. Each square that they exit during this movement pools with blood until the end of the encounter. Each affected square is considered difficult terrain for enemies and deals 3 corruption damage to an enemy when they first enter it on a turn. Whenever a bleeding enemy starts their turn within 10 squares of the blood pool, they are pulled 2 toward the nearest affected square, ignoring stability.')
 											]
 										})
 									})
@@ -751,7 +751,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-5-3c',
 								name: 'Light of the Sun',
-								description: 'These elementals are blazing white avian-shaped beings that are near impossible to look at directly. Between a light of the sun’s talons is a massive glowing sword that can render the heaviest of defenses weak.',
+								description: 'These elementals are blazing white avian-shaped beings that are nearly impossible to perceive directly. Between a light of the sun’s talons is a massive glowing sword that can split the heaviest of defenses asunder.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
 								keywords: [ 'Elemental (air, green, fire, void)' ],
@@ -807,7 +807,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 											name: 'Radiant Field',
 											cost: 2,
 											sections: [
-												FactoryLogic.createAbilitySectionText('When the light is reduced to 0 Stamina, the area within 1 square of the light becomes wreathed in sentient flames until the end of the encounter. An enemy that enters this area or starts their turn there takes 3 fire damage and is slowed (EoT). You or any ally that enters this area or starts their turn there gains 5 temporary Stamina and their Speed increased by 2 until the end of their turn.')
+												FactoryLogic.createAbilitySectionText('When the light is reduced to 0 Stamina, the area within 1 square of the light becomes wreathed in sentient flames until the end of the encounter. An enemy that enters this area or starts their turn there takes 3 fire damage and is slowed (EoT). You or any ally that enters this area or starts their turn there gains 5 temporary Stamina and their speed increases by 2 until the end of their turn.')
 											]
 										})
 									})
@@ -837,11 +837,11 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 					description: `
 Whenever you use Call Forth, you can spend essence to increase the size of one elemental minion you summon as shown on the following table.
 
-| Essence Cost | Size Change               |
-|:=============|===========================|
-| 1            | The minion becomes size 2 |
-| 3            | The minion becomes size 3 |
-| 5            | The minion becomes size 4 |
+| Essence Cost | Size Change                |
+|:=============|============================|
+| 1            | The minion becomes size 2. |
+| 3            | The minion becomes size 3. |
+| 5            | The minion becomes size 4. |
 
 Enlarged minions have their melee distance increased by 1 and inherent damage immunities doubled.`
 				}),
@@ -854,9 +854,9 @@ Enlarged minions have their melee distance increased by 1 and inherent damage im
 								id: 'summoner-2-8-2a',
 								name: 'Dragon’s Portent',
 								description: `
-Your champion is a Portent of a dragon yet to manifest. Through defending the innocent, you have made yourself and your elementals a close neighbor to the malice that threatens them. The dragon desires you bring their creation about, and lends you strength to see your justice through.
+Your champion is a Portent of a dragon yet to manifest. Through defending the innocent, you have made yourself and your elementals a close neighbor to the malice that threatens them. The dragon desires you bring their creation about and lends you strength to see your justice through.
 
-As a harbinger of ruin, the Dragon’s Portent has incredibly potent impact and control of the environment. Their final shape has yet to be determined; use this to your advantage and call upon the affinity that will end conflict the quickest.`,
+As a harbinger of ruin, the dragon’s Portent has incredibly potent impact and control of the environment. Their final shape has yet to be determined; use this to your advantage and call upon the affinity that will end conflict the quickest.`,
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
 								keywords: [ 'Dragon', 'Elemental' ],
@@ -876,7 +876,7 @@ As a harbinger of ruin, the Dragon’s Portent has incredibly potent impact and 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-8-2a-2',
 										name: 'Affinity',
-										description: 'The Portent selects an affinity for one of the following damage types when they are summoned: acid, cold, corruption, fire, lightning, or poison. The Portent gains immunity 5 to this damage type. This type determines the  damage type of their abilities and free strikes.'
+										description: 'The Portent selects an affinity for one of the following damage types when they are summoned: acid, cold, corruption, fire, lightning, or poison. This type determines the Portent’s affinity immunity and the damage type of their abilities.'
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({

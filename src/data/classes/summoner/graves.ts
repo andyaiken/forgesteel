@@ -398,7 +398,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-fixture-5-1',
 										name: 'Memento Mori',
-										description: 'You gain a surge the first me in a round one of your undead minions unwillingly dies while you have line of eﬀect to the gates. You can choose to give the surge to an ally who also has line of eﬀect to the gates.'
+										description: 'You gain a surge the first time in a round one of your undead minions unwillingly dies while you have line of effect to the gates. You can choose to give the surge to an ally who also has line of effect to the gates.'
 									})
 								]
 							},
@@ -425,7 +425,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-fixture-9-2',
 										name: 'Open the Gates',
-										description: 'You can use Rise! As a free triggered action each me an enemy dies within 3 squares of the gates while you have line of eﬀect to the gates.'
+										description: 'You can use Rise! as a free triggered action each time an enemy dies within 3 squares of the gates while you have line of effect to the gates.'
 									})
 								]
 							},
@@ -507,7 +507,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-2-2b',
 								name: 'Ceaseless Mournling',
-								description: 'A hulking amalgam of mismatched cadavers with tear stained trenches where their cheeks used to be. Their crying shakes enemies to their bone and renders them struggling to move.',
+								description: 'Mournlings are hulking amalgams of mismatched cadavers with tear-stained trenches where their cheeks used to be. Their crying shakes enemies to their bone and renders them struggling to move.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 								keywords: [ 'Undead' ],
@@ -548,12 +548,12 @@ This ability becomes a free triggered action if the target was a minion (either 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-2-2b-4',
 										name: 'Immutable Form',
-										description: 'The mournling’s shape can’t change via any external eﬀects.'
+										description: 'The mournling’s shape can’t change via any external effects.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-4-2-2b-5',
 										name: 'Rupture',
-										description: 'The first time the mournling burrows out of the ground on their turn, they make a free strike against each adjacent enemy.'
+										description: 'The first time the mournling burrows out of the ground on their turn, they can make a free strike against each adjacent enemy.'
 									})
 								]
 							}),
@@ -564,7 +564,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-2-2c',
 								name: 'Phase Ghoul',
-								description: 'Phase ghouls are caught between two different manifolds and rapidly flicker between them. They almost appear transparent save for their long, bright blue tongues that appears to lag behind their movements by a full second.',
+								description: 'Phase ghouls are bilocated undead caught between two different manifolds, rapidly flickering between them. They almost appear transparent save for their long, bright blue tongues that appears to lag behind their movements by a full second.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Undead' ],
@@ -627,14 +627,14 @@ This ability becomes a free triggered action if the target was a minion (either 
 					description: `
 You can spend 1 uninterrupted minute to perform a ritual and use your body as a host for a willing spirit of a creature who died in the area. While hosting the spirit, you have access to their memories of the 24 hours leading up to their death and any skills they knew in life. You can also magically change your appearance to look like them while they were alive.
 
-You can attempt to stop channeling the spirit at any time. If the spirit is hostile to you or you’ve hosted them for at least 1 hour, you must make a medium Presence test. On success, the spirit leaves your body. On failure, you become fully possessed by a haunt; you have no access to your skills and you can’t get above a tier 2 result on power rolls until you exorcise the haunt either by completing the Find a Cure project or taking a respite with an exorcist.
+You can attempt to stop channeling the spirit at any time. If the spirit is hostile to you or you’ve hosted them for at least 1 hour, you must make a **medium Presence test**. On success, the spirit leaves your body. On failure, you become fully possessed by a **haunt**; you have no access to your skills and you can’t get above a tier 2 result on power rolls until you exorcise the haunt either by completing the Find a Cure downtime project or taking a respite with an exorcist.
 
 After you stop channeling their spirit, you can’t use this feature to channel the same creature again.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-4-5-2',
 					name: 'Dread March',
-					description: 'You and your undead minions don’t spend additional speed to move through difficult terrain. If any of your undead minions would die while using their move action, they can choose to not die until the end of your turn.'
+					description: 'You and your undead minions don’t spend additional speed to move through difficult terrain. If one or more of your undead minions would die while using their move action, they can choose to not die until the end of your turn.'
 				}),
 				FactoryLogic.feature.createSummonChoice({
 					id: 'summoner-4-5-3',
@@ -644,7 +644,7 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3a',
 								name: 'False Vampire',
-								description: 'A false vampire is a bestial, bipedal ghoul that draws life from liquified remains. In death, their hands have curled into thick hooks, their bodies have darkened until they resemble suits, and their mouths have twisted and extended into large feeding needles that can pierce steel.',
+								description: 'A false vampire is a bestial, bipedal ghoul that draws life from liquified remains. In death, their hands curl into thick hooks, their bodies turn a putrid red-green as if wearing a dress suit, and their mouth twists and extends into a large feeding needle that can pierce steel.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Undead' ],
@@ -691,7 +691,7 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3b',
 								name: 'Phantom of the Ripper',
-								description: 'These phantoms still puppet along remnants of their corporeal forms. Unlike other spirits, the ripper tears the reality around them and leaves behind distorted or uneven “bumps” in the air. They can also do this to living matter!',
+								description: 'These phantoms puppet the remnants of their corporeal forms. Unlike other spirits, the ripper tears the reality around them and leaves behind distorted or uneven “bumps” in the air, which can affect stone, metal, and flesh',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 								keywords: [ 'Undead' ],
@@ -743,7 +743,7 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-5-3b-3',
 										name: 'Ripping Phase',
-										description: 'The phantom can move through other creatures and objects at normal speed. The first time in a round that the phantom passes through a creature, that creature takes 3 corrup on damage and has a bane on their next strike. The phantom doesn’t take damage from being force moved into objects.'
+										description: 'The phantom can move through other creatures and objects at normal speed. The first time in a round that the phantom passes through a creature, that creature takes 3 corruption damage and has a bane on their next strike. The phantom doesn’t take damage from being force moved into objects.'
 									})
 								]
 							}),
@@ -754,7 +754,7 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3c',
 								name: 'Zombie Titan',
-								description: 'Undead giants, or sometimes mishmashes of a graveyard’s entire population. The titan lumbers and slumps across battlefields, wanting desperately to collapse and crash into the earth like a sea of flesh and bone.',
+								description: 'Zombie titan is a catchall for undead giants, patchwork ogres and mournlings, or amalgamations of a graveyard’s entire population. The titan lumbers and slumps across battlefields, wanting desperately to collapse and crash into the earth like a sea of flesh and bone.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Undead' ],
@@ -799,7 +799,7 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 									FactoryLogic.feature.create({
 										id: 'summoner-4-5-3c-5',
 										name: 'Flesh to Mountains',
-										description: 'When the titan is reduced to 0 Stamina, their space becomes diﬃcult terrain. If a creature was prone underneath the titan when the titan is killed, they take 10 damage and are restrained (save ends).'
+										description: 'When the titan is reduced to 0 Stamina, their space becomes difficult terrain. If a creature was prone underneath the titan when the titan is killed, they take 10 damage and are restrained (save ends).'
 									})
 								]
 							}),
@@ -824,7 +824,10 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 				FactoryLogic.feature.create({
 					id: 'summoner-4-8-1',
 					name: 'Kill the Pain',
-					description: 'You and each of your undead minions ignore damage rolled as a d3 or a d6 and damage from environmental effects while you are not winded.'
+					description: `
+You aren’t affected by excess damage after all minions in a squad are dead.
+
+Additionally, you and each of your undead minions ignore damage rolled as a d3 or a d6 and damage from environmental effects while you are not winded.`
 				}),
 				FactoryLogic.feature.createSummon({
 					id: 'summoner-4-8-2',
@@ -835,9 +838,9 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 								id: 'summoner-4-8-2a',
 								name: 'Avatar of Death',
 								description: `
-Your champion is an Avatar of Death. The number of creatures you and your army have laid to rest now hangs above your head and threatens to crush your skull at any moment. You were unable to gain the power of the ultimate force of nature without a memento mori to keep you humble.
+Your champion is an Avatar of death. The number of creatures you and your army have laid to rest now hangs above your head and threatens to crush your skull at any moment. You were unable to gain the power of the ultimate force of nature without a memento mori to keep you humble.
 
-The Avatar of Death weighs down their foes with conditions so their army can take care of the rest. If an enemy can’t handle it, well then maybe they should just die.`,
+The Avatar of death weighs down their foes with conditions so their army can take care of the rest. If an enemy can’t handle it, well then maybe they should just die.`,
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
 								keywords: [ 'Undead' ],
@@ -895,7 +898,7 @@ The Avatar of Death weighs down their foes with conditions so their army can tak
 									FactoryLogic.feature.create({
 										id: 'summoner-4-8-2a-4',
 										name: 'Revelation Strike',
-										description: 'The Avatar’s melee free strikes P < [weak] instantly reduces a winded non-leader or solo creature to 0 Stamina, including targets winded by the strike.'
+										description: 'The Avatar’s melee free strikes P < [weak] instantly reduce a winded non-leader or solo creature to 0 Stamina, including targets winded by the strike.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-4-8-2a-5',
@@ -919,7 +922,7 @@ The Avatar of Death weighs down their foes with conditions so their army can tak
 									FactoryLogic.feature.create({
 										id: 'summoner-4-8-2a-7',
 										name: '',
-										description: 'The Avatar is unaﬀected by diﬃcult terrain and damage from forced movement.'
+										description: 'The Avatar is unaffected by difficult terrain and damage from forced movement.'
 									})
 								]
 							}),

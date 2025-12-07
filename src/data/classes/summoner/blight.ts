@@ -365,7 +365,7 @@ When you finish a respite, you can always perceive the soul trails of each creat
 									FactoryLogic.feature.create({
 										id: 'summoner-1-fixture-5-1',
 										name: 'Soul Rancor',
-										description: 'You gain a surge the first time in a round that your demon minions deal 3 or more damage to a creature while you have line of eﬀect to the boil. You can choose to give the surge to an ally who also has line of eﬀect to the boil.'
+										description: 'You gain a surge the first time in a round that your demon minions deal 3 or more damage to a creature while you have line of effect to the boil. You can choose to give the surge to an ally who also has line of effect to the boil.'
 									})
 								]
 							},
@@ -437,12 +437,12 @@ When you finish a respite, you can always perceive the soul trails of each creat
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2a-2',
 										name: 'Gushing Strike',
-										description: 'The spewer’s ranged free strikes have a distance of 10 and slide the target R + 2 squares.'
+										description: 'The spewler’s ranged free strikes have a distance of 10 and slide the target R + 2 squares.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2a-3',
 										name: 'Spew Slide',
-										description: 'The spewler shifts 2 after all eﬀects resolve whenever they take damage. Each square they exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.'
+										description: 'Each time the spewler takes damage, the spewler shifts 2 after all effects resolve. Each square they exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2a-4',
@@ -458,7 +458,7 @@ When you finish a respite, you can always perceive the soul trails of each creat
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-2-2b',
 								name: 'Hulking Chimor',
-								description: 'Their shape restructures and changes endlessly. Pieces of the chimor demon snap off inside their prey, causing their bodies to also restructure from the inside out.',
+								description: 'Chimors have no true shape; their bodies restructure and change endlessly. Pieces of the chimor demon snap off inside their prey, causing their bodies to also restructure from the inside out.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -503,8 +503,8 @@ When you finish a respite, you can always perceive the soul trails of each creat
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-2-2c',
-								name: 'Violence',
-								description: 'The violence are lanky, oily red bipeds that contort and snap their bodies into unassuming objects. Their mimicry is particularly precise, to the point where it’s unclear whether their victims die from the surprise or the violent transformation process first.',
+								name: 'Violent',
+								description: 'The violents are lanky, oily bipeds with bright red flesh that contort and snap their bodies into unassuming objects. Their mimicry is particularly precise, to the point where it’s unclear whether their victims die from the surprise or the violent transformation process first.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -530,17 +530,17 @@ When you finish a respite, you can always perceive the soul trails of each creat
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2c-2',
 										name: 'Transforming Strike',
-										description: 'The violence’s melee free strikes deal an additional 2 damage to each adjacent enemy they were hidden from. The violence loses their disguise after striking.'
+										description: 'The violent’s melee free strikes deal an additional 2 damage to each adjacent enemy from whom they were hidden. The violent loses their disguise after striking.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2c-3',
 										name: 'Mimicry',
-										description: 'The violence uses the Hide maneuver at the start of their turn as a free action, disguising themselves as an object the same size or smaller.'
+										description: 'The violent uses the Hide maneuver at the start of their turn as a free maneuver, disguising themselves as a a size 1M or smaller object.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2c-4',
 										name: 'Soulsight',
-										description: 'Each creature adjacent to the violence can’t be hidden from them.'
+										description: 'Each creature adjacent to the violent can’t be hidden from them.'
 									})
 								]
 							}),
@@ -572,7 +572,7 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-1-5-2',
-					name: 'Take Face',
+					name: 'Shaping',
 					description: 'You can spend 1 uninterrupted minute to perform a ritual that causes one of your minions to fold their shape and disguise themself to look like a duplicate of you, including speaking basic Caelian, allowing them to (potentially) freely move through civilization while completing their tasks. You can have a number of minions disguised at the same time equal to your Reason score.'
 				}),
 				FactoryLogic.feature.createSummonChoice({
@@ -583,7 +583,7 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-5-3a',
 								name: 'Faded Blightling',
-								description: 'A cherubin creature bloated and warped by demonic energy. The lights from their myriad of eyes have all but gone out and now resemble blisters across their body.',
+								description: 'This cherubin creature is bloated and warped by demonic energy. The lights from their myriad eyes have all but gone out, now resembling pustules across their body.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -624,7 +624,7 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 														tier3: '16 corruption damage; P < [strong] bleeding (EoT)'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('Instead of taking damage, you or any ally targeted by this ability impose a double bane on the next strike that targets them.')
+												FactoryLogic.createAbilitySectionText('Instead of taking damage, you or an ally targeted by this ability impose a double bane on the next strike that targets them.')
 											]
 										})
 									}),
@@ -647,7 +647,7 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-5-3b',
 								name: 'Gorrre',
-								description: 'The gorrre demons bear a resemblance to half rhino, half orangutan clad in heavy armor. They’ve been utilized as jail guards by devils, as few prisoners can ever hope to outrun a monster with unlimited endurance.',
+								description: 'The gorrre demons evoke features of rhino and orangutan while clad in heavy armor. They’ve been utilized as jail guards by devils, as few prisoners can ever hope to outrun a monster with unlimited endurance.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -672,12 +672,12 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 									FactoryLogic.feature.create({
 										id: 'summoner-1-5-3b-2',
 										name: 'Goring Strike',
-										description: 'The gorrre must charge before making a strike. The target takes an additional 3 damage if the gorre passed through one or more enemies or objects during the charge.'
+										description: 'The gorrre must charge before making a strike. The target is M < [strong] knocked prone if the gorrre moved through an enemy or object other than the target during the charge.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-5-3b-3',
 										name: 'Devastating Charge',
-										description: 'The gorrre ignores diﬃcult terrain while charging and destroys unattended, size 1 objects in their path. Each enemy they pass through during a charge takes 3 damage.'
+										description: 'The gorrre ignores difficult terrain while charging and destroys unattended, size 1 objects in their path. Each enemy they move through during a charge takes 3 damage.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-5-3b-4',
@@ -766,7 +766,10 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 				FactoryLogic.feature.create({
 					id: 'summoner-1-8-1',
 					name: 'Abyssal Evolution',
-					description: 'At the start of each of your turns, you can transform one of your demon minions within your Summoner’s Range into a different demon minion within your Summoner’s Range, maintaining their current Stamina. Starting from round 2, you can choose to transform the demon into any demon minion you can call forth for half the essence cost. The minion must be reassigned to a new squad if their new name differs from the other squad members.'
+					description: `
+At the start of each of your turns, you can transform up to two of your demon minions within your Summoner’s Range. A demon can transform into a different demon minion within your Summoner’s Range, maintaining their current Stamina. Starting from round 2, a demon can transform any demon minion you can call forth for half the essence cost, as if you summoned the new minion into the demon’s space.
+
+The minions must be reassigned to a new squad if their new name differs from the other squad members.`
 				}),
 				FactoryLogic.feature.createSummon({
 					id: 'summoner-1-8-2',
@@ -777,9 +780,9 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 								id: 'summoner-1-8-2a',
 								name: 'Demon Lord’s Aspect',
 								description: `
-Your champion is an Aspect of a demon lord. They have bore witness to your exploits and struck a deal with you: allow their children to feed and you can call forth a modicum of their power. Morality is none of their concern, but certainly a hero is enough of an arbiter of whose souls deserve to be fed to demons, right?
+Your champion is an Aspect of a demon lord. They have borne witness to your exploits and struck a deal with you: Allow their children to feed and you can call forth a modicum of their power. Morality is none of their concern, but certainly a hero is enough of an arbiter of whose souls deserve to be fed to demons, right?
 
-The Demon Lord’s Aspect enjoys bringing the enemies in close with their appendages or flinging victims and throwing them to the gnashing horde. They’re willing to put your connection to this world at risk if it means taking one more bite.`,
+The demon lord’s Aspect enjoys bringing enemies in close with their appendages or flinging victims and throwing them to the gnashing horde. They’re willing to put your connection to this world at risk if it means taking one more bite.`,
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
 								keywords: [ 'Abyssal', 'Demon' ],
@@ -825,7 +828,7 @@ The Demon Lord’s Aspect enjoys bringing the enemies in close with their append
 														tier3: '14 corruption damage; pull 5'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('A target pulled adjacent to the aspect is grabbed.')
+												FactoryLogic.createAbilitySectionText('A target pulled adjacent to the Aspect is grabbed.')
 											]
 										})
 									}),
@@ -847,7 +850,7 @@ The Demon Lord’s Aspect enjoys bringing the enemies in close with their append
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											sections: [
-												FactoryLogic.createAbilitySectionText('The Aspect has a double edge on their next power roll. They can give this benefit to an ally within your Summoner’s Range.')
+												FactoryLogic.createAbilitySectionText('The Aspect has a double edge on their next power roll. They can choose to give this benefit to an ally within your Summoner’s Range instead.')
 											]
 										})
 									}),
@@ -871,10 +874,10 @@ The Demon Lord’s Aspect enjoys bringing the enemies in close with their append
 										name: 'Flensing Reality',
 										type: FactoryLogic.type.createChampionAction(),
 										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 20 }) ],
-										target: 'Self and all non-minion allies',
+										target: 'Self and each non-minion ally in the area',
 										cost: 1,
 										sections: [
-											FactoryLogic.createAbilitySectionText('Each target teleports up to their speed and makes a free strike. If a target has a Save Ends condition, they can inflict it on their target and remove it from themself.')
+											FactoryLogic.createAbilitySectionText('Each target teleports up to their speed and makes a free strike. If a target has a Save Ends condition, they can inflict the condition onto a creature with their strike and end the condition on themself.')
 										]
 									})
 								})

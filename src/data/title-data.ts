@@ -1915,9 +1915,35 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				id: 'title-safeguarded-1',
 				name: 'Effect',
 				description: `
-You start combat encounters with a squad of five minions from the specific monster band or people you earned this title from.
+You start combat encounters with a squad of three minions from the specific monster band or people you earned this title from. The squad takes their turn as a part of your turn. On the squad’s turn, they can take a move action and either a main action or a maneuver.
 
-Additionally, if you would take damage outside of a combat encounter, you can forgo one of the minions at the start of the next combat encounter to ignore the damage.`
+**Special**: If two or more heroes in the party have this title from the same source, the party starts combat encounters with a squad of six minions instead. At the start of each round of combat, the heroes decide who controls the squad as a part of their turn.`
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static sigilwright: Title = {
+		id: 'title-sigilwright',
+		name: 'Sigilwright',
+		description: 'Let’s find out who’s on the other side of the circle.',
+		echelon: 2,
+		prerequisites: 'You complete a ritual to summon a non-minion entity using a summoning circle you drew.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-sigilwright-1',
+				name: 'Quick Gate',
+				description: 'As a maneuver, you can etch an arcane circle in an adjacent square on the ground. Until the end of the encounter, you can use magic abilities and treat your Summoner’s Range as if you were in that space. Each time you etch an arcane circle, your last circle fades and becomes inactive.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'title-sigilwright-2',
+				name: 'Ritual Circle',
+				description: 'As a respite activity, you can draw a minor summoning circle to temporarily call forth a creature you’ve contacted previously, regardless of manifold. If the creature is willing and able to answer your call, they appear to you for the remainder of the respite. You can ask the creature for information or a service in exchange for ending the respite with two fewer Recoveries or a demand of their choosing. If the creature doesn’t appear, you can choose to take a different respite activity.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'title-sigilwright-3',
+				name: 'Sigil Eye',
+				description: 'You have an edge on tests made to identify summoning circles and who or where they’re connected to. You also have an edge on strikes made against creatures not native to the manifold in which you’re currently located.'
 			})
 		],
 		selectedFeatureID: ''
@@ -1928,13 +1954,13 @@ Additionally, if you would take damage outside of a combat encounter, you can fo
 		name: 'Summoner Successor',
 		description: 'When their leader fell, they started listening to me for some reason.',
 		echelon: 2,
-		prerequisites: 'You defeat a leader or solo creature with a Summon or Call Forth ability, such as a high elf ordinator.',
+		prerequisites: 'You can’t use the Call Forth ability, and you defeat a leader or solo creature with a Summon or Call Forth ability, such as a high elf ordinator.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'title-summoner-successor-1',
 				name: 'Effect',
 				description: `
-Choose a signature minion from a summoner’s portfolio that shares a keyword with one of the creatures the summoner could summon. You can summon three of that minion into a single squad (up to a maximum of eight creatures) at the start of each of your turns in combat. The distance you can command them is equal to your ranged free strike distance. You also gain the Strike for Me triggered action, which now has the Psionic keyword.
+Choose a signature minion from a summoner’s portfolio that shares a keyword with one of the creatures the summoner could summon. You can summon three of that minion into a single squad (up to a maximum of four creatures) at the start of each of your turns in combat. The distance you can command them is equal to your ranged free strike distance. You also gain the Strike for Me triggered ability, which now has the Psionic keyword and loses the Magic keyword.
 
 Additionally, you can summon up to two of your signature minion while outside of combat to do simple tasks.`
 			})
@@ -1963,8 +1989,8 @@ Additionally, you can summon up to two of your signature minion while outside of
 							{
 								feature: FactoryLogic.feature.create({
 									id: 'title-ringleader-1b-1',
-									name: 'Stringpuller',
-									description: 'While occupying a civilized area (such as a village, town, district, or city), you always have access to an extra follower native to the location. If the area is otherwise hostile to you, this follower is a spy in hiding who has any project points they earn halved.'
+									name: 'For the Boss',
+									description: 'Your followers gain a +3 bonus to project rolls thatthey make.'
 								}),
 								value: 1
 							},
@@ -1979,8 +2005,8 @@ Additionally, you can summon up to two of your signature minion while outside of
 							{
 								feature: FactoryLogic.feature.create({
 									id: 'title-ringleader-1b-3',
-									name: 'For the Boss',
-									description: 'Your followers gain a +3 bonus to project rolls that they make.'
+									name: 'Stringpuller',
+									description: 'While occupying a civilized area (such as a village, town, district, or city), you always have access to a follower native to the location. If the area is otherwise hostile to you, this follower is a spy in hiding who has any project points they earn halved.'
 								}),
 								value: 1
 							}
@@ -1995,17 +2021,17 @@ Additionally, you can summon up to two of your signature minion while outside of
 	static delegator: Title = {
 		id: 'title-delegator',
 		name: 'Delegator',
-		description: 'Your champion made a very compelling argument and have stepped in to take your place in battle.',
+		description: 'They’re all yours, buddy.',
 		echelon: 4,
-		prerequisites: 'You are a summoner and you strike a deal with your portfolio’s champion.',
+		prerequisites: 'You are a summoner, and you strike a deal with your portfolio’s champion.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'title-delegator-1',
 				name: 'Effect',
 				description: `
-At the start of a combat encounter, you can choose to unsummon yourself into your portfolio’s native plane while your champion fights and summons monsters in your place. The champion uses your Stamina, Recoveries, abilities, and features (except for your Summoner Strikes and Summoner’s Kit). You can dismiss the champion and summon yourself back into the place you left at the end of an encounter.
+At the start of a combat encounter, you can choose to translate yourself into your circle’s source manifold while your champion fights and summons monsters in your place. The champion uses your Stamina, Recoveries, abilities, and features (except for your Summoner Strikes and Summoner’s Kit). You can dismiss the champion and summon yourself back into the place you left at the end of an encounter.
 
-If your champion would die while taking your place, you lose the ability to summon and unsummon yourself and any minions until you revive your champion as a respite activity.`
+If your champion would die while taking your place, you lose access to your Return to the Source feature and can only summon signature minions until you revive your champion as a respite activity.`
 			})
 		],
 		selectedFeatureID: ''
@@ -2016,15 +2042,46 @@ If your champion would die while taking your place, you lose the ability to summ
 		name: 'High Summoner of the Circle',
 		description: 'As I was taught, so I pass on to you.',
 		echelon: 4,
-		prerequisites: 'You are a summoner, and you teach another person how to call forth two or more minions from your portfolio.',
+		prerequisites: 'You are a summoner, and you teach someone how to call forth two or more minions from your portfolio.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-high-summoner-1',
-				name: 'Effect',
-				description: `
-Your minions cost one fewer essence to summon (minimum cost of 1 essence).
-
-Additionally, you are considered a master that can be learned from using the Learn from a Master research project. Anyone that makes a project roll using you as the source gains a bonus to their roll equal to your Reason.`
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-high-summoner-1a',
+						name: 'Effect',
+						description: 'You are considered a master that can be learned from using the Learn from a Master downtime project. Anyone that makes a project roll using you as the source gains a bonus to their roll equal to your Reason.'
+					}),
+					FactoryLogic.feature.createChoice({
+						id: 'title-high-summoner-1b',
+						options: [
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-high-summoner-1b-1',
+									name: 'Essence Mastery',
+									description: 'Your minions cost one fewer essence to summon (minimum cost of 1 essence).'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-high-summoner-1b-2',
+									name: 'Expanded Domain',
+									description: 'Your Summoner’s Range increases by 5. You can use your minions’ senses as your own as long as they’re on the same manifold as you.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-high-summoner-1b-3',
+									name: 'Signature Summoner',
+									description: 'Select a 3-Essence minion you can call forth. At the start of each of your turns in combat, you summon the set number of minions listed on the stat block in place of your signature minions at no cost.'
+								}),
+								value: 1
+							}
+						]
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''

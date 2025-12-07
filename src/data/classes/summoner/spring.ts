@@ -355,7 +355,7 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-fixture-5-1',
 										name: 'Garden of Jest',
-										description: 'You can spend a recovery the first me in a round a creature gains or starts their turn with a condition while you have line of eﬀect to the pond. You can choose to enable an ally who also has line of eﬀect to the boil to spend a recovery instead.'
+										description: 'You can spend a Recovery the first time in a round a creature gains or starts their turn with a condition while you have line of effect to the pond. Alternatively, you can choose to enable an ally who also has line of effect to the boil to spend a Recovery instead.'
 									})
 								]
 							},
@@ -382,7 +382,7 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-fixture-9-2',
 										name: 'Folly Field',
-										description: 'Each non-fey enemy that starts their turn within 3 squares of the pond has a -1 penalty to saving throws and resis ng potent eﬀects until the start of their next turn.'
+										description: 'Each non-fey enemy that starts their turn within 3 squares of the pond has a −1 penalty to saving throws and resisting potencies until the start of their next turn.'
 									})
 								]
 							},
@@ -401,7 +401,7 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-2-2a',
 								name: 'Nixie Hemloche',
-								description: 'A spotted nixie whose long, wavy hair endlessly bobs and flows into the water surrounding them. Any sailor caught in a whirlpool created by hemloches knows that their ship won’t survive the encounter.',
+								description: 'Hemloches are spotted nixies whose long, wavy hair endlessly bobs and flows into the water surrounding them. Any sailor caught in a whirlpool created by hemloches knows that their ship won’t survive the encounter.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 								keywords: [ 'Fey' ],
@@ -417,12 +417,12 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2a-1',
 										name: 'Water Weird',
-										description: 'Once per turn, each nixie under your control can teleport to a body of water within 6. The hemloche can’t teleport into water their own whirling waves is currently creating.'
+										description: 'Once per turn during their move action, each nixie under your control can teleport to a body of water within 6. The hemloche can’t teleport into water created by their own whirling waves.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2a-2',
 										name: 'Whirling Waves',
-										description: 'The area within 1 square of the hemloche is filled with churning water and is considered diﬃcult terrain. At the end of the hemloche’s turn, the hemloche can choose to slide each enemy in the aﬀected area 3 squares. An enemy that takes damage while being force moved is also M < [average] knocked prone.'
+										description: 'The area within 1 square of the hemloche is filled with churning water and is considered difficult terrain. At the end of the hemloche’s turn, the hemloche can choose to slide each enemy in the affected area 3 squares. An enemy that takes damage while being force moved is also M < [average] knocked prone.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2a-3',
@@ -464,12 +464,12 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2b-2',
 										name: 'Flash Strike',
-										description: 'The foxglow’s melee strikes inflict I < [strong] dazed (EoT) if they were hidden.'
+										description: 'The foxglow’s melee strikes inflict I < [strong] dazed (EoT) if they were hidden when they make the strike.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2b-3',
 										name: 'Quiet Flight',
-										description: 'The area within 2 squares of the foxglow is completely silent. Each enemy has a bane on tests made to search for the foxglow and allies hidden in the aﬀected area.'
+										description: 'The area within 2 squares of the foxglow is completely silent. Each enemy has a bane on tests made to search for the foxglow and allies hidden in the affected area.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2b-4',
@@ -485,7 +485,7 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-2-2c',
 								name: 'Pixie Rosenthall',
-								description: 'The collective of warrior, blood-eyed pixies that make up a rosenthall are also known as rosies. It’s said that some rosenthall armies contain thousands of pixies and can span half the length of a wode.',
+								description: 'The collective of blood-eyed pixie warriors that make up a rosenthall are also known as rosies. It’s said that some rosenthall armies contain thousands of pixies and can span half the length of a wode.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Fey' ],
@@ -522,7 +522,7 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-2-2c-2',
 										name: 'Swarm',
-										description: 'The rosenthall can move through squares as if they were size-1T, and can occupy other creatures’ spaces. At the start of the rosenthall’s turn, they deal 2 damage to each enemy they share a square with.'
+										description: 'The rosenthall can move through squares as if they were size 1T, and can occupy other creatures’ spaces. At the start of the rosenthall’s turn, they deal 2 damage to each enemy whose space they share.'
 									})
 								]
 							}),
@@ -548,13 +548,11 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 					id: 'summoner-3-5-1',
 					name: 'Flash Powder',
 					description: `
-Your number of Recoveries further increases by 2.
-
 Each ally that gains temporary Stamina from your Pixie Dust feature also gains one of the following effects until the end of their next turn (or for 10 minutes if used outside of combat):
 
 * **Flight**: Their speed gains the Fly keyword.
 * **Vanish**: They become invisible.
-* **Water Weird**: As a free action, they can teleport to a body of water within 5 once during their turn.
+* **Water Weird**: As a free maneuver once per turn, they can teleport to a body of water within 5 squares of them.
 * **Panacea**: They can end one condition affecting them or stand up.`
 				}),
 				FactoryLogic.feature.create({
@@ -573,7 +571,7 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3a',
 								name: 'Nixie Corallia',
-								description: 'Corallias are saltwater nixies with coarse, coral-like skin and curly hair with sharp hook ends. The salt that comes off of their bodies has been used to hallow places of worship and ward off demons.',
+								description: 'Corallias are saltwater nixies with coarse, coral-like skin and curly hair with hooked ends. Their salty tears are used to hallow places of worship and ward off demons.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
 								keywords: [ 'Fey' ],
@@ -599,12 +597,12 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3a-2',
 										name: 'Water Weird',
-										description: 'Once per turn, each coralia in a squad can teleport to a body of water within 6. The coralia can’t teleport into water their own pooling magic is currently creating.'
+										description: 'Once per turn during their move action, each nixie under your control can teleport to a body of water within 6. The corallia can’t teleport into water created by their own seafoam pool.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3a-3',
 										name: 'Seafoam Pool',
-										description: 'The area within 2 squares of the coralia is filled with purifying saltwater that disables the eﬀects of diﬃcult terrain created by enemies. At the end of the coralia’s turn, the coralia can scrub you or an ally in the aﬀected area and end one condition.'
+										description: 'The area within 2 squares of the corallia is filled with purifying saltwater that disables the effects of difficult terrain created by enemies. At the end of the corallia’s turn, the corallia can scrub you or an ally in the affected area and end one condition.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3a-4',
@@ -620,7 +618,7 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3b',
 								name: 'Pixie Belladonix',
-								description: 'The belladonix are among an archfey’s elite guard and carry themselves like royalty. Their moth-like wings ooze with vibrant colors and are barbed; the poison within threatening to completely shift the reality of their victims.',
+								description: 'The belladonix are found among the elite guard of fey monarchs and carry themselves like royalty. Their moth-like wings ooze with vibrant colors and are barbed; the poison within threatening to completely shift the reality of their victims.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 								keywords: [ 'Fey' ],
@@ -661,7 +659,7 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 														tier3: '17 poison damage; M < [strong] restrained (save ends)'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('A target restrained by this ability is trapped in a poison fueled haze and considers each creature within 1 square of them to be an enemy until the condition ends.')
+												FactoryLogic.createAbilitySectionText('A target restrained by this ability is trapped in a poison- fueled haze and considers each creature within 1 square of them to be an enemy until the condition ends.')
 											]
 										})
 									}),
@@ -678,8 +676,8 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3c',
-								name: 'Sprite Oleandercules',
-								description: 'These sprites wear heavy beetle armor and have a halo hovering away from their backs where their wings used to be. The faster the halo spins, the more power the oleandercules generates, enabling them to stand toe to toe with giants.',
+								name: 'Sprite Olyender',
+								description: 'These brawny sprites wear heavy beetle armor and have a halo hovering away from their backs where their wings used to be. The faster the halo spins, the more power the olyender generates, enabling them to stand toe to toe with giants.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 								keywords: [ 'Fey' ],
@@ -699,17 +697,17 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3c-2',
 										name: 'Warrior’s Toss',
-										description: 'The oleandercules’ melee strikes inflict push 4. If the target is force moved into an object, they are M < [average] knocked prone and can’t stand (save ends).'
+										description: 'The olyender’s melee strikes inflict push 4. If the target is force moved into an object, they are M < [average] knocked prone and can’t stand (save ends).'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3c-3',
 										name: 'Use Their Might',
-										description: 'When targeting a creature with a grab or forced movement, the oleandercules’ size is considered one larger than the target.'
+										description: 'When targeting a creature with a grab or forced movement, the olyender’s size is considered one larger than the target.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3c-4',
 										name: 'Minuscule',
-										description: 'The oleandercules has cover while occupying a larger creature’s space.'
+										description: 'The oleyander has cover while occupying a larger creature’s space.'
 									})
 								]
 							}),
@@ -731,13 +729,15 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 		{
 			level: 8,
 			features: [
+				FactoryLogic.feature.createBonus({
+					id: 'summoner-3-8-1a',
+					field: FeatureField.Recoveries,
+					value: 2
+				}),
 				FactoryLogic.feature.create({
-					id: 'summoner-3-8-1',
-					name: 'The Archfey\'s Will',
-					description: `
-The characteristic scores of you and each of your fey minions are considered 1 higher for the purposes of resisting potencies. If a characteristic would hit a maximum value this way, that maximum value also increases by 1.
-
-Additionally, any of your fey minions’ traits that affect adjacent creatures and/or the area within 1 or more squares of them have that distance increased by 1 square.`
+					id: 'summoner-3-8-1b',
+					name: 'Celestial Grace',
+					description: 'The area affected by your Pixie Dust feature and any of your fey minions’ traits that affect adjacent creatures and/or the area within 1 or more squares of them increase that distance by 1 square.'
 				}),
 				FactoryLogic.feature.createSummon({
 					id: 'summoner-3-8-2',
@@ -750,7 +750,7 @@ Additionally, any of your fey minions’ traits that affect adjacent creatures a
 								description: `
 Your champion is an Attendant of a celestial. Whenever you call on their assistance, you must formally welcome and introduce them to the occasion. You can’t be certain if this is truly the blessing of a celestial you’ve previously allied yourself with, or if you’ve received someone else’s power—neither circumstance puts you in any less danger.
 
-The Celestial Attendant wants to swarm the map with pixies while limiting their foes’ ability to do anything about it. A single neurotoxic strike is all it takes to move everyone into position.`,
+The celestial Attendant wants to swarm the map with pixies while limiting their foes’ ability to do anything about it. A single neurotoxic strike is all it takes to move everyone into position.`,
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
 								keywords: [ 'Fey' ],
@@ -796,14 +796,14 @@ The Celestial Attendant wants to swarm the map with pixies while limiting their 
 														tier3: '14 damage; slide 6'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('An ally targeted by this ability can, instead, spend a recovery and shift the slide amount.')
+												FactoryLogic.createAbilitySectionText('An ally targeted by this ability can, instead, spend  Recovery and shift the slide amount.')
 											]
 										})
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-8-2a-4',
 										name: 'Neurotoxic Strike',
-										description: 'The Attendant’s free strikes inflict the target with I < [average] being unable to establish line of eﬀect beyond 3 squares (EoT).'
+										description: 'A creature that takes damage from the Attendant’s free strike is I < [average] unable to establish line of effect beyond 3 squares (EoT). '
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-3-8-2a-5',
@@ -825,7 +825,7 @@ The Celestial Attendant wants to swarm the map with pixies while limiting their 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-8-2a-7',
 										name: 'Pixie Bouquet',
-										description: 'The Attendant starts their turn with temporary Stamina equal to 2 x the number of fey minions within 1 square of them. This temporary Stamina lasts until the start of their next turn.'
+										description: 'The Attendant starts their turn with temporary Stamina equal to 2 × the number of fey minions within 1 square of them. This temporary Stamina lasts until the start of their next turn.'
 									})
 								]
 							}),
@@ -842,7 +842,7 @@ The Celestial Attendant wants to swarm the map with pixies while limiting their 
 										name: 'A Shower of Dust ',
 										type: FactoryLogic.type.createChampionAction(),
 										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 20 }) ],
-										target: 'Self and all non-minion allies in the area',
+										target: 'Self and each non-minion ally in the area',
 										cost: 1,
 										sections: [
 											FactoryLogic.createAbilitySectionText('Each target gains 20 temporary Stamina and receives the benefits of one of your Flash Powder effects until the end of their next turn.')

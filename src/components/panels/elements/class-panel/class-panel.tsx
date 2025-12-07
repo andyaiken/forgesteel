@@ -170,6 +170,15 @@ export const ClassPanel = (props: Props) => {
 	if (props.heroClass.type === 'master') {
 		tags.push('Master Class');
 	}
+	const minLevel = Collections.min(props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => lvl.level), x => x);
+	const maxLevel = Collections.max(props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => lvl.level), x => x);
+	if ((minLevel !== 1) || (maxLevel !== 10)) {
+		if (minLevel === maxLevel) {
+			tags.push(`Level ${minLevel}`);
+		} else {
+			tags.push(`Levels ${minLevel}-${maxLevel}`);
+		}
+	}
 	if (props.sourcebooks.length > 0) {
 		const sourcebookType = SourcebookLogic.getClassSourcebook(props.sourcebooks, props.heroClass)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {

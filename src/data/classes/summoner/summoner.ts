@@ -379,7 +379,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 					id: 'summoner-2-2',
 					name: 'Dominion',
 					description: `
-Once per encounter, you can use a maneuver to summon a fixture from your minions’ native manifold or origin into an unoccupied space on the ground within your Summoner’s Range. You can spend 1 essence to relocate the fixture as a free maneuver on your turn. The fixture stays until the end of the encounter, its stamina is reduced to 0, or you become dying.
+Once per encounter, you can use a maneuver to summon a fixture from your minions’ native manifold or origin into an unoccupied space on the ground within your Summoner’s Range. You can spend 1 essence to relocate the fixture as a free maneuver on your turn. The fixture stays until the end of the encounter, until its Stamina is reduced to 0, or until you become dying.
 
 Your fixture gains additional features at 5th and 9th level.`
 				})
@@ -415,7 +415,7 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2b',
 								name: 'Emergency Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
+								description: 'The first time each round you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
 							}),
 							value: 1
 						},
@@ -423,15 +423,15 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2c',
 								name: 'Howling Ward',
-								description: 'You enter combat surrounded by a 1 Aura of defensive forces. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
+								description: 'You create a 1-aura vortex of slicing magic around you when you enter combat. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2d',
-								name: 'Swap Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to swap places with one of your minions within distance. That minion suffers any additional effects instead of you.'
+								name: 'Snare Ward',
+								description: 'Whenever an adjacent creature deals damage to you, you can use a free triggered action to pull that creature toward one of your minions within your Summoner’s Range a number of squares equal to your Reason score.'
 							}),
 							value: 1
 						}
@@ -494,7 +494,7 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 					description: `
 Your maximum number of minions increases by 4.
 
-You can increase each of your minions’ Stamina, as shown on the table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 3).
+You can increase each of your minions’ Stamina as shown on the table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 3).
 
 | Minion           | Stamina Increase |
 |:=================|:=================|
@@ -506,17 +506,17 @@ You can increase each of your minions’ Stamina, as shown on the table. Additio
 				FactoryLogic.feature.create({
 					id: 'summoner-4-4',
 					name: 'Essence Salvage',
-					description: 'The first time each combat round that any minion dies within your Summoner’s Range, you gain 2 essence instead of 1.'
+					description: 'The first time each combat round that any minion unwillingly dies within your Summoner’s Range, you gain 2 essence instead of 1. '
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-4-5',
 					name: 'Minion Chain',
 					description: `
-Whenever you use minion bridge as a maneuver, each of your minions within your Summoner’s Range can shift up to their speed before the maneuver takes effect, as long as each minion that shifts ends their movement adjacent to another one of your minions.
+Whenever you use Minion Bridge as a maneuver, each of your minions within your Summoner’s Range can shift up to their speed before the maneuver takes effect, as long as each minion that shifts ends their movement adjacent to another one of your minions.
 
-Additionally, your minions can chain themselves together to act like a ladder or a swinging rope. When your minions move as a part of using minion bridge, each minion can use this movement to shift into a position directly beneath another one of your minions, hoisting them and each other minion they have hoisted, until they form a chain. The chain can then choose to fall across an unoccupied space a gap and/or the topmost minion grabs an object to keep the chain steady.
+Additionally, your minions can chain themselves together to function as a ladder or a swinging rope. When your minions move as a part of using Minion Bridge, each minion can use this movement to shift into a position directly beneath another one of your minions, hoisting them and each other minion they have hoisted, until they form a chain. The chain can then choose to fall across an unoccupied space and/or the topmost minion grabs an object to keep the chain steady.
 
-The chain lasts until the start of your next turn or the chain is no longer steady. The chain can also end when a minion in the chain is destroyed or you command your minions to let go as a free action. All size 1 minions count as one square when determining the chain’s length.`
+The chain lasts until the start of your next turn or until the chain is no longer steady. The chain can also end when a minion in the chain is destroyed or when you command your minions to let go as a free maneuver. All size 1 minions count as one square when determining the chain’s length.`
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'summoner-4-6'
@@ -540,16 +540,18 @@ The chain lasts until the start of your next turn or the chain is no longer stea
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-6-2',
-					name: 'Go Forth',
+					name: 'Return to the Source',
 					description: `
-You can “unsummon” yourself and your allies into the space that your minions come from. When you take a respite, you can open a portal to your portfolio’s native manifold and bring along any allies to gather resources or research details about that manifold’s denizens. You are seen as a native resident of the manifold, but your allies might be seen as intruders.
+You can translate yourself and your allies into the space that your minions come from, as if summoning in reverse.
 
-| Portfolio | Manifold/Origin    |
-|:==========|:===================|
-| Demon     | Abyssal Waste      |
-| Elemental | Quintessence       |
-| Fey       | Arcadia            |
-| Undead    | Necropolitan Ruins |`
+When you take a respite, you teleport to your circle’s source manifold or point of origin, as shown on the table. You can bring along any allies to gather resources or research details about that location’s denizens. You are seen as a native resident of the location, but your allies might be seen as intruders.
+
+| Circle    | Manifold or Point of Origin                           |
+|:==========|:======================================================|
+| Blight    | Abyssal Waste                                         |
+| Graves    | Necropolitan Ruins (located within the Abyssal Waste) |
+| Spring    | Arcadia                                               |
+| Storms    | Quintessence                                          |`
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'summoner-6-3',
@@ -587,7 +589,7 @@ You can “unsummon” yourself and your allies into the space that your minions
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2b',
 								name: 'Emergency Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
+								description: 'The first time each round you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
 							}),
 							value: 1
 						},
@@ -595,15 +597,15 @@ You can “unsummon” yourself and your allies into the space that your minions
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2c',
 								name: 'Howling Ward',
-								description: 'You enter combat surrounded by a 1 Aura of defensive forces. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
+								description: 'You create a 1-aura vortex of slicing magic around you when you enter combat. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2d',
-								name: 'Swap Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to swap places with one of your minions within distance. That minion suffers any additional effects instead of you.'
+								name: 'Snare Ward',
+								description: 'Whenever an adjacent creature deals damage to you, you can use a free triggered action to pull that creature toward one of your minions within your Summoner’s Range a number of squares equal to your Reason score.'
 							}),
 							value: 1
 						}
@@ -612,8 +614,7 @@ You can “unsummon” yourself and your allies into the space that your minions
 				FactoryLogic.feature.createPackageContent({
 					id: 'summoner-6-4b',
 					name: 'Kit Improvement',
-					description: `
-Whenever you reduce an enemy to 0 Stamina with your Summoner Strike ability, you can use Call Forth as a free maneuver. Minions summoned this way are unable to act during this turn.`,
+					description: 'Whenever you reduce an enemy to 0 Stamina with your Summoner Strike ability, you can use Call Forth as a free maneuver. Minions summoned this way are unable to act during this turn.',
 					tag: 'summoner-strike'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -656,7 +657,7 @@ Whenever you reduce an enemy to 0 Stamina with your Summoner Strike ability, you
 					description: `
 At the start of each of your turns during combat, you can summon one additional signature minion at no cost into an unoccupied space within your Summoner’s Range (no action required).
 
-All of your minions are reaching their zenith. You can further increase each of your minions’ Stamina, as shown in the table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 4).
+Additionally, you can increase each of your minions’ Stamina as shown on the 7th-Level Minion Stamina Increase table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 4).
 
 | Minion           | Stamina Increase              |
 |:=================|:==============================|
@@ -678,9 +679,9 @@ All of your minions are reaching their zenith. You can further increase each of 
 					id: 'summoner-7-4',
 					name: 'Their Life for Mine',
 					description: `
-If you or an ally within your Summoner’s Range would die from an effect that isn’t age related, you sacrifice all your active minions (minimum 1) and spend all your essence (minimum 1) as a free triggered action to bring the target back to life, summoning “minion material” to reconstruct the damaged parts of their body. The target comes back with 0 Stamina plus 1 stamina for each minion and essence used in the effect. You must have at least one fragment of the creature’s remains, and the creature’s soul must be willing to return to life for the effect to work.
+If you or an ally within your Summoner’s Range would die from an effect that isn’t age related, you sacrifice all your active minions (minimum 1) and spend all your essence (minimum 1) as a free triggered action to bring the target back to life, reconstructing the damaged parts of their body with summoned material related to your portfolio. The target comes back with 0 Stamina plus 1 Stamina for each minion and essence used in the effect. You must have at least one fragment of the creature’s remains, and the creature’s soul must be willing to return to life for the effect to work.
 
-You can’t use this feature again until you gain a new level, or you spend 3 eidos to use it.`
+You can’t use this feature again until you gain a new level, or until you spend 3 eidos to use it.`
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'summoner-7-5'
@@ -697,26 +698,34 @@ You can’t use this feature again until you gain a new level, or you spend 3 ei
 					id: 'summoner-8-2',
 					name: 'Portfolio Champion',
 					description: `
-You can now use Call Forth to summon your portfolio’s champion for their essence cost. Champions follow all the same rules as your minions, with the following exceptions:
+Your circle now allows you to add a champion to your portfolio. Champions follow the same rules as your other minions, with the following exceptions:
 
-* Your champion enters into a new squad that does not count towards your maximum number of squads.
-* Your champion can regain Stamina and gain temporary Stamina. Your champion uses your recoveries to regain Stamina.
-* Your champion can take the heal and defend actions.
+* You can only summon and command one instance of your champion.
+* Your champion is in their own squad that does not count toward your maximum number of squads.
+* Your champion can regain Stamina and gain temporary Stamina.
+* Your champion uses your Recoveries to regain Stamina.
+* Your champion can take the Heal and Defend Actions.
 * Your champion uses the normal rules for maneuvers.
 * You have an edge whenever you use an ability with the Champion keyword from your Champion’s space.
 * Your champion refuses to be referred to as a minion.
 
 After summoning a champion, you can’t summon them again until you earn a Victory.
 
-Your champion gains additional features at 10th level. This includes a special Champion Action ability that costs Eidos to use. This ability can be activated once per encounter at the end of any other creature’s turn.`
+Your champion gains additional features at 10th level. This includes a special Champion Action ability that costs eidos to use. This ability can be activated once per encounter at the end of any other creature’s turn.`
 				})
 			]
 		},
 		{
 			level: 9,
 			features: [
+				FactoryLogic.feature.createPackageContent({
+					id: 'summoner-9-1a',
+					name: 'Kit Improvement',
+					description: 'The potency of your Summoner Strike ability increases to R < [strong].',
+					tag: 'summoner-strike'
+				}),
 				FactoryLogic.feature.createChoice({
-					id: 'summoner-10-1a',
+					id: 'summoner-10-1b',
 					name: 'Kit Improvement',
 					description: 'You can choose one additional ward from your Summoner’s Kit.',
 					options: [
@@ -732,7 +741,7 @@ Your champion gains additional features at 10th level. This includes a special C
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2b',
 								name: 'Emergency Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
+								description: 'The first time each round you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
 							}),
 							value: 1
 						},
@@ -740,35 +749,29 @@ Your champion gains additional features at 10th level. This includes a special C
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2c',
 								name: 'Howling Ward',
-								description: 'You enter combat surrounded by a 1 Aura of defensive forces. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
+								description: 'You create a 1-aura vortex of slicing magic around you when you enter combat. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.create({
 								id: 'summoner-3-2d',
-								name: 'Swap Ward',
-								description: 'Whenever you take damage, you can use a free triggered action to swap places with one of your minions within distance. That minion suffers any additional effects instead of you.'
+								name: 'Snare Ward',
+								description: 'Whenever an adjacent creature deals damage to you, you can use a free triggered action to pull that creature toward one of your minions within your Summoner’s Range a number of squares equal to your Reason score.'
 							}),
 							value: 1
 						}
 					]
 				}),
-				FactoryLogic.feature.createPackageContent({
-					id: 'summoner-9-1b',
-					name: 'Kit Improvement',
-					description: 'The potency of your Summoner Strike ability increases to R < [strong].',
-					tag: 'summoner-strike'
-				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-9-1c',
 					name: 'Kit Improvement',
-					description: 'When you finish a respite, you can choose a willing hero ally who took the respite with you. That hero gains the benefits of one of your wards until you finish another respite.'
+					description: 'You have a double edge on tests made to dissuade or scare enemy minions or lackeys.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-9-2',
 					name: 'Steward of Two Worlds',
-					description: 'You and your allies are now welcome in your portfolio’s native manifold or origin. Negotiations with native residents of that manifold have their patience increased by 2.'
+					description: 'Your clothing and equipment become adorned with distinct and elaborate regalia to make you stand out from your army, like massive rib cage pauldrons, a tooth crested helmet, or a billowing mantle of fire.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'summoner-9-3',
@@ -825,9 +828,9 @@ Your champion gains additional features at 10th level. This includes a special C
 					id: 'summoner-10-3',
 					name: 'Minion Improvement',
 					description: `
-You now start encounters and round tracked situations by summoning up to two additional minions for every two Victories you have (in addition to the two you normally summon).
+You now start encounters and round-tracked situations by summoning up to two additional minions for every two Victories you have (in addition to the two you normally summon).
 
-Each of your minions’ Stamina further improves, as shown in the table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 5).
+Each of your minions’ Stamina improves as shown in the table. Additionally, each minion that receives a Stamina boost can treat their characteristics as one higher for the purposes of resisting potencies (to a maximum value of 5).
 
 | Minion           | Stamina Increase               |
 |:=================|:===============================|
@@ -863,7 +866,7 @@ Eidos remains until you spend it.`
 				FactoryLogic.feature.create({
 					id: 'summoner-10-6',
 					name: 'Among our Ranks',
-					description: 'As a Respite Activity, you summon a willing and not restrained NPC or Player ally to join your party, regardless of distance or manifold. The target stays until the start of your next respite or until they are killed, in which they are immediately dismissed to the place where they were summoned from. You can’t have more than one target summoned in this way.'
+					description: 'As a respite activity, you summon a willing and not-restrained NPC or player ally to join your party, regardless of distance or manifold. The target stays until the start of your next respite or until they are killed, in which they are immediately dismissed to the place from which they were summoned. You can’t have more than one character summoned in this way.'
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'summoner-10-7',
@@ -1004,7 +1007,7 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 			id: 'summoner-ability-7',
 			name: 'Blitz Tactics',
 			description: 'Rush em! CRUSH EM!',
-			type: FactoryLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver({ free: true }),
 			keywords: [ AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Special',
@@ -1023,7 +1026,10 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 			target: 'Special',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('You summon a temporary squad containing 6 of your signature minions regardless of your minion maximum within distance. Whenever one of these minions deals damage to an enemy, the enemy is R < [average] compelled to move 5 squares towards the source of the damage (provoking attacks of opportunity). The potency increases by 1 for enemies targeted by two or more of these minions. These minions die at the end of your turn, activate no effects upon death, and you gain no essence from their deaths.')
+				FactoryLogic.createAbilitySectionText(`
+You summon a temporary squad containing 6 of your signature minions regardless of your minion maximum within distance. Whenever one of these minions deals damage to an enemy, the enemy is R < [average] compelled to move 5 squares toward the source of the damage (provoking opportunity attacks). The potency increases by 1 for enemies targeted by two or more of these minions.
+
+These minions die at the end of your turn, activate no effects upon death, and you gain no essence from their deaths`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1046,7 +1052,7 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Special',
-					effect: 'You can choose to kill any number of your minions within your Summoner’s Ranged as a part of this ability, provided they haven’t used a main action or maneuver during the turn. Each target takes an additional 1 damage, plus 1 damage for each minion killed this way. These minions activate no effects upon death, and you gain no essence from their deaths.'
+					effect: 'You can choose to kill any number of your minions within your Summoner’s Range as a part of this ability, provided they haven’t used a main action or maneuver during the turn. Each target takes an additional 1 damage, plus 1 damage for each minion killed this way. These minions activate no effects upon death, and you gain no essence from their deaths.'
 				})
 			]
 		}),
@@ -1105,11 +1111,11 @@ If they move adjacent to their target, become targeted by an opportunity attack,
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionText(`
-You can use this ability as if in the space of one of your minions within your Summoner’s Range.
+You can use this ability as if in the space of one of your minions within your Summoner’s Range
 
 Until the end of the encounter or you become dying, each target has a +2 bonus to saving throws.
 
-Each target can then immediately make each of their saving throws and stand up from prone.`)
+Each target can immediately make each of their saving throws and stand up from prone.`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1125,9 +1131,9 @@ Each target can then immediately make each of their saving throws and stand up f
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Reason,
-						tier1: '5 damage; M < [weak] prone can’t stand (save ends)',
-						tier2: '8 damage; M < [average] prone can’t stand (save ends)',
-						tier3: '11 damage; M < [strong] prone can’t stand (save ends)'
+						tier1: '5 damage; M < [weak] prone and can’t stand (save ends)',
+						tier2: '8 damage; M < [average] prone and can’t stand (save ends)',
+						tier3: '11 damage; M < [strong] prone and can’t stand (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You can use this ability as if in the space of one of your minions within your Summoner’s Range.'),
@@ -1152,7 +1158,7 @@ You can use this ability as if in the space of one of your minions within your S
 
 The target is R < [average] weakened (save ends).
 
-Until the end of the encounter, whenever the target gets a tier 1 result on a strike, they deal half damage. If the target was striking a creature adjacent to one of their allies, they target their ally instead.`)
+Until the end of the encounter, whenever a target gets a tier 1 result on a strike, they deal half damage. If a target was striking a creature adjacent to one of their allies, they target their ally instead.`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1168,7 +1174,7 @@ Until the end of the encounter, whenever the target gets a tier 1 result on a st
 				FactoryLogic.createAbilitySectionText(`
 Until the end of the encounter or you are dying, each square on the ground is considered teeming with minions. An enemy that ends their turn in an affected square takes 5 damage. This damage can’t be reduced.
 
-Additionally, you can use minion bridge treating each affected square as an eligible minion (up to a maximum of 10 additional squares).`)
+Additionally, you can use Minion Bridge treating each affected square as an eligible minion (up to a maximum of 10 additional squares).`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1195,9 +1201,9 @@ Additionally, you can use minion bridge treating each affected square as an elig
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText(`
-Each minion target is removed from the encounter map. Up to three non-leader or non-solo targets of your choice are removed from the encounter for 1 round.
+Each enemy minion in the area is permanently removed from the encounter map. Up to three non-leader or non-solo enemies in the area are removed from the encounter for 1 round.
 
-A leader or solo target is R, I, and P < [average] weakened and slowed (save ends) as they are partially removed from the manifold. You can increase the potency by 1 for each of your minions adjacent to the target you choose to sacrifice as a part of using this ability.`)
+A leader or a solo enemy in the area that has R, I, or P < [average] is weakened and slowed (save ends) as they are partially removed from the manifold. You can increase the potency by 1 for each of your minions adjacent to the target you choose to sacrifice as a part of using this ability.`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1221,7 +1227,7 @@ A leader or solo target is R, I, and P < [average] weakened and slowed (save end
 				FactoryLogic.createAbilitySectionText(`
 You can use this ability as if in the space of one of your minions within your Summoner’s Range.
 
-You can change the damage type to be a type that your champion deals on their stat block. For each enemy reduced to 0 Stamina by this ability, an ally within distance can move up to their speed.`)
+You can change the damage type to be a type that your champion deals on their stat block (see Portfolio Champion). For each enemy reduced to 0 Stamina by this ability, an ally within distance can move up to their speed.`)
 			]
 		})
 	],

@@ -1380,7 +1380,7 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 
 	static dragonBlooded: Title = {
 		id: 'title-dragon-blooded',
-		name: 'Dran Blooded',
+		name: 'Dragon Blooded',
 		description: '“I stabbed the wyrm Axarthan in the heart and their silver blood washed over me, leaving me … as you see.”',
 		echelon: 3,
 		prerequisites: 'You defeat a leader or solo creature with the Dragon keyword, such as a gloom dragon.',

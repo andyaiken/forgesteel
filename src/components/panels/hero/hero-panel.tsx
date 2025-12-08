@@ -9,6 +9,7 @@ import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { ConditionType } from '@/enums/condition-type';
@@ -912,28 +913,30 @@ export const HeroPanel = (props: Props) => {
 
 		const useRows = props.options.compactView;
 
-		const companions = HeroLogic.getCompanions(props.hero);
+		const monsters: { monster: Monster, summon?: SummoningInfo }[] = [
+			...HeroLogic.getCompanions(props.hero).map(m => ({ monster: m, summon: undefined })),
+			...HeroLogic.getRetainers(props.hero).map(m => ({ monster: m, summon: undefined })),
+			...HeroLogic.getSummons(props.hero).map(m => ({ monster: m.monster, summon: m.info }))
+		];
+
 		const followers = HeroLogic.getFollowers(props.hero);
-		const retainers = HeroLogic.getRetainers(props.hero);
-		const summons = HeroLogic.getSummons(props.hero);
 
 		return (
 			<ErrorBoundary>
 				<div className='retinue-section'>
 					{
-						companions.length > 0 ?
+						monsters.length > 0 ?
 							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Companions</HeaderText>
 								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 									{
-										companions.map(monster =>
+										Collections.sort(monsters, m => m.monster.name).map(m =>
 											useRows ?
-												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
-													<div>Companion: <b>{monster.name}</b></div>
+												<div key={m.monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(m.monster, m.summon)}>
+													<div>Companion: <b>{m.monster.name}</b></div>
 												</div>
 												:
-												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
+												<SelectablePanel key={m.monster.id} onSelect={() => onSelectMonster(m.monster, m.summon)}>
+													<MonsterPanel monster={m.monster} summon={m.summon} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -955,48 +958,6 @@ export const HeroPanel = (props: Props) => {
 												:
 												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
 													<FollowerPanel follower={follower} />
-												</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						retainers.length > 0 ?
-							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Retainers</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-									{
-										retainers.map(monster =>
-											useRows ?
-												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
-													<div>Companion: <b>{monster.name}</b></div>
-												</div>
-												:
-												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
-												</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						summons.length > 0 ?
-							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-									{
-										summons.map(summon =>
-											useRows ?
-												<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
-													<div>Summon: <b>{summon.monster.name}</b></div>
-												</div>
-												:
-												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster, summon.info)}>
-													<MonsterPanel monster={summon.monster} summon={summon.info} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}

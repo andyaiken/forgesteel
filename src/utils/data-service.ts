@@ -21,7 +21,7 @@ export class DataService {
 		this.apiToken = settings.warehouseToken;
 		this.jwt = null;
 
-		this.tokenHandlerHost = 'http://localhost:5000';
+		this.tokenHandlerHost = 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app/';
 	};
 
 	private getErrorMessage = (error: unknown) => {

@@ -649,15 +649,17 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getConnectionSettings = () => {
-		return (
-			<Expander title='Connections'>
-				<PatreonConnectPanel
-					connectionSettings={props.connectionSettings}
-					setConnectionSettings={props.setConnectionSettings}
-					dataService={props.dataService}
-				/>
-			</Expander>
-		);
+		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
+			return (
+				<Expander title='Connections'>
+					<PatreonConnectPanel
+						connectionSettings={props.connectionSettings}
+						setConnectionSettings={props.setConnectionSettings}
+						dataService={props.dataService}
+					/>
+				</Expander>
+			);
+		}
 	};
 
 	const getErrors = () => {

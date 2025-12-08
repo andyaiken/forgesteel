@@ -96,6 +96,7 @@ export const KitPanel = (props: Props) => {
 					]}
 					value={page}
 					onChange={setPage}
+					onClick={e => e.stopPropagation()}
 				/>
 				{content}
 			</>

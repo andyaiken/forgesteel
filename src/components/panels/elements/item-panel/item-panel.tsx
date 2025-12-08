@@ -291,6 +291,7 @@ export const ItemPanel = (props: Props) => {
 					options={pages}
 					value={page}
 					onChange={setPage}
+					onClick={e => e.stopPropagation()}
 				/>
 				{content}
 			</>

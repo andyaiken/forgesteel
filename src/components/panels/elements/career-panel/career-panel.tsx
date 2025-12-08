@@ -89,6 +89,7 @@ export const CareerPanel = (props: Props) => {
 					]}
 					value={page}
 					onChange={setPage}
+					onClick={e => e.stopPropagation()}
 				/>
 				{content}
 			</>

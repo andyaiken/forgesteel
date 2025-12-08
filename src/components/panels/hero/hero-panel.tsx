@@ -991,11 +991,11 @@ export const HeroPanel = (props: Props) => {
 									{
 										summons.map(summon =>
 											useRows ?
-												<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster)}>
+												<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
 													<div>Summon: <b>{summon.monster.name}</b></div>
 												</div>
 												:
-												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
+												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster, summon.info)}>
 													<MonsterPanel monster={summon.monster} summon={summon.info} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)

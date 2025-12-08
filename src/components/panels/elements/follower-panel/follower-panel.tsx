@@ -24,7 +24,7 @@ export const FollowerPanel = (props: Props) => {
 				>
 					{props.follower.name || 'Unnamed Follower'}
 				</HeaderText>
-				<Markdown text={props.follower.description} />
+				<Markdown text={props.follower.description || `${props.follower.type} follower.`} />
 				{
 					props.mode === PanelMode.Full ?
 						<>

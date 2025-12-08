@@ -9,6 +9,7 @@
 	padding: 0 10px;
 	color: rgb(0, 0, 0);
 	background-color: colors.$monster-default;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
 	&.ambusher {
 		background: linear-gradient(color.scale(colors.$monster-ambusher, $lightness: 10%), color.scale(colors.$monster-ambusher, $lightness: -10%));

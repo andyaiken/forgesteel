@@ -86,7 +86,7 @@ export const CustomizePanel = (props: Props) => {
 			<Popover
 				trigger='click'
 				content={
-					<>
+					<Space orientation='vertical'>
 						<HeaderText level={3}>Abilities</HeaderText>
 						<div className='customize-option-section'>
 							<Button
@@ -277,19 +277,6 @@ export const CustomizePanel = (props: Props) => {
 							>
 								Retainer
 							</Button>
-							<Button
-								block={true}
-								type='text'
-								onClick={() => {
-									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createSummonChoice({
-										id: Utils.guid(),
-										options: []
-									}));
-								}}
-							>
-								Summon
-							</Button>
 						</div>
 						<HeaderText level={3}>Miscellaneous</HeaderText>
 						<div className='customize-option-section'>
@@ -345,7 +332,7 @@ export const CustomizePanel = (props: Props) => {
 								Skills
 							</Button>
 						</div>
-					</>
+					</Space>
 				}
 				open={menuOpen}
 				onOpenChange={setMenuOpen}

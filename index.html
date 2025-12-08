@@ -33,6 +33,29 @@
 
 <body>
 	<div id="root"></div>
+	<script>
+		// Check for and fix misplaced query parameters, e.g. from an OAuth redirect.
+		// OAuth redirect flows don't handle hash-routing correctly,
+		// So the query parameters get inserted *before* the hash route.
+		// This corrects that and then redirects to the correct url before any
+		// app code gets loaded, making it much faster
+		function normalizeUrl(url) {
+			if (url.match(/^[^?]+(\?[^#]+)#/) != null) {
+				const match = url.match(/(^[^?]+)(\?[^#]+)(#.*)/);
+				if (match) {
+					return `${match[1]}${match[3]}${match[2]}`;
+				}
+			}
+			return url;
+		};
+
+		const url = window.location.toString();
+		const normalized = normalizeUrl(url);
+		
+		if (normalized !== url) {
+			window.location.replace(normalized);
+		}
+	</script>
 	<script type="module" src="/src/index.tsx"></script>
 </body>
 

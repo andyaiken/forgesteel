@@ -51,6 +51,7 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { Montage } from '@/models/montage';
 import { Negotiation } from '@/models/negotiation';
+import { OAuthRedirectPage } from '../pages/auth/oauth-redirect';
 import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
@@ -1324,6 +1325,8 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
+				// patreonConnections={props.patreonConnections}
+				dataService={props.dataService}
 				setConnectionSettings={persistConnectionSettings}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
@@ -1738,6 +1741,16 @@ export const Main = (props: Props) => {
 							}
 						/>
 					</Route>
+					<Route
+						path='oauth-redirect'
+						element={
+							<OAuthRedirectPage
+								connectionSettings={props.connectionSettings}
+								setConnectionSettings={persistConnectionSettings}
+								dataService={props.dataService}
+							/>
+						}
+					/>
 				</Route>
 				<Route path='backup'>
 					<Route

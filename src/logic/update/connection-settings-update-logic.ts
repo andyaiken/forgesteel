@@ -13,5 +13,9 @@ export class ConnectionSettingsUpdateLogic {
 		if (settings.warehouseToken === undefined) {
 			settings.warehouseToken = '';
 		}
+
+		if (settings.patreonConnected === undefined) {
+			settings.patreonConnected = false;
+		}
 	};
 }

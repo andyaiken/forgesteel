@@ -62,13 +62,15 @@ export const OAuthRedirectPage = (props: Props) => {
 	};
 
 	// Do ONCE
-	useEffect(
-		checkPatreonStatus,
-		// dependencies here needs to be an empty array so that it only runs once
-		// otherwise, it runs several times as things change.
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
+	useEffect(() => {
+		const check = setTimeout(checkPatreonStatus, 200);
+
+		return () => clearTimeout(check);
+	},
+	// dependencies here needs to be an empty array so that it only runs once
+	// otherwise, it runs several times as things change.
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	[]);
 
 	return (
 		<ErrorBoundary>

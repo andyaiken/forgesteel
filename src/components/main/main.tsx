@@ -8,6 +8,7 @@ import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Ancestry } from '@/models/ancestry';
+import { AuthPage } from '../pages/auth/auth-page';
 import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
@@ -51,7 +52,6 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { Montage } from '@/models/montage';
 import { Negotiation } from '@/models/negotiation';
-import { OAuthRedirectPage } from '../pages/auth/oauth-redirect';
 import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
@@ -1743,10 +1743,15 @@ export const Main = (props: Props) => {
 					<Route
 						path='oauth-redirect'
 						element={
-							<OAuthRedirectPage
+							<AuthPage
 								connectionSettings={props.connectionSettings}
-								setConnectionSettings={persistConnectionSettings}
 								dataService={props.dataService}
+								highlightAbout={errors.length > 0}
+								showReference={showReference}
+								showRoll={() => showRoll()}
+								showAbout={showAbout}
+								showSettings={showSettings}
+								setConnectionSettings={persistConnectionSettings}
 							/>
 						}
 					/>

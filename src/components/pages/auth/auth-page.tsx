@@ -1,10 +1,11 @@
 import { Button, Result } from 'antd';
 import { useEffect, useState } from 'react';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { PatreonSession } from '@/models/patreon-connection';
 import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { Utils } from '@/utils/utils';
@@ -12,15 +13,20 @@ import axios from 'axios';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useSearchParams } from 'react-router';
 
-import './oauth-redirect.scss';
+import './auth-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
-	setConnectionSettings: (settings: ConnectionSettings) => void
 	dataService: DataService;
+	highlightAbout: boolean;
+	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
+	setConnectionSettings: (settings: ConnectionSettings) => void
 }
 
-export const OAuthRedirectPage = (props: Props) => {
+export const AuthPage = (props: Props) => {
 	const [ searchParams ] = useSearchParams();
 	const navigation = useNavigation();
 
@@ -74,29 +80,39 @@ export const OAuthRedirectPage = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<AppHeader />
-			<Result
-				className='patreon-connect-status'
-				icon={<CheckIcon state={connectionState} />}
-				title='Patreon Connection'
-				extra={[
-					<Button type='primary' key='return' onClick={() => navigation.goToWelcome()}>
-						Return
-					</Button>
-				]}
-			>
-				{
-					patreonSession?.connections.map((conn, i) => {
-						return (
-							<PatreonStatusPanel
-								key={`patreon-connection-${i}`}
-								title={conn.name}
-								status={conn.status}
-							/>
-						);
-					})
-				}
-			</Result>
+			<div className='auth-page'>
+				<AppHeader />
+				<div className='auth-page-content'>
+					<Result
+						className='patreon-connect-status'
+						icon={<CheckIcon state={connectionState} />}
+						title='Patreon Connection'
+					>
+						{
+							patreonSession?.connections.map((conn, i) => {
+								return (
+									<PatreonStatusPanel
+										key={`patreon-connection-${i}`}
+										title={conn.name}
+										status={conn.status}
+									/>
+								);
+							})
+						}
+						<Button block={true} type='primary' onClick={() => navigation.goToWelcome()}>
+							Return
+						</Button>
+					</Result>
+				</div>
+				<AppFooter
+					page='welcome'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
 		</ErrorBoundary>
 	);
 };

@@ -1,5 +1,10 @@
 import { Flex, Tag } from 'antd';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { PatronStatus } from '@/models/patreon-connection';
+
+import './patreon-status-panel.scss';
+
+import patreon from '../../../assets/icons/patreon.svg';
 
 interface Props {
 	title: string;
@@ -7,33 +12,37 @@ interface Props {
 }
 
 export const PatreonStatusPanel = (props: Props) => {
-	const status = props.status;
+	const getStatus = () => {
+		if (!props.status) {
+			return null;
+		}
 
-	const renderPatronStatus = (status: PatronStatus) => {
-		const subTier = status.tier_cents ? Math.round(status.tier_cents / 100) : 0;
 		let subDate = '';
-		if (status.start) {
-			const date = new Date(status.start);
+		if (props.status.start) {
+			const date = new Date(props.status.start);
 			const opts = { month: 'short', year: 'numeric' } as Intl.DateTimeFormatOptions;
 			subDate = date.toLocaleDateString('en-US', opts);
 		}
+
+		const subTier = props.status.tier_cents ? Math.round(props.status.tier_cents / 100) : 0;
+
 		return (
 			<Flex gap='small'>
 				<Tag
-					color={status.patron ? 'green' : 'red'}
+					color={props.status.patron ? 'green' : 'red'}
 					variant='outlined'
 				>
-					{status.patron ? 'Member' : 'Not Member'}
+					{props.status.patron ? 'Member' : 'Not Member'}
 				</Tag>
 				{
-					status.patron ?
+					props.status.patron ?
 						<Tag color='blue' variant='outlined'>
 							${subTier} Tier
 						</Tag>
 						: null
 				}
 				{
-					status.patron ?
+					props.status.patron ?
 						<Tag color='blue' variant='outlined'>
 							Since {subDate}
 						</Tag>
@@ -44,13 +53,14 @@ export const PatreonStatusPanel = (props: Props) => {
 	};
 
 	return (
-		<div className='patreon_status'>
-			<h3>{props.title}</h3>
-			{
-				status ?
-					renderPatronStatus(status)
-					: null
-			}
+		<div className='patreon-status-panel'>
+			<HeaderText>
+				<Flex align='center' gap={10}>
+					<img src={patreon} style={{ fill: 'white', width: '1em', height: '1em' }} />
+					{props.title}
+				</Flex>
+			</HeaderText>
+			{getStatus()}
 		</div>
 	);
 };

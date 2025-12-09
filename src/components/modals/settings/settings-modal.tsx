@@ -648,10 +648,10 @@ export const SettingsModal = (props: Props) => {
 		}
 	};
 
-	const getConnectionSettings = () => {
+	const getPatreonSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
 			return (
-				<Expander title='Connections'>
+				<Expander title='Patreon'>
 					<PatreonConnectPanel
 						connectionSettings={props.connectionSettings}
 						setConnectionSettings={props.setConnectionSettings}
@@ -745,7 +745,7 @@ export const SettingsModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
 						{getWarehouseSettings()}
-						{getConnectionSettings()}
+						{getPatreonSettings()}
 						{getErrors()}
 					</Space>
 				);

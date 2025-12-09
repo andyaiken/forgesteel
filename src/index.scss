@@ -466,4 +466,8 @@ html[data-theme="dark"] {
 			color: rgba(255, 255, 255, 0.88);
 		}
 	}
+
+	.patreon-logo {
+		filter: invert(1)
+	}
 }

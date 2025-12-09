@@ -1,4 +1,4 @@
-import { Button, Space, Spin } from 'antd';
+import { Button, Flex, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -8,7 +8,7 @@ import { PatreonStatusPanel } from './patreon-status-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
 
-import patreon from '../../../assets/icons/patreon.svg';
+import patreon from '@/assets/icons/patreon.svg';
 
 interface Props {
 	dataService: DataService;
@@ -50,7 +50,9 @@ export const PatreonConnectPanel = (props: Props) => {
 
 	if (loadingSession) {
 		return (
-			<Spin />
+			<Flex align='center' justify='center'>
+				<Spin />
+			</Flex>
 		);
 	}
 
@@ -61,9 +63,9 @@ export const PatreonConnectPanel = (props: Props) => {
 					<Button
 						block={true}
 						type='primary'
-						icon={<img src={patreon} style={{ fill: 'white', width: '1em', height: '1em' }} />}
 						onClick={connectOAuth}
 					>
+						<img className='patreon-logo' src={patreon} style={{ width: '16px', height: '16px' }} />
 						Connect with Patreon
 					</Button>
 					: null

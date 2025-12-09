@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
+import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummon, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
 import { afterEach, describe, expect, expectTypeOf, test, vi } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -107,13 +107,22 @@ const beastheartCompanionChoices = beastheart.featuresByLevel.find(fbl => fbl.le
 const companion1 = beastheartCompanionChoices.options.find(o => o.monster.id === 'beastheart-1-2a-1') as Summon;
 
 const mockSummonChoiceFeature = {
-	id: 'mock-summon-chouice',
+	id: 'mock-summon-choice',
 	name: 'Mock Summon Choice',
 	type: FeatureType.SummonChoice,
 	data: {
 		selected: [ companion1, minionSummon1 ]
 	}
 } as FeatureSummonChoice;
+
+const mockSummonFeature = {
+	id: 'mock-summon',
+	name: 'Mock Summon',
+	type: FeatureType.Summon,
+	data: {
+		summons: [ minionSummon1 ]
+	}
+} as FeatureSummon;
 // #endregion
 
 describe('buildFollowerCompanionSheet()', () => {
@@ -194,7 +203,8 @@ describe('buildHeroSheet', () => {
 			{ feature: mockFeatureRetainer, source: 'test' },
 			{ feature: mockFeatureFollower, source: 'test' },
 			{ feature: mockFeatureCompanion, source: 'test' },
-			{ feature: mockSummonChoiceFeature, source: 'test' }
+			{ feature: mockSummonChoiceFeature, source: 'test' },
+			{ feature: mockSummonFeature, source: 'test' }
 		]);
 
 		const result = HeroSheetBuilder.buildHeroSheet(hero, sourcebooks, options);
@@ -202,5 +212,6 @@ describe('buildHeroSheet', () => {
 		expect(result).toBeDefined();
 		expect(result).not.toBeNullable();
 		expect(result.followers.length).toBe(4);
+		expect(result.summons.length).toBe(2);
 	});
 });

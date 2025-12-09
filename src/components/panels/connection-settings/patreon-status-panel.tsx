@@ -4,7 +4,7 @@ import { PatronStatus } from '@/models/patreon-connection';
 
 import './patreon-status-panel.scss';
 
-import patreon from '../../../assets/icons/patreon.svg';
+import patreon from '@/assets/icons/patreon.svg';
 
 interface Props {
 	title: string;
@@ -56,7 +56,7 @@ export const PatreonStatusPanel = (props: Props) => {
 		<div className='patreon-status-panel'>
 			<HeaderText>
 				<Flex align='center' gap={10}>
-					<img src={patreon} style={{ fill: 'white', width: '1em', height: '1em' }} />
+					<img className='patreon-logo' src={patreon} style={{ width: '16px', height: '16px' }} />
 					{props.title}
 				</Flex>
 			</HeaderText>

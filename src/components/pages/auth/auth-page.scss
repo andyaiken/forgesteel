@@ -14,19 +14,26 @@
 		gap: 50px;
 		overflow-y: auto;
 
-        .patreon-connect-status {
-            .ant-result-icon .check-icon svg {
-                width: 75px;
-                height: 75px;
-            }
+		.data-loader-container {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			width: 350px;
+			padding: 20px;
+			border-radius: 10px;
+			background-color: rgb(255, 255, 255);
+			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
-            .ant-result-body {
-                padding: 10px 20px 20px 20px;
+			.overall-state {
 				display: flex;
-				flex-direction: column;
-				gap: 20px;
-            }
-        }
+				justify-content: center;
+
+				svg {
+					width: 75px;
+					height: 75px;
+				}
+			}
+		}
     }
 }
 
@@ -34,6 +41,10 @@ html[data-theme="dark"] {
 	.auth-page {
 		.auth-page-content {
 			background-color: rgb(55, 55, 55);
+
+			.data-loader-container {
+				background-color: rgb(55, 55, 55);
+			}
 		}
 	}
 }

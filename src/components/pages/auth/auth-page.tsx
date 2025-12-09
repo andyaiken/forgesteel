@@ -1,7 +1,7 @@
-import { Button, Result } from 'antd';
 import { useEffect, useState } from 'react';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Button } from 'antd';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
@@ -83,11 +83,10 @@ export const AuthPage = (props: Props) => {
 			<div className='auth-page'>
 				<AppHeader />
 				<div className='auth-page-content'>
-					<Result
-						className='patreon-connect-status'
-						icon={<CheckIcon state={connectionState} />}
-						title='Patreon Connection'
-					>
+					<div className='data-loader-container'>
+						<div className='overall-state'>
+							<CheckIcon state={connectionState} />
+						</div>
 						{
 							patreonSession?.connections.map((conn, i) => {
 								return (
@@ -102,7 +101,7 @@ export const AuthPage = (props: Props) => {
 						<Button block={true} type='primary' onClick={() => navigation.goToWelcome()}>
 							Return
 						</Button>
-					</Result>
+					</div>
 				</div>
 				<AppFooter
 					page='welcome'

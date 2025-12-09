@@ -97,7 +97,7 @@ export const TerrainPanel = (props: Props) => {
 				<Markdown text={terrain.description} />
 				<TerrainLabel terrain={terrain} />
 				<Flex align='center' justify='space-between'>
-					<Tag>{terrain.category}</Tag>
+					<Tag variant='outlined'>{terrain.category}</Tag>
 					<Field label='EV' value={terrain.area ? `${terrain.encounterValue} per ${terrain.area}` : ((terrain.encounterValue === 0) ? '-' : terrain.encounterValue)} />
 				</Flex>
 				{

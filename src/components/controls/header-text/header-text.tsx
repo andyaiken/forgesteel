@@ -26,9 +26,7 @@ export const HeaderText = (props: Props) => {
 					<div className='header-text'>{props.children}</div>
 					{
 						props.tags ?
-							<Flex gap={5}>
-								{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
-							</Flex>
+							<Flex gap={3}>{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}</Flex>
 							: null
 					}
 				</div>

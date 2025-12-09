@@ -122,7 +122,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	standardAbilities.forEach(a => {
 		standardAbilityOptions.push({
 			value: a.id,
-			label: <div className='ds-text'>{a.name} <Tag>{a.actionType}</Tag></div>
+			label: <div className='ds-text'>{a.name} <Tag variant='outlined'>{a.actionType}</Tag></div>
 		});
 	});
 

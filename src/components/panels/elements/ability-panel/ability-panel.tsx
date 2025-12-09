@@ -316,9 +316,7 @@ export const AbilityPanel = (props: Props) => {
 						<div>
 							{
 								props.ability.keywords.length > 0 ?
-									<Flex gap={5}>
-										{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
-									</Flex>
+									<Flex gap={3}>{props.ability.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}</Flex>
 									: null
 							}
 							<AbilityInfoPanel ability={props.ability} hero={props.hero} />

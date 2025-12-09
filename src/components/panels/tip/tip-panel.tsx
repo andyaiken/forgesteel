@@ -19,7 +19,7 @@ export const TipPanel = (props: Props) => {
 				{
 					props.tip.isNew ?
 						<div style={{ textAlign: 'center' }}>
-							<Tag color='red'>NEW!</Tag>
+							<Tag color='red' variant='outlined'>NEW!</Tag>
 						</div>
 						: null
 				}

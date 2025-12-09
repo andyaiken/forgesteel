@@ -1325,7 +1325,6 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
-				// patreonConnections={props.patreonConnections}
 				dataService={props.dataService}
 				setConnectionSettings={persistConnectionSettings}
 				clearErrors={() => setErrors([])}

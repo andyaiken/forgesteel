@@ -1,4 +1,4 @@
-import { Button, Flex, Space } from 'antd';
+import { Button, Flex, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export const PatreonConnectPanel = (props: Props) => {
+	const [ loadingSession, setLoadingSession ] = useState<boolean>(true);
 	const [ patreonSession, setPatreonSession ] = useState<PatreonSession | null>(null);
 
 	const PatreonSvg: React.FC = () => (
@@ -40,44 +41,49 @@ export const PatreonConnectPanel = (props: Props) => {
 	};
 
 	const updateSession = () => {
+		setLoadingSession(true);
 		props.dataService.getPatreonSession()
-			.then(setPatreonSession);
+			.then(setPatreonSession)
+			.finally(() => {
+				setLoadingSession(false);
+			});
 	};
 
 	useEffect(updateSession, [ props.dataService ]);
 
-	return (
-		<Space orientation='vertical' style={{ width: '100%' }}>
-			<Flex gap='small'>
-
-				<Button
-					color='primary'
-					variant='solid'
-					icon={<Icon component={PatreonSvg} style={{ fill: 'white', width: '1em', height: '1em' }} />}
-					disabled={patreonSession?.authenticated}
-					onClick={connectOAuth}
-				>
-					Connect with Patreon
-				</Button>
+	return loadingSession ?
+		<Spin />
+		: (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Flex gap='small'>
+					<Button
+						color='primary'
+						variant='solid'
+						icon={<Icon component={PatreonSvg} style={{ fill: 'white', width: '1em', height: '1em' }} />}
+						disabled={patreonSession?.authenticated}
+						onClick={connectOAuth}
+					>
+						Connect with Patreon
+					</Button>
+					{
+						patreonSession?.authenticated ?
+							<Button onClick={logout} danger={true}>
+								Disconnect Patreon
+							</Button>
+							: null
+					}
+				</Flex>
 				{
-					patreonSession?.authenticated ?
-						<Button onClick={logout} danger={true}>
-							Disconnect Patreon
-						</Button>
-						: null
+					patreonSession?.connections.map((conn, i) => {
+						return (
+							<PatreonStatusPanel
+								key={`patreon-connection-${i}`}
+								title={conn.name}
+								status={conn.status}
+							/>
+						);
+					})
 				}
-			</Flex>
-			{
-				patreonSession?.connections.map((conn, i) => {
-					return (
-						<PatreonStatusPanel
-							key={`patreon-connection-${i}`}
-							title={conn.name}
-							status={conn.status}
-						/>
-					);
-				})
-			}
-		</Space>
-	);
+			</Space>
+		);
 };

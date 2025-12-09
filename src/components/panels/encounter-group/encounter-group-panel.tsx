@@ -161,10 +161,10 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								<Flex gap={5}>
-									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
-									{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
-									{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								<Flex gap={3}>
+									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
+									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+									{props.hero.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</Flex>
 							</div>
 							{
@@ -373,7 +373,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 				.find(m => m.id === props.slot.state.captainID);
 			if (captain) {
 				return (
-					<Tag>
+					<Tag variant='outlined'>
 						Captain: {captain.name}
 					</Tag>
 				);
@@ -381,7 +381,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 		}
 
 		return (
-			<Tag>No captain</Tag>
+			<Tag variant='outlined'>No captain</Tag>
 		);
 	};
 
@@ -443,9 +443,9 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								<Flex gap={5}>
+								<Flex gap={3}>
 									{getMinionCaptainTag()}
-									{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									{props.slot.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</Flex>
 							</div>
 							<Button
@@ -525,10 +525,10 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 										: null
 								}
 								<div className='conditions-column'>
-									<Flex gap={5}>
-										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
-										{monster.state.hidden ? <Tag>Hidden</Tag> : null}
-										{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									<Flex gap={3}>
+										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
+										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+										{monster.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
 									</Flex>
 								</div>
 							</div>

@@ -12,43 +12,49 @@ interface Props {
 }
 
 export const PatreonStatusPanel = (props: Props) => {
-	const getStatus = () => {
-		if (!props.status) {
+	const getIsPatron = () => {
+		return (
+			<Tag
+				color={props.status && props.status.patron ? 'blue' : 'red'}
+				variant={props.status && props.status.patron ? 'solid' : 'outlined'}
+			>
+				{props.status && props.status.patron ? 'Patron' : 'Not A Patron'}
+			</Tag>
+		);
+	};
+
+	const getTier = () => {
+		if (!props.status || !props.status.patron || !props.status.tier_cents) {
 			return null;
 		}
 
-		let subDate = '';
-		if (props.status.start) {
-			const date = new Date(props.status.start);
-			const opts = { month: 'short', year: 'numeric' } as Intl.DateTimeFormatOptions;
-			subDate = date.toLocaleDateString('en-US', opts);
-		}
-
-		const subTier = props.status.tier_cents ? Math.round(props.status.tier_cents / 100) : 0;
+		const dollars = Math.round(props.status.tier_cents / 100);
 
 		return (
-			<Flex gap='small'>
-				<Tag
-					color={props.status.patron ? 'green' : 'red'}
-					variant='outlined'
-				>
-					{props.status.patron ? 'Member' : 'Not Member'}
-				</Tag>
-				{
-					props.status.patron ?
-						<Tag color='blue' variant='outlined'>
-							${subTier} Tier
-						</Tag>
-						: null
-				}
-				{
-					props.status.patron ?
-						<Tag color='blue' variant='outlined'>
-							Since {subDate}
-						</Tag>
-						: null
-				}
-			</Flex>
+			<Tag
+				color='blue'
+				variant='outlined'
+			>
+				${dollars} Tier
+			</Tag>
+		);
+	};
+
+	const getSubscribedDate = () => {
+		if (!props.status || !props.status.patron || !props.status.start) {
+			return null;
+		}
+
+		const date = new Date(props.status.start);
+		const subDate = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+		return (
+			<Tag
+				color='blue'
+				variant='outlined'
+			>
+				Since {subDate}
+			</Tag>
 		);
 	};
 
@@ -60,7 +66,11 @@ export const PatreonStatusPanel = (props: Props) => {
 					{props.title}
 				</Flex>
 			</HeaderText>
-			{getStatus()}
+			<Flex gap={5}>
+				{getIsPatron()}
+				{getTier()}
+				{getSubscribedDate()}
+			</Flex>
 		</div>
 	);
 };

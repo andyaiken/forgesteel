@@ -732,9 +732,7 @@ const HealthPanel = (props: Props) => {
 					}
 					{
 						tags.length > 0 ?
-							<Flex gap={5}>
-								{tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)}
-							</Flex>
+							<Flex gap={3}>{tags.map((tag, n) => <Tag key={n} variant='outlined'>{tag}</Tag>)}</Flex>
 							: null
 					}
 				</div>

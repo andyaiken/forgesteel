@@ -186,7 +186,7 @@ export const HeroPanel = (props: Props) => {
 						{
 							skills.map(s => (
 								<div key={s.name} className='ds-text'>
-									{s.name} {props.options.showSkillsInGroups ? null : <Tag>{s.list}</Tag>}
+									{s.name} {props.options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
 								</div>
 							))
 						}
@@ -742,7 +742,7 @@ export const HeroPanel = (props: Props) => {
 			return (
 				<div key={data.feature.id} className='selectable-row clickable' onClick={() => showFeature(data.feature)}>
 					<div><b>{data.feature.name}</b></div>
-					{props.options.showSources ? <Tag>{data.source}</Tag> : null}
+					{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
 				</div>
 			);
 		};
@@ -826,7 +826,7 @@ export const HeroPanel = (props: Props) => {
 					<div><b>{data.ability.name}</b></div>
 					<div>{data.ability.distance.map(d => AbilityLogic.getDistance(d, data.ability, props.hero)).join(' or ')}</div>
 					<div>{data.ability.target}</div>
-					{props.options.showSources ? <Tag>{data.source}</Tag> : null}
+					{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
 					{
 						data.ability.cost === 'signature' ?
 							<Pill>Signature</Pill>

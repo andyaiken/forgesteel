@@ -25,8 +25,8 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`monster-label ${type}`}>
-				<Flex justify='center' gap={5}>
-					{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+				<Flex justify='center' gap={3}>
+					{props.monster.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
 				</Flex>
 				<Flex align='center' justify='space-between'>
 					<div className='ds-text'>{desc}</div>

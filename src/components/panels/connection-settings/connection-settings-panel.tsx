@@ -41,27 +41,29 @@ export const ConnectionSettingsPanel = (props: Props) => {
 
 	const testWarehouseConnection = () => {
 		setTestingWarehouseConnection(true);
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		const connectUrl = `${connectionSettings.warehouseHost}/connect`;
-		axios.get(connectUrl, { headers: { Authorization: `Bearer ${connectionSettings.warehouseToken}` } })
-			.then(() => {
-				setTestStatusAlert(<Alert title='Success!' type='success' showIcon closable />);
-			})
-			.catch(err => {
-				console.error('Error connecting to Warehouse', err);
-				if (err.response) {
-					const code = err.response.status;
-					const msg = err.response.data.message ?? err.response.data;
-					setTestStatusAlert(<Alert title={`${code} Error: ${msg}`} type='error' showIcon closable />);
-				} else {
-					setTestStatusAlert(<Alert title={`Unable to connect to warehouse: ${err.message}`} type='error' showIcon closable />);
-				}
-			})
-			.finally(() => {
-				setTestingWarehouseConnection(false);
-				setTimeout(() => {
-					setTestStatusAlert(null);
-				}, 10000);
-			});
+		axios.post(connectUrl, {}, {
+			headers: { Authorization: `Bearer ${connectionSettings.warehouseToken}` },
+			withCredentials: true
+		}).then(() => {
+			setTestStatusAlert(<Alert title='Success!' type='success' showIcon closable />);
+		}).catch(err => {
+			console.error('Error connecting to Warehouse', err);
+			if (err.response) {
+				const code = err.response.status;
+				const msg = err.response.data.message ?? err.response.data;
+				setTestStatusAlert(<Alert title={`${code} Error: ${msg}`} type='error' showIcon closable />);
+			} else {
+				setTestStatusAlert(<Alert title={`Unable to connect to warehouse: ${err.message}`} type='error' showIcon closable />);
+			}
+		}).finally(() => {
+			setTestingWarehouseConnection(false);
+			setTimeout(() => {
+				setTestStatusAlert(null);
+			}, 10000);
+		});
 	};
 
 	const saveWarehouseSettings = () => {

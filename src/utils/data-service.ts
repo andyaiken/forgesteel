@@ -12,15 +12,15 @@ export class DataService {
 	settings: ConnectionSettings;
 	readonly host: string;
 	readonly apiToken: string;
-	private jwt: string | null;
+	private csrfToken: boolean;
 	private tokenHandlerHost: string;
 
 	constructor(settings: ConnectionSettings) {
 		this.settings = settings;
 		this.host = settings.warehouseHost;
 		this.apiToken = settings.warehouseToken;
-		this.jwt = null;
 
+		this.csrfToken = false;
 		// this.tokenHandlerHost = 'http://localhost:5000';
 		this.tokenHandlerHost = 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app';
 	};
@@ -33,31 +33,42 @@ export class DataService {
 				const code = error.response.status;
 				const respMsg = error.response.data.message ?? error.response.data;
 				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
+
+				if (code === 401) {
+					this.csrfToken = false;
+				}
 			}
 		}
 		return msg;
 	};
 
-	private async ensureJwt() {
-		if (this.jwt === null) {
+	private async ensureCsrf(): Promise<boolean> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		if (!this.csrfToken) {
 			try {
-				const response = await axios.get(`${this.host}/connect`, { headers: { Authorization: `Bearer ${this.apiToken}` } });
-				this.jwt = response.data.access_token;
+				await axios.post(`${this.host}/connect`, {}, {
+					headers: { Authorization: `Bearer ${this.apiToken}` },
+					withCredentials: true,
+					withXSRFToken: true
+				});
+				this.csrfToken = true;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
 				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		}
-
-		return this.jwt;
+		return this.csrfToken;
 	}
 
 	private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		if (this.settings.useWarehouse) {
-			await this.ensureJwt();
 			try {
 				const response = await axios.get(`${this.host}/data/${key}`, {
-					headers: { Authorization: `Bearer ${this.jwt}` }
+					withCredentials: true,
+					withXSRFToken: true
 				});
 				return response.data.data;
 			} catch (error) {
@@ -70,13 +81,14 @@ export class DataService {
 	}
 
 	private async putLocalOrWarehouse<T>(key: string, value: T): Promise<T> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		if (this.settings.useWarehouse) {
-			await this.ensureJwt();
 			try {
-				await axios.put(`${this.host}/data/${key}`,
-					value, {
-						headers: { Authorization: `Bearer ${this.jwt}` }
-					});
+				await axios.put(`${this.host}/data/${key}`, value, {
+					withCredentials: true,
+					withXSRFToken: true
+				});
 				return value;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
@@ -84,6 +96,15 @@ export class DataService {
 			}
 		} else {
 			return localforage.setItem<T>(key, value);
+		}
+	}
+
+	async initialize(): Promise<boolean> {
+		if (this.settings.useWarehouse) {
+			const connected = await this.ensureCsrf();
+			return connected;
+		} else {
+			return true;
 		}
 	}
 

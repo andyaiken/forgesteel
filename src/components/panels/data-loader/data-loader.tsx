@@ -63,7 +63,9 @@ export const DataLoader = (props: Props) => {
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
 		setConnectionSettings(settings);
-		return new DataService(settings);
+		const service = new DataService(settings);
+		await service.initialize();
+		return service;
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {

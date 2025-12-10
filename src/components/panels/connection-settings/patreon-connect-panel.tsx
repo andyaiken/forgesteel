@@ -1,5 +1,6 @@
-import { Button, Flex, Space, Spin } from 'antd';
+import { Alert, Button, Flex, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
+import { Browser } from '@/utils/browser';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DataService } from '@/utils/data-service';
@@ -58,6 +59,15 @@ export const PatreonConnectPanel = (props: Props) => {
 
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
+			{
+				Browser.isSafari() ?
+					<Alert
+						type='warning'
+						showIcon={true}
+						title='To  use this feature, you will need to disable "Prevent cross-site tracking" in Safari preferences.'
+					/>
+					: null
+			}
 			{
 				!patreonSession || !patreonSession.authenticated ?
 					<Button

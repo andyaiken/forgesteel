@@ -23,14 +23,12 @@ export const telekinesis: SubClass = {
 						target: 'Self or one size 1 creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You slide the target up to a number of squares equal to your Reason score.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'The size of the creature or object you can target increases by 1 for every 2 clarity spent.'
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'You can vertical slide the target.'
 							})
@@ -243,8 +241,7 @@ export const telekinesis: SubClass = {
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target can fly until the start of your next turn, and can immediately shift up to their speed. You can also shift up to your speed. While flying, a target’s stability is reduced to 0 and can’t be increased.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The effects last for 1 hour instead.'
 							})

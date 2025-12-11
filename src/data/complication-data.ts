@@ -852,11 +852,11 @@ You can’t take this complication if you can’t be made dazed.`,
 		description: 'You’re hunting someone or something - perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you face off against your quarry!',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
-				id: '',
+				id: 'comp-hunter-b1',
 				options: [ 'Alertness', 'Criminal Underworld', 'Eavesdrop', 'Interrogate', 'Rumors', 'Search', 'Track', 'Society' ]
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-hunter-b',
+				id: 'comp-hunter-b2',
 				name: 'Hunter Benefit',
 				description: 'You have an edge on tests made to find or learn clues about your quarry.'
 			}),

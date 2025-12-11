@@ -54,9 +54,7 @@ You can make this test only once for any encounter or negotiation.`
 						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('At any time during the target’s movement, one ally can make a free strike against them.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'If the target has R < [average], they are slowed (EoT).'
 							})
 						]

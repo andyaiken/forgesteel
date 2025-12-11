@@ -112,9 +112,7 @@ You can choose only one free triggered action option at a time, even if multiple
 						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You spend a Recovery and the target regains Stamina equal to your Recovery value.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You can end one effect on the target that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up.'
 							})
 						]

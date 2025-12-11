@@ -34,9 +34,7 @@ export const guardian: SubClass = {
 						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The triggering damage is halved for the ally.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You spend one of your Recoveries; the ally regains the Stamina instead of you.'
 							})
 						]
@@ -164,8 +162,7 @@ While teleporting after making the attack, your companion can teleport with a gr
 												tier3: '21 + M damage; taunted (save ends); M < [strong], prone and can’t stand (EoT)'
 											})
 										),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
+										FactoryLogic.createAbilitySectionSpend({
 											value: 2,
 											effect: 'Your companion can use this ability as a triggered action against an enemy who damages you.'
 										})
@@ -246,9 +243,7 @@ While teleporting after making the attack, your companion can teleport with a gr
 											})
 										),
 										FactoryLogic.createAbilitySectionText('While frightened by this ability, a creature takes 10 psychic damage at the start of each of your turns.'),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'This ability also affects a 3 burst around you. An enemy in both areas is only affected once.'
 										})
 									]

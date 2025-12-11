@@ -493,8 +493,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You can shift up to 3 squares.'),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
+				FactoryLogic.createAbilitySectionSpend({
 					value: 2,
 					repeatable: true,
 					effect: 'You can target one additional creature or object for every 2 drama spent.'
@@ -564,9 +563,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					})
 				),
 				FactoryLogic.createAbilitySectionText('One ally within 10 squares of you can end one effect on them that is ended by a saving throw or that ends at the end of their turn.'),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
-					value: 1,
+				FactoryLogic.createAbilitySectionSpend({
 					effect: 'The chosen ally can spend a Recovery.'
 				})
 			]
@@ -613,8 +610,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 						tier3: 'Slide 2; I < [strong], dazed (save ends)'
 					})
 				),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
+				FactoryLogic.createAbilitySectionSpend({
 					value: 2,
 					repeatable: true,
 					effect: 'The size of the burst increases by 1 for every 2 drama spent.'

@@ -535,8 +535,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								tier2: '5 damage',
 								tier3: '7 damage; A<2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'This ability targets one additional target for each 2 Malice spent.'

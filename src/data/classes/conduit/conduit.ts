@@ -85,9 +85,8 @@ You can gain more piety by praying to the gods—but beware! Doing so can easily
 						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can spend a Recovery.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
+								repeatable: true,
 								effect: `
 For each piety spent, you can choose one of the following enhancements:
 
@@ -135,9 +134,7 @@ For each piety spent, you can choose one of the following enhancements:
 									target: 'One ally',
 									sections: [
 										FactoryLogic.createAbilitySectionText('The power roll gains an edge.'),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'The power roll has a double edge.'
 										})
 									]
@@ -157,9 +154,7 @@ For each piety spent, you can choose one of the following enhancements:
 									target: 'One ally',
 									sections: [
 										FactoryLogic.createAbilitySectionText('The power roll takes a bane against the target.'),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'The power roll has a double bane against the target.'
 										})
 									]

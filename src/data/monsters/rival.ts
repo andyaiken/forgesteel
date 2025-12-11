@@ -262,8 +262,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '10 damage; push 2',
 								tier3: '13 damage; push 3'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each target who has <code>M < 1</code> is slowed (save ends).'
 							})
@@ -396,9 +395,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '11 damage',
 								tier3: '14 damage; A < 2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The shadow can teleport up to 5 squares, then can attempt to hide.'
 							})
 						]
@@ -458,8 +455,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '10 damage',
 								tier3: '13 damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Two allies within distance can make a free strike against one of the targets.'
 							})
@@ -745,8 +741,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '15 damage; push 3',
 								tier3: '18 damage; push 4'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each target who has <code>M < 2</code> is slowed (save ends).'
 							})
@@ -879,9 +874,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '15 damage; A < 2 bleeding (save ends)',
 								tier3: '18 damage; A < 3 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The shadow can teleport up to 6 squares, then can attempt to hide.'
 							})
 						]
@@ -941,8 +934,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '15 damage',
 								tier3: '18 damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Two allies within distance can make a free strike against the same target.'
 							})
@@ -1228,8 +1220,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '18 damage; push 4',
 								tier3: '22 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
 								effect: 'Each target who has <code>M < 3</code> is bleeding and slowed (save ends).'
 							})
@@ -1362,9 +1353,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '18 damage; A < 3 bleeding (save ends)',
 								tier3: '22 damage; A < 4 bleeding and weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The shadow can teleport up to 7 squares, then can attempt to hide.'
 							})
 						]
@@ -1424,8 +1413,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '18 damage; A < 3 prone',
 								tier3: '22 damage; A < 4 prone '
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
 								effect: 'Two allies within distance move up to their speed and can use a signature ability.'
 							})
@@ -1502,8 +1490,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '17 psychic damage',
 								tier3: '21 psychic damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Each target shifts up to their speed and can make a free strike against one enemy of the talent’s choice. The target can’t be moved in a way that would harm them.'
 							})
@@ -1584,8 +1571,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier3: '24 damage; vertical slide 5; M < 5 9 lightning damage'
 							})),
 							FactoryLogic.createAbilitySectionText('The conduit or one ally within distance regains Stamina equal to half the damage dealt.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Two additional allies within distance regain the same amount of Stamina.'
 							})
@@ -1716,8 +1702,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '21 damage; push 4',
 								tier3: '25 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
 								effect: 'Each target who has <code>M < 3</code> is bleeding and slowed (save ends).'
 							})
@@ -1850,9 +1835,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '21 damage; A < 4 bleeding (save ends)',
 								tier3: '25 damage; A < 5 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The shadow can teleport up to 10 squares, then can attempt to hide.'
 							})
 						]
@@ -1912,8 +1895,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '21 damage; A < 3 prone and can’t stand (EoT)',
 								tier3: '25 damage; prone; A < 5 can’t stand (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'Two allies within distance move up to their speed and can use a signature ability that has a double edge.'
 							})
@@ -1990,8 +1972,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '20 psychic damage',
 								tier3: '24 psychic damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
 								effect: 'Each target moves up to their speed and can make a free strike against one enemy of the talent’s choice. The target’s movement can provoke opportunity attacks, but they can’t otherwise be moved in a way that would harm them.'
 							})

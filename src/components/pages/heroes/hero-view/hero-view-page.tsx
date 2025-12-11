@@ -11,6 +11,7 @@ import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
+import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { Follower } from '@/models/follower';
@@ -67,6 +68,11 @@ interface Props {
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
 	setNotes: (hero: Hero, value: string) => void;
+	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
+	onRemoveSquad: (hero: Hero, slotID: string) => void;
+	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
+	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -103,7 +109,12 @@ export const HeroViewPage = (props: Props) => {
 						onSelectFeature={feature => props.showFeature(feature, hero)}
 						onSelectAbility={ability => props.showAbility(ability, hero)}
 						onShowState={page => props.showHeroState(hero, page)}
-						onshowReference={page => props.showReference(hero, page)}
+						onShowReference={page => props.showReference(hero, page)}
+						onAddSquad={props.onAddSquad}
+						onRemoveSquad={props.onRemoveSquad}
+						onAddMonsterToSquad={props.onAddMonsterToSquad}
+						onSelectControlledMonster={props.onSelectControlledMonster}
+						onSelectControlledSquad={props.onSelectControlledSquad}
 					/>
 				);
 			case 'classic':

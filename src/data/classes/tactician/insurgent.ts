@@ -35,9 +35,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target gains 2 surges, which they can use on the triggering damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'If the damage has any potency effect associated with it, the potency is increased by 1.'
 							})
 						]

@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "12.40.0",
+	"version": "12.42.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -32,7 +32,7 @@
 		"react": "^19.2.1",
 		"react-dom": "^19.2.1",
 		"react-router": "^7.10.1",
-		"sass": "^1.95.1",
+		"sass": "^1.96.0",
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {

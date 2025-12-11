@@ -293,8 +293,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier3: '12 damage; push 5'
 							})),
 							FactoryLogic.createAbilitySectionText('If the target is adjacent to an object or a wall after the power roll is resolved, they are restrained until the end of their next turn. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'If the target is pushed into another creature, the target and the creature are each restrained until the end of their next turn.'
 							})
@@ -469,8 +468,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier3: '13 damage; slide 1'
 							})),
 							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 square to remain adjacent to the target. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'This ablitiy targets one additional target.'
 							})
@@ -712,8 +710,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier3: '15 damage; slide 5'
 							})),
 							FactoryLogic.createAbilitySectionText('target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'A target force moved adjacent to an ally of the marauder lord is restrained until the end of their next turn.'
 							})
@@ -730,8 +727,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target vertical slides up to 5 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'This ability takes the Area keyword and loses the Ranged keyword, its distance becomes a 10 burst, and it targets each restrained creature in the area.'
 							})

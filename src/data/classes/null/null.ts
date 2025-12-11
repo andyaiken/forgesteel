@@ -106,9 +106,7 @@ This ability remains active even after an encounter ends. It ends only if you ar
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You halve the damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The potency of one effect associated with the damage is reduced by 1 for you.'
 							}),
 							FactoryLogic.createAbilitySectionPackage('inertial-shield')

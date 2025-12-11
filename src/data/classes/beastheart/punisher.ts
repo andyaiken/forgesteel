@@ -34,9 +34,7 @@ export const punisher: SubClass = {
 						target: 'One enemy',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You deal damage equal to your Might score to the target and push them up to a number of squares equal to your Might score + 1. If this movement causes the enemy to move farther from the creature they damaged, the triggering damage is halved.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You can push the enemy twice the distance.'
 							})
 						]
@@ -61,9 +59,7 @@ export const punisher: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You end the forced movement. You can then push the creature up to a number of squares equal to your Might score + 1. The creature takes 1 damage for each square they are moved in this way.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You can each use this free triggered action on the same turn.'
 							})
 						]
@@ -185,8 +181,7 @@ export const punisher: SubClass = {
 												tier3: '18 sonic damage; M < [strong], prone'
 											})
 										),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
+										FactoryLogic.createAbilitySectionSpend({
 											value: 2,
 											effect: 'You can move up to your speed. The power roll also affects any enemy you come adjacent to during the move.'
 										})

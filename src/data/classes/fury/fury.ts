@@ -547,9 +547,8 @@ Primordial power remains until you spend it.`
 						tier3: '16 + M damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
-					value: 1,
+				FactoryLogic.createAbilitySectionSpend({
+					repeatable: true,
 					effect: 'While you are winded, this ability deals an extra 1d6 damage for each ferocity spent. While you are dying, it deals an extra 1d10 damage for each ferocity spent. In either case, you lose 1d6 Stamina after making this strike.'
 				})
 			]

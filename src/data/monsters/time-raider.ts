@@ -232,8 +232,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 									tier3: '13 damage; R<2 weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'A creature weakened this way is also bleeding.'
 							})
@@ -394,8 +393,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The area is a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature who enters the area or starts their turn there slides 3 squares toward the end of the area in the chosen direction. Each ene- my in the area when it first appears takes 3 damage before they slide.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The helix creates a second kinetic lane.'
 							})
@@ -777,8 +775,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 						target: 'The triggering creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The strike takes a bane. After the strike resolves, the tyrannis can make a free strike against the target.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The strike has a double bane instead.'
 							})

@@ -5,6 +5,7 @@ import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { EncounterSlot } from '@/models/encounter-slot';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureLogic } from '@/logic/feature-logic';
@@ -408,6 +409,20 @@ export class MonsterLogic {
 		}
 		if (monster.state.staminaTemp > 0) {
 			str += ` +${monster.state.staminaTemp}`;
+		}
+
+		return str;
+	};
+
+	static getMinionStaminaDescription = (slot: EncounterSlot) => {
+		const max = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m));
+
+		let str = `${max}`;
+		if (slot.state.staminaDamage > 0) {
+			str = `${Math.max(max - slot.state.staminaDamage, 0)} / ${max}`;
+		}
+		if (slot.state.staminaTemp > 0) {
+			str += ` +${slot.state.staminaTemp}`;
 		}
 
 		return str;

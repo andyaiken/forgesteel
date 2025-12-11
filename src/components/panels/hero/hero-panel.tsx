@@ -265,18 +265,6 @@ export const HeroPanel = (props: Props) => {
 							</div>
 					}
 					{
-						!useRows ?
-							<ControlledMonstersPanel
-								hero={props.hero}
-								onAddSquad={props.onAddSquad!}
-								onRemoveSquad={props.onRemoveSquad!}
-								onAddMonsterToSquad={props.onAddMonsterToSquad!}
-								onSelectControlledMonster={props.onSelectControlledMonster!}
-								onSelectControlledSquad={props.onSelectControlledSquad!}
-							/>
-							: null
-					}
-					{
 						(heroicResources.length > 0) && !props.options.singlePage ?
 							<>
 								{
@@ -305,6 +293,18 @@ export const HeroPanel = (props: Props) => {
 									)
 								}
 							</>
+							: null
+					}
+					{
+						!useRows ?
+							<ControlledMonstersPanel
+								hero={props.hero}
+								onAddSquad={props.onAddSquad!}
+								onRemoveSquad={props.onRemoveSquad!}
+								onAddMonsterToSquad={props.onAddMonsterToSquad!}
+								onSelectControlledMonster={props.onSelectControlledMonster!}
+								onSelectControlledSquad={props.onSelectControlledSquad!}
+							/>
 							: null
 					}
 					{

@@ -13,12 +13,14 @@ import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { ConditionType } from '@/enums/condition-type';
+import { ControlledMonstersPanel } from '@/components/panels/hero/controlled-monsters/controlled-monsters-panel';
 import { Culture } from '@/models/culture';
 import { CultureData } from '@/data/culture-data';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
+import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -75,7 +77,12 @@ interface Props {
 	onSelectFeature?: (feature: Feature) => void;
 	onSelectAbility?: (ability: Ability) => void;
 	onShowState?: (page: HeroStatePage) => void;
-	onshowReference?: (page: RulesPage) => void;
+	onShowReference?: (page: RulesPage) => void;
+	onAddSquad?: (hero: Hero, monster: Monster, count: number) => void;
+	onRemoveSquad?: (hero: Hero, slotID: string) => void;
+	onAddMonsterToSquad?: (hero: Hero, slotID: string) => void;
+	onSelectControlledMonster?: (hero: Hero, monster: Monster) => void;
+	onSelectControlledSquad?: (hero: Hero, slot: EncounterSlot) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -109,20 +116,20 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const onShowConditions = () => {
-			if (props.onshowReference) {
-				props.onshowReference(RulesPage.Conditions);
+			if (props.onShowReference) {
+				props.onShowReference(RulesPage.Conditions);
 			}
 		};
 
 		const onShowSkills = () => {
-			if (props.onshowReference) {
-				props.onshowReference(RulesPage.Skills);
+			if (props.onShowReference) {
+				props.onShowReference(RulesPage.Skills);
 			}
 		};
 
 		const onShowLanguages = () => {
-			if (props.onshowReference) {
-				props.onshowReference(RulesPage.Languages);
+			if (props.onShowReference) {
+				props.onShowReference(RulesPage.Languages);
 			}
 		};
 
@@ -256,6 +263,18 @@ export const HeroPanel = (props: Props) => {
 									}}
 								/>
 							</div>
+					}
+					{
+						!useRows ?
+							<ControlledMonstersPanel
+								hero={props.hero}
+								onAddSquad={props.onAddSquad!}
+								onRemoveSquad={props.onRemoveSquad!}
+								onAddMonsterToSquad={props.onAddMonsterToSquad!}
+								onSelectControlledMonster={props.onSelectControlledMonster!}
+								onSelectControlledSquad={props.onSelectControlledSquad!}
+							/>
+							: null
 					}
 					{
 						(heroicResources.length > 0) && !props.options.singlePage ?

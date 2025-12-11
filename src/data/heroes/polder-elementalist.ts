@@ -713,7 +713,7 @@ export const polderElementalist = {
 										data: {
 											features: [
 												{
-													id: '',
+													id: 'elementalist-1-7e-1',
 													name: 'Stamina',
 													description: '',
 													type: 'Bonus',
@@ -727,7 +727,7 @@ export const polderElementalist = {
 													}
 												},
 												{
-													id: '',
+													id: 'elementalist-1-7e-2',
 													name: 'Stability',
 													description: '',
 													type: 'Bonus',

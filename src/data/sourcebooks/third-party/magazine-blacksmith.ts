@@ -594,17 +594,17 @@ Tiny, fluttering wings decorate the sides of these sandals.`,
 			level: 1,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'item-winged-sandals-1',
+					id: 'item-winged-sandals-1a',
 					name: 'Level 1',
 					description: 'While you wear these sandals, you gain a +1 bonus to your jump distance and height. Additionally, you reduce the effective height of your falls by 2 squares.'
 				}),
 				FactoryLogic.feature.createBonus({
-					id: '',
+					id: 'item-winged-sandals-1b',
 					field: FeatureField.Speed,
 					value: 1
 				}),
 				FactoryLogic.feature.createBonus({
-					id: '',
+					id: 'item-winged-sandals-1c',
 					field: FeatureField.Disengage,
 					value: 1
 				})

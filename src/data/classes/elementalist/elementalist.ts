@@ -195,12 +195,12 @@ Choose one of the following effects:
 								name: 'Enchantment of Permanence',
 								features: [
 									FactoryLogic.feature.createBonus({
-										id: '',
+										id: 'elementalist-1-7e-1',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 6
 									}),
 									FactoryLogic.feature.createBonus({
-										id: '',
+										id: 'elementalist-1-7e-2',
 										field: FeatureField.Stability,
 										value: 1
 									})

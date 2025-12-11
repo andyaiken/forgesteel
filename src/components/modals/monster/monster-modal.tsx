@@ -34,7 +34,7 @@ interface Props {
 export const MonsterModal = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ encounter, setEncounter ] = useState<Encounter | undefined>(props.encounter ? Utils.copy(props.encounter) : undefined);
-	const [ page, setPage ] = useState<string>(props.updateMonster ? 'Encounter' : 'Stat Block');
+	const [ page, setPage ] = useState<string>(props.updateMonster ? 'Vitals' : 'Stat Block');
 	const [ editingName, setEditingName ] = useState<boolean>(false);
 
 	const updateMonster = (monster: Monster) => {
@@ -46,7 +46,7 @@ export const MonsterModal = (props: Props) => {
 
 	const getContent = () => {
 		switch (page) {
-			case 'Encounter':
+			case 'Vitals':
 				return (
 					<div style={{ padding: '0 20px' }}>
 						<HeaderText
@@ -140,7 +140,7 @@ export const MonsterModal = (props: Props) => {
 							<Flex align='center' justify='center' style={{ width: '100%' }}>
 								<Segmented
 									name='tabs'
-									options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
+									options={encounter ? [ 'Vitals', 'Stat Block', 'Malice' ] : [ 'Vitals', 'Stat Block' ]}
 									value={page}
 									onChange={setPage}
 								/>

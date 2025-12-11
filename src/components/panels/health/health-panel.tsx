@@ -397,7 +397,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 
 interface MinionGroupProps {
 	slot: EncounterSlot;
-	encounter: Encounter;
+	encounter?: Encounter;
 	onChange?: (slot: EncounterSlot) => void;
 }
 
@@ -506,15 +506,19 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 					value: slot.state.defeated,
 					setValue: setDefeated
 				}}
-				captain={{
-					captainID: slot.state.captainID,
-					candidates: props.encounter.groups
-						.flatMap(g => g.slots)
-						.flatMap(s => s.monsters)
-						.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
-						.filter(m => !m.state.defeated),
-					setCaptainID: setCaptainID
-				}}
+				captain={
+					props.encounter ?
+						{
+							captainID: slot.state.captainID,
+							candidates: props.encounter.groups
+								.flatMap(g => g.slots)
+								.flatMap(s => s.monsters)
+								.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+								.filter(m => !m.state.defeated),
+							setCaptainID: setCaptainID
+						}
+						: undefined
+				}
 				conditions={{
 					current: slot.state.conditions,
 					immunities: []

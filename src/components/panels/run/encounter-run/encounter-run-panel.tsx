@@ -24,8 +24,7 @@ import { HeroStatePage } from '@/enums/hero-state-page';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { MinionGroupHealthPanel } from '@/components/panels/health/health-panel';
-import { Modal } from '@/components/modals/modal/modal';
+import { MinionSlotModal } from '@/components/modals/minion-slot/minion-slot-modal';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
@@ -306,6 +305,7 @@ export const EncounterRunPanel = (props: Props) => {
 			const addMonsterToSquad = (hero: Hero, slotID: string) => {
 				const monsters = [
 					...HeroLogic.getCompanions(hero),
+					...HeroLogic.getRetainers(hero),
 					...HeroLogic.getSummons(hero).map(s => s.monster)
 				];
 
@@ -916,34 +916,28 @@ export const EncounterRunPanel = (props: Props) => {
 			<Drawer open={!!selectedMinionSlot} onClose={() => setSelectedMinionSlot(null)} closeIcon={null} size={500}>
 				{
 					selectedMinionSlot ?
-						<Modal
-							content={
-								<div style={{ padding: '20px' }}>
-									<MinionGroupHealthPanel
-										slot={selectedMinionSlot}
-										encounter={encounter}
-										onChange={slot => {
-											const copy = Utils.copy(encounter);
+						<MinionSlotModal
+							slot={selectedMinionSlot}
+							encounter={encounter}
+							updateSlot={slot => {
+								const copy = Utils.copy(encounter);
 
-											copy.groups.forEach(g => {
-												const index = g.slots.findIndex(s => s.id === slot.id);
-												if (index !== -1) {
-													g.slots[index] = slot;
-												}
-											});
-											copy.heroes.forEach(h => {
-												const index = h.state.controlledSlots.findIndex(s => s.id === slot.id);
-												if (index !== -1) {
-													h.state.controlledSlots[index] = slot;
-												}
-											});
+								copy.groups.forEach(g => {
+									const index = g.slots.findIndex(s => s.id === slot.id);
+									if (index !== -1) {
+										g.slots[index] = slot;
+									}
+								});
+								copy.heroes.forEach(h => {
+									const index = h.state.controlledSlots.findIndex(s => s.id === slot.id);
+									if (index !== -1) {
+										h.state.controlledSlots[index] = slot;
+									}
+								});
 
-											setEncounter(copy);
-											props.onChange(copy);
-										}}
-									/>
-								</div>
-							}
+								setEncounter(copy);
+								props.onChange(copy);
+							}}
 							onClose={() => setSelectedMinionSlot(null)}
 						/>
 						: null

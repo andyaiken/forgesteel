@@ -23,6 +23,7 @@ import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { ElementModal } from '@/components/modals/element/element-modal';
 import { Encounter } from '@/models/encounter';
+import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -35,6 +36,7 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
 import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '@/enums/hero-state-page';
@@ -47,6 +49,7 @@ import { Kit } from '@/models/kit';
 import { LibraryEditPage } from '@/components/pages/library/library-edit/library-edit-page';
 import { LibraryListPage } from '@/components/pages/library/library-list/library-list-page';
 import { MainLayout } from '@/components/main/main-layout';
+import { MinionSlotModal } from '@/components/modals/minion-slot/minion-slot-modal';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
@@ -337,6 +340,87 @@ export const Main = (props: Props) => {
 		copy.state.notes = value;
 
 		persistHero(copy);
+	};
+
+	const addSquad = (hero: Hero, monster: Monster, count: number) => {
+		const copy = Utils.copy(hero);
+
+		const slot = FactoryLogic.createEncounterSlotFromMonster(monster);
+		while (slot.monsters.length < count) {
+			const m = Utils.copy(monster);
+			m.id = Utils.guid();
+			slot.monsters.push(m);
+		}
+		copy.state.controlledSlots.push(slot);
+
+		persistHero(copy);
+	};
+
+	const removeSquad = (hero: Hero, slotID: string) => {
+		const copy = Utils.copy(hero);
+
+		copy.state.controlledSlots = copy.state.controlledSlots.filter(s => s.id !== slotID);
+
+		persistHero(copy);
+	};
+
+	const addMonsterToSquad = (hero: Hero, slotID: string) => {
+		const copy = Utils.copy(hero);
+
+		const monsters = [
+			...HeroLogic.getCompanions(copy),
+			...HeroLogic.getRetainers(copy),
+			...HeroLogic.getSummons(copy).map(s => s.monster)
+		];
+
+		copy.state.controlledSlots
+			.filter(s => s.id === slotID)
+			.forEach(slot => {
+				const original = monsters.find(m => m.id === slot.monsterID);
+				if (original) {
+					const m = Utils.copy(original);
+					m.id = Utils.guid();
+					slot.monsters.push(m);
+				}
+			});
+
+		persistHero(copy);
+	};
+
+	const selectControlledMonster = (hero: Hero, monster: Monster) => {
+		setDrawer(
+			<MonsterModal
+				monster={monster}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				options={options}
+				onClose={() => setDrawer(null)}
+				updateMonster={monster => {
+					const copy = Utils.copy(hero);
+
+					copy.state.controlledSlots.forEach(s => {
+						s.monsters = s.monsters.map(m => m.id === monster.id ? monster : m);
+					});
+
+					persistHero(copy);
+				}}
+			/>
+		);
+	};
+
+	const selectControlledSquad = (hero: Hero, slot: EncounterSlot) => {
+		setDrawer(
+			<MinionSlotModal
+				slot={slot}
+				updateSlot={slot => {
+					const copy = Utils.copy(hero);
+
+					copy.state.controlledSlots = copy.state.controlledSlots.map(s => s.id === slot.id ? slot : s);
+
+					persistHero(copy);
+				}}
+				onClose={() => setDrawer(null)}
+			/>
+		);
 	};
 
 	// #endregion
@@ -1595,6 +1679,11 @@ export const Main = (props: Props) => {
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
 									setNotes={setNotes}
+									onAddSquad={addSquad}
+									onRemoveSquad={removeSquad}
+									onAddMonsterToSquad={addMonsterToSquad}
+									onSelectControlledMonster={selectControlledMonster}
+									onSelectControlledSquad={selectControlledSquad}
 								/>
 							}
 						/>

@@ -263,7 +263,6 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<Alert
 							type='info'
-							showIcon={true}
 							title={
 								<Markdown
 									text={`

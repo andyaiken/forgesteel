@@ -88,6 +88,7 @@ You can gain more piety by praying to the gods—but beware! Doing so can easily
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
+								repeatable: true,
 								effect: `
 For each piety spent, you can choose one of the following enhancements:
 

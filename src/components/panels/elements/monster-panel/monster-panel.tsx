@@ -83,15 +83,18 @@ export const MonsterPanel = (props: Props) => {
 				</div>
 			);
 		}
-	} else {
-		if (props.monster.role.organization === MonsterOrganizationType.Minion) {
-			rightOfTags = (
-				<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
-			);
-		} else if (props.monster.encounterValue > 0) {
-			rightOfTags = (
-				<Field label='EV' value={props.monster.encounterValue} />
-			);
+	} else if (props.monster.encounterValue > 0) {
+		switch (props.monster.role.organization) {
+			case MonsterOrganizationType.Minion:
+				rightOfTags = (
+					<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+				);
+				break;
+			default:
+				rightOfTags = (
+					<Field label='EV' value={props.monster.encounterValue} />
+				);
+				break;
 		}
 	}
 

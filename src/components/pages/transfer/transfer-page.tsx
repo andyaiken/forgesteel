@@ -183,9 +183,12 @@ export const TransferPage = (props: Props) => {
 	const getTransferContent = () => {
 		if (!settings.useWarehouse) {
 			return (
-				<div>
-					<p>Your are not currently setup to use the Warehouse backend - nothing to transfer!</p>
-				</div>
+				<Alert
+					title='Not connected to warehouse'
+					type='info'
+					description='You are not currently setup to use the Warehouse - nothing to do!'
+					showIcon={true}
+				/>
 			);
 		} else {
 			return (
@@ -266,11 +269,11 @@ export const TransferPage = (props: Props) => {
 					<HeaderText level={1}>Data Transfer</HeaderText>
 					<p>
 						By default, Forge Steel uses your local browser storage to store your data.
-						This meant that you didn't have to register or sign up anywhere, and all of your data stayed local to yoy.
-						But it also meant that you couldn't access your data across browsers, and a browser reset could wipe all your data.
+						This means that you didn't have to register or sign up anywhere, and all of your data stays local to you.
+						But it also means that you can't access your data across browsers, and a browser reset could wipe all your data.
 					</p>
 					<p>
-						However, now that you have connected with the Warehouse, you have access to persistent, remote storage
+						However, once you have connected with the Warehouse, you have access to persistent, remote storage
 						that you can use to keep data and access it across devices, and which won't get wiped if your browser cache clears.
 					</p>
 					<p>
@@ -282,10 +285,16 @@ export const TransferPage = (props: Props) => {
 						It only checks the internal ID for determining if a chunk of data is 'the same'.
 						This means that copying or merging data could result in some data loss. Use at your own risk!
 					</p>
-					<p>
-						Once you are done, you will need to reload the app to see the updated data.
-					</p>
-					<Button type='primary' onClick={navHome}>Return</Button>
+					{
+						settings.useWarehouse ?
+							<>
+								<p>
+									Once you are done, you will need to reload the app to see the updated data.
+								</p>
+								<Button type='primary' onClick={navHome}>Return</Button>
+							</>
+							: null
+					}
 					{getTransferContent()}
 				</div>
 			</div>

@@ -1,5 +1,7 @@
 {
   "characterName": "Character Name",
   "class": "Class",
-  "noAncestryChosen": "No ancestry chosen"
+  "noAncestryChosen": "No ancestry chosen",
+  "noCultureChosen": "No culture chosen",
+  "noCareerChosen": "No career chosen"
 }

@@ -1,5 +1,7 @@
 {
   "characterName": "Nome Personaggio",
   "class": "Classe",
-  "noAncestryChosen": "Discendenza non scelta"
+  "noAncestryChosen": "Discendenza non scelta",
+  "noCultureChosen": "Cultura non scelta",
+  "noCareerChosen": "Carriera non scelta"
 }

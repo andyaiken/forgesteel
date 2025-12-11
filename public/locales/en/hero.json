@@ -1,4 +1,5 @@
 {
   "characterName": "Character Name",
-  "class": "Class"
+  "class": "Class",
+  "noAncestryChosen": "No ancestry chosen"
 }

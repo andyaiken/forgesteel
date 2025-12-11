@@ -1,4 +1,5 @@
 {
   "characterName": "Nome Personaggio",
-  "class": "Classe"
+  "class": "Classe",
+  "noAncestryChosen": "Discendenza non scelta"
 }

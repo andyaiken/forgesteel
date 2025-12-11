@@ -8,7 +8,7 @@ i18next.use(HttpBackend).use(initReactI18next).init({
 	fallbackLng: 'en',
 	lng: 'it',
 	debug: true,
-	ns: [ 'common', 'welcomePage' ],
+	ns: [ 'common', 'welcomePage', 'hero', 'ancestry' ],
 	backend: {
 		loadPath: '/forgesteel/locales/{{lng}}/{{ns}}.json'
 	},
@@ -22,7 +22,7 @@ i18next.use(HttpBackend).use(initReactI18next).init({
 					return value.toLowerCase();
 				case 'uppercase':
 					return value.toUpperCase();
-				case 'titlecase':
+				case 'capitalize':
 					return value.toLowerCase().replace(/(?:^|\s)\w/g, function (match: string) {
 						return match.toUpperCase();
 					});

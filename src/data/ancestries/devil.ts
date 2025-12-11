@@ -6,16 +6,16 @@ import { SkillList } from '@/enums/skill-list';
 
 export const devil: Ancestry = {
 	id: 'ancestry-devil',
-	name: 'Devil',
+	name: 'ancestry:devil',
 	description: 'The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark - horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings.',
 	features: [
 		FactoryLogic.feature.createMultiple({
 			id: 'devil-feature-1',
-			name: 'Silver Tongue',
+			name: 'ancestry:silverTongue',
 			features: [
 				FactoryLogic.feature.create({
 					id: 'devil-feature-1a',
-					name: 'Silver Tongue',
+					name: 'ancestry:silverTongue',
 					description: 'Your innate magic allows you to twist how your words are perceived to get a better read on people and convince them to see things your way. You gain an edge on tests when attempting to discover an NPC’s motivations and pitfalls during a negotiation.'
 				}),
 				FactoryLogic.feature.createSkillChoice({

@@ -54,6 +54,8 @@ import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
 import './hero-panel.scss';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 interface Props {
 	hero: Hero;
@@ -78,6 +80,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
+	const { t } = useTranslation([ 'common', 'hero' ]);
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
@@ -559,37 +562,40 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>Ancestry: <b>{props.hero.ancestry.name}</b></div>
+									<div>{t('common:ancestry', { format: 'capitalize' })}: <b>{props.hero.ancestry.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
-									<HeaderText>Ancestry</HeaderText>
-									<Field label='Ancestry' value={props.hero.ancestry.name} />
+									<HeaderText>{t('common:ancestry')}</HeaderText>
+									<Field
+										label={i18next.format(t('common:ancestry'), 'capitalize')}
+										value={i18next.format(t(`${props.hero.ancestry.name}`), 'capitalize')}
+									/>
 									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Ancestry</HeaderText>
-								<div className='ds-text dimmed-text'>No ancestry chosen</div>
+								<HeaderText>{t('common:ancestry', { format: 'capitalize' })}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noAncestryChosen')}</div>
 							</div>
 					}
 					{
 						props.hero.culture ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCulture}>
-									<div>Culture: <b>{props.hero.culture.name}</b></div>
+									<div>{t('common:culture', 'capitalize')}: <b>{props.hero.culture.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
-									<HeaderText>Culture</HeaderText>
-									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
-									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
-									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
-									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
+									<HeaderText>{t('common:culture', 'capitalize')}</HeaderText>
+									{props.hero.culture ? <Field label={t('common:culture', 'capitalize')} value={t(`${props.hero.culture.name}`, 'capitalize')} /> : null}
+									{props.hero.culture.environment ? <Field label={t('common:environment', 'capitalize')} value={t(`${props.hero.culture.environment.name}`, 'capitalize')} /> : null}
+									{props.hero.culture.organization ? <Field label={t('common:organization', 'capitalize')} value={t(`${props.hero.culture.organization.name}`, 'capitalize')} /> : null}
+									{props.hero.culture.upbringing ? <Field label={t('common:upbringing', 'capitalize')} value={t(`${props.hero.culture.upbringing.name}`, 'capitalize')} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Culture</HeaderText>
+								<HeaderText>{t('common:culture', 'capitalize')}</HeaderText>
 								<div className='ds-text dimmed-text'>No culture chosen</div>
 							</div>
 					}
@@ -597,7 +603,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.career ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCareer}>
-									<div>Career: <b>{props.hero.career.name}</b></div>
+									<div>{t('common:career', 'capitalize')}: <b>{props.hero.career.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCareer}>

@@ -562,20 +562,20 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>{t('common:ancestry', { format: 'capitalize' })}: <b>{props.hero.ancestry.name}</b></div>
+									<div>{t('ancestry', { format: 'capitalize' })}: <b>{props.hero.ancestry.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
-									<HeaderText>{t('common:ancestry')}</HeaderText>
+									<HeaderText>{t('ancestry')}</HeaderText>
 									<Field
-										label={i18next.format(t('common:ancestry'), 'capitalize')}
+										label={i18next.format(t('ancestry'), 'capitalize')}
 										value={i18next.format(t(`${props.hero.ancestry.name}`), 'capitalize')}
 									/>
 									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>{t('common:ancestry', { format: 'capitalize' })}</HeaderText>
+								<HeaderText>{t('ancestry', { format: 'capitalize' })}</HeaderText>
 								<div className='ds-text dimmed-text'>{t('hero:noAncestryChosen')}</div>
 							</div>
 					}
@@ -583,38 +583,38 @@ export const HeroPanel = (props: Props) => {
 						props.hero.culture ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCulture}>
-									<div>{t('common:culture', 'capitalize')}: <b>{props.hero.culture.name}</b></div>
+									<div>{t('culture', 'capitalize')}: <b>{props.hero.culture.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
-									<HeaderText>{t('common:culture', 'capitalize')}</HeaderText>
-									{props.hero.culture ? <Field label={t('common:culture', 'capitalize')} value={t(`${props.hero.culture.name}`, 'capitalize')} /> : null}
-									{props.hero.culture.environment ? <Field label={t('common:environment', 'capitalize')} value={t(`${props.hero.culture.environment.name}`, 'capitalize')} /> : null}
-									{props.hero.culture.organization ? <Field label={t('common:organization', 'capitalize')} value={t(`${props.hero.culture.organization.name}`, 'capitalize')} /> : null}
-									{props.hero.culture.upbringing ? <Field label={t('common:upbringing', 'capitalize')} value={t(`${props.hero.culture.upbringing.name}`, 'capitalize')} /> : null}
+									<HeaderText>{i18next.format(t('culture'), 'capitalize')}</HeaderText>
+									{props.hero.culture ? <Field label={i18next.format(t('culture'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.name}`), 'capitalize')} /> : null}
+									{props.hero.culture.environment ? <Field label={i18next.format(t('environment'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.environment.name}`), 'capitalize')} /> : null}
+									{props.hero.culture.organization ? <Field label={i18next.format(t('organization'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.organization.name}`), 'capitalize')} /> : null}
+									{props.hero.culture.upbringing ? <Field label={i18next.format(t('upbringing'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.upbringing.name}`), 'capitalize')} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>{t('common:culture', 'capitalize')}</HeaderText>
-								<div className='ds-text dimmed-text'>No culture chosen</div>
+								<HeaderText>{i18next.format(t('culture'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noCultureChosen')}</div>
 							</div>
 					}
 					{
 						props.hero.career ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCareer}>
-									<div>{t('common:career', 'capitalize')}: <b>{props.hero.career.name}</b></div>
+									<div>{i18next.format(t('career'), 'capitalize')}: <b>{props.hero.career.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCareer}>
-									<HeaderText>Career</HeaderText>
-									<Field label='Career' value={props.hero.career.name} />
+									<HeaderText>{i18next.format(t('career'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('career'), 'capitalize')} value={props.hero.career.name} />
 									{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Career</HeaderText>
-								<div className='ds-text dimmed-text'>No career chosen</div>
+								<HeaderText>{i18next.format(t('career'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noCareerChosen')}</div>
 							</div>
 					}
 					{

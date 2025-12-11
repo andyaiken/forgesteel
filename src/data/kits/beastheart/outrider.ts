@@ -32,9 +32,7 @@ export const outrider: Kit = {
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionText('2 + M damage; if the target is a creature or object, your companion can teleport to an unoccupied space adjacent to the target, provided your companion is also within range. If the target is an unoccupied space, you or your companion can teleport to the space.'),
-					FactoryLogic.createAbilitySectionField({
-						name: 'Spend',
-						value: 1,
+					FactoryLogic.createAbilitySectionSpend({
 						effect: 'The ability’s distance increases to ranged 10.'
 					})
 				]

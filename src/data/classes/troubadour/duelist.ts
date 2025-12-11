@@ -41,9 +41,7 @@ export const duelist: SubClass = {
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('You gain a +2 bonus to speed until the end of your turn. Additionally, the next power roll you make this turn can’t have an outcome lower than tier 2.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You gain a +4 bonus to speed instead.'
 							})
 						]

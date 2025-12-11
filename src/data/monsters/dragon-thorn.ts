@@ -150,8 +150,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 								tier2: '12 damage; push 4',
 								tier3: '15 damage; push 8'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each target takes an extra 1d3 damage, and if they have A<2, they are bleeding (save ends).'
 							})

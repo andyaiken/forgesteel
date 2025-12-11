@@ -41,9 +41,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You take half the damage from the triggering effect and can shift up to a number of squares equal to your Agility score.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'If the damage has any potency effects associated with it, the potency is reduced by 1 for you.'
 							})
 						]

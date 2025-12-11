@@ -127,9 +127,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M corruption damage; stoned (Save Ends)'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'While stoned, the target is slowed.'
 												})
 											]
@@ -207,9 +205,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'One creature or object',
 											sections: [
 												FactoryLogic.createAbilitySectionText('3 + M damage; push 2'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'The target is pushed up to an additional number of squares equal to the bear’s Might score.'
 												})
 											]
@@ -287,9 +283,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'One creature or object',
 											sections: [
 												FactoryLogic.createAbilitySectionText('The boar moves up to their speed in a straight line, and can then deal 2 + M damage to an adjacent target. If the boar moved closer to the target as part of this ability’s movement, the boar deals extra damage equal to their Might score.'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'The target is bleeding (EoT).'
 												})
 											]
@@ -367,9 +361,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M damage; until the end of your next turn, enemies are weakened while adjacent to the condor.'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'When an enemy would be weakened by this ability, they are taunted instead.'
 												})
 											]
@@ -447,9 +439,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M damage; bleeding (EoT)'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'The target is bleeding (save ends) instead of bleeding (EoT).'
 												})
 											]
@@ -523,9 +513,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 											target: 'Each creature in the area',
 											sections: [
 												FactoryLogic.createAbilitySectionText('M damage of the attuned damage type (see Elementally Attuned)'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													repeatable: true,
 													effect: 'For each ferocity you spend (max 4), the damage increases by 1 and the size of the cube increases by 1.'
 												})
@@ -618,9 +606,7 @@ Additionally, you can use Drake Breath. You don’t need to spend ferocity to ch
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M acid damage; A < [average], the sphere moves into the target’s space. If the target is completely within the sphere’s space, the target is grabbed.'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'Until the grab ends, the creature takes acid damage equal to the sphere’s Might score at the end of each of the sphere’s turns.'
 												})
 											]
@@ -718,9 +704,7 @@ Additionally, you can use Drake Breath. You don’t need to spend ferocity to ch
 											target: 'One creature or object',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M fire damage'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'The hellhound adds their Intuition score to either the damage or the range.'
 												})
 											]
@@ -801,9 +785,7 @@ Additionally, you can use Drake Breath. You don’t need to spend ferocity to ch
 2 + M damage; I < [average], dazzled (EoT)
 
 A dazzled creature can’t have line of effect to targets who aren’t adjacent to them.`),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'A dazzled creature also has a bane on strikes.'
 												})
 											]
@@ -881,9 +863,7 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M damage; M < [average], prone'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'The panther can jump up to their speed before using this ability. If they jump at least 1 square in this way, a target who is M < [strong] is prone.'
 												})
 											]
@@ -961,9 +941,7 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('M < [average], restrained (EoT)'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'M < [strong], restrained (save ends)'
 												})
 											]
@@ -1051,9 +1029,7 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M poison damage; the sporeling is invisible to the enemy until the end of the sporeling’s next turn or the sporeling deals damage to the enemy.'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'An enemy affected by Spore Puff who is M < [strong] is dazed (EoT).'
 												})
 											]
@@ -1131,9 +1107,7 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 											target: 'One enemy',
 											sections: [
 												FactoryLogic.createAbilitySectionText('2 + M damage; M < [average], grabbed'),
-												FactoryLogic.createAbilitySectionField({
-													name: 'Spend',
-													value: 1,
+												FactoryLogic.createAbilitySectionSpend({
 													effect: 'M < [strong], grabbed'
 												})
 											]
@@ -1214,14 +1188,10 @@ You and your companion each have separate move actions. You have one triggered a
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You spend a Recovery as your partner rips their way out of your chest or climbs from your unnaturally wide jaws. Your partner teleports to your space over any distance, even if they don’t have line of effect to you. Your partner gains temporary Stamina equal to their recovery value.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: '(Beastheart only) You rip your heart from your chest and throw it up to 10 squares to an unoccupied space. Your heart then transforms into your companion, teleporting them to that space instead of to your space.'
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'The teleported creature gains additional temporary Stamina equal to their Recovery value times the number of Ferocity you spend in this way (max 3). If they are dead, you can spend 3 Ferocity to restore them to life with 1 Stamina, even if their body was destroyed, and they gain no temporary Stamina.'
 							})
@@ -1666,9 +1636,7 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 						tier3: '7 sonic damage; push 3; P < [strong], taunted (save ends)'
 					})
 				),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
-					value: 1,
+				FactoryLogic.createAbilitySectionSpend({
 					effect: 'This ability also affects a 2 burst around you. An enemy in both areas is only affected once.'
 				})
 			]
@@ -1708,9 +1676,7 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionText('You can spend a Recovery. Each enemy in the area is taunted (EoT). You gain 3 temporary Stamina for each enemy in the area.'),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
-					value: 1,
+				FactoryLogic.createAbilitySectionSpend({
 					effect: 'This ability also affects a 3 burst around your companion. Creatures in this second burst are taunted by your companion. An enemy in both areas is taunted only by you.'
 				})
 			]
@@ -1973,8 +1939,7 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 						tier3: '26 cold, fire, lightning, or sonic damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionField({
-					name: 'Spend',
+				FactoryLogic.createAbilitySectionSpend({
 					value: 2,
 					repeatable: true,
 					effect: 'You can spend up to 6 extra ferocity. For each 2 extra ferocity you spend, the size of the burst is increased by 1, 2 is added to the power roll, and you take 5 damage that can’t be reduced in any way. You can decide how much ferocity you spend after you make the power roll.'

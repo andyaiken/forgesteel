@@ -149,8 +149,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						target: 'Self or one elemental',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the crux’s next turn, the target has fire immunity 5.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Until the end of the encounter, the ground within 3 squares of the target is wreathed in fire. Any enemy who enters that area for the first time in a round or starts their turn there takes 3 fire damage.'
 							})
@@ -230,8 +229,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						target: 'Self or one elemental',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the essence’s next turn, the target has lightning immunity 5.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Until the end of the encounter, a vortex surrounds the target in a 3 aura. The area is difficult terrain for enemies. Additionally, at the end of each of the target’s turns, they can push one creature in the area up to 5 squares.'
 							})
@@ -313,8 +311,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						target: 'Self or one elemental',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the essence’s next turn, the target has cold immunity 5.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Until the end of the encounter, the ground within 1 square of the target is a pool of water that is difficult terrain. This water extends out behind the target as they move, creating a stream that lasts until the end of the encounter. Any enemy who ends their turn in the stream and has M<2 is slowed (save ends).'
 							})
@@ -399,8 +396,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						target: 'Self or one elemental',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target gains 15 temporary Stamina that lasts until the start of the field’s next turn.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target while within line of effect of that area, the enemy is pulled 5 squares toward the area after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.'
 							})
@@ -485,8 +481,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						target: 'Self or one elemental',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the force’s next turn, any melee strike made against the target takes a bane if it doesn’t already have a bane or double bane.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Until the end of the encounter, the target grows a carapace of stone. They have a +3 bonus to stability and gain 15 temporary Stamina.'
 							})

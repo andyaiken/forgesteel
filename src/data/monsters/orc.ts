@@ -340,8 +340,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier3: '13 damage; push special or prone'
 							})),
 							FactoryLogic.createAbilitySectionText('The forced movement distance is equal to the number of squares the bloodrunner moved on their turn before using this ability. An ally targeted by this ability ignores the damage and can move up to that same distance.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'An ally targeted by this ability can make a free strike after the forced movement is resolved.'
 							})
@@ -615,8 +614,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target moves up to their speed and can use a main action'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The godcaller targets a second ally.'
 							})
@@ -858,13 +856,10 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target moves up to their speed and can use a main action.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The warleader targets two allies.'
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The warleader targets one ally and a minion squad.'
 							})

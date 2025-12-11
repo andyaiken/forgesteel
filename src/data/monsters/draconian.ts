@@ -155,8 +155,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								tier3: '12 lightning damage; A<2 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The first time in an encounter that Aeolyxria makes a power roll for this ability, she can subsequently use the outcome of that roll instead of rolling whenever she uses this ability until the end of the encounter.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'The ability targets one additional target for each 2 Malice spent.'
@@ -174,9 +173,7 @@ Six individual draconians are presented in this section—not an adventuring par
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The ground in the area rises 5 squares, creating a pillar of dirt. Any creature in the area moves with the ground to its new elevation.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'Aeolyxria creates an additional pillar for each Malice spent.'
 							})
@@ -427,8 +424,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								tier2: '15 damage; M<2 weakened (save ends)',
 								tier3: '18 corruption damage; M<3 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Myxovidan regains Stamina equal to half the damage dealt.'
 							})
@@ -620,8 +616,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								tier2: '16 damage; M<3 prone',
 								tier3: '19 damage; M<4 prone'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'If the target has M<4, they are also bleeding (save ends).'
 							})

@@ -155,8 +155,7 @@ export const fossilCryptic: MonsterGroup = {
 						target: 'One creature or object on the ground',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The cryptic slides the target up to 3 squares.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The ability targets one additional target.'
 							})

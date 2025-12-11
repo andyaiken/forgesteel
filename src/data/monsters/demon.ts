@@ -501,8 +501,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								tier2: '6 damage; the remasch can teleport up to 3 squares',
 								tier3: '8 damage; the remasch can teleport up to 5 squares'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The remasch takes an adjacent creature with them when they teleport. The creature appears in an unoccupied space adjacent to the remasch’s destination.'
 							})
@@ -960,8 +959,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								tier3: '9 psychic damage'
 							})),
 							FactoryLogic.createAbilitySectionText('The target has corruption weakness 5 (EoT).'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The target has I<2 corruption weakness 5 (save ends).'
 							})
@@ -1310,8 +1308,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								tier2: '16 corruption damage; A<3 restrained (save ends)',
 								tier3: '19 corruption damage; A<4 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Two **ensnarers** appear in unoccupied spaces adjacent to each target. On a tier 3 outcome, four ensnarers appear.'
 							})
@@ -1328,8 +1325,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Four level 1 demon minions (most commonly **ensnarers**, **frenzieds**, and **pitlings**) burst forth from the egress and appear in unoccupied squares in the area.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Four level 4 demon minions (most commonly **orliq**, **grulqins**, and **wobalas**) appear instead.'
 							})
@@ -1593,8 +1589,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** The blight phage must create the cube beneath themself.'),
 							FactoryLogic.createAbilitySectionText('The blight phage spins and sheds corruptive blight to fill the area, which is treated as if affected by **Seeping Blight**.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The blight phage chooses three 2 cube areas within 10 squares of the phage. Each area is covered with blight and treated as if affected by **Seeping Blight**.'
 							})
@@ -1930,8 +1925,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Two soulraker minions appear within distance.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'A **soulraker praetorian** also appears within distance.'
 							})
@@ -2174,8 +2168,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 								tier3: '14 psychic damage; R<5 restrained (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The izyak can slide any target restrained this way up to 3 squares.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The izyak can vertical slide any target restrained this way up to 6 squares instead. A target left in midair doesn’t fall until the restrained condition ends.'
 							})
@@ -2199,8 +2192,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 								tier3: '9 psychic damage; I<5 dazed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('Any target dazed this way must use a move action to move their speed toward the izyak on their next turn.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The area increases to a 6 cube.'
 							})
@@ -2328,8 +2320,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 								tier2: '20 corruption damage; R<5 weakened (save ends)',
 								tier3: '24 corruption damage; R<6 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Aurumvas regains Stamina equal to the damage dealt.'
 							})
@@ -2352,8 +2343,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 								tier2: '20 psychic damage; P<5 dazed (save ends)',
 								tier3: '24 psychic damage; P<6 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'While dazed this way, a target can’t gain Heroic Resources.'
 							})

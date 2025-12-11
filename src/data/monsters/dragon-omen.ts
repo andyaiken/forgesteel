@@ -155,8 +155,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 								tier2: '19 damage; M<4 bleeding (save ends)',
 								tier3: '23 damage; M<5 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The potency increases by 2, and each target is also pulled up to 5 squares.'
 							})

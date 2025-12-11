@@ -34,9 +34,7 @@ export const spark: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You teleport up to 5 spaces and halve the triggering damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'When you teleport in this way, each enemy adjacent to your original position takes cold, fire, lightning, or sonic damage equal to your Intuition score.'
 							})
 						]
@@ -80,9 +78,7 @@ export const spark: SubClass = {
 												tier3: '14 + I fire or lightning damage; M < [strong], prone and can’t stand (EoT)'
 											})
 										),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'If you are within 2 squares of the enemy, you can use a free maneuver to wield a second whip, dealing extra fire or lightning damage to the target equal to your Intuition score.'
 										})
 									]
@@ -165,8 +161,7 @@ Your companion transforms into a creature made of elemental energy. Choose a dam
 * Your companion has immunity to the chosen damage type and immunity 5 to all other damage.
 
 Your companion’s transformation lasts until the start of your next turn. At the start of each turn, you can spend 3 ferocity to extend the transformation’s duration for 1 more turn. When you do so, you can change the damage type chosen`),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
+										FactoryLogic.createAbilitySectionSpend({
 											value: 2,
 											effect: 'You are transformed as well.'
 										})

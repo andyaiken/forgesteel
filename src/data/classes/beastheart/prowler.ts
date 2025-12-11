@@ -34,9 +34,7 @@ export const prowler: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You become invisible, use the Hide maneuver, and move up to a number of squares equal to your Intuition score, in any order. You remain invisible until the end of your next turn or you deal damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The distance of your move is doubled, and it ignores difficult terrain.'
 							})
 						]

@@ -392,8 +392,7 @@ Choose one of the following effects, which applies to one target of the next dam
 Effects other than the changing of the damage type are applied after the ability is resolved. If you use this ability more than once before it applies to an ability, you can choose one of the damage types to apply to the affected ability, but apply all of the effects.
 
 You cannot use *Enweave* more than twice before applying its effect to an ability.`),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'This ability becomes a free maneuver instead.'
 							})
@@ -818,8 +817,7 @@ You cannot use *Enweave* more than twice before applying its effect to an abilit
 								target: 'Self',
 								sections: [
 									FactoryLogic.createAbilitySectionText('You teleport up to 7 squares.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
+									FactoryLogic.createAbilitySectionSpend({
 										value: 5,
 										effect: 'If used immediately after performing an ability that targets only one enemy, you may repeat that ability at your target destination without needing to spend the base cost as long as it costs 5 balance or fewer.'
 									})
@@ -837,9 +835,7 @@ You cannot use *Enweave* more than twice before applying its effect to an abilit
 								target: 'Self',
 								sections: [
 									FactoryLogic.createAbilitySectionText('You take half the damage, you can then teleport up to 4 squares after the triggering effect resolves.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'You teleport an additional 2 squares for each balance spent.'
 									})
 								]
@@ -947,8 +943,7 @@ You cannot use *Enweave* more than twice before applying its effect to an abilit
 								cost: 1,
 								sections: [
 									FactoryLogic.createAbilitySectionText('When using this ability, choose one of the Enweave effects, ignoring the component that changes the damage type of your next strike. You brand your target with a rune imbued by the effect you chose, priming it for detonation. At the end of your turn, the rune is primed. When a rune is primed, the next time the branded target is damaged, the rune detonates, applying its effect to every enemy within range 2 of it. If the branded effect already has an area, it is increased by 2 instead. If the branded effect has a push effect, it is relative to the branded target’s location.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
+									FactoryLogic.createAbilitySectionSpend({
 										value: 2,
 										effect: 'The rune is immediately primed, allowing you to detonate it this turn.'
 									})
@@ -966,9 +961,7 @@ You cannot use *Enweave* more than twice before applying its effect to an abilit
 								target: 'One enemy',
 								sections: [
 									FactoryLogic.createAbilitySectionText('The target takes damage equal to triple your Reason score.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'If the target has I < [average], they are slowed (EoT).'
 									})
 								]
@@ -1088,8 +1081,7 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 * Powerful: Melee weapon abilities with rolled damage have their damage increased by your Reason score. If the ability force moves a target, the forced movement distance gains a bonus equal to your Reason score.
 * Resonant: Melee weapon abilities have their potency increased by 1.
 * Reaching: Melee weapon abilities have their distance increased by double your Reason.`),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
+									FactoryLogic.createAbilitySectionSpend({
 										value: 2,
 										effect: 'Any numeric benefit of the chosen form is doubled in value.'
 									})
@@ -1107,8 +1099,7 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 								target: 'Self or one ally',
 								sections: [
 									FactoryLogic.createAbilitySectionText('You can shift a number of squares equal to your Reason score. If the target is you, or if you end this shift adjacent to the target, the target takes half the damage.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
+									FactoryLogic.createAbilitySectionSpend({
 										value: 2,
 										effect: 'Make a melee free strike against the creature that damaged the target.'
 									})

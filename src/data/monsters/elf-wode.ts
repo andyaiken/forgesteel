@@ -312,8 +312,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '12 damage; push 5'
 							})),
 							FactoryLogic.createAbilitySectionText('The chirurgeon can make a ranged free strike before using this ability.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The chirurgeon uses this ability again.'
 							})
@@ -372,8 +371,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '10 damage; pull 5; M<2 slowed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('While slowed this way, a target can’t search for hidden creatures.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The size of the cube and the potency both increase by 1.'
 							})
@@ -508,8 +506,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '9 damage'
 							})),
 							FactoryLogic.createAbilitySectionText('The target is taunted until the end of their next turn, and the greenskeeper shifts up to 3 squares.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The distance increases to Melee 5.'
 							})
@@ -571,8 +568,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '14 damage; M<2 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The guerilla can teleport up to 3 squares.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'This ability targets one additional target, and deals an additional 3 damage if both targets are adjacent to each other.'
 							})
@@ -639,8 +635,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '14 damage; A<2 restrained (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The gweiadur shifts up to 3 squares.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'If this ability restrains the target, one enemy adjacent to the target is also restrained (save ends).'
 							})
@@ -705,8 +700,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '9 damage; the target is marked (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('Allies gain an edge on abilities against a target marked by any wode elf.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The sentry targets two additional creatures or objects.'
 							})
@@ -765,8 +759,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 								tier3: '15 damage; M<3 restrained (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The warleader can teleport up to 3 squares between each strike.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'A target restrained by this ability takes an extra 3 damage.'
 							})

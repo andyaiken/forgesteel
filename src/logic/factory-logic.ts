@@ -877,14 +877,27 @@ export class FactoryLogic {
 
 	static createAbilitySectionField = (data: {
 		name: string,
+		effect: string
+	}): AbilitySectionField => {
+		return {
+			type: 'field',
+			name: data.name,
+			value: 0,
+			repeatable: false,
+			effect: data.effect
+		};
+	};
+
+	static createAbilitySectionSpend = (data: {
+		name?: string,
 		effect: string,
 		value?: number,
 		repeatable?: boolean
 	}): AbilitySectionField => {
 		return {
 			type: 'field',
-			name: data.name,
-			value: data.value || 0,
+			name: data.name || 'Spend',
+			value: data.value || 1,
 			repeatable: data.repeatable || false,
 			effect: data.effect
 		};

@@ -403,9 +403,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 								tier2: '2 poison damage; slide 2',
 								tier3: '3 poison damage; slide 3'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'For each Malice spent, one target can be force moved 1 additional square.'
 							})
@@ -476,8 +474,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						target: 'Each ally in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the underboss’s next turn, each target gains an edge on strikes, and any strike made against a target gains an edge.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Strikes made against targets no longer gain an edge.'
 							})
@@ -692,8 +689,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 								tier2: '11 poison damage',
 								tier3: '14 poison damage; M<2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'For any tier outcome, if the target has m<3, they are weakened (save ends).'
 							})

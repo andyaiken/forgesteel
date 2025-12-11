@@ -43,9 +43,7 @@ export const fire: SubClass = {
 						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The forced movement distance gains a bonus equal to your Reason score.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The forced movement distance gains a bonus equal to twice your Reason score instead.'
 							})
 						]

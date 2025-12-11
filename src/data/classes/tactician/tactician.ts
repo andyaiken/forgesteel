@@ -107,9 +107,9 @@ While a creature marked by you is within your line of effect, you and allies wit
 								type: FactoryLogic.type.createTrigger('You or any ally uses an ability to deal rolled damage to a creature marked by you', { free: true }),
 								distance: [ FactoryLogic.distance.createSpecial('Special') ],
 								target: 'Special',
+								cost: 1,
 								sections: [
 									FactoryLogic.createAbilitySectionText(`
-#### Spend 1:
 You gain one of the following benefits:
 
 * The ability deals extra damage equal to twice your Reason score.
@@ -135,8 +135,7 @@ You can’t gain more than one benefit from the same trigger.`),
 						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can use a signature ability as a free triggered action.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'You target two allies instead of one.'
 							})

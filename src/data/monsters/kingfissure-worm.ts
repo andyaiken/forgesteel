@@ -162,10 +162,9 @@ export const kingfissureWorm: MonsterGroup = {
 									tier3: '25 damage; the target is swallowed (see Swallowed)'
 								})
 							),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								effect: 'When the kingfissure worm uses the Charge main action, they ignore difficult terrain and automatically destroy mundane size 3 and smaller objects in the path of their charge. The first time the kingfissure worm moves through a creature’s space during this charge, that creature takes 8 damage and is pushed up to 3 squares.',
-								value: 2
+							FactoryLogic.createAbilitySectionSpend({
+								value: 2,
+								effect: 'When the kingfissure worm uses the Charge main action, they ignore difficult terrain and automatically destroy mundane size 3 and smaller objects in the path of their charge. The first time the kingfissure worm moves through a creature’s space during this charge, that creature takes 8 damage and is pushed up to 3 squares.'
 							})
 						]
 					})

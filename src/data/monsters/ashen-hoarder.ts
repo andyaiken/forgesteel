@@ -134,13 +134,11 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 								tier2: '8 damage; A < 3 weakened (save ends)',
 								tier3: '11 damage; A < 4 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Any enemy weakened this way is instead slowed and weakened (save ends).'
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The ashen hoarder targets a second 4 cube within distance.'
 							})

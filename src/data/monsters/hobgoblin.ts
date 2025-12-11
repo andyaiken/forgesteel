@@ -331,8 +331,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 								tier2: '6 corruption or fire damage',
 								tier3: '8 corruption or fire damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each target who has <code>P < 2</code> is weakened (save ends). Any enemy who starts their turn within 3 squares of a target weakened this way and who has <code>P < 2</code> is weakened (save ends).'
 							})
@@ -399,8 +398,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 								tier3: '8 damage, 7 corruption damage'
 							})),
 							FactoryLogic.createAbilitySectionText('The next strike made against the target has a double edge.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'One ally adjacent to the target can use their signature ability.'
 							})
@@ -537,8 +535,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 								tier2: '14 damage',
 								tier3: '17 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'Each ally adjacent to a prone target can make a free strike against that target.'
 							})
@@ -975,8 +972,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 								tier2: '16 corruption damage; P < 3 bleeding (save ends)',
 								tier3: '19 corruption damage; P < 4 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each target is marked until the end of the encounter or until they die. The bloodlord’s allies gain an edge on strikes against any target marked this way. The bloodlord can have up to three targets marked this way. If they mark a new target who would exceed the limit, the oldest mark ends.'
 							})

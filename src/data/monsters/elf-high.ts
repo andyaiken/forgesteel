@@ -407,8 +407,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 								tier2: '10 damage',
 								tier3: '13 damage; R<1 bleeding (save ends); I<1 frightened (save ends); P<1 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The ability takes the Area keyword and loses the Strike keyword, its distance becomes a 3 cube within 10, and it targets each enemy in the area.'
 							})
@@ -523,8 +522,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 								tier2: '7 psychic damage; I<1 weakened (save ends)',
 								tier3: '9 psychic damage; I<2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The potency increases by 1. If the target is weakened this way at the end of the encounter, they can’t take a respite activity during their next respite.'
 							})
@@ -744,8 +742,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The ordinator summons four **elemental motes** or four **soot crows** into unoccupied space within distance.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The ordinator instead summons one **ceramic horse** or one winded **brambleguard** into an unoccupied space within distance.'
 							})

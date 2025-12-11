@@ -1037,8 +1037,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 								tier2: 'Grabbed',
 								tier3: 'No effect'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'A target who would be grabbed by this ability is instead either vertical pushed up to 5 squares; or they take 5 damage, are knocked prone, and can’t stand until the end of their next turn.'
 							})

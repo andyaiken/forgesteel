@@ -143,9 +143,7 @@ export const olothec: MonsterGroup = {
 								tier3: '13 acid damage; A<4 push special and prone'
 							})),
 							FactoryLogic.createAbilitySectionText('Each creature pushed this way is pushed to an unoccupied space in the area as far as possible from the olothec.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The area is difficult terrain. Any creature who enters the area or moves within it for the first time on a turn and has A<3 is knocked prone.'
 							})
 						]

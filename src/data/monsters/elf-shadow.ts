@@ -294,8 +294,7 @@ In many shadow elf societies, all people are given basic combat training and are
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The next ability made against the target has a double edge.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'Each non-minion ally within 3 squares of the target can make a free strike against them.'
 							})
@@ -376,8 +375,7 @@ In many shadow elf societies, all people are given basic combat training and are
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the duskcaller’s next turn, the area is filled with darkness.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The area of the cube increases by 3.'
 							})
@@ -654,8 +652,7 @@ In many shadow elf societies, all people are given basic combat training and are
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The target takes a bane on their next strike.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The target instead has a double bane on the next ability they use.'
 							})
@@ -785,8 +782,7 @@ In many shadow elf societies, all people are given basic combat training and are
 								tier2: '16 damage; I<3 bleeding (save ends)',
 								tier3: '19 damage; I<4 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The potency increases by 1.'
 							})

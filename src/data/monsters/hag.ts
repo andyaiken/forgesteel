@@ -163,8 +163,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 squares o
 								tier3: '10 corruption damage; P<3 6 corruption damage'
 							})),
 							FactoryLogic.createAbilitySectionText('This ability gains an edge against a target who has a soul.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The hag regains Stamina equal to half the damage dealt.'
 							})
@@ -181,8 +180,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 squares o
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The hag alters their body to become any size 1 creature, from a house cat to a humanoid. If the hag uses this ability while outside of any enemy’s line of effect, they can choose to be automatically hidden. The hag can return to their original form as a free maneuver.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The hag becomes a size 2 creature instead, from a bear to an ogre. While in this form, the hag’s melee abilities gain a +1 bonus to distance and deal an extra 4 damage.'
 							})

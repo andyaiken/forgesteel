@@ -143,9 +143,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 								})
 							),
 							FactoryLogic.createAbilitySectionText('Ajax shifts up to 2 squares between striking each target.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'Ajax can strike one additional target for each Malice spent.'
 							})
@@ -170,8 +168,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 								})
 							),
 							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
 							})
@@ -374,9 +371,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 								})
 							),
 							FactoryLogic.createAbilitySectionText('Ajax shifts up to 2 squares between striking each target.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'Ajax can strike one additional target for each Malice spent.'
 							})
@@ -401,8 +396,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 								})
 							),
 							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
 							})

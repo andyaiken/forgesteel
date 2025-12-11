@@ -26,9 +26,7 @@ export const causticAlchemy: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You gain two surges. Additionally, whenever you use a surge before the end of the encounter, you can choose to have it deal poison damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'For each insight you spend, you gain 1 additional surge.'
 							})
@@ -50,9 +48,7 @@ export const causticAlchemy: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You take half the triggering damage, then can shift up to 2 squares after the triggering effect resolves. If you end this shift with concealment or cover, you can use the Hide maneuver even if you are observed.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The potency of any effects associated with the damage are reduced by 1 for you.'
 							})
 						]
@@ -235,8 +231,7 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 Each target takes acid, fire, or poison damage (your choice) equal to your Agility score.
 
 For each combat round that has passed since this ability was last used in the current encounter, the area increases by 1 and you gain 1 surge that must be used with this ability. After using the ability or at the end of the encounter, its area and surges are reset.`),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'For every 2 insight spent, you increase the cube’s size by 1 and gain 1 surge that can be used only with this ability.'

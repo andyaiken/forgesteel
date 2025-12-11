@@ -309,7 +309,7 @@ Pinna, Hedge Witch, Gravesford`,
 								tier2: '6 poison damage',
 								tier3: '7 poison damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
+							FactoryLogic.createAbilitySectionSpend({
 								name: 'Malice:',
 								value: 2,
 								effect: 'A target who has <code>M < 2</code> is weakened (save ends). A target weakened this way takes 2 poison damage at the start of each of their turns.'
@@ -495,9 +495,7 @@ Pinna, Hedge Witch, Gravesford`,
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The next time the target makes a strike against the daybringer, the target takes 4 acid damage after the strike is resolved.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The daybringer jumps up to 3 squares before or after using this ability.'
 							})
 						]
@@ -524,8 +522,7 @@ Pinna, Hedge Witch, Gravesford`,
 						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The outcome of the strike’s power roll is reduced by one tier'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The target is pulled up to 4 squares after the strike resolves.'
 							})

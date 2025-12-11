@@ -625,9 +625,7 @@ Additionally, when your Stamina reaches the negative of your winded value, you b
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target takes corruption damage equal to your level + 2. This damage can\'t be reduced in any way. You gain temporary Stamina equal to your level + 2.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: `
 Spending additional thirst on this ability grants you the following benefits:
@@ -948,9 +946,7 @@ Some of your abilities have a shroud effect entry. Whenever you use a shroud abi
 								target: 'Self',
 								sections: [
 									FactoryLogic.createAbilitySectionText('You teleport up to a number of squares equal to twice your Presence score.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'You gain concealment until the start of your next turn and automatically become hidden.'
 									})
 								]
@@ -967,9 +963,7 @@ Some of your abilities have a shroud effect entry. Whenever you use a shroud abi
 								target: 'Self',
 								sections: [
 									FactoryLogic.createAbilitySectionText('You take half the triggering damage, then can teleport up to a number of squares equal to your Presence score after the triggering effect resolves.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'You gain concealment until the start of your next turn and automatically become hidden.'
 									})
 								]
@@ -1208,9 +1202,7 @@ Some of your abilities have the Spore keyword. Abilities with the Spore keyword 
 								target: 'Self',
 								sections: [
 									FactoryLogic.createAbilitySectionText('The size of your Spore Cloud aura increases by 1 until the start of your next turn.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'After the size of your aura increases, each enemy in the area gains damage weakness equal to your echelon until the end of their next turn.'
 									})
 								]
@@ -1227,9 +1219,7 @@ Some of your abilities have the Spore keyword. Abilities with the Spore keyword 
 								target: 'Self or one infected ally',
 								sections: [
 									FactoryLogic.createAbilitySectionText('Spores are released in a 1 burst area originating from the target. Each creature in the area becomes infected. The area lasts until the start of your next turn. You and your allies have concealment while in the area, including against the triggering ability, and all creatures have concealment from enemies in the area.'),
-									FactoryLogic.createAbilitySectionField({
-										name: 'Spend',
-										value: 1,
+									FactoryLogic.createAbilitySectionSpend({
 										effect: 'Each enemy in the area takes poison damage equal to your Presence score + your virulence.'
 									})
 								]

@@ -369,9 +369,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 								tier3: '18 fire damage; A < 3 burning (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'The jurist can target one additional creature or object for each Malice spent.'
 							})
@@ -679,8 +677,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 								tier2: '15 damage; R < 3 the target can’t hide (save ends)',
 								tier3: '19 damage; R < 4 the target can’t hide (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'While a target is unable to hide this way, any strike against them made by a devil gains an edge.'
 							})

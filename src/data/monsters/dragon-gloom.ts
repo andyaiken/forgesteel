@@ -150,8 +150,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 								tier2: '15 psychic damage; pull 4',
 								tier3: '18 psychic damage; pull 6'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The pull becomes a vertical slide.'
 							})

@@ -36,9 +36,7 @@ export const stormwight: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You gain temporary Stamina equal to your Might score and can enter your animal form or hybrid form.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'If you are not dying, you can spend a Recovery.'
 							})
 						]
@@ -55,9 +53,7 @@ export const stormwight: SubClass = {
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You can shapeshift into the animal defined by your stormwight kit, into a hybrid form, or back into your true form. While in animal form or hybrid form, you can speak as you usually do, and you can also speak to animals who share your form. If you are in a negotiation with an animal while in animal form, you treat your Renown as 2 higher than usual.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'As a free maneuver, you can shapeshift a second time, either into another animal form, into your hybrid form, or back into your true form.'
 							})
 						]

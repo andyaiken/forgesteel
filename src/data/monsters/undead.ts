@@ -551,8 +551,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								tier2: '4 corruption damage; P<1 weakened (save ends)',
 								tier3: '5 corruption damage; P<2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The potency increases by 1. Any living creature who dies from this damage rises at the start of the next round in the target’s space as a **specter** under the Director’s control.'
 							})
@@ -836,8 +835,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						target: 'Self or one ally with a Phasing trait',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target shifts up to their speed.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The ghost chooses one additional target.'
 							})
@@ -1117,9 +1115,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The target can’t shift until the end of their next turn.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'This ability targets one additional target.'
 							})
 						]
@@ -1347,9 +1343,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The vampire spawn regains Stamina equal to any corruption damage dealt.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The target takes an additional 3 corruption damage.'
 							})
 						]
@@ -1512,8 +1506,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								})
 							),
 							FactoryLogic.createAbilitySectionText('While frightened this way, a target takes 4 psychic damage whenever they use a move action.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'This ability targets one additional target for each 2 Malice spent.'
@@ -1541,8 +1534,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						name: 'Cursed Transference',
 						sections: [
 							FactoryLogic.createAbilitySectionText('At the end of each of their turns, the mummy lord can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The effect that is ended is transferred to another creature within 10 squares.'
 							})
@@ -2185,8 +2177,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The vampire regains Stamina equal to half the damage dealt, and can end one effect on them that can be ended by a saving throw.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								repeatable: true,
 								effect: 'The vampire shifts 3 after striking the last target, and can target one additional creature for every 2 malice spent.'
@@ -2482,8 +2473,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The bonecage can have up to four size 1 targets grabbed at once. Any creature grabbed by the bonecage takes a bane on the Escape Grab maneuver, and the bonecage has damage immunity 5 against that creature’s abilities. When the bonecage is force moved, any creature or object they have grabbed moves with them.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'While grabbed this way, a target can’t teleport or be teleported.'
 							})

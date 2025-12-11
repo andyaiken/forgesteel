@@ -254,8 +254,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 								name: 'Special',
 								effect: 'The hulking brain can have up to four size 1 creatures grabbed.'
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The potency increases by 1.'
 							})
@@ -305,8 +304,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The hulking brain shifts to a square adjacent to the ally and takes the damage instead.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The enemy is knocked prone.'
 							})
@@ -403,8 +401,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The mindkiller halves the damage. If the mindkiller has a creature grabbed, that creature takes the other half of the damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'A grabbed creature takes the damage instead of the mindkiller.'
 							})
@@ -466,8 +463,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The strike’s spread is the distance it expands from a target to nearby enemies. Each enemy within that distance takes 3 damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'Each enemy within the strike spread takes an extra 3 damage.'
 							})
@@ -595,8 +591,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 									tier3: '12 psychic damage; R<3 push 4 and prone'
 								})
 							),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The size of the burst increases to 5.'
 							})

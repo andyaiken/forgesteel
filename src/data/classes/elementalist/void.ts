@@ -46,9 +46,7 @@ export const voidSubclass: SubClass = {
 						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You teleport the target up to a number of squares equal to twice your Reason score instead.'
 							})
 						]

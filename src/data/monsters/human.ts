@@ -609,8 +609,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '9 damage',
 								tier3: '12 damage; I<2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The death cultist regains Stamina equal to half the damage dealt.'
 							})
@@ -682,8 +681,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '9 damage',
 								tier3: '12 damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'If this ability gains an edge or has a double edge, it deals an extra 2 damage.'
 							})
@@ -752,8 +750,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '10 lightning damage',
 								tier3: '13 lightning damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The ability loses the Ranged and Strike keywords, takes the Area keyword, and is a 10 × 1 line within 15 that targets each enemy and object in the area. '
 							})
@@ -838,8 +835,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier3: '12 damage'
 							})),
 							FactoryLogic.createAbilitySectionText('This ability ignores cover and concealment.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'This ability targets one additional target.'
 							})
@@ -898,9 +894,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier3: '8 damage; M<3 slowed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('One ally within 10 squares can make a free strike.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'One ally within 10 squares can use their signature ability instead.'
 							})
 						]
@@ -1028,8 +1022,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier3: '15 damage; pull 3'
 							})),
 							FactoryLogic.createAbilitySectionText('Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'This ability targets one additional target.'
 							})
@@ -1051,8 +1044,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: 'Push 2; M<2 prone',
 								tier3: 'Push 4; M<3 prone'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The ability takes the Area keyword, loses the Melee keyword, and is a 1 burst that targets each enemy in the area.'
 							})
@@ -1156,8 +1148,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '7 damage',
 								tier3: '9 damage; grabbed'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'If this ability gains an edge or has a double edge, it deals an extra 2 damage.'
 							})

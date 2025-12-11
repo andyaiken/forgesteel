@@ -33,9 +33,7 @@ export const stormcrow: Kit = {
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionText('M cold, fire, lightning, or sonic damage (your choice)'),
-					FactoryLogic.createAbilitySectionField({
-						name: 'Spend',
-						value: 1,
+					FactoryLogic.createAbilitySectionSpend({
 						effect: 'The distance becomes 3 cube within 1.'
 					})
 				]

@@ -153,9 +153,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 								tier3: '20 damage; M<4 prone'
 							})),
 							FactoryLogic.createAbilitySectionText('The dragon can make a free strike against each slagged target knocked prone this way.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The strike deals 1d6 cold damage.'
 							})
 						]

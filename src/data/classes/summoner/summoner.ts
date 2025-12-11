@@ -215,9 +215,7 @@ When combat begins, any of your minions who were summoned outside of combat fini
 You shift into a square adjacent to the target, including vertically.
 
 You can shift into squares that contain one of your minions, even if they occupy difficult terrain. Each time you shift into a square that contains one of your minions while using this maneuver, you can shift an additional square.`),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'An adjacent ally can shift alongside you during this movement. They must end their movement in an unoccupied square adjacent to the last minion you moved through.'
 							})
 						]
@@ -288,9 +286,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									target: 'Self or one ally',
 									sections: [
 										FactoryLogic.createAbilitySectionText('The target gains a surge for each of your minions adjacent to them (up to a maximum of 3 surges), which they can use on the triggering damage'),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'If the triggering damage is from an ability that uses a power roll, the power roll gains an edge.'
 										})
 									]
@@ -349,9 +345,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									target: 'Self or one ally',
 									sections: [
 										FactoryLogic.createAbilitySectionText('If one of your minions is adjacent to the target and is within distance of the strike, they become the new target of the strike.'),
-										FactoryLogic.createAbilitySectionField({
-											name: 'Spend',
-											value: 1,
+										FactoryLogic.createAbilitySectionSpend({
 											effect: 'Instead of commanding an existing minion, you summon a signature minion into an unoccupied space adjacent to the target to take the strike.'
 										})
 									]

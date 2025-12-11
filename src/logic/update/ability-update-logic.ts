@@ -58,7 +58,7 @@ export class AbilityUpdateLogic {
 
 		if (ability.spend.length > 0) {
 			ability.spend.forEach(spend => {
-				ability.sections.push(FactoryLogic.createAbilitySectionField({
+				ability.sections.push(FactoryLogic.createAbilitySectionSpend({
 					name: spend.name || 'Spend',
 					effect: spend.effect,
 					value: spend.value,
@@ -70,7 +70,7 @@ export class AbilityUpdateLogic {
 
 		if (ability.persistence.length > 0) {
 			ability.persistence.forEach(persist => {
-				ability.sections.push(FactoryLogic.createAbilitySectionField({
+				ability.sections.push(FactoryLogic.createAbilitySectionSpend({
 					name: 'Persist',
 					effect: persist.effect,
 					value: persist.value

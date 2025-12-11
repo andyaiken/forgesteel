@@ -37,9 +37,7 @@ export const telepathy: SubClass = {
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next ability roll an ally makes against the target before the start of your next turn gains an edge.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You target one additional creature or object.'
 							})
 						]

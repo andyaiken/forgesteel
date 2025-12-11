@@ -160,8 +160,7 @@ This effect lasts until an affected creature takes damage or an ally uses a main
 								})
 							),
 							FactoryLogic.createAbilitySectionText('A hopeless creature can’t benefit from edges or double edges, can’t gain or use surges, and can’t gain temporary Stamina.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The distance of this ability increases to a 20 burst and its potency increases by 1.',
 								value: 3
 							})
@@ -187,13 +186,11 @@ This effect lasts until an affected creature takes damage or an ally uses a main
 								})
 							),
 							FactoryLogic.createAbilitySectionText('A target who has M<4 is wracked with pain (save ends). A creature wracked with pain has a double bane on abilities.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The lich chooses one additional target.',
 								value: 3
 							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'Each creature wracked with pain gains one of the following conditions of the lich’s choice for each 2 Malice spent: bleeding, slowed, or prone and can’t stand. These conditions end when a creature is no longer wracked with pain.',
 								value: 2,
 								repeatable: true

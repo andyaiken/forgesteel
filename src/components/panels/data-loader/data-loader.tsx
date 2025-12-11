@@ -246,6 +246,10 @@ export const DataLoader = (props: Props) => {
 				setError(reason.message);
 				setOverallLoadState('failure');
 			});
+		}).catch(reason => {
+			console.error(reason);
+			setError(reason.message);
+			setOverallLoadState('failure');
 		});
 	};
 

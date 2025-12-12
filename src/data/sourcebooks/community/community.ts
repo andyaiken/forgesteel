@@ -1549,23 +1549,22 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 	abilities: [
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-1',
-			name: 'From Pain, Power',
-			description: 'Your suffering becomes theirs.',
+			name: 'Bone Burst',
+			description: 'A wave of bones smash into your foes.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One creature or object',
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+			target: 'All enemies and objects',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Presence,
-						tier1: '5 + P psychic damage',
-						tier2: '7 + P psychic damage',
-						tier3: '9 + P psychic damage'
+						tier1: '2 damage',
+						tier2: '5 damage',
+						tier3: '7 damage; M < [strong], prone'
 					})
-				),
-				FactoryLogic.createAbilitySectionText('If you’ve taken damage since the start of your last turn, you gain 1 surge before making the power roll.')
+				)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1611,22 +1610,23 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-4',
-			name: 'Bone Burst',
-			description: 'A wave of bones smash into your foes.',
+			name: 'From Pain, Power',
+			description: 'Your suffering becomes theirs.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-			target: 'All enemies and objects',
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Presence,
-						tier1: '2 damage',
-						tier2: '5 damage',
-						tier3: '7 damage; M < [strong], prone'
+						tier1: '5 + P psychic damage',
+						tier2: '7 + P psychic damage',
+						tier3: '9 + P psychic damage'
 					})
-				)
+				),
+				FactoryLogic.createAbilitySectionText('If you’ve taken damage since the start of your last turn, you gain 1 surge before making the power roll.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1651,27 +1651,6 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-6',
-			name: 'Misfortune',
-			description: 'You curse your foe to a horrible fate.',
-			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One creature',
-			cost: 3,
-			sections: [
-				FactoryLogic.createAbilitySectionRoll(
-					FactoryLogic.createPowerRoll({
-						characteristic: Characteristic.Presence,
-						tier1: '6 + P patron damage; P < [weak], weakened (save ends)',
-						tier2: '10 + P patron damage; P < [average], weakened (save ends)',
-						tier3: '14 + P patron damage; P < [strong], weakened (save ends)'
-					})
-				),
-				FactoryLogic.createAbilitySectionText('While weakened this way, the creature can’t benefit from edges or a critical hit.')
-			]
-		}),
-		FactoryLogic.createAbility({
-			id: 'vessel-ability-7',
 			name: 'Anima Extraction',
 			description: 'A tendril of shadow repurposes life essence.',
 			type: FactoryLogic.type.createMain(),
@@ -1692,6 +1671,19 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You or an ally within range gain temporary Stamina equal to half the damage dealt.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'vessel-ability-7',
+			name: 'Growing Corruption',
+			description: 'You plant a hex, withering plants and darkening the earth.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			target: 'Special',
+			cost: 3,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The area becomes cursed with your patron’s energy. The area lasts until the end of the encounter or you are dying. At the start of each round, the area grows by 1 square in every direction. Any enemy in the area or who targets a creature in the area takes a bane on power rolls due to concealment. The area is difficult terrain for enemies.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1717,35 +1709,44 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-9',
-			name: 'Growing Corruption',
-			description: 'You plant a hex, withering plants and darkening the earth.',
-			type: FactoryLogic.type.createManeuver(),
-			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-			target: 'Special',
+			name: 'Misfortune',
+			description: 'You curse your foe to a horrible fate.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature',
 			cost: 3,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The area becomes cursed with your patron’s energy. The area lasts until the end of the encounter or you are dying. At the start of each round, the area grows by 1 square in every direction. Any enemy in the area or who targets a creature in the area takes a bane on power rolls due to concealment. The area is difficult terrain for enemies.')
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Presence,
+						tier1: '6 + P patron damage; P < [weak], weakened (save ends)',
+						tier2: '10 + P patron damage; P < [average], weakened (save ends)',
+						tier3: '14 + P patron damage; P < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('While weakened this way, the creature can’t benefit from edges or a critical hit.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-10',
-			name: 'Embrittle',
-			description: 'Spirits are easily drained, bones are easily broken.',
+			name: 'Bloodletting',
+			description: 'New wounds appear from nowhere.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One creature or object',
+			target: 'Up to three creatures',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Presence,
-						tier1: '4 + P damage; M < [weak], slowed and the target has damage weakness 2 (EoT)',
-						tier2: '6 + P damage; M < [average], slowed and the target has damage weakness 3 (EoT)',
-						tier3: '8 + P damage; M < [strong], slowed and the target has damage weakness 5 (EoT)'
+						tier1: '3 damage; M < [weak], bleeding (save ends)',
+						tier2: '4 damage; M < [average], bleeding (save ends)',
+						tier3: '6 damage; M < [strong], bleeding (save ends)'
 					})
-				)
+				),
+				FactoryLogic.createAbilitySectionText('If a target is affected by the potency and is already bleeding, it takes additional damage equal to your Presence score.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1770,6 +1771,26 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-12',
+			name: 'Embrittle',
+			description: 'Spirits are easily drained, bones are easily broken.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
+			cost: 5,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Presence,
+						tier1: '4 + P damage; M < [weak], slowed and the target has damage weakness 2 (EoT)',
+						tier2: '6 + P damage; M < [average], slowed and the target has damage weakness 3 (EoT)',
+						tier3: '8 + P damage; M < [strong], slowed and the target has damage weakness 5 (EoT)'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'vessel-ability-13',
 			name: 'Enter the Beyond',
 			description: 'You bring a part of your patron’s realm to yours.',
 			type: FactoryLogic.type.createMain(),
@@ -1790,28 +1811,31 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'vessel-ability-13',
-			name: 'Bloodletting',
-			description: 'New wounds appear from nowhere.',
+			id: 'vessel-ability-14',
+			name: 'Blight',
+			description: 'Use your magic to undercut a foes’ ability to fend you off.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'Up to three creatures',
-			cost: 5,
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature',
+			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Presence,
-						tier1: '3 damage; M < [weak], bleeding (save ends)',
-						tier2: '4 damage; M < [average], bleeding (save ends)',
-						tier3: '6 damage; M < [strong], bleeding (save ends)'
+						tier1: '8 + P corruption damage; P < [weak], slowed (save ends)',
+						tier2: '11 + P corruption damage; P < [average], slowed (save ends)',
+						tier3: '15 + P corruption damage; P < [strong], slowed (save ends)'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If a target is affected by the potency and is already bleeding, it takes additional damage equal to your Presence score.')
+				FactoryLogic.createAbilitySectionText('While slowed this way, the target rolls two d10s on saving throws and takes the lower, and takes double damage from ending it using End Effect.')
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'vessel-ability-14',
+			id: 'vessel-ability-15',
 			name: 'The Harrowing',
 			description: 'Focus your patron’s power into dismantling a foe.',
 			type: FactoryLogic.type.createMain(),
@@ -1829,27 +1853,6 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Until the end of the encounter, the target is harrowed. You can use a maneuver on your turn to cause all creatures harrowed by you to take patron damage equal to thrice your Presence score.')
-			]
-		}),
-		FactoryLogic.createAbility({
-			id: 'vessel-ability-15',
-			name: 'Life Absorption',
-			description: 'You draw in the life essence of enemies around you, empowering yourself.',
-			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-			target: 'All enemies',
-			cost: 7,
-			sections: [
-				FactoryLogic.createAbilitySectionRoll(
-					FactoryLogic.createPowerRoll({
-						characteristic: Characteristic.Presence,
-						tier1: '3 corruption damage',
-						tier2: '4 corruption damage',
-						tier3: '6 corruption damage'
-					})
-				),
-				FactoryLogic.createAbilitySectionText('You gain temporary Stamina equal to half the total damage dealt.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1876,26 +1879,23 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-17',
-			name: 'Blight',
-			description: 'Use your magic to undercut a foes’ ability to fend you off.',
+			name: 'Life Absorption',
+			description: 'You draw in the life essence of enemies around you, empowering yourself.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [
-				FactoryLogic.distance.createMelee(),
-				FactoryLogic.distance.createRanged(5)
-			],
-			target: 'One creature',
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+			target: 'All enemies',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Presence,
-						tier1: '8 + P corruption damage; P < [weak], slowed (save ends)',
-						tier2: '11 + P corruption damage; P < [average], slowed (save ends)',
-						tier3: '15 + P corruption damage; P < [strong], slowed (save ends)'
+						tier1: '3 corruption damage',
+						tier2: '4 corruption damage',
+						tier3: '6 corruption damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('While slowed this way, the target rolls two d10s on saving throws and takes the lower, and takes double damage from ending it using End Effect.')
+				FactoryLogic.createAbilitySectionText('You gain temporary Stamina equal to half the total damage dealt.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -1921,6 +1921,27 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 		}),
 		FactoryLogic.createAbility({
 			id: 'vessel-ability-19',
+			name: 'Heartstopper',
+			description: 'Reach into their chest and rip out their still-beating heart.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Presence,
+						tier1: '8 + P damage',
+						tier2: '10 + P damage',
+						tier3: '13 + P damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target is winded after damage resolves, they die if they rely on a heart to live and aren’t a leader, solo or boss. Otherwise, a winded creature is bleeding (save ends).')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'vessel-ability-20',
 			name: 'Maddening Whispers',
 			description: 'It’s hard to focus over the voices in your head.',
 			type: FactoryLogic.type.createMain(),
@@ -1941,7 +1962,7 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'vessel-ability-20',
+			id: 'vessel-ability-21',
 			name: 'Wall of the Damned',
 			description: 'You conjure a wall of your patron’s victims.',
 			type: FactoryLogic.type.createManeuver(),
@@ -1954,27 +1975,6 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 You can place this wall in occupied squares, with each creature in an affected place sliding to the nearest unoccupied square of your choice. The wall lasts until the end of the encounter or you are dying. The wall squares count as stone squares for purposes of damage. You can move freely through the wall squares. Whenever a creature dies within 10 of the wall, it grows an additional segment.
 
 Any enemy who moves into the area for the first time in a combat round or starts their turn there takes patron damage equal to twice your Presence score and is M < weak, restrained by the wall (save ends). An enemy that is force moved into the wall is M < strong, restrained by the wall (save ends) instead, and the creature doing the forced movement can choose for the wall to not break if the excess movement would cause it to. A creature that saves against being restrained this way can shift 1 square.`)
-			]
-		}),
-		FactoryLogic.createAbility({
-			id: 'vessel-ability-21',
-			name: 'Heartstopper',
-			description: 'Reach into their chest and rip out their still-beating heart.',
-			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createMelee() ],
-			target: 'One creature',
-			cost: 9,
-			sections: [
-				FactoryLogic.createAbilitySectionRoll(
-					FactoryLogic.createPowerRoll({
-						characteristic: Characteristic.Presence,
-						tier1: '8 + P damage',
-						tier2: '10 + P damage',
-						tier3: '13 + P damage'
-					})
-				),
-				FactoryLogic.createAbilitySectionText('If the target is winded after damage resolves, they die if they rely on a heart to live and aren’t a leader, solo or boss. Otherwise, a winded creature is bleeding (save ends).')
 			]
 		})
 	],
@@ -2087,27 +2087,6 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			abilities: [
 				FactoryLogic.createAbility({
 					id: 'vessel-subclass-1-ability-1',
-					name: 'Hellfire Mote',
-					description: 'Hellfire coats the battlefield, igniting the souls of your foes.',
-					type: FactoryLogic.type.createMain(),
-					keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-					target: 'All enemies',
-					cost: 5,
-					sections: [
-						FactoryLogic.createAbilitySectionRoll(
-							FactoryLogic.createPowerRoll({
-								characteristic: Characteristic.Presence,
-								tier1: '5 fire damage; I < [weak], aflame (EoT)',
-								tier2: '7 fire damage; I < [average], aflame (EoT)',
-								tier3: '11 fire damage; I < [strong], aflame (EoT)'
-							})
-						),
-						FactoryLogic.createAbilitySectionText('The first time an aflame target willingly moves, they take fire damage equal to twice your Presence score and the condition ends.')
-					]
-				}),
-				FactoryLogic.createAbility({
-					id: 'vessel-subclass-1-ability-2',
 					name: 'Devilish Charm',
 					description: 'Perhaps we can work this out in a more… civilised manner?',
 					type: FactoryLogic.type.createTrigger('A creature damages you with a rolled ability.', { free: true }),
@@ -2125,6 +2104,27 @@ Any enemy who moves into the area for the first time in a combat round or starts
 								tier3: 'P < [strong], charmed (save ends)'
 							})
 						)
+					]
+				}),
+				FactoryLogic.createAbility({
+					id: 'vessel-subclass-1-ability-2',
+					name: 'Hellfire Mote',
+					description: 'Hellfire coats the battlefield, igniting the souls of your foes.',
+					type: FactoryLogic.type.createMain(),
+					keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+					target: 'All enemies',
+					cost: 5,
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: '5 fire damage; I < [weak], aflame (EoT)',
+								tier2: '7 fire damage; I < [average], aflame (EoT)',
+								tier3: '11 fire damage; I < [strong], aflame (EoT)'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('The first time an aflame target willingly moves, they take fire damage equal to twice your Presence score and the condition ends.')
 					]
 				})
 			],
@@ -2397,6 +2397,19 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			abilities: [
 				FactoryLogic.createAbility({
 					id: 'vessel-subclass-3-ability-1',
+					name: 'Unfathomable Geometries',
+					description: 'Your form is warped and twists into spaces that don’t exist.',
+					type: FactoryLogic.type.createManeuver(),
+					keywords: [ AbilityKeyword.Magic ],
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					cost: 5,
+					sections: [
+						FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever an enemy uses an ability on you that requires line of effect or Searches while it can perceive you, the creature takes psychic damage equal to thrice your Presence score unless it takes a double bane on the roll.')
+					]
+				}),
+				FactoryLogic.createAbility({
+					id: 'vessel-subclass-3-ability-2',
 					name: 'Wrack the Mind',
 					description: 'BEHOLD! THE INFINITE COSMOS!',
 					type: FactoryLogic.type.createMain(),
@@ -2413,19 +2426,6 @@ Any enemy who moves into the area for the first time in a combat round or starts
 								tier3: '14 + P psychic damage; I < [strong], dazed (save ends)'
 							})
 						)
-					]
-				}),
-				FactoryLogic.createAbility({
-					id: 'vessel-subclass-3-ability-2',
-					name: 'Unfathomable Geometries',
-					description: 'Your form is warped and twists into spaces that don’t exist.',
-					type: FactoryLogic.type.createManeuver(),
-					keywords: [ AbilityKeyword.Magic ],
-					distance: [ FactoryLogic.distance.createSelf() ],
-					target: 'Self',
-					cost: 5,
-					sections: [
-						FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever an enemy uses an ability on you that requires line of effect or Searches while it can perceive you, the creature takes psychic damage equal to thrice your Presence score unless it takes a double bane on the roll.')
 					]
 				})
 			],

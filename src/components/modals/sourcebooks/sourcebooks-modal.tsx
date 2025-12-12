@@ -1,10 +1,11 @@
-import { Button, Flex, Segmented, Space, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Flex, Popover, Segmented, Space, Upload } from 'antd';
+import { DownloadOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -31,37 +32,6 @@ export const SourcebooksModal = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(props.hiddenSourcebookIDs));
 
-	const createSourcebook = () => {
-		const copy = Utils.copy(homebrewSourcebooks);
-		const sourcebook = FactoryLogic.createSourcebook();
-		copy.push(sourcebook);
-		setHomebrewSourcebooks(copy);
-		props.onHomebrewSourcebookChange(copy);
-	};
-
-	const changeSourcebook = (sourcebook: Sourcebook) => {
-		const copy = Utils.copy(homebrewSourcebooks);
-		const index = copy.findIndex(s => s.id === sourcebook.id);
-		if (index !== -1) {
-			copy[index] = sourcebook;
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
-		}
-	};
-
-	const deleteSourcebook = (sourcebook: Sourcebook) => {
-		const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
-		setHomebrewSourcebooks(copy);
-		props.onHomebrewSourcebookChange(copy);
-	};
-
-	const importSourcebook = (sourcebook: Sourcebook) => {
-		const copy = Utils.copy(homebrewSourcebooks);
-		copy.push(sourcebook);
-		setHomebrewSourcebooks(copy);
-		props.onHomebrewSourcebookChange(copy);
-	};
-
 	const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 		if (visible) {
 			const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
@@ -75,13 +45,10 @@ export const SourcebooksModal = (props: Props) => {
 		}
 	};
 
-	const officialSourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Official);
-	const thirdPartySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.ThirdParty);
-	const communitySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Community);
-
 	const getContent = () => {
 		switch (page) {
-			case SourcebookType.Official:
+			case SourcebookType.Official: {
+				const officialSourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Official);
 				return (
 					<>
 						<HeaderText level={1}>
@@ -97,8 +64,6 @@ export const SourcebooksModal = (props: Props) => {
 											visible={!hiddenSourcebookIDs.includes(s.id)}
 											heroes={props.heroes}
 											onSetVisible={setVisibility}
-											onChange={changeSourcebook}
-											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>
 								))
@@ -111,10 +76,23 @@ export const SourcebooksModal = (props: Props) => {
 						</Space>
 					</>
 				);
-			case SourcebookType.ThirdParty:
+			}
+			case SourcebookType.ThirdParty: {
+				const thirdPartySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.ThirdParty);
 				return (
 					<>
-						<HeaderText level={1}>
+						<HeaderText
+							level={1}
+							extra={
+								<Popover
+									content={
+										<Markdown text={'If you\'d like your company\'s content to be featured here, [get in touch](mailto:andy.aiken@live.co.uk).'} />
+									}
+								>
+									<Button type='text' icon={<InfoCircleOutlined />} />
+								</Popover>
+							}
+						>
 							Third-Party Sourcebooks
 						</HeaderText>
 						<Space orientation='vertical' style={{ width: '100%' }}>
@@ -127,8 +105,6 @@ export const SourcebooksModal = (props: Props) => {
 											visible={!hiddenSourcebookIDs.includes(s.id)}
 											heroes={props.heroes}
 											onSetVisible={setVisibility}
-											onChange={changeSourcebook}
-											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>
 								))
@@ -141,10 +117,23 @@ export const SourcebooksModal = (props: Props) => {
 						</Space>
 					</>
 				);
-			case SourcebookType.Community:
+			}
+			case SourcebookType.Community: {
+				const communitySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Community);
 				return (
 					<>
-						<HeaderText level={1}>
+						<HeaderText
+							level={1}
+							extra={
+								<Popover
+									content={
+										<Markdown text={'If you\'d like your creations to be featured here, just fill in [this form](https://forms.cloud.microsoft/r/mmxqfnFzx4).'} />
+									}
+								>
+									<Button type='text' icon={<InfoCircleOutlined />} />
+								</Popover>
+							}
+						>
 							Community Sourcebooks
 						</HeaderText>
 						<Space orientation='vertical' style={{ width: '100%' }}>
@@ -157,8 +146,6 @@ export const SourcebooksModal = (props: Props) => {
 											visible={!hiddenSourcebookIDs.includes(s.id)}
 											heroes={props.heroes}
 											onSetVisible={setVisibility}
-											onChange={changeSourcebook}
-											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>
 								))
@@ -171,7 +158,39 @@ export const SourcebooksModal = (props: Props) => {
 						</Space>
 					</>
 				);
-			case SourcebookType.Homebrew:
+			}
+			case SourcebookType.Homebrew: {
+				const createSourcebook = () => {
+					const copy = Utils.copy(homebrewSourcebooks);
+					const sourcebook = FactoryLogic.createSourcebook();
+					copy.push(sourcebook);
+					setHomebrewSourcebooks(copy);
+					props.onHomebrewSourcebookChange(copy);
+				};
+
+				const changeSourcebook = (sourcebook: Sourcebook) => {
+					const copy = Utils.copy(homebrewSourcebooks);
+					const index = copy.findIndex(s => s.id === sourcebook.id);
+					if (index !== -1) {
+						copy[index] = sourcebook;
+						setHomebrewSourcebooks(copy);
+						props.onHomebrewSourcebookChange(copy);
+					}
+				};
+
+				const deleteSourcebook = (sourcebook: Sourcebook) => {
+					const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
+					setHomebrewSourcebooks(copy);
+					props.onHomebrewSourcebookChange(copy);
+				};
+
+				const importSourcebook = (sourcebook: Sourcebook) => {
+					const copy = Utils.copy(homebrewSourcebooks);
+					copy.push(sourcebook);
+					setHomebrewSourcebooks(copy);
+					props.onHomebrewSourcebookChange(copy);
+				};
+
 				return (
 					<>
 						<HeaderText
@@ -226,6 +245,7 @@ export const SourcebooksModal = (props: Props) => {
 						</Space>
 					</>
 				);
+			}
 		}
 	};
 

@@ -295,18 +295,14 @@ export const HeroPanel = (props: Props) => {
 							</>
 							: null
 					}
-					{
-						!useRows ?
-							<ControlledMonstersPanel
-								hero={props.hero}
-								onAddSquad={props.onAddSquad!}
-								onRemoveSquad={props.onRemoveSquad!}
-								onAddMonsterToSquad={props.onAddMonsterToSquad!}
-								onSelectControlledMonster={props.onSelectControlledMonster!}
-								onSelectControlledSquad={props.onSelectControlledSquad!}
-							/>
-							: null
-					}
+					<ControlledMonstersPanel
+						hero={props.hero}
+						onAddSquad={props.onAddSquad!}
+						onRemoveSquad={props.onRemoveSquad!}
+						onAddMonsterToSquad={props.onAddMonsterToSquad!}
+						onSelectControlledMonster={props.onSelectControlledMonster!}
+						onSelectControlledSquad={props.onSelectControlledSquad!}
+					/>
 					{
 						(triggers.length > 0) && !props.options.singlePage ?
 							useRows ?
@@ -430,7 +426,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='stats-section'>
-					<Flex gap={5}>
+					<Flex gap={10}>
 						<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</StatsRow>
@@ -489,7 +485,7 @@ export const HeroPanel = (props: Props) => {
 									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
 									<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
 								</StatsRow>
-								<Flex gap={20}>
+								<Flex gap={10}>
 									<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
 										<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
 										<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />

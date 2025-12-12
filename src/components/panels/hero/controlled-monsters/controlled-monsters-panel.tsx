@@ -24,15 +24,15 @@ interface Props {
 }
 
 export const ControlledMonstersPanel = (props: Props) => {
+	const companions = HeroLogic.getCompanions(props.hero);
+	const retainers = HeroLogic.getRetainers(props.hero);
+	const summons = HeroLogic.getSummons(props.hero);
+
+	if (companions.length + retainers.length + summons.length === 0) {
+		return null;
+	}
+
 	const getAddBtn = () => {
-		const companions = HeroLogic.getCompanions(props.hero);
-		const retainers = HeroLogic.getRetainers(props.hero);
-		const summons = HeroLogic.getSummons(props.hero);
-
-		if (companions.length + retainers.length + summons.length === 0) {
-			return null;
-		}
-
 		return (
 			<Popover
 				trigger='click'

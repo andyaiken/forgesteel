@@ -5,9 +5,10 @@
     align-items: center;
     justify-content: center;
     background-color: rgb(230, 230, 230);
+    overflow-y: scroll;
 
     .data-loader-container {
-        width: 250px;
+        width: 380px;
         padding: 20px;
         border-radius: 10px;
         background-color: rgb(255, 255, 255);
@@ -21,6 +22,18 @@
                 width: 75px;
                 height: 75px;
             }
+        }
+
+        .header-text-panel {
+            justify-content: center;
+        }
+
+        .load-states {
+            margin: 0 auto 10px;
+        }
+
+        .ant-alert-error {
+            margin-bottom: 10px;
         }
     }
 }

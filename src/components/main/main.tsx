@@ -78,6 +78,7 @@ import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Title } from '@/models/title';
+import { TransferPage } from '../pages/transfer/transfer-page';
 import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -1858,6 +1859,19 @@ export const Main = (props: Props) => {
 								showRoll={() => showRoll()}
 								showAbout={showAbout}
 								showSettings={showSettings}
+							/>
+						}
+					/>
+				</Route>
+				<Route path='transfer'>
+					<Route
+						index={true}
+						element={
+							<TransferPage
+								connectionSettings={connectionSettings}
+								heroes={heroes}
+								homebrewSourcebooks={homebrewSourcebooks}
+								options={options}
 							/>
 						}
 					/>

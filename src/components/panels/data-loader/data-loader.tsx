@@ -1,4 +1,4 @@
-import { Alert, Flex } from 'antd';
+import { Alert, Button, Flex } from 'antd';
 import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
@@ -269,7 +269,7 @@ export const DataLoader = (props: Props) => {
 				</div>
 				<HeaderText level={1}>Loading Data</HeaderText>
 				<Flex vertical={true}>
-					<Flex vertical={true}>
+					<Flex className='load-states' vertical={true}>
 						<CheckLabel state={connectionSettingsState}>Connection Settings</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
@@ -296,6 +296,13 @@ export const DataLoader = (props: Props) => {
 									showIcon={true}
 									title='Update Warehouse settings below, if necessary.'
 								/>
+								<Button
+									block={true}
+									type='primary'
+									onClick={() => location.reload()}
+								>
+									Retry
+								</Button>
 								<Expander title='Forge Steel Warehouse Settings'>
 									<ConnectionSettingsPanel
 										connectionSettings={connectionSettings}

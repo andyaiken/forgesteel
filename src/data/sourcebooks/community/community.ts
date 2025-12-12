@@ -1197,7 +1197,7 @@ const vessel: HeroClass = {
 	id: 'vessel',
 	name: 'Vessel',
 	description: `
-*By Matthew Mitchell*
+*By ChaoticGoodra*
 
 *“I am a man possessed,” he groaned, “and without this devil-blade I carry I would not be a man at all.”*
 

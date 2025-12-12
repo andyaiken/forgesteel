@@ -666,7 +666,8 @@ For each condition the target suffers from, treat the thirst spent on this abili
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'vampire-class-2-2',
 					cost: 5,
-					fromSubclassOnly: true
+					fromClass: false,
+					fromSubclass: true
 				})
 			]
 		},

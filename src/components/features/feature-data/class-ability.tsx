@@ -32,7 +32,15 @@ interface InfoProps {
 }
 
 export const InfoClassAbility = (props: InfoProps) => {
-	let heroClass = props.hero?.class || null;
+	if (!props.hero) {
+		return (
+			<div className='ds-text'>
+				Choose {props.data.count > 1 ? props.data.count : 'a'} {(props.data.cost === 'signature') || (props.data.cost === 0) ? 'signature' : `${props.data.cost}pt`} {props.data.count > 1 ? 'abilities' : 'ability'}.
+			</div>
+		);
+	}
+
+	let heroClass = props.hero.class || null;
 	if (props.data.classID && props.sourcebooks) {
 		// You get an ability from a different class
 		heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === props.data.classID) || null;

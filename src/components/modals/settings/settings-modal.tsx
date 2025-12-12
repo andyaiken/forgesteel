@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
@@ -23,6 +23,7 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { WarehouseActionsPanel } from '@/components/panels/connection-settings/warehouse-actions-panel';
 import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -639,10 +640,23 @@ export const SettingsModal = (props: Props) => {
 		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
 			return (
 				<Expander title='Forge Steel Warehouse'>
-					<ConnectionSettingsPanel
-						connectionSettings={props.connectionSettings}
-						setConnectionSettings={props.setConnectionSettings}
-					/>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							props.connectionSettings.useWarehouse ?
+								<>
+									<WarehouseActionsPanel
+										connectionSettings={props.connectionSettings}
+									/>
+									<Divider size='small' />
+								</>
+								: null
+						}
+						<ConnectionSettingsPanel
+							connectionSettings={props.connectionSettings}
+							setConnectionSettings={props.setConnectionSettings}
+							showReload={true}
+						/>
+					</Space>
 				</Expander>
 			);
 		}

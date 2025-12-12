@@ -6,6 +6,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
@@ -71,6 +72,11 @@ export const ConnectionSettingsPanel = (props: Props) => {
 		setConnectionSettingsChanged(false);
 	};
 
+	const navigate = useNavigate();
+	const goToTransferPage = () => {
+		navigate('/transfer');
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<Toggle
@@ -81,6 +87,11 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			{
 				connectionSettings.useWarehouse ?
 					<>
+						<Button
+							onClick={goToTransferPage}
+						>
+							Transfer Data
+						</Button>
 						<HeaderText>Warehouse Host</HeaderText>
 						<Input
 							placeholder='Warehouse Host'

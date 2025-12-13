@@ -25,5 +25,16 @@
   "culture": "Cultura",
   "organization": "organizzazione",
   "upbringing": "educazione",
-  "career": "carriera"
+  "career": "carriera",
+  "class": "classe",
+  "level": "livello",
+  "kit": "kit",
+  "armor": "armatura",
+  "weapon_one": "arma",
+  "weapon_other": "armi",
+  "title_one": "titolo",
+  "title_other": "titoli",
+  "complication": "complicazione",
+  "project": "project",
+  "state": "stato"
 }

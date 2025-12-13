@@ -3,5 +3,6 @@
   "class": "Class",
   "noAncestryChosen": "No ancestry chosen",
   "noCultureChosen": "No culture chosen",
-  "noCareerChosen": "No career chosen"
+  "noCareerChosen": "No career chosen",
+  "noClassChosen": "No class chosen"
 }

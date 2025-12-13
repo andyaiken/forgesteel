@@ -623,26 +623,26 @@ export const HeroPanel = (props: Props) => {
 								<div className='selectable-row clickable' onClick={onSelectClass}>
 									{
 										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
+											<div>{i18next.format(t('class'), 'capitalize')}: <b>{i18next.format(t(props.hero.class.name), 'capitalize')} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => i18next.format(t(sc.name), 'capitalize')).join(' ')}, level {props.hero.class.level})</b></div>
 											:
-											<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
+											<div>{i18next.format(t('class'), 'capitalize')}: <b>{i18next.format(t(props.hero.class.name), 'capitalize')} (level {props.hero.class.level})</b></div>
 									}
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectClass}>
-									<HeaderText>Class</HeaderText>
-									<Field label='Class' value={props.hero.class.name} />
-									<Field label='Level' value={props.hero.class.level} />
+									<HeaderText>{i18next.format(t('class'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('class'), 'capitalize')} value={i18next.format(t(props.hero.class.name), 'capitalize')} />
+									<Field label={i18next.format(t('level'), 'capitalize')} value={props.hero.class.level} />
 									{
 										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+											<Field label={i18next.format(t(props.hero.class.subclassName), 'capitalize')} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => i18next.format(t(sc.name), 'capitalize')).join(', ') || ''} />
 											: null
 									}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Class</HeaderText>
-								<div className='ds-text dimmed-text'>No class chosen</div>
+								<HeaderText>{i18next.format(t('class'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noClassChosen')}</div>
 							</div>
 					}
 					{
@@ -650,12 +650,12 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getDomains(props.hero).map(domain =>
 								useRows ?
 									<div key={domain.id} className='selectable-row clickable' onClick={() => onSelectDomain(domain)}>
-										<div>Domain: <b>{domain.name}</b></div>
+										<div>{i18next.format(t('domain'), 'capitalize')}: <b>{i18next.format(t(domain.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={domain.id} className='overview-tile clickable' onClick={() => onSelectDomain(domain)}>
-										<HeaderText>Domain</HeaderText>
-										<Field label='Domain' value={domain.name} />
+										<HeaderText>{i18next.format(t('domain'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('domain'), 'capitalize')} value={i18next.format(t(domain.name), 'capitalize')} />
 									</div>
 							)
 							:
@@ -666,14 +666,14 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getKits(props.hero).map(kit =>
 								useRows ?
 									<div key={kit.id} className='selectable-row clickable' onClick={() => onSelectKit(kit)}>
-										<div>Kit: <b>{kit.name}</b></div>
+										<div>{i18next.format(t('kit'), 'capitalize')}: <b>{i18next.format(t(kit.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={kit.id} className='overview-tile clickable' onClick={() => onSelectKit(kit)}>
-										<HeaderText>Kit</HeaderText>
-										<Field label='Kit' value={kit.name} />
-										{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
-										{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
+										<HeaderText>{i18next.format(t('kit'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('kit'), 'capitalize')} value={i18next.format(t(kit.name), 'capitalize')} />
+										{kit.armor.length > 0 ? <Field label={i18next.format(t('armor'), 'capitalize')} value={kit.armor.join(', ')} /> : null}
+										{kit.weapon.length > 0 ? <Field label={i18next.format(t('weapon_other'), 'capitalize')} value={kit.weapon.join(', ')} /> : null}
 									</div>
 							)
 							:
@@ -684,12 +684,12 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getTitles(props.hero).map(title =>
 								useRows ?
 									<div key={title.id} className='selectable-row clickable' onClick={() => onSelectTitle(title)}>
-										<div>Title: <b>{title.name}</b></div>
+										<div>{i18next.format(t('title_one'), 'capitalize')}: <b>{i18next.format(t(title.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
-										<HeaderText>Title</HeaderText>
-										<Field label='Title' value={title.name} />
+										<HeaderText>{i18next.format(t('title_one'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('title_one'), 'capitalize')} value={i18next.format(t(title.name), 'capitalize')} />
 									</div>
 							)
 							:
@@ -699,12 +699,12 @@ export const HeroPanel = (props: Props) => {
 						props.hero.complication ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectComplication}>
-									<div>Complication: <b>{props.hero.complication.name}</b></div>
+									<div>{i18next.format(t('complication'), 'capitalize')}: <b>{props.hero.complication.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectComplication}>
-									<HeaderText>Complication</HeaderText>
-									<Field label='Complication' value={props.hero.complication.name} />
+									<HeaderText>{i18next.format(t('complication'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('complication'), 'capitalize')} value={i18next.format(t(props.hero.complication.name), 'capitalize')} />
 								</div>
 							:
 							null
@@ -714,13 +714,13 @@ export const HeroPanel = (props: Props) => {
 							props.hero.state.projects.map(project =>
 								useRows ?
 									<div key={project.id} className='selectable-row clickable' onClick={onSelectProject}>
-										<div>Project: <b>{project.name}</b></div>
+										<div>{i18next.format(t('project'), 'capitalize')}: <b>{project.name}</b></div>
 									</div>
 									:
 									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
-										<HeaderText>Project</HeaderText>
-										<Field label='Project' value={project.name} />
-										{project.progress ? <Field label='State' value={ProjectLogic.getStatus(project)} /> : null}
+										<HeaderText>{i18next.format(t('project'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('project'), 'capitalize')} value={i18next.format(t(project.name), 'capitalize')} />
+										{project.progress ? <Field label={i18next.format(t('state'), 'capitalize')} value={i18next.format(t(ProjectLogic.getStatus(project)), 'capitalize')} /> : null}
 									</div>
 							)
 							:

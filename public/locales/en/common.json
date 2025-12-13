@@ -25,5 +25,17 @@
   "environment": "environment",
   "organization": "organization",
   "upbringing": "upbringing",
-  "career": "career"
+  "career": "career",
+  "class": "class",
+  "level": "level",
+  "domain": "domain",
+  "kit": "kit",
+  "armor": "armor",
+  "weapon_one": "weapon",
+  "weapon_other": "weapons",
+  "title_one": "title",
+  "title_other": "titles",
+  "complication": "complication",
+  "project": "project",
+  "state": "state"
 }

@@ -3,5 +3,6 @@
   "class": "Classe",
   "noAncestryChosen": "Discendenza non scelta",
   "noCultureChosen": "Cultura non scelta",
-  "noCareerChosen": "Carriera non scelta"
+  "noCareerChosen": "Carriera non scelta",
+  "noClassChosen": "Classe non scelta"
 }

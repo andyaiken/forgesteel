@@ -95,14 +95,12 @@ describe('DataService', () => {
 			const catchFn = vi.fn();
 			const thenFn = vi.fn();
 
-			const healthResponse = { data: { version: '0.1.6' } };
 			const jwtResponse = { data: { access_token: 'fake_token' } };
 
 			const mockHero = { id: 'test-hero' } as Hero;
 			const mockData = [ mockHero ];
 			const responseObj = { data: { data: mockData } };
 			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(healthResponse))
 				.mockImplementationOnce(() => Promise.resolve(jwtResponse))
 				.mockImplementationOnce(() => Promise.resolve(responseObj));
 
@@ -114,61 +112,12 @@ describe('DataService', () => {
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/healthz');
-
-			expect(axios.get).toHaveBeenNthCalledWith(2, 'http://test-fake-host/connect', {
+			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/connect', {
 				headers: { Authorization: 'Bearer abcd123' }
 			});
 
-			expect(axios.get).toHaveBeenNthCalledWith(3, 'http://test-fake-host/data/forgesteel-heroes', {
-				headers: { Authorization: 'Bearer fake_token' }
-			});
-
-			expect(thenFn).toHaveBeenCalledWith(mockData);
-		});
-
-		test('Uses cookie auth for new versions of Warehouse', async () => {
-			const connSettings = { ...defaultSettings,
-				useWarehouse: true,
-				warehouseHost: 'http://test-fake-host',
-				warehouseToken: 'abcd123'
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const healthResponse = { data: { version: '1.0.0' } };
-			const connectResponse = { data: {} };
-
-			const mockHero = { id: 'test-hero' } as Hero;
-			const mockData = [ mockHero ];
-			const responseObj = { data: { data: mockData } };
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(healthResponse))
-				.mockImplementationOnce(() => Promise.resolve(responseObj));
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(connectResponse));
-
-			const ds = new DataService(connSettings);
-			const connected = await ds.initialize();
-			expect(connected).toBe(true);
-
-			await ds.getHeroes()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/healthz');
-
-			expect(axios.post).toHaveBeenNthCalledWith(1, 'http://test-fake-host/connect', { }, {
-				headers: { Authorization: 'Bearer abcd123' },
-				withCredentials: true,
-				withXSRFToken: true
-			});
-
 			expect(axios.get).toHaveBeenNthCalledWith(2, 'http://test-fake-host/data/forgesteel-heroes', {
-				withCredentials: true,
-				withXSRFToken: true
+				headers: { Authorization: 'Bearer fake_token' }
 			});
 
 			expect(thenFn).toHaveBeenCalledWith(mockData);
@@ -200,11 +149,9 @@ describe('DataService', () => {
 			const catchFn = vi.fn();
 			const thenFn = vi.fn();
 
-			const healthResponse = { data: { version: '0.1.6' } };
 			const jwtResponse = { data: { access_token: 'fake_token' } };
 
 			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(healthResponse))
 				.mockImplementationOnce(() => Promise.resolve(jwtResponse));
 
 			axios.put = vi.fn();
@@ -220,62 +167,12 @@ describe('DataService', () => {
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'fake-host/healthz');
-
-			expect(axios.get).toHaveBeenNthCalledWith(2, 'fake-host/connect', {
+			expect(axios.get).toHaveBeenNthCalledWith(1, 'fake-host/connect', {
 				headers: { Authorization: 'Bearer abcd123' }
 			});
 
 			expect(axios.put).toHaveBeenCalledWith('fake-host/data/forgesteel-heroes', mockData, {
 				headers: { Authorization: 'Bearer fake_token' }
-			});
-
-			expect(thenFn).toHaveBeenCalledWith(mockData);
-		});
-
-		test('Uses cookie auth for new versions of warehouse', async () => {
-			const connSettings = { ...defaultSettings,
-				warehouseHost: 'fake-host',
-				useWarehouse: true,
-				warehouseToken: 'abcd123'
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const healthResponse = { data: { version: '1.0.0' } };
-			const connectResponse = { data: { } };
-
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(healthResponse));
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(connectResponse));
-
-			axios.put = vi.fn();
-
-			const ds = new DataService(connSettings);
-			const connected = await ds.initialize();
-			expect(connected).toBe(true);
-
-			const mockHero = { id: 'test-hero' } as Hero;
-			const mockData = [ mockHero ];
-			// const responseObj = { data: mockData };
-			await ds.saveHeroes(mockData)
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'fake-host/healthz');
-
-			expect(axios.post).toHaveBeenNthCalledWith(1, 'fake-host/connect', { }, {
-				headers: { Authorization: 'Bearer abcd123' },
-				withCredentials: true,
-				withXSRFToken: true
-			});
-
-			expect(axios.put).toHaveBeenCalledWith('fake-host/data/forgesteel-heroes', mockData, {
-				withCredentials: true,
-				withXSRFToken: true
 			});
 
 			expect(thenFn).toHaveBeenCalledWith(mockData);

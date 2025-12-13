@@ -106,23 +106,25 @@ export class SheetFormatter {
 
 	static enhanceMarkdown = (text: string) => {
 		text = text
-			.replace(/([MARIP]) < \[?([Ss]trong|[Aa]verage|[Ww]eak)\]?/g, '$1<$2')
+			.replace(/([MARIP]) < \[?([Ss]trong|[Aa]verage|[Ww]eak|\d)\]?/g, '$1<$2')
 			.replace(/([MARIP])<[Ss]trong/g, '$1<s]')
 			.replace(/([MARIP])<[Aa]verage/g, '$1<v]')
 			.replace(/([MARIP])<[Ww]eak/g, '$1<w]')
-			.replace(/M<([svw])\]/g, 'm<$1]')
-			.replace(/A<([svw])\]/g, 'a<$1]')
-			.replace(/R<([svw])\]/g, 'r<$1]')
-			.replace(/I<([svw])\]/g, 'i<$1]')
-			.replace(/P<([svw])\]/g, 'p<$1]')
-			.replace(/([marip])<([svw]\])/g, '<span class="potency">$1&lt;$2</span>')
+			.replace(/([MARIP])<(\d)/g, '$1<$2]')
+			.replace(/M<([svw\d])\]/g, 'm<$1]')
+			.replace(/A<([svw\d])\]/g, 'a<$1]')
+			.replace(/R<([svw\d])\]/g, 'r<$1]')
+			.replace(/I<([svw\d])\]/g, 'i<$1]')
+			.replace(/P<([svw\d])\]/g, 'p<$1]')
+			.replace(/([marip])<([svw\d]\])/g, '<span class="potency">$1&lt;$2</span>')
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
 			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
 			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
 			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`)
-			.replace(/[`]/g, '');
+			.replace(/[`]/g, '')
+			.replace(/<\/?code>/g, '');
 		return text;
 	};
 

@@ -1,4 +1,6 @@
 {
-  "devil": "devil",
-  "silverTongue": "silver tongue"
+  "devil":{
+    "devil": "devil",
+    "silverTongue": "silver tongue"
+  }
 }

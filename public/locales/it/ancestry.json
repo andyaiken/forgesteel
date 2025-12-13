@@ -1,4 +1,6 @@
 {
-  "devil": "diavolo",
-  "silverTongue": "voce vellutata"
+  "devil":{
+    "devil": "diavolo",
+    "silverTongue": "voce vellutata"
+  }
 }

@@ -27,6 +27,25 @@
         center center;
 }
 
+@mixin monster-header-gradient-half($color) {
+    --cutout-size: calc(var(--notch-size) - var(--border-size));
+    background-image: linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, #fff, #fff),
+        linear-gradient(180deg, $color, transparent);
+
+    background-size: var(--notch-size) var(--border-size),
+        var(--border-size) var(--notch-size),
+        var(--cutout-size) var(--cutout-size),
+        100% 100%;
+
+    background-position: left var(--cutout-size),
+        calc(0% + var(--cutout-size)) top,
+        top left,
+        center center;
+}
+
+
 main#classic-sheet .encounter-sheet .monster,
 main#classic-sheet .hero-sheet .monster {
     padding: 10px;
@@ -52,6 +71,17 @@ main#classic-sheet .hero-sheet .monster {
                 margin: 2px calc(0px - var(--cutout-size)) 0;
                 padding: 16px var(--cutout-size) 0;
                 @include monster-header-gradient(common.$color-general-monster);
+            }
+        }
+
+        &.wide {
+            section.bordered {
+                column-count: 2;
+                column-gap: 25px;
+
+                .name-wrapper {
+                    @include monster-header-gradient-half(common.$color-general-monster);
+                }
             }
         }
     }
@@ -253,23 +283,12 @@ main#classic-sheet .hero-sheet .monster {
         }
     }
 
-    .features-abilities {
-        display: flex;
-        flex-direction: column;
-
-        .feature .feature-description p {
-            margin-left: 0;
-            margin-right: 0;
-        }
-
-        .wrapper {
-            &:not(:last-of-type) {
-                @include common.divider-plain(common.$color-medium, 1px);
-            }
-        }
+    .feature .feature-description p {
+        margin-left: 0;
+        margin-right: 0;
     }
 
-    .features-abilities .wrapper {
+    .wrapper {
         display: grid;
         grid-template-columns: min-content 1fr;
         grid-template-rows: min-content 1fr;
@@ -277,6 +296,10 @@ main#classic-sheet .hero-sheet .monster {
 
         .ability {
             margin-bottom: 10px;
+        }
+
+        &:not(:last-of-type) {
+            @include common.divider-plain(common.$color-medium, 1px);
         }
     }
 }
@@ -286,45 +309,72 @@ main#classic-sheet .color .monster.card {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-ambusher);
         }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-ambusher);
+        }
     }
     &.artillery {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-artillery);
+        }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-artillery);
         }
     }
     &.brute {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-brute);
         }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-brute);
+        }
     }
     &.controller {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-controller);
+        }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-controller);
         }
     }
     &.defender {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-defender);
         }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-defender);
+        }
     }
     &.harrier {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-harrier);
+        }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-harrier);
         }
     }
     &.hexer {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-hexer);
         }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-hexer);
+        }
     }
     &.mount {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-mount);
         }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-mount);
+        }
     }
     &.support {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-support);
+        }
+        &.wide section.bordered .name-wrapper {
+            @include monster-header-gradient-half(common.$color-support);
         }
     }
 }

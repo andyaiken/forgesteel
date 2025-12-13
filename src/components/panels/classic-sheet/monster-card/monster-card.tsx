@@ -15,10 +15,12 @@ import starIcon from '@/assets/icons/star.svg';
 interface Props {
 	monster: MonsterSheet;
 	options: Options;
+	columns?: number;
 }
 
 export const MonsterCard = (props: Props) => {
 	const monster = useMemo(() => props.monster, [ props.monster ]);
+	const columns = props.columns ?? 1;
 
 	const getDetails = () => {
 		return (
@@ -124,6 +126,9 @@ export const MonsterCard = (props: Props) => {
 	};
 
 	const cardClasses = [ 'monster', 'card' ];
+	if (columns > 1) {
+		cardClasses.push('wide');
+	}
 	cardClasses.push(monster.role.toLocaleLowerCase().split(' ').join('-'));
 
 	return (
@@ -143,10 +148,8 @@ export const MonsterCard = (props: Props) => {
 				</div>
 				{getDetails()}
 				<CharacteristicsComponent characteristics={monster.characteristics} />
-				<div className='features-abilities'>
-					{getAbilities()}
-					{getFeatures()}
-				</div>
+				{getAbilities()}
+				{getFeatures()}
 			</section>
 		</div>
 	);

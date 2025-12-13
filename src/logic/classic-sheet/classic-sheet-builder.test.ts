@@ -8,6 +8,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
+import { ajax } from '@/data/monsters/ajax';
 import { goblin } from '@/data/monsters/goblin';
 
 describe('buildCharacteristicsSheet', () => {
@@ -164,5 +165,16 @@ describe('buildAbilitySheet', () => {
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
 		expect(result.rollBonuses).toBeNullable();
+	});
+});
+
+describe('buildMonsterSheet', () => {
+	test.each([
+		[ goblin.monsters[4], 'Lvl 1 Horde Ambusher' ], // Goblin Assassin
+		[ goblin.monsters[0], 'Lvl 1 Minion Harrier' ], // Goblin Runner
+		[ ajax.monsters[0], 'Lvl 11 Solo' ]
+	])('sets type correctly', (monster, expectedType) => {
+		const result = ClassicSheetBuilder.buildMonsterSheet(monster);
+		expect(result.type).toBe(expectedType);
 	});
 });

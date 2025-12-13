@@ -8,6 +8,7 @@
         display: inline-block;
         font-size: round(1.2rem, 1px);
     }
+
     .potency {
         @include common.font-glyphs();
         display: inline-block;

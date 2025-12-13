@@ -2445,8 +2445,7 @@ export const communityPrerelease: Sourcebook = {
 	ancestries: [],
 	careers: [],
 	classes: [
-		scion,
-		vessel
+		scion
 	],
 	complications: [],
 	cultures: [],
@@ -2479,7 +2478,9 @@ export const community: Sourcebook = {
 		solar
 	],
 	careers: [],
-	classes: [],
+	classes: [
+		vessel
+	],
 	complications: [],
 	cultures: [],
 	domains: [],

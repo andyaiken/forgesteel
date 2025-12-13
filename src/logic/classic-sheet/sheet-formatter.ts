@@ -668,17 +668,23 @@ export class SheetFormatter {
 		return size;
 	};
 
-	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number): number => {
+	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number, columns: number = 1): number => {
 		let size = 0;
 		size = 12.5; // name, stats, characteristics
+		let largestBlock = 0;
 		monster.abilities?.forEach(ability => {
-			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
+			const abilitySize = this.calculateAbilityComponentSize(ability, lineWidth - 5);
+			size += abilitySize;
+			largestBlock = Math.max(largestBlock, abilitySize);
 		});
 		monster.features?.forEach(f => {
-			size += this.calculateFeatureSize(f, null, lineWidth, false);
+			const featureSize = this.calculateFeatureSize(f, null, lineWidth, false);
+			size += featureSize;
+			largestBlock = Math.max(largestBlock, featureSize);
 		});
 		// ability/feature dividers
 		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		size = Math.ceil(size / columns);
 		return size;
 	};
 

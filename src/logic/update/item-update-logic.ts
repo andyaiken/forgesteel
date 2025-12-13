@@ -5,6 +5,10 @@ import { ItemType } from '@/enums/item-type';
 
 export class ItemUpdateLogic {
 	static updateItem = (item: Item) => {
+		if (item.type.toString() === 'Consumable Item') {
+			item.type = ItemType.Consumable1st;
+		}
+
 		if (item.type.toString() === 'Trinket') {
 			item.type = ItemType.Trinket1st;
 		}

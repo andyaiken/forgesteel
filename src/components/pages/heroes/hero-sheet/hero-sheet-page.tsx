@@ -314,7 +314,7 @@ export const HeroSheetPage = (props: Props) => {
 
 		// Artifacts, and maybe consumables on 'overflow' inventory card
 		const artifacts = character.inventory?.filter(i => i.item.type === ItemType.Artifact) ?? [];
-		const consumables = character.inventory?.filter(i => i.item.type === ItemType.Consumable) ?? [];
+		const consumables = character.inventory?.filter(i => [ ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th ].includes(i.item.type)) ?? [];
 		const maxConsumables = props.options.pageOrientation === 'portrait' ? 2 : 4; // approximation
 		if (artifacts.length || consumables.length > maxConsumables) {
 			const inv = artifacts.concat(consumables);

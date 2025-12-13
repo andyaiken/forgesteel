@@ -564,7 +564,7 @@ export const Main = (props: Props) => {
 				imbuement.id = Utils.guid();
 			} else {
 				imbuement = FactoryLogic.createImbuement({
-					type: ItemType.Consumable,
+					type: ItemType.Consumable1st,
 					crafting: FactoryLogic.createProject({}),
 					level: 1,
 					feature: FactoryLogic.feature.create({
@@ -589,7 +589,7 @@ export const Main = (props: Props) => {
 					id: Utils.guid(),
 					name: '',
 					description: '',
-					type: ItemType.Consumable,
+					type: ItemType.Consumable1st,
 					crafting: FactoryLogic.createProject({})
 				});
 			}

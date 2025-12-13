@@ -8,7 +8,7 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 
 export class TrinketData {
-	// Echelon 1
+	// #region Echelon 1
 
 	static colorCloakBlue: Item = FactoryLogic.createItem({
 		id: 'item-color-cloak-blue',
@@ -377,7 +377,9 @@ While wearing this bangle, your melee free strikes inflict I < [average] frighte
 		effect: 'These boots can temporarily unbind themselves from the chains of the earth, letting you move through the air as high as 3 squares above the ground from where you started. If you end your turn while you are still airborne, you fall.'
 	});
 
-	// Echelon 2
+	// #endregion
+
+	// #region Echelon 2
 
 	static abyssalMapInk: Item = FactoryLogic.createItem({
 		id: 'item-abyssal-map-ink',
@@ -621,7 +623,9 @@ The thunder chariot can be used as a size 2 mount. Its speed is equal to its rid
 While riding in the thunder chariot, you have lightning immunity 5. An ally can use their maneuver while adjacent to you to move up to their speed, pulling you along.`
 	});
 
-	// Echelon 3
+	// #endregion
+
+	// #region Echelon 3
 
 	static bracersOfStrife: Item = FactoryLogic.createItem({
 		id: 'item-bracers-of-strife',
@@ -851,7 +855,9 @@ While holding the banner, you have a +1 bonus to saving throws and resisting pot
 At the end of each of your turns, each ally within 10 squares of you can make a saving throw against one effect they are suffering that is ended by a saving throw.`
 	});
 
-	// Echelon 4
+	// #endregion
+
+	// #region Echelon 4
 
 	static gravekeepersLantern: Item = FactoryLogic.createItem({
 		id: 'item-gravekeepers-lantern',
@@ -954,4 +960,6 @@ You can choose to regain 1 Recovery at the end of every combat encounter while h
 
 Once per turn when you or an ally within 10 squares of you makes a melee strike, the strike can deal extra damage based on the number of Recoveries the striker has left. The strike deals +1 damage if the striker has more than half their Recoveries remaining, +2 damage if the striker has half or fewer but still at least one of their Recoveries remaining, and +5 damage if the striker has no Recoveries.`
 	});
+
+	// #endregion
 }

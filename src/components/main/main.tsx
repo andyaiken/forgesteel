@@ -7,6 +7,7 @@ import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
+import { Analytics } from '@/utils/analytics';
 import { Ancestry } from '@/models/ancestry';
 import { AuthPage } from '../pages/auth/auth-page';
 import { BackupPage } from '@/components/pages/backup/backup-page';
@@ -133,6 +134,8 @@ export const Main = (props: Props) => {
 			return persistHeroes(list);
 		}
 		else {
+			Analytics.logHeroCreation(hero);
+
 			const copy = Utils.copy(heroes);
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);

@@ -28,8 +28,8 @@ export interface Hero {
 
 	ancestry: Ancestry | null;
 	culture: Culture | null;
-	class: HeroClass | null;
 	career: Career | null;
+	class: HeroClass | null;
 	complication: Complication | null;
 
 	features: Feature[];

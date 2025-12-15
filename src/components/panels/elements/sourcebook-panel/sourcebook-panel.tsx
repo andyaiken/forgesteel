@@ -4,10 +4,12 @@ import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdow
 import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
@@ -368,8 +370,54 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
 			);
 			if (props.onDelete) {
+				const heroes = props.heroes.filter(h => h.settingIDs.includes(sourcebook.id));
+
+				const used: { element: Element, type: string, container: Element }[] = [];
+				const elements = [
+					...SourcebookLogic.getElements(props.sourcebook),
+					...props.sourcebook.classes.flatMap(c => c.subclasses).map(sc => ({ element: sc, type: 'Subclass' })),
+					...props.sourcebook.monsterGroups.flatMap(g => g.monsters).map(m => ({ element: m, type: 'Monster' }))
+				];
+				elements.forEach(e => {
+					SourcebookLogic.getUsedIn(props.sourcebooks, e.element.id)
+						.filter(x => !elements.map(e => e.element.id).includes(x.id))
+						.forEach(x => {
+							used.push({ element: e.element, type: e.type, container: x });
+						});
+				});
+
+				let msg = undefined;
+				if ((heroes.length > 0) || (used.length > 0)) {
+					msg = (
+						<>
+							<div>Cannot delete:</div>
+							<ul>
+								{
+									heroes.map(h => (
+										<li key={h.id}>
+											{h.name || 'Unnamed Hero'} uses this sourcebook
+										</li>
+									))
+								}
+								{
+									used.map(x => (
+										<li key={x.element.id}>
+											<b>{x.element.name || 'Unnamed Element'}</b> ({Format.capitalize(x.type.split('-').join(' '))}) is used in <b>{x.container.name || 'Unnamed Element'}</b>
+										</li>
+									))
+								}
+							</ul>
+						</>
+					);
+				}
+
 				buttons.push(
-					<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={() => props.onDelete!(sourcebook)} />
+					<DangerButton
+						key='delete'
+						mode='clear'
+						disabledMessage={msg}
+						onConfirm={() => props.onDelete!(sourcebook)}
+					/>
 				);
 			}
 		}

@@ -551,6 +551,6 @@ export class SourcebookLogic {
 		return [
 			...SourcebookLogic.getEncounters(sourcebooks).filter(enc => EncounterLogic.getMonsterData(enc).map(data => data.monsterID).includes(elementID)),
 			...SourcebookLogic.getAdventures(sourcebooks).filter(adv => AdventureLogic.getContentIDs(adv.plot).includes(elementID))
-		];
+		] as Element[];
 	};
 }

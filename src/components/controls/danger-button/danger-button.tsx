@@ -11,6 +11,7 @@ interface Props {
 	label?: string;
 	icon?: ReactNode;
 	message?: ReactNode;
+	disabledMessage?: ReactNode;
 	onConfirm: (e: MouseEvent) => void;
 }
 
@@ -54,10 +55,16 @@ export const DangerButton = (props: Props) => {
 				trigger='click'
 				content={(
 					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-						{props.message || <div className='ds-text'>This can't be undone; are you sure?</div>}
-						<Button danger={true} onClick={e => { setOpen(false); props.onConfirm(e); }}>
-							{props.label || 'Delete'}
-						</Button>
+						{
+							props.disabledMessage || props.message || <div className='ds-text'>This can't be undone; are you sure?</div>
+						}
+						{
+							!props.disabledMessage ?
+								<Button danger={true} onClick={e => { setOpen(false); props.onConfirm(e); }}>
+									{props.label || 'Delete'}
+								</Button>
+								: null
+						}
 					</div>
 				)}
 			>

@@ -17,7 +17,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { Utils } from '@/utils/utils';
-import { generatePath } from 'react-router';
+import { useNavigation } from '@/hooks/use-navigation';
 
 import './transfer-page.scss';
 
@@ -256,10 +256,17 @@ export const TransferPage = (props: Props) => {
 		}
 	};
 
+	const nav = useNavigation();
 	const navHome = () => {
 		// set the url directly so the app reloads
-		const home = generatePath('/');
-		window.location.href = home;
+		const url = window.location.toString();
+		const match = url.match(/^([^#]+)(#.*)/);
+		if (match) {
+			const base = match[1];
+			window.location.href = base;
+		} else {
+			nav.goToWelcome();
+		}
 	};
 
 	return (

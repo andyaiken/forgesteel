@@ -49,16 +49,10 @@ export class DataService {
 		return msg;
 	};
 
-	private async checkUseNewAuth(): Promise<boolean> {
-		try {
-			const status = await axios.get(`${this.host}/healthz`);
-			const version = status.data.version;
-			const maj = parseInt(version.split('.')[0]);
-			return maj > 0;
-		} catch (error) {
-			console.error('Error communicating with FS Warehouse', error);
-			throw new Error(this.getErrorMessage(error), { cause: error });
-		}
+	private async checkUseCookieAuth(): Promise<boolean> {
+		// Future work - once Patreon is integrated and backend is on same domain,
+		// use new auth for patreon. Otherwise, use header auth
+		return false;
 	}
 
 	private async ensureJwt() {
@@ -145,7 +139,7 @@ export class DataService {
 
 	async initialize(): Promise<boolean> {
 		if (this.settings.useWarehouse) {
-			this.useNewAuth = await this.checkUseNewAuth();
+			this.useNewAuth = await this.checkUseCookieAuth();
 			if (this.useNewAuth) {
 				const connected = await this.ensureCsrf();
 				return connected;

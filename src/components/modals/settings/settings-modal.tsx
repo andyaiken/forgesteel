@@ -642,7 +642,7 @@ export const SettingsModal = (props: Props) => {
 				<Expander title='Forge Steel Warehouse'>
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
-							props.connectionSettings.useWarehouse ?
+							props.connectionSettings.useWarehouse || (props.connectionSettings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code)) ?
 								<>
 									<WarehouseActionsPanel
 										connectionSettings={props.connectionSettings}

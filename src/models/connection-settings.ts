@@ -3,4 +3,7 @@ export interface ConnectionSettings {
 	warehouseHost: string;
 	warehouseToken: string;
 	patreonConnected: boolean;
+	useJsonBin: boolean;
+	jsonBinId: string;
+	jsonBinAccessKey: string;
 }

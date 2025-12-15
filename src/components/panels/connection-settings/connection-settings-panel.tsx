@@ -2,6 +2,7 @@ import { Alert, Button, Flex, Input, Space } from 'antd';
 import { CloudServerOutlined, SaveFilled } from '@ant-design/icons';
 import { JSX, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -17,6 +18,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(Utils.copy(props.connectionSettings));
 	const [ connectionSettingsChanged, setConnectionSettingsChanged ] = useState<boolean>(false);
 	const [ testingWarehouseConnection, setTestingWarehouseConnection ] = useState<boolean>(false);
+	const [ testingJsonBinConnection, setTestingJsonBinConnection ] = useState<boolean>(false);
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
 	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
 
@@ -39,6 +41,27 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const setWarehouseToken = (value: string) => {
 		const copy = Utils.copy(connectionSettings);
 		copy.warehouseToken = value;
+		setConnectionSettings(copy);
+		setConnectionSettingsChanged(true);
+	};
+
+	const setUseJsonBin = (value: boolean) => {
+		const copy = Utils.copy(connectionSettings);
+		copy.useJsonBin = value;
+		setConnectionSettings(copy);
+		setConnectionSettingsChanged(true);
+	};
+
+	const setJsonBinId = (value: string) => {
+		const copy = Utils.copy(connectionSettings);
+		copy.jsonBinId = value;
+		setConnectionSettings(copy);
+		setConnectionSettingsChanged(true);
+	};
+
+	const setJsonBinAccessKey = (value: string) => {
+		const copy = Utils.copy(connectionSettings);
+		copy.jsonBinAccessKey = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
 	};
@@ -84,6 +107,36 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			});
 	};
 
+	const testJsonBinConnection = () => {
+		setTestingJsonBinConnection(true);
+		const url = `https://api.jsonbin.io/v3/b/${connectionSettings.jsonBinId}`;
+		axios.get(url, {
+			headers: {
+			'X-Access-Key': connectionSettings.jsonBinAccessKey,
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(() => {
+				setTestStatusAlert(<Alert title='Success! Connected to JSONBin' type='success' showIcon closable />);
+			})
+			.catch((err: any) => {
+				console.error('Error connecting to JSONBin', err);
+				if (err.response) {
+					const code = err.response.status;
+					const msg = err.response.data.message ?? err.response.data;
+					setTestStatusAlert(<Alert title={`${code} Error: ${msg}`} type='error' showIcon closable />);
+				} else {
+					setTestStatusAlert(<Alert title={`Unable to connect to JSONBin: ${err.message}`} type='error' showIcon closable />);
+				}
+			})
+			.finally(() => {
+				setTestingJsonBinConnection(false);
+				setTimeout(() => {
+					setTestStatusAlert(null);
+				}, 10000);
+			});
+	};
+
 	const saveWarehouseSettings = () => {
 		props.setConnectionSettings(connectionSettings);
 		setConnectionSettingsChanged(false);
@@ -116,6 +169,39 @@ export const ConnectionSettingsPanel = (props: Props) => {
 					</>
 					: null
 			}
+			{
+				FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code) ?
+					<>
+						<Toggle
+							label='Connect with JSONBin'
+							value={connectionSettings.useJsonBin}
+							onChange={setUseJsonBin}
+						/>
+						{
+							connectionSettings.useJsonBin ?
+								<>
+									<HeaderText>JSONBin Bin ID</HeaderText>
+									<Input
+										placeholder='Your JSONBin Bin ID'
+										allowClear={true}
+										value={connectionSettings.jsonBinId}
+										onChange={e => setJsonBinId(e.target.value)}
+									/>
+										<HeaderText>Access Key</HeaderText>
+										<Input.Password
+											placeholder='Your JSONBin Access Key'
+											value={connectionSettings.jsonBinAccessKey}
+											onChange={e => setJsonBinAccessKey(e.target.value)}
+										/>
+										<p style={{ fontSize: '12px', color: '#999' }}>
+											Create an X-Access-Key with <strong>Read</strong> and <strong>Update</strong> rights.
+										</p>
+								</>
+								: null
+						}
+					</>
+					: null
+			}
 			<Flex gap='small' justify='flex-end' wrap>
 				{
 					connectionSettings.useWarehouse ?
@@ -126,6 +212,18 @@ export const ConnectionSettingsPanel = (props: Props) => {
 							onClick={testWarehouseConnection}
 						>
 							Test Connection
+						</Button>
+						: null
+				}
+				{
+					connectionSettings.useJsonBin ?
+						<Button
+							variant='solid'
+							loading={testingJsonBinConnection}
+							icon={<CloudServerOutlined />}
+							onClick={testJsonBinConnection}
+						>
+							Test JSONBin
 						</Button>
 						: null
 				}

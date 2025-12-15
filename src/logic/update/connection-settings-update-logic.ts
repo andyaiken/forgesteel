@@ -17,5 +17,17 @@ export class ConnectionSettingsUpdateLogic {
 		if (settings.patreonConnected === undefined) {
 			settings.patreonConnected = false;
 		}
+
+		if (settings.useJsonBin === undefined) {
+			settings.useJsonBin = false;
+		}
+
+		if (settings.jsonBinId === undefined) {
+			settings.jsonBinId = '';
+		}
+
+		if (settings.jsonBinAccessKey === undefined) {
+			settings.jsonBinAccessKey = '';
+		}
 	};
 }

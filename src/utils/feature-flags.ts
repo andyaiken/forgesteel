@@ -28,11 +28,17 @@ export class FeatureFlags {
 		description: 'Show the Patreon connector'
 	};
 
+	static remoteJsonBin: FeatureFlag = {
+		code: Utils.hashCode('remote-json-bin'),
+		description: 'Enable JSONBin remote sync'
+	};
+
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
 		FeatureFlags.communityPreRelease,
-		FeatureFlags.patreon
+		FeatureFlags.patreon,
+		FeatureFlags.remoteJsonBin
 	];
 
 	// #endregion

@@ -128,13 +128,15 @@ export const Main = (props: Props) => {
 
 	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
+			Analytics.logHeroEdited(hero);
+
 			const copy = Utils.copy(heroes);
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
 			return persistHeroes(list);
 		}
 		else {
-			Analytics.logHeroCreation(hero);
+			Analytics.logHeroCreated(hero);
 
 			const copy = Utils.copy(heroes);
 			copy.push(hero);
@@ -1051,6 +1053,8 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
+		Analytics.logHomebrewEdited(kind, element);
+
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (sourcebook) {

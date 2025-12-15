@@ -43,10 +43,20 @@ export const EncounterSheetPage = (props: Props) => {
 
 		if (encounter.monsters?.length) {
 			encounter.monsters?.forEach(ms => {
+				let mH = SheetFormatter.calculateMonsterSize(ms, layout.cardLineLen);
+				let mW = 1;
+				if (mH > layout.linesY) {
+					mW = 2;
+					mH = SheetFormatter.calculateMonsterSize(ms, layout.cardLineLen, 2);
+					if (mH > layout.linesY) {
+						console.warn('Card still larger than a full page!', ms.name, mH);
+						mH = layout.linesY;
+					}
+				}
 				requiredCards.push({
-					element: <MonsterCard monster={ms} options={props.options} key={ms.id} />,
-					width: 1,
-					height: Math.min(layout.linesY, SheetFormatter.calculateMonsterSize(ms, layout.cardLineLen)),
+					element: <MonsterCard monster={ms} columns={mW} options={props.options} key={ms.id} />,
+					width: mW,
+					height: mH,
 					shown: false
 				});
 			});

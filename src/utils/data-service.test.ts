@@ -100,8 +100,11 @@ describe('DataService', () => {
 			const mockHero = { id: 'test-hero' } as Hero;
 			const mockData = [ mockHero ];
 			const responseObj = { data: { data: mockData } };
+
+			axios.post = vi.fn()
+				.mockImplementationOnce(() => Promise.resolve(jwtResponse));
+
 			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(jwtResponse))
 				.mockImplementationOnce(() => Promise.resolve(responseObj));
 
 			const ds = new DataService(connSettings);
@@ -112,11 +115,11 @@ describe('DataService', () => {
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/connect', {
+			expect(axios.post).toHaveBeenNthCalledWith(1, 'http://test-fake-host/connect', {}, {
 				headers: { Authorization: 'Bearer abcd123' }
 			});
 
-			expect(axios.get).toHaveBeenNthCalledWith(2, 'http://test-fake-host/data/forgesteel-heroes', {
+			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/data/forgesteel-heroes', {
 				headers: { Authorization: 'Bearer fake_token' }
 			});
 
@@ -151,7 +154,7 @@ describe('DataService', () => {
 
 			const jwtResponse = { data: { access_token: 'fake_token' } };
 
-			axios.get = vi.fn()
+			axios.post = vi.fn()
 				.mockImplementationOnce(() => Promise.resolve(jwtResponse));
 
 			axios.put = vi.fn();
@@ -167,7 +170,7 @@ describe('DataService', () => {
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'fake-host/connect', {
+			expect(axios.post).toHaveBeenNthCalledWith(1, 'fake-host/connect', {}, {
 				headers: { Authorization: 'Bearer abcd123' }
 			});
 

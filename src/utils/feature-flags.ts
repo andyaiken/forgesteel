@@ -9,12 +9,12 @@ export class FeatureFlags {
 	// #region List of all the recognised flags
 
 	static warehouse: FeatureFlag = {
-		code: Utils.hashCode('warehouse'),
+		code: -1310338776,
 		description: 'Access to the Warehouse beta'
 	};
 
 	static playtest: FeatureFlag = {
-		code: Utils.hashCode('playtest'),
+		code: -1755389952,
 		description: 'Access to the Playtest sourcebook'
 	};
 

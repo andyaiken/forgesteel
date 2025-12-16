@@ -20,6 +20,7 @@ import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
+import { RemoteGoogleDriveDataService } from '@/utils/remote-google-drive-data-service';
 
 import './transfer-page.scss';
 
@@ -48,11 +49,16 @@ export const TransferPage = (props: Props) => {
 		if (settings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code)) {
 			return new RemoteJsonBinDataService(settings);
 		}
+		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			return new RemoteGoogleDriveDataService(settings);
+		}
 		return new DataService(settings);
 	}, [ settings ]);
 
 	const hasRemoteStorage = useMemo(() => {
-		return settings.useWarehouse || (settings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code));
+		const jsonBin = settings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code);
+		const gdrive = settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code);
+		return settings.useWarehouse || jsonBin || gdrive;
 	}, [ settings ]);
 
 	const mergeToWarehouse = async () => {

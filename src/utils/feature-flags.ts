@@ -33,12 +33,18 @@ export class FeatureFlags {
 		description: 'Enable JSONBin remote sync'
 	};
 
+	static remoteGoogleDrive: FeatureFlag = {
+		code: Utils.hashCode('remote-google-drive'),
+		description: 'Enable Google Drive remote sync'
+	};
+
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
 		FeatureFlags.communityPreRelease,
 		FeatureFlags.patreon,
-		FeatureFlags.remoteJsonBin
+		FeatureFlags.remoteJsonBin,
+		FeatureFlags.remoteGoogleDrive
 	];
 
 	// #endregion

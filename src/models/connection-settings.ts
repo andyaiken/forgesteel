@@ -6,4 +6,8 @@ export interface ConnectionSettings {
 	useJsonBin: boolean;
 	jsonBinId: string;
 	jsonBinAccessKey: string;
+
+	// Google Drive (client-side, no backend)
+	useGoogleDrive?: boolean;
+	googleClientId?: string;
 }

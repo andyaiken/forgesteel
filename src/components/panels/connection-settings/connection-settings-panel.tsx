@@ -7,6 +7,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import axios from 'axios';
+import { GoogleDriveClient } from '@/utils/google-drive-client';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
@@ -21,6 +22,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ testingJsonBinConnection, setTestingJsonBinConnection ] = useState<boolean>(false);
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
 	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
+	const [ driveStatusAlert, setDriveStatusAlert ] = useState<JSX.Element | null>(null);
 
 	const showReload = props.showReload ?? false;
 
@@ -62,6 +64,25 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const setJsonBinAccessKey = (value: string) => {
 		const copy = Utils.copy(connectionSettings);
 		copy.jsonBinAccessKey = value;
+		setConnectionSettings(copy);
+		setConnectionSettingsChanged(true);
+	};
+
+	const setUseGoogleDrive = (value: boolean) => {
+		const copy = Utils.copy(connectionSettings);
+		copy.useGoogleDrive = value;
+		setConnectionSettings(copy);
+		setConnectionSettingsChanged(true);
+		if (value) {
+			FeatureFlags.add(FeatureFlags.remoteGoogleDrive.code);
+		} else {
+			FeatureFlags.remove(FeatureFlags.remoteGoogleDrive.code);
+		}
+	};
+
+	const setGoogleClientId = (value: string) => {
+		const copy = Utils.copy(connectionSettings);
+		copy.googleClientId = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
 	};
@@ -137,6 +158,44 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			});
 	};
 
+	const envGoogleClientId = (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID as string | undefined;
+	const effectiveGoogleClientId = connectionSettings.googleClientId || envGoogleClientId || '';
+	const gdc = effectiveGoogleClientId ? new GoogleDriveClient(effectiveGoogleClientId) : null;
+
+	const connectGoogleDrive = async () => {
+		try {
+			if (!gdc) {
+				setDriveStatusAlert(<Alert title='Google Client ID not configured' type='error' showIcon closable />);
+				return;
+			}
+			await gdc.getAccessToken(true);
+			const copy = Utils.copy(connectionSettings);
+			copy.useGoogleDrive = true;
+			setConnectionSettings(copy);
+			setConnectionSettingsChanged(true);
+			setDriveStatusAlert(<Alert title='Connected to Google Drive' type='success' showIcon closable />);
+		} catch (e: any) {
+			setDriveStatusAlert(<Alert title={`Google Drive connect failed: ${e?.message || e}`} type='error' showIcon closable />);
+		} finally {
+			setTimeout(() => setDriveStatusAlert(null), 10000);
+		}
+	};
+
+	const disconnectGoogleDrive = () => {
+		try {
+			gdc?.revoke();
+			const copy = Utils.copy(connectionSettings);
+			copy.useGoogleDrive = false;
+			setConnectionSettings(copy);
+			setConnectionSettingsChanged(true);
+			setDriveStatusAlert(<Alert title='Disconnected from Google Drive' type='success' showIcon closable />);
+		} catch (e: any) {
+			setDriveStatusAlert(<Alert title={`Google Drive disconnect failed: ${e?.message || e}`} type='error' showIcon closable />);
+		} finally {
+			setTimeout(() => setDriveStatusAlert(null), 10000);
+		}
+	};
+
 	const saveWarehouseSettings = () => {
 		props.setConnectionSettings(connectionSettings);
 		setConnectionSettingsChanged(false);
@@ -196,6 +255,43 @@ export const ConnectionSettingsPanel = (props: Props) => {
 										<p style={{ fontSize: '12px', color: '#999' }}>
 											Create an X-Access-Key with <strong>Read</strong> and <strong>Update</strong> rights.
 										</p>
+								</>
+								: null
+						}
+					</>
+					: null
+			}
+			{
+				FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code) ?
+					<>
+						<Toggle
+							label='Connect with Google Drive (no backend)'
+							value={!!connectionSettings.useGoogleDrive}
+							onChange={setUseGoogleDrive}
+						/>
+						{
+							connectionSettings.useGoogleDrive ?
+								<>
+									{(!envGoogleClientId) ? (
+										<>
+											<HeaderText>Google OAuth Client ID</HeaderText>
+											<Input
+												placeholder='Web Client ID from Google Cloud Console'
+												allowClear={true}
+												value={connectionSettings.googleClientId}
+												onChange={e => setGoogleClientId(e.target.value)}
+											/>
+										</>
+									) : null}
+									<p style={{ fontSize: '12px', color: '#999' }}>
+										Uses Google Identity Services with the Drive <strong>appDataFolder</strong> scope.
+										Your data is stored in your private app storage; no backend required.
+									</p>
+									<Flex gap='small'>
+										<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
+										<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
+									</Flex>
+									{driveStatusAlert}
 								</>
 								: null
 						}

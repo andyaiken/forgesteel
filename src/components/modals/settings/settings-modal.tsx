@@ -643,8 +643,7 @@ export const SettingsModal = (props: Props) => {
 				<Expander title='Forge Steel Warehouse'>
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
-							props.connectionSettings.useWarehouse ||
-							(props.connectionSettings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) ?
+							props.connectionSettings.useWarehouse ?
 								<>
 									<WarehouseActionsPanel
 										connectionSettings={props.connectionSettings}
@@ -664,7 +663,7 @@ export const SettingsModal = (props: Props) => {
 		}
 	};
 
-		const getGoogleDriveSettings = () => {
+	const getGoogleDriveSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
 			return (
 				<Expander title='Google Drive Storage'>

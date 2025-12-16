@@ -20,7 +20,6 @@ import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/s
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { RemoteGoogleDriveDataService } from '@/utils/remote-google-drive-data-service';
-import { GoogleDriveClient } from '@/utils/google-drive-client';
 
 import './transfer-page.scss';
 
@@ -63,20 +62,6 @@ export const TransferPage = (props: Props) => {
 			console.error('No warehouse data service available');
 			return;
 		}
-
-		// Ensure Google token is fresh before transferring data
-		const checkGoogleAccessToken = async () => {
-			const envGoogleClientId = (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID as string | undefined;
-			const clientId = settings.googleClientId || envGoogleClientId || '';
-			if (!clientId) return;
-			if (!(settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code))) return;
-			const gdc = new GoogleDriveClient(clientId);
-			if (!gdc.isAuthorized()) {
-				try { await gdc.getAccessToken(false); } catch { /* ignore */ }
-			}
-		};
-
-		await checkGoogleAccessToken();
 
 		try {
 			setIsLoading(true);

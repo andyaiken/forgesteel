@@ -58,7 +58,7 @@ export class DataService {
 	private async ensureJwt() {
 		if (this.jwt === null) {
 			try {
-				const response = await axios.get(`${this.host}/connect`, { headers: { Authorization: `Bearer ${this.apiToken}` } });
+				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
 				this.jwt = response.data.access_token;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);

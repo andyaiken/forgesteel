@@ -111,23 +111,23 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const effectiveGoogleClientId = connectionSettings.googleClientId || envGoogleClientId || '';
 	const gdc = effectiveGoogleClientId ? new GoogleDriveClient(effectiveGoogleClientId) : null;
 
-	useEffect(() => {
-		const checkOnce = async () => {
-			if (!gdc || !connectionSettings.useGoogleDrive) {
-				setDriveIsConnected(false);
-				return;
+	const checkGoogleAccessToken = async () => {
+		if (!gdc || !connectionSettings.useGoogleDrive) {
+			setDriveIsConnected(false);
+			return;
+		}
+		if (!gdc.isAuthorized()) {
+			try {
+				await gdc.getAccessToken(false);
+			} catch {
+				// silent refresh failed; user can connect interactively later
 			}
-			if (!gdc.isAuthorized()) {
-				try {
-					await gdc.getAccessToken(false);
-				} catch {
-					// silent refresh failed; user can connect interactively
-				}
-			}
-			setDriveIsConnected(gdc.isAuthorized());
-		};
+		}
+		setDriveIsConnected(gdc.isAuthorized());
+	};
 
-		checkOnce();
+	useEffect(() => {
+		checkGoogleAccessToken();
 	}, [gdc, connectionSettings.useGoogleDrive]);
 
 	const connectGoogleDrive = async () => {
@@ -241,6 +241,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 									<p style={{ fontSize: '12px', color: '#999', marginTop: 8 }}>
 										Please enable popups for this site to allow Google sign‑in.
 									</p>
+									{driveStatusAlert}
 								</>
 								: null
 						}

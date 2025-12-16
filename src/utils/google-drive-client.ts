@@ -113,26 +113,56 @@ export class GoogleDriveClient {
 
     const token = await new Promise<string>((resolve, reject) => {
       const client = this.tokenClient;
+      let settled = false;
+      const timeoutMs = interactive ? 15000 : 7000;
+      const timeoutId = window.setTimeout(() => {
+        if (!settled) {
+          settled = true;
+          reject(new Error('popup_blocked_or_prevented'));
+        }
+      }, timeoutMs);
+
       client.callback = (resp: any) => {
         if (resp.error) {
-          reject(new Error(resp.error));
+          if (!settled) {
+            settled = true;
+            window.clearTimeout(timeoutId);
+            reject(new Error(resp.error));
+          }
           return;
         }
         try {
           const accessToken = resp.access_token as string;
           const expiresIn = resp.expires_in as number | undefined;
           this.storeToken(accessToken, (expiresIn ?? 3600));
-          resolve(accessToken);
+          if (!settled) {
+            settled = true;
+            window.clearTimeout(timeoutId);
+            resolve(accessToken);
+          }
         } catch (e) {
-          reject(e);
+          if (!settled) {
+            settled = true;
+            window.clearTimeout(timeoutId);
+            reject(e);
+          }
         }
       };
 
       // Attempt silent first if not interactive
-      if (!interactive) {
-        client.requestAccessToken({ prompt: '' });
-      } else {
-        client.requestAccessToken();
+      try {
+        if (!interactive) {
+          client.requestAccessToken({ prompt: '' });
+        } else {
+          client.requestAccessToken();
+        }
+      } catch (err) {
+        // Synchronous failure to open popup or SDK error
+        if (!settled) {
+          settled = true;
+          window.clearTimeout(timeoutId);
+          reject(err as Error);
+        }
       }
     });
 

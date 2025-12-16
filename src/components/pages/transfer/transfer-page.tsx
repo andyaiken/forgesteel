@@ -244,7 +244,7 @@ export const TransferPage = (props: Props) => {
 		} else {
 			return (
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<HeaderText level={4}>Move Local data into the Warehouse 💻 ➜ ☁️ </HeaderText>
+					<HeaderText level={4}>Upload Local data into the Warehouse 💻 ➜ ☁️ </HeaderText>
 					<LabelControl
 						label='What to do when there is a duplicate item (by id) in the warehouse?'
 						control={
@@ -262,7 +262,8 @@ export const TransferPage = (props: Props) => {
 						Merge Local data into Warehouse
 					</Button>
 
-					<HeaderText level={4}>Copy Warehouse data to Local storage ☁️ ➜ 💻 </HeaderText>
+					<p></p>
+					<HeaderText level={4}>Download Warehouse data to Local storage ☁️ ➜ 💻 </HeaderText>
 					<Alert
 						type='warning'
 						title='This replaces the local content completely!'
@@ -356,7 +357,7 @@ export const TransferPage = (props: Props) => {
 									<p>
 										Once you are done, you will need to reload the app to see the updated data.
 									</p>
-									<Button type='primary' onClick={navHome}>Return</Button>
+									<Button type='primary' onClick={navHome}>Return To App Home Page</Button>
 								</>
 								: null
 						}

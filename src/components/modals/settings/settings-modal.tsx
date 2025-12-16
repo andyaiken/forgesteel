@@ -28,6 +28,7 @@ import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
 import './settings-modal.scss';
+import { GoogleDriveSettingsPanel } from '@/components/panels/connection-settings/google-drive-settings-panel';
 
 interface Props {
 	options: Options;
@@ -663,6 +664,32 @@ export const SettingsModal = (props: Props) => {
 		}
 	};
 
+		const getGoogleDriveSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			return (
+				<Expander title='Google Drive Storage'>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							props.connectionSettings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code) ?
+								<>
+									<WarehouseActionsPanel
+										connectionSettings={props.connectionSettings}
+									/>
+									<Divider size='small' />
+								</>
+								: null
+						}
+						<GoogleDriveSettingsPanel
+							connectionSettings={props.connectionSettings}
+							setConnectionSettings={props.setConnectionSettings}
+							showReload={true}
+						/>
+					</Space>
+				</Expander>
+			);
+		}
+	};
+
 	const getPatreonSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
 			return (
@@ -760,6 +787,7 @@ export const SettingsModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
 						{getWarehouseSettings()}
+						{getGoogleDriveSettings()}
 						{getPatreonSettings()}
 						{getErrors()}
 					</Space>

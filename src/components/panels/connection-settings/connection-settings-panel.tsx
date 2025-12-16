@@ -1,13 +1,11 @@
-import { Alert, Button, Flex, Input, Space, Tag } from 'antd';
-import { CloudServerOutlined, SaveFilled, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import { JSX, useState, useEffect } from 'react';
+import { Alert, Button, Flex, Input, Space } from 'antd';
+import { CloudServerOutlined, SaveFilled } from '@ant-design/icons';
+import { JSX, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import axios from 'axios';
-import { GoogleDriveClient } from '@/utils/google-drive-client';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
@@ -21,8 +19,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ testingWarehouseConnection, setTestingWarehouseConnection ] = useState<boolean>(false);
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
 	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
-	const [ driveStatusAlert, setDriveStatusAlert ] = useState<JSX.Element | null>(null);
-	const [ driveIsConnected, setDriveIsConnected ] = useState<boolean>(false);
 
 	const showReload = props.showReload ?? false;
 
@@ -43,25 +39,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const setWarehouseToken = (value: string) => {
 		const copy = Utils.copy(connectionSettings);
 		copy.warehouseToken = value;
-		setConnectionSettings(copy);
-		setConnectionSettingsChanged(true);
-	};
-
-	const setUseGoogleDrive = (value: boolean) => {
-		const copy = Utils.copy(connectionSettings);
-		copy.useGoogleDrive = value;
-		setConnectionSettings(copy);
-		setConnectionSettingsChanged(true);
-		if (value) {
-			FeatureFlags.add(FeatureFlags.remoteGoogleDrive.code);
-		} else {
-			FeatureFlags.remove(FeatureFlags.remoteGoogleDrive.code);
-		}
-	};
-
-	const setGoogleClientId = (value: string) => {
-		const copy = Utils.copy(connectionSettings);
-		copy.googleClientId = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
 	};
@@ -107,63 +84,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			});
 	};
 
-	const envGoogleClientId = (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID as string | undefined;
-	const effectiveGoogleClientId = connectionSettings.googleClientId || envGoogleClientId || '';
-	const gdc = effectiveGoogleClientId ? new GoogleDriveClient(effectiveGoogleClientId) : null;
-
-	const checkGoogleAccessToken = async () => {
-		if (!gdc || !connectionSettings.useGoogleDrive) {
-			setDriveIsConnected(false);
-			return;
-		}
-		if (!gdc.isAuthorized()) {
-			try {
-				await gdc.getAccessToken(false);
-			} catch {
-				// silent refresh failed; user can connect interactively later
-			}
-		}
-		setDriveIsConnected(gdc.isAuthorized());
-	};
-
-	useEffect(() => {
-		checkGoogleAccessToken();
-	}, [gdc, connectionSettings.useGoogleDrive]);
-
-	const connectGoogleDrive = async () => {
-		try {
-			if (!gdc) {
-				setDriveStatusAlert(<Alert title='Google Client ID not configured' type='error' showIcon closable />);
-				return;
-			}
-			await gdc.getAccessToken(true);
-			const copy = Utils.copy(connectionSettings);
-			copy.useGoogleDrive = true;
-			setConnectionSettings(copy);
-			setConnectionSettingsChanged(true);
-			setDriveStatusAlert(<Alert title='Connected to Google Drive' type='success' showIcon closable />);
-		} catch (e: any) {
-			setDriveStatusAlert(<Alert title={`Google Drive connect failed: ${e?.message || e}`} type='error' showIcon closable />);
-		} finally {
-			setTimeout(() => setDriveStatusAlert(null), 10000);
-		}
-	};
-
-	const disconnectGoogleDrive = () => {
-		try {
-			gdc?.revoke();
-			const copy = Utils.copy(connectionSettings);
-			copy.useGoogleDrive = false;
-			setConnectionSettings(copy);
-			setConnectionSettingsChanged(true);
-			setDriveStatusAlert(<Alert title='Disconnected from Google Drive' type='success' showIcon closable />);
-		} catch (e: any) {
-			setDriveStatusAlert(<Alert title={`Google Drive disconnect failed: ${e?.message || e}`} type='error' showIcon closable />);
-		} finally {
-			setTimeout(() => setDriveStatusAlert(null), 10000);
-		}
-	};
-
 	const saveWarehouseSettings = () => {
 		props.setConnectionSettings(connectionSettings);
 		setConnectionSettingsChanged(false);
@@ -193,58 +113,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 							value={connectionSettings.warehouseToken}
 							onChange={e => setWarehouseToken(e.target.value)}
 						/>
-					</>
-					: null
-			}
-			{
-				FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code) ?
-					<>
-						<Toggle
-							label='Connect with Google Drive'
-							value={!!connectionSettings.useGoogleDrive}
-							onChange={setUseGoogleDrive}
-						/>
-						{
-							connectionSettings.useGoogleDrive ?
-								<>
-									{(!envGoogleClientId) ? (
-										<>
-											<HeaderText>Google OAuth Client ID</HeaderText>
-											<Input
-												placeholder='Web Client ID from Google Cloud Console'
-												allowClear={true}
-												value={connectionSettings.googleClientId}
-												onChange={e => setGoogleClientId(e.target.value)}
-											/>
-										</>
-									) : null}
-					<p style={{ fontSize: '12px', color: '#999' }}>
-										
-										For security reasons, ForgeSteel
-										does not have access to your main  Google Drive files, only the ForgeSteel app's settings folder.
-										Uses Google Identity Services to store data in the Drive <strong>appDataFolder</strong> scope.
-									</p>
-									<Flex gap='small' align='center' style={{ marginBottom: '12px' }}>
-										{driveIsConnected ? (
-											<Tag icon={<CheckCircleOutlined />} color='success'>Connected</Tag>
-										) : (
-											<Tag icon={<ClockCircleOutlined />} color='default'>Not connected</Tag>
-										)}
-									</Flex>
-									<Flex gap='small'>
-										{!driveIsConnected ? (
-											<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
-										) : (
-											<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
-										)}
-									</Flex>
-									<p style={{ fontSize: '12px', color: '#999', marginTop: 8 }}>
-										Please enable popups for this site to allow Google sign‑in.
-									</p>
-									{driveStatusAlert}
-								</>
-								: null
-						}
 					</>
 					: null
 			}

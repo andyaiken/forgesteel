@@ -66,6 +66,7 @@ export const TransferPage = (props: Props) => {
 		try {
 			setIsLoading(true);
 			const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
+			console.log('Merged heroes:', mergedHeroes);
 			await warehouseDs.saveHeroes(mergedHeroes);
 			setRemoteHeroes(mergedHeroes);
 
@@ -224,7 +225,7 @@ export const TransferPage = (props: Props) => {
 				okText='Yes'
 				cancelText='No'
 			>
-				<Button>
+				<Button type='primary'>
 					Copy Warehouse data to Local
 				</Button>
 			</Popconfirm>

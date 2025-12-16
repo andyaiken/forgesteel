@@ -279,12 +279,28 @@ export const ElementToolbar = (props: Props) => {
 	};
 
 	const getDelete = () => {
+		if (sourcebook.type !== SourcebookType.Homebrew) {
+			return null;
+		}
+
 		const elements = [ props.element ];
 		if (props.category === 'class') {
-			elements.push(...(props.element as HeroClass).subclasses);
+			const c = props.element as HeroClass;
+			if (c.subclasses) {
+				elements.push(...c.subclasses);
+			} else {
+				// This is a subclass, not a class - can't be deleted here
+				return null;
+			}
 		}
 		if (props.category === 'monster-group') {
-			elements.push(...(props.element as MonsterGroup).monsters);
+			const g = props.element as MonsterGroup;
+			if (g.monsters) {
+				elements.push(...g.monsters);
+			} else {
+				// This is a monster, not a group - can't be deleted here
+				return null;
+			}
 		}
 
 		const used: { element: Element, container: Element }[] = [];
@@ -314,13 +330,13 @@ export const ElementToolbar = (props: Props) => {
 			);
 		}
 
-		return sourcebook.type === SourcebookType.Homebrew ?
+		return (
 			<DangerButton
 				mode='block'
 				disabledMessage={msg}
 				onConfirm={() => props.deleteElement(props.category, sourcebook.id, props.element)}
 			/>
-			: null;
+		);
 	};
 
 	return (

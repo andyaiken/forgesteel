@@ -177,6 +177,18 @@ export class GoogleDriveClient {
     return (data.files as Array<{ id: string; name: string }>) || [];
   }
 
+  async getAppDataFileMetadata(name: string): Promise<{ id: string; name: string; modifiedTime: string } | null> {
+    const url = `/drive/v3/files?spaces=appDataFolder&fields=files(id,name,modifiedTime)&pageSize=100`;
+    const resp = await this.driveFetch(url, { method: 'GET' });
+    if (!resp.ok) {
+      throw new Error(`Drive list failed: ${resp.status}`);
+    }
+    const data = await resp.json();
+    const files = (data.files as Array<{ id: string; name: string; modifiedTime: string }>) || [];
+    const file = files.find(f => f.name === name);
+    return file || null;
+  }
+
   async downloadFile(fileId: string): Promise<string> {
     const resp = await this.driveFetch(`/drive/v3/files/${fileId}?alt=media`, { method: 'GET' });
     if (!resp.ok) {

@@ -1,6 +1,6 @@
-import { Alert, Button, Flex, Input, Space } from 'antd';
-import { CloudServerOutlined, SaveFilled } from '@ant-design/icons';
-import { JSX, useState } from 'react';
+import { Alert, Button, Flex, Input, Space, Tag } from 'antd';
+import { CloudServerOutlined, SaveFilled, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { JSX, useState, useEffect } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -22,6 +22,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
 	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
 	const [ driveStatusAlert, setDriveStatusAlert ] = useState<JSX.Element | null>(null);
+	const [ driveIsConnected, setDriveIsConnected ] = useState<boolean>(false);
 
 	const showReload = props.showReload ?? false;
 
@@ -110,6 +111,14 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const effectiveGoogleClientId = connectionSettings.googleClientId || envGoogleClientId || '';
 	const gdc = effectiveGoogleClientId ? new GoogleDriveClient(effectiveGoogleClientId) : null;
 
+	useEffect(() => {
+		if (gdc && connectionSettings.useGoogleDrive) {
+			setDriveIsConnected(gdc.isAuthorized());
+		} else {
+			setDriveIsConnected(false);
+		}
+	}, [gdc, connectionSettings.useGoogleDrive]);
+
 	const connectGoogleDrive = async () => {
 		try {
 			if (!gdc) {
@@ -180,7 +189,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code) ?
 					<>
 						<Toggle
-							label='Connect with Google Drive (no backend)'
+							label='Connect with Google Drive'
 							value={!!connectionSettings.useGoogleDrive}
 							onChange={setUseGoogleDrive}
 						/>
@@ -198,13 +207,25 @@ export const ConnectionSettingsPanel = (props: Props) => {
 											/>
 										</>
 									) : null}
-									<p style={{ fontSize: '12px', color: '#999' }}>
-										Uses Google Identity Services with the Drive <strong>appDataFolder</strong> scope.
-										Your data is stored in your private app storage; no backend required.
+					<p style={{ fontSize: '12px', color: '#999' }}>
+										
+										For security reasons, ForgeSteel
+										does not have access to your main  Google Drive files, only the ForgeSteel app's settings folder.
+										Uses Google Identity Services to store data in the Drive <strong>appDataFolder</strong> scope.
 									</p>
+									<Flex gap='small' align='center' style={{ marginBottom: '12px' }}>
+										{driveIsConnected ? (
+											<Tag icon={<CheckCircleOutlined />} color='success'>Connected</Tag>
+										) : (
+											<Tag icon={<ClockCircleOutlined />} color='default'>Not connected</Tag>
+										)}
+									</Flex>
 									<Flex gap='small'>
-										<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
-										<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
+										{!driveIsConnected ? (
+											<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
+										) : (
+											<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
+										)}
 									</Flex>
 									{driveStatusAlert}
 								</>

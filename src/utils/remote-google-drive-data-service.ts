@@ -135,4 +135,18 @@ export class RemoteGoogleDriveDataService extends DataService {
   override async saveHiddenSettingIds(ids: string[]): Promise<string[]> {
     return this.setDocument<string[]>(this.HIDDEN_SETTINGS_DOC_ID, ids);
   }
+
+  async getRemoteFileModifiedTime(): Promise<Date | null> {
+    const client = this.ensureClient();
+    try {
+      const metadata = await client.getAppDataFileMetadata(RemoteGoogleDriveDataService.FILE_NAME);
+      if (!metadata || !metadata.modifiedTime) {
+        return null;
+      }
+      return new Date(metadata.modifiedTime);
+    } catch (e) {
+      console.error('Error getting file metadata', e);
+      return null;
+    }
+  }
 }

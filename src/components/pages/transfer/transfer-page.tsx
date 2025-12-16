@@ -36,6 +36,7 @@ export const TransferPage = (props: Props) => {
 	const [ copyLocalOpen, setCopyLocalOpen ] = useState<boolean>(false);
 	const [ mergeStatusMessage, setMergeStatusMessage ] = useState<string | null>(null);
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
+	const [ remoteModifiedTime, setRemoteModifiedTime ] = useState<Date | null>(null);
 
 	const [ localHeroes, setLocalHeroes ] = useState<Hero[]>([]);
 	const [ localHomebrewSourcebooks, setLocalHomebrewSourcebooks ] = useState<Sourcebook[]>([]);
@@ -122,7 +123,11 @@ export const TransferPage = (props: Props) => {
 					if (sourcebooks !== null) {
 						setLocalHomebrewSourcebooks(sourcebooks);
 					}
-				})
+				}),
+			warehouseDs instanceof RemoteGoogleDriveDataService ?
+				(warehouseDs as RemoteGoogleDriveDataService).getRemoteFileModifiedTime()
+					.then(time => setRemoteModifiedTime(time))
+				: Promise.resolve()
 		]).finally(() => setIsLoading(false));
 	};
 
@@ -239,7 +244,7 @@ export const TransferPage = (props: Props) => {
 		} else {
 			return (
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<HeaderText level={4}>Move Local data into the Warehouse</HeaderText>
+					<HeaderText level={4}>Move Local data into the Warehouse 💻 ➜ ☁️ </HeaderText>
 					<LabelControl
 						label='What to do when there is a duplicate item (by id) in the warehouse?'
 						control={
@@ -257,7 +262,7 @@ export const TransferPage = (props: Props) => {
 						Merge Local data into Warehouse
 					</Button>
 
-					<HeaderText level={4}>Copy Warehouse data to Local storage</HeaderText>
+					<HeaderText level={4}>Copy Warehouse data to Local storage ☁️ ➜ 💻 </HeaderText>
 					<Alert
 						type='warning'
 						title='This replaces the local content completely!'
@@ -283,6 +288,12 @@ export const TransferPage = (props: Props) => {
 					</Expander>
 
 					<HeaderText level={3}>Warehouse Storage</HeaderText>
+
+					{remoteModifiedTime && (
+						<p style={{ fontSize: '12px', color: '#999', margin: '4px' }}>
+							Last synced: {remoteModifiedTime.toLocaleString()}
+						</p>
+					)}
 
 					<Expander title={`Heroes (${remoteHeroes.length})`}>
 						{getHeroSection(remoteHeroes, remoteHomebrewSourcebooks)}

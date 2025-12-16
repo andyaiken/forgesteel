@@ -28,11 +28,6 @@ export class FeatureFlags {
 		description: 'Show the Patreon connector'
 	};
 
-	static remoteJsonBin: FeatureFlag = {
-		code: Utils.hashCode('remote-json-bin'),
-		description: 'Enable JSONBin remote sync'
-	};
-
 	static remoteGoogleDrive: FeatureFlag = {
 		code: Utils.hashCode('remote-google-drive'),
 		description: 'Enable Google Drive remote sync'
@@ -43,7 +38,6 @@ export class FeatureFlags {
 		FeatureFlags.playtest,
 		FeatureFlags.communityPreRelease,
 		FeatureFlags.patreon,
-		FeatureFlags.remoteJsonBin,
 		FeatureFlags.remoteGoogleDrive
 	];
 

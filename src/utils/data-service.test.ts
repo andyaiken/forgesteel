@@ -21,10 +21,7 @@ const defaultSettings: ConnectionSettings = {
 	useWarehouse: false,
 	warehouseHost: '',
 	warehouseToken: '',
-	patreonConnected: false,
-	useJsonBin: false,
-	jsonBinId: '',
-	jsonBinAccessKey: ''
+	patreonConnected: false
 };
 
 const mockOptions = {} as Options;

@@ -15,7 +15,6 @@ export const WarehouseActionsPanel = (props: Props) => {
 	};
 
 	const showTransferButton = props.connectionSettings.useWarehouse || 
-		(props.connectionSettings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code)) ||
 		(props.connectionSettings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code));
 
 	return (

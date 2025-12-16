@@ -3,11 +3,8 @@ export interface ConnectionSettings {
 	warehouseHost: string;
 	warehouseToken: string;
 	patreonConnected: boolean;
-	useJsonBin: boolean;
-	jsonBinId: string;
-	jsonBinAccessKey: string;
 
-	// Google Drive (client-side, no backend)
+	// Google Drive
 	useGoogleDrive?: boolean;
 	googleClientId?: string;
 }

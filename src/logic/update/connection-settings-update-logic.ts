@@ -18,18 +18,6 @@ export class ConnectionSettingsUpdateLogic {
 			settings.patreonConnected = false;
 		}
 
-		if (settings.useJsonBin === undefined) {
-			settings.useJsonBin = false;
-		}
-
-		if (settings.jsonBinId === undefined) {
-			settings.jsonBinId = '';
-		}
-
-		if (settings.jsonBinAccessKey === undefined) {
-			settings.jsonBinAccessKey = '';
-		}
-
 		// Google Drive defaults
 		if (settings.useGoogleDrive === undefined) {
 			settings.useGoogleDrive = false;

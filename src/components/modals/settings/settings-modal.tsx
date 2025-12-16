@@ -643,7 +643,6 @@ export const SettingsModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.connectionSettings.useWarehouse ||
-							(props.connectionSettings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code)) ||
 							(props.connectionSettings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) ?
 								<>
 									<WarehouseActionsPanel

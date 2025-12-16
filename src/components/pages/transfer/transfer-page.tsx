@@ -13,7 +13,6 @@ import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
-import { RemoteJsonBinDataService } from '@/utils/remote-jsonbin-data-service';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
@@ -46,9 +45,6 @@ export const TransferPage = (props: Props) => {
 
 	const localDs = useMemo(() => new DataService({ ...settings, useWarehouse: false }), [ settings ]);
 	const warehouseDs = useMemo(() => {
-		if (settings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code)) {
-			return new RemoteJsonBinDataService(settings);
-		}
 		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
 			return new RemoteGoogleDriveDataService(settings);
 		}
@@ -56,9 +52,8 @@ export const TransferPage = (props: Props) => {
 	}, [ settings ]);
 
 	const hasRemoteStorage = useMemo(() => {
-		const jsonBin = settings.useJsonBin && FeatureFlags.hasFlag(FeatureFlags.remoteJsonBin.code);
 		const gdrive = settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code);
-		return settings.useWarehouse || jsonBin || gdrive;
+		return settings.useWarehouse || gdrive;
 	}, [ settings ]);
 
 	const mergeToWarehouse = async () => {

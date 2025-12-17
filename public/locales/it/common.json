@@ -36,5 +36,20 @@
   "title_other": "titoli",
   "complication": "complicazione",
   "project": "project",
-  "state": "stato"
+  "state": "stato",
+  "inventory": "inventario",
+  "follower_other": "seguaci",
+  "follower_one": "seguace",
+  "summon_other": "evocazioni",
+  "summon_one": "evocazione",
+  "background": "passato",
+  "levelWithCount_one": "livello {{count}}",
+  "levelWithCount_other": "livello {{count}}",
+  "language_other": "lingue",
+  "weakness_other": "debolezze",
+  "trigger_other": "reazione",
+  "triggeredAction_other": "reazioni",
+  "heroicResource_one": "risorsa",
+  "condition_one": "condizione",
+  "dying": "morente"
 }

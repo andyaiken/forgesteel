@@ -1,8 +1,12 @@
 {
   "characterName": "Character Name",
-  "class": "Class",
-  "noAncestryChosen": "No ancestry chosen",
-  "noCultureChosen": "No culture chosen",
-  "noCareerChosen": "No career chosen",
-  "noClassChosen": "No class chosen"
+  "noAncestryChosen": "No $t(common:ancestry) chosen",
+  "noCultureChosen": "No $t(common:culture) chosen",
+  "noCareerChosen": "No $t(common:career) chosen",
+  "noClassChosen": "No $t(common:class) chosen",
+  "unnamedHero": "Unnamed $t(common:hero_one, capitalize)",
+  "unnamedAbility": "Unnamed $t(common:ability_one, capitalize)",
+  "cannotBeImmunity": "Cannot be",
+  "catchBreathWhileDying": "You can’t take the $t(maneuver:catchBreath, capitalize) maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.",
+  "recoveriesWhileDying": "Your allies can help you spend $t(recoveries, capitalize) in combat, and you can spend $t(recoveries, capitalize) out of combat as usual."
 }

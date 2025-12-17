@@ -1,6 +1,5 @@
 import { Button, Space } from 'antd';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { useNavigate } from 'react-router';
 
 interface Props {
@@ -14,12 +13,10 @@ export const WarehouseActionsPanel = (props: Props) => {
 		navigate('/transfer');
 	};
 
-	const showTransferButton = props.connectionSettings.useWarehouse;
-
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{
-				showTransferButton ?
+				props.connectionSettings.useWarehouse ?
 					<Button
 						block={true}
 						onClick={goToTransferPage}

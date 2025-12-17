@@ -1,13 +1,12 @@
-import { Alert, Button, Flex, Input, Space, Tag } from 'antd';
+import { Alert, Button, Flex, Space, Tag } from 'antd';
 import { CheckCircleOutlined, ClockCircleOutlined, SaveFilled } from '@ant-design/icons';
 import { JSX, useEffect, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { FeatureFlags } from '@/utils/feature-flags';
-import { HeaderText } from '@/components/controls/header-text/header-text';
-import { useNavigate } from 'react-router';
+import { GoogleDriveClient } from '@/utils/google-drive-client';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { GoogleDriveClient } from '@/utils/google-drive-client';
+import { useNavigate } from 'react-router';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
@@ -37,6 +36,7 @@ export const GoogleDriveSettingsPanel = (props: Props) => {
 		}
 	};
 
+	// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 	const envGoogleClientId = (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID as string | undefined;
 	const effectiveGoogleClientId = connectionSettings.googleClientId || envGoogleClientId || '';
 	const gdc = effectiveGoogleClientId ? new GoogleDriveClient(effectiveGoogleClientId) : null;
@@ -51,7 +51,7 @@ export const GoogleDriveSettingsPanel = (props: Props) => {
 
 	useEffect(() => {
 		checkGoogleAccessToken();
-	}, [ gdc, connectionSettings.useGoogleDrive ]);
+	});
 
 	const connectGoogleDrive = async () => {
 		try {
@@ -65,8 +65,9 @@ export const GoogleDriveSettingsPanel = (props: Props) => {
 			setConnectionSettings(copy);
 			setConnectionSettingsChanged(true);
 			setDriveStatusAlert(<Alert title='Connected to Google Drive' type='success' showIcon closable />);
-		} catch (e: any) {
-			setDriveStatusAlert(<Alert title={`Google Drive connect failed: ${e?.message || e}`} type='error' showIcon closable />);
+		} catch (e: unknown) {
+			const errorMessage = e instanceof Error ? e.message : String(e);
+			setDriveStatusAlert(<Alert title={`Google Drive connect failed: ${errorMessage}`} type='error' showIcon closable />);
 		} finally {
 			setTimeout(() => setDriveStatusAlert(null), 10000);
 		}
@@ -80,8 +81,9 @@ export const GoogleDriveSettingsPanel = (props: Props) => {
 			setConnectionSettings(copy);
 			setConnectionSettingsChanged(true);
 			setDriveStatusAlert(<Alert title='Disconnected from Google Drive' type='success' showIcon closable />);
-		} catch (e: any) {
-			setDriveStatusAlert(<Alert title={`Google Drive disconnect failed: ${e?.message || e}`} type='error' showIcon closable />);
+		} catch (e: unknown) {
+			const errorMessage = e instanceof Error ? e.message : String(e);
+			setDriveStatusAlert(<Alert title={`Google Drive disconnect failed: ${errorMessage}`} type='error' showIcon closable />);
 		} finally {
 			setTimeout(() => setDriveStatusAlert(null), 10000);
 		}
@@ -113,55 +115,54 @@ export const GoogleDriveSettingsPanel = (props: Props) => {
 								<>
 									{(!envGoogleClientId)
 										? (
-											<Alert 
-												message="Google OAuth Client ID Missing" 
-												description="The Google OAuth Client ID is missing from the environment variables. Please configure VITE_GDRIVE_CLIENT_ID." 
-												type="error" 
-												showIcon 
+											<Alert
+												description='The Google OAuth Client ID is missing from the environment variables.'
+												type='error'
+												showIcon
 											/>
 										)
 										: (
-									<>
-										<p style={{ fontSize: '12px', color: '#999' }}>
-											For security reasons, ForgeSteel
-											does not have access to your main  Google Drive files, only the ForgeSteel app's settings folder.
-											Uses Google Identity Services to store data in the Drive <strong>appDataFolder</strong> scope.
-										</p>
-										<Flex gap='small' align='center' style={{ marginBottom: '12px' }}>
-											{driveIsConnected
-												? (
-													<Tag icon={<CheckCircleOutlined />} color='success'>Connected</Tag>
-												)
-												: (
-													<Tag icon={<ClockCircleOutlined />} color='default'>Not connected</Tag>
-												)}
-										</Flex>
-										<Flex gap='small'>
-											{!driveIsConnected
-												? (
-													<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
-												)
-												: (
-													<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
-												)}
-										</Flex>
-										<p style={{ fontSize: '12px', color: '#999', marginTop: 8 }}>
-											Please enable popups for this site to allow Google sign‑in.
-										</p>
-										{driveStatusAlert}
-										<Space orientation='vertical' style={{ width: '100%' }}>
-											{
-												driveIsConnected ?
-													<Button
-														block={true}
-														onClick={goToTransferPage}
-													>
-														Transfer Data
-													</Button>
-													: null
-											}
-										</Space>										
-									</>
+											<>
+												<p style={{ fontSize: '12px', color: '#999' }}>
+													For security reasons, ForgeSteel
+													does not have access to your main  Google Drive files, only the ForgeSteel app's settings folder.
+													Uses Google Identity Services to store data in the Drive <strong>appDataFolder</strong> scope.
+												</p>
+												<Flex gap='small' align='center' style={{ marginBottom: '12px' }}>
+													{driveIsConnected
+														? (
+															<Tag icon={<CheckCircleOutlined />} color='success'>Connected</Tag>
+														)
+														: (
+															<Tag icon={<ClockCircleOutlined />} color='default'>Not connected</Tag>
+														)}
+												</Flex>
+												<Flex gap='small'>
+													{!driveIsConnected
+														? (
+															<Button onClick={connectGoogleDrive}>Connect Google Drive</Button>
+														)
+														: (
+															<Button onClick={disconnectGoogleDrive}>Disconnect</Button>
+														)}
+												</Flex>
+												<p style={{ fontSize: '12px', color: '#999', marginTop: 8 }}>
+													Please enable popups for this site to allow Google sign‑in.
+												</p>
+												{driveStatusAlert}
+												<Space orientation='vertical' style={{ width: '100%' }}>
+													{
+														driveIsConnected ?
+															<Button
+																block={true}
+																onClick={goToTransferPage}
+															>
+																Transfer Data
+															</Button>
+															: null
+													}
+												</Space>
+											</>
 										)}
 								</>
 								: null

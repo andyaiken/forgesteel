@@ -10,6 +10,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
+import { GoogleDriveSettingsPanel } from '@/components/panels/connection-settings/google-drive-settings-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -28,7 +29,6 @@ import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
 import './settings-modal.scss';
-import { GoogleDriveSettingsPanel } from '@/components/panels/connection-settings/google-drive-settings-panel';
 
 interface Props {
 	options: Options;

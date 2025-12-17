@@ -9,6 +9,7 @@
   You'll need to grantee the "Drive App Data" scope to your OAuth client.
 */
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export type GoogleDriveScopes = 'https://www.googleapis.com/auth/drive.appdata';
 
 interface StoredToken {
@@ -273,9 +274,6 @@ export class GoogleDriveClient {
 			},
 			body
 		});
-
-		console.log('Upload response:');
-		console.log(resp);
 
 		if (!resp.ok) {
 			throw new Error(`Drive create failed: ${resp.status}`);

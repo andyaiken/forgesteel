@@ -1,11 +1,11 @@
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
+import { GoogleDriveClient } from '@/utils/google-drive-client';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
-import { GoogleDriveClient } from '@/utils/google-drive-client';
 
 interface DriveJsonBlob {
 	[key: string]: unknown;
@@ -25,6 +25,7 @@ export class RemoteGoogleDriveDataService extends DataService {
 
 	constructor(settings: ConnectionSettings) {
 		super(settings);
+		// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 		if (!(settings.googleClientId || (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID)) {
 			console.warn('RemoteGoogleDriveDataService: googleClientId is not configured');
 		}
@@ -32,6 +33,7 @@ export class RemoteGoogleDriveDataService extends DataService {
 
 	private ensureClient(): GoogleDriveClient {
 		if (!this.client) {
+			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 			const envId = (import.meta as any).env?.VITE_GDRIVE_CLIENT_ID as string | undefined;
 			this.client = new GoogleDriveClient(this.settings.googleClientId || envId || '');
 		}
@@ -61,7 +63,7 @@ export class RemoteGoogleDriveDataService extends DataService {
 		try {
 			const data = await client.downloadJsonFromAppData(RemoteGoogleDriveDataService.FILE_NAME);
 			return (data as DriveJsonBlob) || ({} as DriveJsonBlob);
-		} catch (e: any) {
+		} catch (e: unknown) {
 			console.error('Error reading from Google Drive', e);
 			return {} as DriveJsonBlob;
 		}

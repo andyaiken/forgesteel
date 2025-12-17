@@ -13,13 +13,13 @@ import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
+import { RemoteGoogleDriveDataService } from '@/utils/remote-google-drive-data-service';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
-import { RemoteGoogleDriveDataService } from '@/utils/remote-google-drive-data-service';
 
 import './transfer-page.scss';
 
@@ -34,6 +34,7 @@ export const TransferPage = (props: Props) => {
 	const settings = props.connectionSettings;
 	const [ mergeBehavior, setMergeBehavior ] = useState<MergeDuplicateBehavior>(MergeDuplicateBehavior.Skip);
 	const [ copyLocalOpen, setCopyLocalOpen ] = useState<boolean>(false);
+	// eslint-disable-next-line  @typescript-eslint/no-unused-vars
 	const [ mergeStatusMessage, setMergeStatusMessage ] = useState<string | null>(null);
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const [ remoteModifiedTime, setRemoteModifiedTime ] = useState<Date | null>(null);
@@ -57,7 +58,7 @@ export const TransferPage = (props: Props) => {
 		return settings.useWarehouse || gdrive;
 	}, [ settings ]);
 
-	let remoteStorageReady = useMemo(() => {
+	const remoteStorageReady = useMemo(() => {
 		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
 			const googleDriveService = warehouseDs as RemoteGoogleDriveDataService;
 			if (!googleDriveService.isAuthorized()) {
@@ -66,7 +67,7 @@ export const TransferPage = (props: Props) => {
 			}
 		}
 		return true;	// asssume the remote storage is working and ready if it's the warehouse
-	}, [ settings ]);
+	}, [ settings.useGoogleDrive, warehouseDs ]);
 
 	const mergeToWarehouse = async () => {
 		if (!warehouseDs) {
@@ -77,7 +78,6 @@ export const TransferPage = (props: Props) => {
 		try {
 			setIsLoading(true);
 			const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
-			console.log('Merged heroes:', mergedHeroes);
 			await warehouseDs.saveHeroes(mergedHeroes);
 			setRemoteHeroes(mergedHeroes);
 
@@ -111,6 +111,7 @@ export const TransferPage = (props: Props) => {
 		// Load remote data
 		setIsLoading(true);
 
+		// TODO: maybe wrap this in a try block in case the warehouse or google is down/unavailable
 		Promise.all([
 			warehouseDs.getHeroes()
 				.then(heroes => {
@@ -148,7 +149,8 @@ export const TransferPage = (props: Props) => {
 		[
 			localDs,
 			warehouseDs,
-			hasRemoteStorage
+			hasRemoteStorage,
+			remoteStorageReady
 		]
 	);
 

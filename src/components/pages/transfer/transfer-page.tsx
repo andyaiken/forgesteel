@@ -111,7 +111,6 @@ export const TransferPage = (props: Props) => {
 		// Load remote data
 		setIsLoading(true);
 
-		// TODO: maybe wrap this in a try block in case the warehouse or google is down/unavailable
 		Promise.all([
 			warehouseDs.getHeroes()
 				.then(heroes => {

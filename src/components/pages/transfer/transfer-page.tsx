@@ -57,6 +57,17 @@ export const TransferPage = (props: Props) => {
 		return settings.useWarehouse || gdrive;
 	}, [ settings ]);
 
+	let remoteStorageReady = useMemo(() => {
+		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			const googleDriveService = warehouseDs as RemoteGoogleDriveDataService;
+			if (!googleDriveService.isAuthorized()) {
+				console.warn('Google Drive not authorized');
+				return false;	// not authorized yet
+			}
+		}
+		return true;	// asssume the remote storage is working and ready if it's the warehouse
+	}, [ settings ]);
+
 	const mergeToWarehouse = async () => {
 		if (!warehouseDs) {
 			console.error('No warehouse data service available');
@@ -93,13 +104,13 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const initializeData = () => {
-		if (!warehouseDs || !hasRemoteStorage) {
+		if (!warehouseDs || !hasRemoteStorage || !remoteStorageReady) {
 			return;
 		}
 
+		// Load remote data
 		setIsLoading(true);
 
-		// Load remote data
 		Promise.all([
 			warehouseDs.getHeroes()
 				.then(heroes => {
@@ -233,7 +244,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const getTransferContent = () => {
-		if (!hasRemoteStorage) {
+		if (!hasRemoteStorage || !remoteStorageReady) {
 			return (
 				<Alert
 					title='Not connected to warehouse'

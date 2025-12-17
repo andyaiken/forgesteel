@@ -668,16 +668,6 @@ export const SettingsModal = (props: Props) => {
 			return (
 				<Expander title='Google Drive Storage'>
 					<Space orientation='vertical' style={{ width: '100%' }}>
-						{
-							props.connectionSettings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code) ?
-								<>
-									<WarehouseActionsPanel
-										connectionSettings={props.connectionSettings}
-									/>
-									<Divider size='small' />
-								</>
-								: null
-						}
 						<GoogleDriveSettingsPanel
 							connectionSettings={props.connectionSettings}
 							setConnectionSettings={props.setConnectionSettings}

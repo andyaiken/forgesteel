@@ -259,7 +259,17 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 				/>
 			</Drawer>
 			<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} size={500}>
-				{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
+				{
+					selectedSummon ?
+						<MonsterModal
+							monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)}
+							summon={selectedSummon.info}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onClose={() => setSelectedSummon(null)}
+						/>
+						: null
+				}
 			</Drawer>
 		</Space>
 	);

@@ -409,6 +409,7 @@ export const Main = (props: Props) => {
 
 					persistHero(copy);
 				}}
+				exportElementData={exportLibraryElementData}
 			/>
 		);
 	};
@@ -1463,6 +1464,7 @@ export const Main = (props: Props) => {
 				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
+				exportElementData={exportLibraryElementData}
 			/>
 		);
 	};

@@ -302,7 +302,7 @@ const scion: HeroClass = {
 	id: 'scion',
 	name: 'Scion',
 	description: `
-*By Ben Shabtai*
+*By SurfingBird*
 
 You were deemed worthy of a secret Art unknown to most, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of balance: a harmonious alignment of movement, feeling, and intent.
 

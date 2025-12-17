@@ -156,7 +156,16 @@ export const ConfigRetainer = (props: ConfigProps) => {
 				/>
 			</Drawer>
 			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
-				{selectedMonster ? <MonsterModal monster={selectedMonster} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				{
+					selectedMonster ?
+						<MonsterModal
+							monster={selectedMonster}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onClose={() => setSelectedMonster(null)}
+						/>
+						: null
+				}
 			</Drawer>
 		</Space>
 	);

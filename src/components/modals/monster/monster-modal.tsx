@@ -1,5 +1,6 @@
 import { Button, Divider, Flex, Input, Segmented, Space } from 'antd';
-import { EditFilled, EditOutlined } from '@ant-design/icons';
+import { EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
@@ -29,6 +30,7 @@ interface Props {
 	onClose: () => void;
 	updateMonster?: (monster: Monster) => void;
 	updateEncounter?: (encounter: Encounter) => void;
+	exportElementData?: (category: string, element: Element) => void;
 }
 
 export const MonsterModal = (props: Props) => {
@@ -42,6 +44,37 @@ export const MonsterModal = (props: Props) => {
 		if (props.updateMonster) {
 			props.updateMonster(monster);
 		}
+	};
+
+	const exportMonster = () => {
+		if (props.exportElementData) {
+			props.exportElementData('monster', props.monster);
+		}
+	};
+
+	const getToolbar = () => {
+		if (props.updateMonster) {
+			return (
+				<Flex align='center' justify='center' style={{ width: '100%' }}>
+					<Segmented
+						name='tabs'
+						options={encounter ? [ 'Vitals', 'Stat Block', 'Malice' ] : [ 'Vitals', 'Stat Block' ]}
+						value={page}
+						onChange={setPage}
+					/>
+				</Flex>
+			);
+		}
+
+		if (props.exportElementData) {
+			return (
+				<Button icon={<UploadOutlined />} onClick={exportMonster}>
+					Export
+				</Button>
+			);
+		}
+
+		return null;
 	};
 
 	const getContent = () => {
@@ -133,22 +166,7 @@ export const MonsterModal = (props: Props) => {
 
 	return (
 		<Modal
-			toolbar={
-				<>
-					{
-						props.updateMonster ?
-							<Flex align='center' justify='center' style={{ width: '100%' }}>
-								<Segmented
-									name='tabs'
-									options={encounter ? [ 'Vitals', 'Stat Block', 'Malice' ] : [ 'Vitals', 'Stat Block' ]}
-									value={page}
-									onChange={setPage}
-								/>
-							</Flex>
-							: null
-					}
-				</>
-			}
+			toolbar={getToolbar()}
 			content={
 				<div className='monster-modal'>
 					{getContent()}

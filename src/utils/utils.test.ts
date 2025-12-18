@@ -47,4 +47,14 @@ describe('Utils', () => {
 			expect(Utils.fixHostnameUrl(url)).toBe(expected);
 		});
 	});
+
+	describe('getErrorMessage', () => {
+		test.each([
+			[ 'Just a string', 'Just a string' ],
+			[ new Error('an error message'), 'an error message' ],
+			[ { msg: 'an object' }, '[object Object]' ]
+		])('Returns reasonable messages for various things that are error-like', (err, expected) => {
+			expect(Utils.getErrorMessage(err)).toBe(expected);
+		});
+	});
 });

@@ -39,7 +39,7 @@ export class DataService {
 			msg = `There was a problem with Forge Steel Warehouse: ${error.message}`;
 			if (error.response) {
 				const code = error.response.status;
-				const respMsg = error.response.data.message ?? error.response.data;
+				const respMsg = error.response.data.message ?? error.response.data.msg ?? error.response.data;
 				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
 
 				if (code === 401) {

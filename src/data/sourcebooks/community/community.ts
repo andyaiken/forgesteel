@@ -310,9 +310,9 @@ const scion: HeroClass = {
 	description: `
 *By SurfingBird*
 
-You were deemed worthy of a secret Art unknown to most, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of balance: a harmonious alignment of movement, feeling, and intent.
+You were deemed worthy of a secret Art known only to a chosen few, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of Balance: a harmonious alignment of movement, feeling, and intent.
 
-As a scion, you move with purpose - each strike empowered to suit the moment, whether to wound, disrupt, or disable, your flexibility is unmatched. At the height of your mastery, you are the eye of the storm: utterly calm, yet entirely devastating.`,
+As a Scion, you are the the quiet before the storm. You move like the wind, and strike as lightning. Your flexibility is unmatched - each blow empowered to suit the moment, whether to debilitate foes, or bring their end closer still. The battlefield is a canvas upon which you paint your masterpiece, and your Art is your brush.`,
 	type: 'standard',
 	subclassName: 'Art',
 	subclassCount: 1,

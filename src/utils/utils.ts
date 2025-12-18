@@ -46,6 +46,10 @@ export class Utils {
 		};
 	};
 
+	static wait = (ms: number = 1000) => {
+		return new Promise<void>(resolve => setTimeout(resolve, ms));
+	};
+
 	static textMatches = (sources: string[], searchTerm: string) => {
 		if (!searchTerm) {
 			return true;

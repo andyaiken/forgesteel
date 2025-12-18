@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "12.56.0",
+	"version": "12.57.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -11,7 +11,7 @@
 		"lint": "eslint \"src/**/*.{ts,tsx}\"",
 		"fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
 		"test": "vitest",
-		"check": "npm run lint && tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && vitest run && npm audit",
+		"check": "npm run lint && tsc -p tsconfig.json && vitest run && npm audit",
 		"build": "vite build",
 		"predeploy": "npm run check && npm run build",
 		"deploy": "gh-pages -d dist"

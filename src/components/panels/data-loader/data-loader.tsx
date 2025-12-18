@@ -22,6 +22,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 
 import './data-loader.scss';
@@ -50,6 +51,7 @@ export const DataLoader = (props: Props) => {
 	const [ playbookState, setPlaybookState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
+	const [ splinesState, setSplinesState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ error, setError ] = useState<string | null>(null);
@@ -102,6 +104,7 @@ export const DataLoader = (props: Props) => {
 		setSessionState(undefined);
 		setOptionsState(undefined);
 		setHiddenSettingsState(undefined);
+		setSplinesState(undefined);
 
 		getDataService().then(dataService => {
 			setConnectionSettingsState('success');
@@ -112,6 +115,7 @@ export const DataLoader = (props: Props) => {
 			setSessionState('pending');
 			setOptionsState('pending');
 			setHiddenSettingsState('pending');
+			setSplinesState('pending');
 
 			const promises = [
 				updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
@@ -119,7 +123,8 @@ export const DataLoader = (props: Props) => {
 				updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
 				updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
 				updateLoadingStatus(dataService.getSession(), setSessionState),
-				updateLoadingStatus(dataService.getOptions(), setOptionsState)
+				updateLoadingStatus(dataService.getOptions(), setOptionsState),
+				updateLoadingStatus(Utils.wait(), setSplinesState)
 			];
 
 			Promise.all(promises).then(results => {
@@ -229,18 +234,15 @@ export const DataLoader = (props: Props) => {
 				// #endregion
 
 				setOverallLoadState('success');
-				setTimeout(
-					() => props.onComplete({
-						connectionSettings: dataService.settings,
-						service: dataService,
-						heroes: heroes,
-						homebrew: sourcebooks,
-						hiddenSourcebookIDs: hiddenSourcebookIDs,
-						session: session,
-						options: options
-					}),
-					1000
-				);
+				props.onComplete({
+					connectionSettings: dataService.settings,
+					service: dataService,
+					heroes: heroes,
+					homebrew: sourcebooks,
+					hiddenSourcebookIDs: hiddenSourcebookIDs,
+					session: session,
+					options: options
+				});
 			}).catch(reason => {
 				console.error(reason);
 				setError(reason.message);
@@ -277,6 +279,7 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSettingsState}>Identifying Manifold</CheckLabel>
+						<CheckLabel state={splinesState}>Reticulating Splines</CheckLabel>
 					</Flex>
 					{
 						error ?

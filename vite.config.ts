@@ -1,7 +1,68 @@
-import { generateManifest, manifestPlugin } from './vite-plugin-manifest';
-import { defineConfig } from 'vite';
+import { Plugin, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+
+// Base manifest template
+const BASE_MANIFEST = {
+	name: 'Forge Steel',
+	short_name: 'Forge Steel',
+	description: 'Heroes, monsters, encounters ... everything you need for Draw Steel.',
+	start_url: '/forgesteel/',
+	display: 'standalone',
+	background_color: '#ffffff',
+	theme_color: '#1890ff',
+	orientation: 'any',
+	scope: '/forgesteel/',
+	categories: [ 'games', 'entertainment', 'utilities' ],
+	lang: 'en',
+	dir: 'ltr'
+};
+
+// Generate manifest with icon paths
+const generateManifest = (shieldIconPath?: string) => {
+	const iconPath = shieldIconPath || '/forgesteel/src/assets/shield.png';
+
+	return {
+		...BASE_MANIFEST,
+		icons: [
+			{
+				src: iconPath,
+				sizes: '192x192',
+				type: 'image/png',
+				purpose: 'any maskable'
+			},
+			{
+				src: iconPath,
+				sizes: '512x512',
+				type: 'image/png',
+				purpose: 'any maskable'
+			}
+		]
+	};
+};
+
+const manifestPlugin = (): Plugin => {
+	return {
+		name: 'manifest-plugin',
+		generateBundle(_, bundle) {
+			// Find the shield icon in the bundle
+			const shieldIcon = Object.keys(bundle).find(
+				key => key.includes('shield') && key.endsWith('.png')
+			);
+
+			if (shieldIcon) {
+				const manifest = generateManifest(`/forgesteel/${shieldIcon}`);
+
+				// Write the manifest to the dist folder
+				this.emitFile({
+					type: 'asset',
+					fileName: 'manifest.json',
+					source: JSON.stringify(manifest, null, 2)
+				});
+			}
+		}
+	};
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({

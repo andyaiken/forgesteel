@@ -1,5 +1,5 @@
 import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';

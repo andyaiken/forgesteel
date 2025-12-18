@@ -1,5 +1,5 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';

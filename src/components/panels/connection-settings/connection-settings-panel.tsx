@@ -10,7 +10,6 @@ import axios from 'axios';
 interface Props {
 	connectionSettings: ConnectionSettings;
 	setConnectionSettings: (settings: ConnectionSettings) => void;
-	showReload?: boolean;
 }
 
 export const ConnectionSettingsPanel = (props: Props) => {
@@ -18,9 +17,9 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ connectionSettingsChanged, setConnectionSettingsChanged ] = useState<boolean>(false);
 	const [ testingWarehouseConnection, setTestingWarehouseConnection ] = useState<boolean>(false);
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
-	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
 
-	const showReload = props.showReload ?? false;
+	const [ hostInputStatus, setHostInputStatus ] = useState<'error' | undefined>(undefined);
+	const [ tokenInputStatus, setTokenInputStatus ] = useState<'error' | undefined>(undefined);
 
 	const setUseWarehouse = (value: boolean) => {
 		const copy = Utils.copy(connectionSettings);
@@ -30,6 +29,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	};
 
 	const setWarehouseUrl = (value: string) => {
+		setHostInputStatus(undefined);
 		const copy = Utils.copy(connectionSettings);
 		copy.warehouseHost = value;
 		setConnectionSettings(copy);
@@ -37,10 +37,18 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	};
 
 	const setWarehouseToken = (value: string) => {
+		setTokenInputStatus(undefined);
 		const copy = Utils.copy(connectionSettings);
 		copy.warehouseToken = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
+	};
+
+	const normalizeSettings = () => {
+		const copy = Utils.copy(connectionSettings);
+		copy.warehouseHost = Utils.fixHostnameUrl(connectionSettings.warehouseHost);
+		setConnectionSettings(copy);
+		return copy;
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,11 +64,14 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	};
 
 	const testWarehouseConnection = () => {
+		const settings = normalizeSettings();
+		setHostInputStatus(undefined);
+		setTokenInputStatus(undefined);
 		setTestingWarehouseConnection(true);
 		axios.defaults.xsrfCookieName = 'csrf_access_token';
 		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-		const healthUrl = `${connectionSettings.warehouseHost}/healthz`;
-		const connectUrl = `${connectionSettings.warehouseHost}/connect`;
+		const healthUrl = `${settings.warehouseHost}/healthz`;
+		const connectUrl = `${settings.warehouseHost}/connect`;
 		axios.get(healthUrl)
 			.then(response => {
 				const version = response.data.version;
@@ -69,14 +80,19 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				axios.request({
 					url: connectUrl,
 					method: method,
-					headers: { Authorization: `Bearer ${connectionSettings.warehouseToken}` },
+					headers: { Authorization: `Bearer ${settings.warehouseToken}` },
 					withCredentials: true,
 					withXSRFToken: true
 				}).then(() => {
 					setTestStatusAlert(<Alert title={`Success! (v${version})`} type='success' showIcon closable />);
-				}).catch(showTestConnectionError);
-			}).catch(showTestConnectionError)
-			.finally(() => {
+				}).catch(reason => {
+					setTokenInputStatus('error');
+					showTestConnectionError(reason);
+				});
+			}).catch(reason => {
+				setHostInputStatus('error');
+				showTestConnectionError(reason);
+			}).finally(() => {
 				setTestingWarehouseConnection(false);
 				setTimeout(() => {
 					setTestStatusAlert(null);
@@ -85,9 +101,9 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	};
 
 	const saveWarehouseSettings = () => {
+		normalizeSettings();
 		props.setConnectionSettings(connectionSettings);
 		setConnectionSettingsChanged(false);
-		setReloadNeeded(true);
 	};
 
 	return (
@@ -104,12 +120,14 @@ export const ConnectionSettingsPanel = (props: Props) => {
 						<Input
 							placeholder='Warehouse Host'
 							allowClear={true}
+							status={hostInputStatus}
 							value={connectionSettings.warehouseHost}
 							onChange={e => setWarehouseUrl(e.target.value)}
 						/>
 						<HeaderText>API Token</HeaderText>
 						<Input.Password
 							placeholder='Warehouse API Token'
+							status={tokenInputStatus}
 							value={connectionSettings.warehouseToken}
 							onChange={e => setWarehouseToken(e.target.value)}
 						/>
@@ -140,20 +158,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				</Button>
 			</Flex>
 			{testStatusAlert}
-			{
-				reloadNeeded && showReload ?
-					<Alert
-						title='Reload Forge Steel to use new settings'
-						type='info'
-						showIcon
-						action={
-							<Button size='small' type='primary' onClick={() => location.reload()}>
-								Reload
-							</Button>
-						}
-					/>
-					: null
-			}
 		</Space>
 	);
 };

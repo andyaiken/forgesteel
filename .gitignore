@@ -5,7 +5,5 @@ node_modules
 .github
 .vscode/
 .vscode/*
-
-# Environment variables
 .env
 .env.local

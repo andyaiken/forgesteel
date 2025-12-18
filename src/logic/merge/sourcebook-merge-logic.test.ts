@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { FactoryLogic } from '../factory-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookMergeLogic } from './sourcebook-merge-logic';
+import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 
 describe('merge', () => {
 	const byId = (arr: Sourcebook[], id: string): Sourcebook | undefined => {

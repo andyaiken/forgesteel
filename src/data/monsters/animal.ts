@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureAddOnType } from '@/enums/feature-addon-type';

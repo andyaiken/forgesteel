@@ -1,5 +1,5 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
@@ -16,8 +16,10 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
+// #region Ancestries
+
 const aranox: Ancestry = {
-	id: 'aranox',
+	id: 'ancestry-aranox',
 	name: 'Aranox',
 	description: `
 *By Marc Aranha*
@@ -120,7 +122,7 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 };
 
 const solar: Ancestry = {
-	id: 'solar',
+	id: 'ancestry-solar',
 	name: 'Solar',
 	description: `
 *By Jenny [REDACTED]*
@@ -298,15 +300,19 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 	culture: FactoryLogic.createCulture('Solar', 'Urban, bureaucratic, noble.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.noble, 'Axiomatic')
 };
 
+// #endregion
+
+// #region Classes
+
 const scion: HeroClass = {
-	id: 'scion',
+	id: 'class-scion',
 	name: 'Scion',
 	description: `
 *By SurfingBird*
 
-You were deemed worthy of a secret Art unknown to most, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of balance: a harmonious alignment of movement, feeling, and intent.
+You were deemed worthy of a secret Art known only to a chosen few, allowing you to weave steel and magic into a single, fluid dance. Passed down through an unbroken chain of master and disciple, this ancient discipline was entrusted to you, its esoteric techniques guiding you toward the cultivation of Balance: a harmonious alignment of movement, feeling, and intent.
 
-As a scion, you move with purpose - each strike empowered to suit the moment, whether to wound, disrupt, or disable, your flexibility is unmatched. At the height of your mastery, you are the eye of the storm: utterly calm, yet entirely devastating.`,
+As a Scion, you are the the quiet before the storm. You move like the wind, and strike as lightning. Your flexibility is unmatched - each blow empowered to suit the moment, whether to debilitate foes, or bring their end closer still. The battlefield is a canvas upon which you paint your masterpiece, and your Art is your brush.`,
 	type: 'standard',
 	subclassName: 'Art',
 	subclassCount: 1,
@@ -1195,7 +1201,7 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 };
 
 const vessel: HeroClass = {
-	id: 'vessel',
+	id: 'class-vessel',
 	name: 'Vessel',
 	description: `
 *By ChaoticGoodra*
@@ -2436,6 +2442,8 @@ Any enemy who moves into the area for the first time in a combat round or starts
 	level: 1,
 	characteristics: []
 };
+
+// #endregion
 
 export const communityPrerelease: Sourcebook = {
 	id: 'community-prerelease',

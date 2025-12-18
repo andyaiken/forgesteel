@@ -8,7 +8,7 @@
     overflow-y: scroll;
 
     .data-loader-container {
-        width: 380px;
+        width: 250px;
         padding: 20px;
         border-radius: 10px;
         background-color: rgb(255, 255, 255);
@@ -26,10 +26,6 @@
 
         .header-text-panel {
             justify-content: center;
-        }
-
-        .load-states {
-            margin: 0 auto 10px;
         }
 
         .ant-alert-error {

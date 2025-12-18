@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
 import { Input, Segmented, Select, Space } from 'antd';
 import { Ability } from '@/models/ability';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Characteristic } from '@/enums/characteristic';

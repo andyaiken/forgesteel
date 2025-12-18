@@ -46,6 +46,10 @@ export class Utils {
 		};
 	};
 
+	static wait = (ms: number = 1000) => {
+		return new Promise<void>(resolve => setTimeout(resolve, ms));
+	};
+
 	static textMatches = (sources: string[], searchTerm: string) => {
 		if (!searchTerm) {
 			return true;
@@ -178,11 +182,17 @@ export class Utils {
 		pdf.save(filename);
 	};
 
-	static isNullOrEmpty = (str: string | undefined) => {
+	static isNullOrEmpty = (str: string | null | undefined) => {
 		return (str === null || str === undefined || str.trim() === '');
 	};
 
-	static valueOrDefault = (value: string | number | undefined, defaultValue: string): string => {
+	// Returns the given default if the value is:
+	//    - null
+	//    - undefined
+	//    - an empty string
+	//    - ZERO (0)
+	// Otherwise, returns the value as a string.
+	static valueOrDefault = (value: string | number | null | undefined, defaultValue: string): string => {
 		let result = defaultValue;
 
 		if (value && !Utils.isNullOrEmpty(value.toString())) {
@@ -190,5 +200,9 @@ export class Utils {
 		}
 
 		return result;
+	};
+
+	static fixHostnameUrl = (value: string) => {
+		return value.toLowerCase().replace(/\/+$/, '');
 	};
 }

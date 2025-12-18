@@ -195,4 +195,8 @@ export class Utils {
 
 		return result;
 	};
+
+	static fixHostnameUrl = (value: string) => {
+		return value.toLowerCase().replace(/\/+$/, '');
+	};
 }

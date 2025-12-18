@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Element } from '@/models/element';
 import { PowerRoll } from '@/models/power-roll';

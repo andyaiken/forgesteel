@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
@@ -9,6 +9,8 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
+
+// #region Ancestries
 
 const anthousai: Ancestry = {
 	id: 'ancestry-anthousai',
@@ -252,6 +254,8 @@ Dryads have forms as varied as the trees they resemble. Smooth skinned or rough,
 	],
 	ancestryPoints: 3
 };
+
+// #endregion
 
 export const ratcatcher: Sourcebook = {
 	id: 'ratcatcher',

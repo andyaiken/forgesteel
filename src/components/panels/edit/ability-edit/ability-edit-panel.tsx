@@ -1,7 +1,7 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
 import { Alert, Button, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Characteristic } from '@/enums/characteristic';

@@ -1,5 +1,5 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
@@ -20,8 +20,10 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
+// #region Ancestries
+
 const boggit: Ancestry = {
-	id: 'boggit',
+	id: 'ancestry-boggit',
 	name: 'Boggit',
 	description: `
 *By Triglav Games*
@@ -319,7 +321,7 @@ Years of traversing swamps have taught you how to deal with terrain obstacles an
 };
 
 const vampireAncestry: Ancestry = {
-	id: 'vampire-ancestry',
+	id: 'ancestry-vampire',
 	name: 'Vampire',
 	description: `
 *By Triglav Games*
@@ -488,8 +490,12 @@ Additionally, when your Stamina reaches the negative of your winded value, you b
 	ancestryPoints: 2
 };
 
+// #endregion
+
+// #region Classes
+
 const vampireClass: HeroClass = {
-	id: 'vampire-class',
+	id: 'class-vampire',
 	name: 'Vampire',
 	description: `
 *By Triglav Games*
@@ -1438,6 +1444,10 @@ If the target is an enemy, the appendage doesn't immediately wither down and is 
 	characteristics: []
 };
 
+// #endregion
+
+// #region Kits
+
 const crimsonKnight: Kit = {
 	id: 'kit-crimson-knight',
 	name: 'Crimson Knight',
@@ -1612,8 +1622,12 @@ You use your sharp, elongated claws to cut and tear your enemies, trying to inju
 	]
 };
 
+// #endregion
+
+// #region Perks
+
 const deceptiveAppearance: Perk = {
-	id: 'deceptive-appearance',
+	id: 'perk-deceptive-appearance',
 	name: 'Deceptive Appearance',
 	list: PerkList.Special,
 	description: `
@@ -1625,7 +1639,7 @@ An illusory glamor makes you attractive and easy on the eyes of the beholder. It
 };
 
 const insidiousMist: Perk = {
-	id: 'insidious-mist',
+	id: 'perk-insidious-mist',
 	name: 'Insidious Mist',
 	list: PerkList.Special,
 	description: `
@@ -1645,7 +1659,7 @@ As a maneuver, you can turn into a cloud of sentient mist. In this form, you gai
 };
 
 const nightSpeech: Perk = {
-	id: 'night-speech',
+	id: 'perk-night-speech',
 	name: 'Night Speech',
 	list: PerkList.Special,
 	description: `
@@ -1657,7 +1671,7 @@ You can speak with and understand animals that are associated with night or evil
 };
 
 const oneWithTheShadows: Perk = {
-	id: 'one-with-the-shadows',
+	id: 'perk-one-with-the-shadows',
 	name: 'One with the Shadows',
 	list: PerkList.Special,
 	description: `
@@ -1667,6 +1681,8 @@ As a nocturnal predator, you embrace the shadows as they embrace you. You have a
 	type: FeatureType.Text,
 	data: null
 };
+
+// #endregion
 
 export const triglav: Sourcebook = {
 	id: 'triglav',

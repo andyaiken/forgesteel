@@ -1,6 +1,6 @@
 import { Button, Segmented, Space } from 'antd';
 import { Ability } from '@/models/ability';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { BarChartOutlined } from '@ant-design/icons';

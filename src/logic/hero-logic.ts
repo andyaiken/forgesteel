@@ -1,7 +1,7 @@
 import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';

@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -41,9 +41,7 @@ export const duelist: SubClass = {
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('You gain a +2 bonus to speed until the end of your turn. Additionally, the next power roll you make this turn can’t have an outcome lower than tier 2.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You gain a +4 bonus to speed instead.'
 							})
 						]
@@ -308,5 +306,6 @@ Additionally, when your named signature ability is the last ability you use in a
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

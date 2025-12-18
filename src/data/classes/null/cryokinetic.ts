@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -260,5 +260,6 @@ As your discipline grows, you strengthen the psionic power suffusing you, granti
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

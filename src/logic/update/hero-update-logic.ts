@@ -108,6 +108,12 @@ export class HeroUpdateLogic {
 				hero.class.primaryCharacteristicsOptions = [];
 			}
 
+			hero.class.subclasses.forEach(sc => {
+				if (sc.abilities === undefined) {
+					sc.abilities = [];
+				}
+			});
+
 			hero.class.featuresByLevel
 				.flatMap(lvl => lvl.features)
 				.forEach(FeatureUpdateLogic.updateFeature);
@@ -192,6 +198,10 @@ export class HeroUpdateLogic {
 		}
 
 		hero.abilityCustomizations.forEach(ac => {
+			if (ac.costModifier === undefined) {
+				ac.costModifier = 0;
+			}
+
 			if (ac.distanceBonus === undefined) {
 				ac.distanceBonus = 0;
 			}

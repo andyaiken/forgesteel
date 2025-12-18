@@ -20,6 +20,7 @@ import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { ItemType } from '@/enums/item-type';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -66,7 +67,10 @@ export class ClassicSheetBuilder {
 	// #region Monster Sheet
 	static buildMonsterSheet = (monster: Monster): MonsterSheet => {
 		const level = MonsterLogic.getMonsterLevel(monster);
-		const monsterType = `Lvl ${level} ${monster.role.organization} ${monster.role.type}`;
+		let monsterType = `Lvl ${level} ${monster.role.organization}`;
+		if (monster.role.type !== MonsterRoleType.NoRole) {
+			monsterType += ` ${monster.role.type}`;
+		}
 
 		const speed = MonsterLogic.getSpeed(monster);
 		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);

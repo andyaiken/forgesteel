@@ -12,6 +12,7 @@ export interface AbilityCustomization {
 	name: string;
 	description: string;
 	notes: string;
+	costModifier: number;
 	distanceBonus: number;
 	damageBonus: number;
 	characteristic: Characteristic | null;
@@ -27,8 +28,8 @@ export interface Hero {
 
 	ancestry: Ancestry | null;
 	culture: Culture | null;
-	class: HeroClass | null;
 	career: Career | null;
+	class: HeroClass | null;
 	complication: Complication | null;
 
 	features: Feature[];

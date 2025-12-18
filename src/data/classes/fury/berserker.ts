@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -43,9 +43,7 @@ As your ferocity grows, you gain benefits as noted on the Berserker Growing Fero
 						target: 'Self or one creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You can select a new target of the same size or smaller within distance to be force moved instead. You become the source of the forced movement, determine the new target’s destination, and can push the target instead of using the original forced movement type. Additionally, the forced movement distance gains a bonus equal to your Might score.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'The forced movement distance gains a bonus equal to twice your Might score instead.'
 							})
 						]
@@ -308,5 +306,6 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

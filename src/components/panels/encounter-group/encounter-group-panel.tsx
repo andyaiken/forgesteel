@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Input, Popover, Segmented, Tag } from 'antd';
+import { Alert, Button, Flex, Input, Popover, Segmented, Space, Tag } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
@@ -46,7 +46,6 @@ interface EncounterGroupHeroProps {
 
 export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 	const [ setRef, size ] = useDimensions();
-	const [ showMonsters, setShowMonsters ] = useState<boolean>(false);
 
 	const showStamina = size.width >= (widthBase + widthStaminaColumn);
 	const showCharacteristics = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn);
@@ -161,43 +160,76 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
-								{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
-								{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								<Flex gap={3}>
+									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
+									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+									{props.hero.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								</Flex>
 							</div>
 							{
-								HeroLogic.getCompanions(props.hero).length + HeroLogic.getSummons(props.hero).length > 0 ?
-									<Button
-										type='text'
-										icon={showMonsters ? <DownOutlined rotate={180} /> : <DownOutlined />}
-										onClick={e => {
-											e.stopPropagation();
-											setShowMonsters(!showMonsters);
-										}}
-									/>
+								HeroLogic.getCompanions(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length > 0 ?
+									<Popover
+										trigger='click'
+										content={
+											<Space orientation='vertical' style={{ width: '100%' }}>
+												{
+													HeroLogic.getCompanions(props.hero).map(m => (
+														<Button
+															key={m.id}
+															type='text'
+															block={true}
+															onClick={e => {
+																e.stopPropagation();
+																props.onAddSquad(props.hero, m, 1);
+															}}
+														>
+															Companion: {m.name}
+														</Button>
+													))
+												}
+												{
+													HeroLogic.getRetainers(props.hero).map(m => (
+														<Button
+															key={m.id}
+															type='text'
+															block={true}
+															onClick={e => {
+																e.stopPropagation();
+																props.onAddSquad(props.hero, m, 1);
+															}}
+														>
+															Retainer: {m.name}
+														</Button>
+													))
+												}
+												{
+													HeroLogic.getSummons(props.hero).map(m => (
+														<Button
+															key={m.id}
+															type='text'
+															block={true}
+															onClick={e => {
+																e.stopPropagation();
+																props.onAddSquad(props.hero, m.monster, m.info.count);
+															}}
+														>
+															{m.info.count === 1 ? `Summon: ${m.name}` : `Summon: ${m.name} (x${m.info.count})`}
+														</Button>
+													))
+												}
+											</Space>
+										}
+									>
+										<Button
+											type='text'
+											icon={<PlusOutlined />}
+											title='Add a controlled monster'
+											onClick={e => e.stopPropagation()}
+										/>
+									</Popover>
 									: null
 							}
 						</div>
-						{
-							showMonsters ?
-								<div>
-									{
-										HeroLogic.getCompanions(props.hero).map(m => (
-											<Button key={m.id} block={true} onClick={() => props.onAddSquad(props.hero, m, 1)}>
-												{m.name}
-											</Button>
-										))
-									}
-									{
-										HeroLogic.getSummons(props.hero).map(m => (
-											<Button key={m.id} block={true} onClick={() => props.onAddSquad(props.hero, m.monster, m.info.count)}>
-												Summon: {m.name}
-											</Button>
-										))
-									}
-								</div>
-								: null
-						}
 						{
 							props.hero.state.controlledSlots.map(slot => (
 								<div key={slot.id} className='encounter-slot controlled-slot'>
@@ -304,7 +336,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 
 interface MonsterSlotProps {
 	slot: EncounterSlot;
-	encounter: Encounter;
+	encounter?: Encounter;
 	sourcebooks: Sourcebook[];
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
@@ -321,20 +353,6 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 	const [ showMonsters, setShowMonsters ] = useState<boolean>(!isMinionSlot);
 
 	const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, props.slot.monsterID);
-
-	const getStaminaDescription = () => {
-		const max = Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m));
-
-		let str = `${max}`;
-		if (props.slot.state.staminaDamage > 0) {
-			str = `${Math.max(max - props.slot.state.staminaDamage, 0)} / ${max}`;
-		}
-		if (props.slot.state.staminaTemp > 0) {
-			str += ` +${props.slot.state.staminaTemp}`;
-		}
-
-		return str;
-	};
 
 	const getMinionCountMessage = () => {
 		if (!isMinionSlot) {
@@ -364,6 +382,10 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 			return null;
 		}
 
+		if (!props.encounter) {
+			return null;
+		}
+
 		if (props.slot.state.captainID) {
 			const captain = props.encounter.groups
 				.flatMap(g => g.slots)
@@ -371,7 +393,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 				.find(m => m.id === props.slot.state.captainID);
 			if (captain) {
 				return (
-					<Tag>
+					<Tag variant='outlined'>
 						Captain: {captain.name}
 					</Tag>
 				);
@@ -379,7 +401,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 		}
 
 		return (
-			<Tag>No captain</Tag>
+			<Tag variant='outlined'>No captain</Tag>
 		);
 	};
 
@@ -395,7 +417,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 							{
 								showStamina ?
 									<div className='stamina-column'>
-										{getStaminaDescription()}
+										{MonsterLogic.getMinionStaminaDescription(props.slot)}
 										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 									</div>
 									: null
@@ -441,8 +463,10 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								{getMinionCaptainTag()}
-								{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								<Flex gap={3}>
+									{getMinionCaptainTag()}
+									{props.slot.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								</Flex>
 							</div>
 							<Button
 								type='text'
@@ -521,9 +545,11 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 										: null
 								}
 								<div className='conditions-column'>
-									{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
-									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
-									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									<Flex gap={3}>
+										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
+										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+										{monster.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									</Flex>
 								</div>
 							</div>
 						))

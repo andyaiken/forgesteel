@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -442,8 +442,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 								tier2: '10 damage; pull 1; A<2 bleeding (save ends)',
 								tier3: '12 damage; pull 2; A<3 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 1,
 								effect: 'One target adjacent to the deathrex is grabbed in the deathrex’s mouth.'
 							})

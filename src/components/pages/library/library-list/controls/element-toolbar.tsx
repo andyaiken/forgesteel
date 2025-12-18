@@ -5,7 +5,9 @@ import { DangerButton } from '@/components/controls/danger-button/danger-button'
 import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
 import { Element } from '@/models/element';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HeroClass } from '@/models/class';
 import { LibraryLogic } from '@/logic/library-logic';
+import { MonsterGroup } from '@/models/monster-group';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -277,13 +279,64 @@ export const ElementToolbar = (props: Props) => {
 	};
 
 	const getDelete = () => {
-		return sourcebook.type === SourcebookType.Homebrew ?
+		if (sourcebook.type !== SourcebookType.Homebrew) {
+			return null;
+		}
+
+		const elements = [ props.element ];
+		if (props.category === 'class') {
+			const c = props.element as HeroClass;
+			if (c.subclasses) {
+				elements.push(...c.subclasses);
+			} else {
+				// This is a subclass, not a class - can't be deleted here
+				return null;
+			}
+		}
+		if (props.category === 'monster-group') {
+			const g = props.element as MonsterGroup;
+			if (g.monsters) {
+				elements.push(...g.monsters);
+			} else {
+				// This is a monster, not a group - can't be deleted here
+				return null;
+			}
+		}
+
+		const used: { element: Element, container: Element }[] = [];
+		elements.forEach(e => {
+			SourcebookLogic.getUsedIn(props.sourcebooks, e.id)
+				.filter(x => !elements.map(e => e.id).includes(x.id))
+				.forEach(x => {
+					used.push({ element: e, container: x });
+				});
+		});
+
+		let msg = undefined;
+		if (used.length > 0) {
+			msg = (
+				<>
+					<div>Cannot delete:</div>
+					<ul>
+						{
+							used.map(x => (
+								<li key={x.element.id}>
+									<b>{x.element.name || 'Unnamed Element'}</b> is used in <b>{x.container.name || 'Unnamed Element'}</b>
+								</li>
+							))
+						}
+					</ul>
+				</>
+			);
+		}
+
+		return (
 			<DangerButton
 				mode='block'
-				disabled={SourcebookLogic.getUsedIn(props.sourcebooks, props.element.id).length !== 0}
+				disabledMessage={msg}
 				onConfirm={() => props.deleteElement(props.category, sourcebook.id, props.element)}
 			/>
-			: null;
+		);
 	};
 
 	return (

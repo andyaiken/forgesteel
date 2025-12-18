@@ -3,11 +3,11 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureSummonChoice } from '@/models/feature';
 import { Summon } from '@/models/summon';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
-import { undead } from '@/data/classes/summoner/undead';
+import { circleOfGraves } from '@/data/classes/summoner/graves';
 
 describe('isSummon', () => {
 	test('returns true for Summoner minions', () => {
-		const signatureMinions = undead.featuresByLevel.flatMap(fbl => fbl.features)
+		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
 		const skeleton = signatureMinions.data.options.find(o => o.id === 'summoner-4-1-4c') as Summon;
 		expect(CreatureLogic.isSummon(skeleton)).toBe(true);
@@ -30,7 +30,7 @@ describe('isCompanion', () => {
 	});
 
 	test('returns false for Summoner minions', () => {
-		const signatureMinions = undead.featuresByLevel.flatMap(fbl => fbl.features)
+		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
 		const skeleton = signatureMinions.data.options.find(o => o.id === 'summoner-4-1-4c') as Summon;
 		expect(CreatureLogic.isCompanion(skeleton)).toBe(false);

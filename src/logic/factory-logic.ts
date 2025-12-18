@@ -283,6 +283,7 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
+			abilities: [],
 			selected: false
 		};
 	};
@@ -876,14 +877,27 @@ export class FactoryLogic {
 
 	static createAbilitySectionField = (data: {
 		name: string,
+		effect: string
+	}): AbilitySectionField => {
+		return {
+			type: 'field',
+			name: data.name,
+			value: 0,
+			repeatable: false,
+			effect: data.effect
+		};
+	};
+
+	static createAbilitySectionSpend = (data: {
+		name?: string,
 		effect: string,
 		value?: number,
 		repeatable?: boolean
 	}): AbilitySectionField => {
 		return {
 			type: 'field',
-			name: data.name,
-			value: data.value || 0,
+			name: data.name || 'Spend',
+			value: data.value || 1,
 			repeatable: data.repeatable || false,
 			effect: data.effect
 		};
@@ -916,8 +930,7 @@ export class FactoryLogic {
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
-			tier3: data.tier3,
-			crit: data.crit || ''
+			tier3: data.tier3
 		};
 	};
 
@@ -1071,7 +1084,8 @@ export class FactoryLogic {
 		return {
 			useWarehouse: false,
 			warehouseHost: '',
-			warehouseToken: ''
+			warehouseToken: '',
+			patreonConnected: false
 		};
 	};
 

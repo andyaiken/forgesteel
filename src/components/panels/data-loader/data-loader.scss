@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgb(230, 230, 230);
+    overflow-y: scroll;
 
     .data-loader-container {
         width: 250px;
@@ -21,6 +22,14 @@
                 width: 75px;
                 height: 75px;
             }
+        }
+
+        .header-text-panel {
+            justify-content: center;
+        }
+
+        .ant-alert-error {
+            margin-bottom: 10px;
         }
     }
 }

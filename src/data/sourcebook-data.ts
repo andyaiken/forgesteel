@@ -1,16 +1,18 @@
-import { community, communityPrerelease } from '@/data/sourcebooks/community';
-import { blacksmith } from '@/data/sourcebooks/magazine-blacksmith';
-import { core } from '@/data/sourcebooks/core';
-import { orden } from '@/data/sourcebooks/orden';
-import { playtest } from '@/data/sourcebooks/playtest';
-import { ratcatcher } from '@/data/sourcebooks/magazine-ratcatcher';
-import { triglav } from '@/data/sourcebooks/triglav';
+import { community, communityPrerelease } from '@/data/sourcebooks/community/community';
+import { blacksmith } from '@/data/sourcebooks/third-party/magazine-blacksmith';
+import { core } from '@/data/sourcebooks/official/core';
+import { orden } from '@/data/sourcebooks/official/orden';
+import { patreon } from '@/data/sourcebooks/official/patreon';
+import { ratcatcher } from '@/data/sourcebooks/third-party/magazine-ratcatcher';
+import { summonerSourcebook } from '@/data/sourcebooks/official/summoner';
+import { triglav } from '@/data/sourcebooks/third-party/triglav';
 
 export class SourcebookData {
 	// Official
 	static core = core;
 	static orden = orden;
-	static playtest = playtest;
+	static patreon = patreon;
+	static summoner = summonerSourcebook;
 
 	// Third Party
 	static magazineBlacksmith = blacksmith;

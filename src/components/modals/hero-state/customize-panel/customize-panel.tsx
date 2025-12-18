@@ -4,6 +4,7 @@ import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
 import { ConditionType } from '@/enums/condition-type';
+import { ConfigFeature } from '@/components/features/feature';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -11,7 +12,6 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
@@ -86,7 +86,7 @@ export const CustomizePanel = (props: Props) => {
 			<Popover
 				trigger='click'
 				content={
-					<>
+					<Space orientation='vertical'>
 						<HeaderText level={3}>Abilities</HeaderText>
 						<div className='customize-option-section'>
 							<Button
@@ -96,8 +96,7 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createClassAbilityChoice({
 										id: Utils.guid(),
-										cost: 'signature',
-										allowAnySource: true
+										cost: 'signature'
 									}));
 								}}
 							>
@@ -219,7 +218,7 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createPerk({
 										id: Utils.guid(),
-										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ]
 									}));
 								}}
 							>
@@ -278,19 +277,6 @@ export const CustomizePanel = (props: Props) => {
 							>
 								Retainer
 							</Button>
-							<Button
-								block={true}
-								type='text'
-								onClick={() => {
-									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createSummonChoice({
-										id: Utils.guid(),
-										options: []
-									}));
-								}}
-							>
-								Summon
-							</Button>
 						</div>
 						<HeaderText level={3}>Miscellaneous</HeaderText>
 						<div className='customize-option-section'>
@@ -346,7 +332,7 @@ export const CustomizePanel = (props: Props) => {
 								Skills
 							</Button>
 						</div>
-					</>
+					</Space>
 				}
 				open={menuOpen}
 				onOpenChange={setMenuOpen}
@@ -530,11 +516,9 @@ export const CustomizePanel = (props: Props) => {
 		switch (feature.type) {
 			case FeatureType.Ability:
 				return (
-					<div style={{ paddingTop: '20px' }}>
-						<Expander title='Ability Editor'>
-							<AbilityEditPanel ability={feature.data.ability} onChange={setAbility} />
-						</Expander>
-					</div>
+					<Expander title='Ability Editor'>
+						<AbilityEditPanel ability={feature.data.ability} onChange={setAbility} />
+					</Expander>
 				);
 			case FeatureType.AncestryFeatureChoice:
 				return (
@@ -629,7 +613,7 @@ export const CustomizePanel = (props: Props) => {
 			case FeatureType.ConditionImmunity:
 				return (
 					<Select
-						style={{ width: '100%', marginTop: '15px' }}
+						style={{ width: '100%' }}
 						placeholder='Select condition'
 						mode='multiple'
 						options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
@@ -673,11 +657,9 @@ export const CustomizePanel = (props: Props) => {
 				);
 			case FeatureType.Follower:
 				return (
-					<div style={{ paddingTop: '20px' }}>
-						<Expander title='Customize'>
-							<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
-						</Expander>
-					</div>
+					<Expander title='Customize'>
+						<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
+					</Expander>
 				);
 			case FeatureType.MovementMode:
 				return (
@@ -701,7 +683,7 @@ export const CustomizePanel = (props: Props) => {
 							mode='multiple'
 							allowClear={true}
 							placeholder='List'
-							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(pl => ({ label: pl, value: pl }))}
+							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(pl => ({ label: pl, value: pl }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={feature.data.lists}
 							onChange={setPerkLists}
@@ -770,18 +752,13 @@ export const CustomizePanel = (props: Props) => {
 								]}
 							>
 								{getEditSection(f)}
-								{
-									[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.MovementMode, FeatureType.Proficiency ].includes(f.type) ?
-										null
-										:
-										<FeatureConfigPanel
-											feature={f}
-											options={props.options}
-											hero={hero}
-											sourcebooks={props.sourcebooks}
-											setData={setFeatureData}
-										/>
-								}
+								<ConfigFeature
+									feature={f}
+									hero={props.hero}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									setData={data => setFeatureData(f.id, data)}
+								/>
 							</Expander>
 						))
 				}

@@ -5,11 +5,13 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 
 export class ConsumableData {
+	// #region Echelon 1
+
 	static blackAshDart: Item = FactoryLogic.createItem({
 		id: 'item-black-ash-dart',
 		name: 'Black Ash Dart',
 		description: 'A diamond-shaped dart holds a shimmering black vial at its core.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			description: 'Yields 1d3 darts, or three darts if crafted by a shadow',
@@ -30,7 +32,7 @@ As a maneuver, you can make a ranged free strike using a black ash dart. The str
 		id: 'item-blood-essence-vial',
 		name: 'Blood Essence Vial',
 		description: 'A brittle glass tube has a ruby set atop it, attached by a hinge.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A ruby purloined from a vampire',
@@ -45,7 +47,7 @@ As a maneuver, you can make a ranged free strike using a black ash dart. The str
 		id: 'item-buzz-balm',
 		name: 'Buzz Balm',
 		description: 'This cooling orange salve crackles and pops when exposed to the air.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Oil ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of demon honey',
@@ -60,7 +62,7 @@ As a maneuver, you can make a ranged free strike using a black ash dart. The str
 		id: 'item-catapult-dust',
 		name: 'Catapult Dust',
 		description: 'A small leather pouch is filled with this fine blue powder.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of witherite crystal',
@@ -75,7 +77,7 @@ As a maneuver, you can make a ranged free strike using a black ash dart. The str
 		id: 'item-giants-blood-flame',
 		name: 'Giant\'s Blood Flame',
 		description: 'A small pot is filled with a viscous, ochre oil that smells of sulfur and burnt hair.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Oil ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One vial of fire giant blood',
@@ -95,7 +97,7 @@ Any fire caused by the oil is extinguished after burning for 1 hour.`
 		id: 'item-growth-potion',
 		name: 'Growth Potion',
 		description: 'This thick, green liquid tastes of licorice and potatoes.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A half-pound of seagrass',
@@ -110,7 +112,7 @@ Any fire caused by the oil is extinguished after burning for 1 hour.`
 		id: 'item-healing-potion',
 		name: 'Healing Potion',
 		description: 'Thick and red, this liquid tastes of sour beer.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of costmary leaves',
@@ -125,7 +127,7 @@ Any fire caused by the oil is extinguished after burning for 1 hour.`
 		id: 'item-imps-tongue',
 		name: 'Imp\'s Tongue',
 		description: 'The tongue of an imp has been dried and preserved. Yuck.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One imp\'s tongue',
@@ -140,7 +142,7 @@ Any fire caused by the oil is extinguished after burning for 1 hour.`
 		id: 'item-lachomp-tooth',
 		name: 'Lachomp Tooth',
 		description: 'A thumb-sized serrated tooth seems to scratch your flesh in some way whenever it is handled.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			description: 'Yields 1d3 teeth',
@@ -160,7 +162,7 @@ As a maneuver, you attach a lachomp tooth to a weapon, allowing that weapon to s
 		id: 'item-mirror-token',
 		name: 'Mirror Token',
 		description: 'A gold-rimmed, mirror-faced coin trembles in the hand as if it were repelled by your touch.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Three sheets of glass, sunbaked gold dust',
@@ -175,7 +177,7 @@ As a maneuver, you attach a lachomp tooth to a weapon, allowing that weapon to s
 		id: 'item-pocket-homunculus',
 		name: 'Pocket Homunculus',
 		description: 'A densely interlocking sphere of clockwork gears features facets that show the countenance of the item\'s wielder.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A strip of starmetal coated in the blood of the item\'s crafter',
@@ -193,7 +195,7 @@ While you have line of effect to your homunculus, you can use a maneuver to issu
 		id: 'item-portable-cloud',
 		name: 'Portable Cloud',
 		description: 'This thin glass sphere holds a tiny roiling cloud.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A cup of rainwater from a sacred fey grove',
@@ -208,7 +210,7 @@ While you have line of effect to your homunculus, you can use a maneuver to issu
 		id: 'item-noxious-cloud',
 		name: 'Noxious Cloud',
 		description: 'This thin glass sphere holds a tiny roiling cloud.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ten ounces of rainwater from a sacred fey grove; one ounce of undead flesh',
@@ -226,7 +228,7 @@ Filled with a green or putrid yellow haze, this sphere spreads a choking, foul-s
 		id: 'item-thunderhead-cloud',
 		name: 'Thunderhead Cloud',
 		description: 'This thin glass sphere holds a tiny roiling cloud.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ten ounces of rainwater from a sacred fey grove, a spool of copper wire',
@@ -244,7 +246,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-veratismo',
 		name: 'Professor Veratismo\'s Quaff\'n\'Huff Snuff',
 		description: 'This tiny compact holds a colorless powder with the slightest astringent smell.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The roots of a just-budded nightshade',
@@ -259,7 +261,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-snapdragon',
 		name: 'Snapdragon',
 		description: 'This delicate orange blossom has a sickly-sweet smell.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			description: 'Yields 1d6 + 1 snapdragons',
@@ -271,11 +273,15 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		effect: 'As a maneuver, you sniff a magic snapdragon blossom, causing it to whither and making your movements more forceful and explosive. The next damage-dealing ability you use deals an extra 5 damage and gains a +2 bonus to the distance of any forced movement it imposes. If the ability does not impose forced movement, you can push each creature targeted by the ability up to 2 squares.'
 	});
 
+	// #endregion
+
+	// #region Echelon 2
+
 	static breathofDawn: Item = FactoryLogic.createItem({
 		id: 'item-breath-of-dawn',
 		name: 'Breath of Dawn',
 		description: 'A glass flask contains a whirl of gentle sunlight.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The breath of a mystic sage captured at sunrise',
@@ -290,7 +296,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-bull-shot',
 		name: 'Bull Shot',
 		description: 'Tiny chips of white bone float within this dark potion, which carries the scent of beef broth.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One vial of pure bovine essence',
@@ -305,7 +311,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-chocolate-of-immovability',
 		name: 'Chocolate of Immovability',
 		description: 'This decadent-looking treat feels strangely heavy in the hand.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A chocolate made by a gnome confectioner',
@@ -320,7 +326,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-concealment-potion',
 		name: 'Concealment Potion',
 		description: 'This dark, viscous liquid tastes like burnt leaves.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of sap from a tree damaged by psionic fire',
@@ -335,7 +341,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-float-powder',
 		name: 'Float Powder',
 		description: 'A glass vial holds translucent flakes that twinkle in the light.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			description: 'Yields 1d3 vials',
@@ -351,7 +357,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-purified-jelly',
 		name: 'Purified Jelly',
 		description: 'This clear, pasty substance has a bitter aroma.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			description: 'Yields 1d3 doses',
@@ -367,7 +373,7 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		id: 'item-scroll-of-resurrection',
 		name: 'Scroll of Resurrection',
 		description: 'This scroll is marked by sigils of power, death, and life.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Scroll ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A sheet of paper infused with the dust of a painite',
@@ -385,7 +391,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 		id: 'item-telemagnet',
 		name: 'Telemagnet',
 		description: 'A short iron wand shaped of interlocking segments leaks greasy black oil from its joints.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A shard of prismacore, an ounce of ferrous metal',
@@ -407,7 +413,7 @@ If you pull a size 1T object adjacent to you, you can catch it.`
 		id: 'item-vial-of-ethereal-attack',
 		name: 'Vial of Ethereal Attack',
 		description: 'Clear liquid seems to constantly churn within an obsidian vial, even when at rest.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable2nd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A signed agreement with a ghost, a large obsidian disk',
@@ -418,11 +424,15 @@ If you pull a size 1T object adjacent to you, you can catch it.`
 		effect: 'As a maneuver, you throw this vial up to 10 squares, destroying the vial and creating a 2-cube ethereal vortex centered on the spot where it lands. The vortex dissipates at the end of the encounter or when you dismiss it (no action required). Any creature who enters the vortex for the first time in a combat round or starts their turn there takes 10 psychic damage. At the start of each of your turns, you can move the vortex up to 5 squares (no action required).'
 	});
 
+	// #endregion
+
+	// #region Echelon 3
+
 	static anamorphicLarva: Item = FactoryLogic.createItem({
 		id: 'item-anamorphic-larva',
 		name: 'Anamorphic Larva',
 		description: 'A cloudy glass vial holds a writhing monstrous grub.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A grub steeped in voiceless talker bile',
@@ -440,7 +450,7 @@ At the start of each of your turns, each creature adjacent to the wall takes psy
 		id: 'item-bottled-paradox',
 		name: 'Bottled Paradox',
 		description: 'Liquid constantly swirls within a cut glass bottle that is ice cold to the touch.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A month’s lifespan from the creator or another willing creature, ground sapphire',
@@ -455,7 +465,7 @@ At the start of each of your turns, each creature adjacent to the wall takes psy
 		id: 'item-gallios-visiting-card',
 		name: 'G’Allios Visiting Card',
 		description: 'A card bearing the Eighth City Advocacy Services crest smells faintly of smoke and spices.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One vial of archdevil’s blood, an expired contract',
@@ -470,7 +480,7 @@ At the start of each of your turns, each creature adjacent to the wall takes psy
 		id: 'item-personal-effigy',
 		name: 'Personal Effigy',
 		description: 'This tiny humanoid effigy appears unnervingly lifelike and is always warm to the touch.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A brief period of contact with the creature the effigy is tied to',
@@ -485,7 +495,7 @@ At the start of each of your turns, each creature adjacent to the wall takes psy
 		id: 'item-stygian-liquor',
 		name: 'Stygian Liquor',
 		description: 'This muddy brown whiskey tastes of peat and death.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of scrapings from a coven’s used cauldron',
@@ -500,7 +510,7 @@ At the start of each of your turns, each creature adjacent to the wall takes psy
 		id: 'item-timesplitter',
 		name: 'Timesplitter',
 		description: 'This spiked crystal makes a beautiful ringing sound when first touched.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A time crystal',
@@ -520,7 +530,7 @@ As a maneuver, you make a ranged free strike using the Timesplitter, which shatt
 		id: 'item-ward-token',
 		name: 'Ward Token',
 		description: 'This smoothly polished quartz stone feels strangely warm to the touch.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A small quartz',
@@ -535,7 +545,7 @@ As a maneuver, you make a ranged free strike using the Timesplitter, which shatt
 		id: 'item-wellness-tonic',
 		name: 'Wellness Tonic',
 		description: 'This thick purple liquid has a bitter scent that lingers.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable3rd,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of troll’s blood, raw honey',
@@ -546,11 +556,15 @@ As a maneuver, you make a ranged free strike using the Timesplitter, which shatt
 		effect: 'When you drink this tonic as a maneuver, you feel a surge of physical and spiritual immunity. You can immediately end up to three conditions or effects affecting you. Additionally, until the start of your next turn, you can ignore any effect that would last until the end of your next turn or be ended by a saving throw.'
 	});
 
+	// #endregion
+
+	// #region Echelon 4
+
 	static breathofCreation: Item = FactoryLogic.createItem({
 		id: 'item-breath-of-creation',
 		name: 'Breath of Creation',
 		description: 'A glass flask holds a roiling storm of astral plasma.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable4th,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The captured breath of a god, an ounce of condensed dreams',
@@ -568,7 +582,7 @@ Each time you use another Breath of Creation, you can create a new demiplane or 
 		id: 'item-elixir-of-saint-elspeth',
 		name: 'Elixir of Saint Elspeth',
 		description: 'This thick red liquid smells of cinnamon.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable4th,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Potion ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of the blood of Saint Elspeth',
@@ -583,7 +597,7 @@ Each time you use another Breath of Creation, you can create a new demiplane or 
 		id: 'item-solaris',
 		name: 'Page From the Infinite Library: Solaris',
 		description: 'This page is covered with writing and diagrams detailing the release of limitless energy—and the dangers of that process.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable4th,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One vial of sacred ink, blessed parchment',
@@ -598,7 +612,7 @@ Each time you use another Breath of Creation, you can create a new demiplane or 
 		id: 'item-bright-court',
 		name: 'Restorative of the Bright Court',
 		description: 'An ornately decorated golden vial smells of summer rain and subtle zesty fruits.',
-		type: ItemType.Consumable,
+		type: ItemType.Consumable4th,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A year’s lifespan from the creator or another willing creature, the laughter of a young hero',
@@ -608,4 +622,6 @@ Each time you use another Breath of Creation, you can create a new demiplane or 
 		}),
 		effect: 'When opened as a maneuver, this vial bursts into a storm of multicolored lights. You and each ally within 5 squares of you regain 1d6 Recoveries. However, any mortal using this treasure draws the interest of a powerful fey noble.'
 	});
+
+	// #endregion
 }

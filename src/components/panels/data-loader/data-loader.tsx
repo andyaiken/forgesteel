@@ -1,15 +1,15 @@
-import { Alert, Flex } from 'antd';
+import { Alert, Button, Flex } from 'antd';
 import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Format } from '@/utils/format';
-import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
@@ -22,6 +22,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 
 import './data-loader.scss';
@@ -50,6 +51,7 @@ export const DataLoader = (props: Props) => {
 	const [ playbookState, setPlaybookState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
+	const [ splinesState, setSplinesState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ error, setError ] = useState<string | null>(null);
@@ -63,7 +65,9 @@ export const DataLoader = (props: Props) => {
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
 		setConnectionSettings(settings);
-		return new DataService(settings);
+		const service = new DataService(settings);
+		await service.initialize();
+		return service;
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
@@ -100,6 +104,7 @@ export const DataLoader = (props: Props) => {
 		setSessionState(undefined);
 		setOptionsState(undefined);
 		setHiddenSettingsState(undefined);
+		setSplinesState(undefined);
 
 		getDataService().then(dataService => {
 			setConnectionSettingsState('success');
@@ -110,6 +115,7 @@ export const DataLoader = (props: Props) => {
 			setSessionState('pending');
 			setOptionsState('pending');
 			setHiddenSettingsState('pending');
+			setSplinesState('pending');
 
 			const promises = [
 				updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
@@ -117,7 +123,8 @@ export const DataLoader = (props: Props) => {
 				updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
 				updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
 				updateLoadingStatus(dataService.getSession(), setSessionState),
-				updateLoadingStatus(dataService.getOptions(), setOptionsState)
+				updateLoadingStatus(dataService.getOptions(), setOptionsState),
+				updateLoadingStatus(Utils.wait(), setSplinesState)
 			];
 
 			Promise.all(promises).then(results => {
@@ -227,30 +234,31 @@ export const DataLoader = (props: Props) => {
 				// #endregion
 
 				setOverallLoadState('success');
-				setTimeout(
-					() => props.onComplete({
-						connectionSettings: dataService.settings,
-						service: dataService,
-						heroes: heroes,
-						homebrew: sourcebooks,
-						hiddenSourcebookIDs: hiddenSourcebookIDs,
-						session: session,
-						options: options
-					}),
-					1000
-				);
+				props.onComplete({
+					connectionSettings: dataService.settings,
+					service: dataService,
+					heroes: heroes,
+					homebrew: sourcebooks,
+					hiddenSourcebookIDs: hiddenSourcebookIDs,
+					session: session,
+					options: options
+				});
 			}).catch(reason => {
 				console.error(reason);
 				setError(reason.message);
 				setOverallLoadState('failure');
 			});
+		}).catch(reason => {
+			console.error(reason);
+			setError(reason.message);
+			setOverallLoadState('failure');
 		});
 	};
 
 	useEffect(
 		loadData,
 		// dependencies here needs to be an empty array so that it only runs once
-		// otherwise, it runs several times as things change
+		// otherwise, it runs several times as things change.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
@@ -263,7 +271,7 @@ export const DataLoader = (props: Props) => {
 				</div>
 				<HeaderText level={1}>Loading Data</HeaderText>
 				<Flex vertical={true}>
-					<Flex vertical={true}>
+					<Flex className='load-states' vertical={true}>
 						<CheckLabel state={connectionSettingsState}>Connection Settings</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
@@ -271,6 +279,7 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSettingsState}>Identifying Manifold</CheckLabel>
+						<CheckLabel state={splinesState}>Reticulating Splines</CheckLabel>
 					</Flex>
 					{
 						error ?
@@ -290,8 +299,15 @@ export const DataLoader = (props: Props) => {
 									showIcon={true}
 									title='Update Warehouse settings below, if necessary.'
 								/>
+								<Button
+									block={true}
+									type='primary'
+									onClick={() => location.reload()}
+								>
+									Retry
+								</Button>
 								<Expander title='Forge Steel Warehouse Settings'>
-									<FsWarehouseConnectionSettingsPanel
+									<ConnectionSettingsPanel
 										connectionSettings={connectionSettings}
 										setConnectionSettings={persistConnectionSettings}
 									/>

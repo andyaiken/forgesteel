@@ -474,7 +474,7 @@ const ItemSheet = (props: ItemProps) => {
 			<Markdown text={props.item.description} />
 			{
 				props.item.keywords.length > 0 ?
-					<Field label='Keywords' value={props.item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
+					<Field label='Keywords' value={<Flex gap={3}>{props.item.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}</Flex>} />
 					: null
 			}
 			<Markdown text={props.item.effect} />
@@ -636,7 +636,7 @@ const MonsterSheet = (props: MonsterProps) => {
 			<MonsterLabel monster={props.monster} />
 			<Markdown text={props.monster.description} />
 			<Flex align='center' justify='space-between'>
-				<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
+				<Flex gap={3}>{props.monster.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}</Flex>
 				{rightOfTags}
 			</Flex>
 			<StatsRow>
@@ -802,6 +802,17 @@ const SubclassSheet = (props: SubclassProps) => {
 						</Space>
 					))
 			}
+			{
+				props.subclass.abilities.length > 0 ?
+					<Space orientation='vertical'>
+						{
+							props.subclass.abilities.map(a => (
+								<AbilityPanel key={a.id} ability={a} mode={PanelMode.Full} />
+							))
+						}
+					</Space>
+					: null
+			}
 		</>
 	);
 };
@@ -842,7 +853,7 @@ const TerrainSheet = (props: TerrainProps) => {
 			<Markdown text={props.terrain.description} />
 			<TerrainLabel terrain={props.terrain} />
 			<Flex align='center' justify='space-between'>
-				<Tag>{props.terrain.category}</Tag>
+				<Tag variant='outlined'>{props.terrain.category}</Tag>
 				<Field label='EV' value={props.terrain.area ? `${props.terrain.encounterValue} per ${props.terrain.area}` : ((props.terrain.encounterValue === 0) ? '-' : props.terrain.encounterValue)} />
 			</Flex>
 			<div>

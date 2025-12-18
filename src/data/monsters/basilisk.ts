@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
@@ -117,7 +117,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: '13 poison damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('This ability gains an edge against targets the basilisk has previously dealt poison damage to')
+							FactoryLogic.createAbilitySectionText('This ability gains an edge against targets the basilisk has previously dealt poison damage to.')
 						]
 					})
 				}),
@@ -221,8 +221,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 								})
 							),
 							FactoryLogic.createAbilitySectionText('This ability can pull targets restrained by Petrifying Eye Beams, and ignores stability if it does so.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Malice',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
 								effect: 'The toungesnapper targets two additional creatures or objects.'
 							})

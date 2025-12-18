@@ -34,9 +34,7 @@ Additionally, you can touch a living plant that is not a plant creature to commu
 						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can spend a Recovery.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'The target can spend an additional Recovery for each essence spent.'
 							})
@@ -181,5 +179,6 @@ As a maneuver, a creature can consume a Life Fruit or feed it to an adjacent wil
 			]
 		}
 	],
+	abilities: [],
 	selected: false
 };

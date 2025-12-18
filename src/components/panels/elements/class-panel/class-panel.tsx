@@ -110,19 +110,17 @@ export const ClassPanel = (props: Props) => {
 	};
 
 	const getSubclasses = () => {
-		const subclasses = props.heroClass.subclasses.filter(sc => (props.heroClass.subclasses.filter(x => x.selected).length === 0) || sc.selected);
-
 		return (
 			<div className='class-subclasses-list'>
 				{
-					subclasses.map(sc => (
+					props.heroClass.subclasses.map(sc => (
 						<Expander key={sc.id} title={sc.name}>
 							<SubclassPanel key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} options={props.options} hero={props.hero} mode={PanelMode.Full} style={{ padding: '5px' }} />
 						</Expander>
 					))
 				}
 				{
-					subclasses.length === 0 ?
+					props.heroClass.subclasses.length === 0 ?
 						<Empty />
 						: null
 				}
@@ -160,6 +158,7 @@ export const ClassPanel = (props: Props) => {
 					]}
 					value={page}
 					onChange={setPage}
+					onClick={e => e.stopPropagation()}
 				/>
 				{content}
 			</>
@@ -169,6 +168,15 @@ export const ClassPanel = (props: Props) => {
 	const tags = [];
 	if (props.heroClass.type === 'master') {
 		tags.push('Master Class');
+	}
+	const minLevel = Collections.min(props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => lvl.level), x => x);
+	const maxLevel = Collections.max(props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => lvl.level), x => x);
+	if ((minLevel !== 1) || (maxLevel !== 10)) {
+		if (minLevel === maxLevel) {
+			tags.push(`Level ${minLevel}`);
+		} else {
+			tags.push(`Levels ${minLevel}-${maxLevel}`);
+		}
 	}
 	if (props.sourcebooks.length > 0) {
 		const sourcebookType = SourcebookLogic.getClassSourcebook(props.sourcebooks, props.heroClass)?.type || SourcebookType.Official;

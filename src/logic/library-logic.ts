@@ -32,8 +32,7 @@ import { Utils } from '@/utils/utils';
 export class LibraryLogic {
 	static getAdventures = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getAdventures(sourcebooks)
+			return SourcebookLogic.getAdventures(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -46,8 +45,7 @@ export class LibraryLogic {
 
 	static getAncestries = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getAncestries(sourcebooks)
+			return SourcebookLogic.getAncestries(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -61,8 +59,7 @@ export class LibraryLogic {
 
 	static getCareers = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getCareers(sourcebooks)
+			return SourcebookLogic.getCareers(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -76,8 +73,7 @@ export class LibraryLogic {
 
 	static getClasses = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getClasses(sourcebooks)
+			return SourcebookLogic.getClasses(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -94,8 +90,7 @@ export class LibraryLogic {
 
 	static getComplications = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getComplications(sourcebooks)
+			return SourcebookLogic.getComplications(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -108,8 +103,7 @@ export class LibraryLogic {
 
 	static getCultures = (sourcebooks: Sourcebook[], searchTerm: string, showCulturesFromAncestries: boolean) => {
 		try {
-			return SourcebookLogic
-				.getCultures(sourcebooks, showCulturesFromAncestries)
+			return SourcebookLogic.getCultures(sourcebooks, showCulturesFromAncestries)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -122,8 +116,7 @@ export class LibraryLogic {
 
 	static getDomains = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getDomains(sourcebooks)
+			return SourcebookLogic.getDomains(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -137,16 +130,7 @@ export class LibraryLogic {
 
 	static getEncounters = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getEncounters(sourcebooks)
-				.filter(item => !adventureContentIDs.includes(item.id))
+			return SourcebookLogic.getEncounters(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -159,8 +143,7 @@ export class LibraryLogic {
 
 	static getImbuements = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getImbuements(sourcebooks)
+			return SourcebookLogic.getImbuements(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -173,8 +156,7 @@ export class LibraryLogic {
 
 	static getItems = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getItems(sourcebooks)
+			return SourcebookLogic.getItems(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -189,8 +171,7 @@ export class LibraryLogic {
 
 	static getKits = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getKits(sourcebooks)
+			return SourcebookLogic.getKits(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -204,8 +185,7 @@ export class LibraryLogic {
 
 	static getMonsterGroups = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getMonsterGroups(sourcebooks)
+			return SourcebookLogic.getMonsterGroups(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -219,8 +199,7 @@ export class LibraryLogic {
 
 	static getMonsters = (sourcebooks: Sourcebook[], searchTerm: string, filter: MonsterFilter) => {
 		try {
-			return SourcebookLogic
-				.getMonsters(sourcebooks)
+			return SourcebookLogic.getMonsters(sourcebooks)
 				.filter(item => MonsterLogic.matches(item, filter))
 				.filter(item => Utils.textMatches([
 					item.name,
@@ -234,16 +213,7 @@ export class LibraryLogic {
 
 	static getMontages = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getMontages(sourcebooks)
-				.filter(item => !adventureContentIDs.includes(item.id))
+			return SourcebookLogic.getMontages(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -256,16 +226,7 @@ export class LibraryLogic {
 
 	static getNegotiations = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getNegotiations(sourcebooks)
-				.filter(item => !adventureContentIDs.includes(item.id))
+			return SourcebookLogic.getNegotiations(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -278,8 +239,7 @@ export class LibraryLogic {
 
 	static getPerks = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getPerks(sourcebooks)
+			return SourcebookLogic.getPerks(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -292,8 +252,7 @@ export class LibraryLogic {
 
 	static getProjects = (sourcebooks: Sourcebook[], searchTerm: string, showProjectsFromImbuements: boolean, showProjectsFromItems: boolean) => {
 		try {
-			return SourcebookLogic
-				.getProjects(sourcebooks, showProjectsFromImbuements, showProjectsFromItems)
+			return SourcebookLogic.getProjects(sourcebooks, showProjectsFromImbuements, showProjectsFromItems)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -306,8 +265,7 @@ export class LibraryLogic {
 
 	static getSubclasses = (sourcebooks: Sourcebook[], searchTerm: string, showSubclassesFromClasses: boolean) => {
 		try {
-			return SourcebookLogic
-				.getSubclasses(sourcebooks, showSubclassesFromClasses)
+			return SourcebookLogic.getSubclasses(sourcebooks, showSubclassesFromClasses)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -320,16 +278,7 @@ export class LibraryLogic {
 
 	static getTacticalMaps = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getTacticalMaps(sourcebooks)
-				.filter(item => !adventureContentIDs.includes(item.id))
+			return SourcebookLogic.getTacticalMaps(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -342,8 +291,7 @@ export class LibraryLogic {
 
 	static getTerrainObjects = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getTerrains(sourcebooks)
+			return SourcebookLogic.getTerrains(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -356,8 +304,7 @@ export class LibraryLogic {
 
 	static getTitles = (sourcebooks: Sourcebook[], searchTerm: string) => {
 		try {
-			return SourcebookLogic
-				.getTitles(sourcebooks)
+			return SourcebookLogic.getTitles(sourcebooks)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
@@ -495,6 +442,11 @@ export class LibraryLogic {
 			if (c) {
 				return c.name;
 			}
+		}
+
+		if (category === 'terrain') {
+			const terrain = element as Terrain;
+			return terrain.category;
 		}
 
 		if (category === 'title') {

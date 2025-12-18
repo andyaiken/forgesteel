@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -37,9 +37,7 @@ export const telepathy: SubClass = {
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next ability roll an ally makes against the target before the start of your next turn gains an edge.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'You target one additional creature or object.'
 							})
 						]
@@ -317,5 +315,6 @@ export const telepathy: SubClass = {
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

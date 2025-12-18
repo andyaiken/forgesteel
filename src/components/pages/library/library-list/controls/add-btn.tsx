@@ -146,7 +146,8 @@ export const AddBtn = (props: Props) => {
 							style={{ width: '100%', margin: '10px 0' }}
 							mode='multiple'
 							placeholder='Use monsters with any keywords'
-							options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: <div className='ds-text'>{kw}</div> }))}
+							options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: kw }))}
+							optionRender={opt => <div className='ds-text'>{opt.data.value}</div>}
 							value={keywords}
 							onChange={setKeywords}
 
@@ -158,7 +159,7 @@ export const AddBtn = (props: Props) => {
 			case 'tactical-map':
 				return [
 					<Expander key='image' title='Use a battlemap'>
-						<Space orientation='vertical' style={{ width: '100%', marginTop: '15px' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<Segmented
 								block={true}
 								options={[

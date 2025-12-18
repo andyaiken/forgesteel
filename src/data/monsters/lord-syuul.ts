@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -153,8 +153,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 								tier2: '17 damage; A<2 grabbed',
 								tier3: '20 damage; A<2 grabbed'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
 								effect: 'The distance of this ability increases to melee 10. Each target grabbed by Lord Syuul is pulled up to 10 squares.'
 							})

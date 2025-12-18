@@ -1,23 +1,36 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
+import { PatreonSession } from '@/models/patreon-connection';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from './utils';
 import localforage from 'localforage';
 
 export class DataService {
 	settings: ConnectionSettings;
 	readonly host: string;
 	readonly apiToken: string;
+
+	private useNewAuth: boolean;
 	private jwt: string | null;
+	private csrfToken: boolean;
+
+	private tokenHandlerHost: string;
 
 	constructor(settings: ConnectionSettings) {
 		this.settings = settings;
 		this.host = settings.warehouseHost;
 		this.apiToken = settings.warehouseToken;
+
+		this.useNewAuth = false;
 		this.jwt = null;
+		this.csrfToken = false;
+
+		const envVal = import.meta.env.VITE_PATREON_TOKEN_HANDLER_HOST;
+		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
 	};
 
 	private getErrorMessage = (error: unknown) => {
@@ -28,32 +41,68 @@ export class DataService {
 				const code = error.response.status;
 				const respMsg = error.response.data.message ?? error.response.data;
 				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
+
+				if (code === 401) {
+					this.csrfToken = false;
+				}
 			}
 		}
 		return msg;
 	};
 
+	private async checkUseCookieAuth(): Promise<boolean> {
+		// Future work - once Patreon is integrated and backend is on same domain,
+		// use new auth for patreon. Otherwise, use header auth
+		return false;
+	}
+
 	private async ensureJwt() {
 		if (this.jwt === null) {
 			try {
-				const response = await axios.get(`${this.host}/connect`, { headers: { Authorization: `Bearer ${this.apiToken}` } });
+				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
 				this.jwt = response.data.access_token;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
 				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		}
-
 		return this.jwt;
 	}
 
-	private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
-		if (this.settings.useWarehouse) {
-			await this.ensureJwt();
+	private async ensureCsrf(): Promise<boolean> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		if (!this.csrfToken) {
 			try {
-				const response = await axios.get(`${this.host}/data/${key}`, {
-					headers: { Authorization: `Bearer ${this.jwt}` }
+				await axios.post(`${this.host}/connect`, {}, {
+					headers: { Authorization: `Bearer ${this.apiToken}` },
+					withCredentials: true,
+					withXSRFToken: true
 				});
+				this.csrfToken = true;
+			} catch (error) {
+				console.error('Error communicating with FS Warehouse', error);
+				throw new Error(this.getErrorMessage(error), { cause: error });
+			}
+		}
+		return this.csrfToken;
+	}
+
+	private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		if (this.settings.useWarehouse) {
+			let config: AxiosRequestConfig = {
+				withCredentials: true,
+				withXSRFToken: true
+			};
+			if (!this.useNewAuth) {
+				await this.ensureJwt();
+				config = { headers: { Authorization: `Bearer ${this.jwt}` } };
+			}
+
+			try {
+				const response = await axios.get(`${this.host}/data/${key}`, config);
 				return response.data.data;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
@@ -65,13 +114,20 @@ export class DataService {
 	}
 
 	private async putLocalOrWarehouse<T>(key: string, value: T): Promise<T> {
+		axios.defaults.xsrfCookieName = 'csrf_access_token';
+		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		if (this.settings.useWarehouse) {
-			await this.ensureJwt();
+			let config: AxiosRequestConfig = {
+				withCredentials: true,
+				withXSRFToken: true
+			};
+			if (!this.useNewAuth) {
+				await this.ensureJwt();
+				config = { headers: { Authorization: `Bearer ${this.jwt}` } };
+			}
+
 			try {
-				await axios.put(`${this.host}/data/${key}`,
-					value, {
-						headers: { Authorization: `Bearer ${this.jwt}` }
-					});
+				await axios.put(`${this.host}/data/${key}`, value, config);
 				return value;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
@@ -79,6 +135,21 @@ export class DataService {
 			}
 		} else {
 			return localforage.setItem<T>(key, value);
+		}
+	}
+
+	async initialize(): Promise<boolean> {
+		if (this.settings.useWarehouse) {
+			this.useNewAuth = await this.checkUseCookieAuth();
+			if (this.useNewAuth) {
+				const connected = await this.ensureCsrf();
+				return connected;
+			} else {
+				await this.ensureJwt();
+				return true;
+			}
+		} else {
+			return true;
 		}
 	}
 
@@ -135,4 +206,92 @@ export class DataService {
 	async saveHiddenSettingIds(ids: string[]): Promise<string[]> {
 		return this.putLocalOrWarehouse<string[]>('forgesteel-hidden-setting-ids', ids);
 	}
+
+	// #region Token Handler
+	// login start
+	async getPatreonAuthUrl(): Promise<string> {
+		const loginStartUrl = `${this.tokenHandlerHost}/th/login/start`;
+
+		try {
+			const response = await axios.post(loginStartUrl);
+			return response.data.authorizationUrl;
+		} catch (error) {
+			console.error('Error communicating with Token Handler', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	// login end
+	async finishPatreonLogin(code: string, state: string): Promise<PatreonSession> {
+		const loginEndUrl = `${this.tokenHandlerHost}/th/login/end`;
+		axios.defaults.withCredentials = true;
+		try {
+			const response = await axios.post(loginEndUrl, { code: code, state: state });
+			const result: PatreonSession = {
+				authenticated: false,
+				connections: []
+			};
+
+			if (response.data) {
+				result.authenticated = response.data.authenticated_with_patreon;
+
+				if (response.data.authenticated_with_patreon && response.data.user) {
+					result.connections.push({
+						name: 'MCDM Patreon',
+						status: response.data.user.mcdm
+					});
+				}
+			}
+
+			return result;
+		} catch (error) {
+			console.error('Error communicating with Token Handler', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	// session
+	async getPatreonSession(): Promise<PatreonSession> {
+		const sessionUrl = `${this.tokenHandlerHost}/th/session`;
+		axios.defaults.withCredentials = true;
+		try {
+			const response = await axios.get(sessionUrl);
+			const result: PatreonSession = {
+				authenticated: false,
+				connections: []
+			};
+
+			if (response.data) {
+				result.authenticated = response.data.authenticated_with_patreon;
+
+				if (response.data.authenticated_with_patreon && response.data.user) {
+					result.connections.push({
+						name: 'MCDM Patreon',
+						status: response.data.user.mcdm
+					});
+				}
+			}
+
+			return result;
+		} catch (error) {
+			console.error('Error communicating with Token Handler', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	// logout
+	async logoutPatreon(): Promise<undefined> {
+		const logoutUrl = `${this.tokenHandlerHost}/th/logout`;
+		axios.defaults.withCredentials = true;
+		try {
+			await axios.post(logoutUrl);
+			return;
+		} catch (error) {
+			console.error('Error communicating with Token Handler', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	// refresh?
+	// #endregion
 };

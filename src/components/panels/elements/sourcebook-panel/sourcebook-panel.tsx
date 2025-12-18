@@ -4,10 +4,12 @@ import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdow
 import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
@@ -73,8 +75,8 @@ interface EditorProps {
 	heroes: Hero[];
 	visible: boolean;
 	onSetVisible: (sourcebook: Sourcebook, visible: boolean) => void;
-	onChange: (sourcebook: Sourcebook) => void;
-	onDelete: (sourcebook: Sourcebook) => void;
+	onChange?: (sourcebook: Sourcebook) => void;
+	onDelete?: (sourcebook: Sourcebook) => void;
 }
 
 export const SourcebookEditorPanel = (props: EditorProps) => {
@@ -90,108 +92,138 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
 		const setName = (value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.name = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.name = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setDescription = (value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.description = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.description = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const addLanguage = () => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages.push({ name: '', description: '', type: LanguageType.Cultural, related: [] });
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages.push({ name: '', description: '', type: LanguageType.Cultural, related: [] });
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const deleteLanguage = (index: number) => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages.splice(index, 1);
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages.splice(index, 1);
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const moveLanguage = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages = Collections.move(copy.languages, index, direction);
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages = Collections.move(copy.languages, index, direction);
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setLanguageName = (index: number, value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages[index].name = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages[index].name = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setLanguageDescription = (index: number, value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages[index].description = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages[index].description = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setLanguageType = (index: number, value: LanguageType) => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages[index].type = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages[index].type = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setLanguageRelated = (index: number, value: string[]) => {
-			const copy = Utils.copy(sourcebook);
-			copy.languages[index].related = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.languages[index].related = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const addSkill = () => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills.push({ name: '', description: '', list: SkillList.Crafting });
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills.push({ name: '', description: '', list: SkillList.Crafting });
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const deleteSkill = (index: number) => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills.splice(index, 1);
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills.splice(index, 1);
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const moveSkill = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills = Collections.move(copy.skills, index, direction);
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills = Collections.move(copy.skills, index, direction);
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setSkillName = (index: number, value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills[index].name = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills[index].name = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setSkillDescription = (index: number, value: string) => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills[index].description = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills[index].description = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		const setSkillList = (index: number, value: SkillList) => {
-			const copy = Utils.copy(sourcebook);
-			copy.skills[index].list = value;
-			setSourcebook(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				const copy = Utils.copy(sourcebook);
+				copy.skills[index].list = value;
+				setSourcebook(copy);
+				props.onChange(copy);
+			}
 		};
 
 		content = (
@@ -337,9 +369,57 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 			buttons.push(
 				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
 			);
-			buttons.push(
-				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={() => props.onDelete(sourcebook)} />
-			);
+			if (props.onDelete) {
+				const heroes = props.heroes.filter(h => h.settingIDs.includes(sourcebook.id));
+
+				const used: { element: Element, type: string, container: Element }[] = [];
+				const elements = [
+					...SourcebookLogic.getElements(props.sourcebook),
+					...props.sourcebook.classes.flatMap(c => c.subclasses).map(sc => ({ element: sc, type: 'Subclass' })),
+					...props.sourcebook.monsterGroups.flatMap(g => g.monsters).map(m => ({ element: m, type: 'Monster' }))
+				];
+				elements.forEach(e => {
+					SourcebookLogic.getUsedIn(props.sourcebooks, e.element.id)
+						.filter(x => !elements.map(e => e.element.id).includes(x.id))
+						.forEach(x => {
+							used.push({ element: e.element, type: e.type, container: x });
+						});
+				});
+
+				let msg = undefined;
+				if ((heroes.length > 0) || (used.length > 0)) {
+					msg = (
+						<>
+							<div>Cannot delete:</div>
+							<ul>
+								{
+									heroes.map(h => (
+										<li key={h.id}>
+											{h.name || 'Unnamed Hero'} uses this sourcebook
+										</li>
+									))
+								}
+								{
+									used.map(x => (
+										<li key={x.element.id}>
+											<b>{x.element.name || 'Unnamed Element'}</b> ({Format.capitalize(x.type.split('-').join(' '))}) is used in <b>{x.container.name || 'Unnamed Element'}</b>
+										</li>
+									))
+								}
+							</ul>
+						</>
+					);
+				}
+
+				buttons.push(
+					<DangerButton
+						key='delete'
+						mode='clear'
+						disabledMessage={msg}
+						onConfirm={() => props.onDelete!(sourcebook)}
+					/>
+				);
+			}
 		}
 	}
 

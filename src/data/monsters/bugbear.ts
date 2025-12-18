@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { MonsterGroup } from '@/models/monster-group';
@@ -318,8 +318,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 								tier2: '11 damage; one target is grabbed; one target is pushed up to 2 squares',
 								tier3: '14 damage; one target is grabbed; one target is vertical pushed up to 3 squares'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The ability takes the Area keyword and loses the Strike keyword, its distance becomes a 1 burst, and it targets each enemy in the area.'
 							})

@@ -708,12 +708,12 @@ export const polderElementalist = {
 									feature: {
 										id: 'elementalist-1-7e',
 										name: 'Enchantment of Permanence',
-										description: 'You gain a bonus to Stamina.',
+										description: '',
 										type: 'Multiple Features',
 										data: {
 											features: [
 												{
-													id: '',
+													id: 'elementalist-1-7e-1',
 													name: 'Stamina',
 													description: '',
 													type: 'Bonus',
@@ -727,17 +727,17 @@ export const polderElementalist = {
 													}
 												},
 												{
-													id: '',
+													id: 'elementalist-1-7e-2',
 													name: 'Stability',
 													description: '',
 													type: 'Bonus',
 													data: {
 														field: 'Stability',
-														value: 0,
+														value: 1,
 														valueCharacteristics: [],
 														valueCharacteristicMultiplier: 1,
 														valuePerLevel: 0,
-														valuePerEchelon: 1
+														valuePerEchelon: 0
 													}
 												}
 											]
@@ -1001,7 +1001,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 'signature',
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 2,
 							selectedIDs: [
@@ -1017,7 +1022,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 3,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -1032,7 +1042,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 5,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -1067,7 +1082,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 5,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 2,
 							count: 1,
 							selectedIDs: []
@@ -1085,7 +1105,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 7,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 3,
 							count: 1,
 							selectedIDs: []
@@ -1245,7 +1270,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 9,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 5,
 							count: 1,
 							selectedIDs: []
@@ -1285,7 +1315,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 9,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 6,
 							count: 1,
 							selectedIDs: []
@@ -1408,7 +1443,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 11,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 8,
 							count: 1,
 							selectedIDs: []
@@ -1433,7 +1473,12 @@ export const polderElementalist = {
 						type: 'Class Ability',
 						data: {
 							cost: 11,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 9,
 							count: 1,
 							selectedIDs: []
@@ -4298,6 +4343,7 @@ export const polderElementalist = {
 						]
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -4547,6 +4593,7 @@ export const polderElementalist = {
 						]
 					}
 				],
+				abilities: [],
 				selected: true
 			},
 			{
@@ -4766,6 +4813,7 @@ export const polderElementalist = {
 						]
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -5050,6 +5098,7 @@ export const polderElementalist = {
 						]
 					}
 				],
+				abilities: [],
 				selected: false
 			}
 		],

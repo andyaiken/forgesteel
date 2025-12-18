@@ -183,7 +183,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
+	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', fromClass?: boolean, fromSubclass?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
 		return {
 			id: data.id,
 			name: data.name || `${data.cost === 'signature' ? 'Signature' : `${data.cost}pt`} Ability`,
@@ -192,7 +192,14 @@ export class FactoryFeatureLogic {
 			data: {
 				classID: undefined,
 				cost: data.cost,
-				allowAnySource: data.allowAnySource ?? false,
+				source: {
+					fromClassAbilities: (data.fromClass ?? true) ? true : false,
+					fromSelectedSubclassAbilities: (data.fromSubclass ?? true) ? true : false,
+					fromUnselectedSubclassAbilities: false,
+					fromClassLevels: false,
+					fromSelectedSubclassLevels: false,
+					fromUnselectedSubclassLevels: false
+				},
 				minLevel: data.minLevel || 1,
 				count: data.count || 1,
 				selectedIDs: []
@@ -328,7 +335,7 @@ export class FactoryFeatureLogic {
 			description: data.description || '',
 			type: FeatureType.ItemChoice,
 			data: {
-				types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ],
+				types: data.types || [ ItemType.Artifact, ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ],
 				count: data.count || 1,
 				selected: []
 			}

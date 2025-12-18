@@ -40,6 +40,7 @@ export enum AbilityKeyword {
 	Rot = 'Rot',
 	Scroll = 'Scroll',
 	Spine = 'Spine',
+	Spore = 'Spore',
 	Strike = 'Strike',
 	Telekinesis = 'Telekinesis',
 	Telepathy = 'Telepathy',

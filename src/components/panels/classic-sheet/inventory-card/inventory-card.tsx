@@ -40,7 +40,7 @@ export const ConsumablesCard = (props: InventoryProps) => {
 	const wide = props.wide || false;
 	const cardClasses = [ 'inventory', 'consumables', 'card' ];
 
-	const consumables = character.inventory?.filter(i => i.item.type === ItemType.Consumable) ?? [];
+	const consumables = character.inventory?.filter(i => [ ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th ].includes(i.item.type)) ?? [];
 	const maxConsumables = wide ? 4 : 2; // approximation
 	const displayShort = consumables.length > maxConsumables;
 
@@ -139,7 +139,7 @@ export const ItemComponent = (props: ItemProps) => {
 			name += ` (x${item.count})`;
 		}
 
-		if (item.type === ItemType.Consumable) {
+		if ([ ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th ].includes(item.type)) {
 			return (
 				<>
 					<span className='item-name'>{name}</span>

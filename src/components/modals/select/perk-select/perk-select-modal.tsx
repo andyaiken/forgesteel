@@ -51,7 +51,7 @@ export const PerkSelectModal = (props: Props) => {
 			content={
 				<div className='perk-select-modal'>
 					{
-						[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(list => {
+						[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(list => {
 							const subset = perks.filter(p => p.list === list);
 							if (subset.length === 0) {
 								return null;

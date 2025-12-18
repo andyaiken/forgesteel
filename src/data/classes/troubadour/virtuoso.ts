@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -93,9 +93,7 @@ your Routines feature.`,
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can choose one additional target for the triggering ability. Any damage dealt to the additional target is sonic damage.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								repeatable: true,
 								effect: 'You can trigger this ability when a target uses an ability that has a Heroic Resource cost of 3 + each additional drama spent.'
 							})
@@ -400,5 +398,6 @@ your Routines feature.`,
 			features: []
 		}
 	],
+	abilities: [],
 	selected: false
 };

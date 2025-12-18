@@ -705,7 +705,12 @@ export const highElfTactician = {
 						type: 'Class Ability',
 						data: {
 							cost: 3,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -720,7 +725,12 @@ export const highElfTactician = {
 						type: 'Class Ability',
 						data: {
 							cost: 5,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: [
@@ -767,7 +777,12 @@ export const highElfTactician = {
 						type: 'Class Ability',
 						data: {
 							cost: 7,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -867,7 +882,12 @@ export const highElfTactician = {
 						type: 'Class Ability',
 						data: {
 							cost: 9,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -1024,7 +1044,12 @@ export const highElfTactician = {
 						type: 'Class Ability',
 						data: {
 							cost: 11,
-							allowAnySource: false,
+							source: {
+								fromClassAbilities: true,
+								fromSubclassAbilities: true,
+								fromClassLevels: false,
+								fromSubclassLevels: false
+							},
 							minLevel: 1,
 							count: 1,
 							selectedIDs: []
@@ -2680,6 +2705,7 @@ export const highElfTactician = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -3289,6 +3315,7 @@ export const highElfTactician = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: false
 			},
 			{
@@ -3927,6 +3954,7 @@ export const highElfTactician = {
 						features: []
 					}
 				],
+				abilities: [],
 				selected: true
 			}
 		],

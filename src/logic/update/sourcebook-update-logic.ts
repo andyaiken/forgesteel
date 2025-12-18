@@ -97,6 +97,17 @@ export class SourcebookUpdateLogic {
 		sourcebook.titles = Collections.distinct(sourcebook.titles, a => a.id);
 
 		sourcebook.adventures.forEach(a => {
+			if (a.introduction === undefined) {
+				a.introduction = [];
+			}
+
+			if (a.party === undefined) {
+				a.party = {
+					count: 4,
+					level: 1
+				};
+			}
+
 			if (a.plot === undefined) {
 				a.plot = FactoryLogic.createAdventurePlot('');
 			}
@@ -135,6 +146,10 @@ export class SourcebookUpdateLogic {
 				sc.featuresByLevel.forEach(lvl => {
 					lvl.features.forEach(FeatureUpdateLogic.updateFeature);
 				});
+
+				if (sc.abilities === undefined) {
+					sc.abilities = [];
+				}
 			});
 
 			c.abilities.forEach(AbilityUpdateLogic.updateAbility);
@@ -325,6 +340,12 @@ export class SourcebookUpdateLogic {
 
 		sourcebook.perks.forEach(p => {
 			FeatureUpdateLogic.updateFeature(p);
+		});
+
+		sourcebook.subclasses.forEach(sc => {
+			if (sc.abilities === undefined) {
+				sc.abilities = [];
+			}
 		});
 
 		sourcebook.tacticalMaps.forEach(tm => {

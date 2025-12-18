@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
@@ -33,9 +33,7 @@ export const stormcrow: Kit = {
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionText('M cold, fire, lightning, or sonic damage (your choice)'),
-					FactoryLogic.createAbilitySectionField({
-						name: 'Spend',
-						value: 1,
+					FactoryLogic.createAbilitySectionSpend({
 						effect: 'The distance becomes 3 cube within 1.'
 					})
 				]

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
+import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummon, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
 import { afterEach, describe, expect, expectTypeOf, test, vi } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -15,9 +15,9 @@ import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
+import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { highElfTactician } from '@/data/heroes/high-elf-tactician';
 import { retainer } from '@/data/monsters/retainer';
-import { undead } from '@/data/classes/summoner/undead';
 
 afterEach(() => {
 	vi.resetAllMocks();
@@ -30,7 +30,7 @@ describe('buildSummonSheet', () => {
 	});
 
 	test('it builds sheets for Summoner minions properly', () => {
-		const signatureMinions = undead.featuresByLevel.flatMap(fbl => fbl.features)
+		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
 		const skeleton = signatureMinions.data.options.find(o => o.id === 'summoner-4-1-4c') as Summon;
 		const summoner = FactoryLogic.createHero([]);
@@ -98,7 +98,7 @@ const mockFeatureRetainer = {
 	}
 } as FeatureRetainer;
 
-const undeadSignatureChoices = undead.featuresByLevel.find(fbl => fbl.level === 1)
+const undeadSignatureChoices = circleOfGraves.featuresByLevel.find(fbl => fbl.level === 1)
 	?.features.find(f => f.id === 'summoner-4-1-4')?.data as FeatureSummonChoiceData;
 const minionSummon1 = undeadSignatureChoices.options.find(o => o.monster.id === 'summoner-4-1-4a') as Summon;
 
@@ -107,13 +107,22 @@ const beastheartCompanionChoices = beastheart.featuresByLevel.find(fbl => fbl.le
 const companion1 = beastheartCompanionChoices.options.find(o => o.monster.id === 'beastheart-1-2a-1') as Summon;
 
 const mockSummonChoiceFeature = {
-	id: 'mock-summon-chouice',
+	id: 'mock-summon-choice',
 	name: 'Mock Summon Choice',
 	type: FeatureType.SummonChoice,
 	data: {
 		selected: [ companion1, minionSummon1 ]
 	}
 } as FeatureSummonChoice;
+
+const mockSummonFeature = {
+	id: 'mock-summon',
+	name: 'Mock Summon',
+	type: FeatureType.Summon,
+	data: {
+		summons: [ minionSummon1 ]
+	}
+} as FeatureSummon;
 // #endregion
 
 describe('buildFollowerCompanionSheet()', () => {
@@ -194,7 +203,8 @@ describe('buildHeroSheet', () => {
 			{ feature: mockFeatureRetainer, source: 'test' },
 			{ feature: mockFeatureFollower, source: 'test' },
 			{ feature: mockFeatureCompanion, source: 'test' },
-			{ feature: mockSummonChoiceFeature, source: 'test' }
+			{ feature: mockSummonChoiceFeature, source: 'test' },
+			{ feature: mockSummonFeature, source: 'test' }
 		]);
 
 		const result = HeroSheetBuilder.buildHeroSheet(hero, sourcebooks, options);
@@ -202,5 +212,6 @@ describe('buildHeroSheet', () => {
 		expect(result).toBeDefined();
 		expect(result).not.toBeNullable();
 		expect(result.followers.length).toBe(4);
+		expect(result.summons.length).toBe(2);
 	});
 });

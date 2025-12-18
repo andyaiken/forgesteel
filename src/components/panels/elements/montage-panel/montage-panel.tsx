@@ -138,7 +138,7 @@ export const MontagePanel = (props: Props) => {
 					block={true}
 					options={[
 						{ value: 'overview', label: 'Overview' },
-						...props.montage.sections.map(s => ({ value: s.id, label: s.name })),
+						...props.montage.sections.map(s => ({ value: s.id, label: s.name || 'Details' })),
 						{ value: 'outcomes', label: 'Outcomes' }
 					]}
 					value={page}

@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -213,9 +213,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 									tier3: '13 damage; A<2 vertical slide 3'
 								})
 							),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'Each target who has M<1 is bleeding (save ends).'
 							})
 						]

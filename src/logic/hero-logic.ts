@@ -1,7 +1,7 @@
 import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
@@ -113,7 +113,7 @@ export class HeroLogic {
 						.find(c => c.id === feature.data.classID) || null;
 				}
 				if (heroClass) {
-					const abilities = SourcebookLogic.getAllClassAbilities(heroClass);
+					const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, feature.data.source.fromClassAbilities, feature.data.source.fromSelectedSubclassAbilities, feature.data.source.fromUnselectedSubclassAbilities, feature.data.source.fromClassLevels, feature.data.source.fromSelectedSubclassLevels, feature.data.source.fromUnselectedSubclassLevels);
 					feature.data.selectedIDs.forEach(abilityID => {
 						const ability = abilities.find(a => a.id === abilityID);
 						if (ability) {
@@ -150,6 +150,10 @@ export class HeroLogic {
 
 				ability.name = customization.name || ability.name;
 				ability.description = customization.description || ability.description;
+
+				if (ability.cost !== 'signature') {
+					ability.cost += customization.costModifier;
+				}
 
 				// Distance bonus / damage bonus are handled separately
 

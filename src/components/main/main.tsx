@@ -7,7 +7,9 @@ import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
+import { Analytics } from '@/utils/analytics';
 import { Ancestry } from '@/models/ancestry';
+import { AuthPage } from '@/components/pages/auth/auth-page';
 import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
@@ -22,6 +24,7 @@ import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { ElementModal } from '@/components/modals/element/element-modal';
 import { Encounter } from '@/models/encounter';
+import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -34,6 +37,7 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
 import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '@/enums/hero-state-page';
@@ -46,6 +50,7 @@ import { Kit } from '@/models/kit';
 import { LibraryEditPage } from '@/components/pages/library/library-edit/library-edit-page';
 import { LibraryListPage } from '@/components/pages/library/library-list/library-list-page';
 import { MainLayout } from '@/components/main/main-layout';
+import { MinionSlotModal } from '@/components/modals/minion-slot/minion-slot-modal';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
@@ -74,6 +79,7 @@ import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Title } from '@/models/title';
+import { TransferPage } from '@/components/pages/transfer/transfer-page';
 import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -122,12 +128,16 @@ export const Main = (props: Props) => {
 
 	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
+			Analytics.logHeroEdited(hero);
+
 			const copy = Utils.copy(heroes);
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
 			return persistHeroes(list);
 		}
 		else {
+			Analytics.logHeroCreated(hero);
+
 			const copy = Utils.copy(heroes);
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);
@@ -338,6 +348,88 @@ export const Main = (props: Props) => {
 		persistHero(copy);
 	};
 
+	const addSquad = (hero: Hero, monster: Monster, count: number) => {
+		const copy = Utils.copy(hero);
+
+		const slot = FactoryLogic.createEncounterSlotFromMonster(monster);
+		while (slot.monsters.length < count) {
+			const m = Utils.copy(monster);
+			m.id = Utils.guid();
+			slot.monsters.push(m);
+		}
+		copy.state.controlledSlots.push(slot);
+
+		persistHero(copy);
+	};
+
+	const removeSquad = (hero: Hero, slotID: string) => {
+		const copy = Utils.copy(hero);
+
+		copy.state.controlledSlots = copy.state.controlledSlots.filter(s => s.id !== slotID);
+
+		persistHero(copy);
+	};
+
+	const addMonsterToSquad = (hero: Hero, slotID: string) => {
+		const copy = Utils.copy(hero);
+
+		const monsters = [
+			...HeroLogic.getCompanions(copy),
+			...HeroLogic.getRetainers(copy),
+			...HeroLogic.getSummons(copy).map(s => s.monster)
+		];
+
+		copy.state.controlledSlots
+			.filter(s => s.id === slotID)
+			.forEach(slot => {
+				const original = monsters.find(m => m.id === slot.monsterID);
+				if (original) {
+					const m = Utils.copy(original);
+					m.id = Utils.guid();
+					slot.monsters.push(m);
+				}
+			});
+
+		persistHero(copy);
+	};
+
+	const selectControlledMonster = (hero: Hero, monster: Monster) => {
+		setDrawer(
+			<MonsterModal
+				monster={monster}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				options={options}
+				onClose={() => setDrawer(null)}
+				updateMonster={monster => {
+					const copy = Utils.copy(hero);
+
+					copy.state.controlledSlots.forEach(s => {
+						s.monsters = s.monsters.map(m => m.id === monster.id ? monster : m);
+					});
+
+					persistHero(copy);
+				}}
+				exportElementData={exportLibraryElementData}
+			/>
+		);
+	};
+
+	const selectControlledSquad = (hero: Hero, slot: EncounterSlot) => {
+		setDrawer(
+			<MinionSlotModal
+				slot={slot}
+				updateSlot={slot => {
+					const copy = Utils.copy(hero);
+
+					copy.state.controlledSlots = copy.state.controlledSlots.map(s => s.id === slot.id ? slot : s);
+
+					persistHero(copy);
+				}}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	// #endregion
 
 	// #region Library
@@ -478,7 +570,7 @@ export const Main = (props: Props) => {
 				imbuement.id = Utils.guid();
 			} else {
 				imbuement = FactoryLogic.createImbuement({
-					type: ItemType.Consumable,
+					type: ItemType.Consumable1st,
 					crafting: FactoryLogic.createProject({}),
 					level: 1,
 					feature: FactoryLogic.feature.create({
@@ -503,7 +595,7 @@ export const Main = (props: Props) => {
 					id: Utils.guid(),
 					name: '',
 					description: '',
-					type: ItemType.Consumable,
+					type: ItemType.Consumable1st,
 					crafting: FactoryLogic.createProject({})
 				});
 			}
@@ -962,6 +1054,8 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
+		Analytics.logHomebrewEdited(kind, element);
+
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (sourcebook) {
@@ -1324,6 +1418,7 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
+				dataService={props.dataService}
 				setConnectionSettings={persistConnectionSettings}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
@@ -1369,6 +1464,7 @@ export const Main = (props: Props) => {
 				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
+				exportElementData={exportLibraryElementData}
 			/>
 		);
 	};
@@ -1593,6 +1689,11 @@ export const Main = (props: Props) => {
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
 									setNotes={setNotes}
+									onAddSquad={addSquad}
+									onRemoveSquad={removeSquad}
+									onAddMonsterToSquad={addMonsterToSquad}
+									onSelectControlledMonster={selectControlledMonster}
+									onSelectControlledSquad={selectControlledSquad}
 								/>
 							}
 						/>
@@ -1738,6 +1839,21 @@ export const Main = (props: Props) => {
 							}
 						/>
 					</Route>
+					<Route
+						path='oauth-redirect'
+						element={
+							<AuthPage
+								connectionSettings={props.connectionSettings}
+								dataService={props.dataService}
+								highlightAbout={errors.length > 0}
+								showReference={showReference}
+								showRoll={() => showRoll()}
+								showAbout={showAbout}
+								showSettings={showSettings}
+								setConnectionSettings={persistConnectionSettings}
+							/>
+						}
+					/>
 				</Route>
 				<Route path='backup'>
 					<Route
@@ -1752,6 +1868,19 @@ export const Main = (props: Props) => {
 								showRoll={() => showRoll()}
 								showAbout={showAbout}
 								showSettings={showSettings}
+							/>
+						}
+					/>
+				</Route>
+				<Route path='transfer'>
+					<Route
+						index={true}
+						element={
+							<TransferPage
+								connectionSettings={connectionSettings}
+								heroes={heroes}
+								homebrewSourcebooks={homebrewSourcebooks}
+								options={options}
 							/>
 						}
 					/>

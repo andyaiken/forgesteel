@@ -8,6 +8,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -82,15 +83,18 @@ export const MonsterPanel = (props: Props) => {
 				</div>
 			);
 		}
-	} else {
-		if (props.monster.role.organization === MonsterOrganizationType.Minion) {
-			rightOfTags = (
-				<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
-			);
-		} else if (props.monster.encounterValue > 0) {
-			rightOfTags = (
-				<Field label='EV' value={props.monster.encounterValue} />
-			);
+	} else if (props.monster.encounterValue > 0) {
+		switch (props.monster.role.organization) {
+			case MonsterOrganizationType.Minion:
+				rightOfTags = (
+					<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+				);
+				break;
+			default:
+				rightOfTags = (
+					<Field label='EV' value={props.monster.encounterValue} />
+				);
+				break;
 		}
 	}
 
@@ -196,7 +200,7 @@ export const MonsterPanel = (props: Props) => {
 							}
 							{
 								props.monster.retainer ?
-									<>
+									<Expander title='At Higher Levels'>
 										{
 											props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
 												<>
@@ -221,7 +225,7 @@ export const MonsterPanel = (props: Props) => {
 												</>
 												: null
 										}
-									</>
+									</Expander>
 									: null
 							}
 						</>

@@ -1,14 +1,15 @@
-import { Button, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { DataService } from '@/utils/data-service';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
-import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -16,11 +17,13 @@ import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
+import { PatreonConnectPanel } from '@/components/panels/connection-settings/patreon-connect-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { WarehouseActionsPanel } from '@/components/panels/connection-settings/warehouse-actions-panel';
 import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -32,6 +35,7 @@ interface Props {
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
+	dataService: DataService;
 	setConnectionSettings: (settings: ConnectionSettings) => void
 	clearErrors: () => void;
 	onClose: () => void;
@@ -53,6 +57,16 @@ export const SettingsModal = (props: Props) => {
 	});
 	const [ showAbilitySelector, setShowAbilitySelector ] = useState<boolean>(false);
 	const [ flag, setFlag ] = useState<string>('');
+
+	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
+	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
+
+	const updateConnectionSettings = (value: ConnectionSettings) => {
+		const copy = Utils.copy(value);
+		setConnectionSettings(copy);
+		props.setConnectionSettings(copy);
+		setReloadNeeded(true);
+	};
 
 	const getAppearance = () => {
 		return (
@@ -632,13 +646,53 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getConnectionSettings = () => {
+	const getWarehouseSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
 			return (
 				<Expander title='Forge Steel Warehouse'>
-					<FsWarehouseConnectionSettingsPanel
-						connectionSettings={props.connectionSettings}
-						setConnectionSettings={props.setConnectionSettings}
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							connectionSettings.useWarehouse ?
+								<>
+									<WarehouseActionsPanel
+										connectionSettings={connectionSettings}
+									/>
+									<Divider size='small' />
+								</>
+								: null
+						}
+						<ConnectionSettingsPanel
+							connectionSettings={connectionSettings}
+							setConnectionSettings={updateConnectionSettings}
+						/>
+						{
+							reloadNeeded ?
+								<Alert
+									title='Reload Forge Steel to use new settings'
+									type='info'
+									showIcon
+									action={
+										<Button size='small' type='primary' onClick={() => location.reload()}>
+											Reload
+										</Button>
+									}
+								/>
+								: null
+						}
+					</Space>
+				</Expander>
+			);
+		}
+	};
+
+	const getPatreonSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
+			return (
+				<Expander title='Patreon'>
+					<PatreonConnectPanel
+						connectionSettings={connectionSettings}
+						setConnectionSettings={updateConnectionSettings}
+						dataService={props.dataService}
 					/>
 				</Expander>
 			);
@@ -727,7 +781,8 @@ export const SettingsModal = (props: Props) => {
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
-						{getConnectionSettings()}
+						{getWarehouseSettings()}
+						{getPatreonSettings()}
 						{getErrors()}
 					</Space>
 				);

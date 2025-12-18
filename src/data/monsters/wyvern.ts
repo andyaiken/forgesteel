@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -105,9 +105,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 								tier2: '14 damage; M < 2 bleeding (save ends)',
 								tier3: '17 damage; M < 3 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
+							FactoryLogic.createAbilitySectionSpend({
 								effect: 'One target hidden from the lurker takes an extra 6 acid damage.'
 							})
 						]
@@ -228,8 +226,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 								tier2: '11 damage; A < 2 3 acid damage',
 								tier3: '14 damage; A < 3 3 acid damage'
 							})),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+							FactoryLogic.createAbilitySectionSpend({
 								value: 5,
 								effect: 'The predator uses this ability a second time, either recreating the same line or creating a new one.'
 							})

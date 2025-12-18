@@ -216,7 +216,7 @@ export const HeroPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className={`hero-sidebar ${display}`}>
 					{
-						HeroLogic.getCombatState(props.hero) === 'dying' || true ?
+						HeroLogic.getCombatState(props.hero) === 'dying' ?
 							useRows ?
 								<div className='selectable-row danger clickable' onClick={onShowVitals}>
 									<div><b>{i18next.format(t('dying'), 'capitalize')}</b></div>

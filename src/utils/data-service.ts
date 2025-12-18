@@ -6,6 +6,7 @@ import { PatreonSession } from '@/models/patreon-connection';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from './utils';
 import localforage from 'localforage';
 
 export class DataService {
@@ -28,8 +29,8 @@ export class DataService {
 		this.jwt = null;
 		this.csrfToken = false;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		this.tokenHandlerHost = (import.meta as any).env?.PATREON_TOKEN_HANDLER_HOST as string | 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app';
+		const envVal = import.meta.env.VITE_PATREON_TOKEN_HANDLER_HOST;
+		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
 	};
 
 	private getErrorMessage = (error: unknown) => {

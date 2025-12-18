@@ -28,8 +28,8 @@ export class DataService {
 		this.jwt = null;
 		this.csrfToken = false;
 
-		// this.tokenHandlerHost = 'http://localhost:5000';
-		this.tokenHandlerHost = 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app';
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		this.tokenHandlerHost = (import.meta as any).env?.PATREON_TOKEN_HANDLER_HOST as string | 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app';
 	};
 
 	private getErrorMessage = (error: unknown) => {

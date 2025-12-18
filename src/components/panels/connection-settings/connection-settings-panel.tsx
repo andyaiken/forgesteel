@@ -10,7 +10,6 @@ import axios from 'axios';
 interface Props {
 	connectionSettings: ConnectionSettings;
 	setConnectionSettings: (settings: ConnectionSettings) => void;
-	showReload?: boolean;
 }
 
 export const ConnectionSettingsPanel = (props: Props) => {
@@ -18,12 +17,9 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ connectionSettingsChanged, setConnectionSettingsChanged ] = useState<boolean>(false);
 	const [ testingWarehouseConnection, setTestingWarehouseConnection ] = useState<boolean>(false);
 	const [ testStatusAlert, setTestStatusAlert ] = useState<JSX.Element | null>(null);
-	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
 
 	const [ hostInputStatus, setHostInputStatus ] = useState<'error' | undefined>(undefined);
 	const [ tokenInputStatus, setTokenInputStatus ] = useState<'error' | undefined>(undefined);
-
-	const showReload = props.showReload ?? false;
 
 	const setUseWarehouse = (value: boolean) => {
 		const copy = Utils.copy(connectionSettings);
@@ -108,7 +104,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 		normalizeSettings();
 		props.setConnectionSettings(connectionSettings);
 		setConnectionSettingsChanged(false);
-		setReloadNeeded(true);
 	};
 
 	return (
@@ -163,20 +158,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				</Button>
 			</Flex>
 			{testStatusAlert}
-			{
-				reloadNeeded && showReload ?
-					<Alert
-						title='Reload Forge Steel to use new settings'
-						type='info'
-						showIcon
-						action={
-							<Button size='small' type='primary' onClick={() => location.reload()}>
-								Reload
-							</Button>
-						}
-					/>
-					: null
-			}
 		</Space>
 	);
 };

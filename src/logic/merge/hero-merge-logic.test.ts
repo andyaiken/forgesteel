@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { FactoryLogic } from '../factory-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
-import { HeroMergeLogic } from './hero-merge-logic';
+import { HeroMergeLogic } from '@/logic/merge/hero-merge-logic';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 
 describe('merge', () => {

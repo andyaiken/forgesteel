@@ -5,7 +5,7 @@ import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DataService } from '@/utils/data-service';
 import { PatreonSession } from '@/models/patreon-connection';
-import { PatreonStatusPanel } from './patreon-status-panel';
+import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
 

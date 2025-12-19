@@ -142,7 +142,9 @@ export class Utils {
 		const a = document.createElement('a');
 		a.download = `${name}.ds-${type}`;
 		a.href = window.URL.createObjectURL(blob);
+		document.body.appendChild(a);  // Add to DOM first
 		a.click();
+		document.body.removeChild(a);
 	};
 
 	static saveImage = (filename: string, canvas: HTMLCanvasElement) => {

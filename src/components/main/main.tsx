@@ -155,7 +155,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving heroes',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -164,7 +164,7 @@ export const Main = (props: Props) => {
 				console.error(err);
 				notify.error({
 					title: 'Error saving heroes',
-					description: err,
+					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
 			})
@@ -183,7 +183,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving session',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -206,7 +206,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -222,7 +222,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving hidden sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -238,7 +238,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving options',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -254,7 +254,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving connection settings',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}

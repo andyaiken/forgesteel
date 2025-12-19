@@ -88,7 +88,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const { t } = useTranslation([ 'common', 'hero' ]);
+	const { t } = useTranslation([ 'common', 'hero', 'ancestry' ]);
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
@@ -578,14 +578,14 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>{t('ancestry', { format: 'capitalize' })}: <b>{props.hero.ancestry.name}</b></div>
+									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`ancestry:${props.hero.ancestry.id}.name`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
 									<HeaderText>{t('ancestry')}</HeaderText>
 									<Field
 										label={i18next.format(t('ancestry'), 'capitalize')}
-										value={i18next.format(t(`${props.hero.ancestry.name}`), 'capitalize')}
+										value={i18next.format(t(`ancestry:${props.hero.ancestry.id}.name`), 'capitalize')}
 									/>
 									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
 								</div>

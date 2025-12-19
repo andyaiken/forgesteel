@@ -1,6 +1,22 @@
 {
-  "devil":{
-    "devil": "devil",
-    "silverTongue": "silver tongue"
+  "ancestry-devil":{
+    "name": "devil",
+    "description":"The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark - horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings."
+  },
+  "ancestry-dragon-knight":{
+    "name": "dragon knight",
+	  "description": "The ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master. Small populations of draconians in Khemhara, Higara, and Khoursir attest to this. Descendants of original generations created millennia ago by powerful wizards, they have never been numerous. A typical clutch yields only a single egg. After only a few generations, these draconians begin to show new adaptations like feathers or frilled ridges."
+  },
+  "ancestry-dwarf":{
+    "name": "dwarf",
+	  "description": "Possessed of a strength that belies their size, dwarves have flesh infused with stone - a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves."
+  },
+  "ancestry-high-elf":{
+    "name": "elf (high)",
+	  "description": "Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elf history describes a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty."
+  },
+  "ancestry-wode-elf":{
+    "name": "elf (wode)",
+	  "description": "Children of the sylvan celestials and masters of the elf-haunted forests called wodes, wode elves see all forests as their domain by birthright. They know and enjoy their reputation among humans for snatching children who wander too far into the woods. Humans should fear the trees."
   }
 }

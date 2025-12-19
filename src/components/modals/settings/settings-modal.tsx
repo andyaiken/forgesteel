@@ -181,13 +181,6 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
-		const setDimUnavailableAbilities = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.dimUnavailableAbilities = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
 		const setShowSources = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showSources = value;
@@ -221,7 +214,6 @@ export const SettingsModal = (props: Props) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-					<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 					<Toggle label='Show feature / ability sources' value={options.showSources} onChange={setShowSources} />
 					<LabelControl
 						label='Ability card width'

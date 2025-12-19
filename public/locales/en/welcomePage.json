@@ -1,5 +1,5 @@
 {
-  "forPlayers": "For $t(players, titlecase)",
+  "forPlayers": "For $t(common:players, capitalize)",
   "prevTip": "Prev Tip",
   "nextTip": "Next Tip",
   "description": "<b>$t(common:forgeSteel, uppercase)</b> is an app for <b>$t(common:drawSteel, uppercase)</b> players, directors, and content creators.",

@@ -1,5 +1,5 @@
 {
-  "forPlayers": "Per i $t(players, titlecase)",
+  "forPlayers": "Per I $t(common:players, capitalize)",
   "prevTip": "Sugg. Precedente",
   "nextTip": "Sugg. Successivo",
   "theRightPlace": "Se sei un giocatore di <b>$t(common:drawSteel, uppercase)</b>, sei nel posto giusto.",

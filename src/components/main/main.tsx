@@ -743,6 +743,8 @@ export const Main = (props: Props) => {
 			return title.id;
 		};
 
+		Analytics.logHomebrewCreated(kind);
+
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		let sourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!sourcebook) {

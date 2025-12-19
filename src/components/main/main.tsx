@@ -155,7 +155,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving heroes',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -164,7 +164,7 @@ export const Main = (props: Props) => {
 				console.error(err);
 				notify.error({
 					title: 'Error saving heroes',
-					description: err,
+					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
 			})
@@ -183,7 +183,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving session',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -206,7 +206,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -222,7 +222,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving hidden sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -238,7 +238,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving options',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -254,7 +254,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving connection settings',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -743,6 +743,8 @@ export const Main = (props: Props) => {
 			return title.id;
 		};
 
+		Analytics.logHomebrewCreated(kind);
+
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		let sourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!sourcebook) {
@@ -1054,7 +1056,7 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		Analytics.logHomebrewEdited(kind, element);
+		Analytics.logHomebrewEdited(kind);
 
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(sb => sb.id === sourcebookID);

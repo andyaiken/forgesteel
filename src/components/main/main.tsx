@@ -1054,7 +1054,7 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		Analytics.logHomebrewEdited(kind, element);
+		Analytics.logHomebrewEdited(kind);
 
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(sb => sb.id === sourcebookID);

@@ -1048,7 +1048,6 @@ export class FactoryLogic {
 			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: false,
-			dimUnavailableAbilities: false,
 			showSources: true,
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,

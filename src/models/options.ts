@@ -9,7 +9,6 @@ export interface Options {
 	singlePage: boolean;
 	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
-	dimUnavailableAbilities: boolean;
 	showSources: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;

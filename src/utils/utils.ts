@@ -137,7 +137,7 @@ export class Utils {
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
-		const blob = new Blob([ json ], { type: 'application/json' });
+		const blob = new Blob([ json ], { type: 'application/octet-stream' });
 
 		const a = document.createElement('a');
 		a.download = `${name}.ds-${type}`;

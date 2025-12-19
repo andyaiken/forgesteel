@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
@@ -57,6 +57,16 @@ export const SettingsModal = (props: Props) => {
 	});
 	const [ showAbilitySelector, setShowAbilitySelector ] = useState<boolean>(false);
 	const [ flag, setFlag ] = useState<string>('');
+
+	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
+	const [ reloadNeeded, setReloadNeeded ] = useState<boolean>(false);
+
+	const updateConnectionSettings = (value: ConnectionSettings) => {
+		const copy = Utils.copy(value);
+		setConnectionSettings(copy);
+		props.setConnectionSettings(copy);
+		setReloadNeeded(true);
+	};
 
 	const getAppearance = () => {
 		return (
@@ -171,13 +181,6 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
-		const setDimUnavailableAbilities = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.dimUnavailableAbilities = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
 		const setShowSources = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showSources = value;
@@ -211,7 +214,6 @@ export const SettingsModal = (props: Props) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-					<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 					<Toggle label='Show feature / ability sources' value={options.showSources} onChange={setShowSources} />
 					<LabelControl
 						label='Ability card width'
@@ -642,20 +644,33 @@ export const SettingsModal = (props: Props) => {
 				<Expander title='Forge Steel Warehouse'>
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
-							props.connectionSettings.useWarehouse ?
+							connectionSettings.useWarehouse ?
 								<>
 									<WarehouseActionsPanel
-										connectionSettings={props.connectionSettings}
+										connectionSettings={connectionSettings}
 									/>
 									<Divider size='small' />
 								</>
 								: null
 						}
 						<ConnectionSettingsPanel
-							connectionSettings={props.connectionSettings}
-							setConnectionSettings={props.setConnectionSettings}
-							showReload={true}
+							connectionSettings={connectionSettings}
+							setConnectionSettings={updateConnectionSettings}
 						/>
+						{
+							reloadNeeded ?
+								<Alert
+									title='Reload Forge Steel to use new settings'
+									type='info'
+									showIcon
+									action={
+										<Button size='small' type='primary' onClick={() => location.reload()}>
+											Reload
+										</Button>
+									}
+								/>
+								: null
+						}
 					</Space>
 				</Expander>
 			);
@@ -667,8 +682,8 @@ export const SettingsModal = (props: Props) => {
 			return (
 				<Expander title='Patreon'>
 					<PatreonConnectPanel
-						connectionSettings={props.connectionSettings}
-						setConnectionSettings={props.setConnectionSettings}
+						connectionSettings={connectionSettings}
+						setConnectionSettings={updateConnectionSettings}
 						dataService={props.dataService}
 					/>
 				</Expander>

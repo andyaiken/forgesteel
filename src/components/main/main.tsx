@@ -9,7 +9,7 @@ import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Analytics } from '@/utils/analytics';
 import { Ancestry } from '@/models/ancestry';
-import { AuthPage } from '../pages/auth/auth-page';
+import { AuthPage } from '@/components/pages/auth/auth-page';
 import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
@@ -79,7 +79,7 @@ import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Title } from '@/models/title';
-import { TransferPage } from '../pages/transfer/transfer-page';
+import { TransferPage } from '@/components/pages/transfer/transfer-page';
 import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -155,7 +155,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving heroes',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -164,7 +164,7 @@ export const Main = (props: Props) => {
 				console.error(err);
 				notify.error({
 					title: 'Error saving heroes',
-					description: err,
+					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
 			})
@@ -183,7 +183,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving session',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -206,7 +206,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -222,7 +222,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving hidden sourcebooks',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -238,7 +238,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving options',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -254,7 +254,7 @@ export const Main = (props: Props) => {
 					console.error(err);
 					notify.error({
 						title: 'Error saving connection settings',
-						description: err,
+						description: Utils.getErrorMessage(err),
 						placement: 'top'
 					});
 				}
@@ -409,6 +409,7 @@ export const Main = (props: Props) => {
 
 					persistHero(copy);
 				}}
+				exportElementData={exportLibraryElementData}
 			/>
 		);
 	};
@@ -742,6 +743,8 @@ export const Main = (props: Props) => {
 			return title.id;
 		};
 
+		Analytics.logHomebrewCreated(kind);
+
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		let sourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!sourcebook) {
@@ -1053,7 +1056,7 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		Analytics.logHomebrewEdited(kind, element);
+		Analytics.logHomebrewEdited(kind);
 
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(sb => sb.id === sourcebookID);
@@ -1463,6 +1466,7 @@ export const Main = (props: Props) => {
 				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
+				exportElementData={exportLibraryElementData}
 			/>
 		);
 	};

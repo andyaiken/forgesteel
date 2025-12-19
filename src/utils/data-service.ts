@@ -6,6 +6,7 @@ import { PatreonSession } from '@/models/patreon-connection';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from './utils';
 import localforage from 'localforage';
 
 export class DataService {
@@ -15,6 +16,7 @@ export class DataService {
 
 	private useNewAuth: boolean;
 	private jwt: string | null;
+	private refreshToken: string | null;
 	private csrfToken: boolean;
 
 	private tokenHandlerHost: string;
@@ -26,10 +28,11 @@ export class DataService {
 
 		this.useNewAuth = false;
 		this.jwt = null;
+		this.refreshToken = null;
 		this.csrfToken = false;
 
-		// this.tokenHandlerHost = 'http://localhost:5000';
-		this.tokenHandlerHost = 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app';
+		const envVal = import.meta.env.VITE_PATREON_TOKEN_HANDLER_HOST;
+		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
 	};
 
 	private getErrorMessage = (error: unknown) => {
@@ -38,15 +41,30 @@ export class DataService {
 			msg = `There was a problem with Forge Steel Warehouse: ${error.message}`;
 			if (error.response) {
 				const code = error.response.status;
-				const respMsg = error.response.data.message ?? error.response.data;
+				const respMsg = error.response.data.message ?? error.response.data.msg ?? error.response.data;
 				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
 
+				// Future: move somewhere where it isn't a side effect
 				if (code === 401) {
 					this.csrfToken = false;
 				}
 			}
 		}
 		return msg;
+	};
+
+	private isExpiredTokenError = (error: unknown): boolean => {
+		if (error instanceof AxiosError) {
+			if (error.response) {
+				const code = error.response.status;
+				const respMsg = error.response.data.msg;
+
+				if (code === 401 && respMsg === 'Token has expired') {
+					return true;
+				}
+			}
+		}
+		return false;
 	};
 
 	private async checkUseCookieAuth(): Promise<boolean> {
@@ -58,14 +76,25 @@ export class DataService {
 	private async ensureJwt() {
 		if (this.jwt === null) {
 			try {
-				const response = await axios.get(`${this.host}/connect`, { headers: { Authorization: `Bearer ${this.apiToken}` } });
+				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
 				this.jwt = response.data.access_token;
+				this.refreshToken = response.data.refresh_token;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
 				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		}
 		return this.jwt;
+	}
+
+	private async refreshJwt() {
+		try {
+			const response = await axios.post(`${this.host}/refresh`, {}, { headers: { Authorization: `Bearer ${this.refreshToken}` } });
+			this.jwt = response.data.access_token;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
 	}
 
 	private async ensureCsrf(): Promise<boolean> {
@@ -105,6 +134,17 @@ export class DataService {
 				return response.data.data;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
+				if (!this.useNewAuth && this.isExpiredTokenError(error)) {
+					this.jwt = null;
+					try {
+						await this.refreshJwt();
+						const response = await axios.get(`${this.host}/data/${key}`, { headers: { Authorization: `Bearer ${this.jwt}` } });
+						return response.data.data;
+					} catch (retryError) {
+						console.error('Error communicating with FS Warehouse', retryError);
+						throw new Error(this.getErrorMessage(retryError), { cause: retryError });
+					}
+				}
 				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		} else {
@@ -130,6 +170,17 @@ export class DataService {
 				return value;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
+				if (!this.useNewAuth && this.isExpiredTokenError(error)) {
+					this.jwt = null;
+					try {
+						await this.refreshJwt();
+						await axios.put(`${this.host}/data/${key}`, value, { headers: { Authorization: `Bearer ${this.jwt}` } });
+						return value;
+					} catch (retryError) {
+						console.error('Error communicating with FS Warehouse', retryError);
+						throw new Error(this.getErrorMessage(retryError), { cause: retryError });
+					}
+				}
 				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		} else {

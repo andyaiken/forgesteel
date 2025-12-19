@@ -1,4 +1,3 @@
-import { Element } from '@/models/element';
 import { Hero } from '@/models/hero';
 import { SourcebookElementKind } from '@/models/sourcebook';
 
@@ -23,10 +22,15 @@ export class Analytics {
 		});
 	};
 
-	static logHomebrewEdited = (type: SourcebookElementKind, element: Element) => {
+	static logHomebrewCreated = (type: SourcebookElementKind) => {
 		gtag('event', 'homebrew_created', {
-			type: type,
-			name: element.name
+			type: type
+		});
+	};
+
+	static logHomebrewEdited = (type: SourcebookElementKind) => {
+		gtag('event', 'homebrew_edited', {
+			type: type
 		});
 	};
 };

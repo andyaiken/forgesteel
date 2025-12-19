@@ -444,6 +444,11 @@ export class LibraryLogic {
 			}
 		}
 
+		if (category === 'terrain') {
+			const terrain = element as Terrain;
+			return terrain.category;
+		}
+
 		if (category === 'title') {
 			const title = element as Title;
 			return `Echelon ${title.echelon}`;

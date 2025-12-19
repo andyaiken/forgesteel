@@ -1047,8 +1047,8 @@ export class FactoryLogic {
 			// Hero: Modern Sheet
 			singlePage: false,
 			separateInventoryFeatures: false,
-			showSkillsInGroups: true,
-			dimUnavailableAbilities: true,
+			showSkillsInGroups: false,
+			dimUnavailableAbilities: false,
 			showSources: true,
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,

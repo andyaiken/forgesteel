@@ -1,5 +1,4 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
-import { Input, Segmented } from 'antd';
 import { Expander } from '@/components/controls/expander/expander';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -8,7 +7,9 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -113,11 +114,11 @@ export const FeatureModal = (props: Props) => {
 					<div className='customize-section'>
 						<Expander title='Name and Description'>
 							<HeaderText>Name</HeaderText>
-							<Input
+							<TextInput
 								placeholder={props.feature.name}
 								allowClear={true}
 								value={customization?.name || ''}
-								onChange={e => setName(e.target.value)}
+								onChange={setName}
 							/>
 							<HeaderText>Description</HeaderText>
 							<MarkdownEditor value={customization?.description || ''} onChange={setDescription} />

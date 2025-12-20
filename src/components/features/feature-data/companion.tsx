@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Input, Space } from 'antd';
+import { Button, Drawer, Flex, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Feature, FeatureCompanionData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
@@ -13,6 +13,7 @@ import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -91,12 +92,12 @@ export const ConfigCompanion = (props: ConfigProps) => {
 					<Expander title='Customize'>
 						<HeaderText>Name</HeaderText>
 						<Space.Compact style={{ width: '100%' }}>
-							<Input
+							<TextInput
 								status={props.data.selected.name === '' ? 'warning' : ''}
 								placeholder='Name'
 								allowClear={true}
 								value={props.data.selected.name}
-								onChange={e => setName(e.target.value)}
+								onChange={setName}
 							/>
 							<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 						</Space.Compact>

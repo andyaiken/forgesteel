@@ -1,4 +1,4 @@
-import { Button, Input, Space, Tabs } from 'antd';
+import { Button, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -15,6 +15,7 @@ import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -50,12 +51,12 @@ export const TitleEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={title.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={title.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
@@ -85,11 +86,11 @@ export const TitleEditPanel = (props: Props) => {
 				<HeaderText>Echelon</HeaderText>
 				<NumberSpin min={1} max={4} value={title.echelon} onChange={setEchelon} />
 				<HeaderText>Prerequisites</HeaderText>
-				<Input
+				<TextInput
 					placeholder='Prerequisites'
 					allowClear={true}
 					value={title.prerequisites}
-					onChange={e => setPrerequisites(e.target.value)}
+					onChange={setPrerequisites}
 				/>
 			</Space>
 		);

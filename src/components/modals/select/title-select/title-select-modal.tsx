@@ -1,4 +1,4 @@
-import { Alert, Input, Space } from 'antd';
+import { Alert, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -6,7 +6,7 @@ import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
@@ -56,16 +56,7 @@ export const TitleSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='title-select-modal'>

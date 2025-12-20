@@ -1,4 +1,4 @@
-import { Button, Divider, Empty, Flex, Input, Segmented, Space } from 'antd';
+import { Button, Divider, Empty, Flex, Segmented, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureHeroicResourceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
@@ -12,6 +12,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -158,27 +159,27 @@ export const EditHeroicResource = (props: EditProps) => {
 					>
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Tag</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Tag'
 								allowClear={true}
 								value={gain.tag}
-								onChange={e => setResourceGainTag(data, n, e.target.value)}
+								onChange={value => setResourceGainTag(data, n, value)}
 							/>
 							<HeaderText>Trigger</HeaderText>
-							<Input
+							<TextInput
 								status={gain.value === '' ? 'warning' : ''}
 								placeholder='Trigger'
 								allowClear={true}
 								value={gain.trigger}
-								onChange={e => setResourceGainTrigger(data, n, e.target.value)}
+								onChange={value => setResourceGainTrigger(data, n, value)}
 							/>
 							<HeaderText>Value</HeaderText>
-							<Input
+							<TextInput
 								status={gain.value === '' ? 'warning' : ''}
 								placeholder='Value'
 								allowClear={true}
 								value={gain.value}
-								onChange={e => setResourceGainValue(data, n, e.target.value)}
+								onChange={value => setResourceGainValue(data, n, value)}
 							/>
 						</Space>
 					</Expander>

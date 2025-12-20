@@ -1,13 +1,13 @@
-import { Input, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Project } from '@/models/project';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -37,16 +37,7 @@ export const ProjectSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='project-select-modal'>

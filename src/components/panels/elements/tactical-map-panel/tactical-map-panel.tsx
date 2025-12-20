@@ -1,5 +1,5 @@
 import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, InfoCircleOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
-import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
+import { Button, ColorPicker, Divider, Drawer, Popover, Segmented, Select, Space, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '@/components/panels/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '@/models/tactical-map';
 import { ReactNode, useState } from 'react';
@@ -36,6 +36,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapEditMode } from '@/enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
@@ -660,12 +661,12 @@ export const TacticalMapPanel = (props: Props) => {
 
 			return (
 				<div className='tactical-map-toolbar bottom-toolbar'>
-					<Input
+					<TextInput
 						style={{ width: '200px' }}
 						placeholder='Name'
 						allowClear={true}
 						value={map.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 				</div>
 			);
@@ -951,11 +952,11 @@ export const TacticalMapPanel = (props: Props) => {
 										<Popover
 											content={
 												<Space orientation='vertical' style={{ width: '100%' }}>
-													<Input
+													<TextInput
 														placeholder={item.content.isVideo ? 'URL of video' : 'URL of image'}
 														allowClear={true}
 														value={item.content.url}
-														onChange={e => setContentUrl(e.target.value)}
+														onChange={setContentUrl}
 													/>
 													<Segmented
 														block={true}

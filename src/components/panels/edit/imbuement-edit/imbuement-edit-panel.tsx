@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space, Tabs } from 'antd';
+import { Button, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -13,6 +13,7 @@ import { Options } from '@/models/options';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -49,12 +50,12 @@ export const ImbuementEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={imbuement.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={imbuement.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>

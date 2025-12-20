@@ -1,5 +1,5 @@
-import { Button, Flex, Input, Segmented } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined, FilterFilled, FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Flex, Segmented } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined, FilterFilled, FilterOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { AddBtn } from '@/components/pages/library/library-list/controls/add-btn';
@@ -55,6 +55,7 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { Project } from '@/models/project';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -417,14 +418,7 @@ export const LibraryListPage = (props: Props) => {
 				<div className='selection-toolbar'>
 					{
 						showSidebar ?
-							<Input
-								name='search'
-								placeholder='Search'
-								allowClear={true}
-								value={searchTerm}
-								suffix={<SearchOutlined />}
-								onChange={e => setSearchTerm(e.target.value)}
-							/>
+							<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 							: null
 					}
 					{

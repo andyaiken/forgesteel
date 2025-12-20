@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { Button, Divider, Flex, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -30,6 +30,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { RetainerLogic } from '@/logic/retainer-logic';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -82,12 +83,12 @@ export const MonsterEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={monster.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={monster.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={setRandomName} />
 				</Space.Compact>
@@ -232,11 +233,11 @@ export const MonsterEditPanel = (props: Props) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Keywords</HeaderText>
-				<Input
+				<TextInput
 					placeholder='Keywords'
 					allowClear={true}
 					value={monster.keywords.join(', ')}
-					onChange={e => setKeywords(e.target.value)}
+					onChange={setKeywords}
 				/>
 				<HeaderText>Level</HeaderText>
 				<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
@@ -303,9 +304,9 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setMovementModes = (value: string[]) => {
+		const setMovementModes = (value: string) => {
 			const copy = Utils.copy(monster);
-			copy.speed.modes = value;
+			copy.speed.modes = [ value ];
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -375,11 +376,11 @@ export const MonsterEditPanel = (props: Props) => {
 				}
 				<HeaderText>Speed</HeaderText>
 				<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
-				<Input
+				<TextInput
 					placeholder='Movement modes'
 					allowClear={true}
-					value={monster.speed.modes}
-					onChange={e => setMovementModes([ e.target.value ])}
+					value={monster.speed.modes.join(', ')}
+					onChange={setMovementModes}
 				/>
 				{
 					props.similarMonsters.length > 0 ?

@@ -1,9 +1,9 @@
-import { Button, Divider, Input, Space } from 'antd';
+import { Button, Divider, Space } from 'antd';
+import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
@@ -41,16 +41,7 @@ export const SkillSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='skill-select-modal'>
@@ -99,11 +90,11 @@ export const SkillSelectModal = (props: Props) => {
 					<Expander title='Add a custom skill'>
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Custom Skill</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Custom Skill Name'
 								allowClear={true}
 								value={customSkill}
-								onChange={e => setCustomSkill(e.target.value)}
+								onChange={setCustomSkill}
 							/>
 							<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
 						</Space>

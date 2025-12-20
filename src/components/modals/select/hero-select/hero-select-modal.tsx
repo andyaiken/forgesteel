@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Input, Segmented, Space } from 'antd';
+import { Alert, Button, Flex, Segmented, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -11,6 +11,7 @@ import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { useState } from 'react';
 
 import './hero-select-modal.scss';
@@ -114,11 +115,11 @@ export const HeroSelectModal = (props: Props) => {
 							)}
 						/>
 						<Flex align='center' justify='space-between' gap={10}>
-							<Input
+							<TextInput
 								placeholder='Name'
 								allowClear={true}
 								value={heroName}
-								onChange={e => setHeroName(e.target.value)}
+								onChange={setHeroName}
 							/>
 							<Button
 								disabled={!heroName}

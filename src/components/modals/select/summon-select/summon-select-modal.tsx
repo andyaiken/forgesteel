@@ -1,4 +1,3 @@
-import { Input, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Hero } from '@/models/hero';
@@ -7,9 +6,10 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
 import { Summon } from '@/models/summon';
 import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
@@ -41,14 +41,7 @@ export const SummonSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<Input
-					name='search'
-					placeholder='Search'
-					allowClear={true}
-					value={searchTerm}
-					suffix={<SearchOutlined />}
-					onChange={e => setSearchTerm(e.target.value)}
-				/>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='summon-select-modal'>

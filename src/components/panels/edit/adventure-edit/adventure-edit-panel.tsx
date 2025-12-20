@@ -1,4 +1,4 @@
-import { Button, Input, Space, Tabs } from 'antd';
+import { Button, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Adventure } from '@/models/adventure';
@@ -17,6 +17,7 @@ import { Plot } from '@/models/plot';
 import { PlotEditPanel } from '@/components/panels/edit/plot-edit/plot-edit-panel';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -187,12 +188,12 @@ export const AdventureEditPanel = (props: Props) => {
 						children: (
 							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Name</HeaderText>
-								<Input
+								<TextInput
 									status={adventure.name === '' ? 'warning' : ''}
 									placeholder='Name'
 									allowClear={true}
 									value={adventure.name}
-									onChange={e => setName(e.target.value)}
+									onChange={setName}
 								/>
 								<HeaderText>Description</HeaderText>
 								<MarkdownEditor value={adventure.description} onChange={setDescription} />
@@ -235,12 +236,12 @@ export const AdventureEditPanel = (props: Props) => {
 										>
 											<HeaderText>Section</HeaderText>
 											<Space orientation='vertical' style={{ width: '100%' }}>
-												<Input
+												<TextInput
 													status={section.name === '' ? 'warning' : ''}
 													placeholder='Name'
 													allowClear={true}
 													value={section.name}
-													onChange={e => setSectionName(n, e.target.value)}
+													onChange={value => setSectionName(n, value)}
 												/>
 												<MarkdownEditor placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
 											</Space>

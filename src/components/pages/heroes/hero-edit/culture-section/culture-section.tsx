@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Flex, Input, Space } from 'antd';
+import { Button, Divider, Drawer, Flex, Space } from 'antd';
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { ReactNode, useState } from 'react';
@@ -22,6 +22,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -101,12 +102,12 @@ export const CultureSection = (props: CultureSectionProps) => {
 					<HeaderText>Bespoke Culture</HeaderText>
 					<div className='ds-text'>Choose a name for your culture.</div>
 					<Space.Compact style={{ width: '100%' }}>
-						<Input
+						<TextInput
 							status={props.hero.culture.name === '' ? 'warning' : ''}
 							placeholder='Name'
 							allowClear={true}
 							value={props.hero.culture.name}
-							onChange={e => setName(e.target.value)}
+							onChange={setName}
 						/>
 						<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 					</Space.Compact>

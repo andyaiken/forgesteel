@@ -1,4 +1,4 @@
-import { Button, Input, Space, Tabs } from 'antd';
+import { Button, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -15,6 +15,7 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -49,12 +50,12 @@ export const DomainEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={domain.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={domain.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
@@ -231,35 +232,35 @@ export const DomainEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Name</HeaderText>
-							<Input
+							<TextInput
 								status={rg.resource === '' ? 'warning' : ''}
 								placeholder='Resource'
 								allowClear={true}
 								value={rg.resource}
-								onChange={e => setResource(n, e.target.value)}
+								onChange={value => setResource(n, value)}
 							/>
 							<HeaderText>Tag</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Tag'
 								allowClear={true}
 								value={rg.tag}
-								onChange={e => setTag(n, e.target.value)}
+								onChange={value => setTag(n, value)}
 							/>
 							<HeaderText>Trigger</HeaderText>
-							<Input
+							<TextInput
 								status={rg.trigger === '' ? 'warning' : ''}
 								placeholder='Trigger'
 								allowClear={true}
 								value={rg.trigger}
-								onChange={e => setTrigger(n, e.target.value)}
+								onChange={value => setTrigger(n, value)}
 							/>
 							<HeaderText>Value</HeaderText>
-							<Input
+							<TextInput
 								status={rg.value === '' ? 'warning' : ''}
 								placeholder='Value'
 								allowClear={true}
 								value={rg.value}
-								onChange={e => setValue(n, e.target.value)}
+								onChange={value => setValue(n, value)}
 							/>
 						</Expander>
 					))

@@ -1,10 +1,11 @@
 import { Feature, FeatureHeroicResourceGainData } from '@/models/feature';
-import { Flex, Input, Select, Space } from 'antd';
+import { Flex, Select, Space } from 'antd';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -69,27 +70,27 @@ export const EditHeroicResourceGain = (props: EditProps) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Tag</HeaderText>
-			<Input
+			<TextInput
 				placeholder='Tag'
 				allowClear={true}
 				value={data.tag}
-				onChange={e => setHeroicResourceGainTag(data, e.target.value)}
+				onChange={value => setHeroicResourceGainTag(data, value)}
 			/>
 			<HeaderText>Trigger</HeaderText>
-			<Input
+			<TextInput
 				status={data.value === '' ? 'warning' : ''}
 				placeholder='Trigger'
 				allowClear={true}
 				value={data.trigger}
-				onChange={e => setHeroicResourceGainTrigger(data, e.target.value)}
+				onChange={value => setHeroicResourceGainTrigger(data, value)}
 			/>
 			<HeaderText>Value</HeaderText>
-			<Input
+			<TextInput
 				status={data.value === '' ? 'warning' : ''}
 				placeholder='Value'
 				allowClear={true}
 				value={data.value}
-				onChange={e => setHeroicResourceGainValue(data, e.target.value)}
+				onChange={value => setHeroicResourceGainValue(data, value)}
 			/>
 			<HeaderText>Replaces Tags</HeaderText>
 			<Select

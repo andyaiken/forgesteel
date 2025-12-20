@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Segmented, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { ReactNode, useState } from 'react';
@@ -19,6 +19,7 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 
 import './sourcebook-panel.scss';
@@ -229,12 +230,12 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		content = (
 			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={sourcebook.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={sourcebook.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
@@ -262,12 +263,12 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 								>
 									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Space.Compact style={{ width: '100%' }}>
-											<Input
+											<TextInput
 												status={lang.name === '' ? 'warning' : ''}
 												placeholder='Name'
 												allowClear={true}
 												value={lang.name}
-												onChange={e => setLanguageName(n, e.target.value)}
+												onChange={value => setLanguageName(n, value)}
 											/>
 											<Button icon={<ThunderboltOutlined />} onClick={() => setLanguageName(n, NameGenerator.generateName())} />
 										</Space.Compact>
@@ -319,12 +320,12 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 								>
 									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Space.Compact style={{ width: '100%' }}>
-											<Input
+											<TextInput
 												status={skill.name === '' ? 'warning' : ''}
 												placeholder='Name'
 												allowClear={true}
 												value={skill.name}
-												onChange={e => setSkillName(n, e.target.value)}
+												onChange={value => setSkillName(n, value)}
 											/>
 											<Button icon={<ThunderboltOutlined />} onClick={() => setSkillName(n, NameGenerator.generateName())} />
 										</Space.Compact>

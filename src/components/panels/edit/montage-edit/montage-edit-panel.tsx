@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space, Tabs } from 'antd';
+import { Button, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -13,6 +13,7 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -45,12 +46,12 @@ export const MontageEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={montage.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={montage.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
@@ -359,12 +360,12 @@ export const MontageEditPanel = (props: Props) => {
 															]}
 														>
 															<HeaderText>Name</HeaderText>
-															<Input
+															<TextInput
 																status={c.name === '' ? 'warning' : ''}
 																placeholder='Name'
 																allowClear={true}
 																value={c.name}
-																onChange={e => setChallengeName(sectionIndex, challengeIndex, e.target.value)}
+																onChange={value => setChallengeName(sectionIndex, challengeIndex, value)}
 															/>
 															<HeaderText>Description</HeaderText>
 															<MarkdownEditor value={c.description} onChange={value => setChallengeDescription(sectionIndex, challengeIndex, value)} />
@@ -380,20 +381,20 @@ export const MontageEditPanel = (props: Props) => {
 																onChange={value => setChallengeCharacteristics(sectionIndex, challengeIndex, value)}
 															/>
 															<HeaderText>Skills</HeaderText>
-															<Input
+															<TextInput
 																status={c.skills === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={c.skills}
-																onChange={e => setChallengeSkills(sectionIndex, challengeIndex, e.target.value)}
+																onChange={value => setChallengeSkills(sectionIndex, challengeIndex, value)}
 															/>
 															<HeaderText>Abilities</HeaderText>
-															<Input
+															<TextInput
 																status={c.abilities === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={c.abilities}
-																onChange={e => setChallengeAbilities(sectionIndex, challengeIndex, e.target.value)}
+																onChange={value => setChallengeAbilities(sectionIndex, challengeIndex, value)}
 															/>
 															<HeaderText>Uses</HeaderText>
 															<NumberSpin label='Uses' min={1} value={c.uses} onChange={value => setChallengeUses(sectionIndex, challengeIndex, value)} />
@@ -433,12 +434,12 @@ export const MontageEditPanel = (props: Props) => {
 															]}
 														>
 															<HeaderText>Name</HeaderText>
-															<Input
+															<TextInput
 																status={t.name === '' ? 'warning' : ''}
 																placeholder='Name'
 																allowClear={true}
 																value={t.name}
-																onChange={e => setTwistName(sectionIndex, twistIndex, e.target.value)}
+																onChange={value => setTwistName(sectionIndex, twistIndex, value)}
 															/>
 															<HeaderText>Description</HeaderText>
 															<MarkdownEditor value={t.description} onChange={value => setTwistDescription(sectionIndex, twistIndex, value)} />
@@ -454,20 +455,20 @@ export const MontageEditPanel = (props: Props) => {
 																onChange={value => setTwistCharacteristics(sectionIndex, twistIndex, value)}
 															/>
 															<HeaderText>Skills</HeaderText>
-															<Input
+															<TextInput
 																status={t.skills === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={t.skills}
-																onChange={e => setTwistSkills(sectionIndex, twistIndex, e.target.value)}
+																onChange={value => setTwistSkills(sectionIndex, twistIndex, value)}
 															/>
 															<HeaderText>Abilities</HeaderText>
-															<Input
+															<TextInput
 																status={t.abilities === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={t.abilities}
-																onChange={e => setTwistAbilities(sectionIndex, twistIndex, e.target.value)}
+																onChange={value => setTwistAbilities(sectionIndex, twistIndex, value)}
 															/>
 															<HeaderText>Uses</HeaderText>
 															<NumberSpin label='Uses' min={1} value={t.uses} onChange={value => setTwistUses(sectionIndex, twistIndex, value)} />

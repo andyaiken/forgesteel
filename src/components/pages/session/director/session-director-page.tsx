@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
+import { Alert, Button, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, ReadOutlined } from '@ant-design/icons';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
@@ -28,6 +28,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMap } from '@/models/tactical-map';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
@@ -356,11 +357,11 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Create a new counter:</div>
-						<Input
+						<TextInput
 							placeholder='Counter Name'
 							allowClear={true}
 							value={newCounterName}
-							onChange={e => setNewCounterName(e.target.value)}
+							onChange={setNewCounterName}
 						/>
 						<NumberSpin label='Starting Value' value={newCounterValue} onChange={setNewCounterValue} />
 						<Button block={true} onClick={() => startCounter()}>Create counter</Button>

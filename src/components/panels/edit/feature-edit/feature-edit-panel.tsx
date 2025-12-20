@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Input, Select, Tabs } from 'antd';
+import { Button, Drawer, Flex, Select, Tabs } from 'antd';
 import { Feature, FeatureData } from '@/models/feature';
 import { EditFeature } from '@/components/features/feature';
 import { EditOutlined } from '@ant-design/icons';
@@ -13,6 +13,7 @@ import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -77,12 +78,12 @@ export const FeatureEditPanel = (props: Props) => {
 							children: (
 								<div>
 									<HeaderText>Name</HeaderText>
-									<Input
+									<TextInput
 										status={feature.name === '' ? 'warning' : ''}
 										placeholder='Name'
 										allowClear={true}
 										value={feature.name}
-										onChange={e => setName(e.target.value)}
+										onChange={setName}
 									/>
 									<HeaderText>Description</HeaderText>
 									<MarkdownEditor value={feature.description} onChange={setDescription} />

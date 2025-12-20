@@ -1,5 +1,5 @@
-import { Button, Input, Segmented, Select, Space } from 'antd';
-import { CloseOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Button, Segmented, Select, Space } from 'antd';
+import { CloseOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Feature, FeatureData } from '@/models/feature';
 import { Hero, HeroEditTab } from '@/models/hero';
@@ -26,6 +26,7 @@ import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StartSection } from '@/components/pages/heroes/hero-edit/start-section/start-section';
@@ -605,15 +606,7 @@ export const HeroEditPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-edit-page'>
 				<AppHeader subheader='Hero Builder'>
-					<Input
-						name='search'
-						placeholder='Search'
-						disabled={!allowSearch()}
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
+					<SearchBox disabled={!allowSearch()} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 					<div className='divider' />
 					<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes

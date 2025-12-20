@@ -1,8 +1,9 @@
-import { Input, Space } from 'antd';
 import { FeaturePackageContentData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -26,12 +27,12 @@ export const EditPackageContent = (props: EditProps) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Tag</HeaderText>
-			<Input
+			<TextInput
 				status={data.tag === '' ? 'warning' : ''}
 				placeholder='Tag'
 				allowClear={true}
 				value={data.tag}
-				onChange={e => setTag(e.target.value)}
+				onChange={setTag}
 			/>
 		</Space>
 	);

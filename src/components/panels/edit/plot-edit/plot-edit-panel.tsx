@@ -1,7 +1,8 @@
-import { Button, Divider, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Divider, Drawer, Flex, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Plot, PlotContent, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '@/models/plot';
+import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
@@ -144,12 +145,12 @@ export const PlotEditPanel = (props: Props) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
+				<TextInput
 					status={plot.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={plot.name}
-					onChange={e => setName(e.target.value)}
+					onChange={setName}
 				/>
 				<HeaderText>Description</HeaderText>
 				<MarkdownEditor value={plot.description} onChange={setDescription} />
@@ -359,12 +360,12 @@ export const PlotEditPanel = (props: Props) => {
 												</Upload>
 										}
 										<HeaderText>Title</HeaderText>
-										<Input
+										<TextInput
 											status={c.title === '' ? 'warning' : ''}
 											placeholder='Title'
 											allowClear={true}
 											value={c.title}
-											onChange={e => setImageTitle(c.id, e.target.value)}
+											onChange={value => setImageTitle(c.id, value)}
 										/>
 									</Space>
 								);
@@ -385,26 +386,26 @@ export const PlotEditPanel = (props: Props) => {
 											value={c.roll.characteristic}
 											onChange={value => setRollCharacteristics(c.id, value)}
 										/>
-										<Input
+										<TextInput
 											status={c.roll.tier1 === '' ? 'warning' : ''}
 											placeholder='Tier 1'
 											allowClear={true}
 											value={c.roll.tier1}
-											onChange={e => setRollTier1(c.id, e.target.value)}
+											onChange={value => setRollTier1(c.id, value)}
 										/>
-										<Input
+										<TextInput
 											status={c.roll.tier2 === '' ? 'warning' : ''}
 											placeholder='Tier 2'
 											allowClear={true}
 											value={c.roll.tier2}
-											onChange={e => setRollTier2(c.id, e.target.value)}
+											onChange={value => setRollTier2(c.id, value)}
 										/>
-										<Input
+										<TextInput
 											status={c.roll.tier3 === '' ? 'warning' : ''}
 											placeholder='Tier 3'
 											allowClear={true}
 											value={c.roll.tier3}
-											onChange={e => setRollTier3(c.id, e.target.value)}
+											onChange={value => setRollTier3(c.id, value)}
 										/>
 									</Space>
 								);
@@ -569,11 +570,11 @@ export const PlotEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Label</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Label'
 								allowClear={true}
 								value={l.label}
-								onChange={e => setLinkLabel(l, e.target.value)}
+								onChange={value => setLinkLabel(l, value)}
 							/>
 						</Expander>
 					))
@@ -676,14 +677,7 @@ export const PlotEditPanel = (props: Props) => {
 									value={referenceType}
 									onChange={setReferenceType}
 								/>
-								<Input
-									name='search'
-									placeholder='Search'
-									allowClear={true}
-									value={searchTerm}
-									suffix={<SearchOutlined />}
-									onChange={e => setSearchTerm(e.target.value)}
-								/>
+								<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 								<Divider />
 								{
 									Collections.sort(elements, e => e.element.name)

@@ -1,9 +1,10 @@
 import { Feature, FeatureMovementModeData } from '@/models/feature';
-import { Input, Space } from 'antd';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -33,7 +34,7 @@ interface EditProps {
 export const EditMovementMode = (props: EditProps) => {
 	const [ data, setData ] = useState<FeatureMovementModeData>(Utils.copy(props.data));
 
-	const setMovementMode = (value: string) => {
+	const setMode = (value: string) => {
 		const copy = Utils.copy(data);
 		copy.mode = value;
 		setData(copy);
@@ -43,12 +44,12 @@ export const EditMovementMode = (props: EditProps) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Mode</HeaderText>
-			<Input
+			<TextInput
 				status={data.mode === '' ? 'warning' : ''}
 				placeholder='Mode'
 				allowClear={true}
 				value={data.mode}
-				onChange={e => setMovementMode(e.target.value)}
+				onChange={setMode}
 			/>
 		</Space>
 	);

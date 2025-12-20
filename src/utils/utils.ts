@@ -38,14 +38,6 @@ export class Utils {
 		return JSON.parse(JSON.stringify(object)) as T;
 	};
 
-	static debounce = (func: () => void, delay = 500) => {
-		let timeout: number;
-		return () => {
-			clearTimeout(timeout);
-			timeout = setTimeout(func, delay);
-		};
-	};
-
 	static wait = (ms: number = 1000) => {
 		return new Promise<void>(resolve => setTimeout(resolve, ms));
 	};

@@ -105,6 +105,7 @@ export const ClassPanel = (props: Props) => {
 						);
 					})
 				}
+				{props.heroClass.abilities.length === 0 ? <Empty /> : null}
 			</div>
 		);
 	};

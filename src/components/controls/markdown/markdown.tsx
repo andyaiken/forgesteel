@@ -1,6 +1,8 @@
 import { BlockTypeSelect, BoldItalicUnderlineToggles, CodeToggle, ListsToggle, MDXEditor, UndoRedo, headingsPlugin, listsPlugin, quotePlugin, thematicBreakPlugin, toolbarPlugin } from '@mdxeditor/editor';
+import { useEffect, useState } from 'react';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Utils } from '@/utils/utils';
+import { useDebounce } from '@/hooks/use-debounce';
 
 import '@mdxeditor/editor/style.css';
 import './markdown.scss';
@@ -35,6 +37,15 @@ interface MarkdownEditorProps {
 }
 
 export const MarkdownEditor = (props: MarkdownEditorProps) => {
+	const [ value, setValue ] = useState(props.value);
+	const debouncedValue = useDebounce(value);
+
+	useEffect(
+		() => props.onChange(debouncedValue),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[ debouncedValue ]
+	);
+
 	return (
 		<MDXEditor
 			className='markdown-editor'
@@ -57,8 +68,8 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 					)
 				})
 			]}
-			markdown={props.value}
-			onChange={props.onChange}
+			markdown={value}
+			onChange={setValue}
 		/>
 	);
 };

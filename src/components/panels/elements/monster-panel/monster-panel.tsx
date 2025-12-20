@@ -77,22 +77,18 @@ export const MonsterPanel = (props: Props) => {
 	let rightOfTags = null;
 	if (props.summon) {
 		if (props.summon.cost > 0) {
-			rightOfTags = (
-				<div className='ds-text'>
-					{`${props.summon.cost} essence ${props.summon.count === 1 ? 'per minion summoned' : `for ${props.summon.count} minions`}`}
-				</div>
-			);
+			rightOfTags = `${props.summon.cost} essence ${props.summon.count === 1 ? 'per minion summoned' : `for ${props.summon.count} minions`}`;
 		}
 	} else if (props.monster.encounterValue > 0) {
 		switch (props.monster.role.organization) {
 			case MonsterOrganizationType.Minion:
 				rightOfTags = (
-					<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+					<Field orientation='vertical' label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
 				);
 				break;
 			default:
 				rightOfTags = (
-					<Field label='EV' value={props.monster.encounterValue} />
+					<Field orientation='vertical' label='EV' value={props.monster.encounterValue} />
 				);
 				break;
 		}

@@ -11,7 +11,15 @@
 		column-gap: 1cm;
 		column-fill: auto;
 
-		.feature-panel {
+		table,
+		.ability-panel,
+		.ability-info-panel,
+		.feature-panel,
+		.fixture-panel,
+		.follower-panel,
+		.monster-panel,
+		.power-roll-panel,
+		.selectable-panel {
 			break-inside: avoid;
 		}
 	}

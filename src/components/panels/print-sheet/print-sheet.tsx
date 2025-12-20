@@ -754,7 +754,7 @@ const SubclassSheet = (props: SubclassProps) => {
 				props.subclass.featuresByLevel
 					.filter(lvl => lvl.features.length > 0)
 					.map(lvl => (
-						<Space key={lvl.level} orientation='vertical'>
+						<Space key={lvl.level} orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (

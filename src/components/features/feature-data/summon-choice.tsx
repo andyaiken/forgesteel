@@ -16,6 +16,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
@@ -37,7 +38,7 @@ export const InfoSummonChoice = (props: InfoProps) => {
 	if (props.data.selected.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{props.data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
+				{props.data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
 			</Space>
 		);
 	}
@@ -47,7 +48,7 @@ export const InfoSummonChoice = (props: InfoProps) => {
 			<>
 				<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'monsters' : 'monster'}.</div>
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					{props.data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
+					{props.data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
 				</Space>
 			</>
 		);

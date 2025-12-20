@@ -1,4 +1,4 @@
-import { Input, Select, Slider, Space } from 'antd';
+import { Select, Slider, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -6,6 +6,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Terrain } from '@/models/terrain';
 import { TerrainFilter } from '@/models/filter';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
@@ -58,11 +59,11 @@ export const TerrainFilterPanel = (props: Props) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						props.includeNameFilter ?
-							<Input
+							<TextInput
 								placeholder='Name, keywords'
 								allowClear={true}
 								value={props.terrainFilter.name}
-								onChange={e => setFilterName(e.target.value)}
+								onChange={setFilterName}
 							/>
 							: null
 					}

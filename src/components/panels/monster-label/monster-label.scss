@@ -6,7 +6,10 @@
 .fixture-label {
 	margin: 5px 0;
 	border-radius: 10px;
-	padding: 0 10px;
+	padding: 10px 15px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	color: rgb(0, 0, 0);
 	background-color: colors.$monster-default;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
@@ -47,6 +50,10 @@
 		background: linear-gradient(color.scale(colors.$monster-support, $lightness: 10%), color.scale(colors.$monster-support, $lightness: -10%));
 	}
 
+	>* {
+		flex: 0 0 auto;
+	}
+
 	.ds-text {
 		color: rgba(0, 0, 0, 0.88) !important;
 	}
@@ -60,8 +67,4 @@
 			color: rgba(0, 0, 0, 0.88) !important;
 		}
 	}
-}
-
-.monster-label {
-	padding: 10px 15px 0 15px;
 }

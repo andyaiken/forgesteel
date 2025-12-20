@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Input, Space, Tabs, Upload } from 'antd';
+import { Button, Drawer, Flex, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -24,6 +24,7 @@ import { MonsterSelectModal } from '@/components/modals/select/monster-select/mo
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -102,12 +103,12 @@ export const MonsterGroupEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={monsterGroup.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={monsterGroup.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>

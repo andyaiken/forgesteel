@@ -491,29 +491,31 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	const selected = getList(category).find(item => item.id == selectedID);
-	const getPanel = getElementPanel();
+	const getViewSelector = () => {
+		if (!selectedID) {
+			return null;
+		}
 
-	let viewSelector = null;
-	if (selectedID) {
+		if ((category === 'monster-group') && showMonsters) {
+			return null;
+		}
+
 		switch (category) {
 			case 'adventure':
 			case 'tactical-map':
-				viewSelector = null;
-				break;
+				return null;
 			case 'encounter':
 			case 'montage':
 			case 'negotiation':
-				viewSelector = (
+				return (
 					<ViewSelector
 						mode='classic'
 						value={view}
 						onChange={setView}
 					/>
 				);
-				break;
 			default:
-				viewSelector = (
+				return (
 					<ViewSelector
 						mode='printable'
 						value={view}
@@ -525,9 +527,11 @@ export const LibraryListPage = (props: Props) => {
 						}}
 					/>
 				);
-				break;
 		}
-	}
+	};
+
+	const selected = getList(category).find(item => item.id == selectedID);
+	const getPanel = getElementPanel();
 
 	return (
 		<ErrorBoundary>
@@ -584,11 +588,11 @@ export const LibraryListPage = (props: Props) => {
 							: null
 					}
 					{
-						viewSelector ?
+						getViewSelector() ?
 							<div className='divider' />
 							: null
 					}
-					{viewSelector}
+					{getViewSelector()}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>

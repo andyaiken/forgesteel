@@ -14,6 +14,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -32,7 +33,7 @@ export const InfoSummon = (props: InfoProps) => {
 	if (props.data.summons.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{props.data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
+				{props.data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
 			</Space>
 		);
 	}

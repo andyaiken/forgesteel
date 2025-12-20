@@ -1,5 +1,4 @@
 import { Feature, FeatureTaggedFeatureData } from '@/models/feature';
-import { Input, Space } from 'antd';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -7,6 +6,8 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -51,12 +52,12 @@ export const EditTaggedFeature = (props: EditProps) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Tag</HeaderText>
-			<Input
+			<TextInput
 				status={data.tag === '' ? 'warning' : ''}
 				placeholder='Tag'
 				allowClear={true}
 				value={data.tag}
-				onChange={e => setTag(e.target.value)}
+				onChange={setTag}
 			/>
 			<Expander title='Feature'>
 				<FeatureEditPanel

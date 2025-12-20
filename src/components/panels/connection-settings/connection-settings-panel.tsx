@@ -3,6 +3,7 @@ import { CloudServerOutlined, SaveFilled } from '@ant-design/icons';
 import { JSX, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import axios from 'axios';
@@ -117,12 +118,12 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				connectionSettings.useWarehouse ?
 					<>
 						<HeaderText>Warehouse Host</HeaderText>
-						<Input
+						<TextInput
 							placeholder='Warehouse Host'
 							allowClear={true}
 							status={hostInputStatus}
 							value={connectionSettings.warehouseHost}
-							onChange={e => setWarehouseUrl(e.target.value)}
+							onChange={setWarehouseUrl}
 						/>
 						<HeaderText>API Token</HeaderText>
 						<Input.Password

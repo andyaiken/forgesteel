@@ -1,4 +1,4 @@
-import { Button, Input, Space, Tabs } from 'antd';
+import { Button, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -15,6 +15,7 @@ import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -49,12 +50,12 @@ export const SubClassEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={subClass.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={subClass.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>

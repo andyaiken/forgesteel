@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Input, Segmented, Space } from 'antd';
+import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
@@ -15,6 +15,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -101,13 +102,13 @@ export const MonsterModal = (props: Props) => {
 						{
 							editingName && props.updateMonster ?
 								<div>
-									<Input
+									<TextInput
 										placeholder='Name'
 										allowClear={true}
 										value={monster.name}
-										onChange={e => {
+										onChange={value => {
 											const copy = Utils.copy(monster);
-											copy.name = e.target.value;
+											copy.name = value;
 											updateMonster(copy);
 										}}
 									/>

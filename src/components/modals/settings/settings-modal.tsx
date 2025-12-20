@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
@@ -21,6 +21,7 @@ import { PatreonConnectPanel } from '@/components/panels/connection-settings/pat
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { WarehouseActionsPanel } from '@/components/panels/connection-settings/warehouse-actions-panel';
@@ -590,12 +591,11 @@ export const SettingsModal = (props: Props) => {
 			<Expander title='Feature Flags'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Flex align='center' justify='space-between' gap={10}>
-						<Input
+						<TextInput
 							placeholder='Enter a feature flag code'
 							allowClear={true}
 							value={flag}
-							onChange={e => {
-								const flag = e.target.value;
+							onChange={flag => {
 								// console.error(`${flag}: ${Utils.hashCode(flag)}`);
 								setFlag(flag);
 							}}

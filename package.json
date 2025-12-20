@@ -23,6 +23,7 @@
 		"@types/showdown": "^2.0.6",
 		"antd": "^6.1.1",
 		"axios": "^1.13.2",
+		"axios-mock-adapter": "^2.1.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.4",

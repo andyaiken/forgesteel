@@ -797,33 +797,15 @@ export const LibraryEditPage = (props: Props) => {
 				);
 			case 'imbuement':
 				return (
-					<>
-						<SelectablePanel>
-							<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
-						{
-							(element as Imbuement).crafting ?
-								<SelectablePanel>
-									<ProjectPanel project={(element as Imbuement).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-								</SelectablePanel>
-								: null
-						}
-					</>
+					<SelectablePanel>
+						<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
 				);
 			case 'item':
 				return (
-					<>
-						<SelectablePanel>
-							<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
-						{
-							(element as Item).crafting ?
-								<SelectablePanel>
-									<ProjectPanel project={(element as Item).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-								</SelectablePanel>
-								: null
-						}
-					</>
+					<SelectablePanel>
+						<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
 				);
 			case 'kit':
 				return (

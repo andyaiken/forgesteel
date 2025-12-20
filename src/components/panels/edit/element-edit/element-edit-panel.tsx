@@ -1,8 +1,8 @@
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Input } from 'antd';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -34,12 +34,12 @@ export const ElementEditPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='element-edit-panel'>
 				<HeaderText>Name</HeaderText>
-				<Input
+				<TextInput
 					status={element.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={element.name}
-					onChange={e => setName(e.target.value)}
+					onChange={setName}
 				/>
 				<HeaderText>Description</HeaderText>
 				<MarkdownEditor value={element.description} onChange={setDescription} />

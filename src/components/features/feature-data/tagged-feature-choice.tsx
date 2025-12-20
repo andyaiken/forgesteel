@@ -1,5 +1,5 @@
 import { Feature, FeatureTaggedFeatureChoiceData } from '@/models/feature';
-import { Input, Select, Space } from 'antd';
+import { Select, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -12,6 +12,7 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -70,12 +71,12 @@ export const EditTaggedFeatureChoice = (props: EditProps) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Tag</HeaderText>
-			<Input
+			<TextInput
 				status={data.tag === '' ? 'warning' : ''}
 				placeholder='Tag'
 				allowClear={true}
 				value={data.tag}
-				onChange={e => setTag(e.target.value)}
+				onChange={setTag}
 			/>
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />

@@ -1,5 +1,5 @@
-import { Button, Divider, Input, Popover, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Button, Divider, Popover, Space, Tabs, Upload } from 'antd';
+import { DownOutlined, DownloadOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
@@ -12,6 +12,7 @@ import { HeroInfo } from '@/components/panels/token/token';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { Options } from '@/models/options';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -103,14 +104,7 @@ export const HeroListPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-list-page'>
 				<AppHeader subheader='Heroes'>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
+					<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 					<div className='divider' />
 					<Popover
 						trigger='click'

@@ -1,5 +1,4 @@
-import { Button, Divider, Input, Space } from 'antd';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Divider, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { Hero } from '@/models/hero';
@@ -11,6 +10,8 @@ import { ItemType } from '@/enums/item-type';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { PlusOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -61,16 +62,7 @@ export const ItemSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='item-select-modal'>

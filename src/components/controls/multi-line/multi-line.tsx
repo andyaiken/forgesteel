@@ -1,6 +1,7 @@
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Input } from 'antd';
+import { useDebounce } from '@/hooks/use-debounce';
 
 import './multi-line.scss';
 
@@ -13,12 +14,14 @@ interface Props {
 }
 
 export const MultiLine = (props: Props) => {
-	const [ value, setValue ] = useState<string>(props.value);
+	const [ value, setValue ] = useState(props.value);
+	const debouncedValue = useDebounce(value);
 
-	const onChange = (text: string) => {
-		setValue(text);
-		props.onChange(text);
-	};
+	useEffect(
+		() => props.onChange(debouncedValue),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[ debouncedValue ]
+	);
 
 	return (
 		<ErrorBoundary>
@@ -28,7 +31,7 @@ export const MultiLine = (props: Props) => {
 					style={props.inputStyle}
 					placeholder={props.placeholder}
 					value={value}
-					onChange={e => onChange(e.target.value)}
+					onChange={e => setValue(e.target.value)}
 				/>
 			</div>
 		</ErrorBoundary>

@@ -1,4 +1,4 @@
-import { Input, Select, Slider, Space } from 'antd';
+import { Select, Slider, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -6,6 +6,7 @@ import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
@@ -74,11 +75,11 @@ export const MonsterFilterPanel = (props: Props) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						props.includeNameFilter ?
-							<Input
+							<TextInput
 								placeholder='Name'
 								allowClear={true}
 								value={props.monsterFilter.name}
-								onChange={e => setFilterName(e.target.value)}
+								onChange={setFilterName}
 							/>
 							: null
 					}

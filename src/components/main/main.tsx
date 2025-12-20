@@ -49,6 +49,7 @@ import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
 import { LibraryEditPage } from '@/components/pages/library/library-edit/library-edit-page';
 import { LibraryListPage } from '@/components/pages/library/library-list/library-list-page';
+import { LibraryPrintPage } from '@/components/pages/library/library-print/library-print-page';
 import { MainLayout } from '@/components/main/main-layout';
 import { MinionSlotModal } from '@/components/modals/minion-slot/minion-slot-modal';
 import { Monster } from '@/models/monster';
@@ -1786,6 +1787,16 @@ export const Main = (props: Props) => {
 									showMonster={onSelectMonster}
 									showTerrain={onSelectTerrain}
 									saveChanges={saveLibraryElement}
+								/>
+							}
+						/>
+						<Route
+							path='print/:kind/:sourcebookID/:elementID'
+							element={
+								<LibraryPrintPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={options}
 								/>
 							}
 						/>

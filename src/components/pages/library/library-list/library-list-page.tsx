@@ -20,11 +20,11 @@ import { CulturePanel } from '@/components/panels/elements/culture-panel/culture
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
-import { ElementSheet } from '@/components/panels/classic-sheet/element-sheet/element-sheet';
 import { ElementToolbar } from '@/components/pages/library/library-list/controls/element-toolbar';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
+import { EncounterSheetPage } from '@/components/panels/classic-sheet/encounter-sheet/encounter-sheet-page';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
@@ -47,8 +47,10 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -213,24 +215,41 @@ export const LibraryListPage = (props: Props) => {
 		let getPanel: (element: Element) => ReactNode = () => null;
 
 		if (view === 'classic') {
-			let cat: string = category;
-			if ((category === 'monster-group') && showMonsters) {
-				cat = 'monster';
-			}
-
 			getPanel = (element: Element) => {
-				return (
-					<div style={{ padding: '20px', overflow: 'auto' }}>
-						<ElementSheet
-							key={element.id}
-							type={cat}
-							element={element}
-							sourcebooks={props.sourcebooks}
-							heroes={props.heroes}
-							options={props.options}
-						/>
-					</div>
-				);
+				switch (category) {
+					case 'encounter':
+						return (
+							<div style={{ padding: '20px', overflow: 'auto' }}>
+								<EncounterSheetPage
+									encounter={element as Encounter}
+									sourcebooks={props.sourcebooks}
+									heroes={props.heroes}
+									options={props.options}
+								/>
+							</div>
+						);
+					case 'montage':
+						return (
+							<div style={{ padding: '20px', overflow: 'auto' }}>
+								<MontageSheetPage
+									montage={element as Montage}
+									heroes={props.heroes}
+									options={props.options}
+								/>
+							</div>
+						);
+					case 'negotiation':
+						return (
+							<div style={{ padding: '20px', overflow: 'auto' }}>
+								<NegotiationSheetPage
+									negotiation={element as Negotiation}
+									options={props.options}
+								/>
+							</div>
+						);
+				}
+
+				return null;
 			};
 		} else {
 			switch (category) {
@@ -475,7 +494,40 @@ export const LibraryListPage = (props: Props) => {
 	const selected = getList(category).find(item => item.id == selectedID);
 	const getPanel = getElementPanel();
 
-	const showViewSelector = !!selectedID && (category !== 'adventure') && (category !== 'tactical-map');
+	let viewSelector = null;
+	if (selectedID) {
+		switch (category) {
+			case 'adventure':
+			case 'tactical-map':
+				viewSelector = null;
+				break;
+			case 'encounter':
+			case 'montage':
+			case 'negotiation':
+				viewSelector = (
+					<ViewSelector
+						mode='classic'
+						value={view}
+						onChange={setView}
+					/>
+				);
+				break;
+			default:
+				viewSelector = (
+					<ViewSelector
+						mode='printable'
+						value={view}
+						onChange={() => {
+							const sourcebook = props.sourcebooks.find(sb => SourcebookLogic.getElements(sb).map(e => e.element.id).includes(selectedID));
+							if (sourcebook) {
+								navigation.goToLibraryPrint(category, sourcebook.id, selectedID);
+							}
+						}}
+					/>
+				);
+				break;
+		}
+	}
 
 	return (
 		<ErrorBoundary>
@@ -532,15 +584,11 @@ export const LibraryListPage = (props: Props) => {
 							: null
 					}
 					{
-						showViewSelector ?
+						viewSelector ?
 							<div className='divider' />
 							: null
 					}
-					{
-						showViewSelector ?
-							<ViewSelector value={view} onChange={setView} />
-							: null
-					}
+					{viewSelector}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>

@@ -1,6 +1,7 @@
 import { CSSProperties, useState } from 'react';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Collections } from '@/utils/collections';
+import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -98,6 +99,7 @@ export const SubclassPanel = (props: Props) => {
 						);
 					})
 				}
+				{props.subclass.abilities.length === 0 ? <Empty /> : null}
 			</div>
 		);
 	};

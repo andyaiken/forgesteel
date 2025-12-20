@@ -55,7 +55,7 @@ export const AbilitySelectModal = (props: Props) => {
 									key={a.id}
 									onSelect={() => props.onSelect(a)}
 								>
-									<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
+									<AbilityPanel ability={a} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

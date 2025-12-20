@@ -57,7 +57,6 @@ export const FeatureSelectModal = (props: Props) => {
 								>
 									<FeaturePanel
 										feature={f.feature}
-										hero={props.hero}
 										cost={showCosts ? f.value : undefined}
 										mode={PanelMode.Full}
 										options={props.options}

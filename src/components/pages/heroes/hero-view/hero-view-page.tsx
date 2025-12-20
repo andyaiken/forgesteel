@@ -204,7 +204,7 @@ export const HeroViewPage = (props: Props) => {
 						Manage
 					</Button>
 					<div className='divider' />
-					<ViewSelector value={view} showHeroOptions={true} onChange={setView} />
+					<ViewSelector value={view} mode='hero' onChange={setView} />
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>

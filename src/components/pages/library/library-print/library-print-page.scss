@@ -1,0 +1,18 @@
+.library-print-page {
+	padding: 0 20px;
+	overflow: auto;
+}
+
+@media print {
+	.library-print-page {
+		position: absolute;
+		padding: 0;
+		column-width: 250px;
+		column-gap: 1cm;
+		column-fill: auto;
+
+		.feature-panel {
+			break-inside: avoid;
+		}
+	}
+}

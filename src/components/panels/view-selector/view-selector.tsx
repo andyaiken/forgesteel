@@ -28,11 +28,12 @@ export const ViewSelector = (props: Props) => {
 
 		switch (props.mode) {
 			case 'hero':
+				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
 				options.push(createOption('abilities', 'Standard Abilities', <TableOutlined />));
 				options.push(createOption('notes', 'Notes', <FormOutlined />));
 				break;
 			case 'classic':
-				options.push(createOption('classic', 'Classic View (for printing)', <FilePdfOutlined />));
+				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
 				break;
 			case 'printable':
 				options.push(createOption('print', 'Print', <PrinterOutlined />));

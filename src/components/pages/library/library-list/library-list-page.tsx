@@ -128,6 +128,7 @@ export const LibraryListPage = (props: Props) => {
 	if (kind !== previousCategory) {
 		setCategory(kind || 'ancestry');
 		setPreviousCategory(kind);
+		setView('modern');
 	}
 
 	if (elementID !== previousSelectedID) {
@@ -519,10 +520,12 @@ export const LibraryListPage = (props: Props) => {
 					<ViewSelector
 						mode='printable'
 						value={view}
-						onChange={() => {
-							const sourcebook = props.sourcebooks.find(sb => SourcebookLogic.getElements(sb).map(e => e.element.id).includes(selectedID));
-							if (sourcebook) {
-								navigation.goToLibraryPrint(category, sourcebook.id, selectedID);
+						onChange={value => {
+							if (value === 'print') {
+								const sourcebook = props.sourcebooks.find(sb => SourcebookLogic.getElements(sb).map(e => e.element.id).includes(selectedID));
+								if (sourcebook) {
+									navigation.goToLibraryPrint(category, sourcebook.id, selectedID);
+								}
 							}
 						}}
 					/>

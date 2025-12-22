@@ -50,6 +50,10 @@ export class EncounterDifficultyLogic {
 			heroVictories = Math.round(Collections.mean(party, h => h.state.victories));
 		}
 
+		return EncounterDifficultyLogic.getBudgetsForParty(heroCount, heroLevel, heroVictories);
+	};
+
+	static getBudgetsForParty = (heroCount: number, heroLevel: number, heroVictories: number) => {
 		const effectiveHeroCount = heroCount + Math.floor(heroVictories / 2);
 		const heroValue = EncounterDifficultyLogic.getHeroValue(heroLevel);
 
@@ -64,7 +68,55 @@ export class EncounterDifficultyLogic {
 	static getDifficulty = (encounterStrength: number, options: Options, heroes: Hero[]) => {
 		const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
 
-		if (budgets.maxHard > 40) {
+		if (budgets.maxHard > 30) {
+			if (encounterStrength > budgets.maxHard * 500) {
+				return EncounterDifficulty.Death;
+			}
+
+			if (encounterStrength > budgets.maxHard * 400) {
+				return EncounterDifficulty.BlackGods;
+			}
+
+			if (encounterStrength > budgets.maxHard * 300) {
+				return EncounterDifficulty.Annihilation;
+			}
+
+			if (encounterStrength > budgets.maxHard * 200) {
+				return EncounterDifficulty.Silly;
+			}
+
+			if (encounterStrength > budgets.maxHard * 100) {
+				return EncounterDifficulty.SuperExtreme;
+			}
+		}
+
+		if (encounterStrength > budgets.maxHard) {
+			return EncounterDifficulty.Extreme;
+		}
+
+		if (encounterStrength > budgets.maxStandard) {
+			return EncounterDifficulty.Hard;
+		}
+
+		if (encounterStrength > budgets.maxEasy) {
+			return EncounterDifficulty.Standard;
+		}
+
+		if (encounterStrength > budgets.maxTrivial) {
+			return EncounterDifficulty.Easy;
+		}
+
+		if (encounterStrength > 0) {
+			return EncounterDifficulty.Trivial;
+		}
+
+		return EncounterDifficulty.Empty;
+	};
+
+	static getDifficultyForParty = (encounterStrength: number, heroCount: number, heroLevel: number, heroVictories: number) => {
+		const budgets = EncounterDifficultyLogic.getBudgetsForParty(heroCount, heroLevel, heroVictories);
+
+		if (budgets.maxHard > 30) {
 			if (encounterStrength > budgets.maxHard * 500) {
 				return EncounterDifficulty.Death;
 			}

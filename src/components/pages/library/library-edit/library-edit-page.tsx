@@ -748,66 +748,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getPreview = () => {
 		switch (kind) {
-			case 'ancestry':
-				return (
-					<SelectablePanel>
-						<AncestryPanel ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'career':
-				return (
-					<SelectablePanel>
-						<CareerPanel career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'class':
-				if (!subElementID) {
-					return (
-						<SelectablePanel>
-							<ClassPanel heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
-					);
-				} else {
-					const heroClass = element as HeroClass;
-					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
-
-					return (
-						<SelectablePanel>
-							<SubclassPanel subclass={subclass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
-					);
-				}
-			case 'complication':
-				return (
-					<SelectablePanel>
-						<ComplicationPanel complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'culture':
-				return (
-					<SelectablePanel>
-						<CulturePanel culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'domain':
-				return (
-					<SelectablePanel>
-						<DomainPanel domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'imbuement':
-				return (
-					<SelectablePanel>
-						<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'item':
-				return (
-					<SelectablePanel>
-						<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
-			case 'kit':
+			case 'ancestry': {
 				return (
 					<Tabs
 						items={[
@@ -816,7 +757,214 @@ export const LibraryEditPage = (props: Props) => {
 								label: 'Preview',
 								children: (
 									<SelectablePanel>
-										<KitPanel kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+										<AncestryPanel
+											ancestry={element as Ancestry}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'career': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<CareerPanel
+											career={element as Career}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'class': {
+				if (!subElementID) {
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<ClassPanel
+												heroClass={element as HeroClass}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					);
+				} else {
+					const heroClass = element as HeroClass;
+					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
+
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<SubclassPanel
+												subclass={subclass}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					);
+				}
+			}
+			case 'complication': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<ComplicationPanel
+											complication={element as Complication}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'culture': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<CulturePanel
+											culture={element as Culture}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'domain': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<DomainPanel
+											domain={element as Domain}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'imbuement': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<ImbuementPanel
+											imbuement={element as Imbuement}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'item': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<ItemPanel
+											item={element as Item}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
+				);
+			}
+			case 'kit': {
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<KitPanel
+											kit={element as Kit}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
 									</SelectablePanel>
 								)
 							},
@@ -828,12 +976,28 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'monster-group':
+			}
+			case 'monster-group': {
 				if (!subElementID) {
 					return (
-						<SelectablePanel>
-							<MonsterGroupPanel monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-						</SelectablePanel>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterGroupPanel
+												monsterGroup={element as MonsterGroup}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
 					);
 				} else {
 					const monsterGroup = element as MonsterGroup;
@@ -847,7 +1011,13 @@ export const LibraryEditPage = (props: Props) => {
 									label: 'Preview',
 									children: (
 										<SelectablePanel>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+											<MonsterPanel
+												monster={monster}
+												monsterGroup={monsterGroup}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												mode={PanelMode.Full}
+											/>
 										</SelectablePanel>
 									)
 								},
@@ -865,59 +1035,161 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
-			case 'montage':
+			}
+			case 'montage': {
 				return (
-					<SelectablePanel>
-						<MontagePanel
-							montage={element as Montage}
-							heroes={props.heroes}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<MontagePanel
+											montage={element as Montage}
+											heroes={props.heroes}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'negotiation':
+			}
+			case 'negotiation': {
 				return (
-					<SelectablePanel>
-						<NegotiationPanel
-							negotiation={element as Negotiation}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<NegotiationPanel
+											negotiation={element as Negotiation}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'perk':
+			}
+			case 'perk': {
 				return (
-					<SelectablePanel>
-						<PerkPanel perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<PerkPanel
+											perk={element as Perk}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'project':
+			}
+			case 'project': {
 				return (
-					<SelectablePanel>
-						<ProjectPanel project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<ProjectPanel
+											project={element as Project}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'subclass':
+			}
+			case 'subclass': {
 				return (
-					<SelectablePanel>
-						<SubclassPanel subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<SubclassPanel
+											subclass={element as SubClass}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'terrain':
+			}
+			case 'terrain': {
 				return (
-					<SelectablePanel>
-						<TerrainPanel terrain={element as Terrain} showCustomizations={true} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<TerrainPanel
+											terrain={element as Terrain}
+											showCustomizations={true}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
-			case 'title':
+			}
+			case 'title': {
 				return (
-					<SelectablePanel>
-						<TitlePanel title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-					</SelectablePanel>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<TitlePanel
+											title={element as Title}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							}
+						]}
+					/>
 				);
+			}
 		}
 
 		return null;

@@ -1,7 +1,62 @@
+import { Adventure } from '@/models/adventure';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { Plot } from '@/models/plot';
 import { Session } from '@/models/session';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
 export class AdventureLogic {
+	static getVictories = (adventure: Adventure, sourcebooks: Sourcebook[]) => {
+		return AdventureLogic.getVictoriesForPlot(adventure.plot, adventure.party.count, adventure.party.level, sourcebooks);
+	};
+
+	static getVictoriesForPlot = (plot: Plot, heroCount: number, heroLevel: number, sourcebooks: Sourcebook[]) => {
+		let victories = 0;
+
+		plot.content
+			.filter(pc => pc.contentType === 'reference')
+			.forEach(pc => {
+				switch (pc.type) {
+					case 'adventure': {
+						const adventure = SourcebookLogic.getAdventures(sourcebooks).find(a => a.id === pc.contentID);
+						if (adventure) {
+							victories += AdventureLogic.getVictories(adventure, sourcebooks);
+						}
+						break;
+					}
+					case 'encounter': {
+						const encounter = SourcebookLogic.getEncounters(sourcebooks).find(e => e.id === pc.contentID);
+						if (encounter) {
+							const strength = EncounterDifficultyLogic.getStrength(encounter, sourcebooks);
+							const difficulty = EncounterDifficultyLogic.getDifficultyForParty(strength, heroCount, heroLevel, 0);
+							victories += EncounterDifficultyLogic.getVictories(difficulty);
+						}
+						break;
+					}
+					case 'montage': {
+						const montage = SourcebookLogic.getMontages(sourcebooks).find(m => m.id === pc.contentID);
+						if (montage) {
+							victories += EncounterDifficultyLogic.getVictories(montage.difficulty);
+						}
+						break;
+					}
+					case 'negotiation': {
+						const negotiation = SourcebookLogic.getNegotiations(sourcebooks).find(n => n.id === pc.contentID);
+						if (negotiation) {
+							victories += 1;
+						}
+						break;
+					}
+				}
+			});
+
+		plot.plots.forEach(subplot => {
+			victories += AdventureLogic.getVictoriesForPlot(subplot, heroCount, heroLevel, sourcebooks);
+		});
+
+		return victories;
+	};
+
 	static getContentIDs = (plot: Plot) => {
 		return AdventureLogic
 			.getAllPlotPoints(plot)

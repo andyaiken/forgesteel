@@ -1,5 +1,6 @@
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Divider } from 'antd';
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -67,7 +68,7 @@ export const AdventurePanel = (props: Props) => {
 				<Markdown text={props.adventure.description} />
 				{props.adventure.description ? <Divider /> : null}
 				<div className='ds-text'>
-					A <b>DRAW STEEL</b> adventure for {props.adventure.party.count} heroes of level {props.adventure.party.level}.
+					A <b>DRAW STEEL</b> adventure for <b>{props.adventure.party.count} heroes of level {props.adventure.party.level}</b>, containing <b>{AdventureLogic.getVictories(props.adventure, props.sourcebooks)} victories</b>.
 				</div>
 				{props.adventure.introduction.length > 0 ? <Divider /> : null}
 				{

@@ -29,7 +29,7 @@ export class FeatureFlags {
 	};
 
 	static remoteGoogleDrive: FeatureFlag = {
-		code: Utils.hashCode('remote-google-drive'),
+		code: Utils.hashCode('google-drive'),
 		description: 'Enable Google Drive remote sync'
 	};
 

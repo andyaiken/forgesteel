@@ -323,21 +323,21 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
+		setSpinning(true);
 		const name = hero.name || 'Unnamed Hero';
 
 		const pageIds: string[] = [];
 		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
-		setSpinning(true);
 		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
 			.then(() => setSpinning(false));
 	};
 
 	const exportStandardAbilities = () => {
+		setSpinning(true);
 		const pageIds: string[] = [];
 		document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
 
-		setSpinning(true);
 		Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
 			.then(() => setSpinning(false));
 	};
@@ -1258,12 +1258,12 @@ export const Main = (props: Props) => {
 	};
 
 	const exportLibraryElementPdf = (category: string, element: Element, resolution: 'standard' | 'high') => {
+		setSpinning(true);
 		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
 		const pageIds: string[] = [];
 		document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
-		setSpinning(true);
 		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
 			.then(() => setSpinning(false));
 	};

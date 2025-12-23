@@ -28,3 +28,9 @@
 		font-size: 13px;
 	}
 }
+
+html[data-theme="dark"] {
+	.gauge-info {
+		color: rgb(255, 255, 255);
+	}
+}

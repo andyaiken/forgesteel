@@ -324,22 +324,26 @@ export const Main = (props: Props) => {
 
 	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
 		setSpinning(true);
-		const name = hero.name || 'Unnamed Hero';
+		Utils.wait(500).then(() => {
+			const name = hero.name || 'Unnamed Hero';
 
-		const pageIds: string[] = [];
-		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
+			const pageIds: string[] = [];
+			document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
-		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
-			.then(() => setSpinning(false));
+			Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
+				.then(() => setSpinning(false));
+		});
 	};
 
 	const exportStandardAbilities = () => {
 		setSpinning(true);
-		const pageIds: string[] = [];
-		document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
+		Utils.wait(500).then(() => {
+			const pageIds: string[] = [];
+			document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
 
-		Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
-			.then(() => setSpinning(false));
+			Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
+				.then(() => setSpinning(false));
+		});
 	};
 
 	const setNotes = (hero: Hero, value: string) => {
@@ -1259,13 +1263,15 @@ export const Main = (props: Props) => {
 
 	const exportLibraryElementPdf = (category: string, element: Element, resolution: 'standard' | 'high') => {
 		setSpinning(true);
-		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
+		Utils.wait(500).then(() => {
+			const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
-		const pageIds: string[] = [];
-		document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+			const pageIds: string[] = [];
+			document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
-		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
-			.then(() => setSpinning(false));
+			Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
+				.then(() => setSpinning(false));
+		});
 	};
 
 	// #endregion

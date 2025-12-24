@@ -1,10 +1,11 @@
-import { Alert, Button, Empty, Flex, Popconfirm, Segmented, Space, Tabs } from 'antd';
+import { Alert, Button, Empty, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroMergeLogic } from '@/logic/merge/hero-merge-logic';
@@ -12,6 +13,7 @@ import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
+import { RemoteGoogleDriveDataService } from '@/utils/remote-google-drive-data-service';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
@@ -32,6 +34,10 @@ export const TransferPage = (props: Props) => {
 	const settings = props.connectionSettings;
 	const [ mergeBehavior, setMergeBehavior ] = useState<MergeDuplicateBehavior>(MergeDuplicateBehavior.Skip);
 	const [ copyLocalOpen, setCopyLocalOpen ] = useState<boolean>(false);
+	// eslint-disable-next-line  @typescript-eslint/no-unused-vars
+	const [ mergeStatusMessage, setMergeStatusMessage ] = useState<string | null>(null);
+	const [ isLoading, setIsLoading ] = useState<boolean>(false);
+	const [ remoteModifiedTime, setRemoteModifiedTime ] = useState<Date | null>(null);
 
 	const [ localHeroes, setLocalHeroes ] = useState<Hero[]>([]);
 	const [ localHomebrewSourcebooks, setLocalHomebrewSourcebooks ] = useState<Sourcebook[]>([]);
@@ -40,14 +46,53 @@ export const TransferPage = (props: Props) => {
 	const [ remoteHomebrewSourcebooks, setRemoteHomebrewSourcebooks ] = useState<Sourcebook[]>([]);
 
 	const localDs = useMemo(() => new DataService({ ...settings, useWarehouse: false }), [ settings ]);
-	const warehouseDs = useMemo(() => new DataService(settings), [ settings ]);
+	const warehouseDs = useMemo(() => {
+		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			return new RemoteGoogleDriveDataService(settings);
+		}
+		return new DataService(settings);
+	}, [ settings ]);
 
-	const mergeToWarehouse = () => {
-		const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
-		warehouseDs.saveHeroes(mergedHeroes).then(setRemoteHeroes);
+	const hasRemoteStorage = useMemo(() => {
+		const gdrive = settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code);
+		return settings.useWarehouse || gdrive;
+	}, [ settings ]);
 
-		const mergedSourcebooks = SourcebookMergeLogic.merge(localHomebrewSourcebooks, remoteHomebrewSourcebooks, mergeBehavior);
-		warehouseDs.saveHomebrew(mergedSourcebooks).then(setRemoteHomebrewSourcebooks);
+	const remoteStorageReady = useMemo(() => {
+		if (settings.useGoogleDrive && FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			const googleDriveService = warehouseDs as RemoteGoogleDriveDataService;
+			if (!googleDriveService.isAuthorized()) {
+				console.warn('Google Drive not authorized');
+				return false;	// not authorized yet
+			}
+		}
+		return true;	// asssume the remote storage is working and ready if it's the warehouse
+	}, [ settings.useGoogleDrive, warehouseDs ]);
+
+	const mergeToWarehouse = async () => {
+		if (!warehouseDs) {
+			console.error('No warehouse data service available');
+			return;
+		}
+
+		try {
+			setIsLoading(true);
+			const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
+			await warehouseDs.saveHeroes(mergedHeroes);
+			setRemoteHeroes(mergedHeroes);
+
+			const mergedSourcebooks = SourcebookMergeLogic.merge(localHomebrewSourcebooks, remoteHomebrewSourcebooks, mergeBehavior);
+			await warehouseDs.saveHomebrew(mergedSourcebooks);
+			setRemoteHomebrewSourcebooks(mergedSourcebooks);
+
+			setMergeStatusMessage('Data merged successfully!');
+			setTimeout(() => setMergeStatusMessage(null), 5000);
+		} catch (err) {
+			console.error('Error during merge:', err);
+			setMergeStatusMessage(`Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const copyToLocal = () => {
@@ -59,33 +104,52 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const initializeData = () => {
-		if (settings.useWarehouse) {
-			setRemoteHeroes(props.heroes);
-			setRemoteHomebrewSourcebooks(props.homebrewSourcebooks);
+		if (!warehouseDs || !hasRemoteStorage || !remoteStorageReady) {
+			return;
+		}
 
+		// Load remote data
+		setIsLoading(true);
+
+		Promise.all([
+			warehouseDs.getHeroes()
+				.then(heroes => {
+					if (heroes !== null) {
+						setRemoteHeroes(heroes);
+					}
+				}),
+			warehouseDs.getHomebrew()
+				.then(sourcebooks => {
+					if (sourcebooks !== null) {
+						setRemoteHomebrewSourcebooks(sourcebooks);
+					}
+				}),
 			localDs.getHeroes()
 				.then(heroes => {
 					if (heroes !== null) {
 						setLocalHeroes(heroes);
 					}
-				});
-
+				}),
 			localDs.getHomebrew()
 				.then(sourcebooks => {
 					if (sourcebooks !== null) {
 						setLocalHomebrewSourcebooks(sourcebooks);
 					}
-				});
-		}
+				}),
+			warehouseDs instanceof RemoteGoogleDriveDataService ?
+				(warehouseDs as RemoteGoogleDriveDataService).getRemoteFileModifiedTime()
+					.then(time => setRemoteModifiedTime(time))
+				: Promise.resolve()
+		]).finally(() => setIsLoading(false));
 	};
 
 	useEffect(
 		initializeData,
 		[
 			localDs,
-			props.heroes,
-			props.homebrewSourcebooks,
-			settings
+			warehouseDs,
+			hasRemoteStorage,
+			remoteStorageReady
 		]
 	);
 
@@ -173,7 +237,7 @@ export const TransferPage = (props: Props) => {
 				okText='Yes'
 				cancelText='No'
 			>
-				<Button>
+				<Button type='primary'>
 					Copy Warehouse data to Local
 				</Button>
 			</Popconfirm>
@@ -181,7 +245,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const getTransferContent = () => {
-		if (!settings.useWarehouse) {
+		if (!hasRemoteStorage || !remoteStorageReady) {
 			return (
 				<Alert
 					title='Not connected to warehouse'
@@ -193,7 +257,7 @@ export const TransferPage = (props: Props) => {
 		} else {
 			return (
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<HeaderText level={4}>Move Local data into the Warehouse</HeaderText>
+					<HeaderText level={4}>Upload Local data into the Warehouse 💻 ➜ ☁️ </HeaderText>
 					<LabelControl
 						label='What to do when there is a duplicate item (by id) in the warehouse?'
 						control={
@@ -211,7 +275,8 @@ export const TransferPage = (props: Props) => {
 						Merge Local data into Warehouse
 					</Button>
 
-					<HeaderText level={4}>Copy Warehouse data to Local storage</HeaderText>
+					<p></p>
+					<HeaderText level={4}>Download Warehouse data to Local storage ☁️ ➜ 💻 </HeaderText>
 					<Alert
 						type='warning'
 						title='This replaces the local content completely!'
@@ -237,6 +302,12 @@ export const TransferPage = (props: Props) => {
 					</Expander>
 
 					<HeaderText level={3}>Warehouse Storage</HeaderText>
+
+					{remoteModifiedTime && (
+						<p style={{ fontSize: '12px', color: '#999', margin: '4px' }}>
+							Last synced: {remoteModifiedTime.toLocaleString()}
+						</p>
+					)}
 
 					<Expander title={`Heroes (${remoteHeroes.length})`}>
 						{getHeroSection(remoteHeroes, remoteHomebrewSourcebooks)}
@@ -273,36 +344,38 @@ export const TransferPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='transfer-page'>
 				<div className='transfer-page-content'>
-					<HeaderText level={1}>Data Transfer</HeaderText>
-					<p>
-						By default, Forge Steel uses your local browser storage to store your data.
-						This means that you didn't have to register or sign up anywhere, and all of your data stays local to you.
-						But it also means that you can't access your data across browsers, and a browser reset could wipe all your data.
-					</p>
-					<p>
-						However, once you have connected with the Warehouse, you have access to persistent, remote storage
-						that you can use to keep data and access it across devices, and which won't get wiped if your browser cache clears.
-					</p>
-					<p>
-						Use this page to transfer data between the browser storage (Local), and the Warehouse.
-					</p>
-					<h4>Some important notes:</h4>
-					<p>
-						This tool does <strong>NOT</strong> compare the contents of <em>ANY</em> piece of data.
-						It only checks the internal ID for determining if a chunk of data is 'the same'.
-						This means that copying or merging data could result in some data loss. Use at your own risk!
-					</p>
-					{
-						settings.useWarehouse ?
-							<>
-								<p>
-									Once you are done, you will need to reload the app to see the updated data.
-								</p>
-								<Button type='primary' onClick={navHome}>Return</Button>
-							</>
-							: null
-					}
-					{getTransferContent()}
+					<Spin spinning={isLoading}>
+						<HeaderText level={1}>Data Transfer</HeaderText>
+						<p>
+							By default, Forge Steel uses your local browser storage to store your data.
+							This means that you didn't have to register or sign up anywhere, and all of your data stays local to you.
+							But it also means that you can't access your data across browsers, and a browser reset could wipe all your data.
+						</p>
+						<p>
+							However, once you have connected with the Warehouse, you have access to persistent, remote storage
+							that you can use to keep data and access it across devices, and which won't get wiped if your browser cache clears.
+						</p>
+						<p>
+							Use this page to transfer data between the browser storage (Local), and the Warehouse.
+						</p>
+						<h4>Some important notes:</h4>
+						<p>
+							This tool does <strong>NOT</strong> compare the contents of <em>ANY</em> piece of data.
+							It only checks the internal ID for determining if a chunk of data is 'the same'.
+							This means that copying or merging data could result in some data loss. Use at your own risk!
+						</p>
+						{
+							hasRemoteStorage ?
+								<>
+									<p>
+										Once you are done, you will need to reload the app to see the updated data.
+									</p>
+									<Button type='primary' onClick={navHome}>Return To App Home Page</Button>
+								</>
+								: null
+						}
+						{getTransferContent()}
+					</Spin>
 				</div>
 			</div>
 		</ErrorBoundary>

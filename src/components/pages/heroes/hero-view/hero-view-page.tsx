@@ -80,6 +80,7 @@ export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<string>('modern');
+	const [ showExportPopover, setShowExportPopover ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
@@ -157,6 +158,8 @@ export const HeroViewPage = (props: Props) => {
 					</Button>
 					<Popover
 						trigger='click'
+						open={showExportPopover}
+						onOpenChange={setShowExportPopover}
 						content={(
 							<div style={{ width: '325px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
@@ -172,18 +175,18 @@ export const HeroViewPage = (props: Props) => {
 								{
 									view === 'classic' ?
 										<>
-											<Button onClick={() => props.exportHeroPdf(hero, 'standard')}>Export as PDF</Button>
-											<Button onClick={() => props.exportHeroPdf(hero, 'high')}>Export as PDF (high res)</Button>
+											<Button onClick={() => { setShowExportPopover(false); props.exportHeroPdf(hero, 'standard'); }}>Export as PDF</Button>
+											<Button onClick={() => { setShowExportPopover(false); props.exportHeroPdf(hero, 'high'); }}>Export as PDF (high res)</Button>
 										</>
 										: null
 								}
 								{
 									view === 'abilities' ?
-										<Button onClick={props.exportStandardAbilities}>Export as PDF</Button>
+										<Button onClick={() => { setShowExportPopover(false); props.exportStandardAbilities(); }}>Export as PDF</Button>
 										: null
 								}
 								<Divider />
-								<Button onClick={() => props.exportHeroData(hero)}>Export as Data</Button>
+								<Button onClick={() => { setShowExportPopover(false); props.exportHeroData(hero); }}>Export as Data</Button>
 							</div>
 						)}
 					>

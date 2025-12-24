@@ -117,4 +117,14 @@ describe('getTextEffect', () => {
 
 		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
 	});
+
+	test.each([
+		[ 'equal to three times your Agility score', 1, 'equal to 3' ],
+		[ 'equal to 3 times your Agility score', 1, 'equal to 3' ]
+	])('should properly calculate multiplier references to characteristics', (text, characteristic, expected) => {
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(characteristic);
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
 });

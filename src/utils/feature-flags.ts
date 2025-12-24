@@ -14,7 +14,7 @@ export class FeatureFlags {
 	};
 
 	static playtest: FeatureFlag = {
-		code: -1755389952,
+		code: 6593295311412783,
 		description: 'Access to the Playtest sourcebook'
 	};
 

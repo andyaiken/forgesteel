@@ -9,12 +9,12 @@ export class FeatureFlags {
 	// #region List of all the recognised flags
 
 	static warehouse: FeatureFlag = {
-		code: -1310338776,
+		code: 1551245932421255,
 		description: 'Access to the Warehouse beta'
 	};
 
 	static playtest: FeatureFlag = {
-		code: -1755389952,
+		code: 6593295311412783,
 		description: 'Access to the Playtest sourcebook'
 	};
 

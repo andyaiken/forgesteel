@@ -9,7 +9,7 @@ export class FeatureFlags {
 	// #region List of all the recognised flags
 
 	static warehouse: FeatureFlag = {
-		code: -1310338776,
+		code: 1551245932421255,
 		description: 'Access to the Warehouse beta'
 	};
 

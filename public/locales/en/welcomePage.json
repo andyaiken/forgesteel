@@ -8,7 +8,6 @@
   "appUses": "You can use the app to track your hero's stamina, conditions, surges, and so on.",
   "appOfflineUses": "If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).",
   "rulesLookup": "In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.",
-  "heroesScreenDescription": "In the <b>$t(common:hero_other, uppercase)</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.",
   "includedContent": "All the official content is included, and you can also use any homebrew content your director has created.",
   "offlinePlay": "If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).",
   "customizeAbilities": "Want something a little different? You can customize any of your $t(ability_other) to make them more unique to your hero.",

@@ -241,15 +241,16 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
-	const cardEnter = (event) => {
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+	const cardEnter = (event: any) => {
 		event.target.style.boxShadow = '0 0 5px #008cff';
 	};
 
-	const cardLeave = (event) => {
+	const cardLeave = (event: any) => {
 		event.target.style.boxShadow = '';
 	};
 
-	const cardClick = async (event) => {
+	const cardClick = async (event: any) => {
 		setSpinning(true);
 		const card = event.target.closest('.page');
 		const initialW = card.clientWidth;
@@ -268,16 +269,15 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		setSpinning(false);
 	};
 
-	const imageEnter = (event) => {
+	const imageEnter = (event: any) => {
 		event.target.style.boxShadow = '0 0 5px #ff00dd';
 	};
 
-	const imageLeave = (event) => {
+	const imageLeave = (event: any) => {
 		event.target.style.boxShadow = '';
 	};
 
-	const imageClick = (event) => {
-		console.log('image click', event.target);
+	const imageClick = (event: any) => {
 		const card = event.target.nextSibling;
 		card.style.display = '';
 		event.target.remove();
@@ -290,6 +290,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			card.addEventListener('mouseleave', cardLeave);
 			card.addEventListener('click', cardClick);
 		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

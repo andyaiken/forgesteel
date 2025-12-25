@@ -44,7 +44,7 @@ export const FeatureReferenceCard = (props: Props) => {
 			bySource.forEach((features, source) => {
 				features.sort(SheetFormatter.sortFeatures);
 				sections.push(
-					<Fragment key={source}>
+					<div className='source' key={source}>
 						{features.map((f, i) =>
 							<Fragment key={f.id}>
 								{
@@ -58,7 +58,7 @@ export const FeatureReferenceCard = (props: Props) => {
 								/>
 							</Fragment>
 						)}
-					</Fragment>
+					</div>
 				);
 			});
 

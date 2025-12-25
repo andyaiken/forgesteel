@@ -46,7 +46,7 @@ export const FeatureReferenceCard = (props: Props) => {
 				sections.push(
 					<Fragment key={source}>
 						{features.map((f, i) =>
-							<li key={f.id}>
+							<Fragment key={f.id}>
 								{
 									i === 0 ?
 										<h3>{source}</h3>
@@ -56,16 +56,16 @@ export const FeatureReferenceCard = (props: Props) => {
 									feature={SheetFormatter.enhanceFeature(f)}
 									hero={character.hero}
 								/>
-							</li>
+							</Fragment>
 						)}
 					</Fragment>
 				);
 			});
 
 			return (
-				<ul className={containerClasses.join(' ')}>
+				<div className={containerClasses.join(' ')}>
 					{sections}
-				</ul>
+				</div>
 			);
 		}
 	};

@@ -11,22 +11,21 @@ export const PerksCard = (props: Props) => {
 
 	let moreInRef;
 	if (character.featuresReferenceOther?.find(r => r.source === 'Perks')) {
-		moreInRef = (<li key='more'><em>Remaining perks in Reference…</em></li>);
+		moreInRef = (<div key='more'><em>Remaining perks in Reference…</em></div>);
 	}
 	return (
 		<div className='perks card'>
 			<h2>Ancestry Traits and Perks</h2>
-			<ul className='features-container two-column'>
+			<div className='features-container two-column'>
 				{character.ancestryTraitsPerksCombined?.map(f =>
-					<li key={f.id}>
-						<FeatureComponent
-							feature={f}
-							hero={character.hero}
-						/>
-					</li>
+					<FeatureComponent
+						key={f.id}
+						feature={f}
+						hero={character.hero}
+					/>
 				)}
 				{moreInRef}
-			</ul>
+			</div>
 		</div>
 	);
 };

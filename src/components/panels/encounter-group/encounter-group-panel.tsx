@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Input, Popover, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
@@ -19,6 +19,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
 import { TerrainLogic } from '@/logic/terrain-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { useDimensions } from '@/hooks/use-dimensions';
 import { useState } from 'react';
 
@@ -290,11 +291,11 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 							trigger='click'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Input
+									<TextInput
 										placeholder='Group name'
 										allowClear={true}
 										value={props.group.name}
-										onChange={e => props.onSetName(props.group, e.target.value)}
+										onChange={value => props.onSetName(props.group, value)}
 									/>
 									<Segmented
 										disabled={defeated}

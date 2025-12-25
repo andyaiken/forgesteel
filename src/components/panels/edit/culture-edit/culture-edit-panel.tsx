@@ -1,4 +1,4 @@
-import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
@@ -9,6 +9,7 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -43,12 +44,12 @@ export const CultureEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={culture.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={culture.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>

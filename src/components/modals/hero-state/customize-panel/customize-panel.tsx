@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
@@ -29,6 +29,7 @@ import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -665,12 +666,12 @@ export const CustomizePanel = (props: Props) => {
 				return (
 					<div>
 						<HeaderText>Name</HeaderText>
-						<Input
+						<TextInput
 							status={feature.data.mode === '' ? 'warning' : ''}
 							placeholder='Mode'
 							allowClear={true}
 							value={feature.data.mode}
-							onChange={e => setMovementMode(e.target.value)}
+							onChange={setMovementMode}
 						/>
 					</div>
 				);

@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Segmented, Space, Tabs } from 'antd';
+import { Button, Flex, Segmented, Space, Tabs } from 'antd';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -15,7 +15,7 @@ import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesData } from '@/data/rules-data';
 import { RulesPage } from '@/enums/rules-page';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -89,15 +89,7 @@ export const ReferenceModal = (props: Props) => {
 
 		return (
 			<>
-				<Input
-					style={{ marginTop: '20px' }}
-					name='search'
-					placeholder='Search'
-					allowClear={true}
-					value={searchTerm}
-					suffix={<SearchOutlined />}
-					onChange={e => setSearchTerm(e.target.value)}
-				/>
+				<SearchBox style={{ marginTop: '20px' }} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 				<Flex gap={20} style={{ flex: '1 1 0', overflowY: 'hidden' }}>
 					<Space orientation='vertical' style={{ flex: '0 0 180px', marginTop: '20px', overflowY: 'auto' }}>
 						{

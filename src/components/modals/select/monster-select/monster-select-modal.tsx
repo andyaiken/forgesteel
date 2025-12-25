@@ -1,4 +1,3 @@
-import { Input, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -11,9 +10,10 @@ import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-f
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -44,14 +44,7 @@ export const MonsterSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<Input
-					name='search'
-					placeholder='Search'
-					allowClear={true}
-					value={searchTerm}
-					suffix={<SearchOutlined />}
-					onChange={e => setSearchTerm(e.target.value)}
-				/>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='monster-select-modal'>

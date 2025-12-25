@@ -1,4 +1,3 @@
-import { Input, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -6,8 +5,9 @@ import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -35,16 +35,7 @@ export const FeatureSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='feature-select-modal'>
@@ -57,7 +48,6 @@ export const FeatureSelectModal = (props: Props) => {
 								>
 									<FeaturePanel
 										feature={f.feature}
-										hero={props.hero}
 										cost={showCosts ? f.value : undefined}
 										mode={PanelMode.Full}
 										options={props.options}

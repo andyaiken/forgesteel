@@ -47,4 +47,23 @@ describe('Utils', () => {
 			expect(Utils.fixHostnameUrl(url)).toBe(expected);
 		});
 	});
+
+	describe('getErrorMessage', () => {
+		test.each([
+			[ 'Just a string', 'Just a string' ],
+			[ new Error('an error message'), 'an error message' ],
+			[ { msg: 'an object' }, '[object Object]' ]
+		])('Returns reasonable messages for various things that are error-like', (err, expected) => {
+			expect(Utils.getErrorMessage(err)).toBe(expected);
+		});
+	});
+
+	describe('hashCode', () => {
+		test.each([
+			[ 'some medium string', 'another medium string' ],
+			[ '01234567890123456', 'another medium string' ]
+		])('does not collide on medium-length strings', (a, b) => {
+			expect(Utils.hashCode(a)).not.toEqual(Utils.hashCode(b));
+		});
+	});
 });

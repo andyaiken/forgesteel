@@ -1,11 +1,11 @@
-import { Button, Divider, Input, Space } from 'antd';
+import { Button, Divider, Space } from 'antd';
+import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Language } from '@/models/language';
 import { LanguageType } from '@/enums/language-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -31,16 +31,7 @@ export const LanguageSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='language-select-modal'>
@@ -70,11 +61,11 @@ export const LanguageSelectModal = (props: Props) => {
 					<Expander title='Add a custom language'>
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Custom Language</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Custom Language Name'
 								allowClear={true}
 								value={customLanguage}
-								onChange={e => setCustomLanguage(e.target.value)}
+								onChange={setCustomLanguage}
 							/>
 							<Button block={true} disabled={!customLanguage} onClick={() => props.onSelect({ name: customLanguage, description: '', type: LanguageType.Cultural, related: [] })}>Select</Button>
 						</Space>

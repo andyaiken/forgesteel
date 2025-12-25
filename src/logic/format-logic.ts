@@ -144,7 +144,8 @@ export class FormatLogic {
 					'3x',
 					'3 x',
 					'3×',
-					'3 ×'
+					'3 ×',
+					'3 times'
 				]
 			},
 			{
@@ -154,7 +155,8 @@ export class FormatLogic {
 					'4x',
 					'4 x',
 					'4×',
-					'4 ×'
+					'4 ×',
+					'4 times'
 				]
 			},
 			{
@@ -175,7 +177,8 @@ export class FormatLogic {
 					'6x',
 					'6 x',
 					'6×',
-					'6 ×'
+					'6 ×',
+					'6 times'
 				]
 			},
 			{
@@ -185,7 +188,8 @@ export class FormatLogic {
 					'7x',
 					'7 x',
 					'7×',
-					'7 ×'
+					'7 ×',
+					'7 times'
 				]
 			},
 			{
@@ -195,7 +199,8 @@ export class FormatLogic {
 					'8x',
 					'8 x',
 					'8×',
-					'8 ×'
+					'8 ×',
+					'8 times'
 				]
 			},
 			{
@@ -205,7 +210,8 @@ export class FormatLogic {
 					'9x',
 					'9 x',
 					'9×',
-					'9 ×'
+					'9 ×',
+					'9 times'
 				]
 			},
 			{
@@ -215,7 +221,8 @@ export class FormatLogic {
 					'10x',
 					'10 x',
 					'10×',
-					'10 ×'
+					'10 ×',
+					'10 times'
 				]
 			}
 		];

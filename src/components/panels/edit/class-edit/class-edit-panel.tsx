@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
+import { Alert, Button, Drawer, Popover, Segmented, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
@@ -23,6 +23,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -60,12 +61,12 @@ export const ClassEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={heroClass.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={heroClass.name}
-						onChange={e => setName(e.target.value)}
+						onChange={setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
@@ -146,12 +147,12 @@ export const ClassEditPanel = (props: Props) => {
 					onChange={setType}
 				/>
 				<HeaderText>Subclass Name</HeaderText>
-				<Input
+				<TextInput
 					status={heroClass.subclassName === '' ? 'warning' : ''}
 					placeholder='Subclass name'
 					allowClear={true}
 					value={heroClass.subclassName}
-					onChange={e => setSubclassName(e.target.value)}
+					onChange={setSubclassName}
 				/>
 				<HeaderText>Subclass Count</HeaderText>
 				<NumberSpin

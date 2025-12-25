@@ -55,5 +55,15 @@ main#classic-sheet .negotiation-sheet {
         .negotiation-responses.card {
             grid-row-end: span 2;
         }
+
+        section.bordered {
+            &:has(.reference) div:last-of-type {
+                padding-bottom: 41px;
+            }
+            
+            div:last-of-type p {
+                margin-bottom: 0;
+            }
+        }
     }
 }

@@ -14,8 +14,9 @@ afterEach(() => {
 	vi.resetAllMocks();
 });
 
-vi.mock('axios');
 vi.mock('localforage');
+vi.mock('LocalService');
+vi.mock('WarehouseService');
 
 const defaultSettings: ConnectionSettings = {
 	useWarehouse: false,
@@ -37,8 +38,14 @@ const thenFn = vi.fn();
 describe('DataService', () => {
 	// #region Options
 	describe('getOptions', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test.each([
+			[ true ],
+			[ false ]
+		])('always calls localforage', async (useWarehouse: boolean) => {
+			const connSettings = { ...defaultSettings,
+				useWarehouse: useWarehouse
+			};
+			const ds = new DataService(connSettings);
 
 			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockOptions));
 
@@ -53,8 +60,14 @@ describe('DataService', () => {
 	});
 
 	describe('saveOptions', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test.each([
+			[ true ],
+			[ false ]
+		])('always calls localforage', async (useWarehouse: boolean) => {
+			const connSettings = { ...defaultSettings,
+				useWarehouse: useWarehouse
+			};
+			const ds = new DataService(connSettings);
 
 			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockOptions));
 
@@ -84,47 +97,6 @@ describe('DataService', () => {
 			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
-
-		test('gets a JWT and calls the Warehouse when configured to do so', async () => {
-			const connSettings = { ...defaultSettings,
-				useWarehouse: true,
-				warehouseHost: 'http://test-fake-host',
-				warehouseToken: 'abcd123'
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const jwtResponse = { data: { access_token: 'fake_token' } };
-
-			const mockHero = { id: 'test-hero' } as Hero;
-			const mockData = [ mockHero ];
-			const responseObj = { data: { data: mockData } };
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(jwtResponse));
-
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(responseObj));
-
-			const ds = new DataService(connSettings);
-			const connected = await ds.initialize();
-			expect(connected).toBe(true);
-
-			await ds.getHeroes()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(axios.post).toHaveBeenNthCalledWith(1, 'http://test-fake-host/connect', {}, {
-				headers: { Authorization: 'Bearer abcd123' }
-			});
-
-			expect(axios.get).toHaveBeenNthCalledWith(1, 'http://test-fake-host/data/forgesteel-heroes', {
-				headers: { Authorization: 'Bearer fake_token' }
-			});
-
-			expect(thenFn).toHaveBeenCalledWith(mockData);
-		});
 	});
 
 	describe('saveHeroes', () => {
@@ -140,45 +112,6 @@ describe('DataService', () => {
 			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-heroes', mockHeroes);
 			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
 			expect(catchFn).not.toHaveBeenCalled();
-		});
-
-		test('calls warehouse if configured', async () => {
-			const connSettings = { ...defaultSettings,
-				warehouseHost: 'fake-host',
-				useWarehouse: true,
-				warehouseToken: 'abcd123'
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const jwtResponse = { data: { access_token: 'fake_token' } };
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(jwtResponse));
-
-			axios.put = vi.fn();
-
-			const ds = new DataService(connSettings);
-			const connected = await ds.initialize();
-			expect(connected).toBe(true);
-
-			const mockHero = { id: 'test-hero' } as Hero;
-			const mockData = [ mockHero ];
-			// const responseObj = { data: mockData };
-			await ds.saveHeroes(mockData)
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(axios.post).toHaveBeenNthCalledWith(1, 'fake-host/connect', {}, {
-				headers: { Authorization: 'Bearer abcd123' }
-			});
-
-			expect(axios.put).toHaveBeenCalledWith('fake-host/data/forgesteel-heroes', mockData, {
-				headers: { Authorization: 'Bearer fake_token' }
-			});
-
-			expect(thenFn).toHaveBeenCalledWith(mockData);
 		});
 	});
 	// #endregion Heroes

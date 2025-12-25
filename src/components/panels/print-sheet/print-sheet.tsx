@@ -12,8 +12,6 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
-import { Encounter } from '@/models/encounter';
-import { EncounterSheetPage } from '@/components/panels/classic-sheet/encounter-sheet/encounter-sheet-page';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -32,24 +30,17 @@ import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { Montage } from '@/models/montage';
-import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
-import { Negotiation } from '@/models/negotiation';
-import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { Pill } from '@/components/controls/pill/pill';
 import { Project } from '@/models/project';
-import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { TerrainLogic } from '@/logic/terrain-logic';
 import { Title } from '@/models/title';
-
-import './element-sheet.scss';
 
 interface Props {
 	type: string;
@@ -59,34 +50,7 @@ interface Props {
 	options: Options;
 }
 
-export const ElementSheet = (props: Props) => {
-	switch (props.type) {
-		case 'encounter':
-			return (
-				<EncounterSheetPage
-					encounter={props.element as Encounter}
-					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
-					options={props.options}
-				/>
-			);
-		case 'montage':
-			return (
-				<MontageSheetPage
-					montage={props.element as Montage}
-					heroes={props.heroes}
-					options={props.options}
-				/>
-			);
-		case 'negotiation':
-			return (
-				<NegotiationSheetPage
-					negotiation={props.element as Negotiation}
-					options={props.options}
-				/>
-			);
-	}
-
+export const PrintSheet = (props: Props) => {
 	let content = null;
 	switch (props.type) {
 		case 'ancestry':
@@ -242,9 +206,7 @@ export const ElementSheet = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={`element-sheet ${props.options.classicSheetPageSize.toLowerCase()} ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(props.type, props.element.id)}>
-				{content}
-			</div>
+			{content}
 		</ErrorBoundary>
 	);
 };
@@ -792,7 +754,7 @@ const SubclassSheet = (props: SubclassProps) => {
 				props.subclass.featuresByLevel
 					.filter(lvl => lvl.features.length > 0)
 					.map(lvl => (
-						<Space key={lvl.level} orientation='vertical'>
+						<Space key={lvl.level} orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (

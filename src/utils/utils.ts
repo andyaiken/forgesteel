@@ -22,12 +22,19 @@ export class Utils {
 		return id;
 	};
 
-	static hashCode = (str: string): number => {
-		let h = 0;
-		for (let i = 0; i < str.length; ++i) {
-			h = (31 * h) + str.charCodeAt(i);
+	// From: https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
+	static hashCode = (str: string, seed: number = 0): number => {
+		let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+		for (let i = 0, ch; i < str.length; i++) {
+			ch = str.charCodeAt(i);
+			h1 = Math.imul(h1 ^ ch, 2654435761);
+			h2 = Math.imul(h2 ^ ch, 1597334677);
 		}
-		return h & 0xFFFFFFFF;
+		h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+		h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+		h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+		h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+		return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 	};
 
 	static copy = <T>(object: T) => {
@@ -36,14 +43,6 @@ export class Utils {
 		}
 
 		return JSON.parse(JSON.stringify(object)) as T;
-	};
-
-	static debounce = (func: () => void, delay = 500) => {
-		let timeout: number;
-		return () => {
-			clearTimeout(timeout);
-			timeout = setTimeout(func, delay);
-		};
 	};
 
 	static wait = (ms: number = 1000) => {
@@ -141,12 +140,14 @@ export class Utils {
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
-		const blob = new Blob([ json ], { type: 'application/json' });
+		const blob = new Blob([ json ], { type: 'application/octet-stream' });
 
 		const a = document.createElement('a');
 		a.download = `${name}.ds-${type}`;
 		a.href = window.URL.createObjectURL(blob);
+		document.body.appendChild(a);
 		a.click();
+		document.body.removeChild(a);
 	};
 
 	static saveImage = (filename: string, canvas: HTMLCanvasElement) => {
@@ -204,5 +205,12 @@ export class Utils {
 
 	static fixHostnameUrl = (value: string) => {
 		return value.toLowerCase().replace(/\/+$/, '');
+	};
+
+	static getErrorMessage = (error: unknown): string => {
+		if (error instanceof Error) {
+			return error.message;
+		}
+		return String(error);
 	};
 }

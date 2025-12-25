@@ -1,4 +1,4 @@
-import { Button, Empty, Flex, Input, Select, Space } from 'antd';
+import { Button, Empty, Flex, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureMaliceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
@@ -14,6 +14,7 @@ import { Options } from '@/models/options';
 import { PowerRoll } from '@/models/power-roll';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -183,26 +184,26 @@ export const EditMalice = (props: EditProps) => {
 												value={section.characteristic}
 												onChange={value => setMaliceSectionPowerRollCharacteristics(data, n, value)}
 											/>
-											<Input
+											<TextInput
 												status={section.tier1 === '' ? 'warning' : ''}
 												placeholder='Tier 1'
 												allowClear={true}
 												value={section.tier1}
-												onChange={e => setMaliceSectionPowerRoll1(data, n, e.target.value)}
+												onChange={value => setMaliceSectionPowerRoll1(data, n, value)}
 											/>
-											<Input
+											<TextInput
 												status={section.tier1 === '' ? 'warning' : ''}
 												placeholder='Tier 2'
 												allowClear={true}
 												value={section.tier2}
-												onChange={e => setMaliceSectionPowerRoll2(data, n, e.target.value)}
+												onChange={value => setMaliceSectionPowerRoll2(data, n, value)}
 											/>
-											<Input
+											<TextInput
 												status={section.tier1 === '' ? 'warning' : ''}
 												placeholder='Tier 3'
 												allowClear={true}
 												value={section.tier3}
-												onChange={e => setMaliceSectionPowerRoll3(data, n, e.target.value)}
+												onChange={value => setMaliceSectionPowerRoll3(data, n, value)}
 											/>
 										</Space>
 								}

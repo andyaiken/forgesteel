@@ -1,12 +1,12 @@
-import { Input, Space } from 'antd';
 import { Ability } from '@/models/ability';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -35,16 +35,7 @@ export const AbilitySelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='ability-select-modal'>
@@ -55,7 +46,7 @@ export const AbilitySelectModal = (props: Props) => {
 									key={a.id}
 									onSelect={() => props.onSelect(a)}
 								>
-									<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
+									<AbilityPanel ability={a} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

@@ -1,35 +1,36 @@
-import { Element } from '@/models/element';
 import { Hero } from '@/models/hero';
 import { SourcebookElementKind } from '@/models/sourcebook';
 
 export class Analytics {
 	static logHeroCreated = (hero: Hero) => {
-		const params: Gtag.CustomParams = {};
-		params['ancestry'] = hero.ancestry?.id || '';
-		params['culture'] = hero.culture?.id || '';
-		params['career'] = hero.career?.id || '';
-		params['class'] = hero.class?.id || '';
-		params['complication'] = hero.complication?.id || '';
-
-		gtag('event', 'hero_created', params);
+		gtag('event', 'hero_created', {
+			ancestry: hero.ancestry?.id || '',
+			culture: hero.culture?.id || '',
+			career: hero.career?.id || '',
+			class: hero.class?.id || '',
+			complication: hero.complication?.id || ''
+		});
 	};
 
 	static logHeroEdited = (hero: Hero) => {
-		const params: Gtag.CustomParams = {};
-		params['ancestry'] = hero.ancestry?.id || '';
-		params['culture'] = hero.culture?.id || '';
-		params['career'] = hero.career?.id || '';
-		params['class'] = hero.class?.id || '';
-		params['complication'] = hero.complication?.id || '';
-
-		gtag('event', 'hero_edited', params);
+		gtag('event', 'hero_edited', {
+			ancestry: hero.ancestry?.id || '',
+			culture: hero.culture?.id || '',
+			career: hero.career?.id || '',
+			class: hero.class?.id || '',
+			complication: hero.complication?.id || ''
+		});
 	};
 
-	static logHomebrewEdited = (type: SourcebookElementKind, element: Element) => {
-		const params: Gtag.CustomParams = {};
-		params['type'] = type;
-		params['name'] = element.name;
+	static logHomebrewCreated = (type: SourcebookElementKind) => {
+		gtag('event', 'homebrew_created', {
+			type: type
+		});
+	};
 
-		gtag('event', 'homebrew_created', params);
+	static logHomebrewEdited = (type: SourcebookElementKind) => {
+		gtag('event', 'homebrew_edited', {
+			type: type
+		});
 	};
 };

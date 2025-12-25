@@ -10,6 +10,7 @@ import { FeatureField } from '@/enums/feature-field';
 
 export const polder: Ancestry = {
 	id: 'ancestry-polder',
+	languageKey: 'polder',
 	name: 'Polder',
 	description: 'After humans, polders are the most numerous and diverse ancestry in Orden. They are not humans, but they live in and among humans and share their gods and culture. Almost every human culture in Orden has a polder saint or a human saint venerated by polder.',
 	features: [

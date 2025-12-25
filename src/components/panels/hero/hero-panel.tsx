@@ -578,16 +578,16 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`ancestry:${props.hero.ancestry.id}.name`), 'capitalize')}</b></div>
+									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
 									<HeaderText>{t('ancestry')}</HeaderText>
 									<Field
 										label={i18next.format(t('ancestry'), 'capitalize')}
-										value={i18next.format(t(`ancestry:${props.hero.ancestry.id}.name`), 'capitalize')}
+										value={i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
 									/>
-									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
+									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={i18next.format(t(`ancestry:${a.languageKey}.name_one`), 'capitalize')} />)}
 								</div>
 							:
 							<div className='overview-tile'>
@@ -599,15 +599,15 @@ export const HeroPanel = (props: Props) => {
 						props.hero.culture ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCulture}>
-									<div>{t('culture', 'capitalize')}: <b>{props.hero.culture.name}</b></div>
+									<div>{t('culture', 'capitalize')}: <b>{i18next.format(t(`culture:${props.hero.culture.languageKey}.name_one`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
 									<HeaderText>{i18next.format(t('culture'), 'capitalize')}</HeaderText>
-									{props.hero.culture ? <Field label={i18next.format(t('culture'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.name}`), 'capitalize')} /> : null}
-									{props.hero.culture.environment ? <Field label={i18next.format(t('environment'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.environment.name}`), 'capitalize')} /> : null}
-									{props.hero.culture.organization ? <Field label={i18next.format(t('organization'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.organization.name}`), 'capitalize')} /> : null}
-									{props.hero.culture.upbringing ? <Field label={i18next.format(t('upbringing'), 'capitalize')} value={i18next.format(t(`${props.hero.culture.upbringing.name}`), 'capitalize')} /> : null}
+									{props.hero.culture ? <Field label={i18next.format(t('culture'), 'capitalize')} value={i18next.format(t(`culture:${props.hero.culture.languageKey}.name_one`), 'capitalize')} /> : null}
+									{props.hero.culture.environment ? <Field label={i18next.format(t('environment'), 'capitalize')} value={i18next.format(t(`environment:${props.hero.culture.environment.languageKey}`), 'capitalize')} /> : null}
+									{props.hero.culture.organization ? <Field label={i18next.format(t('organization'), 'capitalize')} value={i18next.format(t(`organization:${props.hero.culture.organization.languageKey}`), 'capitalize')} /> : null}
+									{props.hero.culture.upbringing ? <Field label={i18next.format(t('upbringing'), 'capitalize')} value={i18next.format(t(`upbringing:${props.hero.culture.upbringing.languageKey}`), 'capitalize')} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
@@ -1119,7 +1119,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							<Field
 								label={i18next.format(t('ancestry'), 'capitalize')}
-								value={i18next.format(t(props.hero.ancestry.name), 'capitalize')}
+								value={i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
 							/>
 							: null
 					}

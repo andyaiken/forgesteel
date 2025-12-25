@@ -1,22 +1,62 @@
 {
-  "ancestry-devil":{
-    "name": "devil",
+  "devil":{
+    "name_one": "devil",
+    "name_other": "devils",
     "description":"The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark - horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings."
   },
-  "ancestry-dragon-knight":{
-    "name": "dragon knight",
+  "dragon-knight":{
+    "name_one": "dragon knight",
+    "name_other": "dragon knights",
 	  "description": "The ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master. Small populations of draconians in Khemhara, Higara, and Khoursir attest to this. Descendants of original generations created millennia ago by powerful wizards, they have never been numerous. A typical clutch yields only a single egg. After only a few generations, these draconians begin to show new adaptations like feathers or frilled ridges."
   },
-  "ancestry-dwarf":{
-    "name": "dwarf",
+  "dwarf":{
+    "name_one": "dwarf",
+    "name_other": "dwarves",
 	  "description": "Possessed of a strength that belies their size, dwarves have flesh infused with stone - a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves."
   },
-  "ancestry-high-elf":{
-    "name": "elf (high)",
+  "high-elf":{
+    "name_one": "elf (high)",
+    "name_other": "elves (high)",
 	  "description": "Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elf history describes a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty."
   },
-  "ancestry-wode-elf":{
-    "name": "elf (wode)",
+  "wode-elf":{
+    "name_one": "elf (wode)",
 	  "description": "Children of the sylvan celestials and masters of the elf-haunted forests called wodes, wode elves see all forests as their domain by birthright. They know and enjoy their reputation among humans for snatching children who wander too far into the woods. Humans should fear the trees."
+  },
+  "hakaan":{
+    "name_one": "hakaan",
+    "name_other": "hakaan",
+	  "description": "In spite of their friendly, outgoing nature, the rare presence of a hakaan in human society is considered a harbinger - an omen of dark times. Descended from a tribe of giants in upper Vanigar, the original Haka’an tribe made a bargain with Holkatja the Vanigar trickster god. They traded some of their gigantic size and strength for the ability to see the future."
+  },
+  "human":{
+    "name_one": "human",
+    "name_other": "humans",
+	  "description": "Humans belong to the world in a way the other speaking peoples do not. You can sense the presence of the supernatural—that … oily smell in the air, as I’ve heard it described. And the presence of deathless causes the hairs on the back of your neck to stand up. Or why do you think graveyards affect you so? Whatever magic is, its grip on you is light. Whatever drives the deathless, your nature rebels against it."
+  },
+  "memonek":{
+    "name_one": "memonek",
+    "name_other": "memoneks",
+	  "description": "The native denizens of Axiom, the Plane of Uttermost Law, memonek dwell in a land with lakes and trees and birds and flowers. But on this alien world, the lakes are seas of mercury, the birds glitter with wings of glass stretched gossamer thin, and the flowers’ petals are iridescent metal as flexible and fragile as any earthly rose."
+  },
+  "orc":{
+    "name_one": "orc",
+    "name_other": "orcs",
+	  "description": "An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors - a reputation that the peace-loving orcs find distasteful."
+  },
+  "polder":{
+    "name_one": "polder",
+    "name_other": "polders",
+	  "description": "After humans, polders are the most numerous and diverse ancestry in Orden. They are not humans, but they live in and among humans and share their gods and culture. Almost every human culture in Orden has a polder saint or a human saint venerated by polder."
+  },
+  "revenant":{
+    "name_one": "revenant",
+    "name_other": "revenants",
+	  "description": "The dead walk among us. Some of them are happier about it than others. Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air - and, unlike their zombified cousins, they retain all their memories and personality from life."
+  }
+  ,
+  "time-raider":{
+    "name_one": "time raider",
+    "name_other": "time raiders",
+	  "description": "The original servitor species of the synliroi — evil psions with near godlike power — the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology the kuran’zoi wield, concluded they must be from the future"
   }
 }

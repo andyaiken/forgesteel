@@ -1,11 +1,13 @@
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Button, Dropdown, MenuProps } from 'antd';
-import { GlobalOutlined } from '@ant-design/icons';
 import i18next from 'i18next';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 
 import './language-selector.scss';
+import { useTranslation } from 'react-i18next';
 
 export const LanguageSelector = () => {
+	const { i18n } = useTranslation();
 	const handleMenuClick: MenuProps['onClick'] = e => {
 		console.log('click', e);
 		i18next.changeLanguage(e.key);
@@ -14,12 +16,12 @@ export const LanguageSelector = () => {
 		{
 			label: 'Us',
 			key: 'en-US',
-			icon: <GlobalOutlined />
+			icon: <span className='fi fi-us' />
 		},
 		{
 			label: 'It',
 			key: 'it-IT',
-			icon: <GlobalOutlined />
+			icon: <span className='fi fi-it' />
 		}
 	];
 	const menuProps = {
@@ -29,7 +31,7 @@ export const LanguageSelector = () => {
 	return (
 		<ErrorBoundary>
 			<Dropdown menu={menuProps}>
-				<Button icon={<GlobalOutlined />} />
+				<Button icon={<span className={`fi fi-${i18n.language.split('-')[1]?.toLowerCase() ?? 'us'}`} />} />
 			</Dropdown>
 		</ErrorBoundary>
 	);

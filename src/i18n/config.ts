@@ -5,8 +5,8 @@ import { initReactI18next } from 'react-i18next';
 export const defaultNS = 'common';
 
 i18next.use(HttpBackend).use(initReactI18next).init({
-	fallbackLng: 'en',
-	lng: 'en',
+	fallbackLng: 'en-US',
+	lng: 'en-US',
 	debug: true,
 	ns: [ 'common', 'welcomePage', 'hero', 'ancestry', 'maneuver' ],
 	backend: {

@@ -23,6 +23,7 @@
 		"@types/showdown": "^2.0.6",
 		"antd": "^6.1.2",
 		"axios": "^1.13.2",
+		"flag-icons": "^7.5.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"i18next-http-backend": "^3.0.2",

@@ -531,7 +531,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
+	createSkillChoice = (data: { id: string, languageKey?: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 		const count = data.count || 1;
 		const options = data.options || [];
 		let listOptions = data.listOptions || [];

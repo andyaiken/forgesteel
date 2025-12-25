@@ -5,6 +5,7 @@ import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { ReactNode } from 'react';
 import { useIsSmall } from '@/hooks/use-is-small';
 import './app-header.scss';
+import { LanguageSelector } from '@/components/controls/language-selector/language-selector';
 
 interface Props {
 	subheader?: string;
@@ -34,10 +35,12 @@ export const AppHeader = (props: Props) => {
 								Actions
 								<DownOutlined />
 							</Button>
+							<LanguageSelector />
 						</Popover>
 						:
 						<div className='right-section'>
 							{props.children}
+							<LanguageSelector />
 						</div>
 				}
 			</div>

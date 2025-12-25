@@ -7,6 +7,7 @@ import { FeatureField } from '@/enums/feature-field';
 
 export const orc: Ancestry = {
 	id: 'ancestry-orc',
+	languageKey: 'orc',
 	name: 'Orc',
 	description: 'An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors - a reputation that the peace-loving orcs find distasteful.',
 	features: [

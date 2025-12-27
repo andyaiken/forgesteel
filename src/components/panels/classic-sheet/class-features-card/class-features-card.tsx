@@ -20,17 +20,16 @@ export const ClassFeaturesCard = (props: Props) => {
 	return (
 		<div className='class-features card'>
 			<h2>Class Features</h2>
-			<ul className={`features-container ${props.options.pageOrientation === 'portrait' ? 'two-column' : null}`}>
+			<div className={`features-container ${props.options.pageOrientation === 'portrait' ? 'two-column' : null}`}>
 				{character.classFeatures?.map(f =>
-					<li key={f.id}>
-						<FeatureComponent
-							feature={f}
-							hero={character.hero}
-						/>
-					</li>
+					<FeatureComponent
+						key={f.id}
+						feature={f}
+						hero={character.hero}
+					/>
 				)}
 				{moreInRef}
-			</ul>
+			</div>
 		</div>
 	);
 };

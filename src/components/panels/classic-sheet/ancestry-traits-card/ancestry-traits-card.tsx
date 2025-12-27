@@ -16,12 +16,11 @@ export const AncestryTraitsCard = (props: Props) => {
 
 		character.ancestryTraits?.forEach(f => {
 			results.push(
-				<li key={f.id}>
-					<FeatureComponent
-						feature={f}
-						hero={character.hero}
-					/>
-				</li>
+				<FeatureComponent
+					key={f.id}
+					feature={f}
+					hero={character.hero}
+				/>
 			);
 		});
 		const shownIds = character.ancestryTraits?.map(f => f.id);
@@ -36,9 +35,9 @@ export const AncestryTraitsCard = (props: Props) => {
 	return (
 		<div className='ancestry-traits card'>
 			<h2>Ancestry Traits</h2>
-			<ul className='features-container'>
+			<div className='features-container'>
 				{getTraits()}
-			</ul>
+			</div>
 		</div>
 	);
 };

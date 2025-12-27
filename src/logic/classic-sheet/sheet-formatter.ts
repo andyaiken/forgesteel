@@ -586,18 +586,20 @@ export class SheetFormatter {
 		const headerSize = 2.5; // Card header
 		let largestFeature = 0;
 		let size = 0;
-		const sources: string[] = [];
+		const sources: Map<string, number> = new Map<string, number>();
 		if (features) {
 			features.forEach(f => {
 				let fSize = this.calculateFeatureSize(f.feature, hero, lineWidth, false);
-				if (!sources.includes(f.source)) {
+				if (!sources.has(f.source)) {
 					fSize += 2;
-					sources.push(f.source);
+					sources.set(f.source, 0);
 				}
 				size += fSize;
+				sources.set(f.source, (sources.get(f.source) ?? 0) + fSize);
 				largestFeature = Math.max(largestFeature, fSize);
 			});
-			size = Math.max(Math.ceil(size / columns), largestFeature);
+			const largestSource = Math.max(...sources.values());
+			size = Math.max(Math.ceil(size / columns), largestFeature, largestSource);
 		}
 		const totalSize = headerSize + size;
 		return +totalSize.toFixed(1);
@@ -782,6 +784,7 @@ export class SheetFormatter {
 	};
 
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
+		let tableSpace = 0;
 		const result = text?.trim().split('\n').reduce((n, l) => {
 			let len = emptyLineSize;
 			if (l.length) {
@@ -791,7 +794,15 @@ export class SheetFormatter {
 			if (l.startsWith('|:---')) { // table divider
 				len = 0;
 			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
-				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
+				if (tableSpace === 0) {
+					const firstCol = l.match(/\|([^|]+)\|/);
+					if (firstCol && firstCol[1]) {
+						tableSpace = firstCol[1].trim().length;
+					} else {
+						tableSpace = 3;
+					}
+				}
+				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - tableSpace));
 				len += 0.6;// additional row spacing
 			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
 				len += 0.5;

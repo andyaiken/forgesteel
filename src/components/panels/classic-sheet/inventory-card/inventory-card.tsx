@@ -24,13 +24,11 @@ export const TrinketsCard = (props: InventoryProps) => {
 	return (
 		<div className={cardClasses.join(' ')}>
 			<h2>Trinkets</h2>
-			<ul className={`features-container ${wide ? 'three-column' : 'two-column'}`}>
+			<div className={`features-container ${wide ? 'three-column' : 'two-column'}`}>
 				{getTrinkets().map(item => (
-					<li key={item.id}>
-						<ItemComponent item={item} character={character} />
-					</li>
+					<ItemComponent key={item.id} item={item} character={character} />
 				))}
-			</ul>
+			</div>
 		</div>
 	);
 };
@@ -47,13 +45,11 @@ export const ConsumablesCard = (props: InventoryProps) => {
 	return (
 		<div className={cardClasses.join(' ')}>
 			<h2>Consumables</h2>
-			<ul className={`features-container ${wide ? 'two-column' : ''}`}>
+			<div className={`features-container ${wide ? 'two-column' : ''}`}>
 				{consumables.map(item => (
-					<li key={item.id}>
-						<ItemComponent item={item} character={character} truncate={displayShort} />
-					</li>
+					<ItemComponent key={item.id} item={item} character={character} truncate={displayShort} />
 				))}
-			</ul>
+			</div>
 		</div>
 	);
 };
@@ -87,13 +83,11 @@ export const LeveledTreasureCard = (props: InventoryProps) => {
 					</div>
 				</div>
 			</h2>
-			<ul className='features-container three-column'>
+			<div className='features-container three-column'>
 				{leveledTreasures.map(item => (
-					<li key={item.id}>
-						<ItemComponent item={item} character={character} />
-					</li>
+					<ItemComponent key={item.id} item={item} character={character} />
 				))}
-			</ul>
+			</div>
 		</div>
 	);
 };
@@ -110,13 +104,11 @@ export const RemainingInventoryCard = (props: RemainingInventoryProps) => {
 	return (
 		<div className='inventory card'>
 			<h2>Remaining Inventory</h2>
-			<ul className='features-container'>
+			<div className='features-container'>
 				{items.map(item => (
-					<li key={item.id}>
-						<ItemComponent item={item} character={props.character} />
-					</li>
+					<ItemComponent key={item.id} item={item} character={props.character} />
 				))}
-			</ul>
+			</div>
 		</div>
 	);
 };

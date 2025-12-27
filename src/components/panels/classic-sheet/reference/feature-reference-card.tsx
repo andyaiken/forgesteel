@@ -44,9 +44,9 @@ export const FeatureReferenceCard = (props: Props) => {
 			bySource.forEach((features, source) => {
 				features.sort(SheetFormatter.sortFeatures);
 				sections.push(
-					<Fragment key={source}>
+					<div className='source' key={source}>
 						{features.map((f, i) =>
-							<li key={f.id}>
+							<Fragment key={f.id}>
 								{
 									i === 0 ?
 										<h3>{source}</h3>
@@ -56,16 +56,16 @@ export const FeatureReferenceCard = (props: Props) => {
 									feature={SheetFormatter.enhanceFeature(f)}
 									hero={character.hero}
 								/>
-							</li>
+							</Fragment>
 						)}
-					</Fragment>
+					</div>
 				);
 			});
 
 			return (
-				<ul className={containerClasses.join(' ')}>
+				<div className={containerClasses.join(' ')}>
 					{sections}
-				</ul>
+				</div>
 			);
 		}
 	};

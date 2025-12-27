@@ -155,8 +155,8 @@ main#classic-sheet {
             }
         }
 
-        ul.features-container,
-        ul.titles-container {
+        .features-container,
+        .titles-container {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -192,7 +192,7 @@ main#classic-sheet {
                 background-repeat: no-repeat;
             }
 
-            li {
+            &>* {
                 break-inside: avoid-column;
 
                 .feature-description p {

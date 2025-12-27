@@ -17,18 +17,18 @@ export const TitlesCard = (props: Props) => {
 		const titleFeature = title.features.find(f => f.id === title.selectedFeatureID);
 		if (size === 'short') {
 			return (
-				<li key={title.id}>
+				<div key={title.id}>
 					<h4>{title.name}{(titleFeature && titleFeature.name !== title.name) ? `: ${titleFeature.name}` : null}</h4>
-				</li>
+				</div>
 			);
 		} else {
 			return (
-				<li key={title.id}>
+				<div key={title.id}>
 					<TitleComponent
 						title={title}
 						hero={character.hero}
 					/>
-				</li>
+				</div>
 			);
 		}
 	};
@@ -39,9 +39,9 @@ export const TitlesCard = (props: Props) => {
 	return (
 		<div className='titles card'>
 			<h2>Titles</h2>
-			<ul className={`titles-container ${wide ? 'three-column' : 'two-column'}`}>
+			<div className={`titles-container ${wide ? 'three-column' : 'two-column'}`}>
 				{character.titles?.map(t => getTitleFragment(t, fragmentSize))}
-			</ul>
+			</div>
 		</div>
 	);
 };

@@ -12,6 +12,7 @@ import { stormwight } from '@/data/classes/fury/stormwight';
 
 export const fury: HeroClass = {
 	id: 'class-fury',
+	languageKey: 'class:fury',
 	name: 'Fury',
 	description: `
 You do not temper the heat of battle within you. You unleash it! Your experience in the wild taught you the secrets of predators, and now, like the raptor, the panther, the wolf, you channel unfettered anger into martial prowess. Primordial Chaos is your ally. Let others use finesse to clean up the wreckage left in your wake.
@@ -41,7 +42,7 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'fury-resource',
-					languageKey: 'furyFerocity',
+					languageKey: 'class:fury.ferocity',
 					name: 'Ferocity',
 					gains: [
 						{

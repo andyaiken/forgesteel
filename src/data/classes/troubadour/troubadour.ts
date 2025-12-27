@@ -12,6 +12,7 @@ import { virtuoso } from '@/data/classes/troubadour/virtuoso';
 
 export const troubadour: HeroClass = {
 	id: '9y3Jx3koKZipiPh1',
+	languageKey: 'class:troubadour',
 	name: 'Troubadour',
 	description: `The whole world’s a stage, and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whoever might witness your performance.
 
@@ -57,7 +58,7 @@ Jackson Bootblack`,
 				FactoryLogic.feature.createHeroicResource({
 					id: 'tS1DEkc8ZWqFRIxE',
 					name: 'Drama',
-					languageKey: 'troubadourDrama',
+					languageKey: 'class:troubadour.drama',
 					gains: [
 						{
 							tag: 'start',

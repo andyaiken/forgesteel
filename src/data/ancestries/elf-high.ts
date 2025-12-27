@@ -7,7 +7,7 @@ import { FeatureField } from '@/enums/feature-field';
 
 export const highElf: Ancestry = {
 	id: 'ancestry-high-elf',
-	languageKey: 'high-elf',
+	languageKey: 'ancestry:high-elf',
 	name: 'Elf (high)',
 	description: 'Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elf history describes a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty.',
 	features: [

@@ -274,7 +274,7 @@ export const HeroPanel = (props: Props) => {
 									heroicResources.map(hr =>
 										useRows ?
 											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
-												<div>{i18next.format(t('heroicResource_one'), 'capitalize')}: <b>{i18next.format(t(`heroicResource:${hr.languageKey}.name_one`), 'capitalize')}</b></div>
+												<div>{i18next.format(t('heroicResource_one'), 'capitalize')}: <b>{i18next.format(t(`${hr.languageKey}.name_one`), 'capitalize')}</b></div>
 												<div>{hr.value}</div>
 											</div>
 											:
@@ -282,12 +282,12 @@ export const HeroPanel = (props: Props) => {
 												<HeaderText
 													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
 												>
-													{i18next.format(t(`heroicResource:${hr.languageKey}.name_one`), 'capitalize')}
+													{i18next.format(t(`${hr.languageKey}.name_one`), 'capitalize')}
 												</HeaderText>
 												{
 													hr.gains.map((g, n) => (
 														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{t(`heroicResource:${hr.languageKey}:${g.tag}.trigger`)}</div>
+															<div className='ds-text compact-text'>{t(`${hr.languageKey}:${g.tag}.trigger`)}</div>
 															<Pill>+{g.value}</Pill>
 														</Flex>
 													))
@@ -578,16 +578,16 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}</b></div>
+									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
 									<HeaderText>{t('ancestry')}</HeaderText>
 									<Field
 										label={i18next.format(t('ancestry'), 'capitalize')}
-										value={i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
+										value={i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
 									/>
-									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={i18next.format(t(`ancestry:${a.languageKey}.name_one`), 'capitalize')} />)}
+									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={i18next.format(t(`${a.languageKey}.name_one`), 'capitalize')} />)}
 								</div>
 							:
 							<div className='overview-tile'>
@@ -1119,7 +1119,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							<Field
 								label={i18next.format(t('ancestry'), 'capitalize')}
-								value={i18next.format(t(`ancestry:${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
+								value={i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
 							/>
 							: null
 					}

@@ -25,13 +25,13 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`monster-label ${type}`}>
-				<Flex justify='center' gap={3}>
-					{props.monster.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
+				<Flex orientation='vertical' gap={8}>
+					<Flex gap={3}>
+						{props.monster.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
+					</Flex>
+					<div>{desc}</div>
 				</Flex>
-				<Flex align='center' justify='space-between'>
-					<div className='ds-text'>{desc}</div>
-					{props.extra}
-				</Flex>
+				{props.extra}
 			</div>
 		</ErrorBoundary>
 	);
@@ -39,6 +39,7 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 
 interface TerrainLabelProps {
 	terrain: Terrain;
+	extra?: ReactNode;
 }
 
 export const TerrainLabel = (props: TerrainLabelProps) => {
@@ -51,7 +52,8 @@ export const TerrainLabel = (props: TerrainLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`terrain-label ${type}`}>
-				<div className='ds-text'>{desc}</div>
+				<div>{desc}</div>
+				{props.extra}
 			</div>
 		</ErrorBoundary>
 	);
@@ -59,6 +61,7 @@ export const TerrainLabel = (props: TerrainLabelProps) => {
 
 interface FixtureLabelProps {
 	fixture: Fixture;
+	extra?: ReactNode;
 }
 
 export const FixtureLabel = (props: FixtureLabelProps) => {
@@ -71,7 +74,8 @@ export const FixtureLabel = (props: FixtureLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`fixture-label ${type}`}>
-				<div className='ds-text'>{desc}</div>
+				<div>{desc}</div>
+				{props.extra}
 			</div>
 		</ErrorBoundary>
 	);

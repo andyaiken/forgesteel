@@ -1,10 +1,11 @@
-import { Input, Select } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Project } from '@/models/project';
+import { Select } from 'antd';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -68,12 +69,12 @@ export const ProjectEditPanel = (props: Props) => {
 					props.includeNameAndDescription ?
 						<>
 							<HeaderText>Name</HeaderText>
-							<Input
+							<TextInput
 								status={project.name === '' ? 'warning' : ''}
 								placeholder='Name'
 								allowClear={true}
 								value={project.name}
-								onChange={e => setName(e.target.value)}
+								onChange={setName}
 							/>
 							<HeaderText>Description</HeaderText>
 							<MarkdownEditor value={project.description} onChange={setDescription} />
@@ -81,18 +82,18 @@ export const ProjectEditPanel = (props: Props) => {
 						: null
 				}
 				<HeaderText>Item Prerequisites</HeaderText>
-				<Input
+				<TextInput
 					placeholder='Prerequisites'
 					allowClear={true}
 					value={project.itemPrerequisites}
-					onChange={e => setPrerequisites(e.target.value)}
+					onChange={setPrerequisites}
 				/>
 				<HeaderText>Source</HeaderText>
-				<Input
+				<TextInput
 					placeholder='Source'
 					allowClear={true}
 					value={project.source}
-					onChange={e => setSource(e.target.value)}
+					onChange={setSource}
 				/>
 				<HeaderText>Characteristic</HeaderText>
 				<Select

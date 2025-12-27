@@ -1,13 +1,11 @@
-import { Button, Flex, Popover, Segmented, Space } from 'antd';
-import { DesktopOutlined, DownOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { DesktopOutlined, FilePdfOutlined, FileTextOutlined, PrinterOutlined, TableOutlined } from '@ant-design/icons';
+import { Popover, Segmented } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
-import './view-selector.scss';
-
 interface Props {
+	mode: 'hero' | 'classic' | 'printable';
 	value: string;
-	showHeroOptions?: boolean;
 	onChange: (value: string) => void;
 }
 
@@ -23,37 +21,35 @@ export const ViewSelector = (props: Props) => {
 		};
 	};
 
+	const getOptions = () => {
+		const options = [
+			createOption('modern', 'Interactive View (for on screen use)', <DesktopOutlined />)
+		];
+
+		switch (props.mode) {
+			case 'hero':
+				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
+				options.push(createOption('abilities', 'Standard Abilities', <TableOutlined />));
+				options.push(createOption('notes', 'Notes', <FileTextOutlined />));
+				break;
+			case 'classic':
+				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
+				break;
+			case 'printable':
+				options.push(createOption('print', 'Print', <PrinterOutlined />));
+				break;
+		}
+
+		return options;
+	};
+
 	return (
 		<ErrorBoundary>
-			<Flex className='view-selector'>
-				<Segmented
-					options={[
-						createOption('modern', 'Interactive View (for on screen use)', <DesktopOutlined />),
-						createOption('classic', 'Classic View (for printing)', <FilePdfOutlined />)
-					]}
-					value={props.value}
-					onChange={props.onChange}
-				/>
-				{
-					props.showHeroOptions ?
-						<Popover
-							trigger='click'
-							content={
-								<Space orientation='vertical'>
-									<Button block={true} onClick={() => props.onChange('abilities')}>
-										Standard Abilities
-									</Button>
-									<Button block={true} onClick={() => props.onChange('notes')}>
-										Notes
-									</Button>
-								</Space>
-							}
-						>
-							<Button icon={<DownOutlined />} style={{ borderColor: 'transparent', backgroundColor: '#f5f5f5' }} />
-						</Popover>
-						: null
-				}
-			</Flex>
+			<Segmented
+				options={getOptions()}
+				value={props.value}
+				onChange={props.onChange}
+			/>
 		</ErrorBoundary>
 	);
 };

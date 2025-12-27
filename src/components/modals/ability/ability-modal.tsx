@@ -1,5 +1,5 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
-import { Input, Segmented, Select, Space } from 'antd';
+import { Segmented, Select, Space } from 'antd';
 import { Ability } from '@/models/ability';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -19,6 +19,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { RollLogic } from '@/logic/roll-logic';
 import { RollState } from '@/enums/roll-state';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -228,11 +229,11 @@ export const AbilityModal = (props: Props) => {
 					<div className='customize-section'>
 						<Expander title='Name and Description'>
 							<HeaderText>Name</HeaderText>
-							<Input
+							<TextInput
 								placeholder={props.ability.name}
 								allowClear={true}
 								value={customization?.name || ''}
-								onChange={e => setName(e.target.value)}
+								onChange={setName}
 							/>
 							<HeaderText>Description</HeaderText>
 							<MarkdownEditor value={customization?.description || ''} onChange={setDescription} />

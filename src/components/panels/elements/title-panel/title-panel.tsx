@@ -1,6 +1,6 @@
-import { Button, Input } from 'antd';
 import { CheckCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { Button } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -13,6 +13,7 @@ import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -87,12 +88,12 @@ export const TitlePanel = (props: Props) => {
 						selectedFeature && editing ?
 							<div className='features'>
 								<HeaderText>Name</HeaderText>
-								<Input
+								<TextInput
 									status={selectedFeature.name === '' ? 'warning' : ''}
 									placeholder='Name'
 									allowClear={true}
 									value={selectedFeature.name}
-									onChange={e => setFeatureName(e.target.value)}
+									onChange={setFeatureName}
 								/>
 								<HeaderText>Description</HeaderText>
 								<MarkdownEditor value={selectedFeature.description} onChange={setFeatureDescription} />

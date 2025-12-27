@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Alert, Button, Input, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -14,6 +14,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -375,12 +376,12 @@ export const AbilityEditPanel = (props: Props) => {
 							children: (
 								<div>
 									<HeaderText>Name</HeaderText>
-									<Input
+									<TextInput
 										status={ability.name === '' ? 'warning' : ''}
 										placeholder='Name'
 										allowClear={true}
 										value={ability.name}
-										onChange={e => setName(e.target.value)}
+										onChange={setName}
 									/>
 									<HeaderText>Description</HeaderText>
 									<MarkdownEditor value={ability.description} onChange={setDescription} />
@@ -404,23 +405,23 @@ export const AbilityEditPanel = (props: Props) => {
 										/>
 										{
 											ability.type.usage === AbilityUsage.Trigger ?
-												<Input
+												<TextInput
 													status={ability.type.trigger === '' ? 'warning' : ''}
 													placeholder='Trigger'
 													allowClear={true}
 													value={ability.type.trigger}
-													onChange={e => setTypeTrigger(e.target.value)}
+													onChange={setTypeTrigger}
 												/>
 												: null
 										}
 										{
 											ability.type.usage === AbilityUsage.Other ?
-												<Input
+												<TextInput
 													status={ability.type.time === '' ? 'warning' : ''}
 													placeholder='Other'
 													allowClear={true}
 													value={ability.type.time}
-													onChange={e => setTypeTime(e.target.value)}
+													onChange={setTypeTime}
 												/>
 												: null
 										}
@@ -429,11 +430,11 @@ export const AbilityEditPanel = (props: Props) => {
 												<NumberSpin label='Villain Action Order' min={1} max={3} value={ability.type.order || 1} onChange={setTypeOrder} />
 												: null
 										}
-										<Input
+										<TextInput
 											placeholder='Qualifiers'
 											allowClear={true}
-											value={ability.type.qualifiers}
-											onChange={e => setTypeQualifiers(e.target.value)}
+											value={ability.type.qualifiers.join(', ')}
+											onChange={setTypeQualifiers}
 										/>
 										{
 											(ability.type.usage === AbilityUsage.MainAction) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
@@ -537,12 +538,12 @@ export const AbilityEditPanel = (props: Props) => {
 														}
 														{
 															getDistanceMainType(n) === 'Special' ?
-																<Input
+																<TextInput
 																	status={distance.special === '' ? 'warning' : ''}
 																	placeholder='Special'
 																	allowClear={true}
 																	value={distance.special}
-																	onChange={e => setDistanceSpecial(n, e.target.value)}
+																	onChange={value => setDistanceSpecial(n, value)}
 																/>
 																: null
 														}
@@ -557,12 +558,12 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 									</Space>
 									<HeaderText>Target</HeaderText>
-									<Input
+									<TextInput
 										status={ability.target === '' ? 'warning' : ''}
 										placeholder='Target'
 										allowClear={true}
 										value={ability.target}
-										onChange={e => setTarget(e.target.value)}
+										onChange={setTarget}
 									/>
 									<HeaderText>Signature</HeaderText>
 									<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => setCost(value ? 'signature' : 0)} />
@@ -627,12 +628,12 @@ export const AbilityEditPanel = (props: Props) => {
 														section.type === 'field' ?
 															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Name</HeaderText>
-																<Input
+																<TextInput
 																	status={section.name === '' ? 'warning' : ''}
 																	placeholder='Name'
 																	allowClear={true}
 																	value={section.name}
-																	onChange={e => setFieldSectionName(n, e.target.value)}
+																	onChange={value => setFieldSectionName(n, value)}
 																/>
 																<HeaderText>Effect</HeaderText>
 																<MarkdownEditor value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
@@ -668,26 +669,26 @@ export const AbilityEditPanel = (props: Props) => {
 																		: null
 																}
 																<HeaderText>Tiers</HeaderText>
-																<Input
+																<TextInput
 																	status={section.roll.tier1 === '' ? 'warning' : ''}
 																	placeholder='Tier 1'
 																	allowClear={true}
 																	value={section.roll.tier1}
-																	onChange={e => setRollSectionTier1(n, e.target.value)}
+																	onChange={value => setRollSectionTier1(n, value)}
 																/>
-																<Input
+																<TextInput
 																	status={section.roll.tier2 === '' ? 'warning' : ''}
 																	placeholder='Tier 2'
 																	allowClear={true}
 																	value={section.roll.tier2}
-																	onChange={e => setRollSectionTier2(n, e.target.value)}
+																	onChange={value => setRollSectionTier2(n, value)}
 																/>
-																<Input
+																<TextInput
 																	status={section.roll.tier3 === '' ? 'warning' : ''}
 																	placeholder='Tier 3'
 																	allowClear={true}
 																	value={section.roll.tier3}
-																	onChange={e => setRollSectionTier3(n, e.target.value)}
+																	onChange={value => setRollSectionTier3(n, value)}
 																/>
 															</Space>
 															: null
@@ -696,12 +697,12 @@ export const AbilityEditPanel = (props: Props) => {
 														section.type === 'package' ?
 															<Space orientation='vertical' style={{ width: '100%' }}>
 																<HeaderText>Tag</HeaderText>
-																<Input
+																<TextInput
 																	status={section.tag === '' ? 'warning' : ''}
 																	placeholder='Tag'
 																	allowClear={true}
 																	value={section.tag}
-																	onChange={e => setPackageSectionTag(n, e.target.value)}
+																	onChange={value => setPackageSectionTag(n, value)}
 																/>
 															</Space>
 															: null

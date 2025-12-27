@@ -41,3 +41,25 @@ describe('getConstant', () => {
 		expect(FormatLogic.getConstant(text)).toBe(expected);
 	});
 });
+
+describe('getMultiplier', () => {
+	test.each([
+		[ 'no number' ],
+		[ 'equal to 1d6' ],
+		[ '1' ],
+		[ '1 + your level' ],
+		[ '2 plus your might score' ]
+	])('should return 1 when there is no multiplier in the text', (text: string) => {
+		expect(FormatLogic.getMultiplier(text)).toBe(1);
+	});
+
+	test.each([
+		[ 'equal to twice your Might', 2 ],
+		[ '3x your level', 3 ],
+		[ 'three times your might', 3 ],
+		[ '3 times might', 3 ],
+		[ '4 times agility', 4 ]
+	])('should return the correct multiplier in the formula', (text: string, expected: number) => {
+		expect(FormatLogic.getMultiplier(text)).toBe(expected);
+	});
+});

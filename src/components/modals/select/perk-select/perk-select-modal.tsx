@@ -1,4 +1,3 @@
-import { Input, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -8,9 +7,10 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -37,16 +37,7 @@ export const PerkSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='perk-select-modal'>

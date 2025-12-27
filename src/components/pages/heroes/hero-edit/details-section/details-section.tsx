@@ -1,4 +1,4 @@
-import { Alert, AutoComplete, Button, Divider, Flex, Input, Space, Upload } from 'antd';
+import { Alert, AutoComplete, Button, Divider, Flex, Space, Upload } from 'antd';
 import { DownloadOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -13,6 +13,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { TextInput } from '@/components/controls/text-input/text-input';
 
 import './details-section.scss';
 
@@ -38,12 +39,12 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 			<div className='hero-edit-content-column single-column choices' id='details-main'>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
-					<Input
+					<TextInput
 						status={props.hero.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={props.hero.name}
-						onChange={e => props.setName(e.target.value)}
+						onChange={props.setName}
 					/>
 					<Button icon={<ThunderboltOutlined />} onClick={() => props.setName(NameGenerator.generateName())} />
 				</Space.Compact>

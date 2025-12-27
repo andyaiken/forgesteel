@@ -1,10 +1,10 @@
-import { Button, Divider, Input, Space } from 'antd';
+import { Button, Divider, Space } from 'antd';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Element } from '@/models/element';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -42,16 +42,7 @@ export const ElementSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<>
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</>
+				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			}
 			content={
 				<div className='element-select-modal'>
@@ -69,11 +60,11 @@ export const ElementSelectModal = (props: Props) => {
 					<Expander title='Add a custom element'>
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Name</HeaderText>
-							<Input
+							<TextInput
 								placeholder='Name'
 								allowClear={true}
 								value={customElement.name}
-								onChange={e => setCustomName(e.target.value)}
+								onChange={setCustomName}
 							/>
 							<HeaderText>Description</HeaderText>
 							<MarkdownEditor value={customElement.description} onChange={setCustomDescription} />

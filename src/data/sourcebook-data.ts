@@ -1,6 +1,7 @@
 import { community, communityPrerelease } from '@/data/sourcebooks/community/community';
 import { blacksmith } from '@/data/sourcebooks/third-party/magazine-blacksmith';
 import { core } from '@/data/sourcebooks/official/core';
+import { lookOut } from '@/data/sourcebooks/third-party/look-out';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { patreon } from '@/data/sourcebooks/official/patreon';
 import { ratcatcher } from '@/data/sourcebooks/third-party/magazine-ratcatcher';
@@ -15,6 +16,7 @@ export class SourcebookData {
 	static summoner = summonerSourcebook;
 
 	// Third Party
+	static lookOut = lookOut;
 	static magazineBlacksmith = blacksmith;
 	static magazineRatcatcher = ratcatcher;
 	static triglav = triglav;

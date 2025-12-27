@@ -1041,6 +1041,8 @@ export class FactoryLogic {
 
 	static createOptions = (): Options => {
 		return {
+			// App
+			cookieConsent: false,
 			// Hero
 			shownStandardAbilities: [],
 			xpPerLevel: 16,

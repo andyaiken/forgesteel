@@ -4,6 +4,10 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
+		if (options.cookieConsent === undefined) {
+			options.cookieConsent = false;
+		}
+
 		if (options.xpPerLevel === undefined) {
 			options.xpPerLevel = 16;
 		}

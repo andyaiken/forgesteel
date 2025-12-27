@@ -58,6 +58,10 @@ export class SourcebookLogic {
 			list.push(SourcebookData.communityPrerelease);
 		}
 
+		if (FeatureFlags.hasFlag(FeatureFlags.lookOut.code)) {
+			list.push(SourcebookData.lookOut);
+		}
+
 		list.push(...homebrew);
 
 		return list;

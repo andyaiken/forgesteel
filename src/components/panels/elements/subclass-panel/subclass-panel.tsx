@@ -118,16 +118,21 @@ export const SubclassPanel = (props: Props) => {
 				break;
 		}
 
+		const pages = [
+			{ value: 'overview', label: 'Overview' },
+			{ value: 'features', label: 'Features' }
+		];
+
+		if (props.subclass.abilities.length > 0) {
+			pages.push({ value: 'abilities', label: 'Abilities' });
+		}
+
 		return (
 			<>
 				<Segmented
 					style={{ marginBottom: '20px' }}
 					block={true}
-					options={[
-						{ value: 'overview', label: 'Overview' },
-						{ value: 'features', label: 'Features' },
-						{ value: 'abilities', label: 'Abilities' }
-					]}
+					options={pages}
 					value={page}
 					onChange={setPage}
 					onClick={e => e.stopPropagation()}

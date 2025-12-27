@@ -1484,7 +1484,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 					tier2: '18 + R fire damage; I < [average] , dazed (save ends)',
 					tier3: '25 + R fire damage; I < [strong] , dazed (save ends)'
 				})),
-				FactoryLogic.createAbilitySectionText('You use up to three heroic abilities whose essence costs total 11 or less, spending no additional essence beyond the cost of this ability. You can shift up to 2 squares between your use of each ability.')
+				FactoryLogic.createAbilitySectionText('This damage ignores immunity.')
 			]
 		})
 

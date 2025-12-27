@@ -1,7 +1,8 @@
-import { Divider } from 'antd';
+import { Button, Divider, Flex } from 'antd';
 import { Field } from '@/components/controls/field/field';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
 
 import pbds from '@/assets/powered-by-draw-steel.png';
 import pkg from '../../../../package.json';
@@ -9,6 +10,8 @@ import pkg from '../../../../package.json';
 import './about-modal.scss';
 
 interface Props {
+	options: Options;
+	setOptions: (options: Options) => void;
 	onClose: () => void;
 }
 
@@ -53,6 +56,24 @@ export const AboutModal = (props: Props) => {
 					<p>
 						<a href='https://mcdm.gg/DrawSteel/DrawSteelGlyphs.zip' target='_blank'>Draw Steel Glyphs Font</a> by <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions</a> is licensed under <a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA 4.0</a>.
 					</p>
+					<Divider />
+					{
+						!props.options.cookieConsent ?
+							<>
+								<div className='ds-text'>
+									Just so you know, <b>FORGE STEEL</b> uses cookies. We good?
+								</div>
+								<Flex align='center' gap={5}>
+									<Button block={true} type='primary' onClick={() => props.setOptions({ ...props.options, cookieConsent: true })}>
+										Yes, obviously that's fine
+									</Button>
+									<Button block={true} onClick={() => window.location.assign('https:google.com')}>
+										I'm not OK with that actually
+									</Button>
+								</Flex>
+							</>
+							: null
+					}
 				</div>
 			}
 			onClose={props.onClose}

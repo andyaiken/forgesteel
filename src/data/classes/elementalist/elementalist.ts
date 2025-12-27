@@ -46,6 +46,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'elementalist-resource',
+					languageKey: 'elementalistEssence',
 					name: 'Essence',
 					gains: [
 						{

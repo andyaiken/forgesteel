@@ -40,6 +40,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'conduit-resource',
+					languageKey: 'conduitPiety',
 					name: 'Piety',
 					gains: [
 						{

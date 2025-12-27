@@ -41,6 +41,7 @@ As a shadow, you possess abilities that deal significant damage, enable you to m
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'shadow-resource',
+					languageKey: 'shadowInsight',
 					name: 'Insight',
 					gains: [
 						{

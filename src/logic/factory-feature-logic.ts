@@ -296,9 +296,10 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+	createHeroicResource = (data: { id: string, languageKey?: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 		return {
 			id: data.id,
+			languageKey: data.languageKey,
 			name: data.name,
 			description: data.description || '',
 			type: FeatureType.HeroicResource,

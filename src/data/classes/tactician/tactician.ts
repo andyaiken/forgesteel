@@ -41,6 +41,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'tactician-resource',
+					languageKey: 'tacticianFocus',
 					name: 'Focus',
 					gains: [
 						{

@@ -16,12 +16,12 @@ export const LanguageSelector = () => {
 		{
 			label: 'Us',
 			key: 'en-US',
-			icon: <span className='fi fi-us' />
+			icon: <span className='fi fi-us dropdown-icon' />
 		},
 		{
 			label: 'It',
 			key: 'it-IT',
-			icon: <span className='fi fi-it' />
+			icon: <span className='fi fi-it dropdown-icon' />
 		}
 	];
 	const menuProps = {
@@ -31,7 +31,7 @@ export const LanguageSelector = () => {
 	return (
 		<ErrorBoundary>
 			<Dropdown menu={menuProps}>
-				<Button icon={<span className={`fi fi-${i18n.language.split('-')[1]?.toLowerCase() ?? 'us'}`} />} />
+				<Button shape='circle' className={`fi fi-${i18n.language.split('-')[1]?.toLowerCase() ?? 'us'}`} />
 			</Dropdown>
 		</ErrorBoundary>
 	);

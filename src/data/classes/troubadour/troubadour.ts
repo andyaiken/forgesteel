@@ -57,6 +57,7 @@ Jackson Bootblack`,
 				FactoryLogic.feature.createHeroicResource({
 					id: 'tS1DEkc8ZWqFRIxE',
 					name: 'Drama',
+					languageKey: 'troubadourDrama',
 					gains: [
 						{
 							tag: 'start',
@@ -64,22 +65,22 @@ Jackson Bootblack`,
 							value: '1d3'
 						},
 						{
-							tag: '',
+							tag: 'action',
 							trigger: 'The first time three or more heroes use an ability on the same turn',
 							value: '2'
 						},
 						{
-							tag: '',
+							tag: 'winded',
 							trigger: 'The first time any hero is made winded during the encounter',
 							value: '2'
 						},
 						{
-							tag: '',
+							tag: 'critical',
 							trigger: 'Whenever a creature within your line of effect rolls a natural 19 or 20',
 							value: '3'
 						},
 						{
-							tag: '',
+							tag: 'death',
 							trigger: 'When you or another hero dies',
 							value: '10'
 						}

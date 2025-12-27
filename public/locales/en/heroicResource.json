@@ -1,0 +1,122 @@
+{
+  "censorWrath":{
+    "name_one": "wrath",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "take-damage": {
+      "trigger": "The first time each round that a creature judged by you deals damage to you"
+    },
+    "deal-damage": {
+      "trigger": "The first time each round that you deal damage to a creature judged by you"
+    }
+  },
+  "beastheartFerocity":{
+    "name_one": "ferocity",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "deal-damage-self": {
+      "trigger": "The first time in a round that you deal damage"
+    },
+    "deal-damage-companion": {
+      "trigger": "The first time in a round that your companion deals damage"
+    }
+  },
+  "conduitPiety":{
+    "name_one": "piety",
+    "start": {
+      "trigger": "Start of your turn"
+    }
+  },
+  "elementalistEssence":{
+    "name_one": "essence",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "take-damage": {
+      "trigger": "The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy"
+    }
+  },
+  "furyFerocity":{
+    "name_one": "ferocity",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "take-damage": {
+      "trigger": "The first time each combat round that you take damage"
+    },
+    "winded": {
+      "trigger": "The first time you become winded or are dying in an encounter"
+    }
+  },
+  "nullDiscipline":{
+    "name_one": "discipline",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "action": {
+      "trigger": "The first time each combat round that an enemy in the area of your Null Field ability uses a main action"
+    },
+    "malice": {
+      "trigger": "The first time each combat round that the Director uses an ability that costs Malice"
+    }
+  },
+  "shadowInsight":{
+    "name_one": "insight",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "deal-damage": {
+      "trigger": "The first time each combat round that you deal damage incorporating 1 or more surges"
+    }
+  },
+  "summonerEssence":{
+    "name_one": "essence",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "minion-death": {
+      "trigger": "The first time each round that any minion dies unwillingly within your Summoner’s Range"
+    }
+  },
+  "tacticianFocus":{
+    "name_one": "focus",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "deal-damage": {
+      "trigger": "The first time each round that you or an ally damages a creature you have marked"
+    },
+    "ability":{
+      "trigger": "The first time in a round that an ally within 10 squares of you uses a heroic ability"
+    }
+  },
+  "talentClarity":{
+    "name_one": "clarity",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "move": {
+      "trigger": "The first time each combat round that a creature is force moved"
+    }
+  },
+  "troubadourDrama":{
+    "name_one": "drama",
+    "start": {
+      "trigger": "Start of your turn"
+    },
+    "action": {
+      "trigger": "The first time three or more heroes use an ability on the same turn"
+    },
+    "winded": {
+      "trigger": "The first time any hero is made winded during the encounter"
+    },
+    "critical": {
+      "trigger": "Whenever a creature within your line of effect rolls a natural 19 or 20"
+    },
+    "death": {
+      "trigger": "When you or another hero dies"
+    }
+  }
+}

@@ -8,7 +8,7 @@ i18next.use(HttpBackend).use(initReactI18next).init({
 	fallbackLng: 'en-US',
 	lng: 'en-US',
 	debug: true,
-	ns: [ 'common', 'welcomePage', 'hero', 'ancestry', 'maneuver' ],
+	ns: [ 'common', 'welcomePage', 'hero', 'ancestry', 'maneuver', 'class', 'heroicResource' ],
 	backend: {
 		loadPath: '/forgesteel/locales/{{lng}}/{{ns}}.json'
 	},

@@ -88,7 +88,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const { t } = useTranslation([ 'common', 'hero', 'ancestry' ]);
+	const { t } = useTranslation([ 'common', 'hero', 'ancestry', 'class', 'heroicResource' ]);
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
@@ -274,7 +274,7 @@ export const HeroPanel = (props: Props) => {
 									heroicResources.map(hr =>
 										useRows ?
 											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
-												<div>{i18next.format(t('heroicResource_one'), 'capitalize')}: <b>{i18next.format(t(hr.name), 'capitalize')}</b></div>
+												<div>{i18next.format(t('heroicResource_one'), 'capitalize')}: <b>{i18next.format(t(`heroicResource:${hr.languageKey}.name_one`), 'capitalize')}</b></div>
 												<div>{hr.value}</div>
 											</div>
 											:
@@ -282,12 +282,12 @@ export const HeroPanel = (props: Props) => {
 												<HeaderText
 													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
 												>
-													{i18next.format(t(hr.name), 'capitalize')}
+													{i18next.format(t(`heroicResource:${hr.languageKey}.name_one`), 'capitalize')}
 												</HeaderText>
 												{
 													hr.gains.map((g, n) => (
 														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{t(g.trigger)}</div>
+															<div className='ds-text compact-text'>{t(`heroicResource:${hr.languageKey}:${g.tag}.trigger`)}</div>
 															<Pill>+{g.value}</Pill>
 														</Flex>
 													))

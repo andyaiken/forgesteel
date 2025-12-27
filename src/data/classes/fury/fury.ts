@@ -41,6 +41,7 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'fury-resource',
+					languageKey: 'furyFerocity',
 					name: 'Ferocity',
 					gains: [
 						{

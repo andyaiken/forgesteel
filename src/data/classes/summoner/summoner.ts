@@ -48,6 +48,7 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 				FactoryLogic.feature.createHeroicResource({
 					id: 'summoner-resource',
 					name: 'Essence',
+					languageKey: 'summonerEssence',
 					gains: [
 						{
 							tag: 'start',

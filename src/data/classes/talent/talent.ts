@@ -46,6 +46,7 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'talent-resource',
+					languageKey: 'talentClarity',
 					name: 'Clarity',
 					gains: [
 						{

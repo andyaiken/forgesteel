@@ -44,6 +44,7 @@ As a null, you resist the supernatural forces of the universe with composure and
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'null-resource',
+					languageKey: 'nullDiscipline',
 					name: 'Discipline',
 					gains: [
 						{

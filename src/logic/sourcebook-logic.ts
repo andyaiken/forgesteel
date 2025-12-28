@@ -44,6 +44,7 @@ export class SourcebookLogic {
 
 			// Third Party
 			SourcebookData.community,
+			SourcebookData.lookOut,
 			SourcebookData.magazineBlacksmith,
 			SourcebookData.magazineRatcatcher,
 			SourcebookData.triglav
@@ -56,10 +57,6 @@ export class SourcebookLogic {
 
 		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {
 			list.push(SourcebookData.communityPrerelease);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.lookOut.code)) {
-			list.push(SourcebookData.lookOut);
 		}
 
 		list.push(...homebrew);

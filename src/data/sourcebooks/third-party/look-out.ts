@@ -1114,7 +1114,10 @@ Your new wooden familiar is your retainer, but has no Recoveries and cannot rega
 export const lookOut: Sourcebook = {
 	id: 'look-out',
 	name: 'Look Out Behind You Studios',
-	description: 'A selection of content from [Look Out Behind You Studios](https://www.backerkit.com/call_to_action/5c146898-9aae-4593-af4d-9e916b1b5121/landing).',
+	description: `
+Third-party content from Look Out Behind You Studios.
+
+[The Kiln crowdfunder](https://www.backerkit.com/call_to_action/5c146898-9aae-4593-af4d-9e916b1b5121/landing) is live until Feb 5th.`,
 	type: SourcebookType.ThirdParty,
 	adventures: [],
 	ancestries: [],

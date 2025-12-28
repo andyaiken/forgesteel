@@ -23,11 +23,6 @@ export class FeatureFlags {
 		description: 'Access to the (pre-release) Community sourcebook'
 	};
 
-	static lookOut: FeatureFlag = {
-		code: Utils.hashCode('hot-hot-hot'),
-		description: 'Access to the Kiln'
-	};
-
 	static patreon: FeatureFlag = {
 		code: Utils.hashCode('patreon'),
 		description: 'Show the Patreon connector'
@@ -37,7 +32,6 @@ export class FeatureFlags {
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
 		FeatureFlags.communityPreRelease,
-		FeatureFlags.lookOut,
 		FeatureFlags.patreon
 	];
 

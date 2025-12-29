@@ -430,19 +430,19 @@ export const HeroPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='stats-section'>
 					<Flex gap={10}>
-						<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('might_short'), 'capitalize') : i18next.format(t('might'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('agility_short'), 'capitalize') : i18next.format(t('agility'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('reason_short'), 'capitalize') : i18next.format(t('reason'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('intuition_short'), 'capitalize') : i18next.format(t('intuition'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('presence_short'), 'capitalize') : i18next.format(t('presence'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</StatsRow>
 					</Flex>
@@ -455,51 +455,51 @@ export const HeroPanel = (props: Props) => {
 											<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
 										))
 									}
-									<div>Surges: <b>{props.hero.state.surges}</b></div>
-									<div>Victories: <b>{props.hero.state.victories}</b></div>
-									<div>XP: <b>{props.hero.state.xp}</b></div>
-									<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
-									<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
+									<div>{i18next.format(t('surge_other'), 'capitalize')}: <b>{props.hero.state.surges}</b></div>
+									<div>{i18next.format(t('victory_other'), 'capitalize')}: <b>{props.hero.state.victories}</b></div>
+									<div>{i18next.format(t('xp'), 'uppercase')}: <b>{props.hero.state.xp}</b></div>
+									<div>{i18next.format(t('renown'), 'capitalize')}: <b>{HeroLogic.getRenown(props.hero)}</b></div>
+									<div>{i18next.format(t('wealth'), 'capitalize')}: <b>{HeroLogic.getWealth(props.hero)}</b></div>
 								</div>
 								<div className='selectable-row'>
-									<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
+									<div>{i18next.format(t('size'), 'capitalize')}: <b>{FormatLogic.getSize(size)}</b></div>
 									<div>{speedStr}: <b>{speed.value}</b></div>
-									<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
-									<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
-									<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
+									<div>{i18next.format(t('stability'), 'capitalize')}: <b>{HeroLogic.getStability(props.hero)}</b></div>
+									<div>{i18next.format(t('disengage'), 'capitalize')}: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
+									<div>{i18next.format(t('save'), 'capitalize')}: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
 								</div>
 								<div className='selectable-row clickable' onClick={onShowVitals}>
-									<div>Stamina: <b>{stamina}</b></div>
-									<div>Recoveries: <b>{recoveries}</b></div>
-									<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
+									<div>{i18next.format(t('stamina'), 'capitalize')}: <b>{stamina}</b></div>
+									<div>{i18next.format(t('recovery_other'), 'capitalize')}: <b>{recoveries}</b></div>
+									<div>{i18next.format(t('recoveryValue'), 'capitalize')}: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
 								</div>
 							</>
 							:
 							<>
-								<StatsRow caption='Resources' onClick={onShowHero}>
+								<StatsRow caption={i18next.format(t('resource_other'), 'capitalize')} onClick={onShowHero}>
 									{
 										HeroLogic.getHeroicResources(props.hero).map(hr => (
 											<Statistic key={hr.id} title={hr.name} value={hr.value} />
 										))
 									}
-									<Statistic title='Surges' value={props.hero.state.surges} />
-									<Statistic title='Victories' value={props.hero.state.victories} />
-									<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
-									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
-									<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+									<Statistic title={i18next.format(t('surge_other'), 'capitalize')} value={props.hero.state.surges} />
+									<Statistic title={i18next.format(t('victory_other'), 'capitalize')} value={props.hero.state.victories} />
+									<Statistic title={i18next.format(t('xp'), 'uppercase')} value={props.hero.state.xp} suffix={xpSuffix} />
+									<Statistic title={i18next.format(t('renown'), 'capitalize')} value={HeroLogic.getRenown(props.hero)} />
+									<Statistic title={i18next.format(t('wealth'), 'capitalize')} value={HeroLogic.getWealth(props.hero)} />
 								</StatsRow>
 								<Flex gap={10}>
-									<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
-										<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+									<StatsRow caption={i18next.format(t('statistics_other'), 'capitalize')} style={{ flex: '5 5 0' }}>
+										<Statistic title={i18next.format(t('size'), 'capitalize')} value={size.value} suffix={sizeSuffix} />
 										<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
-										<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-										<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
-										<Statistic title='Save' value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
+										<Statistic title={i18next.format(t('stability'), 'capitalize')} value={HeroLogic.getStability(props.hero)} />
+										<Statistic title={i18next.format(t('disengage'), 'capitalize')} value={HeroLogic.getDisengage(props.hero)} />
+										<Statistic title={i18next.format(t('save'), 'capitalize')} value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
 									</StatsRow>
-									<StatsRow caption='Vitals' onClick={onShowVitals} style={{ flex: '3 3 0' }}>
-										<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
-										<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
-										<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+									<StatsRow caption={i18next.format(t('vitals'), 'capitalize')} onClick={onShowVitals} style={{ flex: '3 3 0' }}>
+										<Statistic title={i18next.format(t('stamina'), 'capitalize')} value={stamina} suffix={staminaSuffix} />
+										<Statistic title={i18next.format(t('recovery_other'), 'capitalize')} value={recoveries} suffix={recoveriesSuffix} />
+										<Statistic title={i18next.format(t('recoveryValue'), 'capitalize')} value={HeroLogic.getRecoveryValue(props.hero)} />
 									</StatsRow>
 								</Flex>
 							</>

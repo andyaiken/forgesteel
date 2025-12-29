@@ -29,7 +29,7 @@ export const EncounterToolsModal = (props: Props) => {
 		.forEach(slot => {
 			const existing = monsters.find(m => m.monster.id === slot.monsterID);
 			if (existing) {
-				existing.count += slot.count;
+				existing.count += slot.count * MonsterLogic.getRoleMultiplier(existing.monster.role.organization);
 			} else {
 				const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
 				if (monster) {
@@ -76,7 +76,7 @@ export const EncounterToolsModal = (props: Props) => {
 												.filter(f => f.data.ability.keywords.includes(AbilityKeyword.Weapon))
 												.map(f => f.name)
 												.sort()
-												.join(', ')
+												.join(', ') || 'None'
 										}
 									/>
 								</div>

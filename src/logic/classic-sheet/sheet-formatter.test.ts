@@ -65,6 +65,22 @@ describe.concurrent('Test markdown enhancement', () => {
 	])('Removes extra/bad markdown stuff', (inStr, expected) => {
 		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
 	});
+
+	test.each([
+		[ '| ≤ 11 |', '|![11 or less](<img>)|' ],
+		[ '| 12-16 |', '|![12 to 16](<img>)|' ],
+		[ '| 17+ |', '|![17 or greater](<img>)|' ],
+		[ '* 11 or lower:', '* ![11 or less](<img>)' ],
+		[ '* 12 - 16:', '* ![12 to 16](<img>)' ],
+		[ '* ≥ 17:', '* ![17 or greater](<img>)' ],
+		[ '* 17+:', '* ![17 or greater](<img>)' ],
+		[ '* ≤11:', '* ![11 or less](<img>)' ]
+	])('Converts power roll text to glyphs', (inStr, expected) => {
+		const markdown = SheetFormatter.enhanceMarkdown(inStr);
+		// switch out the image svg details
+		const check = markdown.replace(/(!\[.+\])\(data:image.+\)/, '$1(<img>)');
+		expect(check).toBe(expected);
+	});
 });
 
 describe.concurrent('cleanupText', () => {

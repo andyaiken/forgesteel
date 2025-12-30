@@ -1,4 +1,9 @@
 @use '../../../pages/classic-sheet/common.scss';
+
+// #classic-sheet .notes.card {
+//     @include common.striped-card;
+// }
+
 #classic-sheet .notes.card .content {
     p {
         font-size: round(1.1rem, 1px);
@@ -6,5 +11,38 @@
 
     h1, h2 {
         @include common.divider-plain(common.$color-medium, 1px);
+    }
+
+    h3 {
+        @include common.divider-gradient-line-center;
+    }
+
+    ul:has(img) {
+        list-style: none;
+        img {
+            width: 50px;
+            height: 26px;
+            margin-top: 2px;
+            margin-bottom: -9px;
+        }
+    }
+    
+    table {
+        th, td {
+            @include common.font-slab();
+            border: 0;
+            padding: 0;
+            height: 26px;
+        }
+        th {
+            font-weight: 500;
+        }
+
+        img {
+            width: 50px;
+            height: 26px;
+            margin-top: 2px;
+            margin-bottom: -5px;
+        }
     }
 }

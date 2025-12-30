@@ -120,9 +120,9 @@ export class SheetFormatter {
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
 			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
-			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
+			.replace(/(11 or lower|≤\s*11):?/g, `![11 or less](${rollT1Icon})`)
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
-			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`)
+			.replace(/(17\s*\+|≥\s*17):?/g, `![17 or greater](${rollT3Icon})`)
 			.replace(/[`]/g, '')
 			.replace(/<\/?code>/g, '');
 		return text;
@@ -757,6 +757,16 @@ export class SheetFormatter {
 		return size;
 	};
 
+	static calculateNotesCardSize = (notes: string, lineWidth: number): number => {
+		let size = 2.7;
+		size += Math.max(20, this.countLines(notes, lineWidth));
+		const numHeadings = (notes.match(/###/g) || []).length;
+		size += numHeadings * 0.8; // extra spage per heading
+		const numParagraphs = (notes.match(/\n\n/g) || []).length;
+		size += numParagraphs * 0.3; // extra space per paragraph
+		return size;
+	};
+
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
 		const rollLineLen = Math.ceil(0.8 * lineWidth) - 10;
@@ -785,7 +795,7 @@ export class SheetFormatter {
 
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
 		let tableSpace = 0;
-		const result = text?.trim().split('\n').reduce((n, l) => {
+		const result = text?.trim().replaceAll(/(!\[.+\])\(data:image.+\)/g, '$1(<img>)').split('\n').reduce((n, l) => {
 			let len = emptyLineSize;
 			if (l.length) {
 				len = Math.ceil(l.length / lineWidth) * lineFactor;

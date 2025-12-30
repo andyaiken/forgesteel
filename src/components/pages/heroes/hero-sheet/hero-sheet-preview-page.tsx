@@ -1,5 +1,5 @@
-import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Tag } from 'antd';
-import { useMemo, useState } from 'react';
+import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Spin, Tag } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 import { AbilityData } from '@/data/ability-data';
 import { Career } from '@/models/career';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
@@ -39,6 +39,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	);
 
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
+	const [ spinning, setSpinning ] = useState(false);
 	const [ previewOptions, setPreviewOptions ] = useState<'html' | 'canvas'>('html');
 
 	const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
@@ -240,6 +241,58 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+	const cardEnter = (event: any) => {
+		event.target.style.boxShadow = '0 0 5px #008cff';
+	};
+
+	const cardLeave = (event: any) => {
+		event.target.style.boxShadow = '';
+	};
+
+	const cardClick = async (event: any) => {
+		setSpinning(true);
+		const card = event.target.closest('.page');
+		const initialW = card.clientWidth;
+		const initialH = card.clientHeight;
+
+		const parent = card.parentNode;
+
+		const image = await Utils.elementToImage(card, 2);
+		card.style.display = 'none';
+		image.style.width = initialW + 'px';
+		image.style.height = initialH + 'px';
+		image.addEventListener('click', imageClick);
+		image.addEventListener('mouseenter', imageEnter);
+		image.addEventListener('mouseleave', imageLeave);
+		parent.insertBefore(image, card);
+		setSpinning(false);
+	};
+
+	const imageEnter = (event: any) => {
+		event.target.style.boxShadow = '0 0 5px #ff00dd';
+	};
+
+	const imageLeave = (event: any) => {
+		event.target.style.boxShadow = '';
+	};
+
+	const imageClick = (event: any) => {
+		const card = event.target.nextSibling;
+		card.style.display = '';
+		event.target.remove();
+	};
+
+	useEffect(() => {
+		const cards = document.querySelectorAll('.hero-sheet .page');
+		cards.forEach(card => {
+			card.addEventListener('mouseenter', cardEnter);
+			card.addEventListener('mouseleave', cardLeave);
+			card.addEventListener('click', cardClick);
+		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<ErrorBoundary>
 			<div id='pdf-preview'>
@@ -323,6 +376,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					</Space>
 				</Drawer>
 			</div>
+			<Spin spinning={spinning} size='large' fullscreen />
 		</ErrorBoundary>
 	);
 };

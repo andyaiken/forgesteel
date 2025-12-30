@@ -18,26 +18,23 @@ export const SkillsCard = (props: Props) => {
 				{Array.from(allSkills).map(([ list, skills ]) =>
 					<div className='skill-list' key={`skill-list-${list}`}>
 						<h3>{list}</h3>
-						<ul>
+						<div className='skill-group'>
 							{skills.map(s => {
 								const key = s.replaceAll(' ', '-');
 								return (
-									<li key={`skill-list-${list}-item-${key}`}>
-										<LabeledBooleanField
-											value={character.skills?.includes(s)}
-											label={SheetFormatter.getSkillAbbreviation(s)}
-										/>
-									</li>
+									<LabeledBooleanField
+										key={`skill-list-${list}-item-${key}`}
+										value={character.skills?.includes(s)}
+										label={SheetFormatter.getSkillAbbreviation(s)}
+									/>
 								);
 							})}
 							{
 								skills.length % 2 !== 0 ?
-									<li>
-										<div className='spacer'>&nbsp;</div>
-									</li>
+									<div className='spacer'>&nbsp;</div>
 									: null
 							}
-						</ul>
+						</div>
 					</div>
 				)}
 			</div>

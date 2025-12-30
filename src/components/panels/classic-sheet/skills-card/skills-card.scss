@@ -25,22 +25,23 @@
         margin-bottom: 5px;
     }
 
-    ul {
+    .skill-group {
         list-style: none;
         column-count: 2;
         column-fill: balance;
         margin:0;
         padding: 0;
 
-        li {
+       .labeled-boolean,
+       .spacer {
             padding: 3px 0;
 
-            &.spacer {
-                height: round(2rem, 1px);
+            label{
+                font-weight: 400;
             }
         }
-        li label{
-            font-weight: 400;
+        .spacer {
+            height: round(2rem, 1px);
         }
     }
 }

@@ -72,15 +72,20 @@ export const MontagePanel = (props: Props) => {
 			return (
 				<div key={challenge.id} className='montage-challenge'>
 					<Flex align='center' justify='space-between' gap={10}>
-						{challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 						<Field
 							style={{ flex: '1 1 0', opacity: (challenge.successes + challenge.failures) >= challenge.uses ? 0.3 : 1 }}
 							label={challenge.name}
+							labelTag={challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 							value={
 								<Markdown text={challenge.description} useSpan={true} />
 							}
 						/>
 					</Flex>
+					<ul>
+						{challenge.characteristics.length > 0 ? <li><Field label='Characteristics' value={challenge.characteristics.join(', ')} /></li> : null}
+						{challenge.skills.length > 0 ? <li><Field label='Skills' value={challenge.skills} /></li> : null}
+						{challenge.abilities.length > 0 ? <li><Field label='Abilities' value={challenge.abilities} /></li> : null}
+					</ul>
 				</div>
 			);
 		};

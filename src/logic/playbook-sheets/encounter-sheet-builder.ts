@@ -9,6 +9,7 @@ import { Hero } from '@/models/hero';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
+import { SheetFormatter } from '../classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -31,7 +32,10 @@ export class EncounterSheetBuilder {
 			encounterEv: strength
 		};
 
-		sheet.notes = encounter.notes.map(note => `# ${note.name}\n${note.description}`).join('\n\n');
+		sheet.notes = encounter.notes.map(note => {
+			const description = SheetFormatter.enhanceMarkdown(note.description);
+			return `### ${note.name}\n${description}`;
+		}).join('\n\n');
 
 		sheet.objective = encounter.objective?.name;
 		sheet.successCondition = encounter.objective?.successCondition;

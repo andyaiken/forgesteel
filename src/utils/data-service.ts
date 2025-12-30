@@ -146,6 +146,11 @@ export class DataService {
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
 					result.connections.push({
+						name: 'Forge Steel Patreon',
+						status: response.data.user.forgesteel
+					});
+
+					result.connections.push({
 						name: 'MCDM Patreon',
 						status: response.data.user.mcdm
 					});
@@ -174,6 +179,11 @@ export class DataService {
 				result.authenticated = response.data.authenticated_with_patreon;
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
+					result.connections.push({
+						name: 'Forge Steel Patreon',
+						status: response.data.user.forgesteel
+					});
+
 					result.connections.push({
 						name: 'MCDM Patreon',
 						status: response.data.user.mcdm

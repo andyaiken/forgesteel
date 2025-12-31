@@ -77,10 +77,11 @@ export const EncounterSheetPage = (props: Props) => {
 			];
 			if (props.options.colorSheet) {
 				classes.push('color');
+				classes.push(`colors-${props.options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet ]
+		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
 	);
 
 	return (

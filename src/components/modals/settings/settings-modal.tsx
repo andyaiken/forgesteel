@@ -252,13 +252,6 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
-		const setColorSheet = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.colorSheet = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
 		const setShowPowerRollCalculation = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showPowerRollCalculation = value;
@@ -278,7 +271,6 @@ export const SettingsModal = (props: Props) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
-					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
 					<LabelControl
 						label='Show class features'
 						control={
@@ -323,6 +315,20 @@ export const SettingsModal = (props: Props) => {
 		const setPageOrientation = (value: 'portrait' | 'landscape') => {
 			const copy = Utils.copy(options);
 			copy.pageOrientation = value;
+			setOptions(copy);
+			props.setOptions(copy);
+		};
+
+		const setColorSheet = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.colorSheet = value;
+			setOptions(copy);
+			props.setOptions(copy);
+		};
+
+		const setColorScheme = (value: 'community' | 'classic') => {
+			const copy = Utils.copy(options);
+			copy.colorScheme = value;
 			setOptions(copy);
 			props.setOptions(copy);
 		};
@@ -388,16 +394,35 @@ export const SettingsModal = (props: Props) => {
 							/>
 						}
 					/>
+					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
+					{
+						options.colorSheet &&
+							<LabelControl
+								label='Color scheme'
+								control={
+									<Segmented
+										name='colorScheme'
+										block={true}
+										options={[
+											{ value: 'community', label: 'Community' },
+											{ value: 'classic', label: 'Classic' }
+										]}
+										value={options.colorScheme}
+										onChange={setColorScheme}
+									/>
+								}
+							/>
+					}
 					<LabelControl
-						label='Text color'
+						label='Text contrast'
 						control={
 							<Segmented
 								name='textColor'
 								block={true}
 								options={[
-									{ value: 'dark', label: 'Darker' },
+									{ value: 'dark', label: 'Higher' },
 									{ value: 'default', label: 'Default' },
-									{ value: 'light', label: 'Lighter' }
+									{ value: 'light', label: 'Lower' }
 								]}
 								value={options.sheetTextColor}
 								onChange={changeTextColor}

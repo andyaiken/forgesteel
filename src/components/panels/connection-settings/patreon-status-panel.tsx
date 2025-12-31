@@ -23,20 +23,27 @@ export const PatreonStatusPanel = (props: Props) => {
 		);
 	};
 
-	const getTier = () => {
-		if (!props.status || !props.status.patron || !props.status.tier_cents) {
+	const getTiers = () => {
+		if (!props.status || !props.status.patron || !props.status.tiers) {
 			return null;
 		}
 
-		const dollars = Math.round(props.status.tier_cents / 100);
-
 		return (
-			<Tag
-				color='blue'
-				variant='outlined'
-			>
-				${dollars} Tier
-			</Tag>
+			<>
+				{
+					props.status.tiers.map(tier => {
+						return (
+							<Tag
+								key={tier.id}
+								color='blue'
+								variant='outlined'
+							>
+								{tier.title}
+							</Tag>
+						);
+					})
+				}
+			</>
 		);
 	};
 
@@ -68,7 +75,7 @@ export const PatreonStatusPanel = (props: Props) => {
 			</HeaderText>
 			<Flex gap={5}>
 				{getIsPatron()}
-				{getTier()}
+				{getTiers()}
 				{getSubscribedDate()}
 			</Flex>
 		</div>

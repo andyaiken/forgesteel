@@ -310,6 +310,10 @@ describe('DataService', () => {
 				authenticated: true,
 				connections: [
 					{
+						name: 'Forge Steel Patreon',
+						status: undefined
+					},
+					{
 						name: 'MCDM Patreon',
 						status: {
 							patron: true,
@@ -357,6 +361,10 @@ describe('DataService', () => {
 			expect(thenFn.mock.lastCall).toEqual([ {
 				authenticated: true,
 				connections: [
+					{
+						name: 'Forge Steel Patreon',
+						status: undefined
+					},
 					{
 						name: 'MCDM Patreon',
 						status: {

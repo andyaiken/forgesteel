@@ -295,7 +295,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: FactoryLogic.createSize(1, 'S'),
+			size: FactoryLogic.createSize(1, 'L'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 40,
 			stability: 2,

@@ -39,6 +39,7 @@ export enum AbilityKeyword {
 	Ring = 'Ring',
 	Rot = 'Rot',
 	Scroll = 'Scroll',
+	Servitor = 'Servitor',
 	Spine = 'Spine',
 	Spore = 'Spore',
 	Strike = 'Strike',

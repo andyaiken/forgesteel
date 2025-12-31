@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 $extra-light: #eee;
 $light: #bbb; // 73.3%
 $medium: #666; // 40%
@@ -9,13 +11,37 @@ $dark: #444; // 26.7%
     --color-text-lightest: #666;
 }
 
-// Print-optimized colors
-$main-action: #00aeef;
-$triggered-action: #ed1c24;
-$maneuver: #00a651;
-$performance: #92278f;
-$free-strike: #666;
-$move: #db8b27;
+// prefer print-optimized colors
+$fs-cs-colors: (
+    'blue': #00aeef,
+    'red': #ed1c24,
+    'green': #00a651,
+    'purple': #92278f,
+    'gray': #666,
+    'orange': #db8b27
+);
+
+$classic-colors: (
+    className: 'classic',
+    main-action:        map.get($fs-cs-colors, 'blue'),
+    triggered-action:   map.get($fs-cs-colors, 'red'),
+    maneuver:           map.get($fs-cs-colors, 'green'),
+    performance:        map.get($fs-cs-colors, 'purple'),
+    free-strike:        map.get($fs-cs-colors, 'gray'),
+    move:               map.get($fs-cs-colors, 'orange')
+);
+
+$community-colors: (
+    className: 'community',
+    main-action:        map.get($fs-cs-colors, 'red'),
+    triggered-action:   map.get($fs-cs-colors, 'green'),
+    maneuver:           map.get($fs-cs-colors, 'blue'),
+    performance:        map.get($fs-cs-colors, 'purple'),
+    free-strike:        map.get($fs-cs-colors, 'gray'),
+    move:               map.get($fs-cs-colors, 'orange')
+);
+
+$schemes: $classic-colors, $community-colors;
 
 $error: #ed1c24;
 

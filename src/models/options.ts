@@ -18,6 +18,7 @@ export interface Options {
 	includePlayState: boolean;
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
+	colorScheme: 'community' | 'classic';
 	showPowerRollCalculation: boolean;
 	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';

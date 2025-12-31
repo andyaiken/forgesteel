@@ -40,6 +40,10 @@ export class OptionsUpdateLogic {
 			options.colorSheet = true;
 		}
 
+		if (options.colorScheme === undefined) {
+			options.colorScheme = 'community';
+		}
+
 		if (options.showPowerRollCalculation === undefined) {
 			options.showPowerRollCalculation = true;
 		}

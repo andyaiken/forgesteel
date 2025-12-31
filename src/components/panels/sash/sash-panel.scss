@@ -20,37 +20,37 @@
 
 	&.type-main {
 		background-color: rgba(colors.$ability-main, 0.5);
-		border-color: rgba(colors.$ability-main, 0.5);
+		border-color: rgba(colors.$ability-main, 0.6);
 		color: rgba(255, 255, 255, 0.88);
 	}
 
 	&.type-maneuver {
 		background-color: rgba(colors.$ability-maneuver, 0.5);
-		border-color: rgba(colors.$ability-maneuver, 0.5);
+		border-color: rgba(colors.$ability-maneuver, 0.6);
 		color: rgba(255, 255, 255, 0.88);
 	}
 
 	&.type-trigger {
 		background-color: rgba(colors.$ability-trigger, 0.5);
-		border-color: rgba(colors.$ability-trigger, 0.5);
+		border-color: rgba(colors.$ability-trigger, 0.6);
 		color: rgba(255, 255, 255, 0.88);
 	}
 
 	&.type-move {
 		background-color: rgba(colors.$ability-move, 0.5);
-		border-color: rgba(colors.$ability-move, 0.5);
-		color: rgba(255, 255, 255, 0.88);
+		border-color: rgba(colors.$ability-move, 0.6);
+		color: rgba(0, 0, 0, 0.88);
 	}
 
 	&.type-villain {
 		background-color: rgba(colors.$ability-villain, 0.5);
-		border-color: rgba(colors.$ability-villain, 0.5);
-		color: rgba(0, 0, 0, 0.88);
+		border-color: rgba(colors.$ability-villain, 0.6);
+		color: rgba(255, 255, 255, 0.88);
 	}
 
 	&.type-perform {
 		background-color: rgba(colors.$ability-perform, 0.5);
-		border-color: rgba(colors.$ability-perform, 0.5);
+		border-color: rgba(colors.$ability-perform, 0.6);
 		color: rgba(0, 0, 0, 0.88);
 	}
 }

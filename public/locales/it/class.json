@@ -109,70 +109,70 @@
     }
   },
   "summoner":{
-    "name_one": "summoner",
-    "name_other": "summoners",
-    "description":"You are the armada. The kings of old would trade armies for your abilities. You’ve undertaken the tradition that conjures an endless supply of warriors. You are the summoner, the mage who takes their dreams and makes them manifest.<br />You call forth minions to trudge fearlessly into the fray and provide support, holding the enemy at bay while you and your fellow heroes ready the counteroffensive. Your minions serve unflinchingly, unerringly, to their death or to yours.<br />You can also take advantage of powerful magic to buff your allies, whittle down your enemies, or enlist the fallen into your ranks. And when push comes to shove, you can call upon your champion to finish the fight.",
+    "name_one": "evocatore",
+    "name_other": "evocatori",
+    "description":"Tu sei l'armada. I re di tempi antichi scambiavano eserciti interi per ottenere le tue abilità.  Hai intrapreso la tradizione che evoca una schiera infinita di guerrieri. Tue sei l'$t(class:summoner.name_one), il mago che prende i propri sogni e li manifesta.<br />Ordini ai tuoi $t(common:minion) di avanzare senza timore nella mischia e fornire supporto, tenendo il nemico a bada mentre tu e i tuoi compagni vi preparate per la controffensiva. I tuoi $t(common:minion) ti obbediscono senza esitazione, senza errori, fino alla loro morte, o alla tua.<br />Puoi anche sfruttare potenti magie per potenziare i tuoi alleati, sfinire i tuoi nemici, o reclutare i caduti nei tuoi ranghi. E quando il gioco si fa dureo, puoi invocare il tuo campione per porre termine al combattimento.",
 	  "essence":{
-      "name_one": "essence",
+      "name_one": "essenza",
       "start": {
-        "trigger": "Start of your turn"
+        "trigger": "$t(class:beginningOfYourTurn)"
       },
       "minion-death": {
-        "trigger": "The first time each round that any minion dies unwillingly within your Summoner’s Range"
+        "trigger": "La prima volta in ogni round che uno dei tuoi $t(common:minion) muore involontariamente entro la tua portata da $t(class:summoner.name_one)"
       }
     }
   },
   "tactician":{
-    "name_one": "tactician",
-    "name_other": "tacticians",
-    "description":"Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.<br />As a tactician, you have abilities that heal your allies and grant them increased damage, movement, and attacks.",
+    "name_one": "stratega",
+    "name_other": "strateghi",
+    "description":"Tattico. Difensore. Capitano. Con una spada in mano, guidi i tuoi alleati nel fitto della battaglia, impartendo ordini che ispirano i tuoi compagni a muoversi piu velocemente e a colpire con maggior precisione. In tutto cio, ti poni tra i tuoi compatrioti e la morte, sfidando i seguaci del male a sconfiggerti, se ne sono capaci.<br />In quanto $t(class:tactician.name_one), hai l'abilita di curare i tuoi alleati e dar loro maggiorni danni, movimento e attacchi.",
 	  "focus":{
-      "name_one": "focus",
+      "name_one": "concentrazione",
       "start": {
-      "trigger": "Start of your turn"
-    },
-    "deal-damage": {
-      "trigger": "The first time each round that you or an ally damages a creature you have marked"
-    },
-    "ability":{
-      "trigger": "The first time in a round that an ally within 10 squares of you uses a heroic ability"
-    }
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "deal-damage": {
+        "trigger": "La prima volta in ogni round che tu o un alleato danneggia una creatura che hai marcato"
+      },
+      "ability":{
+        "trigger": "La prima volta in ogni round che un alleato entro 10 quadrati da te una un'abilità eroica"
+      }
     }
   },
   "talent":{
-    "name_one": "talent",
-    "name_other": "talents",
-    "description":"A rare few people are born with the potential to harness psionic power, but only those who experience an awakening, a significant event that activates a talent’s abilities, can tap into the mind’s full potential. You are one of those people—a master of psionics and a source of incredible power created through sheer force of will. You can move and change matter, time, gravity, the laws of physics, or another creature’s mind.<br />As a talent, you are limited only by the strength of your mind. But the ability to wield multiple powers at once and change reality at will involves a gamble. Every manifestation has a chance of harming you, and talents who use too much power too quickly pay a deadly price.",
+    "name_one": "talento",
+    "name_other": "talenti",
+    "description":"Pochi e rare sono le persone nate con il potenziale di impugnare il potere psionico, ma solo coloro che vivono un risveglio, un evento significativo che attiva le abilita di un $t(class:talent.name_one), possono attingere al pieno potenziale della mente. Tu sei una di queste persone-un maestro della psionica e fonte di enorme potere creato dalla pura forza di volontà. Puoi spostare o cambiare la materia, il tempo, la gravita, le leggi della fisica, o la mente di altre creature.<br /> In quanto talento sei limitato solo dalla forza della tua mente. Ma l'abilita di brandire molteplici poteri al contempo e cambiare la realta a tuo piacimento è un azzardo. Ogni manifestazioni può ritorcersiti contro, e i $t(class:talent.name_other) che usano troppo potere troppo velocemente pagano un prezzo mortale.",
 	  "clarity":{
-      "name_one": "clarity",
+      "name_one": "lucidità",
       "start": {
-        "trigger": "Start of your turn"
+        "trigger": "$t(class:beginningOfYourTurn)"
       },
       "move": {
-        "trigger": "The first time each combat round that a creature is force moved"
+        "trigger": "La prima volta in ogni round che una creatura e spostata forzatamente"
       }
     }
   },
   "troubadour":{
-    "name_one": "troubadour",
-    "name_other": "troubadours",
-    "description":"The whole world’s a stage, and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whoever might witness your performance.<br />As a troubadour, you chase drama. The insurmountable dangers of the world might cause many a hero to cower. But you take to that world stage not intending to die, but to find out if you are truly alive.<br />“History is a tale. Each of us is just a story we tell ourselves. Change the story, and you change the world.”<br />Jackson Bootblack",
+    "name_one": "menestrello",
+    "name_other": "menestrelli",
+    "description":"Il mondo intero è un palcoscenico, e siamo tutto attori. Nessuno sa questa verità meglio di un $t(class:troubadour.name_one). Trovi la forza nella drammaticità nella vita quotidiano e sai come tratte uno spettacolo anche delle situazioni piu mondane. Esalti i successi e rendi piu drammatici le difficoltà, in servizio a chiunque possa assistere al tuo spettacolo.<br />In quanto $t(class:troubadour.name_one), rincorri il dramma. I pericoli insormontabili del mondo potrebbero causare in molti eroi la paur. Ma tu affronti il palcoscenico del mondo con nessuna intenzione di morire, ma per scoprire se sei veramente vivo.<br /> “La storia è un racconto. Ogniuno di noi è solo una storia che ci raccondiamo da soli. Cambia la storia, e cambi il mondo.“<br />Jasckson Bootblack",
 	  "drama":{
-      "name_one": "drama",
+      "name_one": "dramma",
       "start": {
-        "trigger": "Start of your turn"
+        "trigger": "$t(class:beginningOfYourTurn)"
       },
       "action": {
-        "trigger": "The first time three or more heroes use an ability on the same turn"
+        "trigger": "La prima volta che tre o piu eroi usano un abilità nello stesso turno"
       },
       "winded": {
-        "trigger": "The first time any hero is made winded during the encounter"
+        "trigger": "La prima volta che un eroe diventa $t(common:winded) in un incontro"
       },
       "critical": {
-        "trigger": "Whenever a creature within your line of effect rolls a natural 19 or 20"
+        "trigger": "Ogni volta che una creatura nella tua linea d'effetto ottiene un 19 o 20 naturale"
       },
       "death": {
-        "trigger": "When you or another hero dies"
+        "trigger": "Quando tu o un altro eroe muore"
       }
     }
   }

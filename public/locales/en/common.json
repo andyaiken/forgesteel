@@ -86,5 +86,7 @@
   "recoveryValue": "recovery value",
   "vitals": "vitals",
   "statistics_other": "statistics",
-  "resource_other": "resources"
+  "resource_other": "resources",
+  "minion_one": "minion",
+  "minion_other": "minions"
 }

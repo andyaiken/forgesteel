@@ -78,5 +78,7 @@
   "recoveryValue": "valore recupero",
   "vitals": "valori vitali",
   "statistics_other": "statistiche",
-  "resource_other": "risorse"
+  "resource_other": "risorse",
+  "minion_one": "minion",
+  "minion_other": "minions"
 }

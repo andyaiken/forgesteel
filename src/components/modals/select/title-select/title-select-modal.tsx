@@ -1,4 +1,4 @@
-import { Alert, Space } from 'antd';
+import { Alert, Button, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -81,7 +81,11 @@ export const TitleSelectModal = (props: Props) => {
 							</Space>
 							:
 							<Space orientation='vertical' style={{ width: '100%' }}>
-								<SelectablePanel action={{ label: 'Unselect', onClick: () => setSelectedTitle(null) }}>
+								<SelectablePanel
+									action={
+										<Button onClick={e => { e.stopPropagation(); setSelectedTitle(null); }}>Unselect</Button>
+									}
+								>
 									<TitlePanel title={selectedTitle} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>
 								<Alert

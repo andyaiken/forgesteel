@@ -1,6 +1,8 @@
-import { Button, Space, Tabs } from 'antd';
+import { Button, Segmented, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Ancestry } from '@/models/ancestry';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { Collections } from '@/utils/collections';
 import { Culture } from '@/models/culture';
 import { CultureEditPanel } from '@/components/panels/edit/culture-edit/culture-edit-panel';
@@ -13,13 +15,17 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { TextInput } from '@/components/controls/text-input/text-input';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -35,6 +41,8 @@ interface Props {
 
 export const AncestryEditPanel = (props: Props) => {
 	const [ ancestry, setAncestry ] = useState<Ancestry>(props.ancestry);
+	const [ featureCost, setFeatureCost ] = useState<number>(0);
+	const [ featureSearch, setFeatureSearch ] = useState<string>('');
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -190,33 +198,143 @@ export const AncestryEditPanel = (props: Props) => {
 		);
 	};
 
+	const getCherryPick = () => {
+		const cherryPick = (feature: Feature, value: number) => {
+			const copy = Utils.copy(ancestry);
+			const featureCopy = Utils.copy(feature);
+			if (value === 0) {
+				// Signature
+				copy.features.push(featureCopy);
+			} else {
+				// Purchased
+				const f = copy.features.find(f => f.type === FeatureType.Choice);
+				if (f) {
+					f.data.options.push({ feature: featureCopy, value: value });
+				}
+			}
+			setAncestry(copy);
+			props.onChange(copy);
+		};
+
+		const currentSignatureFeatureNames = ancestry.features.filter(f => f.type !== FeatureType.Choice).map(f => f.name);
+		const currentPurchasedFeatureNames = ancestry.features.filter(f => f.type === FeatureType.Choice).flatMap(f => f.data.options).map(f => f.feature.name);
+		const currentFeatureNames = [
+			...currentSignatureFeatureNames,
+			...currentPurchasedFeatureNames
+		];
+
+		const availableSignatureFeatures = SourcebookLogic.getAncestries(props.sourcebooks).flatMap(a => a.features).filter(f => f.type !== FeatureType.Choice).filter(f => !currentFeatureNames.includes(f.name)).map(f => ({ feature: f, value: 0 }));
+		const availablePurchasedFeatures = SourcebookLogic.getAncestries(props.sourcebooks).flatMap(a => a.features).filter(f => f.type === FeatureType.Choice).flatMap(f => f.data.options).filter(f => !currentFeatureNames.includes(f.feature.name));
+
+		const features = Collections.sort(
+			Collections.distinct(
+				[
+					...availableSignatureFeatures,
+					...availablePurchasedFeatures
+				],
+				f => f.feature.name
+			),
+			f => f.feature.name
+		);
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Segmented
+					block={true}
+					options={[
+						{ value: 0, label: 'Signature' },
+						{ value: 1, label: 'Purchased' }
+					]}
+					value={featureCost}
+					onChange={setFeatureCost}
+				/>
+				<SearchBox searchTerm={featureSearch} setSearchTerm={setFeatureSearch} />
+				{
+					features
+						.filter(f => (f.value === 0) === (featureCost === 0))
+						.filter(f => Utils.textMatches([ f.feature.name ], featureSearch))
+						.map(f => (
+							<SelectablePanel
+								key={f.feature.id}
+								action={
+									<Button
+										onClick={e => {
+											e.stopPropagation();
+											cherryPick(f.feature, f.value);
+										}}
+									>
+										Import
+									</Button>
+								}
+							>
+								<FeaturePanel
+									feature={f.feature}
+									cost={f.value || 'signature'}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									mode={PanelMode.Full}
+								/>
+							</SelectablePanel>
+						))
+				}
+			</Space>
+		);
+	};
+
 	return (
 		<ErrorBoundary>
 			<div className='ancestry-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Ancestry',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Features',
-							children: getFeaturesEditSection()
-						},
-						{
-							key: '3',
-							label: 'Ancestry Points',
-							children: getAncestryPointsEditSection()
-						},
-						{
-							key: '4',
-							label: 'Culture',
-							children: getCultureEditSection()
-						}
-					]}
-				/>
+				<div className='ancestry-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Ancestry',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							},
+							{
+								key: '3',
+								label: 'Ancestry Points',
+								children: getAncestryPointsEditSection()
+							},
+							{
+								key: '4',
+								label: 'Culture',
+								children: getCultureEditSection()
+							}
+						]}
+					/>
+				</div>
+				<div className='ancestry-preview-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: (
+									<SelectablePanel>
+										<AncestryPanel
+											ancestry={ancestry}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											mode={PanelMode.Full}
+										/>
+									</SelectablePanel>
+								)
+							},
+							{
+								key: '2',
+								label: 'Cherry Pick',
+								children: getCherryPick()
+							}
+						]}
+					/>
+				</div>
 			</div>
 		</ErrorBoundary>
 	);

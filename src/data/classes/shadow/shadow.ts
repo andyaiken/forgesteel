@@ -12,6 +12,7 @@ import { harlequinMask } from '@/data/classes/shadow/harlequin-mask';
 
 export const shadow: HeroClass = {
 	id: 'class-shadow',
+	languageKey: 'class:shadow',
 	name: 'Shadow',
 	description: `
 Subtlety is your art, the tip of the blade your brush. You studied at a secret college, specializing in alchemy, illusion, or shadow-magics. Your training and knowledge place you among the elite ranks of assassins, spies, and commandos. But more potent than any weapon or sorcery is your insight into your enemies’ weaknesses.
@@ -41,6 +42,7 @@ As a shadow, you possess abilities that deal significant damage, enable you to m
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'shadow-resource',
+					languageKey: 'class:shadow.insight',
 					name: 'Insight',
 					gains: [
 						{

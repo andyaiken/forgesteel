@@ -12,6 +12,7 @@ import { virtuoso } from '@/data/classes/troubadour/virtuoso';
 
 export const troubadour: HeroClass = {
 	id: '9y3Jx3koKZipiPh1',
+	languageKey: 'class:troubadour',
 	name: 'Troubadour',
 	description: `The whole world’s a stage, and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whoever might witness your performance.
 
@@ -57,6 +58,7 @@ Jackson Bootblack`,
 				FactoryLogic.feature.createHeroicResource({
 					id: 'tS1DEkc8ZWqFRIxE',
 					name: 'Drama',
+					languageKey: 'class:troubadour.drama',
 					gains: [
 						{
 							tag: 'start',
@@ -64,22 +66,22 @@ Jackson Bootblack`,
 							value: '1d3'
 						},
 						{
-							tag: '',
+							tag: 'action',
 							trigger: 'The first time three or more heroes use an ability on the same turn',
 							value: '2'
 						},
 						{
-							tag: '',
+							tag: 'winded',
 							trigger: 'The first time any hero is made winded during the encounter',
 							value: '2'
 						},
 						{
-							tag: '',
+							tag: 'critical',
 							trigger: 'Whenever a creature within your line of effect rolls a natural 19 or 20',
 							value: '3'
 						},
 						{
-							tag: '',
+							tag: 'death',
 							trigger: 'When you or another hero dies',
 							value: '10'
 						}

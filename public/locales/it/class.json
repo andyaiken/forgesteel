@@ -1,0 +1,179 @@
+{
+  "beginningOfYourTurn": "Inizio del tuo turno",
+  "beastheart":{
+    "name_one": "cuore di belva",
+    "name_other": "cuori di belve",
+    "description":"Un $t(class:beastheart.name_one) non combatte mai solo! Viaggi con una bestia feroce al tuo fianco-on un animale addomesticato, una un belva feroce, come un lupo, un basilisco, o addirittuare un giovane drago. Legato a te da una connessione primordiale, il tuo compagno obbedisce ai tuoi desideri, cosi come tu sei guidato dai suoi istinti. Ma fai attenzione: mentra la battaglia infuria, il tuo compagno potrebbe perdersi in una furia sanguinaria, scagliandosi contro nemici e amici senza distinzione.<bre /> Scegli un $t(class:beastheart.name_one) se vuoi affrontare i pericoli dal mondo con un possente compagno selvaggio al tuo fiancho, lanciandoti nel mezzo del combattimento a sfidare i nemici piu possenti, o aggirando furtivamente il combattimento, finendo i nemici più deboli.",
+    "ferocity":{
+      "name_one": "ferocia",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "deal-damage-self": {
+        "trigger": "La prima volta in ogni round che infliggi danni"
+      },
+      "deal-damage-companion": {
+        "trigger": "La prima volta in ogni round che il tuo compagno infligge danni"
+      }
+    }
+  },
+  "censor":{
+    "name_one": "censor",
+    "name_other": "censors",
+    "description":"Demoni e non morti ti temono. I criminali fuggono alla sola vista della tua ombra. Gli agenti del caos, i blasfemi e gli eretici tremono al suono della tua voce. Porti con te il potere degli dei, armato di ira e mandato nel mondo, dapprima a cercare, e poi a censurare coloro le cui azioni - o la cui esistenza - sono un'anatema alla tua chiesa,<br /> In quanto $t(class:censor.name_one), dai il meglio contro i nemici piu forti. Il tuo giudizio terrorizza gli eretici, immobilizza i nemici e puo addirittura scagliarli al di la del campo di battaglia.",
+    "wrath":{
+      "name_one": "ira",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "take-damage": {
+        "trigger": "La prima volta in ogni round che una creatura giudicata da te ti infligge danni"
+      },
+      "deal-damage": {
+        "trigger": "La prima volta in ogni round che infliggi danni a una creatura giudicata da te"
+      }
+    }
+  },
+  "conduit":{
+    "name_one": "conduit",
+    "name_other": "conduits",
+    "description":"The power of the gods flows through you! As a vessel for divine power, you don’t just keep your allies in the fight. You make those allies more effective, even as you rain divine energy down upon your foes. Though the deity or saint you serve might have other faithful and clergy, you are special among worshippers, receiving your abilities from the highest source.<br />As a conduit, you heal and buff your allies, and debuff your foes while smiting them with divine magic. The spark of divinity within you shines, filling your enemies with awe and making you more worldly and aware.",
+    "piety":{
+      "name_one": "devozione",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      }
+    }
+  },
+  "elemenatalist":{
+    "name_one": "elementalista",
+    "name_other": "elementalisti",
+    "description":"Aria per il movimento. Terra per la permanenza. Fuoco per la distruzione, Acqua per il cambiamento, Verde per la crescita. Marcio per la morte. Vuoto per il mister. Anni di studi e pratica e studio matto e disperatissimo su tomi ti ha portato a rivelazioni che ti permettono di manipolare i mattoncini che compongono la realta. Ora usi la tua meastria sui sette elementi per distruggere, creare e modellatre il mondo con la tua magia.<br /> In quanto elementalista, puoi scatenare la tua rabbia sul campo di battaglia, mettere un nemico esattamente dove vuoi, debilitarlo con effetti nocivi, proteggere te stesso e i tuoi alleati dai pericoli, manipolare il terreno, piegare lo spazio, e molto altro. La tua scelta di specializzazione elementale determina quali di questi poteri ti riesce meglio.",
+	"essence":{
+      "name_one": "essenza",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "take-damage": {
+        "trigger": "La prima volta in ogni round che tu o una creatura entro 10 da te subisce danni che non siano non tipizzati o sacri"
+      }
+    }
+  },
+  "fury":{
+    "name_one": "fury",
+    "name_other": "furies",
+    "description":"You do not temper the heat of battle within you. You unleash it! Your experience in the wild taught you the secrets of predators, and now, like the raptor, the panther, the wolf, you channel unfettered anger into martial prowess. Primordial Chaos is your ally. Let others use finesse to clean up the wreckage left in your wake.<br />As a fury, you devastate foes with overwhelming might, hurl yourself and enemies around the battlefield, and grow stronger as your ferocity increases. Nature has no concept of fairness — and neither do you..",
+    "ferocity":{
+      "name_one": "ferocity",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "take-damage": {
+        "trigger": "The first time each combat round that you take damage"
+      },
+      "winded": {
+        "trigger": "The first time you become winded or are dying in an encounter"
+      }
+    }
+  },
+  "null":{
+    "name_one": "nullo",
+    "name_other": "nulli",
+    "description":"La mente non è separata dal compo. La perfezione di uno richiede la perfezione dell'altro. Ambisci alla disciplina perfetta, all'ordine perfeto, maestria sulla mente e sul corpo, diventare un guerriero psionico senza armi, che smorza e assorbe la magia e la psionica. Non necessiti di armi, ne di attrezzi. Basti tu.<br />Come nullo, controlli il campo di battaglia smorzando la magia e la psionica nemica, assorbendone gli effetti nocivi, e contrattaccando i nemici che osano usare tali poteri contro te o i tuoi alleati.",
+    "discipline":{
+      "name_one": "disciplina",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "action": {
+        "trigger": "La prima volta in ogni round che un nemico all'interno della tua aurea nulla usa un'azione principale"
+      },
+      "malice": {
+        "trigger": 
+        "La prima volta in ogni round che il $t(common:director_one, capitalize) usa un'abilità che costa $t(common:malice, capitalize)"
+      }
+    }
+  },
+  "shadow":{
+    "name_one": "ombra",
+    "name_other": "ombre",
+    "description":"La finezza è un arte, e la punta della lama il tuo pennello. Hai studiato in un collegio segreto, specializzandoti in alchimia, illusioni, o magie dell'ombra. La tua formazione e conoscenza ti pongono tra l'élite di assassini, spie, e commando. Ma più potente di qualsiasi arma o stregoneria è la tua intuizione sulle debolezze dei tuoi nemici.<br />In quanto ombra, possiedi abilità che infliggono danni significativi, ti permettono di muoverti rapidamente attraverso il campo di battaglia ed evitare pericoli, e ti consentono di svanire dallo sgurdo anche nel mezzo degli scontri più intensi. Inoltre possiedi più $t(common:skill_other) di qualsiasi altro eroe.",
+    "insight":{
+      "name_one": "intuizione",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "deal-damage": {
+        "trigger": "La prima volta in ogni round di combattimento che infliggi danni incorporando 1 o piu $t(common:surge_other)"
+      }
+    }
+  },
+  "summoner":{
+    "name_one": "evocatore",
+    "name_other": "evocatori",
+    "description":"Tu sei l'armada. I re di tempi antichi scambiavano eserciti interi per ottenere le tue abilità.  Hai intrapreso la tradizione che evoca una schiera infinita di guerrieri. Tue sei l'$t(class:summoner.name_one), il mago che prende i propri sogni e li manifesta.<br />Ordini ai tuoi $t(common:minion) di avanzare senza timore nella mischia e fornire supporto, tenendo il nemico a bada mentre tu e i tuoi compagni vi preparate per la controffensiva. I tuoi $t(common:minion) ti obbediscono senza esitazione, senza errori, fino alla loro morte, o alla tua.<br />Puoi anche sfruttare potenti magie per potenziare i tuoi alleati, sfinire i tuoi nemici, o reclutare i caduti nei tuoi ranghi. E quando il gioco si fa dureo, puoi invocare il tuo campione per porre termine al combattimento.",
+	  "essence":{
+      "name_one": "essenza",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "minion-death": {
+        "trigger": "La prima volta in ogni round che uno dei tuoi $t(common:minion) muore involontariamente entro la tua portata da $t(class:summoner.name_one)"
+      }
+    }
+  },
+  "tactician":{
+    "name_one": "stratega",
+    "name_other": "strateghi",
+    "description":"Tattico. Difensore. Capitano. Con una spada in mano, guidi i tuoi alleati nel fitto della battaglia, impartendo ordini che ispirano i tuoi compagni a muoversi piu velocemente e a colpire con maggior precisione. In tutto cio, ti poni tra i tuoi compatrioti e la morte, sfidando i seguaci del male a sconfiggerti, se ne sono capaci.<br />In quanto $t(class:tactician.name_one), hai l'abilita di curare i tuoi alleati e dar loro maggiorni danni, movimento e attacchi.",
+	  "focus":{
+      "name_one": "concentrazione",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "deal-damage": {
+        "trigger": "La prima volta in ogni round che tu o un alleato danneggia una creatura che hai marcato"
+      },
+      "ability":{
+        "trigger": "La prima volta in ogni round che un alleato entro 10 quadrati da te una un'abilità eroica"
+      }
+    }
+  },
+  "talent":{
+    "name_one": "talento",
+    "name_other": "talenti",
+    "description":"Pochi e rare sono le persone nate con il potenziale di impugnare il potere psionico, ma solo coloro che vivono un risveglio, un evento significativo che attiva le abilita di un $t(class:talent.name_one), possono attingere al pieno potenziale della mente. Tu sei una di queste persone-un maestro della psionica e fonte di enorme potere creato dalla pura forza di volontà. Puoi spostare o cambiare la materia, il tempo, la gravita, le leggi della fisica, o la mente di altre creature.<br /> In quanto talento sei limitato solo dalla forza della tua mente. Ma l'abilita di brandire molteplici poteri al contempo e cambiare la realta a tuo piacimento è un azzardo. Ogni manifestazioni può ritorcersiti contro, e i $t(class:talent.name_other) che usano troppo potere troppo velocemente pagano un prezzo mortale.",
+	  "clarity":{
+      "name_one": "lucidità",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "move": {
+        "trigger": "La prima volta in ogni round che una creatura e spostata forzatamente"
+      }
+    }
+  },
+  "troubadour":{
+    "name_one": "menestrello",
+    "name_other": "menestrelli",
+    "description":"Il mondo intero è un palcoscenico, e siamo tutto attori. Nessuno sa questa verità meglio di un $t(class:troubadour.name_one). Trovi la forza nella drammaticità nella vita quotidiano e sai come tratte uno spettacolo anche delle situazioni piu mondane. Esalti i successi e rendi piu drammatici le difficoltà, in servizio a chiunque possa assistere al tuo spettacolo.<br />In quanto $t(class:troubadour.name_one), rincorri il dramma. I pericoli insormontabili del mondo potrebbero causare in molti eroi la paur. Ma tu affronti il palcoscenico del mondo con nessuna intenzione di morire, ma per scoprire se sei veramente vivo.<br /> “La storia è un racconto. Ogniuno di noi è solo una storia che ci raccondiamo da soli. Cambia la storia, e cambi il mondo.“<br />Jasckson Bootblack",
+	  "drama":{
+      "name_one": "dramma",
+      "start": {
+        "trigger": "$t(class:beginningOfYourTurn)"
+      },
+      "action": {
+        "trigger": "La prima volta che tre o piu eroi usano un abilità nello stesso turno"
+      },
+      "winded": {
+        "trigger": "La prima volta che un eroe diventa $t(common:winded) in un incontro"
+      },
+      "critical": {
+        "trigger": "Ogni volta che una creatura nella tua linea d'effetto ottiene un 19 o 20 naturale"
+      },
+      "death": {
+        "trigger": "Quando tu o un altro eroe muore"
+      }
+    }
+  }
+}

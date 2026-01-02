@@ -4,6 +4,7 @@ import { LabeledTextField } from '@/components/panels/classic-sheet/components/l
 import { Options } from '@/models/options';
 
 import './hero-header-card.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	character: HeroSheet;
@@ -11,32 +12,36 @@ interface Props {
 }
 
 export const HeroHeaderCard = (props: Props) => {
+	const { t } = useTranslation([ 'common', 'hero', 'ancestry' ]);
 	const character = props.character;
 	const showState = props.options.includePlayState;
 
 	const currentVictories = (showState && character.currentVictories) || 0;
 	return (
 		<div className='hero-header card'>
+			<div>
+				{t('hero:career')}
+			</div>
 			<HeaderImage />
 			<section className='hero-overview container'>
 				<LabeledTextField
-					label='Character Name'
+					label={t('hero:characterName')}
 					content={character.name}
 					additionalClasses={[ 'name', 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Ancestry'
-					content={character.ancestryName}
+					label={t('hero:ancestry')}
+					content={t(`${character.ancestryName}`)}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Class'
-					content={character.className}
+					label={t('hero:class')}
+					content={t('hero:Devil')} // {t(`${character.className}`)}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Career'
-					content={character.career?.name || ''}
+					label={t('hero:career')}
+					content={t(`${character.career?.name || ''}`)}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField

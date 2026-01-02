@@ -6,6 +6,7 @@ import { FeatureField } from '@/enums/feature-field';
 
 export const human: Ancestry = {
 	id: 'ancestry-human',
+	languageKey: 'ancestry:human',
 	name: 'Human',
 	description: 'Humans belong to the world in a way the other speaking peoples do not. You can sense the presence of the supernatural—that … oily smell in the air, as I’ve heard it described. And the presence of deathless causes the hairs on the back of your neck to stand up. Or why do you think graveyards affect you so? Whatever magic is, its grip on you is light. Whatever drives the deathless, your nature rebels against it.',
 	features: [

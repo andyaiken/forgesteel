@@ -16,7 +16,7 @@ export const WarehouseActionsPanel = (props: Props) => {
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{
-				props.connectionSettings.useWarehouse ?
+				props.connectionSettings.useManualWarehouse ?
 					<Button
 						block={true}
 						onClick={goToTransferPage}

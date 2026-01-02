@@ -39,7 +39,7 @@ export const TransferPage = (props: Props) => {
 	const [ remoteHeroes, setRemoteHeroes ] = useState<Hero[]>([]);
 	const [ remoteHomebrewSourcebooks, setRemoteHomebrewSourcebooks ] = useState<Sourcebook[]>([]);
 
-	const localDs = useMemo(() => new DataService({ ...settings, useWarehouse: false }), [ settings ]);
+	const localDs = useMemo(() => new DataService({ ...settings, useManualWarehouse: false }), [ settings ]);
 	const warehouseDs = useMemo(() => new DataService(settings), [ settings ]);
 
 	const mergeToWarehouse = () => {
@@ -59,7 +59,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const initializeData = () => {
-		if (settings.useWarehouse) {
+		if (settings.useManualWarehouse) {
 			setRemoteHeroes(props.heroes);
 			setRemoteHomebrewSourcebooks(props.homebrewSourcebooks);
 
@@ -181,7 +181,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const getTransferContent = () => {
-		if (!settings.useWarehouse) {
+		if (!settings.useManualWarehouse) {
 			return (
 				<Alert
 					title='Not connected to warehouse'
@@ -293,7 +293,7 @@ export const TransferPage = (props: Props) => {
 						This means that copying or merging data could result in some data loss. Use at your own risk!
 					</p>
 					{
-						settings.useWarehouse ?
+						settings.useManualWarehouse ?
 							<>
 								<p>
 									Once you are done, you will need to reload the app to see the updated data.

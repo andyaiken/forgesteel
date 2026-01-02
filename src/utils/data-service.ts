@@ -10,10 +10,11 @@ import { StorageService } from '@/service/storage/storage-service';
 import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
 import { Utils } from './utils';
 import localforage from 'localforage';
+import { PatreonLogic } from '@/logic/patreon-logic';
 
 export class DataService {
 	settings: ConnectionSettings;
-	readonly storageService: StorageService;
+	private readonly storageService: StorageService;
 
 	private tokenHandlerHost: string;
 
@@ -25,24 +26,31 @@ export class DataService {
 		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
 	};
 
-	private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
-		if (this.settings.useWarehouse) {
-			return this.storageService.get<T>(key);
-		} else {
-			return localforage.getItem<T>(key);
-		}
-	}
+	// private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
+	// 	if (this.settings.useManualWarehouse) {
+	// 		return this.storageService.get<T>(key);
+	// 	} else {
+	// 		return localforage.getItem<T>(key);
+	// 	}
+	// }
 
-	private async putLocalOrWarehouse<T>(key: string, value: T): Promise<T> {
-		if (this.settings.useWarehouse) {
-			return this.storageService.put<T>(key, value);
-		} else {
-			return localforage.setItem<T>(key, value);
-		}
-	}
+	// private async putLocalOrWarehouse<T>(key: string, value: T): Promise<T> {
+	// 	if (this.settings.useManualWarehouse) {
+	// 		return this.storageService.put<T>(key, value);
+	// 	} else {
+	// 		return localforage.setItem<T>(key, value);
+	// 	}
+	// }
 
 	async initialize(): Promise<boolean> {
-		if (this.settings.useWarehouse) {
+		if (this.settings.patreonConnected) {
+			const patreon = await this.getPatreonSession();
+			if (PatreonLogic.hasWarehouseAccess(patreon)) {
+				console.log('connect with warehouse!');
+			}
+		}
+
+		if (this.settings.useManualWarehouse) {
 			return this.storageService.initialize();
 		} else {
 			return true;
@@ -58,19 +66,19 @@ export class DataService {
 	}
 
 	async getHeroes(): Promise<Hero[] | null> {
-		return this.getLocalOrWarehouse<Hero[]>('forgesteel-heroes');
+		return this.storageService.get<Hero[]>('forgesteel-heroes');
 	};
 
 	async saveHeroes(heroes: Hero[]): Promise<Hero[]> {
-		return this.putLocalOrWarehouse<Hero[]>('forgesteel-heroes', heroes);
+		return this.storageService.put<Hero[]>('forgesteel-heroes', heroes);
 	}
 
 	async getHomebrew(): Promise<Sourcebook[] | null> {
-		return this.getLocalOrWarehouse<Sourcebook[]>('forgesteel-homebrew-settings');
+		return this.storageService.get<Sourcebook[]>('forgesteel-homebrew-settings');
 	}
 
 	async saveHomebrew(sourcebooks: Sourcebook[]): Promise<Sourcebook[]> {
-		return this.putLocalOrWarehouse<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
+		return this.storageService.put<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
 	}
 
 	/**
@@ -88,19 +96,19 @@ export class DataService {
 	}
 
 	async getSession(): Promise<Session | null> {
-		return this.getLocalOrWarehouse<Session>('forgesteel-session');
+		return this.storageService.get<Session>('forgesteel-session');
 	}
 
 	async saveSession(session: Session): Promise<Session> {
-		return this.putLocalOrWarehouse<Session>('forgesteel-session', session);
+		return this.storageService.put<Session>('forgesteel-session', session);
 	}
 
 	async getHiddenSettingIds(): Promise<string[] | null> {
-		return this.getLocalOrWarehouse<string[]>('forgesteel-hidden-setting-ids');
+		return this.storageService.get<string[]>('forgesteel-hidden-setting-ids');
 	}
 
 	async saveHiddenSettingIds(ids: string[]): Promise<string[]> {
-		return this.putLocalOrWarehouse<string[]>('forgesteel-hidden-setting-ids', ids);
+		return this.storageService.put<string[]>('forgesteel-hidden-setting-ids', ids);
 	}
 
 	// #region Token Handler
@@ -146,11 +154,13 @@ export class DataService {
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
 					result.connections.push({
+						id: 'forgesteel',
 						name: 'Forge Steel Patreon',
 						status: response.data.user.forgesteel
 					});
 
 					result.connections.push({
+						id: 'mcdm',
 						name: 'MCDM Patreon',
 						status: response.data.user.mcdm
 					});
@@ -180,11 +190,13 @@ export class DataService {
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
 					result.connections.push({
+						id: 'forgesteel',
 						name: 'Forge Steel Patreon',
 						status: response.data.user.forgesteel
 					});
 
 					result.connections.push({
+						id: 'mcdm',
 						name: 'MCDM Patreon',
 						status: response.data.user.mcdm
 					});

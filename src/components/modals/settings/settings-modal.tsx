@@ -677,7 +677,7 @@ export const SettingsModal = (props: Props) => {
 				<Expander title='Forge Steel Warehouse'>
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
-							connectionSettings.useWarehouse ?
+							connectionSettings.useManualWarehouse ?
 								<>
 									<WarehouseActionsPanel
 										connectionSettings={connectionSettings}

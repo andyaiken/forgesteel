@@ -24,7 +24,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 
 	const setUseWarehouse = (value: boolean) => {
 		const copy = Utils.copy(connectionSettings);
-		copy.useWarehouse = value;
+		copy.useManualWarehouse = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
 	};
@@ -111,11 +111,11 @@ export const ConnectionSettingsPanel = (props: Props) => {
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<Toggle
 				label='Connect with Forge Steel Warehouse'
-				value={connectionSettings.useWarehouse}
+				value={connectionSettings.useManualWarehouse}
 				onChange={setUseWarehouse}
 			/>
 			{
-				connectionSettings.useWarehouse ?
+				connectionSettings.useManualWarehouse ?
 					<>
 						<HeaderText>Warehouse Host</HeaderText>
 						<TextInput
@@ -137,7 +137,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			}
 			<Flex gap='small' justify='flex-end' wrap>
 				{
-					connectionSettings.useWarehouse ?
+					connectionSettings.useManualWarehouse ?
 						<Button
 							variant='solid'
 							loading={testingWarehouseConnection}

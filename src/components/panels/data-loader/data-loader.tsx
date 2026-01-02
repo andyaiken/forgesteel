@@ -71,8 +71,11 @@ export const DataLoader = (props: Props) => {
 			const patreonSvc = new PatreonService();
 			const patreonSession = await patreonSvc.getPatreonSession();
 			if (PatreonLogic.hasWarehouseAccess(patreonSession)) {
-				console.log('connect with warehouse!');
-				// TODO
+				settings.usePatreonWarehouse = true;
+			}
+
+			if (patreonSession.authenticated) {
+				patreonSvc.refreshTokens();
 			}
 		}
 

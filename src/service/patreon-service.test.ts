@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import MockAdapter from 'axios-mock-adapter';
 import { PatreonService } from './patreon-service';
 import axios from 'axios';
 
@@ -6,6 +7,15 @@ describe('PatreonService', () => {
 	afterEach(() => {
 		vi.resetAllMocks();
 	});
+
+	vi.mock('axios', async () => {
+		return {
+			...(await vi.importActual('axios') as object),
+			create: vi.fn().mockReturnValue(await vi.importActual('axios'))
+		};
+	});
+
+	const mockAdapter = new MockAdapter(axios);
 
 	// #region Token Handler
 	describe('getPatreonAuthUrl', () => {
@@ -16,15 +26,10 @@ describe('PatreonService', () => {
 			const thenFn = vi.fn();
 
 			const authUrl = 'https://some.fake/auth/url';
-			const urlResponse = {
-				data: {
-					authorizationUrl: authUrl
-				}
-			};
 
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(urlResponse));
-
+			mockAdapter.onPost('/th/login/start').reply(() => {
+				return [ 200, { authorizationUrl: authUrl } ];
+			});
 			await svc.getPatreonAuthUrl()
 				.then(thenFn)
 				.catch(catchFn);
@@ -40,20 +45,19 @@ describe('PatreonService', () => {
 			const thenFn = vi.fn();
 
 			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: true,
-					user: {
-						mcdm: {
-							patron: true,
-							tier_cents: 800,
-							start: 'Wed, 14 Feb 2024 00:00:00 GMT'
-						}
+				authenticated_with_patreon: true,
+				user: {
+					mcdm: {
+						patron: true,
+						tier_cents: 800,
+						start: 'Wed, 14 Feb 2024 00:00:00 GMT'
 					}
 				}
 			};
 
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
+			mockAdapter.onPost('/th/login/end').reply(() => {
+				return [ 200, sessionResponse ];
+			});
 
 			const svc = new PatreonService();
 
@@ -90,20 +94,19 @@ describe('PatreonService', () => {
 			const thenFn = vi.fn();
 
 			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: true,
-					user: {
-						mcdm: {
-							patron: false,
-							tier_cents: 0,
-							start: null
-						}
+				authenticated_with_patreon: true,
+				user: {
+					mcdm: {
+						patron: false,
+						tier_cents: 0,
+						start: null
 					}
 				}
 			};
 
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
+			mockAdapter.onGet('/th/session').reply(() => {
+				return [ 200, sessionResponse ];
+			});
 
 			const svc = new PatreonService();
 
@@ -138,14 +141,13 @@ describe('PatreonService', () => {
 			const thenFn = vi.fn();
 
 			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: false,
-					user: null
-				}
+				authenticated_with_patreon: false,
+				user: null
 			};
 
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
+			mockAdapter.onGet('/th/session').reply(() => {
+				return [ 200, sessionResponse ];
+			});
 
 			const svc = new PatreonService();
 

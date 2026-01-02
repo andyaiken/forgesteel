@@ -108,6 +108,10 @@ export const TransferPage = (props: Props) => {
 		[ localDs, props.connectionSettings, warehouseDs ]
 	);
 
+	const usingRemoteWarehouse = () => {
+		return props.connectionSettings.useManualWarehouse || props.connectionSettings.usePatreonWarehouse;
+	};
+
 	const getHeroSection = (heroes: Hero[], sourcebooks: Sourcebook[]) => {
 		const folders = Collections.distinct(heroes.map(h => h.folder).sort(), f => f);
 		if (folders.length === 0) {
@@ -200,7 +204,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const getTransferContent = () => {
-		if (!props.connectionSettings.useManualWarehouse) {
+		if (!usingRemoteWarehouse()) {
 			return (
 				<Alert
 					title='Not connected to warehouse'
@@ -316,7 +320,7 @@ export const TransferPage = (props: Props) => {
 						This means that copying or merging data could result in some data loss. Use at your own risk!
 					</p>
 					{
-						props.connectionSettings.useManualWarehouse ?
+						usingRemoteWarehouse() ?
 							<>
 								<p>
 									Once you are done, you will need to reload the app to see the updated data.

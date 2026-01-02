@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { Config } from '@/utils/config';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { StorageService } from './storage-service';
 
@@ -14,10 +15,16 @@ export class WarehouseService implements StorageService {
 	private api: AxiosInstance;
 
 	constructor(settings: ConnectionSettings) {
-		this.host = settings.warehouseHost;
-		this.apiToken = settings.warehouseToken;
+		if (settings.usePatreonWarehouse) {
+			this.host = Config.getPatreonWarehouseHost();
+			this.apiToken = '';
+			this.useNewAuth = true;
+		} else {
+			this.host = settings.warehouseHost;
+			this.apiToken = settings.warehouseToken;
+			this.useNewAuth = false;
+		}
 
-		this.useNewAuth = false;
 		this.jwt = null;
 		this.refreshToken = null;
 		this.csrfToken = false;
@@ -30,39 +37,6 @@ export class WarehouseService implements StorageService {
 			xsrfHeaderName: 'X-CSRF-TOKEN'
 		});
 	};
-
-	private async ensureJwt() {
-		if (this.jwt === null) {
-			try {
-				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
-				this.jwt = response.data.access_token;
-				this.refreshToken = response.data.refresh_token;
-			} catch (error) {
-				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error), { cause: error });
-			}
-		}
-		return this.jwt;
-	}
-
-	private async ensureCsrf(): Promise<boolean> {
-		axios.defaults.xsrfCookieName = 'csrf_access_token';
-		axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-		if (!this.csrfToken) {
-			try {
-				await axios.post(`${this.host}/connect`, {}, {
-					headers: { Authorization: `Bearer ${this.apiToken}` },
-					withCredentials: true,
-					withXSRFToken: true
-				});
-				this.csrfToken = true;
-			} catch (error) {
-				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error), { cause: error });
-			}
-		}
-		return this.csrfToken;
-	}
 
 	private isExpiredTokenError = (err: unknown): boolean => {
 		if ((err as AxiosError).isAxiosError) {
@@ -92,10 +66,12 @@ export class WarehouseService implements StorageService {
 
 	async initialize(): Promise<boolean> {
 		this.api.interceptors.request.use(async config => {
-			if (this.jwt === null) {
-				await this.ensureJwt();
+			if (this.needAuth()) {
+				await this.ensureAuth();
 			}
-			config.headers.Authorization = `Bearer ${this.jwt}`;
+			if (!this.useNewAuth) {
+				config.headers.Authorization = `Bearer ${this.jwt}`;
+			}
 			return config;
 		});
 
@@ -112,14 +88,53 @@ export class WarehouseService implements StorageService {
 			}
 		});
 
+		const connected = await this.ensureAuth();
+		return connected;
+	}
+
+	private needAuth = (): boolean => {
+		if (this.useNewAuth) {
+			return this.csrfToken === null;
+		} else {
+			return this.jwt === null;
+		}
+	};
+
+	private async ensureAuth() {
 		if (this.useNewAuth) {
 			const connected = await this.ensureCsrf();
 			return connected;
-			// return false;
 		} else {
 			await this.ensureJwt();
 			return true;
 		}
+	};
+
+	private async ensureJwt() {
+		if (this.jwt === null) {
+			try {
+				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
+				this.jwt = response.data.access_token;
+				this.refreshToken = response.data.refresh_token;
+			} catch (error) {
+				console.error('Error communicating with FS Warehouse', error);
+				throw new Error(this.getErrorMessage(error), { cause: error });
+			}
+		}
+		return this.jwt;
+	}
+
+	private async ensureCsrf(): Promise<boolean> {
+		if (!this.csrfToken) {
+			try {
+				await this.api.get(`${this.host}/th/session`);
+				this.csrfToken = true;
+			} catch (error) {
+				console.error('Error communicating with FS Warehouse', error);
+				throw new Error(this.getErrorMessage(error), { cause: error });
+			}
+		}
+		return this.csrfToken;
 	}
 
 	private getErrorMessage = (error: unknown) => {

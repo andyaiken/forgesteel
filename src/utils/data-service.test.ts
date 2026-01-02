@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
-import axios from 'axios';
+import { StorageService } from '@/service/storage/storage-service';
 import localforage from 'localforage';
 
 afterEach(() => {
@@ -15,15 +14,8 @@ afterEach(() => {
 });
 
 vi.mock('localforage');
-vi.mock('LocalService');
-vi.mock('WarehouseService');
 
-const defaultSettings: ConnectionSettings = {
-	useManualWarehouse: false,
-	warehouseHost: '',
-	warehouseToken: '',
-	patreonConnected: false
-};
+const mockStorage = {} as StorageService;
 
 const mockOptions = {} as Options;
 const mockHeroes = [] as Hero[];
@@ -38,14 +30,8 @@ const thenFn = vi.fn();
 describe('DataService', () => {
 	// #region Options
 	describe('getOptions', () => {
-		test.each([
-			[ true ],
-			[ false ]
-		])('always calls localforage', async (useWarehouse: boolean) => {
-			const connSettings = { ...defaultSettings,
-				useWarehouse: useWarehouse
-			};
-			const ds = new DataService(connSettings);
+		test('always calls localforage', async () => {
+			const ds = new DataService(mockStorage);
 
 			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockOptions));
 
@@ -60,14 +46,8 @@ describe('DataService', () => {
 	});
 
 	describe('saveOptions', () => {
-		test.each([
-			[ true ],
-			[ false ]
-		])('always calls localforage', async (useWarehouse: boolean) => {
-			const connSettings = { ...defaultSettings,
-				useWarehouse: useWarehouse
-			};
-			const ds = new DataService(connSettings);
+		test('always calls localforage', async () => {
+			const ds = new DataService(mockStorage);
 
 			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockOptions));
 
@@ -84,32 +64,32 @@ describe('DataService', () => {
 
 	// #region Heroes
 	describe('getHeroes', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
+			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
 
 			await ds.getHeroes()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.getItem).toHaveBeenCalledWith('forgesteel-heroes');
+			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-heroes');
 			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
 
 	describe('saveHeroes', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
+			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
 
 			await ds.saveHeroes(mockHeroes)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-heroes', mockHeroes);
+			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-heroes', mockHeroes);
 			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -118,32 +98,32 @@ describe('DataService', () => {
 
 	// #region Playbook
 	describe('getHomebrew', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
+			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
 
 			await ds.getHomebrew()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.getItem).toHaveBeenCalledWith('forgesteel-homebrew-settings');
+			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-homebrew-settings');
 			expect(thenFn).toHaveBeenCalledWith(mockHomebrew);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
 
 	describe('saveHomebrew', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
+			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
 
 			await ds.saveHomebrew(mockHomebrew)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-homebrew-settings', mockHomebrew);
+			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-homebrew-settings', mockHomebrew);
 			expect(thenFn).toHaveBeenCalledWith(mockHomebrew);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -152,8 +132,8 @@ describe('DataService', () => {
 
 	// #region Playbook
 	describe('getPlaybook', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('always calls localforage', async () => {
+			const ds = new DataService(mockStorage);
 
 			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockPlaybook));
 
@@ -168,8 +148,8 @@ describe('DataService', () => {
 	});
 
 	describe('savePlaybook', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('always calls localforage', async () => {
+			const ds = new DataService(mockStorage);
 
 			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockPlaybook));
 
@@ -186,32 +166,32 @@ describe('DataService', () => {
 
 	// #region Session
 	describe('getSession', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
+			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
 
 			await ds.getSession()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.getItem).toHaveBeenCalledWith('forgesteel-session');
+			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-session');
 			expect(thenFn).toHaveBeenCalledWith(mockSession);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
 
 	describe('saveSession', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
+			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
 
 			await ds.saveSession(mockSession)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-session', mockSession);
+			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-session', mockSession);
 			expect(thenFn).toHaveBeenCalledWith(mockSession);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -220,198 +200,35 @@ describe('DataService', () => {
 
 	// #region HiddenSettingIds
 	describe('getHiddenSettingIds', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
+			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
 			await ds.getHiddenSettingIds()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.getItem).toHaveBeenCalledWith('forgesteel-hidden-setting-ids');
+			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-hidden-setting-ids');
 			expect(thenFn).toHaveBeenCalledWith(mockHiddenSettingIds);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
 
 	describe('saveHiddenSettingIds', () => {
-		test('calls localforage when configured to not use warehouse', async () => {
-			const ds = new DataService(defaultSettings);
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
 
-			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
+			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
 			await ds.saveHiddenSettingIds(mockHiddenSettingIds)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-hidden-setting-ids', mockHiddenSettingIds);
+			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-hidden-setting-ids', mockHiddenSettingIds);
 			expect(thenFn).toHaveBeenCalledWith(mockHiddenSettingIds);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
 	// #endregion HiddenSettingIds
-
-	// #region Token Handler
-	describe('getPatreonAuthUrl', () => {
-		test('calls the token handler login/start endpoint', async () => {
-			const ds = new DataService(defaultSettings);
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const authUrl = 'https://some.fake/auth/url';
-			const urlResponse = {
-				data: {
-					authorizationUrl: authUrl
-				}
-			};
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(urlResponse));
-
-			await ds.getPatreonAuthUrl()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(thenFn).toHaveBeenCalledWith(authUrl);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('finishPatreonLogin', () => {
-		test('returns a successful login correctly', async () => {
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: true,
-					user: {
-						mcdm: {
-							patron: true,
-							tier_cents: 800,
-							start: 'Wed, 14 Feb 2024 00:00:00 GMT'
-						}
-					}
-				}
-			};
-
-			axios.post = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
-
-			const ds = new DataService(defaultSettings);
-
-			await ds.finishPatreonLogin('some_code', 'some_state')
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(thenFn.mock.lastCall).toEqual([ {
-				authenticated: true,
-				connections: [
-					{
-						id: 'forgesteel',
-						name: 'Forge Steel Patreon',
-						status: undefined
-					},
-					{
-						id: 'mcdm',
-						name: 'MCDM Patreon',
-						status: {
-							patron: true,
-							tier_cents: 800,
-							start: 'Wed, 14 Feb 2024 00:00:00 GMT'
-						}
-					}
-				]
-			} ]);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('getPatreonSession', () => {
-		test('returns a logged in session correctly', async () => {
-			const connSettings = { ...defaultSettings,
-				patreonConnected: true
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: true,
-					user: {
-						mcdm: {
-							patron: false,
-							tier_cents: 0,
-							start: null
-						}
-					}
-				}
-			};
-
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
-
-			const ds = new DataService(connSettings);
-
-			await ds.getPatreonSession()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(thenFn.mock.lastCall).toEqual([ {
-				authenticated: true,
-				connections: [
-					{
-						id: 'forgesteel',
-						name: 'Forge Steel Patreon',
-						status: undefined
-					},
-					{
-						id: 'mcdm',
-						name: 'MCDM Patreon',
-						status: {
-							patron: false,
-							tier_cents: 0,
-							start: null
-						}
-					}
-				]
-			} ]);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-
-		test('returns a NON logged in session correctly', async () => {
-			const connSettings = { ...defaultSettings,
-				patreonConnected: true
-			};
-
-			const catchFn = vi.fn();
-			const thenFn = vi.fn();
-
-			const sessionResponse = {
-				data: {
-					authenticated_with_patreon: false,
-					user: null
-				}
-			};
-
-			axios.get = vi.fn()
-				.mockImplementationOnce(() => Promise.resolve(sessionResponse));
-
-			const ds = new DataService(connSettings);
-
-			await ds.getPatreonSession()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(thenFn.mock.lastCall).toEqual([ {
-				authenticated: false,
-				connections: []
-			} ]);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-	// #endregion Token Handler
 });

@@ -690,20 +690,6 @@ export const SettingsModal = (props: Props) => {
 							connectionSettings={connectionSettings}
 							setConnectionSettings={updateConnectionSettings}
 						/>
-						{
-							reloadNeeded ?
-								<Alert
-									title='Reload Forge Steel to use new settings'
-									type='info'
-									showIcon
-									action={
-										<Button size='small' type='primary' onClick={() => location.reload()}>
-											Reload
-										</Button>
-									}
-								/>
-								: null
-						}
 					</Space>
 				</Expander>
 			);
@@ -804,6 +790,20 @@ export const SettingsModal = (props: Props) => {
 			case 'Admin':
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							reloadNeeded ?
+								<Alert
+									title='Reload Forge Steel to use new settings'
+									type='info'
+									showIcon
+									action={
+										<Button size='small' type='primary' onClick={() => location.reload()}>
+											Reload
+										</Button>
+									}
+								/>
+								: null
+						}
 						{getFeatureFlags()}
 						{getWarehouseSettings()}
 						{getPatreonSettings()}

@@ -4,6 +4,7 @@ export interface PatreonSession {
 }
 
 export interface PatreonConnection {
+	id: string,
 	name: string;
 	status: PatronStatus | null;
 }

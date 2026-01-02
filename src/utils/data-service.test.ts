@@ -19,7 +19,7 @@ vi.mock('LocalService');
 vi.mock('WarehouseService');
 
 const defaultSettings: ConnectionSettings = {
-	useWarehouse: false,
+	useManualWarehouse: false,
 	warehouseHost: '',
 	warehouseToken: '',
 	patreonConnected: false
@@ -310,10 +310,12 @@ describe('DataService', () => {
 				authenticated: true,
 				connections: [
 					{
+						id: 'forgesteel',
 						name: 'Forge Steel Patreon',
 						status: undefined
 					},
 					{
+						id: 'mcdm',
 						name: 'MCDM Patreon',
 						status: {
 							patron: true,
@@ -362,10 +364,12 @@ describe('DataService', () => {
 				authenticated: true,
 				connections: [
 					{
+						id: 'forgesteel',
 						name: 'Forge Steel Patreon',
 						status: undefined
 					},
 					{
+						id: 'mcdm',
 						name: 'MCDM Patreon',
 						status: {
 							patron: false,

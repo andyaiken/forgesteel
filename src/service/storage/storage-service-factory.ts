@@ -5,7 +5,7 @@ import { WarehouseService } from './warehouse-service';
 
 export class StorageServiceFactory {
 	static fromConnectionSettings = (settings: ConnectionSettings): StorageService => {
-		if (settings.useWarehouse) {
+		if (settings.useManualWarehouse) {
 			return new WarehouseService(settings);
 		} else {
 			return new LocalService();

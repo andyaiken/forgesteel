@@ -292,7 +292,7 @@ export const DataLoader = (props: Props) => {
 							: null
 					}
 					{
-						error && connectionSettings?.useWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
+						error && connectionSettings?.useManualWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
 							<Flex gap='small' justify='space-between' vertical={true}>
 								<Alert
 									type='info'

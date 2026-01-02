@@ -181,11 +181,6 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			features: [
-				FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: 'Signature Trait',
-					description: ''
-				}),
 				FactoryLogic.feature.createChoice({
 					id: Utils.guid(),
 					name: 'Purchased Traits',

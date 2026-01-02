@@ -47,19 +47,22 @@ export const AppFooter = (props: Props) => {
 				}
 				<div className='action-buttons-panel'>
 					<SyncStatus />
-					<Button onClick={props.showReference}>
+					<Button type='text' onClick={props.showReference}>
 						{ isSmall ? 'Ref' : 'Reference' }
 					</Button>
-					<Button onClick={props.showRoll}>
+					<Divider orientation='vertical' />
+					<Button type='text' onClick={props.showRoll}>
 						Roll
 					</Button>
+					<Divider orientation='vertical' />
 					<Badge dot={props.highlightAbout}>
-						<Button onClick={props.showSettings}>
+						<Button type='text' onClick={props.showSettings}>
 							<SettingOutlined />
 							{ isSmall ? '' : 'Settings' }
 						</Button>
 					</Badge>
-					<Button onClick={props.showAbout}>
+					<Divider orientation='vertical' />
+					<Button type='text' onClick={props.showAbout}>
 						<InfoCircleOutlined />
 						{ isSmall ? '' : 'About' }
 					</Button>

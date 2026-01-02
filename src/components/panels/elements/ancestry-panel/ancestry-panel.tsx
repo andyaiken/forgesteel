@@ -1,11 +1,10 @@
 import { Segmented, Space } from 'antd';
 import { Ancestry } from '@/models/ancestry';
+import { AncestryLogic } from '@/logic/ancestry-logic';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
-import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -32,14 +31,6 @@ interface Props {
 export const AncestryPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 
-	const isSignatureFeature = (feature: Feature) => {
-		return !isPurchasedFeature(feature);
-	};
-
-	const isPurchasedFeature = (feature: Feature) => {
-		return (feature.type === FeatureType.Choice) && (feature.data.count === 'ancestry');
-	};
-
 	const getOverview = () => {
 		return (
 			<Markdown text={props.ancestry.description} />
@@ -47,30 +38,36 @@ export const AncestryPanel = (props: Props) => {
 	};
 
 	const getSignatureFeatures = () => {
+		const features = AncestryLogic.getSignatureFeatures(props.ancestry);
+
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.ancestry.features.filter(isSignatureFeature).map(f => (
+					features.map(f => (
 						<SelectablePanel key={f.id}>
 							<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					))
 				}
+				{features.length === 0 ? <Empty /> : null}
 			</Space>
 		);
 	};
 
 	const getPurchasedFeatures = () => {
+		const features = AncestryLogic.getPurchasedFeatures(props.ancestry);
+
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Field label='Ancestry Points' value={props.ancestry.ancestryPoints} />
 				{
-					props.ancestry.features.filter(isPurchasedFeature).map(f => (
-						<SelectablePanel key={f.id}>
-							<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					features.map(f => (
+						<SelectablePanel key={f.feature.id}>
+							<FeaturePanel feature={f.feature} cost={f.value} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					))
 				}
+				{features.length === 0 ? <Empty /> : null}
 			</Space>
 		);
 	};

@@ -717,7 +717,6 @@ export const SettingsModal = (props: Props) => {
 					<PatreonConnectPanel
 						connectionSettings={connectionSettings}
 						setConnectionSettings={updateConnectionSettings}
-						dataService={props.dataService}
 					/>
 				</Expander>
 			);

@@ -1,60 +1,20 @@
-import axios, { AxiosError } from 'axios';
-import { ConnectionSettings } from '@/models/connection-settings';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
-import { PatreonSession } from '@/models/patreon-connection';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/service/storage/storage-service';
-import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
-import { Utils } from './utils';
 import localforage from 'localforage';
-import { PatreonLogic } from '@/logic/patreon-logic';
 
 export class DataService {
-	settings: ConnectionSettings;
 	private readonly storageService: StorageService;
 
-	private tokenHandlerHost: string;
-
-	constructor(settings: ConnectionSettings) {
-		this.settings = settings;
-		this.storageService = StorageServiceFactory.fromConnectionSettings(settings);
-
-		const envVal = import.meta.env.VITE_PATREON_TOKEN_HANDLER_HOST;
-		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
+	constructor(storage: StorageService) {
+		this.storageService = storage;
 	};
 
-	// private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {
-	// 	if (this.settings.useManualWarehouse) {
-	// 		return this.storageService.get<T>(key);
-	// 	} else {
-	// 		return localforage.getItem<T>(key);
-	// 	}
-	// }
-
-	// private async putLocalOrWarehouse<T>(key: string, value: T): Promise<T> {
-	// 	if (this.settings.useManualWarehouse) {
-	// 		return this.storageService.put<T>(key, value);
-	// 	} else {
-	// 		return localforage.setItem<T>(key, value);
-	// 	}
-	// }
-
 	async initialize(): Promise<boolean> {
-		if (this.settings.patreonConnected) {
-			const patreon = await this.getPatreonSession();
-			if (PatreonLogic.hasWarehouseAccess(patreon)) {
-				console.log('connect with warehouse!');
-			}
-		}
-
-		if (this.settings.useManualWarehouse) {
-			return this.storageService.initialize();
-		} else {
-			return true;
-		}
+		return this.storageService.initialize();
 	}
 
 	async getOptions(): Promise<Options | null> {
@@ -110,117 +70,4 @@ export class DataService {
 	async saveHiddenSettingIds(ids: string[]): Promise<string[]> {
 		return this.storageService.put<string[]>('forgesteel-hidden-setting-ids', ids);
 	}
-
-	// #region Token Handler
-	private getErrorMessage = (error: unknown) => {
-		let msg = 'Error communicating with FS Warehouse';
-		if (error instanceof AxiosError) {
-			msg = `There was a problem with Forge Steel Warehouse: ${error.message}`;
-			if (error.response) {
-				const code = error.response.status;
-				const respMsg = error.response.data.message ?? error.response.data.msg ?? error.response.data;
-				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
-			}
-		}
-		return msg;
-	};
-
-	// login start
-	async getPatreonAuthUrl(): Promise<string> {
-		const loginStartUrl = `${this.tokenHandlerHost}/th/login/start`;
-
-		try {
-			const response = await axios.post(loginStartUrl);
-			return response.data.authorizationUrl;
-		} catch (error) {
-			console.error('Error communicating with Token Handler', error);
-			throw new Error(this.getErrorMessage(error), { cause: error });
-		}
-	}
-
-	// login end
-	async finishPatreonLogin(code: string, state: string): Promise<PatreonSession> {
-		const loginEndUrl = `${this.tokenHandlerHost}/th/login/end`;
-		axios.defaults.withCredentials = true;
-		try {
-			const response = await axios.post(loginEndUrl, { code: code, state: state });
-			const result: PatreonSession = {
-				authenticated: false,
-				connections: []
-			};
-
-			if (response.data) {
-				result.authenticated = response.data.authenticated_with_patreon;
-
-				if (response.data.authenticated_with_patreon && response.data.user) {
-					result.connections.push({
-						id: 'forgesteel',
-						name: 'Forge Steel Patreon',
-						status: response.data.user.forgesteel
-					});
-
-					result.connections.push({
-						id: 'mcdm',
-						name: 'MCDM Patreon',
-						status: response.data.user.mcdm
-					});
-				}
-			}
-
-			return result;
-		} catch (error) {
-			console.error('Error communicating with Token Handler', error);
-			throw new Error(this.getErrorMessage(error), { cause: error });
-		}
-	}
-
-	// session
-	async getPatreonSession(): Promise<PatreonSession> {
-		const sessionUrl = `${this.tokenHandlerHost}/th/session`;
-		axios.defaults.withCredentials = true;
-		try {
-			const response = await axios.get(sessionUrl);
-			const result: PatreonSession = {
-				authenticated: false,
-				connections: []
-			};
-
-			if (response.data) {
-				result.authenticated = response.data.authenticated_with_patreon;
-
-				if (response.data.authenticated_with_patreon && response.data.user) {
-					result.connections.push({
-						id: 'forgesteel',
-						name: 'Forge Steel Patreon',
-						status: response.data.user.forgesteel
-					});
-
-					result.connections.push({
-						id: 'mcdm',
-						name: 'MCDM Patreon',
-						status: response.data.user.mcdm
-					});
-				}
-			}
-
-			return result;
-		} catch (error) {
-			console.error('Error communicating with Token Handler', error);
-			throw new Error(this.getErrorMessage(error), { cause: error });
-		}
-	}
-
-	// logout
-	async logoutPatreon(): Promise<undefined> {
-		const logoutUrl = `${this.tokenHandlerHost}/th/logout`;
-		axios.defaults.withCredentials = true;
-		try {
-			await axios.post(logoutUrl);
-			return;
-		} catch (error) {
-			console.error('Error communicating with Token Handler', error);
-			throw new Error(this.getErrorMessage(error), { cause: error });
-		}
-	}
-	// #endregion
 };

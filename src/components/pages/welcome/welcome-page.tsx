@@ -279,12 +279,11 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<Alert
 							type='info'
+							showIcon={true}
 							title={
 								<Markdown
 									text={`
-Forge Steel now includes third-party content from the Blacksmith's Guild, Ratcatcher magazine, Triglav Games, and the Draw Steel homebrew community.
-
-If you'd like your own homebrew creations to feature in Forge Steel, you can submit them [here](https://forms.office.com/r/mmxqfnFzx4).`}
+**FORGE STEEL** now includes third-party content. If you'd like your own homebrew creations to feature in Forge Steel, you can submit them [here](https://forms.office.com/r/mmxqfnFzx4).`}
 								/>
 							}
 						/>

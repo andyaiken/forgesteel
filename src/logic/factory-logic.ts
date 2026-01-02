@@ -1041,6 +1041,8 @@ export class FactoryLogic {
 
 	static createOptions = (): Options => {
 		return {
+			// App
+			cookieConsent: false,
 			// Hero
 			shownStandardAbilities: [],
 			xpPerLevel: 16,
@@ -1055,6 +1057,7 @@ export class FactoryLogic {
 			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
+			colorScheme: 'community',
 			showPowerRollCalculation: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',

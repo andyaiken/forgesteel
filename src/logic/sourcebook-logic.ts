@@ -44,6 +44,7 @@ export class SourcebookLogic {
 
 			// Third Party
 			SourcebookData.community,
+			SourcebookData.lookOut,
 			SourcebookData.magazineBlacksmith,
 			SourcebookData.magazineRatcatcher,
 			SourcebookData.triglav

@@ -120,9 +120,9 @@ export class SheetFormatter {
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
 			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
-			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
+			.replace(/(11 or lower|≤\s*11):?/g, `![11 or less](${rollT1Icon})`)
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
-			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`)
+			.replace(/(17\s*\+|≥\s*17):?/g, `![17 or greater](${rollT3Icon})`)
 			.replace(/[`]/g, '')
 			.replace(/<\/?code>/g, '');
 		return text;
@@ -586,18 +586,20 @@ export class SheetFormatter {
 		const headerSize = 2.5; // Card header
 		let largestFeature = 0;
 		let size = 0;
-		const sources: string[] = [];
+		const sources: Map<string, number> = new Map<string, number>();
 		if (features) {
 			features.forEach(f => {
 				let fSize = this.calculateFeatureSize(f.feature, hero, lineWidth, false);
-				if (!sources.includes(f.source)) {
+				if (!sources.has(f.source)) {
 					fSize += 2;
-					sources.push(f.source);
+					sources.set(f.source, 0);
 				}
 				size += fSize;
+				sources.set(f.source, (sources.get(f.source) ?? 0) + fSize);
 				largestFeature = Math.max(largestFeature, fSize);
 			});
-			size = Math.max(Math.ceil(size / columns), largestFeature);
+			const largestSource = Math.max(...sources.values());
+			size = Math.max(Math.ceil(size / columns), largestFeature, largestSource);
 		}
 		const totalSize = headerSize + size;
 		return +totalSize.toFixed(1);
@@ -755,6 +757,16 @@ export class SheetFormatter {
 		return size;
 	};
 
+	static calculateNotesCardSize = (notes: string, lineWidth: number): number => {
+		let size = 2.7;
+		size += Math.max(20, this.countLines(notes, lineWidth));
+		const numHeadings = (notes.match(/###/g) || []).length;
+		size += numHeadings * 0.8; // extra spage per heading
+		const numParagraphs = (notes.match(/\n\n/g) || []).length;
+		size += numParagraphs * 0.3; // extra space per paragraph
+		return size;
+	};
+
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
 		const rollLineLen = Math.ceil(0.8 * lineWidth) - 10;
@@ -782,7 +794,8 @@ export class SheetFormatter {
 	};
 
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
-		const result = text?.trim().split('\n').reduce((n, l) => {
+		let tableSpace = 0;
+		const result = text?.trim().replaceAll(/(!\[.+\])\(data:image.+\)/g, '$1(<img>)').split('\n').reduce((n, l) => {
 			let len = emptyLineSize;
 			if (l.length) {
 				len = Math.ceil(l.length / lineWidth) * lineFactor;
@@ -791,7 +804,15 @@ export class SheetFormatter {
 			if (l.startsWith('|:---')) { // table divider
 				len = 0;
 			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
-				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
+				if (tableSpace === 0) {
+					const firstCol = l.match(/\|([^|]+)\|/);
+					if (firstCol && firstCol[1]) {
+						tableSpace = firstCol[1].trim().length;
+					} else {
+						tableSpace = 3;
+					}
+				}
+				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - tableSpace));
 				len += 0.6;// additional row spacing
 			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
 				len += 0.5;

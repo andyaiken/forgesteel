@@ -33,10 +33,12 @@ export const EncounterSheetPage = (props: Props) => {
 		const requiredCards: FillerCard[] = [];
 
 		if (encounter.notes?.length) {
+			let nH = Math.max(20, SheetFormatter.calculateNotesCardSize(encounter.notes, layout.cardLineLen));
+			nH = Math.min(layout.linesY, nH);
 			requiredCards.push({
 				element: <NotesCard notes={encounter.notes} key='notes' />,
 				width: 1,
-				height: Math.max(20, SheetFormatter.countLines(encounter.notes, layout.cardLineLen)),
+				height: nH,
 				shown: false
 			});
 		}
@@ -75,10 +77,11 @@ export const EncounterSheetPage = (props: Props) => {
 			];
 			if (props.options.colorSheet) {
 				classes.push('color');
+				classes.push(`colors-${props.options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet ]
+		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
 	);
 
 	return (

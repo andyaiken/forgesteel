@@ -6,6 +6,7 @@
 @use './borders';
 @use './dividers';
 @use './colors';
+@use 'sass:map';
 
 @mixin font-slab() {
     font-family: 'Roboto Slab', Georgia, serif !important;
@@ -117,7 +118,7 @@ main#classic-sheet {
         }
 
         .card {
-            background: #fff;
+            background-color: #fff;
             border: 2px solid colors.$light;
             border-radius: 2px;
             margin: 5px;
@@ -155,8 +156,8 @@ main#classic-sheet {
             }
         }
 
-        ul.features-container,
-        ul.titles-container {
+        .features-container,
+        .titles-container {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -192,7 +193,7 @@ main#classic-sheet {
                 background-repeat: no-repeat;
             }
 
-            li {
+            &>* {
                 break-inside: avoid-column;
 
                 .feature-description p {
@@ -402,6 +403,101 @@ main#classic-sheet {
                 height: 1240px;
                 max-width: 1754px;
                 max-height: 1240px;
+            }
+        }
+    }
+
+    @mixin color-ability-card($color) {
+        section.bordered {
+            @include borders.beveled(10px, 2px, $color);
+
+            h3,
+            .action-type {
+                color: $color;
+            }
+            h3 {
+                font-weight: 450;
+            }
+        }
+    }
+
+    @each $scheme in colors.$schemes {
+        $scheme-class: map.get($scheme, 'className');
+        
+        $main-action:       map.get($scheme, 'main-action');
+        $triggered-action:  map.get($scheme, 'triggered-action');
+        $maneuver:          map.get($scheme, 'maneuver');
+        $performance:       map.get($scheme, 'performance');
+        $free-strike:       map.get($scheme, 'free-strike');
+        $move:              map.get($scheme, 'move');
+
+        .color.colors-#{$scheme-class} {
+            &.hero-sheet .ability.card {
+                &.main-action {
+                    @include color-ability-card($main-action);
+                    h2 {
+                        @include dividers.fancy-2($main-action);
+                    }
+                }
+
+                &.maneuver,
+                &.free-maneuver {
+                    @include color-ability-card($maneuver);
+                    h2 {
+                        @include dividers.fancy-4($maneuver);
+                    }
+                }
+
+                &.triggered-action,
+                &.free-triggered-action {
+                    @include color-ability-card($triggered-action);
+                    h2 {
+                        @include dividers.fancy-5($triggered-action);
+                    }
+                }
+
+                &.free-strike {
+                    // Fix for the gray not looking right in the border label
+                    section.bordered h3 {
+                        color: var(--color-text-lighter);
+                    }
+                }
+
+                &.performance {
+                    @include color-ability-card($performance);
+                    h2 {
+                        @include dividers.fancy-2($performance);
+                    }
+                }
+                &.move-action {
+                    @include color-ability-card($move);
+                    h2 {
+                        @include dividers.fancy-3($move);
+                    }
+                }
+            }
+
+            .feature {
+                .type {
+                    font-weight: 380;
+                    &.main-action {
+                        color: $main-action;
+                    }
+                    &.triggered-action,
+                    &.free-triggered-action {
+                        color: $triggered-action;
+                    }
+                    &.maneuver,
+                    &.free-maneuver {
+                        color: $maneuver;
+                    }
+                    &.performance {
+                        color: $performance;
+                    }
+                    &.move {
+                        color: $move;
+                    }
+                }
             }
         }
     }

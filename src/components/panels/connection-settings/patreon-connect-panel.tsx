@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Space, Spin } from 'antd';
+import { Alert, Button, Flex, Space, Spin, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { Browser } from '@/utils/browser';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -20,6 +20,7 @@ interface Props {
 export const PatreonConnectPanel = (props: Props) => {
 	const [ loadingSession, setLoadingSession ] = useState<boolean>(true);
 	const [ patreonSession, setPatreonSession ] = useState<PatreonSession | null>(null);
+	const [ notify, notifyContext ] = notification.useNotification();
 
 	const connectOAuth = () => {
 		props.dataService.getPatreonAuthUrl()
@@ -42,12 +43,20 @@ export const PatreonConnectPanel = (props: Props) => {
 		setLoadingSession(true);
 		props.dataService.getPatreonSession()
 			.then(setPatreonSession)
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error connecting with Patreon',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			})
 			.finally(() => {
 				setLoadingSession(false);
 			});
 	};
 
-	useEffect(updateSession, [ props.dataService ]);
+	useEffect(updateSession, [ props.dataService, notify ]);
 
 	if (loadingSession) {
 		return (
@@ -102,6 +111,7 @@ export const PatreonConnectPanel = (props: Props) => {
 					/>
 					: null
 			}
+			{notifyContext}
 		</Space>
 	);
 };

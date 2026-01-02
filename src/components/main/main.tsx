@@ -1414,6 +1414,8 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
+				options={options}
+				setOptions={persistOptions}
 				onClose={() => setDrawer(null)}
 			/>
 		);

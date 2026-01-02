@@ -3938,7 +3938,7 @@ export const polderElementalist = {
 					},
 					{
 						type: 'text',
-						text: 'You use up to three heroic abilities whose essence costs total 11 or less, spending no additional essence beyond the cost of this ability. You can shift up to 2 squares between your use of each ability.'
+						text: 'This damage ignores immunity.'
 					}
 				],
 				preEffect: '',

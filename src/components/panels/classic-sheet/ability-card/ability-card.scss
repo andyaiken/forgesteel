@@ -2,19 +2,21 @@
 
 #classic-sheet .hero-sheet .ability.card {
     // @include common.striped-card;
-
     padding: 10px;
     display:grid;
     justify-self: stretch;
 
     section.bordered {
-        @include common.border-beveled-fancy-curve(10px, 2px, common.$color-light);
-        margin-bottom: 0;
+        // These are set to *almost* 0 but not 0 because of a weird
+        // rendering issue with the pdf gen where the first ability
+        // cards on a page would render wrong, no idea why *this* is the fix?
+        margin-bottom: 0.1px;
 
         &:last-child {
-            margin-bottom: 0;
+            margin-bottom: 0.1px;
         }
     }
+
     h2 {
         margin-top: -8px;
         @include common.divider-fancy-2(common.$color-medium);

@@ -55,9 +55,9 @@ export const DrawSteelSymbolText = (props: Props) => {
 						check = 's';
 						break;
 				}
-				results.push(<span className='potency'>{`${c}<${check}]`}</span>);
+				results.push(<div className='potency'>{`${c}<${check}]`}</div>);
 			} else { // characteristic
-				results.push(<span className='characteristic'>{str[1]}</span>);
+				results.push(<div className='characteristic'>{str[1]}</div>);
 			}
 		});
 		results.push(text.slice(i));
@@ -67,8 +67,8 @@ export const DrawSteelSymbolText = (props: Props) => {
 	const content = tokenize(props.content || '');
 
 	return (
-		<span className='symbol-text'>
+		<div className='symbol-text'>
 			{content}
-		</span>
+		</div>
 	);
 };

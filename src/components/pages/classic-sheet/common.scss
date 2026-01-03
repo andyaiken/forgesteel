@@ -131,7 +131,7 @@ main#classic-sheet {
             padding: round(0.5rem, 1px);
         }
 
-        .card section.bordered {
+        .card .bordered {
             @include borders.beveled(8px, 2px, colors.$light);
             margin-bottom: 10px;
             padding: 0 10px 10px;
@@ -149,6 +149,7 @@ main#classic-sheet {
                 padding: 0 10px;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
+                text-wrap: nowrap;
             }
 
             p {
@@ -408,7 +409,7 @@ main#classic-sheet {
     }
 
     @mixin color-ability-card($color) {
-        section.bordered {
+        .bordered {
             @include borders.beveled(10px, 2px, $color);
 
             h3,
@@ -458,7 +459,7 @@ main#classic-sheet {
 
                 &.free-strike {
                     // Fix for the gray not looking right in the border label
-                    section.bordered h3 {
+                    .bordered h3 {
                         color: var(--color-text-lighter);
                     }
                 }

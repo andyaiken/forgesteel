@@ -23,6 +23,7 @@ export interface Options {
 	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	pageOrientation: 'portrait' | 'landscape';
+	debugClassicSheet: boolean;
 	// Monster Builder
 	similarLevel: boolean;
 	similarRole: boolean;

@@ -1,3 +1,4 @@
+import { Browser } from './browser';
 import { Converter } from 'showdown';
 import { Random } from '@/utils/random';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -107,10 +108,21 @@ export class Utils {
 		const width = element.clientWidth;
 		const height = element.clientHeight;
 
+		// see: https://github.com/qq15725/modern-screenshot/issues/104
+		const mobileFix = (node: Node) => {
+			if (node instanceof HTMLElement) {
+				node.style.fontSize = node.style.fontSize.replace(/(\d+(\.\d+)?(e[+-]?\d+)?)/g, (match, number) => {
+					const parsedNumber = parseFloat(number);
+					return isNaN(parsedNumber) ? match : (parsedNumber * 0.999).toString();
+				});
+			}
+		};
+
 		return domToImage(element, {
 			width: width,
 			height: height,
-			scale: scale
+			scale: scale,
+			onCloneEachNode: Browser.isMobile() ? mobileFix : null
 		});
 	};
 

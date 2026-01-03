@@ -70,8 +70,10 @@ export const DataLoader = (props: Props) => {
 		if (settings.patreonConnected) {
 			const patreonSvc = new PatreonService();
 			const patreonSession = await patreonSvc.getPatreonSession();
-			if (PatreonLogic.hasWarehouseAccess(patreonSession)) {
+			if (PatreonLogic.hasWarehouseAccess(patreonSession) && !settings.useManualWarehouse) {
 				settings.usePatreonWarehouse = true;
+			} else {
+				settings.usePatreonWarehouse = false;
 			}
 
 			if (patreonSession.authenticated) {

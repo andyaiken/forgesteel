@@ -13,12 +13,21 @@ interface Props {
 
 export const PatreonStatusPanel = (props: Props) => {
 	const getIsPatron = () => {
+		let patron = false;
+		let label = 'Not A Patron';
+		if (props.status && props.status.patron) {
+			patron = true;
+			const date = new Date(props.status.start);
+			const subDate = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+			label = `Patron since ${subDate}`;
+		}
+
 		return (
 			<Tag
-				color={props.status && props.status.patron ? 'blue' : 'red'}
-				variant={props.status && props.status.patron ? 'solid' : 'outlined'}
+				color={patron ? 'blue' : 'red'}
+				variant={patron ? 'solid' : 'outlined'}
 			>
-				{props.status && props.status.patron ? 'Patron' : 'Not A Patron'}
+				{label}
 			</Tag>
 		);
 	};
@@ -47,24 +56,6 @@ export const PatreonStatusPanel = (props: Props) => {
 		);
 	};
 
-	const getSubscribedDate = () => {
-		if (!props.status || !props.status.patron || !props.status.start) {
-			return null;
-		}
-
-		const date = new Date(props.status.start);
-		const subDate = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-		return (
-			<Tag
-				color='blue'
-				variant='outlined'
-			>
-				Since {subDate}
-			</Tag>
-		);
-	};
-
 	return (
 		<div className='patreon-status-panel'>
 			<HeaderText>
@@ -76,7 +67,6 @@ export const PatreonStatusPanel = (props: Props) => {
 			<Flex gap={5}>
 				{getIsPatron()}
 				{getTiers()}
-				{getSubscribedDate()}
 			</Flex>
 		</div>
 	);

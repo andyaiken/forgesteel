@@ -36,134 +36,6 @@ export const ResourcesPanel = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ expression, setExpression ] = useState<Expression | null>(null);
 
-	const getStatsSection = () => {
-		const setSurges = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.surges = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setVictories = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.victories = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setRenown = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.renown = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setWealth = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.wealth = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<>
-				<Flex gap={20}>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Surges'
-							value={hero.state.surges}
-							min={0}
-							onChange={setSurges}
-						/>
-						<NumberSpin
-							label='Victories'
-							value={hero.state.victories}
-							min={0}
-							onChange={setVictories}
-						/>
-					</Space>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Renown'
-							value={hero.state.renown}
-							format={() => HeroLogic.getRenown(hero).toString()}
-							onChange={setRenown}
-						/>
-						<NumberSpin
-							label='Wealth'
-							value={hero.state.wealth}
-							format={() => HeroLogic.getWealth(hero).toString()}
-							onChange={setWealth}
-						/>
-					</Space>
-				</Flex>
-				{
-					hero.state.surges > 0 ?
-						<Alert
-							type='info'
-							title={
-								<>
-									<div className='alert-text'>
-										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
-									</div>
-									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
-								</>
-							}
-						/>
-						: null
-				}
-			</>
-		);
-	};
-
-	const getExperienceSection = () => {
-		const setXP = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.xp = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const levelUp = () => {
-			if (props.onLevelUp) {
-				const copy = Utils.copy(hero);
-				if (copy.class) {
-					while (HeroLogic.canLevelUp(copy, props.options)) {
-						copy.class.level += 1;
-					}
-				}
-				setHero(copy);
-				props.onLevelUp(copy);
-			}
-		};
-
-		return (
-			<>
-				<HeaderText>XP</HeaderText>
-				<NumberSpin
-					min={0}
-					max={props.options.xpPerLevel}
-					suffix={`/ ${props.options.xpPerLevel}`}
-					value={hero.state.xp}
-					onChange={setXP}
-				/>
-				<Flex justify='center'>
-					<Progress percent={100 * hero.state.xp / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
-				</Flex>
-				{
-					HeroLogic.canLevelUp(hero, props.options) ?
-						<Alert
-							type='info'
-							showIcon={true}
-							title='You have enough XP to level up.'
-							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
-						/>
-						: null
-				}
-			</>
-		);
-	};
-
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
 			const copy = Utils.copy(hero);
@@ -365,6 +237,134 @@ export const ResourcesPanel = (props: Props) => {
 		);
 	};
 
+	const getStatsSection = () => {
+		const setSurges = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.surges = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setVictories = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.victories = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRenown = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.renown = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setWealth = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.wealth = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<>
+				<HeaderText>Stats</HeaderText>
+				<Flex gap={20}>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+						<NumberSpin
+							label='Surges'
+							value={hero.state.surges}
+							min={0}
+							onChange={setSurges}
+						/>
+						<NumberSpin
+							label='Victories'
+							value={hero.state.victories}
+							min={0}
+							onChange={setVictories}
+						/>
+					</Space>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+						<NumberSpin
+							label='Renown'
+							value={hero.state.renown}
+							format={() => HeroLogic.getRenown(hero).toString()}
+							onChange={setRenown}
+						/>
+						<NumberSpin
+							label='Wealth'
+							value={hero.state.wealth}
+							format={() => HeroLogic.getWealth(hero).toString()}
+							onChange={setWealth}
+						/>
+					</Space>
+				</Flex>
+				{
+					hero.state.surges > 0 ?
+						<Alert
+							type='info'
+							title={
+								<>
+									<div className='alert-text'>
+										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
+									</div>
+									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
+								</>
+							}
+						/>
+						: null
+				}
+			</>
+		);
+	};
+
+	const getExperienceSection = () => {
+		const setXP = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.xp = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const levelUp = () => {
+			if (props.onLevelUp) {
+				const copy = Utils.copy(hero);
+				if (copy.class) {
+					while (HeroLogic.canLevelUp(copy, props.options)) {
+						copy.class.level += 1;
+					}
+				}
+				setHero(copy);
+				props.onLevelUp(copy);
+			}
+		};
+
+		return (
+			<>
+				<HeaderText>XP</HeaderText>
+				<NumberSpin
+					min={0}
+					suffix={`/ ${props.options.xpPerLevel * hero.class!.level}`}
+					value={hero.state.xp}
+					onChange={setXP}
+				/>
+				<Flex justify='center'>
+					<Progress percent={100 * (hero.state.xp % props.options.xpPerLevel) / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
+				</Flex>
+				{
+					HeroLogic.canLevelUp(hero, props.options) ?
+						<Alert
+							type='info'
+							showIcon={true}
+							title='You have enough XP to level up.'
+							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
+						/>
+						: null
+				}
+			</>
+		);
+	};
+
 	const getHeroTokenSection = () => {
 		const setHeroTokens = (value: number) => {
 			const copy = Utils.copy(hero);
@@ -452,9 +452,9 @@ export const ResourcesPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='resources-panel'>
+				{getHeroicResourceSection()}
 				{getStatsSection()}
 				{getExperienceSection()}
-				{getHeroicResourceSection()}
 				{getHeroTokenSection()}
 			</div>
 		</ErrorBoundary>

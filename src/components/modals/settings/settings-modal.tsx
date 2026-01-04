@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
@@ -619,47 +619,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getConnections = () => {
-		const getWarehouseConnection = () => {
-			if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
-				return (
-					<ConnectionSettingsPanel
-						connectionSettings={connectionSettings}
-						setConnectionSettings={updateConnectionSettings}
-					/>
-				);
-			}
-		};
-		return (
-			<Expander title='Connections'>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					<PatreonConnectPanel
-						connectionSettings={connectionSettings}
-						setConnectionSettings={updateConnectionSettings}
-					/>
-					<WarehouseActionsPanel
-						connectionSettings={connectionSettings}
-					/>
-					{getWarehouseConnection()}
-					{
-						reloadNeeded ?
-							<Alert
-								title='Reload Forge Steel to use new settings'
-								type='info'
-								showIcon
-								action={
-									<Button size='small' type='primary' onClick={() => location.reload()}>
-										Reload
-									</Button>
-								}
-							/>
-							: null
-					}
-				</Space>
-			</Expander>
-		);
-	};
-
 	const getFeatureFlags = () => {
 		return (
 			<Expander title='Feature Flags'>
@@ -710,6 +669,59 @@ export const SettingsModal = (props: Props) => {
 				</Space>
 			</Expander>
 		);
+	};
+
+	const getWarehouseSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
+			return (
+				<Expander title='Forge Steel Warehouse'>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							connectionSettings.useWarehouse ?
+								<>
+									<WarehouseActionsPanel
+										connectionSettings={connectionSettings}
+									/>
+									<Divider size='small' />
+								</>
+								: null
+						}
+						<ConnectionSettingsPanel
+							connectionSettings={connectionSettings}
+							setConnectionSettings={updateConnectionSettings}
+						/>
+						{
+							reloadNeeded ?
+								<Alert
+									title='Reload Forge Steel to use new settings'
+									type='info'
+									showIcon
+									action={
+										<Button size='small' type='primary' onClick={() => location.reload()}>
+											Reload
+										</Button>
+									}
+								/>
+								: null
+						}
+					</Space>
+				</Expander>
+			);
+		}
+	};
+
+	const getPatreonSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
+			return (
+				<Expander title='Patreon'>
+					<PatreonConnectPanel
+						connectionSettings={connectionSettings}
+						setConnectionSettings={updateConnectionSettings}
+						dataService={props.dataService}
+					/>
+				</Expander>
+			);
+		}
 	};
 
 	const getErrors = () => {
@@ -788,13 +800,14 @@ export const SettingsModal = (props: Props) => {
 						{getEncounterRunner()}
 						{getDifficulty()}
 						{getTacticalMaps()}
-						{getConnections()}
 					</Space>
 				);
 			case 'Admin':
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
+						{getWarehouseSettings()}
+						{getPatreonSettings()}
 						{getErrors()}
 					</Space>
 				);

@@ -10,11 +10,10 @@ afterEach(() => {
 });
 
 const defaultSettings: ConnectionSettings = {
-	useManualWarehouse: true,
+	useWarehouse: true,
 	warehouseHost: 'http://test-fake-host',
 	warehouseToken: 'abcd123',
-	patreonConnected: false,
-	usePatreonWarehouse: false
+	patreonConnected: false
 };
 
 describe('WarehouseService', () => {

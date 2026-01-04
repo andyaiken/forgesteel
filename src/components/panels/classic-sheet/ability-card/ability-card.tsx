@@ -59,21 +59,21 @@ export const AbilityCard = (props: Props) => {
 					<div className='roll-tiers'>
 						<div className='tier t1'>
 							<img src={rollT1} alt='≤ 11' className='range' />
-							<span className='effect'>
+							<div className='effect'>
 								<DrawSteelSymbolText content={ability.rollT1Effect} lookFor='potencies' />
-							</span>
+							</div>
 						</div>
 						<div className='tier t2'>
 							<img src={rollT2} alt='12 - 16' className='range' />
-							<span className='effect'>
+							<div className='effect'>
 								<DrawSteelSymbolText content={ability.rollT2Effect} lookFor='potencies' />
-							</span>
+							</div>
 						</div>
 						<div className='tier t3'>
 							<img src={rollT3} alt='17 +' className='range' />
-							<span className='effect'>
+							<div className='effect'>
 								<DrawSteelSymbolText content={ability.rollT3Effect} lookFor='potencies' />
-							</span>
+							</div>
 						</div>
 					</div>
 					{

@@ -72,7 +72,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetManage,
-				content: 'You can access your hero\'s resources, inventory, projects, and more through the **Manage** button.'
+				content: 'You can access your hero\'s resources, inventory, projects, and more through the **Tools** button.'
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetState,

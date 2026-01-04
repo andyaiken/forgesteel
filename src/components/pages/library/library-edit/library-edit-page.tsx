@@ -1176,6 +1176,16 @@ export const LibraryEditPage = (props: Props) => {
 		return null;
 	};
 
+	let showPreview = true;
+	switch (kind) {
+		case 'adventure':
+		case 'ancestry':
+		case 'encounter':
+		case 'tactical-map':
+			showPreview = false;
+			break;
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className='library-edit-page'>
@@ -1194,7 +1204,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getEditSection()}
 						</div>
 						{
-							(kind !== 'adventure') && (kind !== 'ancestry') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
+							showPreview ?
 								<div className='preview-column'>
 									{getPreviewHeaderSection()}
 									{getPreview()}

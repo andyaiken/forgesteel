@@ -22,9 +22,9 @@ export const ConnectionSettingsPanel = (props: Props) => {
 	const [ hostInputStatus, setHostInputStatus ] = useState<'error' | undefined>(undefined);
 	const [ tokenInputStatus, setTokenInputStatus ] = useState<'error' | undefined>(undefined);
 
-	const setUseManualWarehouse = (value: boolean) => {
+	const setUseWarehouse = (value: boolean) => {
 		const copy = Utils.copy(connectionSettings);
-		copy.useManualWarehouse = value;
+		copy.useWarehouse = value;
 		setConnectionSettings(copy);
 		setConnectionSettingsChanged(true);
 	};
@@ -109,21 +109,13 @@ export const ConnectionSettingsPanel = (props: Props) => {
 
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
-			{
-				connectionSettings.usePatreonWarehouse &&
-					<Alert
-						type='warning'
-						title="You are a patron with automatic access to the Patron Warehouse - you don't need to manually connect to anything!"
-						showIcon={true}
-					/>
-			}
 			<Toggle
-				label='Manually connect with Forge Steel Warehouse'
-				value={connectionSettings.useManualWarehouse}
-				onChange={setUseManualWarehouse}
+				label='Connect with Forge Steel Warehouse'
+				value={connectionSettings.useWarehouse}
+				onChange={setUseWarehouse}
 			/>
 			{
-				connectionSettings.useManualWarehouse ?
+				connectionSettings.useWarehouse ?
 					<>
 						<HeaderText>Warehouse Host</HeaderText>
 						<TextInput
@@ -145,7 +137,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 			}
 			<Flex gap='small' justify='flex-end' wrap>
 				{
-					connectionSettings.useManualWarehouse ?
+					connectionSettings.useWarehouse ?
 						<Button
 							variant='solid'
 							loading={testingWarehouseConnection}

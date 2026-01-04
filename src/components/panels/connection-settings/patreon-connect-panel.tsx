@@ -1,9 +1,9 @@
 import { Alert, Button, Flex, Space, Spin, notification } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Browser } from '@/utils/browser';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { PatreonService } from '@/service/patreon-service';
+import { DataService } from '@/utils/data-service';
 import { PatreonSession } from '@/models/patreon-connection';
 import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -12,6 +12,7 @@ import { Utils } from '@/utils/utils';
 import patreon from '@/assets/icons/patreon.svg';
 
 interface Props {
+	dataService: DataService;
 	connectionSettings: ConnectionSettings;
 	setConnectionSettings: (settings: ConnectionSettings) => void
 }
@@ -21,21 +22,18 @@ export const PatreonConnectPanel = (props: Props) => {
 	const [ patreonSession, setPatreonSession ] = useState<PatreonSession | null>(null);
 	const [ notify, notifyContext ] = notification.useNotification();
 
-	const service = useMemo(() => new PatreonService(), []);
-
 	const connectOAuth = () => {
-		service.getPatreonAuthUrl()
+		props.dataService.getPatreonAuthUrl()
 			.then(authorizationUrl => {
 				window.location.href = authorizationUrl;
 			});
 	};
 
 	const logout = () => {
-		service.logoutPatreon()
+		props.dataService.logoutPatreon()
 			.then(() => {
 				const settingsCopy = Utils.copy(props.connectionSettings);
 				settingsCopy.patreonConnected = false;
-				settingsCopy.usePatreonWarehouse = false;
 				props.setConnectionSettings(settingsCopy);
 				updateSession();
 			});
@@ -43,7 +41,7 @@ export const PatreonConnectPanel = (props: Props) => {
 
 	const updateSession = () => {
 		setLoadingSession(true);
-		service.getPatreonSession()
+		props.dataService.getPatreonSession()
 			.then(setPatreonSession)
 			.catch(err => {
 				console.error(err);
@@ -58,7 +56,7 @@ export const PatreonConnectPanel = (props: Props) => {
 			});
 	};
 
-	useEffect(updateSession, [ notify, service ]);
+	useEffect(updateSession, [ props.dataService, notify ]);
 
 	if (loadingSession) {
 		return (

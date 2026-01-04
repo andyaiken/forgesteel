@@ -2,8 +2,8 @@ import { ConnectionSettings } from '@/models/connection-settings';
 
 export class ConnectionSettingsUpdateLogic {
 	static updateSettings = (settings: ConnectionSettings) => {
-		if (settings.useManualWarehouse === undefined) {
-			settings.useManualWarehouse = false;
+		if (settings.useWarehouse === undefined) {
+			settings.useWarehouse = false;
 		}
 
 		if (settings.warehouseHost === undefined) {
@@ -16,10 +16,6 @@ export class ConnectionSettingsUpdateLogic {
 
 		if (settings.patreonConnected === undefined) {
 			settings.patreonConnected = false;
-		}
-
-		if (settings.usePatreonWarehouse === undefined) {
-			settings.usePatreonWarehouse = false;
 		}
 	};
 }

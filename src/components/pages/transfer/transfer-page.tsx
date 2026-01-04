@@ -1,4 +1,4 @@
-import { Alert, Button, Empty, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'antd';
+import { Alert, Button, Empty, Flex, Popconfirm, Segmented, Space, Tabs } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -10,14 +10,12 @@ import { Hero } from '@/models/hero';
 import { HeroMergeLogic } from '@/logic/merge/hero-merge-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
-import { LocalService } from '@/service/storage/local-service';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
-import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 
@@ -25,10 +23,13 @@ import './transfer-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
+	heroes: Hero[];
+	homebrewSourcebooks: Sourcebook[];
 	options: Options;
 };
 
 export const TransferPage = (props: Props) => {
+	const settings = props.connectionSettings;
 	const [ mergeBehavior, setMergeBehavior ] = useState<MergeDuplicateBehavior>(MergeDuplicateBehavior.Skip);
 	const [ copyLocalOpen, setCopyLocalOpen ] = useState<boolean>(false);
 
@@ -38,20 +39,8 @@ export const TransferPage = (props: Props) => {
 	const [ remoteHeroes, setRemoteHeroes ] = useState<Hero[]>([]);
 	const [ remoteHomebrewSourcebooks, setRemoteHomebrewSourcebooks ] = useState<Sourcebook[]>([]);
 
-	const [ loadingRemoteHeroes, setLoadingRemoteHeroes ] = useState<boolean>(false);
-	const [ loadingRemoteHomebrew, setLoadingRemoteHomebrew ] = useState<boolean>(false);
-
-	const localDs = useMemo(() => {
-		const ds = new DataService(new LocalService());
-		ds.initialize();
-		return ds;
-	}, []);
-	const warehouseDs = useMemo(() => {
-		const storage = StorageServiceFactory.fromConnectionSettings(props.connectionSettings);
-		const ds = new DataService(storage);
-		ds.initialize();
-		return ds;
-	}, [ props.connectionSettings ]);
+	const localDs = useMemo(() => new DataService({ ...settings, useWarehouse: false }), [ settings ]);
+	const warehouseDs = useMemo(() => new DataService(settings), [ settings ]);
 
 	const mergeToWarehouse = () => {
 		const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
@@ -70,47 +59,35 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const initializeData = () => {
-		localDs.getHeroes()
-			.then(heroes => {
-				if (heroes !== null) {
-					setLocalHeroes(heroes);
-				}
-			});
+		if (settings.useWarehouse) {
+			setRemoteHeroes(props.heroes);
+			setRemoteHomebrewSourcebooks(props.homebrewSourcebooks);
 
-		localDs.getHomebrew()
-			.then(sourcebooks => {
-				if (sourcebooks !== null) {
-					setLocalHomebrewSourcebooks(sourcebooks);
-				}
-			});
+			localDs.getHeroes()
+				.then(heroes => {
+					if (heroes !== null) {
+						setLocalHeroes(heroes);
+					}
+				});
 
-		setLoadingRemoteHeroes(true);
-		warehouseDs.getHeroes()
-			.then(heroes => {
-				if (heroes !== null) {
-					setRemoteHeroes(heroes);
-				}
-				setLoadingRemoteHeroes(false);
-			});
-
-		setLoadingRemoteHomebrew(true);
-		warehouseDs.getHomebrew()
-			.then(sourcebooks => {
-				if (sourcebooks !== null) {
-					setRemoteHomebrewSourcebooks(sourcebooks);
-				}
-				setLoadingRemoteHomebrew(false);
-			});
+			localDs.getHomebrew()
+				.then(sourcebooks => {
+					if (sourcebooks !== null) {
+						setLocalHomebrewSourcebooks(sourcebooks);
+					}
+				});
+		}
 	};
 
 	useEffect(
 		initializeData,
-		[ localDs, props.connectionSettings, warehouseDs ]
+		[
+			localDs,
+			props.heroes,
+			props.homebrewSourcebooks,
+			settings
+		]
 	);
-
-	const usingRemoteWarehouse = () => {
-		return props.connectionSettings.useManualWarehouse || props.connectionSettings.usePatreonWarehouse;
-	};
 
 	const getHeroSection = (heroes: Hero[], sourcebooks: Sourcebook[]) => {
 		const folders = Collections.distinct(heroes.map(h => h.folder).sort(), f => f);
@@ -204,7 +181,7 @@ export const TransferPage = (props: Props) => {
 	};
 
 	const getTransferContent = () => {
-		if (!usingRemoteWarehouse()) {
+		if (!settings.useWarehouse) {
 			return (
 				<Alert
 					title='Not connected to warehouse'
@@ -261,23 +238,19 @@ export const TransferPage = (props: Props) => {
 
 					<HeaderText level={3}>Warehouse Storage</HeaderText>
 
-					<Spin spinning={loadingRemoteHeroes}>
-						<Expander title={`Heroes (${remoteHeroes.length})`}>
-							{getHeroSection(remoteHeroes, remoteHomebrewSourcebooks)}
-						</Expander>
-					</Spin>
+					<Expander title={`Heroes (${remoteHeroes.length})`}>
+						{getHeroSection(remoteHeroes, remoteHomebrewSourcebooks)}
+					</Expander>
 
-					<Spin spinning={loadingRemoteHomebrew}>
-						<Expander title={`Sourcebooks (${remoteHomebrewSourcebooks.length})`}>
-							<Flex wrap={true} gap='20px'>
-								{
-									remoteHomebrewSourcebooks.map(sb => (
-										<SourcebookPanel key={`remote-sb-${sb.id}`} sourcebook={sb} />
-									))
-								}
-							</Flex>
-						</Expander>
-					</Spin>
+					<Expander title={`Sourcebooks (${remoteHomebrewSourcebooks.length})`}>
+						<Flex wrap={true} gap='20px'>
+							{
+								remoteHomebrewSourcebooks.map(sb => (
+									<SourcebookPanel key={`remote-sb-${sb.id}`} sourcebook={sb} />
+								))
+							}
+						</Flex>
+					</Expander>
 				</Space>
 			);
 		}
@@ -320,7 +293,7 @@ export const TransferPage = (props: Props) => {
 						This means that copying or merging data could result in some data loss. Use at your own risk!
 					</p>
 					{
-						usingRemoteWarehouse() ?
+						settings.useWarehouse ?
 							<>
 								<p>
 									Once you are done, you will need to reload the app to see the updated data.

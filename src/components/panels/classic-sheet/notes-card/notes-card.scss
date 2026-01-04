@@ -19,12 +19,14 @@
 
     ul:has(img) {
         list-style: none;
-        img {
-            width: 50px;
-            height: 26px;
-            margin-top: 2px;
-            margin-bottom: -9px;
-        }
+    }
+    
+    li img,
+    p img {
+        width: 50px;
+        height: 26px;
+        margin-top: 2px;
+        margin-bottom: -9px;
     }
     
     table {

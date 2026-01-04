@@ -35,6 +35,7 @@ import { FollowerModal } from '@/components/modals/follower/follower-modal';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
+import { HeroCustomizeModal } from '@/components/modals/hero-customize/hero-customize-modal';
 import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -63,6 +64,7 @@ import { Perk } from '@/models/perk';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
 import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
+import { RespiteModal } from '@/components/modals/respite/respite-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { Session } from '@/models/session';
@@ -1560,6 +1562,40 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onShowHeroRespite = (hero: Hero) => {
+		setDrawer(
+			<RespiteModal
+				onTakeRespite={() => {
+					const copy = Utils.copy(hero);
+					HeroLogic.takeRespite(copy);
+					persistHero(copy);
+
+					notify.info({
+						title: 'Respite',
+						description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
+						placement: 'top'
+					});
+				}}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const onShowHeroCustomize = (hero: Hero) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => hero.settingIDs.includes(sb.id));
+
+		setDrawer(
+			<HeroCustomizeModal
+				hero={hero}
+				sourcebooks={sourcebooks}
+				options={options}
+				onClose={() => setDrawer(null)}
+				onChange={persistHero}
+			/>
+		);
+	};
+
 	const onShowParty = (folder: string) => {
 		setDrawer(
 			<PartyModal
@@ -1699,6 +1735,8 @@ export const Main = (props: Props) => {
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
+									showHeroRespite={onShowHeroRespite}
+									showHeroCustomize={onShowHeroCustomize}
 									setNotes={setNotes}
 									onAddSquad={addSquad}
 									onRemoveSquad={removeSquad}

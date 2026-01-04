@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { Hero } from '@/models/hero';
 import MockAdapter from 'axios-mock-adapter';
-import { WarehouseService } from './warehouse-service';
+import { WarehouseService } from '@/service/storage/warehouse-service';
 import axios from 'axios';
 
 afterEach(() => {

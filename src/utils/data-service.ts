@@ -8,7 +8,7 @@ import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/service/storage/storage-service';
 import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
-import { Utils } from './utils';
+import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 
 export class DataService {

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { StorageService } from './storage-service';
+import { StorageService } from '@/service/storage/storage-service';
 
 export class WarehouseService implements StorageService {
 	readonly host: string;

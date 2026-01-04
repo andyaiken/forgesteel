@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { Utils } from './utils';
+import { Utils } from '@/utils/utils';
 
 describe('Utils', () => {
 	describe('isNullOrEmpty', () => {

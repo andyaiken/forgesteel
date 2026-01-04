@@ -105,7 +105,7 @@ export const HeroPanel = (props: Props) => {
 	const getSidebarSection = () => {
 		const onShowStats = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Hero);
+				props.onShowState(HeroStatePage.Resources);
 			}
 		};
 
@@ -411,9 +411,9 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onShowHero = () => {
+		const onShowResources = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Hero);
+				props.onShowState(HeroStatePage.Resources);
 			}
 		};
 
@@ -446,7 +446,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						useRows ?
 							<>
-								<div className='selectable-row clickable' onClick={onShowHero}>
+								<div className='selectable-row clickable' onClick={onShowResources}>
 									{
 										HeroLogic.getHeroicResources(props.hero).map(hr => (
 											<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
@@ -473,7 +473,7 @@ export const HeroPanel = (props: Props) => {
 							</>
 							:
 							<>
-								<StatsRow caption='Resources' onClick={onShowHero}>
+								<StatsRow caption='Resources' onClick={onShowResources}>
 									{
 										HeroLogic.getHeroicResources(props.hero).map(hr => (
 											<Statistic key={hr.id} title={hr.name} value={hr.value} />

@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Popover } from 'antd';
+import { Alert, Button, Divider, Popover, Space } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
@@ -67,6 +67,8 @@ interface Props {
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
+	showHeroRespite: (hero: Hero) => void;
+	showHeroCustomize: (hero: Hero) => void;
 	setNotes: (hero: Hero, value: string) => void;
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
@@ -81,6 +83,7 @@ export const HeroViewPage = (props: Props) => {
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<string>('modern');
 	const [ showExportPopover, setShowExportPopover ] = useState<boolean>(false);
+	const [ showToolsPopover, setShowToolsPopover ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
@@ -200,12 +203,23 @@ export const HeroViewPage = (props: Props) => {
 						onConfirm={() => props.deleteHero(hero)}
 					/>
 					<div className='divider' />
-					<Button
-						icon={<ToolOutlined />}
-						onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
+					<Popover
+						trigger='click'
+						open={showToolsPopover}
+						onOpenChange={setShowToolsPopover}
+						content={
+							<Space orientation='vertical' style={{ width: '100%' }}>
+								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroState(hero, HeroStatePage.Resources); }}>Manage Your Hero</Button>
+								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroRespite(hero); }}>Take A Respite</Button>
+								<Divider />
+								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroCustomize(hero); }}>Customize</Button>
+							</Space>
+						}
 					>
-						Manage
-					</Button>
+						<Button icon={<ToolOutlined />}>
+							Tools
+						</Button>
+					</Popover>
 					<div className='divider' />
 					<ViewSelector value={view} mode='hero' onChange={setView} />
 				</AppHeader>

@@ -1057,6 +1057,7 @@ export class FactoryLogic {
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',
+			debugClassicSheet: false,
 			// Monster Builder
 			similarLevel: true,
 			similarRole: true,

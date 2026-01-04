@@ -364,6 +364,13 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
+		const setDebugClassicSheet = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.debugClassicSheet = value;
+			setOptions(copy);
+			props.setOptions(copy);
+		};
+
 		return (
 			<Expander title='Classic View'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
@@ -429,6 +436,7 @@ export const SettingsModal = (props: Props) => {
 							/>
 						}
 					/>
+					<Toggle label='Debug classic sheet' value={options.debugClassicSheet} onChange={setDebugClassicSheet} />
 				</Space>
 			</Expander>
 		);

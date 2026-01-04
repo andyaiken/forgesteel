@@ -64,6 +64,10 @@ export class OptionsUpdateLogic {
 			options.pageOrientation = 'portrait';
 		}
 
+		if (options.debugClassicSheet === undefined) {
+			options.debugClassicSheet = false;
+		}
+
 		if (options.similarLevel === undefined) {
 			options.similarLevel = true;
 		}

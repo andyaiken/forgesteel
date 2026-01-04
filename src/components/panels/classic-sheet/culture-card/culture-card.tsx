@@ -23,12 +23,6 @@ export const CultureCard = (props: Props) => {
 	return (
 		<div className='culture card'>
 			<h2>Culture</h2>
-			{/* <LabeledTextField
-				label='Culture Name'
-				content={character.culture?.name}
-				additionalClasses={[ 'name', 'label-overlay' ]}
-			/> */}
-
 			<section className='name bordered'>
 				<h3>Culture Name</h3>
 				<div className='content'>

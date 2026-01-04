@@ -7,6 +7,7 @@ import { CompanionCard } from '@/components/panels/classic-sheet/follower-card/c
 import { ComplicationCard } from '@/components/panels/classic-sheet/complication-card/complication-card';
 import { ConditionsCard } from '@/components/panels/classic-sheet/conditions-card/conditions-card';
 import { CultureCard } from '@/components/panels/classic-sheet/culture-card/culture-card';
+import { DebugCard } from '@/components/panels/classic-sheet/reference/debug-card';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureReferenceCard } from '@/components/panels/classic-sheet/reference/feature-reference-card';
 import { FollowersCard } from '@/components/panels/classic-sheet/follower-card/followers-card';
@@ -79,6 +80,15 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			}
 		];
+
+		if (props.options.debugClassicSheet) {
+			required.push({
+				element: <DebugCard options={props.options} key='debug' />,
+				width: 1,
+				height: 15,
+				shown: false
+			});
+		}
 
 		let lineWidth = layout.cardLineLen;
 

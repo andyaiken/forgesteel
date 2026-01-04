@@ -4,8 +4,8 @@ import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Button } from 'antd';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { DataService } from '@/utils/data-service';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { PatreonService } from '@/service/patreon-service';
 import { PatreonSession } from '@/models/patreon-connection';
 import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { Utils } from '@/utils/utils';
@@ -17,6 +17,7 @@ import './auth-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
+	dataService: DataService;
 	highlightAbout: boolean;
 	showReference: () => void;
 	showRoll: () => void;
@@ -28,7 +29,6 @@ interface Props {
 export const AuthPage = (props: Props) => {
 	const [ searchParams ] = useSearchParams();
 	const navigation = useNavigation();
-	const service = new PatreonService();
 
 	const [ connectionState, setConnectionState ] = useState<'pending' | 'success' | 'failure' | undefined>(undefined);
 	const [ patreonSession, setPatreonSession ] = useState<PatreonSession | null>(null);
@@ -56,14 +56,14 @@ export const AuthPage = (props: Props) => {
 		const state = searchParams.get('state');
 
 		if (code && state) {
-			service.finishPatreonLogin(code, state)
+			props.dataService.finishPatreonLogin(code, state)
 				.then(updatePatronStatus)
 				.catch(reason => {
 					console.error(reason);
 					setConnectionState('failure');
 				});
 		} else {
-			service.getPatreonSession().then(updatePatronStatus);
+			props.dataService.getPatreonSession().then(updatePatronStatus);
 		}
 	};
 

@@ -88,5 +88,6 @@
   "statistics_other": "statistics",
   "resource_other": "resources",
   "minion_one": "minion",
-  "minion_other": "minions"
+  "minion_other": "minions",
+  "speed": "speed"
 }

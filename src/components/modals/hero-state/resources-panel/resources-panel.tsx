@@ -6,11 +6,13 @@ import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroLevelUpModal } from '@/components/modals/hero-level-up/hero-level-up-modal';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -27,14 +29,15 @@ interface Expression {
 
 interface Props {
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onChange: (hero: Hero) => void;
-	onLevelUp?: (hero: Hero) => void;
 }
 
 export const ResourcesPanel = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ expression, setExpression ] = useState<Expression | null>(null);
+	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
 
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
@@ -326,30 +329,19 @@ export const ResourcesPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const levelUp = () => {
-			if (props.onLevelUp) {
-				const copy = Utils.copy(hero);
-				if (copy.class) {
-					while (HeroLogic.canLevelUp(copy, props.options)) {
-						copy.class.level += 1;
-					}
-				}
-				setHero(copy);
-				props.onLevelUp(copy);
-			}
-		};
+		const minXP = HeroLogic.getMinXP(hero.class!.level, props.options);
 
 		return (
 			<>
 				<HeaderText>XP</HeaderText>
 				<NumberSpin
-					min={0}
+					min={minXP}
 					suffix={`/ ${props.options.xpPerLevel * hero.class!.level}`}
 					value={hero.state.xp}
 					onChange={setXP}
 				/>
 				<Flex justify='center'>
-					<Progress percent={100 * (hero.state.xp % props.options.xpPerLevel) / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
+					<Progress percent={100 * (hero.state.xp - minXP) / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
 				</Flex>
 				{
 					HeroLogic.canLevelUp(hero, props.options) ?
@@ -357,7 +349,7 @@ export const ResourcesPanel = (props: Props) => {
 							type='info'
 							showIcon={true}
 							title='You have enough XP to level up.'
-							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
+							action={<Button icon={<ArrowUpOutlined />} onClick={() => setShowLevelUp(true)}>Level Up</Button>}
 						/>
 						: null
 				}
@@ -457,6 +449,23 @@ export const ResourcesPanel = (props: Props) => {
 				{getExperienceSection()}
 				{getHeroTokenSection()}
 			</div>
+			<Drawer open={showLevelUp} onClose={() => setShowLevelUp(false)} closeIcon={null} size={500}>
+				{
+					showLevelUp ?
+						<HeroLevelUpModal
+							hero={hero}
+							soucebooks={props.sourcebooks}
+							options={props.options}
+							onAccept={h => {
+								setShowLevelUp(false);
+								setHero(h);
+								props.onChange(h);
+							}}
+							onClose={() => setShowLevelUp(false)}
+						/>
+						: null
+				}
+			</Drawer>
 		</ErrorBoundary>
 	);
 };

@@ -977,6 +977,14 @@ export class HeroLogic {
 			return false;
 		}
 
+		const maxLevel = Math.max(
+			...hero.class.featuresByLevel.flatMap(lvl => lvl.level),
+			...hero.class.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.level)
+		);
+		if (hero.class.level >= maxLevel) {
+			return false;
+		}
+
 		return hero.state.xp >= HeroLogic.getMinXP(hero.class.level + 1, options);
 	};
 

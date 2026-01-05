@@ -22,7 +22,6 @@ interface Props {
 	showEncounterControls: boolean;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
-	onLevelUp?: (hero: Hero) => void;
 }
 
 export const HeroStateModal = (props: Props) => {
@@ -40,9 +39,9 @@ export const HeroStateModal = (props: Props) => {
 				return (
 					<ResourcesPanel
 						hero={hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={onChange}
-						onLevelUp={props.onLevelUp}
 					/>
 				);
 			case HeroStatePage.Vitals:

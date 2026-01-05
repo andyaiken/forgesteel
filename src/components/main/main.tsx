@@ -1554,10 +1554,6 @@ export const Main = (props: Props) => {
 				showEncounterControls={false}
 				onClose={() => setDrawer(null)}
 				onChange={persistHero}
-				onLevelUp={hero => {
-					setDrawer(null);
-					persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'class'));
-				}}
 			/>
 		);
 	};

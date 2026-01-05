@@ -398,7 +398,7 @@ export const HeroPanel = (props: Props) => {
 
 		const speed = HeroLogic.getSpeed(props.hero);
 		const speedSuffix = HeroLogic.getSpeedModified(props.hero) ? <ArrowDownOutlined /> : undefined;
-		const speedStr = speed.modes.length === 0 ? i18next.format(t('speed'), 'capitalize') : `${i18next.format(t('speed'), 'capitalize')} (${FormatLogic.getSpeedModes(speed.modes).toLowerCase()})`;
+		const speedStr = speed.modes.length === 0 ? i18next.format(t('speed'), 'capitalize') : `${i18next.format(t('speed'), 'capitalize')} (${FormatLogic.getSpeedModes(speed.modes, t).toLowerCase()})`;
 
 		const maxStamina = HeroLogic.getStamina(props.hero);
 		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;

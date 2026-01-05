@@ -1,4 +1,4 @@
-import { Browser } from './browser';
+import { Browser } from '@/utils/browser';
 import { Converter } from 'showdown';
 import { Random } from '@/utils/random';
 import { SheetPageSize } from '@/enums/sheet-page-size';

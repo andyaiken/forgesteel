@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const HeroHeaderCard = (props: Props) => {
-	const { t } = useTranslation([ 'common', 'hero', 'ancestry' ]);
+	const { t, i18n } = useTranslation([ 'common', 'hero', 'ancestry' ]);
 	const character = props.character;
 	const showState = props.options.includePlayState;
 
@@ -20,7 +20,7 @@ export const HeroHeaderCard = (props: Props) => {
 	return (
 		<div className='hero-header card'>
 			<div>
-				{t('hero:career')}
+				{i18n.format(t('common:career'), 'capitalize')}
 			</div>
 			<HeaderImage />
 			<section className='hero-overview container'>
@@ -30,18 +30,18 @@ export const HeroHeaderCard = (props: Props) => {
 					additionalClasses={[ 'name', 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label={t('hero:ancestry')}
-					content={t(`${character.ancestryName}`)}
+					label={i18n.format(t('common:ancestry'), 'capitalize')}
+					content={i18n.format(t(`ancestry:${character.ancestryName}.name_one`), 'capitalize')}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label={t('hero:class')}
-					content={t('hero:Devil')} // {t(`${character.className}`)}
+					label={i18n.format(t('common:class'), 'capitalize')}
+					content={i18n.format(t(`class:${character.className}.name_one`), 'capitalize')}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label={t('hero:career')}
-					content={t(`${character.career?.name || ''}`)}
+					label={i18n.format(t('common:career'), 'capitalize')}
+					content={character.career?.name || ''}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField

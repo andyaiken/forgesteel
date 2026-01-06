@@ -96,17 +96,22 @@ export const AncestryPanel = (props: Props) => {
 				break;
 		}
 
+		const pages = [
+			{ value: 'overview', label: 'Overview' },
+			{ value: 'signature', label: 'Signature' },
+			{ value: 'purchased', label: 'Purchased' }
+		];
+
+		if (props.ancestry.culture) {
+			pages.push({ value: 'culture', label: 'Culture' });
+		}
+
 		return (
 			<>
 				<Segmented
 					style={{ marginBottom: '20px' }}
 					block={true}
-					options={[
-						{ value: 'overview', label: 'Overview' },
-						{ value: 'signature', label: 'Signature' },
-						{ value: 'purchased', label: 'Purchased' },
-						{ value: 'culture', label: 'Culture' }
-					]}
+					options={pages}
 					value={page}
 					onChange={setPage}
 					onClick={e => e.stopPropagation()}

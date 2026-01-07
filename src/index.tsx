@@ -10,17 +10,29 @@ import './index.scss';
 
 initializeTheme();
 
-// Register Service Worker for PWA functionality
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', () => {
-		navigator.serviceWorker.register('/forgesteel/sw.js')
-			.catch(registrationError => {
-				console.error('SW registration failed: ', registrationError);
-			});
-	});
-}
+const unregisterServiceWorker = async () => {
+	if ('serviceWorker' in navigator) {
+		const registrations = await navigator.serviceWorker.getRegistrations();
+		for (const registration of registrations) {
+			await registration.unregister();
+			console.log('Service Worker unregistered:', registration.scope);
+		}
+	}
+};
 
 const onDataLoaded = (data: LoadedData) => {
+	if ('serviceWorker' in navigator) {
+		if (data.connectionSettings.disableServiceWorker) {
+			unregisterServiceWorker();
+		} else {
+			window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/forgesteel/sw.js')
+					.catch(registrationError => {
+						console.error('SW registration failed: ', registrationError);
+					});
+			});
+		}
+	}
 	root.render(
 		<StrictMode>
 			<HashRouter>

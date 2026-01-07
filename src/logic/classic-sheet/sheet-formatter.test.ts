@@ -87,6 +87,16 @@ describe.concurrent('Test markdown enhancement', () => {
 		const check = markdown.replace(/(!\[.+\])\(data:image.+\)/, '$1(<img>)');
 		expect(check).toBe(expected);
 	});
+
+	test.each([
+		[ '|---|---|', '|---|---|' ],
+		[ '|---|---|\n|---|---|', '|---|---|\n|---|---|' ],
+		[ '  |   ---	|---  |\n|---|---|', '|---|---|\n|---|---|' ]
+	])('properly handles table whitespace', (inStr, expected) => {
+		const markdown = SheetFormatter.enhanceMarkdown(inStr);
+
+		expect(markdown).toBe(expected);
+	});
 });
 
 describe.concurrent('cleanupText', () => {

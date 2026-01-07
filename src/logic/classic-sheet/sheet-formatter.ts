@@ -121,7 +121,7 @@ export class SheetFormatter {
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
 			.replace(/((≥|>=)\s*17|17(\+| or (more|greater))):?/g, `![17 or greater](${rollT3Icon})`)
 			.replace(/[`]/g, '')
-			.replace(/\s*\|\s*/g, '|')
+			.replace(/[^\S\r\n]*\|[^\S\r\n]*/g, '|')
 			.replace(/<\/?code>/g, '');
 		return text;
 	};

@@ -24,7 +24,7 @@ export const LanguageSelector = () => {
 			icon: <span className='fi fi-us dropdown-icon' />
 		},
 		{
-			label: 'Italiano',
+			label: 'Italiano (IT)',
 			key: 'it-IT',
 			icon: <span className='fi fi-it dropdown-icon' />
 		}

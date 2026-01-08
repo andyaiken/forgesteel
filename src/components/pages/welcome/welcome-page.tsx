@@ -149,7 +149,7 @@ const Welcome = (props: WelcomeProps) => {
 								</li>
 							</ul>
 							<div className='ds-text'>
-								In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.
+								{t('welcomePage:rulesLookup')}
 							</div>
 						</div>
 						<div className='welcome-buttons'>

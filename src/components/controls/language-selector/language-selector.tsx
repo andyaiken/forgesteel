@@ -14,12 +14,17 @@ export const LanguageSelector = () => {
 	};
 	const items: MenuProps['items'] = [
 		{
-			label: 'Us',
+			label: 'English (GB)',
+			key: 'en-GB',
+			icon: <span className='fi fi-gb dropdown-icon' />
+		},
+		{
+			label: 'English (US)',
 			key: 'en-US',
 			icon: <span className='fi fi-us dropdown-icon' />
 		},
 		{
-			label: 'It',
+			label: 'Italiano',
 			key: 'it-IT',
 			icon: <span className='fi fi-it dropdown-icon' />
 		}
@@ -31,7 +36,7 @@ export const LanguageSelector = () => {
 	return (
 		<ErrorBoundary>
 			<Dropdown menu={menuProps}>
-				<Button shape='circle' className={`fi fi-${i18n.language.split('-')[1]?.toLowerCase() ?? 'us'}`} />
+				<Button shape='circle' className={`fi fi-${i18n.language.split('-')[1]?.toLowerCase() ?? 'gb'}`} />
 			</Dropdown>
 		</ErrorBoundary>
 	);

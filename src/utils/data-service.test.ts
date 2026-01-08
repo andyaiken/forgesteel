@@ -23,7 +23,7 @@ const defaultSettings: ConnectionSettings = {
 	warehouseHost: '',
 	warehouseToken: '',
 	patreonConnected: false,
-	disableServiceWorker: false,
+	disableServiceWorker: false
 };
 
 const mockOptions = {} as Options;

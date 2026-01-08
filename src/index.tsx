@@ -15,7 +15,6 @@ const unregisterServiceWorker = async () => {
 		const registrations = await navigator.serviceWorker.getRegistrations();
 		for (const registration of registrations) {
 			await registration.unregister();
-			console.log('Service Worker unregistered:', registration.scope);
 		}
 	}
 };

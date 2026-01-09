@@ -20,7 +20,10 @@ export const Expander = (props: Props) => {
 					{
 						key: '1',
 						label: props.tags ?
-							<>{props.title} <Flex gap={3}>{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}</Flex></>
+							<Flex align='center' gap={5}>
+								{props.title}
+								{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}
+							</Flex>
 							: props.title,
 						children: props.children,
 						extra: props.extra ?

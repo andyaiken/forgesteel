@@ -138,7 +138,7 @@ export class AbilityLogic {
 				break;
 		}
 		if (distance.within > 0) {
-			sections.push(`within ${distance.within}`);
+			sections.push(`within ${distance.within + bonus}`);
 		}
 		if (distance.qualifier) {
 			sections.push(`(${distance.qualifier})`);

@@ -26,6 +26,7 @@
 		"flag-icons": "^7.5.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
+		"i18next-browser-languagedetector": "^8.2.0",
 		"i18next-http-backend": "^3.0.2",
 		"jspdf": "^4.0.0",
 		"localforage": "^1.10.0",

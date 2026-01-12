@@ -65,7 +65,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						tier1: '4 corruption damage; A<0 slowed (save ends)',
 						tier2: '6 corruption damage; A<1 slowed (save ends)',
 						tier3: '9 corruption damage; A<2 restrained (save ends)'
-					}))
+					})),
+					FactoryLogic.createAbilitySectionField({
+						name: 'Special',
+						effect: 'This ability can’t be used by a minion.'
+					})
 				]
 			})
 		}),

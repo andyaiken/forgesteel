@@ -14,9 +14,12 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Title } from '@/models/title';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -26,6 +29,7 @@ interface Props {
 	title: Title;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (title: Title) => void;
 }
 
@@ -175,25 +179,51 @@ export const TitleEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='title-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Title',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getTitleEditSection()
-						},
-						{
-							key: '3',
-							label: 'Features',
-							children: getFeaturesEditSection()
-						}
-					]}
-				/>
+				<div className='title-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Title',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getTitleEditSection()
+							},
+							{
+								key: '3',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='title-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<TitlePanel
+													title={title}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

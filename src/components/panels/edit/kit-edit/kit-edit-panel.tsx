@@ -1,5 +1,7 @@
-import { Alert, Button, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Select, Slider, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { ReactNode, useState } from 'react';
+import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -9,19 +11,23 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
+import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { useState } from 'react';
 
 import './kit-edit-panel.scss';
 
@@ -29,6 +35,7 @@ interface Props {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (kit: Kit) => void;
 }
 
@@ -380,38 +387,183 @@ export const KitEditPanel = (props: Props) => {
 		);
 	};
 
+	const getTuningSection = () => {
+		const powerA: { name: string, value: number }[] = [];
+		const powerB: { name: string, value: number }[] = [];
+
+		powerA.push({ name: 'Stamina', value: Math.floor(kit.stamina / 3) });
+
+		powerA.push({ name: 'Disengage', value: kit.disengage });
+
+		powerA.push({ name: 'Speed', value: kit.speed > 0 ? 1 + kit.speed : 0 });
+
+		powerA.push({ name: 'Stability', value: kit.stability > 0 ? 1 + kit.stability : 0 });
+
+		powerB.push({ name: 'Melee Distance', value: 2 * kit.meleeDistance });
+
+		const minMeleeDamage = kit.meleeDamage ? Math.min(kit.meleeDamage.tier1, kit.meleeDamage.tier2, kit.meleeDamage.tier3) : 0;
+		let powerMeleeDamage = minMeleeDamage;
+		if (kit.meleeDamage && (kit.meleeDamage.tier3 - minMeleeDamage >= 4)) {
+			powerMeleeDamage += 2;
+		}
+		powerB.push({ name: 'Melee Damage', value: powerMeleeDamage });
+
+		let powerRange = 0;
+		if (kit.rangedDistance >= 5) {
+			powerRange += 1;
+		}
+		if (kit.rangedDistance >= 7) {
+			powerRange += 1;
+		}
+		if (kit.rangedDistance >= 10) {
+			powerRange += 1;
+		}
+		powerB.push({ name: 'Ranged Distance', value: powerRange });
+
+		const minRangedDamage = kit.rangedDamage ? Math.min(kit.rangedDamage.tier1, kit.rangedDamage.tier2, kit.rangedDamage.tier3) : 0;
+		let powerRangedDamage = minRangedDamage;
+		if (kit.rangedDamage && (kit.rangedDamage.tier3 - minRangedDamage >= 4)) {
+			powerRangedDamage += 2;
+		}
+		powerB.push({ name: 'Ranged Damage', value: powerRangedDamage });
+
+		const power = Collections.sum([ ...powerA, ...powerB ], p => p.value);
+
+		const constraints: { name: string, value: boolean }[] = [];
+		const gear: { name: string, value: boolean }[] = [];
+
+		constraints.push({ name: 'Kit power value = 8', value: power === 8 });
+		constraints.push({ name: 'Stamina max +12', value: kit.stamina <= 12 });
+		constraints.push({ name: 'Ranged distance max +10', value: kit.rangedDistance <= 10 });
+		constraints.push({ name: 'Disengage max +1', value: kit.disengage <= 1 });
+		constraints.push({ name: 'Speed max +3', value: kit.speed <= 3 });
+		constraints.push({ name: 'Stability max +3', value: kit.stability <= 3 });
+		constraints.push({ name: 'Has disengage OR stability', value: ((kit.disengage > 0) && (kit.stability === 0)) || ((kit.disengage === 0) && (kit.stability < 0)) });
+
+		gear.push({ name: 'Light Armor', value: kit.stamina >= 3 });
+		gear.push({ name: 'Light Armor + Shield', value: kit.stamina >= 6 });
+		gear.push({ name: 'Medium Armor', value: kit.stamina >= 6 });
+		gear.push({ name: 'Medium Armor + Shield', value: kit.stamina >= 9 });
+		gear.push({ name: 'Heavy Armor', value: (kit.stamina >= 9) && (kit.stability >= 1) });
+		gear.push({ name: 'Heavy Armor + Shield', value: (kit.stamina >= 12) && (kit.stability >= 1) });
+		gear.push({ name: 'Light Weapon (melee)', value: minMeleeDamage >= 1 });
+		gear.push({ name: 'Medium Weapon (melee)', value: minMeleeDamage >= 2 });
+		gear.push({ name: 'Heavy Weapon (melee)', value: !!kit.meleeDamage && (kit.meleeDamage.tier3 >= 4) });
+		gear.push({ name: 'Light Weapon (ranged)', value: minRangedDamage >= 1 });
+		gear.push({ name: 'Medium Weapon (ranged)', value: minRangedDamage >= 2 });
+		gear.push({ name: 'Heavy Weapon (ranged)', value: !!kit.rangedDamage && (kit.rangedDamage.tier3 >= 4) });
+
+		const marks: Record<string | number, ReactNode> = {};
+		marks[8] = <div className='ds-text dimmed-text small-text'>Target: 8</div>;
+
+		return (
+			<div>
+				<HeaderText>Power</HeaderText>
+				<Slider
+					range={true}
+					marks={marks}
+					min={0}
+					max={16}
+					value={[ power ]}
+					styles={{
+						track: {
+							background: 'transparent'
+						}
+					}}
+					tooltip={{ open: false }}
+				/>
+				<div className='ds-text'>
+					The power level of a kit should be <b>8</b>. The calculation takes a number of kit statistics into account, listed below.
+				</div>
+				<StatsRow>
+					{powerA.map((p, n) => <Field key={n} orientation='vertical' label={p.name} value={p.value} />)}
+				</StatsRow>
+				<StatsRow>
+					{powerB.map((p, n) => <Field key={n} orientation='vertical' label={p.name} value={p.value} />)}
+				</StatsRow>
+				<HeaderText>Constraints</HeaderText>
+				{
+					constraints.map((c, n) => (
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
+							<div style={{ fontWeight: c.value ? '400' : '600', opacity: c.value ? '0.5' : '1' }}>{c.name}</div>
+						</CheckLabel>
+					))
+				}
+				<HeaderText>Suggested Proficiencies</HeaderText>
+				{
+					gear.map((c, n) => (
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
+							<div style={{ fontWeight: c.value ? '600' : '400', opacity: c.value ? '1' : '0.5' }}>{c.name}</div>
+						</CheckLabel>
+					))
+				}
+			</div>
+		);
+	};
+
 	return (
 		<ErrorBoundary>
 			<div className='kit-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Kit',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getKitDetailsSection()
-						},
-						{
-							key: '3',
-							label: 'Stats',
-							children: getKitStatsEditSection()
-						},
-						{
-							key: '4',
-							label: 'Damage',
-							children: getKitDamageEditSection()
-						},
-						{
-							key: '5',
-							label: 'Features',
-							children: getFeaturesEditSection()
-						}
-					]}
-				/>
+				<div className='kit-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Kit',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getKitDetailsSection()
+							},
+							{
+								key: '3',
+								label: 'Stats',
+								children: getKitStatsEditSection()
+							},
+							{
+								key: '4',
+								label: 'Damage',
+								children: getKitDamageEditSection()
+							},
+							{
+								key: '5',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='kit-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<KitPanel
+													kit={kit}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									},
+									{
+										key: '2',
+										label: 'Tuning',
+										children: getTuningSection()
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

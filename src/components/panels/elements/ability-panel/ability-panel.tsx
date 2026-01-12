@@ -40,7 +40,7 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
-	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+	const [ autoCalc, setAutoCalc ] = useState<boolean>(!!props.hero);
 
 	const getIsSignature = () => {
 		const cost = props.cost ?? props.ability.cost;

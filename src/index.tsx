@@ -2,10 +2,10 @@ import { DataLoader, LoadedData } from '@/components/panels/data-loader/data-loa
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HashRouter } from 'react-router';
 import { Main } from '@/components/main/main.tsx';
+import { ServiceWorkerLogic } from './logic/service-worker-logic';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
-import { ServiceWorkerLogic } from './logic/service-worker-logic';
 
 import './index.scss';
 

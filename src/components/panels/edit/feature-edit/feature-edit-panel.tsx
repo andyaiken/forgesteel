@@ -4,14 +4,18 @@ import { EditFeature } from '@/components/features/feature';
 import { EditOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureLogic } from '@/logic/feature-logic';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -24,12 +28,15 @@ interface Props {
 	allowedTypes?: FeatureType[];
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (feature: Feature) => void;
 }
 
 export const FeatureEditPanel = (props: Props) => {
 	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
 	const [ typeSelectorVisible, setTypeSelectorVisible ] = useState<boolean>(false);
+
+	const isPerk = (feature as Perk).list !== undefined;
 
 	const setName = (value: string) => {
 		const copy = Utils.copy(feature);
@@ -70,71 +77,107 @@ export const FeatureEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='feature-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Feature',
-							children: (
-								<div>
-									<HeaderText>Name</HeaderText>
-									<TextInput
-										status={feature.name === '' ? 'warning' : ''}
-										placeholder='Name'
-										allowClear={true}
-										value={feature.name}
-										onChange={setName}
-									/>
-									<HeaderText>Description</HeaderText>
-									<MarkdownEditor value={feature.description} onChange={setDescription} />
-								</div>
-							)
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: (
-								<div>
+				<div className='feature-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: isPerk ? 'Perk' : 'Feature',
+								children: (
+									<div>
+										<HeaderText>Name</HeaderText>
+										<TextInput
+											status={feature.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											value={feature.name}
+											onChange={setName}
+										/>
+										<HeaderText>Description</HeaderText>
+										<MarkdownEditor value={feature.description} onChange={setDescription} />
+									</div>
+								)
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: (
+									<div>
+										{
+											(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
+												<>
+													<HeaderText>Feature Type</HeaderText>
+													<Flex align='center' justify='space-between'>
+														<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
+														<Button onClick={() => setTypeSelectorVisible(true)}>
+															<EditOutlined />
+															Change
+														</Button>
+													</Flex>
+												</>
+												: null
+										}
+										{
+											isPerk ?
+												<div>
+													<HeaderText>Perk List</HeaderText>
+													<Select
+														style={{ width: '100%' }}
+														placeholder='Select list'
+														options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(o => ({ value: o }))}
+														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+														value={(feature as Perk).list}
+														onChange={setList}
+													/>
+												</div>
+												: null
+										}
+										<EditFeature
+											feature={feature}
+											sourcebooks={props.sourcebooks}
+											options={props.options}
+											setData={setData}
+										/>
+									</div>
+								)
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='feature-preview-column'>
+							<Tabs
+								items={[
 									{
-										(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
-											<>
-												<HeaderText>Feature Type</HeaderText>
-												<Flex align='center' justify='space-between'>
-													<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
-													<Button onClick={() => setTypeSelectorVisible(true)}>
-														<EditOutlined />
-														Change
-													</Button>
-												</Flex>
-											</>
-											: null
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												{
+													!isPerk ?
+														<FeaturePanel
+															feature={feature}
+															sourcebooks={props.sourcebooks}
+															options={props.options}
+															mode={PanelMode.Full}
+														/>
+														:
+														<PerkPanel
+															perk={feature as Perk}
+															sourcebooks={props.sourcebooks}
+															options={props.options}
+															mode={PanelMode.Full}
+														/>
+												}
+											</SelectablePanel>
+										)
 									}
-									{
-										(feature as Perk).list !== undefined ?
-											<div>
-												<HeaderText>Perk List</HeaderText>
-												<Select
-													style={{ width: '100%' }}
-													placeholder='Select list'
-													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(o => ({ value: o }))}
-													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-													value={(feature as Perk).list}
-													onChange={setList}
-												/>
-											</div>
-											: null
-									}
-									<EditFeature
-										feature={feature}
-										sourcebooks={props.sourcebooks}
-										options={props.options}
-										setData={setData}
-									/>
-								</div>
-							)
-						}
-					]}
-				/>
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} size={500}>
 				<FeatureTypeSelectModal

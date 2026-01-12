@@ -3,6 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined }
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
+import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
@@ -14,6 +15,8 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -25,6 +28,7 @@ interface Props {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (domain: Domain) => void;
 }
 
@@ -355,30 +359,56 @@ export const DomainEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='domain-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Domain',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Levels',
-							children: getFeaturesByLevelEditSection()
-						},
-						{
-							key: '3',
-							label: 'Resource Gains',
-							children: getResourceGainsEditSection()
-						},
-						{
-							key: '4',
-							label: 'Default Features',
-							children: getDefaultFeaturesEditSection()
-						}
-					]}
-				/>
+				<div className='domain-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Domain',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Levels',
+								children: getFeaturesByLevelEditSection()
+							},
+							{
+								key: '3',
+								label: 'Resource Gains',
+								children: getResourceGainsEditSection()
+							},
+							{
+								key: '4',
+								label: 'Default Features',
+								children: getDefaultFeaturesEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='domain-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<DomainPanel
+													domain={domain}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

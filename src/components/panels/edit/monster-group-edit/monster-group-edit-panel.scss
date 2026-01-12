@@ -1,5 +1,15 @@
 .monster-group-edit-panel {
-	display: block;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	overflow: hidden;
+
+	.monster-group-workspace-column,
+	.monster-group-preview-column {
+		flex: 1 1 0;
+		padding: 0 5px 5px 5px;
+		overflow-y: auto;
+	}
 
 	.portrait-edit {
 		border: 3px solid rgba(5, 5, 5, 0.2);

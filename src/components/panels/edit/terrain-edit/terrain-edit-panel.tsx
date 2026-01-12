@@ -20,10 +20,13 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
 import { Terrain } from '@/models/terrain';
 import { TerrainCategory } from '@/enums/terrain-category';
+import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -35,6 +38,7 @@ interface Props {
 	terrain: Terrain;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (terrain: Terrain) => void;
 }
 
@@ -685,35 +689,60 @@ export const TerrainEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='terrain-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Terrain',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Stats',
-							children: getTerrainStatsSection()
-						},
-						{
-							key: '3',
-							label: 'Damage',
-							children: getTerrainDamageSection()
-						},
-						{
-							key: '4',
-							label: 'Sections',
-							children: getTerrainSectionsSection()
-						},
-						{
-							key: '5',
-							label: 'Customization',
-							children: getTerrainCustomizationSection()
-						}
-					]}
-				/>
+				<div className='terrain-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Terrain',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Stats',
+								children: getTerrainStatsSection()
+							},
+							{
+								key: '3',
+								label: 'Damage',
+								children: getTerrainDamageSection()
+							},
+							{
+								key: '4',
+								label: 'Sections',
+								children: getTerrainSectionsSection()
+							},
+							{
+								key: '5',
+								label: 'Customization',
+								children: getTerrainCustomizationSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='terrain-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<TerrainPanel
+													terrain={terrain}
+													sourcebooks={props.sourcebooks}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

@@ -1,8 +1,9 @@
-import { Alert, Button, Drawer, Popover, Segmented, Space, Tabs, Upload } from 'antd';
+import { Alert, Button, Drawer, Popover, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
+import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -19,9 +20,11 @@ import { Modal } from '@/components/modals/modal/modal';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
+import { SubClassEditPanel } from '@/components/panels/edit/subclass-edit/subclass-edit-panel';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -34,12 +37,13 @@ interface Props {
 	heroClass: HeroClass;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (heroClass: HeroClass) => void;
-	onEditSubClass: (sc: SubClass) => void;
 }
 
 export const ClassEditPanel = (props: Props) => {
 	const [ heroClass, setHeroClass ] = useState<HeroClass>(props.heroClass);
+	const [ subclassID, setSubclassID ] = useState<string>('');
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
@@ -473,7 +477,7 @@ export const ClassEditPanel = (props: Props) => {
 								key={sc.id}
 								title={sc.name || 'Unnamed Subclass'}
 								extra={[
-									<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); props.onEditSubClass(sc); }} />,
+									<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); setSubclassID(sc.id); }} />,
 									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
 									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
 									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
@@ -520,37 +524,91 @@ export const ClassEditPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='class-edit-panel'>
-				<Tabs
-					items={[
+			<Select
+				options={[
+					{ label: `Class: ${heroClass.name || 'Unnamed Class'}`, value: '' },
+					...heroClass.subclasses.map(sc => ({ label: `Subclass: ${sc.name || 'Unnamed Subclass'}`, value: sc.id }))
+				]}
+				optionRender={o => <div className='ds-text'>{o.data.label}</div>}
+				value={subclassID}
+				onChange={setSubclassID}
+			/>
+			{
+				subclassID === '' ?
+					<div className='class-edit-panel'>
+						<div className='class-workspace-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Class',
+										children: getNameAndDescriptionSection()
+									},
+									{
+										key: '2',
+										label: 'Details',
+										children: getClassEditSection()
+									},
+									{
+										key: '3',
+										label: 'Levels',
+										children: getFeaturesByLevelEditSection()
+									},
+									{
+										key: '4',
+										label: 'Abilities',
+										children: getClassAbilitiesEditSection()
+									},
+									{
+										key: '5',
+										label: 'Subclasses',
+										children: getClassSubclassesEditSection()
+									}
+								]}
+							/>
+						</div>
 						{
-							key: '1',
-							label: 'Class',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getClassEditSection()
-						},
-						{
-							key: '3',
-							label: 'Levels',
-							children: getFeaturesByLevelEditSection()
-						},
-						{
-							key: '4',
-							label: 'Abilities',
-							children: getClassAbilitiesEditSection()
-						},
-						{
-							key: '5',
-							label: 'Subclasses',
-							children: getClassSubclassesEditSection()
+							props.mode === PanelMode.Full ?
+								<div className='class-preview-column'>
+									<Tabs
+										items={[
+											{
+												key: '1',
+												label: 'Preview',
+												children: (
+													<SelectablePanel>
+														<ClassPanel
+															heroClass={heroClass}
+															sourcebooks={props.sourcebooks}
+															options={props.options}
+															mode={PanelMode.Full}
+														/>
+													</SelectablePanel>
+												)
+											}
+										]}
+									/>
+								</div>
+								: null
 						}
-					]}
-				/>
-			</div>
+					</div>
+					:
+					<SubClassEditPanel
+						subClass={heroClass.subclasses.find(sc => sc.id === subclassID) as SubClass}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						mode={PanelMode.Full}
+						onChange={sc => {
+							const copy = Utils.copy(heroClass);
+							const index = copy.subclasses.findIndex(s => s.id === sc.id);
+							if (index !== -1) {
+								copy.subclasses[index] = sc;
+							}
+							setHeroClass(copy);
+							props.onChange(copy);
+						}}
+					/>
+			}
 		</ErrorBoundary>
 	);
 };

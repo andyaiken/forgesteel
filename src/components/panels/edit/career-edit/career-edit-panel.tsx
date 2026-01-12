@@ -1,6 +1,7 @@
 import { Button, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Career } from '@/models/career';
+import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Element } from '@/models/element';
@@ -16,6 +17,8 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -27,6 +30,7 @@ interface Props {
 	career: Career;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (career: Career) => void;
 }
 
@@ -219,25 +223,51 @@ export const CareerEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='career-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Career',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Features',
-							children: getFeaturesEditSection()
-						},
-						{
-							key: '3',
-							label: 'Inciting Incidents',
-							children: getIncitingIncidentsSection()
-						}
-					]}
-				/>
+				<div className='career-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Career',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							},
+							{
+								key: '3',
+								label: 'Inciting Incidents',
+								children: getIncitingIncidentsSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='career-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<CareerPanel
+													career={career}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

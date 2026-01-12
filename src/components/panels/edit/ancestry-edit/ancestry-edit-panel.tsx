@@ -36,6 +36,7 @@ interface Props {
 	ancestry: Ancestry;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (ancestry: Ancestry) => void;
 }
 
@@ -286,7 +287,7 @@ export const AncestryEditPanel = (props: Props) => {
 				<Toggle label='Include a culture' value={!!ancestry.culture} onChange={setHasCulture} />
 				{
 					ancestry.culture ?
-						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} onChange={setCulture} />
+						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} options={props.options} onChange={setCulture} />
 						: null
 				}
 			</Space>
@@ -404,31 +405,35 @@ export const AncestryEditPanel = (props: Props) => {
 						]}
 					/>
 				</div>
-				<div className='ancestry-preview-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Preview',
-								children: (
-									<SelectablePanel>
-										<AncestryPanel
-											ancestry={ancestry}
-											sourcebooks={props.sourcebooks}
-											options={props.options}
-											mode={PanelMode.Full}
-										/>
-									</SelectablePanel>
-								)
-							},
-							{
-								key: '2',
-								label: 'Cherry Pick',
-								children: getCherryPick()
-							}
-						]}
-					/>
-				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='ancestry-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<AncestryPanel
+													ancestry={ancestry}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									},
+									{
+										key: '2',
+										label: 'Cherry Pick',
+										children: getCherryPick()
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

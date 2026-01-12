@@ -1,7 +1,15 @@
 .monster-edit-panel {
 	display: flex;
-	flex-direction: column;
-	gap: 10px;
+	flex-direction: row;
+	gap: 20px;
+	overflow: hidden;
+
+	.monster-workspace-column,
+	.monster-preview-column {
+		flex: 1 1 0;
+		padding: 0 5px 5px 5px;
+		overflow-y: auto;
+	}
 
 	.category-selector {
 		height: 46px;

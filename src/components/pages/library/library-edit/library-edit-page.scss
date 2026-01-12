@@ -4,47 +4,15 @@
 	flex-direction: column;
 
 	.library-edit-page-content {
+		padding: 20px;
 		background-color: rgb(230, 230, 230);
 		flex: 1 1 0;
 		display: flex;
-		gap: 10px;
-		padding: 10px;
+		flex-direction: column;
 		overflow: hidden;
 
-		.edit-column {
-			padding: 10px;
-			flex: 1 1 0;
-			overflow-x: hidden;
-			overflow-y: auto;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-
-			.edit-header-section {
-				padding: 10px 0 0 0;
-			}
-
-			.adventure-container {
-				overflow-y: hidden;
-			}
-
-			.tactical-map-container {
-				overflow: auto;
-			}
-		}
-
-		.preview-column {
-			padding: 10px;
-			flex: 1 1 0;
-			overflow-x: hidden;
-			overflow-y: auto;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-
-			.preview-header-section {
-				padding: 10px 0 0 0;
-			}
+		.tactical-map-container {
+			overflow: auto;
 		}
 	}
 }

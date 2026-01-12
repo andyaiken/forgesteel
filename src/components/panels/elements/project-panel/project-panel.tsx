@@ -266,6 +266,7 @@ export const ProjectPanel = (props: Props) => {
 			<ProjectEditPanel
 				project={project}
 				includeNameAndDescription={true}
+				sourcebooks={props.sourcebooks}
 				onChange={onChange}
 			/>
 		);

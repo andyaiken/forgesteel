@@ -114,16 +114,6 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				value={connectionSettings.useWarehouse}
 				onChange={setUseWarehouse}
 			/>
-			<Toggle
-				label='Disable Service Worker'
-				value={connectionSettings.disableServiceWorker}
-				onChange={value => {
-					const copy = Utils.copy(connectionSettings);
-					copy.disableServiceWorker = value;
-					setConnectionSettings(copy);
-					setConnectionSettingsChanged(true);
-				}}
-			/>
 			{
 				connectionSettings.useWarehouse ?
 					<>

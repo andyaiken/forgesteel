@@ -5,6 +5,7 @@ import { Main } from '@/components/main/main.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
+import { ServiceWorkerLogic } from './logic/service-worker-logic';
 
 import './index.scss';
 
@@ -21,7 +22,7 @@ const unregisterServiceWorker = async () => {
 
 const onDataLoaded = (data: LoadedData) => {
 	if ('serviceWorker' in navigator) {
-		if (data.connectionSettings.disableServiceWorker) {
+		if (ServiceWorkerLogic.shouldDisableServiceWorker(data.connectionSettings)) {
 			unregisterServiceWorker();
 		} else {
 			window.addEventListener('load', () => {

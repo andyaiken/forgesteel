@@ -18,8 +18,5 @@ export class ConnectionSettingsUpdateLogic {
 			settings.patreonConnected = false;
 		}
 
-		if (settings.disableServiceWorker === undefined) {
-			settings.disableServiceWorker = false;
-		}
 	};
 }

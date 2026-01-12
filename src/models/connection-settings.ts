@@ -3,5 +3,4 @@ export interface ConnectionSettings {
 	warehouseHost: string;
 	warehouseToken: string;
 	patreonConnected: boolean;
-	disableServiceWorker: boolean;
 }

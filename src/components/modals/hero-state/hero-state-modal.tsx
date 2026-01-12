@@ -1,4 +1,3 @@
-import { CustomizePanel } from '@/components/modals/hero-state/customize-panel/customize-panel';
 import { Hero } from '@/models/hero';
 import { HeroHealthPanel } from '@/components/panels/health/health-panel';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -7,9 +6,9 @@ import { InventoryPanel } from '@/components/modals/hero-state/inventory-panel/i
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/projects-panel';
+import { ResourcesPanel } from '@/components/modals/hero-state/resources-panel/resources-panel';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
-import { StatsPanel } from '@/components/modals/hero-state/stats-panel/stats-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -23,7 +22,6 @@ interface Props {
 	showEncounterControls: boolean;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
-	onLevelUp?: (hero: Hero) => void;
 }
 
 export const HeroStateModal = (props: Props) => {
@@ -37,13 +35,13 @@ export const HeroStateModal = (props: Props) => {
 
 	const getContent = () => {
 		switch (page) {
-			case HeroStatePage.Hero:
+			case HeroStatePage.Resources:
 				return (
-					<StatsPanel
+					<ResourcesPanel
 						hero={hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={onChange}
-						onLevelUp={props.onLevelUp}
 					/>
 				);
 			case HeroStatePage.Vitals:
@@ -72,15 +70,6 @@ export const HeroStateModal = (props: Props) => {
 						onChange={onChange}
 					/>
 				);
-			case HeroStatePage.Customize:
-				return (
-					<CustomizePanel
-						hero={hero}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={onChange}
-					/>
-				);
 		}
 	};
 
@@ -94,11 +83,10 @@ export const HeroStateModal = (props: Props) => {
 						options={
 							HeroLogic.getStamina(hero) !== 0 ?
 								[
-									HeroStatePage.Hero,
+									HeroStatePage.Resources,
 									HeroStatePage.Vitals,
 									HeroStatePage.Inventory,
-									HeroStatePage.Projects,
-									HeroStatePage.Customize
+									HeroStatePage.Projects
 								]
 								:
 								[

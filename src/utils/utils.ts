@@ -107,10 +107,21 @@ export class Utils {
 		const width = element.clientWidth;
 		const height = element.clientHeight;
 
+		// see: https://github.com/qq15725/modern-screenshot/issues/104
+		const fontScaleFix = (node: Node) => {
+			if (node instanceof HTMLElement) {
+				node.style.fontSize = node.style.fontSize.replace(/(\d+(\.\d+)?(e[+-]?\d+)?)/g, (match, number) => {
+					const parsedNumber = parseFloat(number);
+					return isNaN(parsedNumber) ? match : (parsedNumber * 0.999).toString();
+				});
+			}
+		};
+
 		return domToImage(element, {
 			width: width,
 			height: height,
-			scale: scale
+			scale: scale,
+			onCloneEachNode: fontScaleFix
 		});
 	};
 

@@ -40,6 +40,10 @@ export class OptionsUpdateLogic {
 			options.colorSheet = true;
 		}
 
+		if (options.colorScheme === undefined) {
+			options.colorScheme = 'community';
+		}
+
 		if (options.showPowerRollCalculation === undefined) {
 			options.showPowerRollCalculation = true;
 		}
@@ -58,6 +62,10 @@ export class OptionsUpdateLogic {
 
 		if (options.pageOrientation === undefined) {
 			options.pageOrientation = 'portrait';
+		}
+
+		if (options.debugClassicSheet === undefined) {
+			options.debugClassicSheet = false;
 		}
 
 		if (options.similarLevel === undefined) {

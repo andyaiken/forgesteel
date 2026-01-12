@@ -216,20 +216,26 @@ export class HeroLogic {
 	};
 
 	static getAncestryPoints = (hero: Hero) => {
+		let value = 0;
+
 		if (hero.ancestry) {
-			let points = hero.ancestry.ancestryPoints;
+			value += hero.ancestry.ancestryPoints;
 
 			if (hero.ancestry.id === AncestryData.revenant.id) {
 				const size = HeroLogic.getSize(hero);
 				if ((size.value == 1) && (size.mod === 'S')) {
-					points += 1;
+					value += 1;
 				}
 			}
-
-			return points;
 		}
 
-		return 0;
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Bonus)
+			.filter(f => f.data.field === FeatureField.AncestryPoints)
+			.forEach(f => value += ModifierLogic.calculateModifierValue(f.data, hero));
+
+		return value;
 	};
 
 	static getCompanions = (hero: Hero) => {
@@ -974,6 +980,14 @@ export class HeroLogic {
 
 	static canLevelUp = (hero: Hero, options: Options) => {
 		if (!hero.class) {
+			return false;
+		}
+
+		const maxLevel = Math.max(
+			...hero.class.featuresByLevel.flatMap(lvl => lvl.level),
+			...hero.class.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.level)
+		);
+		if (hero.class.level >= maxLevel) {
 			return false;
 		}
 

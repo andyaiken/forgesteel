@@ -1,4 +1,5 @@
 import { FillerCard, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
+import { DebugCard } from '../reference/debug-card';
 import { Encounter } from '@/models/encounter';
 import { EncounterHeaderCard } from '@/components/panels/classic-sheet/encounter-header/encounter-header';
 import { EncounterRosterCard } from '@/components/panels/classic-sheet/encounter-roster/encounter-roster';
@@ -43,6 +44,15 @@ export const EncounterSheetPage = (props: Props) => {
 			});
 		}
 
+		if (props.options.debugClassicSheet) {
+			requiredCards.push({
+				element: <DebugCard options={props.options} key='debug' />,
+				width: 1,
+				height: 15,
+				shown: false
+			});
+		}
+
 		if (encounter.monsters?.length) {
 			encounter.monsters?.forEach(ms => {
 				let mH = SheetFormatter.calculateMonsterSize(ms, layout.cardLineLen);
@@ -77,10 +87,11 @@ export const EncounterSheetPage = (props: Props) => {
 			];
 			if (props.options.colorSheet) {
 				classes.push('color');
+				classes.push(`colors-${props.options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet ]
+		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
 	);
 
 	return (

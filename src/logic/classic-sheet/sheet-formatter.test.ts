@@ -68,18 +68,34 @@ describe.concurrent('Test markdown enhancement', () => {
 
 	test.each([
 		[ '| ≤ 11 |', '|![11 or less](<img>)|' ],
-		[ '| 12-16 |', '|![12 to 16](<img>)|' ],
-		[ '| 17+ |', '|![17 or greater](<img>)|' ],
+		[ '|<=11|', '|![11 or less](<img>)|' ],
+		[ '|11 or less		|', '|![11 or less](<img>)|' ],
 		[ '* 11 or lower:', '* ![11 or less](<img>)' ],
+		[ '* ≤11:', '* ![11 or less](<img>)' ],
+		[ '<=11', '![11 or less](<img>)' ],
+		[ '\\<\\=11', '![11 or less](<img>)' ],
+		[ '* <= 11:', '* ![11 or less](<img>)' ],
+		[ '| 12-16 |', '|![12 to 16](<img>)|' ],
 		[ '* 12 - 16:', '* ![12 to 16](<img>)' ],
+		[ '| 17+ |', '|![17 or greater](<img>)|' ],
 		[ '* ≥ 17:', '* ![17 or greater](<img>)' ],
-		[ '* 17+:', '* ![17 or greater](<img>)' ],
-		[ '* ≤11:', '* ![11 or less](<img>)' ]
+		[ '* >=17:', '* ![17 or greater](<img>)' ],
+		[ '* 17+:', '* ![17 or greater](<img>)' ]
 	])('Converts power roll text to glyphs', (inStr, expected) => {
 		const markdown = SheetFormatter.enhanceMarkdown(inStr);
 		// switch out the image svg details
 		const check = markdown.replace(/(!\[.+\])\(data:image.+\)/, '$1(<img>)');
 		expect(check).toBe(expected);
+	});
+
+	test.each([
+		[ '|---|---|', '|---|---|' ],
+		[ '|---|---|\n|---|---|', '|---|---|\n|---|---|' ],
+		[ '  |   ---	|---  |\n|---|---|', '|---|---|\n|---|---|' ]
+	])('properly handles table whitespace', (inStr, expected) => {
+		const markdown = SheetFormatter.enhanceMarkdown(inStr);
+
+		expect(markdown).toBe(expected);
 	});
 });
 

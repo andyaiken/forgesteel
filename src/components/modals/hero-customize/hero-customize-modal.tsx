@@ -23,6 +23,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
@@ -33,16 +34,17 @@ import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
-import './customize-panel.scss';
+import './hero-customize-modal.scss';
 
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	options: Options;
 	onChange: (hero: Hero) => void;
+	onClose: () => void;
 }
 
-export const CustomizePanel = (props: Props) => {
+export const HeroCustomizeModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
 
@@ -544,7 +546,7 @@ export const CustomizePanel = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							value={feature.data.field}
 							onChange={setValueField}
@@ -737,38 +739,45 @@ export const CustomizePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='customize-panel'>
-				<HeaderText extra={getMenu()}>
-					Customize
-				</HeaderText>
-				{
-					hero.features
-						.filter(f => f.id !== 'default-language')
-						.map(f => (
-							<Expander
-								key={f.id}
-								title={f.name}
-								extra={[
-									<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
-								]}
-							>
-								{getEditSection(f)}
-								<ConfigFeature
-									feature={f}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									options={props.options}
-									setData={data => setFeatureData(f.id, data)}
-								/>
-							</Expander>
-						))
+			<Modal
+				content={
+					<div className='hero-customize-modal'>
+						<HeaderText extra={getMenu()}>
+							Customize
+						</HeaderText>
+						<Space orientation='vertical' style={{ width: '100%' }}>
+							{
+								hero.features
+									.filter(f => f.id !== 'default-language')
+									.map(f => (
+										<Expander
+											key={f.id}
+											title={f.name}
+											extra={[
+												<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
+											]}
+										>
+											{getEditSection(f)}
+											<ConfigFeature
+												feature={f}
+												hero={props.hero}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												setData={data => setFeatureData(f.id, data)}
+											/>
+										</Expander>
+									))
+							}
+							{
+								hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+									<Empty text='You have no customizations.' />
+									: null
+							}
+						</Space>
+					</div>
 				}
-				{
-					hero.features.filter(f => f.id !== 'default-language').length === 0 ?
-						<Empty text='You have no customizations.' />
-						: null
-				}
-			</div>
+				onClose={props.onClose}
+			/>
 		</ErrorBoundary>
 	);
 };

@@ -1,4 +1,4 @@
-import { StorageService } from './storage-service';
+import { StorageService } from '@/service/storage/storage-service';
 import localforage from 'localforage';
 
 export class LocalService implements StorageService {

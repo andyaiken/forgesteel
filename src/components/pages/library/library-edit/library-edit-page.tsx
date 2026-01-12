@@ -6,7 +6,6 @@ import { Adventure } from '@/models/adventure';
 import { AdventureEditPanel } from '@/components/panels/edit/adventure-edit/adventure-edit-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
-import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
@@ -374,20 +373,24 @@ export const LibraryEditPage = (props: Props) => {
 						return (
 							<SelectablePanel
 								key={m.id}
-								action={{
-									label: 'Hide',
-									onClick: () => {
-										if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
-											let copy = Utils.copy(scratchpadMonsters) as Monster[];
-											copy = copy.filter(cm => cm.id !== m.id);
-											setScratchpadMonsters(copy);
-										} else {
-											const copy = Utils.copy(hiddenMonsterIDs) as string[];
-											copy.push(m.id);
-											setHiddenMonsterIDs(copy);
-										}
-									}
-								}}
+								action={
+									<Button
+										onClick={e => {
+											e.stopPropagation();
+											if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
+												let copy = Utils.copy(scratchpadMonsters) as Monster[];
+												copy = copy.filter(cm => cm.id !== m.id);
+												setScratchpadMonsters(copy);
+											} else {
+												const copy = Utils.copy(hiddenMonsterIDs) as string[];
+												copy.push(m.id);
+												setHiddenMonsterIDs(copy);
+											}
+										}}
+									>
+										Hide
+									</Button>
+								}
 								onSelect={() => props.showMonster(m, monsterGroup)}
 							>
 								<MonsterPanel
@@ -748,28 +751,6 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getPreview = () => {
 		switch (kind) {
-			case 'ancestry': {
-				return (
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Preview',
-								children: (
-									<SelectablePanel>
-										<AncestryPanel
-											ancestry={element as Ancestry}
-											sourcebooks={props.sourcebooks}
-											options={props.options}
-											mode={PanelMode.Full}
-										/>
-									</SelectablePanel>
-								)
-							}
-						]}
-					/>
-				);
-			}
 			case 'career': {
 				return (
 					<Tabs
@@ -1195,6 +1176,16 @@ export const LibraryEditPage = (props: Props) => {
 		return null;
 	};
 
+	let showPreview = true;
+	switch (kind) {
+		case 'adventure':
+		case 'ancestry':
+		case 'encounter':
+		case 'tactical-map':
+			showPreview = false;
+			break;
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className='library-edit-page'>
@@ -1213,7 +1204,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getEditSection()}
 						</div>
 						{
-							(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
+							showPreview ?
 								<div className='preview-column'>
 									{getPreviewHeaderSection()}
 									{getPreview()}

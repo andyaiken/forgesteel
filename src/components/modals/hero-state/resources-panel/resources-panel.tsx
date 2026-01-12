@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd';
+import { Alert, Button, Drawer, Flex, Progress, Space } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureType } from '@/enums/feature-type';
@@ -6,15 +6,17 @@ import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroLevelUpModal } from '@/components/modals/hero-level-up/hero-level-up-modal';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
-import './stats-panel.scss';
+import './resources-panel.scss';
 
 interface Expression {
 	resourceID: string;
@@ -27,200 +29,15 @@ interface Expression {
 
 interface Props {
 	hero: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onChange: (hero: Hero) => void;
-	onLevelUp?: (hero: Hero) => void;
 }
 
-export const StatsPanel = (props: Props) => {
+export const ResourcesPanel = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
-	const [ respiteVisible, setRespiteVisible ] = useState<boolean>(false);
 	const [ expression, setExpression ] = useState<Expression | null>(null);
-	const [ notify, notifyContext ] = notification.useNotification();
-
-	const getStatsSection = () => {
-		const setSurges = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.surges = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setVictories = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.victories = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setXP = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.xp = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setRenown = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.renown = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setWealth = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.wealth = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const levelUp = () => {
-			if (props.onLevelUp) {
-				const copy = Utils.copy(hero);
-				if (copy.class) {
-					while (HeroLogic.canLevelUp(copy, props.options)) {
-						copy.class.level += 1;
-					}
-				}
-				setHero(copy);
-				props.onLevelUp(copy);
-			}
-		};
-
-		const takeRespite = () => {
-			const copy = Utils.copy(hero);
-			HeroLogic.takeRespite(copy);
-			setHero(copy);
-			props.onChange(copy);
-
-			notify.info({
-				title: 'Respite',
-				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
-				placement: 'top'
-			});
-		};
-
-		return (
-			<>
-				<Flex gap={20}>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Surges'
-							value={hero.state.surges}
-							min={0}
-							onChange={setSurges}
-						/>
-						<NumberSpin
-							label='Victories'
-							value={hero.state.victories}
-							min={0}
-							onChange={setVictories}
-						/>
-						<NumberSpin
-							label='XP'
-							value={hero.state.xp}
-							min={0}
-							onChange={setXP}
-						/>
-					</Space>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Renown'
-							value={hero.state.renown}
-							format={() => HeroLogic.getRenown(hero).toString()}
-							onChange={setRenown}
-						/>
-						<NumberSpin
-							label='Wealth'
-							value={hero.state.wealth}
-							format={() => HeroLogic.getWealth(hero).toString()}
-							onChange={setWealth}
-						/>
-						<Button className='tall-button' block={true} onClick={() => setRespiteVisible(true)}>
-							Respite
-						</Button>
-					</Space>
-				</Flex>
-				{
-					hero.state.surges > 0 ?
-						<Alert
-							type='info'
-							title={
-								<>
-									<div className='alert-text'>
-										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
-									</div>
-									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
-								</>
-							}
-						/>
-						: null
-				}
-				{
-					HeroLogic.canLevelUp(hero, props.options) ?
-						<Alert
-							type='info'
-							showIcon={true}
-							title='You have enough XP to level up.'
-							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
-						/>
-						: null
-				}
-				<Drawer open={respiteVisible} onClose={() => setRespiteVisible(false)} closeIcon={null} size={500}>
-					<Modal
-						content={
-							<Space orientation='vertical' style={{ width: '100%', padding: '0 20px' }}>
-								<HeaderText>Respite</HeaderText>
-								<div className='ds-text'>
-									Taking a respite has the following effects:
-								</div>
-								<ul>
-									<li>
-										Your Stamina and Recoveries are reset (and any temporary Stamina goes away)
-									</li>
-									<li>
-										Your Victories are turned into XP
-									</li>
-									<li>
-										Any conditions affecting you are removed
-									</li>
-								</ul>
-								<div className='ds-text'>
-									During a respite you can take one respite action. Standard respite actions are:
-								</div>
-								<ul>
-									<li>
-										Make a project roll
-									</li>
-									<li>
-										Change your kit / prayer / enchantment / augmentation / ward
-									</li>
-									<li>
-										Attract followers (for every 3 renown, you can have 1 follower)
-									</li>
-								</ul>
-								<Divider />
-								<Button
-									key='take-respite'
-									block={true}
-									className='tall-button'
-									onClick={takeRespite}
-								>
-									<div>
-										<div>Take a Respite</div>
-										<div className='subtext'>
-											24 hours of rest
-										</div>
-									</div>
-								</Button>
-							</Space>
-						}
-						onClose={() => setRespiteVisible(false)}
-					/>
-				</Drawer>
-			</>
-		);
-	};
+	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
 
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
@@ -423,6 +240,123 @@ export const StatsPanel = (props: Props) => {
 		);
 	};
 
+	const getStatsSection = () => {
+		const setSurges = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.surges = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setVictories = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.victories = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRenown = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.renown = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setWealth = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.wealth = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<>
+				<HeaderText>Stats</HeaderText>
+				<Flex gap={20}>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+						<NumberSpin
+							label='Surges'
+							value={hero.state.surges}
+							min={0}
+							onChange={setSurges}
+						/>
+						<NumberSpin
+							label='Victories'
+							value={hero.state.victories}
+							min={0}
+							onChange={setVictories}
+						/>
+					</Space>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+						<NumberSpin
+							label='Renown'
+							value={hero.state.renown}
+							format={() => HeroLogic.getRenown(hero).toString()}
+							onChange={setRenown}
+						/>
+						<NumberSpin
+							label='Wealth'
+							value={hero.state.wealth}
+							format={() => HeroLogic.getWealth(hero).toString()}
+							onChange={setWealth}
+						/>
+					</Space>
+				</Flex>
+				{
+					hero.state.surges > 0 ?
+						<Alert
+							type='info'
+							title={
+								<>
+									<div className='alert-text'>
+										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
+									</div>
+									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
+								</>
+							}
+						/>
+						: null
+				}
+			</>
+		);
+	};
+
+	const getExperienceSection = () => {
+		const setXP = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.xp = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const minXP = HeroLogic.getMinXP(hero.class!.level, props.options);
+
+		return (
+			<>
+				<HeaderText>XP</HeaderText>
+				<NumberSpin
+					min={minXP}
+					suffix={`/ ${props.options.xpPerLevel * hero.class!.level}`}
+					value={hero.state.xp}
+					onChange={setXP}
+				/>
+				<Flex justify='center'>
+					<Progress percent={100 * (hero.state.xp - minXP) / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
+				</Flex>
+				{
+					HeroLogic.canLevelUp(hero, props.options) ?
+						<Alert
+							type='info'
+							showIcon={true}
+							title='You have enough XP to level up.'
+							action={<Button icon={<ArrowUpOutlined />} onClick={() => setShowLevelUp(true)}>Level Up</Button>}
+						/>
+						: null
+				}
+			</>
+		);
+	};
+
 	const getHeroTokenSection = () => {
 		const setHeroTokens = (value: number) => {
 			const copy = Utils.copy(hero);
@@ -509,12 +443,29 @@ export const StatsPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='stats-panel'>
-				{getStatsSection()}
+			<div className='resources-panel'>
 				{getHeroicResourceSection()}
+				{getStatsSection()}
+				{getExperienceSection()}
 				{getHeroTokenSection()}
-				{notifyContext}
 			</div>
+			<Drawer open={showLevelUp} onClose={() => setShowLevelUp(false)} closeIcon={null} size={500}>
+				{
+					showLevelUp ?
+						<HeroLevelUpModal
+							hero={hero}
+							soucebooks={props.sourcebooks}
+							options={props.options}
+							onAccept={h => {
+								setShowLevelUp(false);
+								setHero(h);
+								props.onChange(h);
+							}}
+							onClose={() => setShowLevelUp(false)}
+						/>
+						: null
+				}
+			</Drawer>
 		</ErrorBoundary>
 	);
 };

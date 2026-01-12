@@ -181,11 +181,6 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			features: [
-				FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: 'Signature Trait',
-					description: ''
-				}),
 				FactoryLogic.feature.createChoice({
 					id: Utils.guid(),
 					name: 'Purchased Traits',
@@ -1057,10 +1052,12 @@ export class FactoryLogic {
 			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
+			colorScheme: 'community',
 			showPowerRollCalculation: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',
+			debugClassicSheet: false,
 			// Monster Builder
 			similarLevel: true,
 			similarRole: true,

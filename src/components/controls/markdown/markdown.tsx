@@ -46,6 +46,11 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 		[ debouncedValue ]
 	);
 
+	const onChange = (str: string) => {
+		const sanitized = str.replaceAll('\\<', '<');
+		setValue(sanitized);
+	};
+
 	return (
 		<MDXEditor
 			className='markdown-editor'
@@ -69,7 +74,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 				})
 			]}
 			markdown={value}
-			onChange={setValue}
+			onChange={onChange}
 		/>
 	);
 };

@@ -117,13 +117,11 @@ export class SheetFormatter {
 			.replace(/I<([svw\d])\]/g, 'i<$1]')
 			.replace(/P<([svw\d])\]/g, 'p<$1]')
 			.replace(/([marip])<([svw\d]\])/g, '<span class="potency">$1&lt;$2</span>')
-			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
-			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
-			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
-			.replace(/(11 or lower|≤\s*11):?/g, `![11 or less](${rollT1Icon})`)
+			.replace(/((≤|\\?<\\?=)\s*11|11 or (less|lower)):?/g, `![11 or less](${rollT1Icon})`)
 			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
-			.replace(/(17\s*\+|≥\s*17):?/g, `![17 or greater](${rollT3Icon})`)
+			.replace(/((≥|>=)\s*17|17(\+| or (more|greater))):?/g, `![17 or greater](${rollT3Icon})`)
 			.replace(/[`]/g, '')
+			.replace(/[^\S\r\n]*\|[^\S\r\n]*/g, '|')
 			.replace(/<\/?code>/g, '');
 		return text;
 	};

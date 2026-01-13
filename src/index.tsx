@@ -13,7 +13,7 @@ initializeTheme();
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
-		navigator.serviceWorker.register('/forgesteel/sw.js')
+		navigator.serviceWorker.register('/sw.js')
 			.catch(registrationError => {
 				console.error('SW registration failed: ', registrationError);
 			});

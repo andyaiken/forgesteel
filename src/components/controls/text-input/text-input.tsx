@@ -20,6 +20,11 @@ export const TextInput = (props: Props) => {
 	const debouncedValue = useDebounce(value);
 
 	useEffect(
+		() => setValue(props.value),
+		[ props.value ]
+	);
+
+	useEffect(
 		() => props.onChange(debouncedValue),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ debouncedValue ]

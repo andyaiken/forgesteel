@@ -10,7 +10,7 @@ export class FeatureFlags {
 
 	static warehouse: FeatureFlag = {
 		code: 1551245932421255,
-		description: 'Access to the Warehouse beta'
+		description: 'Manual Forge Steel Warehouse connections'
 	};
 
 	static playtest: FeatureFlag = {
@@ -23,16 +23,10 @@ export class FeatureFlags {
 		description: 'Access to the (pre-release) Community sourcebook'
 	};
 
-	static patreon: FeatureFlag = {
-		code: Utils.hashCode('patreon'),
-		description: 'Show the Patreon connector'
-	};
-
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
-		FeatureFlags.communityPreRelease,
-		FeatureFlags.patreon
+		FeatureFlags.communityPreRelease
 	];
 
 	// #endregion

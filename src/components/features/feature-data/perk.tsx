@@ -164,7 +164,11 @@ export const ConfigPerk = (props: ConfigProps) => {
 					</Flex>
 				))
 			}
-			{props.data.selected.length < props.data.count ? getAddButton() : null}
+			{
+				props.data.selected.length < props.data.count ?
+					getAddButton()
+					: null
+			}
 			<Drawer open={perkSelectorOpen} onClose={() => setPerkSelectorOpen(false)} closeIcon={null} size={500}>
 				<PerkSelectModal
 					perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}

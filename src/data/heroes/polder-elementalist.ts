@@ -5330,6 +5330,7 @@ export const polderElementalist = {
 		conditions: [],
 		inventory: [],
 		projects: [],
+		titles: [],
 		controlledSlots: [],
 		notes: '',
 		encounterState: 'ready',

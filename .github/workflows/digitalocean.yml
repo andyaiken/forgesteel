@@ -2,11 +2,11 @@ name: Build and deploy
 
 on:
   push:
-    branches: [ feature/gh-action-deploy ]
+    branches: [ host-deployment ]
 
 env:
-  CONTAINER_REGISTRY: "registry.digitalocean.com/forgesteel-fork-test"
-  IMAGE_NAME: "forgesteel"
+  CONTAINER_REGISTRY: "registry.digitalocean.com/forgesteel"
+  IMAGE_NAME: "forgesteel-app"
 
 jobs:
   build_and_push:

@@ -7,12 +7,12 @@ const BASE_MANIFEST = {
 	name: 'Forge Steel',
 	short_name: 'Forge Steel',
 	description: 'Heroes, monsters, encounters ... everything you need for Draw Steel.',
-	start_url: '/forgesteel/',
+	start_url: '/',
 	display: 'standalone',
 	background_color: '#ffffff',
 	theme_color: '#1890ff',
 	orientation: 'any',
-	scope: '/forgesteel/',
+	scope: '/',
 	categories: [ 'games', 'entertainment', 'utilities' ],
 	lang: 'en',
 	dir: 'ltr'
@@ -20,7 +20,7 @@ const BASE_MANIFEST = {
 
 // Generate manifest with icon paths
 const generateManifest = (shieldIconPath?: string) => {
-	const iconPath = shieldIconPath || '/forgesteel/src/assets/shield.png';
+	const iconPath = shieldIconPath || '/src/assets/shield.png';
 
 	return {
 		...BASE_MANIFEST,
@@ -51,7 +51,7 @@ const manifestPlugin = (): Plugin => {
 			);
 
 			if (shieldIcon) {
-				const manifest = generateManifest(`/forgesteel/${shieldIcon}`);
+				const manifest = generateManifest(`/${shieldIcon}`);
 
 				// Write the manifest to the dist folder
 				this.emitFile({
@@ -66,7 +66,7 @@ const manifestPlugin = (): Plugin => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: '/forgesteel/',
+	base: '/',
 	build: {
 		chunkSizeWarningLimit: 10000,
 		rollupOptions: {
@@ -77,6 +77,12 @@ export default defineConfig({
 			output: {
 				entryFileNames: chunkInfo => {
 					return chunkInfo.name === 'sw' ? 'sw.js' : '[name]-[hash].js';
+				},
+				assetFileNames: chunkInfo => {
+					if (chunkInfo.names && chunkInfo.names[0].match(/\.(ttf|otf)$/)) {
+						return 'assets/[name][extname]';
+					}
+					return 'assets/[name]-[hash][extname]';
 				}
 			}
 		}
@@ -90,20 +96,14 @@ export default defineConfig({
 			name: 'dev-pwa-files',
 			configureServer(server) {
 				// Serve manifest.json during development
-				// Handle both possible paths due to Vite's base path resolution
-				server.middlewares.use('/forgesteel/forgesteel/manifest.json', (_, res) => {
-					const manifest = generateManifest();
-					res.setHeader('Content-Type', 'application/json');
-					res.end(JSON.stringify(manifest, null, 2));
-				});
-				server.middlewares.use('/forgesteel/manifest.json', (_, res) => {
+				server.middlewares.use('/manifest.json', (_, res) => {
 					const manifest = generateManifest();
 					res.setHeader('Content-Type', 'application/json');
 					res.end(JSON.stringify(manifest, null, 2));
 				});
 
 				// Serve sw.js during development (compiled on-the-fly)
-				server.middlewares.use('/forgesteel/sw.js', async (_, res) => {
+				server.middlewares.use('/sw.js', async (_, res) => {
 					try {
 						// Import and compile the service worker
 						const { build } = await import('esbuild');
@@ -131,7 +131,7 @@ export default defineConfig({
 	publicDir: 'public',
 	server: {
 		headers: {
-			'Service-Worker-Allowed': '/forgesteel/'
+			'Service-Worker-Allowed': '/'
 		}
 	}
 });

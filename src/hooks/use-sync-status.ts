@@ -91,9 +91,9 @@ export const useSyncStatus = () => {
 
 				// Cache essential files
 				const urlsToCache = [
-					'/forgesteel/',
-					'/forgesteel/index.html',
-					'/forgesteel/manifest.json'
+					'/',
+					'/index.html',
+					'/manifest.json'
 				];
 
 				await cache.addAll(urlsToCache);

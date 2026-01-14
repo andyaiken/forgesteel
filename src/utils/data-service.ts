@@ -22,7 +22,7 @@ export class DataService {
 		this.storageService = StorageServiceFactory.fromConnectionSettings(settings);
 
 		const envVal = import.meta.env.VITE_PATREON_TOKEN_HANDLER_HOST;
-		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://forgesteel-warehouse-b7wsk.ondigitalocean.app');
+		this.tokenHandlerHost = Utils.valueOrDefault(envVal, 'https://warehouse.forgesteel.net');
 	};
 
 	private async getLocalOrWarehouse<T>(key: string): Promise<T | null> {

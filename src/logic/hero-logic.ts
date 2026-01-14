@@ -187,10 +187,13 @@ export class HeroLogic {
 	};
 
 	static getTitles = (hero: Hero) => {
-		return HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.TitleChoice)
-			.flatMap(f => f.data.selected);
+		return [
+			...hero.state.titles,
+			...HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.TitleChoice)
+				.flatMap(f => f.data.selected)
+		];
 	};
 
 	static getDomains = (hero: Hero) => {

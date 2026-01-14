@@ -1,5 +1,5 @@
 import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
@@ -226,19 +226,6 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Perk
-							</Button>
-							<Button
-								block={true}
-								type='text'
-								onClick={() => {
-									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createTitleChoice({
-										id: Utils.guid(),
-										echelon: 1
-									}));
-								}}
-							>
-								Title
 							</Button>
 						</div>
 						<HeaderText level={3}>NPCs</HeaderText>
@@ -483,13 +470,6 @@ export const HeroCustomizeModal = (props: Props) => {
 			setFeature(feature.id, copy);
 		};
 
-		const setEchelon = (value: number) => {
-			const copy = Utils.copy(feature) as FeatureTitleChoice;
-			copy.data.echelon = value;
-			copy.data.selected = [];
-			setFeature(feature.id, copy);
-		};
-
 		const setAbility = (value: Ability) => {
 			const copy = Utils.copy(feature) as FeatureAbility;
 			copy.data.ability = value;
@@ -717,18 +697,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							value={feature.data.armor}
 							onChange={setProficiencyArmor}
-						/>
-					</div>
-				);
-			case FeatureType.TitleChoice:
-				return (
-					<div>
-						<HeaderText>Echelon</HeaderText>
-						<NumberSpin
-							min={1}
-							max={4}
-							value={feature.data.echelon}
-							onChange={setEchelon}
 						/>
 					</div>
 				);

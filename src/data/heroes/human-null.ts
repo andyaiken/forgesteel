@@ -4622,6 +4622,7 @@ export const humanNull = {
 		conditions: [],
 		inventory: [],
 		projects: [],
+		titles: [],
 		controlledSlots: [],
 		notes: '',
 		encounterState: 'ready',

@@ -4923,6 +4923,7 @@ export const polderShadow = {
 		conditions: [],
 		inventory: [],
 		projects: [],
+		titles: [],
 		controlledSlots: [],
 		notes: '',
 		encounterState: 'ready',

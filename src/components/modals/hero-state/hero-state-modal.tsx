@@ -9,6 +9,7 @@ import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/pro
 import { ResourcesPanel } from '@/components/modals/hero-state/resources-panel/resources-panel';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
+import { TitlesPanel } from '@/components/modals/hero-state/titles-panel/titles-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -70,6 +71,15 @@ export const HeroStateModal = (props: Props) => {
 						onChange={onChange}
 					/>
 				);
+			case HeroStatePage.Titles:
+				return (
+					<TitlesPanel
+						hero={hero}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={onChange}
+					/>
+				);
 		}
 	};
 
@@ -86,7 +96,8 @@ export const HeroStateModal = (props: Props) => {
 									HeroStatePage.Resources,
 									HeroStatePage.Vitals,
 									HeroStatePage.Inventory,
-									HeroStatePage.Projects
+									HeroStatePage.Projects,
+									HeroStatePage.Titles
 								]
 								:
 								[

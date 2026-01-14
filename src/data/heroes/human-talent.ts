@@ -5747,6 +5747,7 @@ export const humanTalent = {
 		conditions: [],
 		inventory: [],
 		projects: [],
+		titles: [],
 		controlledSlots: [],
 		notes: '',
 		encounterState: 'ready',

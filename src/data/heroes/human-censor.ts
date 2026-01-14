@@ -4560,6 +4560,7 @@ export const humanCensor = {
 		conditions: [],
 		inventory: [],
 		projects: [],
+		titles: [],
 		controlledSlots: [],
 		notes: '',
 		encounterState: 'ready',

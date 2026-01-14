@@ -1,19 +1,15 @@
 import { Button, Drawer, Flex, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Feature, FeatureTitleChoiceData } from '@/models/feature';
-import { Collections } from '@/utils/collections';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { TitleSelectModal } from '@/components/modals/select/title-select/title-select-modal';
@@ -86,17 +82,6 @@ export const ConfigTitleChoice = (props: ConfigProps) => {
 	const [ titleSelectorOpen, setTitleSelectorOpen ] = useState<boolean>(false);
 	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
-	const currentTitleIDs = HeroLogic.getTitles(props.hero).map(t => t.id);
-	const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[])
-		.filter(t => t.echelon === props.data.echelon)
-		.filter(t => !currentTitleIDs.includes(t.id));
-	const sortedTitles = Collections.sort(titles, t => t.name);
-
-	const customTitle = FactoryLogic.createTitle();
-	customTitle.name = 'Custom Title';
-	customTitle.echelon = props.data.echelon;
-	customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Title', description: 'Details' }));
-
 	const getAddButton = () => {
 		return (
 			<Button className='status-warning' block={true} onClick={() => setTitleSelectorOpen(true)}>
@@ -153,7 +138,6 @@ export const ConfigTitleChoice = (props: ConfigProps) => {
 			{props.data.selected.length < props.data.count ? getAddButton() : null}
 			<Drawer open={titleSelectorOpen} onClose={() => setTitleSelectorOpen(false)} closeIcon={null} size={500}>
 				<TitleSelectModal
-					titles={[ customTitle, ...sortedTitles ]}
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
 					options={props.options}

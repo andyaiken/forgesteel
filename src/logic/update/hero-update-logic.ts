@@ -167,6 +167,10 @@ export class HeroUpdateLogic {
 			hero.state.projects = [];
 		}
 
+		if (hero.state.titles === undefined) {
+			hero.state.titles = [];
+		}
+
 		if (hero.state.controlledSlots === undefined) {
 			hero.state.controlledSlots = [];
 		}
@@ -192,6 +196,9 @@ export class HeroUpdateLogic {
 				}
 			}
 		});
+
+		hero.state.titles.push(...hero.features.filter(f => f.type === FeatureType.TitleChoice).flatMap(f => f.data.selected));
+		hero.features = hero.features.filter(f => f.type !== FeatureType.TitleChoice);
 
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];

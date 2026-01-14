@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -180,10 +180,19 @@ interface ConfigProps {
 }
 
 export const ConfigChoice = (props: ConfigProps) => {
+	const [ comprehensive, setComprehensive ] = useState<boolean>(false);
 	const [ choiceSelectorOpen, setChoiceSelectorOpen ] = useState<boolean>(false);
 	const [ selectedFeature, setSelectedFeature ] = useState<Feature | null>(null);
 
 	let allOptions = [ ...props.data.options ];
+	if ((props.data.count === 'ancestry') && comprehensive) {
+		allOptions = props.sourcebooks
+			.flatMap(sb => sb.ancestries)
+			.flatMap(a => a.features)
+			.filter(f => f.type === FeatureType.Choice)
+			.filter(f => f.data.count === 'ancestry')
+			.flatMap(f => f.data.options);
+	}
 	if (allOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
 		allOptions = allOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
 		const additionalOptions = HeroLogic.getFormerAncestries(props.hero!)
@@ -215,20 +224,6 @@ export const ConfigChoice = (props: ConfigProps) => {
 	const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
 	const showCosts = props.data.options.some(opt => opt.value > 1);
-
-	const getAddButton = () => {
-		if (sortedOptions.length === 0) {
-			return (
-				<Empty text='There are no options to choose for this feature.' />
-			);
-		}
-
-		return (
-			<Button className='status-warning' block={true} onClick={() => setChoiceSelectorOpen(true)}>
-				Choose an option
-			</Button>
-		);
-	};
 
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
@@ -271,7 +266,33 @@ export const ConfigChoice = (props: ConfigProps) => {
 					</Flex>
 				))
 			}
-			{pointsLeft > 0 ? getAddButton() : null}
+			{
+				pointsLeft > 0 ?
+					sortedOptions.length === 0 ?
+						<Empty text='There are no options to choose for this feature.' />
+						:
+						<Button className='status-warning' block={true} onClick={() => setChoiceSelectorOpen(true)}>
+							{comprehensive ? 'Choose an option (extended)' : 'Choose an option'}
+						</Button>
+					: null
+			}
+			{
+				(pointsLeft > 0) && (props.data.count === 'ancestry') ?
+					<>
+						<Divider />
+						<Toggle label='Choose a feature from a different ancestry' value={comprehensive} onChange={setComprehensive} />
+					</>
+					: null
+			}
+			{
+				comprehensive ?
+					<Alert
+						type='warning'
+						showIcon={true}
+						title='This is typically against the rules.'
+					/>
+					: null
+			}
 			<Drawer open={choiceSelectorOpen} onClose={() => setChoiceSelectorOpen(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={sortedOptions}

@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Space, Tabs, Upload } from 'antd';
+import { Button, Drawer, Flex, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -15,7 +15,9 @@ import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
+import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterGroup } from '@/models/monster-group';
+import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
@@ -23,6 +25,8 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -34,12 +38,13 @@ interface Props {
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (monsterGroup: MonsterGroup) => void;
-	onEditMonster: (monster: Monster) => void;
 }
 
 export const MonsterGroupEditPanel = (props: Props) => {
 	const [ monsterGroup, setMonsterGroup ] = useState<MonsterGroup>(props.monsterGroup);
+	const [ monsterID, setMonsterID ] = useState<string>('');
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
@@ -326,7 +331,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							key={m.id}
 							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
-								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); props.onEditMonster(m); }} />,
+								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); setMonsterID(m.id); }} />,
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
 								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
@@ -469,37 +474,91 @@ export const MonsterGroupEditPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='monster-group-edit-panel'>
-				<Tabs
-					items={[
+			<Select
+				options={[
+					{ label: `Monster Group: ${monsterGroup.name || 'Unnamed Monster Group'}`, value: '' },
+					...monsterGroup.monsters.map(m => ({ label: `Monster: ${m.name || 'Unnamed Monster'}`, value: m.id }))
+				]}
+				optionRender={o => <div className='ds-text'>{o.data.label}</div>}
+				value={monsterID}
+				onChange={setMonsterID}
+			/>
+			{
+				monsterID === '' ?
+					<div className='monster-group-edit-panel'>
+						<div className='monster-group-workspace-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Monster Group',
+										children: getNameAndDescriptionSection()
+									},
+									{
+										key: '2',
+										label: 'Information',
+										children: getInformationEditSection()
+									},
+									{
+										key: '3',
+										label: 'Malice',
+										children: getMaliceEditSection()
+									},
+									{
+										key: '4',
+										label: 'Monsters',
+										children: getMonstersEditSection()
+									},
+									{
+										key: '5',
+										label: 'Customization',
+										children: getMonstersCustomizationSection()
+									}
+								]}
+							/>
+						</div>
 						{
-							key: '1',
-							label: 'Monster Group',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Information',
-							children: getInformationEditSection()
-						},
-						{
-							key: '3',
-							label: 'Malice',
-							children: getMaliceEditSection()
-						},
-						{
-							key: '4',
-							label: 'Monsters',
-							children: getMonstersEditSection()
-						},
-						{
-							key: '5',
-							label: 'Customization',
-							children: getMonstersCustomizationSection()
+							props.mode === PanelMode.Full ?
+								<div className='monster-group-preview-column'>
+									<Tabs
+										items={[
+											{
+												key: '1',
+												label: 'Preview',
+												children: (
+													<SelectablePanel>
+														<MonsterGroupPanel
+															monsterGroup={monsterGroup}
+															sourcebooks={props.sourcebooks}
+															options={props.options}
+															mode={PanelMode.Full}
+														/>
+													</SelectablePanel>
+												)
+											}
+										]}
+									/>
+								</div>
+								: null
 						}
-					]}
-				/>
-			</div>
+					</div>
+					:
+					<MonsterEditPanel
+						monster={monsterGroup.monsters.find(m => m.id === monsterID) as Monster}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						mode={PanelMode.Full}
+						onChange={monster => {
+							const copy = Utils.copy(monsterGroup);
+							const index = copy.monsters.findIndex(m => m.id === monster.id);
+							if (index !== -1) {
+								copy.monsters[index] = monster;
+							}
+							setMonsterGroup(copy);
+							props.onChange(copy);
+						}}
+					/>
+			}
 		</ErrorBoundary>
 	);
 };

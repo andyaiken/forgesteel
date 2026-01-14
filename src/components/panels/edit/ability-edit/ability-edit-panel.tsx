@@ -322,7 +322,7 @@ export const AbilityEditPanel = (props: Props) => {
 				</HeaderText>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						ability.distance.map((distance, n) => (
+						(ability.distance || []).map((distance, n) => (
 							<Expander
 								key={n}
 								title={AbilityLogic.getDistance(distance)}
@@ -508,7 +508,7 @@ export const AbilityEditPanel = (props: Props) => {
 				</HeaderText>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
-						ability.sections.map((section, n) => {
+						(ability.sections || []).map((section, n) => {
 							const getSectionTitle = () => {
 								switch (section.type) {
 									case 'text':

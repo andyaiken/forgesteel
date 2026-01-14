@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { Button, Divider, Drawer, Flex, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -22,14 +22,18 @@ import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { RetainerLogic } from '@/logic/retainer-logic';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -41,13 +45,16 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	sourcebooks: Sourcebook[];
 	options: Options;
-	similarMonsters: Monster[];
+	mode?: PanelMode;
 	onChange: (monster: Monster) => void;
 }
 
 export const MonsterEditPanel = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(props.monster);
 	const [ selectedCategory, setSelectedCategory ] = useState<MonsterFeatureCategory>(MonsterFeatureCategory.Text);
+	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
+	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
+	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -226,7 +233,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const selectRandomEncounterValue = () => {
-			const values = props.similarMonsters.map(m => m.encounterValue);
+			const values = getSimilarMonsters().map(m => m.encounterValue);
 			setEncounterValue(Collections.draw(values));
 		};
 
@@ -261,7 +268,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Encounter Value</HeaderText>
 				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander
 							title='Similar Monsters'
 							extra={[
@@ -271,7 +278,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HeaderText>Encounter Value</HeaderText>
 							<HistogramPanel
 								min={0}
-								values={props.similarMonsters.map(m => m.encounterValue)}
+								values={getSimilarMonsters().map(m => m.encounterValue)}
 								selected={monster.encounterValue}
 								onSelect={setEncounterValue}
 							/>
@@ -340,22 +347,22 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const selectRandomSpeed = () => {
-			const values = props.similarMonsters.map(m => m.speed.value);
+			const values = getSimilarMonsters().map(m => m.speed.value);
 			setSpeed(Collections.draw(values));
 		};
 
 		const selectRandomStamina = () => {
-			const values = props.similarMonsters.map(m => m.stamina);
+			const values = getSimilarMonsters().map(m => m.stamina);
 			setStamina(Collections.draw(values));
 		};
 
 		const selectRandomStability = () => {
-			const values = props.similarMonsters.map(m => m.stability);
+			const values = getSimilarMonsters().map(m => m.stability);
 			setStability(Collections.draw(values));
 		};
 
 		const selectRandomFreeStrikeDamage = () => {
-			const values = props.similarMonsters.map(m => m.freeStrikeDamage);
+			const values = getSimilarMonsters().map(m => m.freeStrikeDamage);
 			setFreeStrikeDamage(Collections.draw(values));
 		};
 
@@ -383,7 +390,7 @@ export const MonsterEditPanel = (props: Props) => {
 					onChange={setMovementModes}
 				/>
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander
 							title='Similar Monsters'
 							extra={[
@@ -393,7 +400,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HeaderText>Speed</HeaderText>
 							<HistogramPanel
 								min={0}
-								values={props.similarMonsters.map(m => m.speed.value)}
+								values={getSimilarMonsters().map(m => m.speed.value)}
 								selected={monster.speed.value}
 								onSelect={setSpeed}
 							/>
@@ -403,7 +410,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Stamina</HeaderText>
 				<NumberSpin min={0} value={monster.stamina} steps={[ 1, 10 ]} onChange={setStamina} />
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander
 							title='Similar Monsters'
 							extra={[
@@ -412,7 +419,7 @@ export const MonsterEditPanel = (props: Props) => {
 						>
 							<HeaderText>Stamina</HeaderText>
 							<HistogramPanel
-								values={props.similarMonsters.map(m => m.stamina)}
+								values={getSimilarMonsters().map(m => m.stamina)}
 								selected={monster.stamina}
 								onSelect={setStamina}
 							/>
@@ -422,7 +429,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Stability</HeaderText>
 				<NumberSpin min={0} value={monster.stability} onChange={setStability} />
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander
 							title='Similar Monsters'
 							extra={[
@@ -432,7 +439,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HeaderText>Stability</HeaderText>
 							<HistogramPanel
 								min={0}
-								values={props.similarMonsters.map(m => m.stability)}
+								values={getSimilarMonsters().map(m => m.stability)}
 								selected={monster.stability}
 								onSelect={setStability}
 							/>
@@ -450,7 +457,7 @@ export const MonsterEditPanel = (props: Props) => {
 					onChange={setFreeStrikeType}
 				/>
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander
 							title='Similar Monsters'
 							extra={[
@@ -460,7 +467,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HeaderText>Free Strike Damage</HeaderText>
 							<HistogramPanel
 								min={0}
-								values={props.similarMonsters.map(m => m.freeStrikeDamage)}
+								values={getSimilarMonsters().map(m => m.freeStrikeDamage)}
 								selected={monster.freeStrikeDamage}
 								onSelect={setFreeStrikeDamage}
 							/>
@@ -482,7 +489,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const selectRandom = (ch: Characteristic) => {
-			const values = props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch));
+			const values = getSimilarMonsters().map(m => MonsterLogic.getCharacteristic(m, ch));
 			setCharacteristic(ch, Collections.draw(values));
 		};
 
@@ -505,7 +512,7 @@ export const MonsterEditPanel = (props: Props) => {
 								onChange={value => setCharacteristic(ch, value)}
 							/>
 							{
-								props.similarMonsters.length > 0 ?
+								getSimilarMonsters().length > 0 ?
 									<Expander
 										title='Similar Monsters'
 										extra={[
@@ -516,7 +523,7 @@ export const MonsterEditPanel = (props: Props) => {
 										<HistogramPanel
 											min={-5}
 											max={5}
-											values={props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch))}
+											values={getSimilarMonsters().map(m => MonsterLogic.getCharacteristic(m, ch))}
 											selected={MonsterLogic.getCharacteristic(monster, ch)}
 											onSelect={value => setCharacteristic(ch, value)}
 										/>
@@ -578,7 +585,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const similar: { feature: Feature, count: number }[] = [];
-		props.similarMonsters.forEach(m => {
+		getSimilarMonsters().forEach(m => {
 			m.features
 				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
 				.filter(f => !monster.features.some(mf => mf.name === f.name))
@@ -632,9 +639,9 @@ export const MonsterEditPanel = (props: Props) => {
 						<Empty />
 						: null
 				}
-				{props.similarMonsters.length > 0 ? <Divider /> : null}
+				{getSimilarMonsters().length > 0 ? <Divider /> : null}
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>Features from Similar Monsters</HeaderText>
 							<Space orientation='vertical' style={{ width: '100%' }}>
@@ -686,7 +693,7 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const values = props.similarMonsters.map(m => m.withCaptain).filter(text => !!text);
+		const values = getSimilarMonsters().map(m => m.withCaptain).filter(text => !!text);
 		const options = Collections.distinct(values, k => k).sort().map(text => ({
 			text: text,
 			count: values.filter(v => v === text).length
@@ -697,7 +704,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>With Captain</HeaderText>
 				<MarkdownEditor value={monster.withCaptain} onChange={setWithCaptain} />
 				{
-					props.similarMonsters.length > 0 ?
+					getSimilarMonsters().length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>With Captain</HeaderText>
 							<Space orientation='vertical' style={{ width: '100%' }}>
@@ -789,9 +796,117 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
+	const getSimilarMonsters = () => {
+		const monsters = SourcebookLogic
+			.getSimilarMonsters(props.sourcebooks, monster, props.options)
+			.filter(m => !hiddenMonsterIDs.includes(m.id));
+
+		scratchpadMonsters
+			.filter(m => !monsters.map(monster => monster.id).includes(m.id))
+			.forEach(m => monsters.push(m));
+
+		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
+	};
+
+	const getMonsterStatsSection = () => {
+		const stats = MonsterLogic.getSuggestedStats(monster);
+
+		return (
+			<div>
+				<HeaderText>Stats</HeaderText>
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Highest characteristic' value={stats.highestCharacteristic} />
+					<Field orientation='vertical' label='EV' value={stats.ev} />
+					<Field orientation='vertical' label='Stamina' value={stats.stamina} />
+					<Field orientation='vertical' label='Free strike damage' value={stats.freeStrikeDamage} />
+				</Flex>
+				<HeaderText>Ability Damage</HeaderText>
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Fewer targets' value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`} />
+					<Field highlight={true} orientation='vertical' label='Typical targets' value={`${stats.damage.tier1} / ${stats.damage.tier2} / ${stats.damage.tier3}`} />
+					<Field orientation='vertical' label='1 extra target' value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`} />
+					<Field orientation='vertical' label='2+ extra targets' value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`} />
+				</Flex>
+			</div>
+		);
+	};
+
+	const getSimilarMonstersSection = () => {
+		const similarMonsters = getSimilarMonsters();
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Expander title='Modify This List'>
+					<Space orientation='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+						<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
+						<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
+					</Space>
+				</Expander>
+				{
+					similarMonsters.map(m => {
+						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
+						if (!monsterGroup) {
+							return null;
+						}
+
+						return (
+							<SelectablePanel
+								key={m.id}
+								action={
+									<Button
+										onClick={e => {
+											e.stopPropagation();
+											if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
+												let copy = Utils.copy(scratchpadMonsters) as Monster[];
+												copy = copy.filter(cm => cm.id !== m.id);
+												setScratchpadMonsters(copy);
+											} else {
+												const copy = Utils.copy(hiddenMonsterIDs) as string[];
+												copy.push(m.id);
+												setHiddenMonsterIDs(copy);
+											}
+										}}
+									>
+										Hide
+									</Button>
+								}
+							>
+								<MonsterPanel
+									monster={m}
+									monsterGroup={monsterGroup}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+								/>
+							</SelectablePanel>
+						);
+					})
+				}
+				{
+					similarMonsters.length === 0 ?
+						<Empty text='No similar monsters.' />
+						: null
+				}
+				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} size={500}>
+					<MonsterSelectModal
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelect={monster => {
+							const copy = Utils.copy(scratchpadMonsters) as Monster[];
+							copy.push(monster);
+							setScratchpadMonsters(copy);
+							setDrawerOpen(false);
+						}}
+						onClose={() => setDrawerOpen(false)}
+					/>
+				</Drawer>
+			</Space>
+		);
+	};
+
 	const genesplice = () => {
 		const copy = Utils.copy(monster);
-		MonsterLogic.genesplice(copy, props.similarMonsters);
+		MonsterLogic.genesplice(copy, getSimilarMonsters());
 		setMonster(copy);
 		props.onChange(copy);
 	};
@@ -843,14 +958,50 @@ export const MonsterEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='monster-edit-panel'>
-				<Tabs
-					items={tabs}
-					tabBarExtraContent={
-						props.similarMonsters.length > 1 ?
-							<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
-							: null
-					}
-				/>
+				<div className='monster-workspace-column'>
+					<Tabs
+						items={tabs}
+						tabBarExtraContent={
+							getSimilarMonsters().length > 1 ?
+								<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
+								: null
+						}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='monster-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<MonsterPanel
+													monster={monster}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									},
+									{
+										key: '2',
+										label: 'Suggested Statistics',
+										children: getMonsterStatsSection()
+									},
+									{
+										key: '3',
+										label: 'Similar Monsters',
+										children: getSimilarMonstersSection()
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

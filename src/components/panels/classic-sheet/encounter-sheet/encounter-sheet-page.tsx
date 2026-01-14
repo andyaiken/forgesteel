@@ -1,4 +1,5 @@
 import { FillerCard, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
+import { DebugCard } from '../reference/debug-card';
 import { Encounter } from '@/models/encounter';
 import { EncounterHeaderCard } from '@/components/panels/classic-sheet/encounter-header/encounter-header';
 import { EncounterRosterCard } from '@/components/panels/classic-sheet/encounter-roster/encounter-roster';
@@ -39,6 +40,15 @@ export const EncounterSheetPage = (props: Props) => {
 				element: <NotesCard notes={encounter.notes} key='notes' />,
 				width: 1,
 				height: nH,
+				shown: false
+			});
+		}
+
+		if (props.options.debugClassicSheet) {
+			requiredCards.push({
+				element: <DebugCard options={props.options} key='debug' />,
+				width: 1,
+				height: 15,
 				shown: false
 			});
 		}

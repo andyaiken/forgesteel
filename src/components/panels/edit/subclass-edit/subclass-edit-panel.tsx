@@ -13,8 +13,11 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
+import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -25,6 +28,7 @@ interface Props {
 	subClass: SubClass;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (subClass: SubClass) => void;
 }
 
@@ -168,20 +172,46 @@ export const SubClassEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='subclass-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Subclass',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Levels',
-							children: getFeaturesByLevelEditSection()
-						}
-					]}
-				/>
+				<div className='subclass-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Subclass',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Levels',
+								children: getFeaturesByLevelEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='subclass-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<SubclassPanel
+													subclass={subClass}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

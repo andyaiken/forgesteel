@@ -12,8 +12,12 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationTrait } from '@/enums/negotiation-trait';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -25,6 +29,8 @@ import './negotiation-edit-panel.scss';
 interface Props {
 	negotiation: Negotiation;
 	sourcebooks: Sourcebook[];
+	options: Options;
+	mode?: PanelMode;
 	onChange: (negotiation: Negotiation) => void;
 }
 
@@ -313,35 +319,61 @@ export const NegotiationEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='negotiation-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Negotiation',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getNegotiationDetailsSection()
-						},
-						{
-							key: '3',
-							label: 'Motivations',
-							children: getNegotiationMotivationsSection()
-						},
-						{
-							key: '4',
-							label: 'Pitfalls',
-							children: getNegotiationPitfallsSection()
-						},
-						{
-							key: '5',
-							label: 'Outcomes',
-							children: getNegotiationOutcomesSection()
-						}
-					]}
-				/>
+				<div className='negotiation-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Negotiation',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getNegotiationDetailsSection()
+							},
+							{
+								key: '3',
+								label: 'Motivations',
+								children: getNegotiationMotivationsSection()
+							},
+							{
+								key: '4',
+								label: 'Pitfalls',
+								children: getNegotiationPitfallsSection()
+							},
+							{
+								key: '5',
+								label: 'Outcomes',
+								children: getNegotiationOutcomesSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='negotiation-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<NegotiationPanel
+													negotiation={negotiation}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

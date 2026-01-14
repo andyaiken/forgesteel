@@ -52,7 +52,7 @@ npm install
 npm run start
 ```
 
-Once built, the app should then be available at `http://localhost:5173/forgesteel/`.
+Once built, the app should then be available at `http://localhost:5173/`.
 
 When you've finished with your changes, make sure to appease the linter and run the unit tests:
 

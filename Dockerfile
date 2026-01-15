@@ -5,7 +5,7 @@ COPY package.json package-lock.json .
 RUN npm ci
 
 COPY . ./
-RUN npm run predeploy
+RUN npm run build
 
 FROM nginx:latest
 

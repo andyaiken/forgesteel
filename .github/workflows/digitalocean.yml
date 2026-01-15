@@ -1,0 +1,125 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ host-deployment ]
+
+env:
+  CONTAINER_REGISTRY: "registry.digitalocean.com/forgesteel"
+  IMAGE_NAME: "forgesteel-app"
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    
+      - name: Log in to DOCR with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+      
+      - name: Set short hash
+        run: echo "COMMIT_SHA_SHORT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+
+      - name: Set full image name
+        run: echo "FULL_IMAGE_NAME=${CONTAINER_REGISTRY}/${IMAGE_NAME}" >> $GITHUB_ENV
+
+      - name: Check image name
+        run: echo "${{ env.FULL_IMAGE_NAME }}:${{ env.COMMIT_SHA_SHORT }}"
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6.5.0
+        with:
+          context: .
+          push: true
+          tags: ${{ env.FULL_IMAGE_NAME }}:${{ env.COMMIT_SHA_SHORT }},${{ env.FULL_IMAGE_NAME }}:latest
+
+      - name: Cleanup old images
+        run: |
+          #!/bin/bash -e
+
+          ## Adapted slightly from https://github.com/rehab834/Automatic-cleaning-up-of-DOCR-/blob/main/DOCR-clean-up.yaml
+          set -o pipefail
+          echo "=== Starting DOCR Cleanup ==="
+          trap 'echo "ERROR: Cleanup failed at $(date)"; exit 1' ERR
+
+          ##
+          ## Build keeplist from running apps
+          ##
+          echo "Building list of digests to keep from running apps..."
+          KEEP_DIGESTS=""
+          echo "Fetching in-use image digests..."
+          IN_USE_DIGESTS=$(doctl apps list --output json | \
+              jq -r '.[] | .active_deployment.cause_details.docr_push.image_digest | select( . != null )')
+          if [ -z "$IN_USE_DIGESTS" ]; then
+              echo "No running images found in apps."
+          else
+              KEEP_DIGESTS=$(echo "$IN_USE_DIGESTS")
+              echo "Successfully marked running image digests to keep."
+          fi
+          echo "Keep list build complete."
+
+          ##
+          ## Loop through each repository
+          ##
+          doctl registry repository list | tail -n +2 | awk '{print $1}' | while read -r repo; do
+              echo "--- Processing repository: $repo ---"
+              ## List all manifests and separate into two lists
+              all_manifests=$(doctl registry repository list-manifests $repo --format Digest,UpdatedAt,Tags | tail -n +2)
+              untagged_list=""
+              tagged_list=""
+              while read -r line; do
+                  [ -z "$line" ] && continue
+                  digest=$(echo $line | awk '{print $1}')
+                  updated_at=$(echo $line | awk '{print $6, $7, $8}')
+                  tags=$(echo $line | awk '{print $10}')
+                  timestamp=$(date -d "$updated_at" +%s)
+                  output_line="$timestamp|$digest|$updated_at"
+                  if [ "$tags" == "[]" ]; then
+                      untagged_list+="$output_line\n"
+                  else
+                      tagged_list+="$output_line\n"
+                  fi
+              done <<< "$all_manifests"
+              ## Process UNTAGGED images (Delete all, no checks)
+              echo "Processing untagged images..."
+              while read -r line; do
+                  [ -z "$line" ] && continue
+                  digest=$(echo $line | cut -d'|' -f2)
+                  updated_at=$(echo $line | cut -d'|' -f3)
+                  printf "Deleting (untagged): %s (updated at %s)\n" "$digest" "$updated_at"
+                  doctl registry repository delete-manifest $repo $digest --force
+              done <<< "$(echo -e "$untagged_list")"
+              ## Process TAGGED images
+              echo "Processing tagged images..."
+              keep_count=0
+              while read -r line; do
+                  [ -z "$line" ] && continue
+                  keep_count=$((keep_count + 1))
+                  timestamp=$(echo $line | cut -d'|' -f1)
+                  digest=$(echo $line | cut -d'|' -f2)
+                  updated_at=$(echo $line | cut -d'|' -f3)
+                  ## Skip images currently running in cluster
+                  if [[ "$KEEP_DIGESTS" == *"$digest"* ]]; then
+                      printf "Keeping (in use): %s (updated at %s)\n" "$digest" "$updated_at"
+                      continue
+                  fi
+                  ## Always keep the 5 latest tagged images
+                  if [[ $keep_count -le 5 ]]; then
+                      printf "Keeping (newest %d/5): %s (updated at %s)\n" "$keep_count" "$digest" "$updated_at"
+                      continue
+                  fi
+                  ## Delete others
+                  printf "Deleting (tagged, older): %s (updated at %s)\n" "$digest" "$updated_at"
+                  doctl registry repository delete-manifest $repo $digest --force
+
+              done <<< "$(echo -e "$tagged_list" | sort -rn)" # Sort tagged list newest first
+              echo "Completed cleanup for repository: $repo"
+          done
+          echo "=== Registry cleanup finished successfully ==="

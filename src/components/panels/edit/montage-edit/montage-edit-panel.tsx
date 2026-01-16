@@ -9,10 +9,16 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -21,6 +27,10 @@ import './montage-edit-panel.scss';
 
 interface Props {
 	montage: Montage;
+	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	options: Options;
+	mode?: PanelMode;
 	onChange: (montage: Montage) => void;
 }
 
@@ -534,30 +544,57 @@ export const MontageEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='montage-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Montage',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Scene',
-							children: getMontageSceneSection()
-						},
-						{
-							key: '3',
-							label: 'Sections',
-							children: getMontageSectionsSection()
-						},
-						{
-							key: '4',
-							label: 'Outcomes',
-							children: getMontageOutcomesSection()
-						}
-					]}
-				/>
+				<div className='montage-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Montage',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Scene',
+								children: getMontageSceneSection()
+							},
+							{
+								key: '3',
+								label: 'Sections',
+								children: getMontageSectionsSection()
+							},
+							{
+								key: '4',
+								label: 'Outcomes',
+								children: getMontageOutcomesSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='montage-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<MontagePanel
+													montage={montage}
+													heroes={props.heroes}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

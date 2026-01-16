@@ -5,13 +5,16 @@ import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Imbuement } from '@/models/imbuement';
+import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
 import { ItemType } from '@/enums/item-type';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { ThunderboltOutlined } from '@ant-design/icons';
@@ -25,6 +28,7 @@ interface Props {
 	imbuement: Imbuement;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (imbuemenet: Imbuement) => void;
 }
 
@@ -122,6 +126,7 @@ export const ImbuementEditPanel = (props: Props) => {
 						<ProjectEditPanel
 							project={imbuement.crafting}
 							includeNameAndDescription={false}
+							sourcebooks={props.sourcebooks}
 							onChange={setCrafting}
 						/>
 						: null
@@ -156,30 +161,56 @@ export const ImbuementEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='imbuement-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'imbuement',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getImbuementEditSection()
-						},
-						{
-							key: '3',
-							label: 'Crafting',
-							children: getCraftingEditSection()
-						},
-						{
-							key: '4',
-							label: 'Feature',
-							children: getFeatureEditSection()
-						}
-					]}
-				/>
+				<div className='imbuement-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'imbuement',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getImbuementEditSection()
+							},
+							{
+								key: '3',
+								label: 'Crafting',
+								children: getCraftingEditSection()
+							},
+							{
+								key: '4',
+								label: 'Feature',
+								children: getFeatureEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='imbuement-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<ImbuementPanel
+													imbuement={imbuement}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

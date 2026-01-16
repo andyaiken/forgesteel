@@ -1,4 +1,3 @@
-import { Browser } from '@/utils/browser';
 import { Converter } from 'showdown';
 import { Random } from '@/utils/random';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -109,7 +108,7 @@ export class Utils {
 		const height = element.clientHeight;
 
 		// see: https://github.com/qq15725/modern-screenshot/issues/104
-		const mobileFix = (node: Node) => {
+		const fontScaleFix = (node: Node) => {
 			if (node instanceof HTMLElement) {
 				node.style.fontSize = node.style.fontSize.replace(/(\d+(\.\d+)?(e[+-]?\d+)?)/g, (match, number) => {
 					const parsedNumber = parseFloat(number);
@@ -122,7 +121,7 @@ export class Utils {
 			width: width,
 			height: height,
 			scale: scale,
-			onCloneEachNode: Browser.isMobile() ? mobileFix : null
+			onCloneEachNode: fontScaleFix
 		});
 	};
 

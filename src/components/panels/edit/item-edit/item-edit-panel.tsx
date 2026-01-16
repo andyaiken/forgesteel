@@ -13,14 +13,17 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Item } from '@/models/item';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -33,6 +36,7 @@ interface Props {
 	item: Item;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	mode?: PanelMode;
 	onChange: (item: Item) => void;
 }
 
@@ -248,6 +252,7 @@ export const ItemEditPanel = (props: Props) => {
 						<ProjectEditPanel
 							project={item.crafting}
 							includeNameAndDescription={false}
+							sourcebooks={props.sourcebooks}
 							onChange={setCrafting}
 						/>
 						: null
@@ -259,30 +264,56 @@ export const ItemEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='item-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Item',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getItemDetailsEditSection()
-						},
-						{
-							key: '3',
-							label: 'Crafting',
-							children: getCraftingEditSection()
-						},
-						{
-							key: '4',
-							label: 'Levels',
-							children: getFeaturesByLevelEditSection()
-						}
-					]}
-				/>
+				<div className='item-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Item',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getItemDetailsEditSection()
+							},
+							{
+								key: '3',
+								label: 'Crafting',
+								children: getCraftingEditSection()
+							},
+							{
+								key: '4',
+								label: 'Levels',
+								children: getFeaturesByLevelEditSection()
+							}
+						]}
+					/>
+				</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div className='item-preview-column'>
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<ItemPanel
+													item={item}
+													sourcebooks={props.sourcebooks}
+													options={props.options}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+										)
+									}
+								]}
+							/>
+						</div>
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

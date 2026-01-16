@@ -33,13 +33,23 @@ export const InventoryPanel = (props: Props) => {
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 
 	const addItem = (item: Item) => {
-		const copy = Utils.copy(hero);
-		copy.state.inventory.push(item);
-		setHero(copy);
-		setShopVisible(false);
-		props.onChange(copy);
-	};
+		const heroCopy = Utils.copy(hero);
+		const itemCopy = Utils.copy(item);
 
+		const baseId = itemCopy.id.split(/-\d+$/)[0];
+		const existingItems = heroCopy.state.inventory.filter(i => i.id.startsWith(baseId));
+
+		if (existingItems.length > 0) {
+			itemCopy.id = `${baseId}-count${existingItems.length + 1}`;
+		} else {
+			itemCopy.id = baseId;
+		}
+
+		heroCopy.state.inventory.push(itemCopy);
+		setHero(heroCopy);
+		setShopVisible(false);
+		props.onChange(heroCopy);
+	};
 	const changeItem = (item: Item) => {
 		const copy = Utils.copy(hero);
 		const index = copy.state.inventory.findIndex(i => i.id === item.id);

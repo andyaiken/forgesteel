@@ -1,0 +1,15 @@
+{
+  "forPlayers": "For $t(common:players, capitalize)",
+  "prevTip": "Prev Tip",
+  "nextTip": "Next Tip",
+  "description": "<b>$t(common:forgeSteel, uppercase)</b> is an app for <b>$t(common:drawSteel, uppercase)</b> players, directors, and content creators.",
+  "theRightPlace": "If you are a <b>$t(common:drawSteel, uppercase)</b> player, you are in the right place.",
+  "heroScreenDescription": "In the <b>$t(common:hero_other, uppercase)</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.",
+  "appUses": "You can use the app to track your hero's stamina, conditions, surges, and so on.",
+  "appOfflineUses": "If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).",
+  "rulesLookup": "In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.",
+  "includedContent": "All the official content is included, and you can also use any homebrew content your director has created.",
+  "offlinePlay": "If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).",
+  "customizeAbilities": "Want something a little different? You can customize any of your $t(ability_other) to make them more unique to your hero.",
+  "heroCustomization": "Need to tweak your hero in a way that's not strictly by the book? No problem! You can customize your hero in any number of ways - an extra $t(ability_one), bonuses to your $t(characteristic_other), extra skills, retainers, etc."
+}

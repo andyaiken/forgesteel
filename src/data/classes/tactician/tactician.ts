@@ -12,6 +12,7 @@ import { vanguard } from '@/data/classes/tactician/vanguard';
 
 export const tactician: HeroClass = {
 	id: 'class-tactician',
+	languageKey: 'class:tactician',
 	name: 'Tactician',
 	description: `
 Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.
@@ -41,6 +42,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'tactician-resource',
+					languageKey: 'class:tactician.focus',
 					name: 'Focus',
 					gains: [
 						{

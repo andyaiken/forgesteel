@@ -4,7 +4,7 @@ import { AbilityType } from '@/models/ability';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Size } from '@/models/size';
 import { Speed } from '@/models/speed';
-
+import { TFunction } from 'i18next';
 export class FormatLogic {
 	static getAbilityType = (type: AbilityType) => {
 		if (type.usage === AbilityUsage.Other) {
@@ -34,12 +34,12 @@ export class FormatLogic {
 		return `${speed.value} (${modes})`;
 	};
 
-	static getSpeedModes = (modes: string | string[]) => {
+	static getSpeedModes = (modes: string | string[], t?: TFunction) => {
 		if (typeof modes === 'string') {
-			return modes;
+			return t ? t(modes) : modes;
 		}
-
-		return modes.join(', ');
+		const translatedModes = t ? modes.map(m => t(m)) : modes;
+		return translatedModes.join(', ');
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

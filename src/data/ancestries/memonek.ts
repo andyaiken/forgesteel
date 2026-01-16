@@ -6,6 +6,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 
 export const memonek: Ancestry = {
 	id: 'ancestry-memonek',
+	languageKey: 'ancestry:memonek',
 	name: 'Memonek',
 	description: 'The native denizens of Axiom, the Plane of Uttermost Law, memonek dwell in a land with lakes and trees and birds and flowers. But on this alien world, the lakes are seas of mercury, the birds glitter with wings of glass stretched gossamer thin, and the flowers’ petals are iridescent metal as flexible and fragile as any earthly rose.',
 	features: [

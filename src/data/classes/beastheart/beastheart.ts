@@ -45,6 +45,7 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'beastheart-resource',
+					languageKey: 'class:beastheart.ferocity',
 					name: 'Ferocity',
 					gains: [
 						{

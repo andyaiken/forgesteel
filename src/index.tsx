@@ -8,6 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
 
 import './index.scss';
+import './i18n/config.ts';
 
 initializeTheme();
 

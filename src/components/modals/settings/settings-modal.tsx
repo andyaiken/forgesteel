@@ -10,6 +10,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
+import { GoogleDriveSettingsPanel } from '@/components/panels/connection-settings/google-drive-settings-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -712,6 +713,22 @@ export const SettingsModal = (props: Props) => {
 		}
 	};
 
+	const getGoogleDriveSettings = () => {
+		if (FeatureFlags.hasFlag(FeatureFlags.remoteGoogleDrive.code)) {
+			return (
+				<Expander title='Google Drive Storage'>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<GoogleDriveSettingsPanel
+							connectionSettings={props.connectionSettings}
+							setConnectionSettings={props.setConnectionSettings}
+							showReload={true}
+						/>
+					</Space>
+				</Expander>
+			);
+		}
+	};
+
 	const getPatreonSettings = () => {
 		if (FeatureFlags.hasFlag(FeatureFlags.patreon.code)) {
 			return (
@@ -809,6 +826,7 @@ export const SettingsModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
 						{getWarehouseSettings()}
+						{getGoogleDriveSettings()}
 						{getPatreonSettings()}
 						{getErrors()}
 					</Space>

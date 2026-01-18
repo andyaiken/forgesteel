@@ -629,7 +629,10 @@ export const SettingsModal = (props: Props) => {
 					/>
 				);
 			}
+
+			return null;
 		};
+
 		return (
 			<Expander title='Connections'>
 				<Space orientation='vertical' style={{ width: '100%' }}>

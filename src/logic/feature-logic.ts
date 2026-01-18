@@ -21,6 +21,7 @@ import { ItemType } from '@/enums/item-type';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
 export class FeatureLogic {
@@ -98,6 +99,14 @@ export class FeatureLogic {
 		const features: { feature: Feature, source: string }[] = [];
 
 		features.push(...complication.features.map(f => ({ feature: f, source: complication.name })));
+
+		return FeatureLogic.simplifyFeatures(features, hero);
+	};
+
+	static getFeaturesFromTitle = (title: Title, hero: Hero) => {
+		const features: { feature: Feature, source: string }[] = [];
+
+		features.push(...title.features.filter(f => f.id === title.selectedFeatureID).map(f => ({ feature: f, source: title.name })));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};

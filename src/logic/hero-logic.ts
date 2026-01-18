@@ -67,6 +67,14 @@ export class HeroLogic {
 
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
+		hero.state.titles.forEach(title => {
+			try {
+				features.push(...FeatureLogic.getFeaturesFromTitle(title, hero));
+			} catch (ex) {
+				console.error(ex);
+			}
+		});
+
 		hero.state.inventory.forEach(item => {
 			try {
 				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));

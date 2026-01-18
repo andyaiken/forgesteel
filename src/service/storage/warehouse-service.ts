@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { Config } from '@/utils/config';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { StorageService } from '@/service/storage/storage-service';
 
@@ -9,18 +10,22 @@ export class WarehouseService implements StorageService {
 	private useNewAuth: boolean;
 	private jwt: string | null;
 	private refreshToken: string | null;
-	// private csrfToken: boolean;
 
 	private api: AxiosInstance;
 
 	constructor(settings: ConnectionSettings) {
-		this.host = settings.warehouseHost;
-		this.apiToken = settings.warehouseToken;
+		if (settings.usePatreonWarehouse) {
+			this.host = Config.getPatreonWarehouseHost();
+			this.apiToken = '';
+			this.useNewAuth = true;
+		} else {
+			this.host = settings.warehouseHost;
+			this.apiToken = settings.warehouseToken;
+			this.useNewAuth = false;
+		}
 
-		this.useNewAuth = false;
 		this.jwt = null;
 		this.refreshToken = null;
-		// this.csrfToken = false;
 
 		this.api = axios.create({
 			baseURL: this.host,
@@ -29,42 +34,7 @@ export class WarehouseService implements StorageService {
 			xsrfCookieName: 'csrf_access_token',
 			xsrfHeaderName: 'X-CSRF-TOKEN'
 		});
-
-		this.api.interceptors.request.use(async config => {
-			if (this.jwt === null) {
-				await this.ensureJwt();
-			}
-			config.headers.Authorization = `Bearer ${this.jwt}`;
-			return config;
-		});
-
-		this.api.interceptors.response.use(undefined, async error => {
-			if (!this.useNewAuth && this.isExpiredTokenError(error)) {
-				this.jwt = null;
-				try {
-					await this.refreshJwt();
-					return this.api(error.config);
-				} catch (retryError) {
-					console.error('Error communicating with FS Warehouse', retryError);
-					throw new Error(this.getErrorMessage(retryError), { cause: retryError });
-				}
-			}
-		});
 	};
-
-	private async ensureJwt() {
-		if (this.jwt === null) {
-			try {
-				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
-				this.jwt = response.data.access_token;
-				this.refreshToken = response.data.refresh_token;
-			} catch (error) {
-				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error), { cause: error });
-			}
-		}
-		return this.jwt;
-	}
 
 	private isExpiredTokenError = (err: unknown): boolean => {
 		if ((err as AxiosError).isAxiosError) {
@@ -84,7 +54,13 @@ export class WarehouseService implements StorageService {
 
 	private async refreshJwt() {
 		try {
-			const response = await axios.post(`${this.host}/refresh`, {}, { headers: { Authorization: `Bearer ${this.refreshToken}` } });
+			const response = await axios.post(`${this.host}/refresh`, {}, {
+				headers: { Authorization: `Bearer ${this.refreshToken}` },
+				withCredentials: true,
+				withXSRFToken: true,
+				xsrfCookieName: 'csrf_refresh_token',
+				xsrfHeaderName: 'X-CSRF-TOKEN'
+			});
 			this.jwt = response.data.access_token;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);
@@ -93,14 +69,54 @@ export class WarehouseService implements StorageService {
 	}
 
 	async initialize(): Promise<boolean> {
-		if (this.useNewAuth) {
-			// const connected = await this.ensureCsrf();
-			// return connected;
-			return false;
-		} else {
+		this.api.interceptors.request.use(async config => {
+			if (!this.useNewAuth) {
+				if (this.jwt === null)
+					await this.ensureAuth();
+				config.headers.Authorization = `Bearer ${this.jwt}`;
+			}
+			return config;
+		});
+
+		const NO_RETRY_HEADER = 'X-NO-RETRY';
+		this.api.interceptors.response.use(undefined, async error => {
+			if (this.isExpiredTokenError(error)) {
+				if (error.config.headers && error.config.headers[NO_RETRY_HEADER])
+					return Promise.reject(error);
+
+				this.jwt = null;
+				await this.refreshJwt();
+
+				error.config.headers ||= {};
+				error.config.headers[NO_RETRY_HEADER] = 'true';
+
+				return this.api(error.config);
+			}
+		});
+
+		const connected = await this.ensureAuth();
+		return connected;
+	}
+
+	private async ensureAuth() {
+		if (!this.useNewAuth) {
 			await this.ensureJwt();
-			return true;
 		}
+		return true;
+	};
+
+	private async ensureJwt() {
+		if (this.jwt === null) {
+			try {
+				const response = await axios.post(`${this.host}/connect`, {}, { headers: { Authorization: `Bearer ${this.apiToken}` } });
+				this.jwt = response.data.access_token;
+				this.refreshToken = response.data.refresh_token;
+			} catch (error) {
+				console.error('Error communicating with FS Warehouse', error);
+				throw new Error(this.getErrorMessage(error), { cause: error });
+			}
+		}
+		return this.jwt;
 	}
 
 	private getErrorMessage = (error: unknown) => {
@@ -111,11 +127,6 @@ export class WarehouseService implements StorageService {
 				const code = error.response.status;
 				const respMsg = error.response.data.message ?? error.response.data.msg ?? error.response.data;
 				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
-
-				// Future: move somewhere where it isn't a side effect
-				// if (code === 401) {
-				// 	this.csrfToken = false;
-				// }
 			}
 		}
 		return msg;

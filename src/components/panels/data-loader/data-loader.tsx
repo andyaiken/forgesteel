@@ -1,4 +1,4 @@
-import { Alert, Button, Flex } from 'antd';
+import { Alert, Button, Flex, Tag } from 'antd';
 import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
@@ -15,6 +15,8 @@ import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Options } from '@/models/options';
 import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
+import { PatreonLogic } from '@/logic/patreon-logic';
+import { PatreonService } from '@/service/patreon-service';
 import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
@@ -22,6 +24,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
 import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 
@@ -42,6 +45,7 @@ interface Props {
 }
 
 type LoadingStatus = 'pending' | 'success' | 'failure' | undefined;
+type DataSource = 'Local' | 'Patron' | 'Warehouse' | undefined;
 
 export const DataLoader = (props: Props) => {
 	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(undefined);
@@ -54,18 +58,47 @@ export const DataLoader = (props: Props) => {
 	const [ splinesState, setSplinesState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
+	const [ dataSource, setDataSource ] = useState<DataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
 
-	// Load connection settings and create DataService
-	async function getDataService() {
+	async function initializeConnectionSettings() {
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
 		if (!settings) {
 			settings = FactoryLogic.createConnectionSettings();
 		}
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
-		setConnectionSettings(settings);
-		const service = new DataService(settings);
+		let source: DataSource = undefined;
+
+		// check patreon status
+		if (settings.patreonConnected) {
+			const patreonSvc = new PatreonService();
+			const patreonSession = await patreonSvc.getPatreonSession();
+			if (PatreonLogic.hasWarehouseAccess(patreonSession) && !settings.useManualWarehouse) {
+				settings.usePatreonWarehouse = true;
+				source = 'Patron';
+			} else {
+				settings.usePatreonWarehouse = false;
+			}
+		}
+
+		if (settings.useManualWarehouse) {
+			source = 'Warehouse';
+		}
+		if (!source) {
+			source = 'Local';
+		}
+		// Don't show the tag for the oauth-redirect page
+		const url = window.location.toString();
+		if (!url.match(/oauth-redirect/))
+			setDataSource(source);
+
+		return settings;
+	};
+
+	async function getDataService(settings: ConnectionSettings) {
+		const storageSvc = StorageServiceFactory.fromConnectionSettings(settings);
+		const service = new DataService(storageSvc);
 		await service.initialize();
 		return service;
 	};
@@ -106,142 +139,150 @@ export const DataLoader = (props: Props) => {
 		setHiddenSettingsState(undefined);
 		setSplinesState(undefined);
 
-		getDataService().then(dataService => {
-			setConnectionSettingsState('success');
+		initializeConnectionSettings().then(settings => {
+			setConnectionSettings(settings);
+			getDataService(settings).then(dataService => {
+				setConnectionSettingsState('success');
 
-			setHomebrewState('pending');
-			setHeroesState('pending');
-			setPlaybookState('pending');
-			setSessionState('pending');
-			setOptionsState('pending');
-			setHiddenSettingsState('pending');
-			setSplinesState('pending');
+				setHomebrewState('pending');
+				setHeroesState('pending');
+				setPlaybookState('pending');
+				setSessionState('pending');
+				setOptionsState('pending');
+				setHiddenSettingsState('pending');
+				setSplinesState('pending');
 
-			const promises = [
-				updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
-				updateLoadingStatus(dataService.getHeroes(), setHeroesState),
-				updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
-				updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
-				updateLoadingStatus(dataService.getSession(), setSessionState),
-				updateLoadingStatus(dataService.getOptions(), setOptionsState),
-				updateLoadingStatus(Utils.wait(), setSplinesState)
-			];
+				const promises = [
+					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
+					updateLoadingStatus(dataService.getHeroes(), setHeroesState),
+					updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
+					updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
+					updateLoadingStatus(dataService.getSession(), setSessionState),
+					updateLoadingStatus(dataService.getOptions(), setOptionsState),
+					updateLoadingStatus(Utils.wait(), setSplinesState)
+				];
 
-			Promise.all(promises).then(results => {
-				// #region Homebrew sourcebooks
-				let sourcebooks = results[0] as Sourcebook[] | null;
-				if (!sourcebooks) {
-					sourcebooks = [];
-				}
+				Promise.all(promises).then(results => {
+					// #region Homebrew sourcebooks
+					let sourcebooks = results[0] as Sourcebook[] | null;
+					if (!sourcebooks) {
+						sourcebooks = [];
+					}
 
-				sourcebooks.forEach(sourcebook => {
-					sourcebook.type = SourcebookType.Homebrew;
-					SourcebookUpdateLogic.updateSourcebook(sourcebook);
-				});
-
-				SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
-					sourcebook.items.forEach(item => {
-						if (item.crafting) {
-							item.crafting.id = `${item.id}-crafting`;
-							item.crafting.name = `Craft ${item.name}`;
-							item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
-						}
+					sourcebooks.forEach(sourcebook => {
+						sourcebook.type = SourcebookType.Homebrew;
+						SourcebookUpdateLogic.updateSourcebook(sourcebook);
 					});
-					sourcebook.imbuements.forEach(imbuement => {
-						if (imbuement.crafting) {
-							imbuement.crafting.id = `${imbuement.id}-crafting`;
-							imbuement.crafting.name = `Imbue ${imbuement.name}`;
-							imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
-						}
+
+					SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
+						sourcebook.items.forEach(item => {
+							if (item.crafting) {
+								item.crafting.id = `${item.id}-crafting`;
+								item.crafting.name = `Craft ${item.name}`;
+								item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
+							}
+						});
+						sourcebook.imbuements.forEach(imbuement => {
+							if (imbuement.crafting) {
+								imbuement.crafting.id = `${imbuement.id}-crafting`;
+								imbuement.crafting.name = `Imbue ${imbuement.name}`;
+								imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
+							}
+						});
 					});
-				});
-				// #endregion
+					// #endregion
 
-				// #region Heroes
-				let heroes = results[1] as Hero[] | null;
-				if (!heroes) {
-					heroes = [];
-				}
-
-				heroes.forEach(hero => {
-					HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
-				});
-				// #endregion
-
-				// #region Hidden sourcebook IDs
-				let hiddenSourcebookIDs = results[2] as string[] | null;
-				if (!hiddenSourcebookIDs) {
-					hiddenSourcebookIDs = [];
-				}
-				// #endregion
-
-				// #region Playbook
-				const playbook = results[3] as Playbook | null;
-				if (playbook) {
-					if (!playbook.adventures) {
-						playbook.adventures = [];
-					}
-					if (!playbook.encounters) {
-						playbook.encounters = [];
-					}
-					if (!playbook.montages) {
-						playbook.montages = [];
-					}
-					if (!playbook.negotiations) {
-						playbook.negotiations = [];
-					}
-					if (!playbook.tacticalMaps) {
-						playbook.tacticalMaps = [];
+					// #region Heroes
+					let heroes = results[1] as Hero[] | null;
+					if (!heroes) {
+						heroes = [];
 					}
 
-					if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
-						// Copy everything from the playbook into a homebrew sourcebook
-						if (sourcebooks.length === 0) {
-							const sb = FactoryLogic.createSourcebook();
-							sb.name = 'Playbook';
-							sourcebooks.push(sb);
+					heroes.forEach(hero => {
+						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+					});
+					// #endregion
+
+					// #region Hidden sourcebook IDs
+					let hiddenSourcebookIDs = results[2] as string[] | null;
+					if (!hiddenSourcebookIDs) {
+						hiddenSourcebookIDs = [];
+					}
+					// #endregion
+
+					// #region Playbook
+					const playbook = results[3] as Playbook | null;
+					if (playbook) {
+						if (!playbook.adventures) {
+							playbook.adventures = [];
+						}
+						if (!playbook.encounters) {
+							playbook.encounters = [];
+						}
+						if (!playbook.montages) {
+							playbook.montages = [];
+						}
+						if (!playbook.negotiations) {
+							playbook.negotiations = [];
+						}
+						if (!playbook.tacticalMaps) {
+							playbook.tacticalMaps = [];
 						}
 
-						const sb = sourcebooks[0];
+						if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
+							// Copy everything from the playbook into a homebrew sourcebook
+							if (sourcebooks.length === 0) {
+								const sb = FactoryLogic.createSourcebook();
+								sb.name = 'Playbook';
+								sourcebooks.push(sb);
+							}
 
-						sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
-						sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));
-						sb.montages.push(...playbook.montages.filter(montage => !sb.montages.some(m => m.id === montage.id)));
-						sb.negotiations.push(...playbook.negotiations.filter(negotiation => !sb.negotiations.some(n => n.id === negotiation.id)));
-						sb.tacticalMaps.push(...playbook.tacticalMaps.filter(map => !sb.tacticalMaps.some(tm => tm.id === map.id)));
+							const sb = sourcebooks[0];
 
-						SourcebookUpdateLogic.updateSourcebook(sb);
-					};
-				}
-				// #endregion
+							sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
+							sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));
+							sb.montages.push(...playbook.montages.filter(montage => !sb.montages.some(m => m.id === montage.id)));
+							sb.negotiations.push(...playbook.negotiations.filter(negotiation => !sb.negotiations.some(n => n.id === negotiation.id)));
+							sb.tacticalMaps.push(...playbook.tacticalMaps.filter(map => !sb.tacticalMaps.some(tm => tm.id === map.id)));
 
-				// #region Session
-				let session = results[4] as Session | null;
-				if (!session) {
-					session = FactoryLogic.createSession();
-				}
+							SourcebookUpdateLogic.updateSourcebook(sb);
+						};
+					}
+					// #endregion
 
-				SessionUpdateLogic.updateSession(session);
-				// #endregion
+					// #region Session
+					let session = results[4] as Session | null;
+					if (!session) {
+						session = FactoryLogic.createSession();
+					}
 
-				// #region Options
-				let options = results[5] as Options | null;
-				if (!options) {
-					options = FactoryLogic.createOptions();
-				}
+					SessionUpdateLogic.updateSession(session);
+					// #endregion
 
-				OptionsUpdateLogic.updateOptions(options);
-				// #endregion
+					// #region Options
+					let options = results[5] as Options | null;
+					if (!options) {
+						options = FactoryLogic.createOptions();
+					}
 
-				setOverallLoadState('success');
-				props.onComplete({
-					connectionSettings: dataService.settings,
-					service: dataService,
-					heroes: heroes,
-					homebrew: sourcebooks,
-					hiddenSourcebookIDs: hiddenSourcebookIDs,
-					session: session,
-					options: options
+					OptionsUpdateLogic.updateOptions(options);
+					// #endregion
+
+					setOverallLoadState('success');
+
+					props.onComplete({
+						connectionSettings: settings,
+						service: dataService,
+						heroes: heroes,
+						homebrew: sourcebooks,
+						hiddenSourcebookIDs: hiddenSourcebookIDs,
+						session: session,
+						options: options
+					});
+				}).catch(reason => {
+					console.error(reason);
+					setError(reason.message);
+					setOverallLoadState('failure');
 				});
 			}).catch(reason => {
 				console.error(reason);
@@ -272,7 +313,13 @@ export const DataLoader = (props: Props) => {
 				<HeaderText level={1}>Loading Data</HeaderText>
 				<Flex vertical={true}>
 					<Flex className='load-states' vertical={true}>
-						<CheckLabel state={connectionSettingsState}>Connection Settings</CheckLabel>
+						<CheckLabel state={connectionSettingsState}>
+							Connection Settings
+							{
+								dataSource &&
+									<Tag>{dataSource}</Tag>
+							}
+						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
 						<CheckLabel state={playbookState}>Playbook</CheckLabel>
@@ -288,11 +335,12 @@ export const DataLoader = (props: Props) => {
 								showIcon={true}
 								title='Data load error'
 								description={error}
+								style={{ width: '350px' }}
 							/>
 							: null
 					}
 					{
-						error && connectionSettings?.useWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
+						error && connectionSettings?.useManualWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
 							<Flex gap='small' justify='space-between' vertical={true}>
 								<Alert
 									type='info'

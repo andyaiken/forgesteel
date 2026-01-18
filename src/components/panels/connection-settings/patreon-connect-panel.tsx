@@ -1,6 +1,5 @@
-import { Alert, Button, Flex, Space, Spin, notification } from 'antd';
+import { Button, Flex, Space, Spin, notification } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Browser } from '@/utils/browser';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { PatreonService } from '@/service/patreon-service';
@@ -74,51 +73,37 @@ export const PatreonConnectPanel = (props: Props) => {
 		);
 	}
 
+	if (!patreonSession || !patreonSession.authenticated) {
+		return (
+			<Button
+				block={true}
+				type='primary'
+				onClick={connectOAuth}
+			>
+				<img className='patreon-logo' src={patreon} style={{ width: '16px', height: '16px' }} />
+				Connect with Patreon
+			</Button>
+		);
+	}
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{
-				Browser.isSafari() ?
-					<Alert
-						type='warning'
-						showIcon={true}
-						title='To  use this feature, you will need to disable "Prevent cross-site tracking" in Safari preferences.'
-					/>
-					: null
+				patreonSession.connections.map((conn, i) => (
+					<SelectablePanel key={`patreon-connection-${i}`}>
+						<PatreonStatusPanel
+							key={`patreon-connection-${i}`}
+							title={conn.name}
+							status={conn.status}
+						/>
+					</SelectablePanel>
+				))
 			}
-			{
-				!patreonSession || !patreonSession.authenticated ?
-					<Button
-						block={true}
-						type='primary'
-						onClick={connectOAuth}
-					>
-						<img className='patreon-logo' src={patreon} style={{ width: '16px', height: '16px' }} />
-						Connect with Patreon
-					</Button>
-					: null
-			}
-			{
-				patreonSession?.connections.map((conn, i) => {
-					return (
-						<SelectablePanel key={`patreon-connection-${i}`}>
-							<PatreonStatusPanel
-								key={`patreon-connection-${i}`}
-								title={conn.name}
-								status={conn.status}
-							/>
-						</SelectablePanel>
-					);
-				})
-			}
-			{
-				patreonSession && patreonSession.authenticated ?
-					<DangerButton
-						mode='block'
-						label='Disconnect from Patreon'
-						onConfirm={logout}
-					/>
-					: null
-			}
+			<DangerButton
+				mode='block'
+				label='Disconnect from Patreon'
+				onConfirm={logout}
+			/>
 			{notifyContext}
 		</Space>
 	);

@@ -55,7 +55,6 @@ export class PatreonService {
 		return msg;
 	};
 
-	// #region login
 	async getPatreonAuthUrl(): Promise<string> {
 		try {
 			const response = await this.api.post('/th/login/start');
@@ -74,7 +73,7 @@ export class PatreonService {
 				connections: []
 			};
 
-			if (response.data) {
+			if (response && response.data) {
 				result.authenticated = response.data.authenticated_with_patreon;
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
@@ -99,7 +98,6 @@ export class PatreonService {
 		}
 	}
 
-	// #region session
 	async getPatreonSession(): Promise<PatreonSession> {
 		try {
 			const response = await this.api.get('/th/session');
@@ -108,7 +106,7 @@ export class PatreonService {
 				connections: []
 			};
 
-			if (response.data) {
+			if (response && response.data) {
 				result.authenticated = response.data.authenticated_with_patreon;
 
 				if (response.data.authenticated_with_patreon && response.data.user) {
@@ -133,7 +131,6 @@ export class PatreonService {
 		}
 	}
 
-	// #region refresh
 	async refreshTokens() {
 		try {
 			await this.api.post('/th/refresh');
@@ -144,7 +141,6 @@ export class PatreonService {
 		}
 	};
 
-	// #region logout
 	async logoutPatreon() {
 		try {
 			await this.api.post('/th/logout');

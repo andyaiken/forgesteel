@@ -73,11 +73,17 @@ export const DataLoader = (props: Props) => {
 		// check patreon status
 		if (settings.patreonConnected) {
 			const patreonSvc = new PatreonService();
-			const patreonSession = await patreonSvc.getPatreonSession();
-			if (PatreonLogic.hasWarehouseAccess(patreonSession) && !settings.useManualWarehouse) {
-				settings.usePatreonWarehouse = true;
-				source = 'Patron';
-			} else {
+			try {
+				const patreonSession = await patreonSvc.getPatreonSession();
+				if (PatreonLogic.hasWarehouseAccess(patreonSession) && !settings.useManualWarehouse) {
+					settings.usePatreonWarehouse = true;
+					source = 'Patron';
+				} else {
+					settings.usePatreonWarehouse = false;
+				}
+			} catch (error) {
+				console.error('Error getting Patreon status, continuing with local instance', error);
+				settings.patreonConnected = false;
 				settings.usePatreonWarehouse = false;
 			}
 		}

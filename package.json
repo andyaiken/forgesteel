@@ -1,12 +1,12 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "12.99.0",
+	"version": "12.100.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
-		"start": "vite --host",
+		"start": "npm ci && vite --host",
 		"update": "npx npm-check-updates --interactive --format group",
 		"lint": "eslint \"src/**/*.{ts,tsx}\"",
 		"fix": "eslint \"src/**/*.{ts,tsx}\" --fix",

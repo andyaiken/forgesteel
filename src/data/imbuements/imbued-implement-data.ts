@@ -119,8 +119,15 @@ export class ImbuedImplementData {
 		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-seeking',
 			name: 'Seeking',
-			description: 'Your ranged magic or psionic abilities gain a +2 distance bonus. Additionally, if you think the name of a specific creature, place, or object to the implement, the implement points toward that target, provided you are on the same world.',
+			description: 'Your ranged magic or psionic abilities gain a +2 distance bonus.',
 			features: [
+				FactoryLogic.feature.createAbilityDistance({
+					id: 'imbuement-seeking-magic',
+					name: 'Seeking (Magic)',
+					description: 'Your ranged magic abilities gain a +2 distance bonus.',
+					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Magic ],
+					value: 2
+				}),
 				FactoryLogic.feature.createAbilityDistance({
 					id: 'imbuement-seeking-psionic',
 					name: 'Seeking (Psionic)',
@@ -128,12 +135,10 @@ export class ImbuedImplementData {
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic ],
 					value: 2
 				}),
-				FactoryLogic.feature.createAbilityDistance({
-					id: 'imbuement-seeking-magic',
-					name: 'Seeking (Magic)',
-					description: 'Your ranged magic abilities gain a +2 distance bonus.',
-					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Magic ],
-					value: 2
+				FactoryLogic.feature.create({
+					id: 'imbuement-seeking-text',
+					name: 'Seeking',
+					description: 'If you think the name of a specific creature, place, or object to the implement, the implement points toward that target, provided you are on the same world.'
 				})
 			]
 		})
@@ -151,8 +156,15 @@ export class ImbuedImplementData {
 		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-thought-sending',
 			name: 'Thought Sending',
-			description: 'Your ranged magic and psionic abilities gain a +2 distance bonus. Additionally, you can telepathically communicate with any willing creature who knows a language and whose name you know, provided they are on the same world as you. You must initiate the conversation, but once you do, the creature can respond until you end the conversation.',
+			description: 'Your ranged magic and psionic abilities gain a +2 distance bonus.',
 			features: [
+				FactoryLogic.feature.createAbilityDistance({
+					id: 'imbuement-thought-sending-magic',
+					name: 'Thought Sending (Magic)',
+					description: 'Your ranged magic abilities gain a +2 distance bonus.',
+					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Magic ],
+					value: 2
+				}),
 				FactoryLogic.feature.createAbilityDistance({
 					id: 'imbuement-thought-sending-psionic',
 					name: 'Thought Sending (Psionic)',
@@ -160,12 +172,10 @@ export class ImbuedImplementData {
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic ],
 					value: 2
 				}),
-				FactoryLogic.feature.createAbilityDistance({
-					id: 'imbuement-thought-sending-magic',
-					name: 'Thought Sending (Magic)',
-					description: 'Your ranged magic abilities gain a +2 distance bonus.',
-					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Magic ],
-					value: 2
+				FactoryLogic.feature.create({
+					id: 'imbuement-thought-sending-text',
+					name: 'Thought Sending',
+					description: 'You can telepathically communicate with any willing creature who knows a language and whose name you know, provided they are on the same world as you. You must initiate the conversation, but once you do, the creature can respond until you end the conversation.'
 				})
 			]
 		})

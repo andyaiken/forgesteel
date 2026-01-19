@@ -40,6 +40,7 @@ interface Props {
 	options: Options;
 	mode?: PanelMode;
 	onChange: (monsterGroup: MonsterGroup) => void;
+	onSelectMonster: (monster: Monster, group: MonsterGroup) => void;
 }
 
 export const MonsterGroupEditPanel = (props: Props) => {
@@ -557,6 +558,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							setMonsterGroup(copy);
 							props.onChange(copy);
 						}}
+						onSelectMonster={props.onSelectMonster}
 					/>
 			}
 		</ErrorBoundary>

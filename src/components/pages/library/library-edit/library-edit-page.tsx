@@ -293,6 +293,7 @@ export const LibraryEditPage = (props: Props) => {
 						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
+						onSelectMonster={props.showMonster}
 					/>
 				);
 			case 'montage':

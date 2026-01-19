@@ -2,32 +2,30 @@
 
 **FORGE STEEL** is a hero builder app for **DRAW STEEL**, designed by [Andy Aiken](mailto:andy.aiken@live.co.uk).
 
-You can find it [here](https://andyaiken.github.io/forgesteel/).
+You can find it [here](https://forgesteel.net).
 
 ## Heroes
 
 With this app you can create heroes using the **DRAW STEEL** core rules.
 
-![Hero Edit](./src/assets/screenshots/hero-edit.png)
-Here is a hero being edited.
-
 ![Hero Sheet](./src/assets/screenshots/hero-sheet-interactive.png)
+
 This shows a hero's character sheet.
 
-![Hero State](./src/assets/screenshots/hero-state.png)
-Here we can see the hero being played in a session.
+![Hero Edit](./src/assets/screenshots/hero-edit.png)
 
-![Hero Roll](./src/assets/screenshots/hero-roll.png)
-The player is making the power roll for one of the hero's abilities.
+Here is a hero being edited.
 
 ## Homebrew
 
 You can also use this app to create homebrew hero-building elements - ancestries, classes, kits, and so on.
 
 ![Library](./src/assets/screenshots/library.png)
+
 Here we can see the list of elements that can be homebrewed. To create a homebrew element you can create it from whole cloth, or copy an official element.
 
 ![Homebrew](./src/assets/screenshots/homebrew.png)
+
 Here we can see a homebrew kit being created.
 
 ## Legal
@@ -43,7 +41,7 @@ Here we can see a homebrew kit being created.
 If you would like to contribute, you can:
 
 * Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
-* Fork the repository, make your changes to the code, and raise a pull request
+* Fork the repository, switch to the `host-deployment` branch, make your changes to the code, and raise a pull request
 
 To run the app locally, run the following commands:
 

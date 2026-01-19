@@ -27,7 +27,7 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 			<div className={`monster-label ${type}`}>
 				<Flex orientation='vertical' gap={8}>
 					<Flex gap={3}>
-						{props.monster.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
+						{props.monster.keywords.filter(k => !!k).map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
 					</Flex>
 					<div>{desc}</div>
 				</Flex>

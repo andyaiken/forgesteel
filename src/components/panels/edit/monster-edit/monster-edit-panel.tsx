@@ -47,6 +47,7 @@ interface Props {
 	options: Options;
 	mode?: PanelMode;
 	onChange: (monster: Monster) => void;
+	onSelectMonster?: (monster: Monster, group: MonsterGroup) => void;
 }
 
 export const MonsterEditPanel = (props: Props) => {
@@ -870,6 +871,7 @@ export const MonsterEditPanel = (props: Props) => {
 										Hide
 									</Button>
 								}
+								onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m, monsterGroup) : undefined}
 							>
 								<MonsterPanel
 									monster={m}

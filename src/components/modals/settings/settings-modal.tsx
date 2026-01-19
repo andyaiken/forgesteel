@@ -92,12 +92,14 @@ export const SettingsModal = (props: Props) => {
 		const setXPPerLevel = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.xpPerLevel = value;
+			setOptions(copy);
 			props.setOptions(copy);
 		};
 
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
+			setOptions(copy);
 			props.setOptions(copy);
 		};
 

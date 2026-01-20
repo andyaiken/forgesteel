@@ -3,6 +3,7 @@ import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const hakaan: Ancestry = {
 	id: 'ancestry-hakaan',
@@ -28,10 +29,27 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'hakaan-feature-2-2',
 						name: 'Forceful',
-						description: 'Whenever you force move a creature or object, the forced movement distance gains a +1 bonus.'
+						description: 'Whenever you force move a creature or object, the forced movement distance gains a +1 bonus.',
+						features: [
+							FactoryLogic.feature.createBonus({
+								id: 'hakaan-feature-2-2a',
+								field: FeatureField.ForcedMovementPush,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'hakaan-feature-2-2b',
+								field: FeatureField.ForcedMovementPull,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'hakaan-feature-2-2c',
+								field: FeatureField.ForcedMovementSlide,
+								value: 1
+							})
+						]
 					}),
 					value: 1
 				},

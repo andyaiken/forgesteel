@@ -94,7 +94,6 @@ export const HeroCustomizeModal = (props: Props) => {
 						<div className='customize-option-section'>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createClassAbilityChoice({
@@ -107,7 +106,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createAbility({
@@ -129,7 +127,6 @@ export const HeroCustomizeModal = (props: Props) => {
 						<div className='customize-option-section'>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createCharacteristicBonus({
@@ -144,7 +141,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createConditionImmunity({
@@ -157,7 +153,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createDamageModifier({
@@ -170,7 +165,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createBonus({
@@ -188,7 +182,6 @@ export const HeroCustomizeModal = (props: Props) => {
 						<div className='customize-option-section'>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createAncestryFeature({
@@ -204,7 +197,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createKitChoice({
@@ -216,7 +208,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createPerk({
@@ -232,7 +223,6 @@ export const HeroCustomizeModal = (props: Props) => {
 						<div className='customize-option-section'>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createCompanion({
@@ -244,7 +234,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createFollower({
@@ -257,7 +246,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createRetainer({
@@ -272,7 +260,6 @@ export const HeroCustomizeModal = (props: Props) => {
 						<div className='customize-option-section'>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createLanguageChoice({
@@ -285,7 +272,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createMovementMode({
@@ -298,7 +284,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createProficiency({
@@ -310,7 +295,6 @@ export const HeroCustomizeModal = (props: Props) => {
 							</Button>
 							<Button
 								block={true}
-								type='text'
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createSkillChoice({
@@ -526,7 +510,7 @@ export const HeroCustomizeModal = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ForcedMovementPush, FeatureField.ForcedMovementPull, FeatureField.ForcedMovementSlide, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							value={feature.data.field}
 							onChange={setValueField}

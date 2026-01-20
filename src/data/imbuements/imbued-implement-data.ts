@@ -63,10 +63,22 @@ export class ImbuedImplementData {
 			goal: 150
 		}),
 		level: 1,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-forceful-i',
 			name: 'Forceful I',
-			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 2 squares.'
+			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 2 squares.',
+			features: [
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-i-push',
+					field: FeatureField.ForcedMovementPush,
+					value: 2
+				}),
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-i-pull',
+					field: FeatureField.ForcedMovementPull,
+					value: 2
+				})
+			]
 		})
 	});
 
@@ -276,10 +288,22 @@ export class ImbuedImplementData {
 			goal: 150
 		}),
 		level: 5,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-forceful-ii',
 			name: 'Forceful II',
-			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 3 squares. This replaces the benefit of Forceful I.'
+			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 3 squares. This replaces the benefit of Forceful I.',
+			features: [
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-ii-push',
+					field: FeatureField.ForcedMovementPush,
+					value: 1
+				}),
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-ii-pull',
+					field: FeatureField.ForcedMovementPull,
+					value: 1
+				})
+			]
 		})
 	});
 

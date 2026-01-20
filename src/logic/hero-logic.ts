@@ -669,6 +669,32 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getForcedMovementBonus = (hero: Hero, type: 'push' | 'pull' | 'slide') => {
+		let value = 0;
+
+		let field = FeatureField.ForcedMovementPush;
+		switch (type) {
+			case 'push':
+				field = FeatureField.ForcedMovementPush;
+				break;
+			case 'pull':
+				field = FeatureField.ForcedMovementPull;
+				break;
+			case 'slide':
+				field = FeatureField.ForcedMovementSlide;
+				break;
+		}
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === field)
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
+
+		return value;
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getKitDamageBonuses = (hero: Hero) => {

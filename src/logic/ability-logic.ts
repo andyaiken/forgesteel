@@ -306,7 +306,7 @@ export class AbilityLogic {
 					let value = 0;
 					let sign = '+';
 					let vertical = false;
-					let type = '';
+					let type: 'push' | 'pull' | 'slide' = 'push';
 					const dice: string[] = [];
 					const characteristics: Characteristic[] = [];
 
@@ -337,6 +337,7 @@ export class AbilityLogic {
 					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
 					const maxCharValue = Collections.max(charValues, n => n) || 0;
 					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+					total += HeroLogic.getForcedMovementBonus(hero, type);
 					if (dice.length > 0) {
 						total = `${dice.join(' + ')} + ${total}`;
 					}

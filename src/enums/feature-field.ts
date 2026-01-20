@@ -1,6 +1,9 @@
 export enum FeatureField {
 	AncestryPoints = 'Ancestry Points',
 	Disengage = 'Disengage',
+	ForcedMovementPush = 'Forced Movement: Push',
+	ForcedMovementPull = 'Forced Movement: Pull',
+	ForcedMovementSlide = 'Forced Movement: Slide',
 	FreeStrikeDamage = 'Free Strike Damage',
 	ProjectPoints = 'Project Points',
 	Recoveries = 'Recoveries',

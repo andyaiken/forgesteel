@@ -128,17 +128,24 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
-								description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit.',
+								description: `
+You can wear light armor and wield light weapons effectively, even though you don’t have a kit.
+
+* While you wear light armor, you gain a +3 bonus to Stamina, and that bonus increases by 3 at 4th, 7th, and 10th levels.
+* While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.
+* You can use light armor treasures and light weapon treasures.
+
+If you have a kit, you can’t take this enchantment.`,
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: 'elementalist-1-7aa',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
 									}),
-									FactoryLogic.feature.create({
+									FactoryLogic.feature.createAbilityDamage({
 										id: 'elementalist-1-7ab',
-										name: 'Enchantment of Battle',
-										description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
+										keywords: [ AbilityKeyword.Weapon ],
+										value: 1
 									}),
 									FactoryLogic.feature.createProficiency({
 										id: 'elementalist-1-7ac',

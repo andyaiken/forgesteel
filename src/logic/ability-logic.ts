@@ -216,13 +216,32 @@ export class AbilityLogic {
 		return [];
 	};
 
+	static matchesKeywords = (hero: Hero, ability: Ability, distance: AbilityDistanceType | undefined, keywords: AbilityKeyword[]) => {
+		if (keywords.length === 0) {
+			return true;
+		}
+
+		const currentKeywords = [ ...ability.keywords ];
+		if (distance === AbilityDistanceType.Melee) {
+			if (!currentKeywords.includes(AbilityKeyword.Melee)) {
+				currentKeywords.push(AbilityKeyword.Melee);
+			}
+		} else if (distance === AbilityDistanceType.Ranged) {
+			if (!currentKeywords.includes(AbilityKeyword.Ranged)) {
+				currentKeywords.push(AbilityKeyword.Ranged);
+			}
+		}
+
+		return keywords.every(k => currentKeywords.includes(k as string));
+	};
+
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		const sections = value.split(';').map(section => section.trim());
 		const hasAnyForcedMovement = sections.some(s => [ 'pull', 'push', 'slide' ].some(fm => s.toLowerCase().includes(fm)));
 
 		return sections.map((section, n) => {
 			if (hero && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
-				let value = 0;
+				let damageValue = 0;
 				let sign = '+';
 				const dice: string[] = [];
 				const characteristics: Characteristic[] = [];
@@ -252,19 +271,19 @@ export class AbilityLogic {
 					const dmg = dmgKits[0];
 					switch (tier) {
 						case 1:
-							value += dmg.tier1;
+							damageValue += dmg.tier1;
 							break;
 						case 2:
-							value += dmg.tier2;
+							damageValue += dmg.tier2;
 							break;
 						case 3:
-							value += dmg.tier3;
+							damageValue += dmg.tier3;
 							break;
 					}
 				}
 
 				const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
-				value += Collections.sum(dmgFeatures, x => x.value);
+				damageValue += Collections.sum(dmgFeatures, x => x.value);
 
 				section.toLowerCase().split(' ').forEach(token => {
 					if ((token === 'damage') || (token === 'dmg')) {
@@ -274,7 +293,7 @@ export class AbilityLogic {
 					} else if (/\d+d\d+/.test(token)) {
 						dice.push(token);
 					} else if (!isNaN(parseInt(token))) {
-						value += parseInt(token);
+						damageValue += parseInt(token);
 					} else if ((token === '+') || (token === '-')) {
 						sign = token;
 					} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
@@ -294,36 +313,21 @@ export class AbilityLogic {
 
 				const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
 				const maxCharValue = Collections.max(charValues, n => n) || 0;
-				let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+				let total: number | string = sign === '+' ? damageValue + maxCharValue : damageValue - maxCharValue;
 				if (dice.length > 0) {
 					total = `${dice.join(' + ')} + ${total}`;
 				}
 
-				const damage = [ ...types, 'damage' ].join(' ');
+				const damageText = [ ...types, 'damage' ].join(' ');
 
-				let result = `${total} ${damage}`;
+				let result = `${total} ${damageText}`;
 
 				if (!hasAnyForcedMovement) {
 					const grantableFeatures = HeroLogic.getFeatures(hero)
 						.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
 						.filter(f => {
 							const data = f.feature.data as FeatureAbilityForcedMovementData;
-							if (!data.canGrant) {
-								return false;
-							}
-
-							const currentKeywords = [ ...ability.keywords ];
-							if (distance === AbilityDistanceType.Melee) {
-								if (!currentKeywords.includes(AbilityKeyword.Melee)) {
-									currentKeywords.push(AbilityKeyword.Melee);
-								}
-							} else if (distance === AbilityDistanceType.Ranged) {
-								if (!currentKeywords.includes(AbilityKeyword.Ranged)) {
-									currentKeywords.push(AbilityKeyword.Ranged);
-								}
-							}
-
-							return data.keywords.every(k => currentKeywords.includes(k as string));
+							return data.canGrant && AbilityLogic.matchesKeywords(hero, ability, distance, data.keywords);
 						});
 
 					if (grantableFeatures.length > 0) {
@@ -343,22 +347,22 @@ export class AbilityLogic {
 			}
 
 			if (hero && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
-				let value = 0;
+				let moveValue = 0;
 				let sign = '+';
 				let vertical = false;
-				let type = '';
+				let moveType = '';
 				const dice: string[] = [];
 				const characteristics: Characteristic[] = [];
 
 				section.toLowerCase().split(' ').forEach(token => {
 					if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
-						type = token;
+						moveType = token;
 					} else if (token === 'vertical') {
 						vertical = true;
 					} else if (/\d+d\d+/.test(token)) {
 						dice.push(token);
 					} else if (!isNaN(parseInt(token))) {
-						value += parseInt(token);
+						moveValue += parseInt(token);
 					} else if ((token === '+') || (token === '-')) {
 						sign = token;
 					} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
@@ -384,21 +388,13 @@ export class AbilityLogic {
 						}
 
 						// Check keywords
-						if (data.keywords.length > 0) {
-							const currentKeywords = [ ...ability.keywords ];
-							if (distance === AbilityDistanceType.Melee) {
-								if (!currentKeywords.includes(AbilityKeyword.Melee)) currentKeywords.push(AbilityKeyword.Melee);
-							} else if (distance === AbilityDistanceType.Ranged) {
-								if (!currentKeywords.includes(AbilityKeyword.Ranged)) currentKeywords.push(AbilityKeyword.Ranged);
-							}
-
-							if (!data.keywords.every(k => currentKeywords.includes(k as string))) {
-								return false;
-							}
+						if (!AbilityLogic.matchesKeywords(hero, ability, distance, data.keywords)) {
+							return false;
 						}
+
 						// Check movement types
 						if (data.forcedMovementTypes.length > 0) {
-							const currentTypeKeyword = type === 'push' ? AbilityKeyword.Push : (type === 'pull' ? AbilityKeyword.Pull : AbilityKeyword.Slide);
+							const currentTypeKeyword = moveType === 'push' ? AbilityKeyword.Push : (moveType === 'pull' ? AbilityKeyword.Pull : AbilityKeyword.Slide);
 							if (!data.forcedMovementTypes.includes(currentTypeKeyword)) {
 								return false;
 							}
@@ -406,16 +402,16 @@ export class AbilityLogic {
 						return true;
 					})
 					.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
-				value += forcedMovementBonus;
+				moveValue += forcedMovementBonus;
 
 				const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
 				const maxCharValue = Collections.max(charValues, n => n) || 0;
-				let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+				let total: number | string = sign === '+' ? moveValue + maxCharValue : moveValue - maxCharValue;
 				if (dice.length > 0) {
 					total = `${dice.join(' + ')} + ${total}`;
 				}
 
-				return Format.capitalize(vertical ? `vertical ${type} ${total}` : `${type} ${total}`);
+				return Format.capitalize(vertical ? `vertical ${moveType} ${total}` : `${moveType} ${total}`);
 			}
 
 			return AbilityLogic.getTextEffect(section, hero);

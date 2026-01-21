@@ -28,11 +28,17 @@ export class FeatureFlags {
 		description: 'Show the Patreon connector'
 	};
 
+	static remoteGoogleDrive: FeatureFlag = {
+		code: Utils.hashCode('google-drive'),
+		description: 'Enable Google Drive remote sync'
+	};
+
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
 		FeatureFlags.communityPreRelease,
-		FeatureFlags.patreon
+		FeatureFlags.patreon,
+		FeatureFlags.remoteGoogleDrive
 	];
 
 	// #endregion

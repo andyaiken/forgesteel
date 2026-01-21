@@ -17,5 +17,14 @@ export class ConnectionSettingsUpdateLogic {
 		if (settings.patreonConnected === undefined) {
 			settings.patreonConnected = false;
 		}
+
+		// Google Drive defaults
+		if (settings.useGoogleDrive === undefined) {
+			settings.useGoogleDrive = false;
+		}
+
+		if (settings.googleClientId === undefined) {
+			settings.googleClientId = '';
+		}
 	};
 }

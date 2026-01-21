@@ -3,4 +3,8 @@ export interface ConnectionSettings {
 	warehouseHost: string;
 	warehouseToken: string;
 	patreonConnected: boolean;
+
+	// Google Drive
+	useGoogleDrive?: boolean;
+	googleClientId?: string;
 }

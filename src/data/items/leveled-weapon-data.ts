@@ -888,7 +888,7 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-1b',
-						name: 'Thunderhead Bident',
+						name: '',
 						description: 'When the weapon is used with any ability that pushes a target, you gain a +1 bonus to the forced movement distance.',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						forcedMovementTypes: [ AbilityKeyword.Push ],
@@ -913,7 +913,7 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-5b',
-						name: 'Thunderhead Bident',
+						name: '',
 						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares.',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						forcedMovementTypes: [ AbilityKeyword.Push ],
@@ -938,7 +938,7 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-9b',
-						name: 'Thunderhead Bident',
+						name: '',
 						description: 'The additional distance or distance of a push for abilities using the weapon increases to 3 squares.',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						forcedMovementTypes: [ AbilityKeyword.Push ],

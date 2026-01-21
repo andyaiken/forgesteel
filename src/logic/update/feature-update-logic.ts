@@ -118,6 +118,11 @@ export class FeatureUpdateLogic {
 					feature.data.tag = 'conduit-prayer';
 				}
 				break;
+			case FeatureType.Perk:
+				if (feature.data.lists === undefined) {
+					feature.data.lists = [];
+				}
+				break;
 		}
 	};
 }

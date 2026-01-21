@@ -127,6 +127,7 @@ export class SourcebookUpdateLogic {
 			if (a.ancestryPoints === undefined) {
 				a.ancestryPoints = 0;
 			}
+			a.features.forEach(FeatureUpdateLogic.updateFeature);
 		});
 
 		sourcebook.classes.forEach(c => {
@@ -174,6 +175,10 @@ export class SourcebookUpdateLogic {
 			domain.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
 			});
+			if (domain.defaultFeatures === undefined) {
+				domain.defaultFeatures = [];
+			}
+			domain.defaultFeatures.forEach(FeatureUpdateLogic.updateFeature);
 		});
 
 		sourcebook.encounters.forEach(e => {
@@ -287,6 +292,7 @@ export class SourcebookUpdateLogic {
 		sourcebook.items.forEach(item => {
 			if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
 				item.customizationsByLevel.forEach(level => {
+					level.features.map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
 					level.features.forEach(feature => {
 						if (!sourcebook.imbuements.find(imbuement => imbuement.id === feature.feature.id)) {
 							sourcebook.imbuements.push(FactoryLogic.createImbuement({
@@ -338,11 +344,13 @@ export class SourcebookUpdateLogic {
 			}
 		});
 
-		sourcebook.perks.forEach(p => {
-			FeatureUpdateLogic.updateFeature(p);
-		});
+		sourcebook.perks.forEach(FeatureUpdateLogic.updateFeature);
 
 		sourcebook.subclasses.forEach(sc => {
+			sc.featuresByLevel.forEach(lvl => {
+				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
+			});
+
 			if (sc.abilities === undefined) {
 				sc.abilities = [];
 			}

@@ -171,7 +171,6 @@ export const EditSummonChoice = (props: EditProps) => {
 							monster={summon.monster}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							similarMonsters={[]}
 							onChange={m => setSummonChoiceMonster(data, n, m)}
 						/>
 					</Expander>

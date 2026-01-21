@@ -95,7 +95,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createAbilityForcedMovement = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], forcedMovementTypes?: AbilityKeyword[], value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityForcedMovement => {
+	createAbilityForcedMovement = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], forcedMovementTypes?: AbilityKeyword[], canGrant?: boolean, value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityForcedMovement => {
 		return {
 			id: data.id,
 			name: data.name || 'Ability forced movement modifier',
@@ -104,6 +104,7 @@ export class FactoryFeatureLogic {
 			data: {
 				keywords: data.keywords,
 				forcedMovementTypes: data.forcedMovementTypes || [],
+				canGrant: data.canGrant || false,
 				value: data.value || 0,
 				valueFromController: data.valueFromController || null,
 				valueCharacteristics: data.valueCharacteristics || [],

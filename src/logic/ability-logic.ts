@@ -217,167 +217,209 @@ export class AbilityLogic {
 	};
 
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
-		return value
-			.split(';')
-			.map(section => section.trim())
-			.map((section, n) => {
-				if (hero && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
-					let value = 0;
-					let sign = '+';
-					const dice: string[] = [];
-					const characteristics: Characteristic[] = [];
-					const types: string[] = [];
+		const sections = value.split(';').map(section => section.trim());
+		const hasAnyForcedMovement = sections.some(s => [ 'pull', 'push', 'slide' ].some(fm => s.toLowerCase().includes(fm)));
 
-					let isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-					let isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
-					if (distance) {
-						isMelee = (distance === AbilityDistanceType.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-						isRanged = (distance === AbilityDistanceType.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
-					}
+		return sections.map((section, n) => {
+			if (hero && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
+				let value = 0;
+				let sign = '+';
+				const dice: string[] = [];
+				const characteristics: Characteristic[] = [];
+				const types: string[] = [];
 
-					const dmgKits = HeroLogic
-						.getKitDamageBonuses(hero)
-						.filter(dmg => {
-							switch (dmg.type) {
-								case 'melee':
-									return isMelee;
-								case 'ranged':
-									return isRanged;
-							}
-						});
-
-					const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
-					if ((dmgKits.length === 1) && hasMeleeXorRanged) {
-						// There's only one applicable kit bonus, and the ability can only be used in one mode
-						const dmg = dmgKits[0];
-						switch (tier) {
-							case 1:
-								value += dmg.tier1;
-								break;
-							case 2:
-								value += dmg.tier2;
-								break;
-							case 3:
-								value += dmg.tier3;
-								break;
-						}
-					}
-
-					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
-					value += Collections.sum(dmgFeatures, x => x.value);
-
-					section.toLowerCase().split(' ').forEach(token => {
-						if ((token === 'damage') || (token === 'dmg')) {
-							// Damage; ignore
-						} else if (token === 'or') {
-							// Ignore
-						} else if (/\d+d\d+/.test(token)) {
-							dice.push(token);
-						} else if (!isNaN(parseInt(token))) {
-							value += parseInt(token);
-						} else if ((token === '+') || (token === '-')) {
-							sign = token;
-						} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
-							characteristics.push(Characteristic.Might);
-						} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
-							characteristics.push(Characteristic.Agility);
-						} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
-							characteristics.push(Characteristic.Reason);
-						} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
-							characteristics.push(Characteristic.Intuition);
-						} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
-							characteristics.push(Characteristic.Presence);
-						} else {
-							types.push(token);
-						}
-					});
-
-					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
-					const maxCharValue = Collections.max(charValues, n => n) || 0;
-					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
-					if (dice.length > 0) {
-						total = `${dice.join(' + ')} + ${total}`;
-					}
-
-					const damage = [ ...types, 'damage' ].join(' ');
-
-					return `${total} ${damage}`;
+				let isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+				let isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+				if (distance) {
+					isMelee = (distance === AbilityDistanceType.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+					isRanged = (distance === AbilityDistanceType.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
 				}
 
-				if (hero && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
-					let value = 0;
-					let sign = '+';
-					let vertical = false;
-					let type = '';
-					const dice: string[] = [];
-					const characteristics: Characteristic[] = [];
-
-					section.toLowerCase().split(' ').forEach(token => {
-						if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
-							type = token;
-						} else if (token === 'vertical') {
-							vertical = true;
-						} else if (/\d+d\d+/.test(token)) {
-							dice.push(token);
-						} else if (!isNaN(parseInt(token))) {
-							value += parseInt(token);
-						} else if ((token === '+') || (token === '-')) {
-							sign = token;
-						} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
-							characteristics.push(Characteristic.Might);
-						} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
-							characteristics.push(Characteristic.Agility);
-						} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
-							characteristics.push(Characteristic.Reason);
-						} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
-							characteristics.push(Characteristic.Intuition);
-						} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
-							characteristics.push(Characteristic.Presence);
+				const dmgKits = HeroLogic
+					.getKitDamageBonuses(hero)
+					.filter(dmg => {
+						switch (dmg.type) {
+							case 'melee':
+								return isMelee;
+							case 'ranged':
+								return isRanged;
 						}
 					});
 
-					// Apply forced movement bonus from items like Thunderhead Bident
-					const forcedMovementBonus = HeroLogic.getFeatures(hero)
+				const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
+				if ((dmgKits.length === 1) && hasMeleeXorRanged) {
+					// There's only one applicable kit bonus, and the ability can only be used in one mode
+					const dmg = dmgKits[0];
+					switch (tier) {
+						case 1:
+							value += dmg.tier1;
+							break;
+						case 2:
+							value += dmg.tier2;
+							break;
+						case 3:
+							value += dmg.tier3;
+							break;
+					}
+				}
+
+				const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
+				value += Collections.sum(dmgFeatures, x => x.value);
+
+				section.toLowerCase().split(' ').forEach(token => {
+					if ((token === 'damage') || (token === 'dmg')) {
+						// Damage; ignore
+					} else if (token === 'or') {
+						// Ignore
+					} else if (/\d+d\d+/.test(token)) {
+						dice.push(token);
+					} else if (!isNaN(parseInt(token))) {
+						value += parseInt(token);
+					} else if ((token === '+') || (token === '-')) {
+						sign = token;
+					} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
+						characteristics.push(Characteristic.Might);
+					} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
+						characteristics.push(Characteristic.Agility);
+					} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
+						characteristics.push(Characteristic.Reason);
+					} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
+						characteristics.push(Characteristic.Intuition);
+					} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
+						characteristics.push(Characteristic.Presence);
+					} else {
+						types.push(token);
+					}
+				});
+
+				const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
+				const maxCharValue = Collections.max(charValues, n => n) || 0;
+				let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+				if (dice.length > 0) {
+					total = `${dice.join(' + ')} + ${total}`;
+				}
+
+				const damage = [ ...types, 'damage' ].join(' ');
+
+				let result = `${total} ${damage}`;
+
+				if (!hasAnyForcedMovement) {
+					const grantableFeatures = HeroLogic.getFeatures(hero)
 						.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
 						.filter(f => {
 							const data = f.feature.data as FeatureAbilityForcedMovementData;
-							// Check keywords
-							if (data.keywords.length > 0) {
-								const currentKeywords = [ ...ability.keywords ];
-								if (distance === AbilityDistanceType.Melee) {
-									if (!currentKeywords.includes(AbilityKeyword.Melee)) currentKeywords.push(AbilityKeyword.Melee);
-								} else if (distance === AbilityDistanceType.Ranged) {
-									if (!currentKeywords.includes(AbilityKeyword.Ranged)) currentKeywords.push(AbilityKeyword.Ranged);
-								}
+							if (!data.canGrant) {
+								return false;
+							}
 
-								if (!data.keywords.every(k => currentKeywords.includes(k as string))) {
-									return false;
+							const currentKeywords = [ ...ability.keywords ];
+							if (distance === AbilityDistanceType.Melee) {
+								if (!currentKeywords.includes(AbilityKeyword.Melee)) {
+									currentKeywords.push(AbilityKeyword.Melee);
+								}
+							} else if (distance === AbilityDistanceType.Ranged) {
+								if (!currentKeywords.includes(AbilityKeyword.Ranged)) {
+									currentKeywords.push(AbilityKeyword.Ranged);
 								}
 							}
-							// Check movement types
-							if (data.forcedMovementTypes.length > 0) {
-								const currentTypeKeyword = type === 'push' ? AbilityKeyword.Push : (type === 'pull' ? AbilityKeyword.Pull : AbilityKeyword.Slide);
-								if (!data.forcedMovementTypes.includes(currentTypeKeyword)) {
-									return false;
-								}
-							}
-							return true;
-						})
-						.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
-					value += forcedMovementBonus;
 
-					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
-					const maxCharValue = Collections.max(charValues, n => n) || 0;
-					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
-					if (dice.length > 0) {
-						total = `${dice.join(' + ')} + ${total}`;
+							return data.keywords.every(k => currentKeywords.includes(k as string));
+						});
+
+					if (grantableFeatures.length > 0) {
+						const grantText = grantableFeatures
+							.map(f => {
+								const data = f.feature.data as FeatureAbilityForcedMovementData;
+								const type = data.forcedMovementTypes.length > 0 ? data.forcedMovementTypes[0] : AbilityKeyword.Push;
+								return `${type} ${data.value}`;
+							})
+							.join(', ');
+
+						result += `; ${grantText}`;
 					}
-
-					return Format.capitalize(vertical ? `vertical ${type} ${total}` : `${type} ${total}`);
 				}
 
-				return AbilityLogic.getTextEffect(section, hero);
-			})
+				return result;
+			}
+
+			if (hero && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
+				let value = 0;
+				let sign = '+';
+				let vertical = false;
+				let type = '';
+				const dice: string[] = [];
+				const characteristics: Characteristic[] = [];
+
+				section.toLowerCase().split(' ').forEach(token => {
+					if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
+						type = token;
+					} else if (token === 'vertical') {
+						vertical = true;
+					} else if (/\d+d\d+/.test(token)) {
+						dice.push(token);
+					} else if (!isNaN(parseInt(token))) {
+						value += parseInt(token);
+					} else if ((token === '+') || (token === '-')) {
+						sign = token;
+					} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
+						characteristics.push(Characteristic.Might);
+					} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
+						characteristics.push(Characteristic.Agility);
+					} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
+						characteristics.push(Characteristic.Reason);
+					} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
+						characteristics.push(Characteristic.Intuition);
+					} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
+						characteristics.push(Characteristic.Presence);
+					}
+				});
+
+				// Apply forced movement bonus from items like Thunderhead Bident
+				const forcedMovementBonus = HeroLogic.getFeatures(hero)
+					.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
+					.filter(f => {
+						const data = f.feature.data as FeatureAbilityForcedMovementData;
+						if (data.canGrant) {
+							return false;
+						}
+
+						// Check keywords
+						if (data.keywords.length > 0) {
+							const currentKeywords = [ ...ability.keywords ];
+							if (distance === AbilityDistanceType.Melee) {
+								if (!currentKeywords.includes(AbilityKeyword.Melee)) currentKeywords.push(AbilityKeyword.Melee);
+							} else if (distance === AbilityDistanceType.Ranged) {
+								if (!currentKeywords.includes(AbilityKeyword.Ranged)) currentKeywords.push(AbilityKeyword.Ranged);
+							}
+
+							if (!data.keywords.every(k => currentKeywords.includes(k as string))) {
+								return false;
+							}
+						}
+						// Check movement types
+						if (data.forcedMovementTypes.length > 0) {
+							const currentTypeKeyword = type === 'push' ? AbilityKeyword.Push : (type === 'pull' ? AbilityKeyword.Pull : AbilityKeyword.Slide);
+							if (!data.forcedMovementTypes.includes(currentTypeKeyword)) {
+								return false;
+							}
+						}
+						return true;
+					})
+					.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
+				value += forcedMovementBonus;
+
+				const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
+				const maxCharValue = Collections.max(charValues, n => n) || 0;
+				let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+				if (dice.length > 0) {
+					total = `${dice.join(' + ')} + ${total}`;
+				}
+
+				return Format.capitalize(vertical ? `vertical ${type} ${total}` : `${type} ${total}`);
+			}
+
+			return AbilityLogic.getTextEffect(section, hero);
+		})
 			.join('; ');
 	};
 

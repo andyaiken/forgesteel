@@ -57,6 +57,7 @@ export type FeatureAbilityDistance = FeatureOf<FeatureType.AbilityDistance, Feat
 export interface FeatureAbilityForcedMovementData extends _FeatureData, Modifier {
 	keywords: AbilityKeyword[];
 	forcedMovementTypes: AbilityKeyword[];
+	canGrant: boolean;
 };
 export type FeatureAbilityForcedMovement = FeatureOf<FeatureType.AbilityForcedMovement, FeatureAbilityForcedMovementData>;
 

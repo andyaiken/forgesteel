@@ -874,10 +874,14 @@ export class LeveledWeaponData {
 			{
 				level: 1,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-1',
 						name: 'Thunderhead Bident',
-						description: 'If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
+						description: 'If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						forcedMovementTypes: [ AbilityKeyword.Push ],
+						canGrant: true,
+						value: 1
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-1a',
@@ -899,16 +903,20 @@ export class LeveledWeaponData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-5',
 						name: 'Thunderhead Bident',
-						description: 'The weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
+						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares.',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						forcedMovementTypes: [ AbilityKeyword.Push ],
+						canGrant: true,
+						value: 2
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						value: 1,
+						value: 2,
 						damageType: DamageType.Sonic
 					}),
 					FactoryLogic.feature.createAbilityForcedMovement({
@@ -918,31 +926,45 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						forcedMovementTypes: [ AbilityKeyword.Push ],
 						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-thunderhead-bident-5c',
+						name: 'Thunderhead Bident',
+						description: 'The weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
 					})
 				]
 			},
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-9',
 						name: 'Thunderhead Bident',
-						description: 'The weapon deals an extra 1 sonic damage for each square it travels as part of a ranged strike. Additionally, whenever you make a weapon strike using this weapon, each enemy adjacent to the target takes 6 sonic damage.'
+						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares.',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						forcedMovementTypes: [ AbilityKeyword.Push ],
+						canGrant: true,
+						value: 2
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						value: 1,
+						value: 3,
 						damageType: DamageType.Sonic
 					}),
 					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-9b',
 						name: '',
-						description: 'The additional distance or distance of a push for abilities using the weapon increases to 3 squares.',
+						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares.',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						forcedMovementTypes: [ AbilityKeyword.Push ],
-						value: 3
+						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-thunderhead-bident-9c',
+						name: 'Thunderhead Bident',
+						description: 'The weapon deals an extra 1 sonic damage for each square it travels as part of a ranged strike. Additionally, whenever you make a weapon strike using this weapon, each enemy adjacent to the target takes 6 sonic damage.'
 					})
 				]
 			}

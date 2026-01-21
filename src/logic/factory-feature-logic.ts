@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityForcedMovement, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -83,6 +83,24 @@ export class FactoryFeatureLogic {
 			name: data.name || 'Ability distance modifier',
 			description: data.description || '',
 			type: FeatureType.AbilityDistance,
+			data: {
+				keywords: data.keywords,
+				value: data.value || 0,
+				valueFromController: data.valueFromController || null,
+				valueCharacteristics: data.valueCharacteristics || [],
+				valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
+				valuePerLevel: data.valuePerLevel || 0,
+				valuePerEchelon: data.valuePerEchelon || 0
+			}
+		};
+	};
+
+	createAbilityForcedMovement = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityForcedMovement => {
+		return {
+			id: data.id,
+			name: data.name || 'Ability forced movement modifier',
+			description: data.description || '',
+			type: FeatureType.AbilityForcedMovement,
 			data: {
 				keywords: data.keywords,
 				value: data.value || 0,

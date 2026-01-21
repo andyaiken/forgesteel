@@ -874,10 +874,16 @@ export class LeveledWeaponData {
 			{
 				level: 1,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-1',
-						name: '',
-						description: 'When the weapon is used with any ability that pushes a target, you gain a +1 bonus to the forced movement distance. If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
+						name: 'Thunderhead Bident (Forced Movement)',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.ForcedMovement ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-thunderhead-bident-1b',
+						name: 'Thunderhead Bident (Push)',
+						description: 'If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-1a',
@@ -891,10 +897,16 @@ export class LeveledWeaponData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-5',
-						name: '',
-						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares. Additionally, the weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
+						name: 'Thunderhead Bident (Forced Movement)',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.ForcedMovement ],
+						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-thunderhead-bident-5b',
+						name: 'Thunderhead Bident (Push)',
+						description: 'The weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-5a',
@@ -908,10 +920,16 @@ export class LeveledWeaponData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createAbilityForcedMovement({
 						id: 'item-thunderhead-bident-9',
-						name: '',
-						description: 'The weapon deals an extra 1 sonic damage for each square it travels as part of a ranged strike. Additionally, whenever you make a weapon strike using this weapon, each enemy adjacent to the target takes 6 sonic damage.'
+						name: 'Thunderhead Bident (Forced Movement)',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.ForcedMovement ],
+						value: 3
+					}),
+					FactoryLogic.feature.create({
+						id: 'item-thunderhead-bident-9b',
+						name: 'Thunderhead Bident (Area Damage)',
+						description: 'Whenever you make a weapon strike using this weapon, each enemy adjacent to the target takes 6 sonic damage.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-9a',

@@ -4,6 +4,7 @@ export enum FeatureType {
 	AbilityCost = 'Ability Cost',
 	AbilityDamage = 'Ability Damage',
 	AbilityDistance = 'Ability Distance',
+	AbilityForcedMovement = 'Ability Forced Movement',
 	AddOn = 'Add-On',
 	AncestryChoice = 'Ancestry Choice',
 	AncestryFeatureChoice = 'Ancestry Feature Choice',

@@ -4,6 +4,8 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { FeatureAbilityForcedMovement } from '@/models/feature';
+import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
@@ -302,13 +304,19 @@ export class AbilityLogic {
 					return `${total} ${damage}`;
 				}
 
-				if (hero && (n === 0) && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
+				if (hero && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
 					let value = 0;
 					let sign = '+';
 					let vertical = false;
 					let type = '';
 					const dice: string[] = [];
 					const characteristics: Characteristic[] = [];
+
+					// Apply forced movement bonus from items like Thunderhead Bident
+					const forcedMovementBonus = HeroLogic.getFeatures(hero)
+						.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
+						.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
+					value += forcedMovementBonus;
 
 					section.toLowerCase().split(' ').forEach(token => {
 						if ((token === 'pull') || (token === 'push') || (token === 'slide')) {

@@ -16,6 +16,7 @@ export enum AbilityKeyword {
 	Eye = 'Eye',
 	Feet = 'Feet',
 	Fire = 'Fire',
+	ForcedMovement = 'ForcedMovement',
 	Green = 'Green',
 	Hands = 'Hands',
 	Head = 'Head',

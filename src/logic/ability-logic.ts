@@ -4,7 +4,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { FeatureAbilityForcedMovement } from '@/models/feature';
+import { FeatureAbilityForcedMovement, FeatureAbilityForcedMovementData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
@@ -312,12 +312,6 @@ export class AbilityLogic {
 					const dice: string[] = [];
 					const characteristics: Characteristic[] = [];
 
-					// Apply forced movement bonus from items like Thunderhead Bident
-					const forcedMovementBonus = HeroLogic.getFeatures(hero)
-						.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
-						.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
-					value += forcedMovementBonus;
-
 					section.toLowerCase().split(' ').forEach(token => {
 						if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
 							type = token;
@@ -341,6 +335,36 @@ export class AbilityLogic {
 							characteristics.push(Characteristic.Presence);
 						}
 					});
+
+					// Apply forced movement bonus from items like Thunderhead Bident
+					const forcedMovementBonus = HeroLogic.getFeatures(hero)
+						.filter(f => f.feature.type === FeatureType.AbilityForcedMovement)
+						.filter(f => {
+							const data = f.feature.data as FeatureAbilityForcedMovementData;
+							// Check keywords
+							if (data.keywords.length > 0) {
+								const currentKeywords = [ ...ability.keywords ];
+								if (distance === AbilityDistanceType.Melee) {
+									if (!currentKeywords.includes(AbilityKeyword.Melee)) currentKeywords.push(AbilityKeyword.Melee);
+								} else if (distance === AbilityDistanceType.Ranged) {
+									if (!currentKeywords.includes(AbilityKeyword.Ranged)) currentKeywords.push(AbilityKeyword.Ranged);
+								}
+
+								if (!data.keywords.every(k => currentKeywords.includes(k as string))) {
+									return false;
+								}
+							}
+							// Check movement types
+							if (data.forcedMovementTypes.length > 0) {
+								const currentTypeKeyword = type === 'push' ? AbilityKeyword.Push : (type === 'pull' ? AbilityKeyword.Pull : AbilityKeyword.Slide);
+								if (!data.forcedMovementTypes.includes(currentTypeKeyword)) {
+									return false;
+								}
+							}
+							return true;
+						})
+						.reduce((sum, f) => sum + ((f.feature as FeatureAbilityForcedMovement).data.value || 0), 0);
+					value += forcedMovementBonus;
 
 					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
 					const maxCharValue = Collections.max(charValues, n => n) || 0;

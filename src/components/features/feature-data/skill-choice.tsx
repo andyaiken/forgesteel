@@ -153,15 +153,6 @@ export const ConfigSkillChoice = (props: ConfigProps) => {
 	const distinctSkills = Collections.distinct(skills, s => s.name);
 	const sortedSkills = Collections.sort(distinctSkills, s => s.name);
 
-	const getAddButton = () => {
-		// We can always add a custom skill, so we always show the Add button
-		return (
-			<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
-				Choose a Skill
-			</Button>
-		);
-	};
-
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
@@ -207,7 +198,13 @@ export const ConfigSkillChoice = (props: ConfigProps) => {
 					);
 				})
 			}
-			{(props.data.selected.length < props.data.count) || (props.data.count === -1) ? getAddButton() : null}
+			{
+				(props.data.selected.length < props.data.count) || (props.data.count === -1) ?
+					<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
+						Choose a Skill
+					</Button>
+					: null
+			}
 			<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} size={500}>
 				<SkillSelectModal
 					skills={sortedSkills}

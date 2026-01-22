@@ -57,8 +57,10 @@ export const CultureSection = (props: CultureSectionProps) => {
 
 	const setName = (value: string) => {
 		const copy = Utils.copy(props.hero.culture)!;
-		copy.name = value;
-		props.selectCulture(copy);
+		if (value !== copy.name) {
+			copy.name = value;
+			props.selectCulture(copy);
+		}
 	};
 
 	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ]

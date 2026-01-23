@@ -37,20 +37,20 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",
-		"@stylistic/eslint-plugin": "^5.7.0",
+		"@stylistic/eslint-plugin": "^5.7.1",
 		"@types/gtag.js": "^0.0.20",
 		"@types/react": "^19.2.9",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^5.1.2",
-		"@vitest/coverage-v8": "^4.0.17",
+		"@vitest/coverage-v8": "^4.0.18",
 		"axios-mock-adapter": "^2.1.0",
 		"eslint": "^9.39.2",
 		"eslint-plugin-react-hooks": "^7.0.1",
-		"globals": "^17.0.0",
+		"globals": "^17.1.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.53.1",
 		"vite": "^7.3.1",
 		"vite-tsconfig-paths": "^6.0.4",
-		"vitest": "^4.0.17"
+		"vitest": "^4.0.18"
 	}
 }

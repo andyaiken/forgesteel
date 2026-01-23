@@ -126,6 +126,96 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 	culture: FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish')
 };
 
+const oakling: Ancestry = {
+	id: 'ancestry-oakling',
+	name: 'Oakling',
+	description: `
+*By Heart of Arcana*
+
+*Children of the oak. Wild soul-sparks dancing in the trees. Wonder and joy, their arms stretching upwards and outwards. Ever seeking. Their hearts like green tendrils grasping for light.*
+- Elder Druid Mogh Roith
+
+Native to the great wodes of Orden, oaklings are the children of great-grandmother oak trees. Sprouting like acorns from her branches, they live in her trunk and defend both her and the wode from threats. Though they are tiny in stature, they hold within them the strength and vigor of the mightiest, sturdiest oaks. 
+
+Oaklings are as diverse as the oaks that bear them. Their distinction is evident in the color, size, and texture of their acorn cap. The combinations of the caps result in a colorful and diverse array of oakling presentations. 
+
+Some oaklings walk a different path. Though it often results in their departure from the wode, these oaklings choose to gain knowledge and power at the expense of permitting parasitic wasps to lay their eggs within their wooden flesh. A choice that results in a transformation from a being of leaf and acorn, into a distorted gall creature, riddled and pockmarked with holes.`,
+	features: [
+		FactoryLogic.feature.create({
+			id: 'oakling-1a',
+			name: 'Acorn Retreat',
+			description: 'Whenever you take damage from a creature, you can use a triggered action to retreat into your acorn cap and halve the damage. While in your acorn cap, your stability is 0, your speed is 0, you have psychic immunity equal to 5 plus your level, and fire weakness equal to 5 plus your level. You automatically exit your acorn cap at the end of your next turn.'
+		}),
+		FactoryLogic.feature.createSize({
+			id: 'oakling-1b',
+			name: 'Tiny!',
+			description: 'Your stature is compact and dense.',
+			sizeValue: 1,
+			sizeMod: 'T'
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'oakling-2',
+			name: 'Oakling Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'oakling-2a',
+						name: 'Poison Protector',
+						description: 'The leaves on your body are vibrant and poisonous. Whenever you take damage from a creature within 2, you can use a triggered action to cause that creature to gain poison weakness equal to twice your highest characteristic score (EoT).'
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'oakling-2b',
+						name: 'Ritual Host',
+						description: 'You permit poison mistletoe to grow within and on your wooden body. Whenever you deal damage with an ability, you can have it deal poison damage instead of its original damage type.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createBonus({
+						id: 'oakling-2c',
+						name: 'Roots of the Blue Oak',
+						description: 'The wood that makes up your body is as sturdy as the most ancient oak.',
+						field: FeatureField.Stability,
+						value: 1
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'oakling-2d',
+						name: 'Strength of the White Oak',
+						description: 'The sinew of your wooden body is as strong as iron! Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createConditionImmunity({
+						id: 'oakling-2e',
+						name: 'Heartwood',
+						description: 'Your core is unshakable.',
+						conditions: [ ConditionType.Frightened ]
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'oakling-2f',
+						name: 'Gift of Woodspeech',
+						description: 'You naturally speak the language of trees and plant creatures. In addition, once per day, you can touch a piece of wood and learn the name of the last person who touched it before you.'
+					}),
+					value: 1
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 4,
+	culture: FactoryLogic.createCulture('Oakling', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Yllyric')
+};
+
 const solar: Ancestry = {
 	id: 'ancestry-solar',
 	name: 'Solar',
@@ -4828,7 +4918,9 @@ export const communityPrerelease: Sourcebook = {
 	description: 'Selected community creations (pre-release).',
 	type: SourcebookType.Community,
 	adventures: [],
-	ancestries: [],
+	ancestries: [
+		oakling
+	],
 	careers: [],
 	classes: [],
 	complications: [],

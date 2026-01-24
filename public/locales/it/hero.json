@@ -1,0 +1,13 @@
+{
+  "characterName": "Nome Personaggio",
+  "class": "Classe",
+  "noAncestryChosen": "$t(common:ancestry, capitalize) non scelta",
+  "noCultureChosen": "$t(common:culture, capitalize) non scelta",
+  "noCareerChosen": "$t(common:career, capitalize) non scelta",
+  "noClassChosen": "$t(common:class, capitalize) non scelta",
+  "unnamedHero": "$t(common:hero_one, capitalize) Senza Nome",
+  "unnamedAbility": "$t(common:ability_one, capitalize) Senza Nome",
+  "cannotBeImmunity": "Non può essere",
+  "catchBreathWhileDying": "Non puoi usare la manovra $t(maneuver:catchBreath, capitalize) in combattimento o mentre stai sanguinando; inoltre questa condizione non puo essere rimossa fino a che sei $t(common:dying) ",
+  "recoveriesWhileDying": "I tuoi alleati possono aiutarti a usare i tuoi $t(recoveries, capitalize) in combattimento, fuori dal combattimento puoi usare $t(recoveries, capitalize) normalmente."
+}

@@ -13,6 +13,7 @@ import { metakinetic } from '@/data/classes/null/metakinetic';
 
 export const nullClass: HeroClass = {
 	id: 'class-null',
+	languageKey: 'class:null',
 	name: 'Null',
 	description: `
 The mind is not separate from the body. Perfection of one requires perfection of the other. You strive for perfect discipline, perfect order, mastery over mind and body becoming an unarmed psionic warrior who dampens and absorbs magic and psionics. You require no weapons, no tools. You suffice.
@@ -44,6 +45,7 @@ As a null, you resist the supernatural forces of the universe with composure and
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'null-resource',
+					languageKey: 'class:null.discipline',
 					name: 'Discipline',
 					gains: [
 						{

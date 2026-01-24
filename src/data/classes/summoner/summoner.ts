@@ -16,6 +16,7 @@ import { circleofStorms } from '@/data/classes/summoner/storms';
 
 export const summoner: HeroClass = {
 	id: 'class-summoner',
+	languageKey: 'class:summoner',
 	name: 'Summoner',
 	description: `
 You are the armada. The kings of old would trade armies for your abilities. You’ve undertaken the tradition that conjures an endless supply of warriors. You are the summoner, the mage who takes their dreams and makes them manifest.
@@ -48,6 +49,7 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 				FactoryLogic.feature.createHeroicResource({
 					id: 'summoner-resource',
 					name: 'Essence',
+					languageKey: 'class:summoner.essence',
 					gains: [
 						{
 							tag: 'start',

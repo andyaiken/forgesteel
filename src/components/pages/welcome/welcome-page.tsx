@@ -17,6 +17,7 @@ import { useState } from 'react';
 import pbds from '@/assets/powered-by-draw-steel.png';
 
 import './welcome-page.scss';
+import { Trans, useTranslation } from 'react-i18next';
 
 type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
@@ -108,6 +109,7 @@ interface WelcomeProps {
 const Welcome = (props: WelcomeProps) => {
 	const navigation = useNavigation();
 	const [ page, setPage ] = useState<WelcomeType>('player');
+	const { t, i18n } = useTranslation([ 'common', 'welcomePage' ]);
 
 	const getContent = () => {
 		switch (page) {
@@ -116,33 +118,47 @@ const Welcome = (props: WelcomeProps) => {
 					<div className='welcome-section'>
 						<div>
 							<HeaderText>
-								For Players
+								{t('welcomePage:forPlayers')}
 							</HeaderText>
 							<div className='ds-text'>
-								If you're a <b>DRAW STEEL</b> player, you've come to the right place.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='welcomePage:theRightPlace'
+									components={{ b: <b /> }}
+									defaults='If you are a <b>DRAW STEEL</b> player, you are in the right place.'
+								/>
 							</div>
 							<div className='ds-text'>
-								In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='welcomePage:heroScreenDescription'
+									components={{ b: <b /> }}
+									defaults='In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.'
+								/>
+							</div>
+							<div className='ds-text'>
 							</div>
 							<ul>
 								<li>
-									All the official content is included, and you can also use any homebrew content your director has created.
+									{t('welcomePage:includedContent')}
 								</li>
 								<li>
-									You can use the app to track your hero's stamina, conditions, surges, and so on.
+									{t('welcomePage:appUses')}
 								</li>
 								<li>
-									If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).
+									{t('welcomePage:offlinePlay')}
 								</li>
 								<li>
-									Want something a little different? You can customize any of your abilities to make them more unique to your hero.
+									{t('welcomePage:customizeAbilities')}
 								</li>
 								<li>
-									Need to tweak your hero in a way that's not strictly by the book? No problem! You can customize your hero in any number of ways - an extra ability, bonuses to your characteristics, extra skills, retainers, etc.
+									{t('welcomePage:heroCustomization')}
 								</li>
 							</ul>
 							<div className='ds-text'>
-								In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.
+								{t('welcomePage:rulesLookup')}
 							</div>
 						</div>
 						<div className='welcome-buttons'>
@@ -294,7 +310,13 @@ const Welcome = (props: WelcomeProps) => {
 		<ErrorBoundary>
 			<div>
 				<div className='ds-text centered-text'>
-					<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+					<Trans
+						i18n={i18n}
+						ns='welcomePage'
+						i18nKey='welcomePage:description'
+						components={{ b: <b /> }}
+						defaults='<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.'
+					/>
 				</div>
 				<Segmented
 					style={{ margin: '15px 0' }}
@@ -304,7 +326,7 @@ const Welcome = (props: WelcomeProps) => {
 							value: 'player',
 							label: (
 								<div className='welcome-tab-button'>
-									<div className='title'>Players</div>
+									<div className='title'>{t('Players')}</div>
 								</div>
 							)
 						},
@@ -312,8 +334,8 @@ const Welcome = (props: WelcomeProps) => {
 							value: 'director-prep',
 							label: (
 								<div className='welcome-tab-button'>
-									<div className='title'>Directors</div>
-									<div className='subtitle'>Prep Time</div>
+									<div className='title'>{t('Directors')}</div>
+									<div className='subtitle'>{t('Prep Time')}</div>
 								</div>
 							)
 						},
@@ -321,8 +343,8 @@ const Welcome = (props: WelcomeProps) => {
 							value: 'director-run',
 							label: (
 								<div className='welcome-tab-button'>
-									<div className='title'>Directors</div>
-									<div className='subtitle'>Game Time</div>
+									<div className='title'>{t('Directors')}</div>
+									<div className='subtitle'>{t('Game Time')}</div>
 								</div>
 							)
 						},
@@ -330,7 +352,7 @@ const Welcome = (props: WelcomeProps) => {
 							value: 'creator',
 							label: (
 								<div className='welcome-tab-button'>
-									<div className='title'>Creators</div>
+									<div className='title'>{t('Creators')}</div>
 								</div>
 							)
 						}

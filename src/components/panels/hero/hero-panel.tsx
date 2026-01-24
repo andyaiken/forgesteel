@@ -57,6 +57,8 @@ import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
 import './hero-panel.scss';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 interface Props {
 	hero: Hero;
@@ -86,6 +88,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
+	const { t } = useTranslation([ 'common', 'hero', 'ancestry', 'class', 'heroicResource' ]);
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
@@ -97,7 +100,7 @@ export const HeroPanel = (props: Props) => {
 				ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
 				tags={props.hero.folder ? [ props.hero.folder ] : []}
 			>
-				{props.hero.name || 'Unnamed Hero'}
+				{props.hero.name || t('hero:unnamedHero')}
 			</HeaderText>
 		);
 	};
@@ -154,7 +157,7 @@ export const HeroPanel = (props: Props) => {
 						ability.type.trigger ?
 							<Field
 								compact={true}
-								label={ability.name || 'Unnamed Ability'}
+								label={i18next.format(t(ability.name || 'hero:unnamedAbility'), 'capitalize') || 'Unnamed Ability'}
 								value={ability.type.trigger}
 							/>
 							: null
@@ -216,16 +219,16 @@ export const HeroPanel = (props: Props) => {
 						HeroLogic.getCombatState(props.hero) === 'dying' ?
 							useRows ?
 								<div className='selectable-row danger clickable' onClick={onShowVitals}>
-									<div><b>Dying</b></div>
+									<div><b>{i18next.format(t('dying'), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile danger clickable' onClick={onShowVitals}>
-									<HeaderText>Dying</HeaderText>
+									<HeaderText>{i18next.format(t('dying'), 'capitalize')}</HeaderText>
 									<div className='ds-text'>
-										You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+										{t('hero:catchBreathWhileDying')}
 									</div>
 									<div className='ds-text'>
-										Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
+										{t('hero:recoveriesWhileDying')}
 									</div>
 								</div>
 							: null
@@ -234,7 +237,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.state.conditions.map(c =>
 							useRows ?
 								<div key={c.id} className='selectable-row warning clickable' onClick={onShowVitals}>
-									<div>Condition: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
+									<div>{i18next.format(t('condition_one'), 'capitalize')}: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
 								</div>
 								:
 								<div key={c.id} className='overview-tile warning clickable' onClick={onShowVitals}>
@@ -271,7 +274,7 @@ export const HeroPanel = (props: Props) => {
 									heroicResources.map(hr =>
 										useRows ?
 											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
-												<div>Resource: <b>{hr.name}</b></div>
+												<div>{i18next.format(t('heroicResource_one'), 'capitalize')}: <b>{i18next.format(t(`${hr.languageKey}.name_one`), 'capitalize')}</b></div>
 												<div>{hr.value}</div>
 											</div>
 											:
@@ -279,12 +282,12 @@ export const HeroPanel = (props: Props) => {
 												<HeaderText
 													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
 												>
-													{hr.name}
+													{i18next.format(t(`${hr.languageKey}.name_one`), 'capitalize')}
 												</HeaderText>
 												{
 													hr.gains.map((g, n) => (
 														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{g.trigger}</div>
+															<div className='ds-text compact-text'>{t(`${hr.languageKey}:${g.tag}.trigger`)}</div>
 															<Pill>+{g.value}</Pill>
 														</Flex>
 													))
@@ -307,11 +310,11 @@ export const HeroPanel = (props: Props) => {
 						(triggers.length > 0) && !props.options.singlePage ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={() => setTab('Triggers')}>
-									<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
+									<div>{i18next.format(t('trigger_other'), 'capitalize')}: <b>{triggers.map(tr => i18next.format(t(tr.ability.name), 'capitalize')).join(', ')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
-									<HeaderText>Triggered Actions</HeaderText>
+									<HeaderText>{i18next.format(t('triggeredAction_other'), 'capitalize')}</HeaderText>
 									<Space orientation='vertical'>
 										{triggers.map(t => getTrigger(t.ability))}
 									</Space>
@@ -322,11 +325,11 @@ export const HeroPanel = (props: Props) => {
 						conditionImmunities.length > 0 ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onShowConditions}>
-									<div>Cannot Be: <b>{conditionImmunities.join(', ')}</b></div>
+									<div>{t('hero:cannotBeImmunity')}: <b>{conditionImmunities.join(', ')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onShowConditions}>
-									<HeaderText>Cannot Be</HeaderText>
+									<HeaderText>{t('hero:cannotBeImmunity')}</HeaderText>
 									{conditionImmunities.map((c, n) => <div key={n} className='ds-text'>{c}</div>)}
 								</div>
 							: null
@@ -335,12 +338,12 @@ export const HeroPanel = (props: Props) => {
 						damageImmunities.length > 0 ?
 							useRows ?
 								<div className='selectable-row'>
-									<div>Immunities: <b>{damageImmunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
+									<div>{i18next.format(t('immunity_other'), 'capitalize')}: <b>{damageImmunities.map(dm => `${i18next.format(t(dm.damageType), 'capitalize')} ${dm.value}`).join(', ')}</b></div>
 								</div>
 								:
 								<div className='overview-tile'>
-									<HeaderText>Immunities</HeaderText>
-									{damageImmunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
+									<HeaderText>{i18next.format(t('immunity_other'), 'capitalize')}</HeaderText>
+									{damageImmunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{i18next.format(t(dm.damageType), 'capitalize')}</span><span>{dm.value}</span></div>)}
 								</div>
 							: null
 					}
@@ -348,26 +351,26 @@ export const HeroPanel = (props: Props) => {
 						damageWeaknesses.length > 0 ?
 							useRows ?
 								<div className='selectable-row'>
-									<div>Weaknesses: <b>{damageWeaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
+									<div>{i18next.format(t('weakness_other'), 'capitalize')}: <b>{damageWeaknesses.map(dm => `${i18next.format(t(dm.damageType), 'capitalize')} ${dm.value}`).join(', ')}</b></div>
 								</div>
 								:
 								<div className='overview-tile'>
-									<HeaderText>Weaknesses</HeaderText>
-									{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
+									<HeaderText>{i18next.format(t('weakness_other'), 'capitalize')}</HeaderText>
+									{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{i18next.format(t(dm.damageType), 'capitalize')}</span><span>{dm.value}</span></div>)}
 								</div>
 							: null
 					}
 					{
 						useRows ?
 							<div className='selectable-row clickable' onClick={onShowLanguages}>
-								<div>Languages: <b>{languages.map(l => l.name).join(', ')}</b></div>
+								<div>{i18next.format(t('language_other'), 'capitalize')}: <b>{languages.map(l => i18next.format(t(l.name), 'capitalize')).join(', ')}</b></div>
 							</div>
 							:
 							<div className='overview-tile clickable' onClick={onShowLanguages}>
-								<HeaderText>Languages</HeaderText>
+								<HeaderText>{i18next.format(t('language_other'), 'capitalize')}</HeaderText>
 								{
 									languages.length > 0 ?
-										languages.map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+										languages.map(l => <div key={l.name} className='ds-text'>{i18next.format(t(l.name), 'capitalize')}</div>)
 										:
 										<div className='ds-text dimmed-text'>None</div>
 								}
@@ -395,7 +398,7 @@ export const HeroPanel = (props: Props) => {
 
 		const speed = HeroLogic.getSpeed(props.hero);
 		const speedSuffix = HeroLogic.getSpeedModified(props.hero) ? <ArrowDownOutlined /> : undefined;
-		const speedStr = speed.modes.length === 0 ? 'Speed' : `Speed (${FormatLogic.getSpeedModes(speed.modes).toLowerCase()})`;
+		const speedStr = speed.modes.length === 0 ? i18next.format(t('speed'), 'capitalize') : `${i18next.format(t('speed'), 'capitalize')} (${FormatLogic.getSpeedModes(speed.modes, t).toLowerCase()})`;
 
 		const maxStamina = HeroLogic.getStamina(props.hero);
 		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
@@ -427,19 +430,19 @@ export const HeroPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='stats-section'>
 					<Flex gap={10}>
-						<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('might_short'), 'capitalize') : i18next.format(t('might'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('agility_short'), 'capitalize') : i18next.format(t('agility'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('reason_short'), 'capitalize') : i18next.format(t('reason'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('intuition_short'), 'capitalize') : i18next.format(t('intuition'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</StatsRow>
-						<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? i18next.format(t('presence_short'), 'capitalize') : i18next.format(t('presence'), 'capitalize')} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</StatsRow>
 					</Flex>
@@ -452,51 +455,51 @@ export const HeroPanel = (props: Props) => {
 											<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
 										))
 									}
-									<div>Surges: <b>{props.hero.state.surges}</b></div>
-									<div>Victories: <b>{props.hero.state.victories}</b></div>
-									<div>XP: <b>{props.hero.state.xp}</b></div>
-									<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
-									<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
+									<div>{i18next.format(t('surge_other'), 'capitalize')}: <b>{props.hero.state.surges}</b></div>
+									<div>{i18next.format(t('victory_other'), 'capitalize')}: <b>{props.hero.state.victories}</b></div>
+									<div>{i18next.format(t('xp'), 'uppercase')}: <b>{props.hero.state.xp}</b></div>
+									<div>{i18next.format(t('renown'), 'capitalize')}: <b>{HeroLogic.getRenown(props.hero)}</b></div>
+									<div>{i18next.format(t('wealth'), 'capitalize')}: <b>{HeroLogic.getWealth(props.hero)}</b></div>
 								</div>
 								<div className='selectable-row'>
-									<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
+									<div>{i18next.format(t('size'), 'capitalize')}: <b>{FormatLogic.getSize(size)}</b></div>
 									<div>{speedStr}: <b>{speed.value}</b></div>
-									<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
-									<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
-									<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
+									<div>{i18next.format(t('stability'), 'capitalize')}: <b>{HeroLogic.getStability(props.hero)}</b></div>
+									<div>{i18next.format(t('disengage'), 'capitalize')}: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
+									<div>{i18next.format(t('save'), 'capitalize')}: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
 								</div>
 								<div className='selectable-row clickable' onClick={onShowVitals}>
-									<div>Stamina: <b>{stamina}</b></div>
-									<div>Recoveries: <b>{recoveries}</b></div>
-									<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
+									<div>{i18next.format(t('stamina'), 'capitalize')}: <b>{stamina}</b></div>
+									<div>{i18next.format(t('recovery_other'), 'capitalize')}: <b>{recoveries}</b></div>
+									<div>{i18next.format(t('recoveryValue'), 'capitalize')}: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
 								</div>
 							</>
 							:
 							<>
-								<StatsRow caption='Resources' onClick={onShowResources}>
+								<StatsRow caption={i18next.format(t('resource_other'), 'capitalize')} onClick={onShowResources}>
 									{
 										HeroLogic.getHeroicResources(props.hero).map(hr => (
 											<Statistic key={hr.id} title={hr.name} value={hr.value} />
 										))
 									}
-									<Statistic title='Surges' value={props.hero.state.surges} />
-									<Statistic title='Victories' value={props.hero.state.victories} />
-									<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
-									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
-									<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+									<Statistic title={i18next.format(t('surge_other'), 'capitalize')} value={props.hero.state.surges} />
+									<Statistic title={i18next.format(t('victory_other'), 'capitalize')} value={props.hero.state.victories} />
+									<Statistic title={i18next.format(t('xp'), 'uppercase')} value={props.hero.state.xp} suffix={xpSuffix} />
+									<Statistic title={i18next.format(t('renown'), 'capitalize')} value={HeroLogic.getRenown(props.hero)} />
+									<Statistic title={i18next.format(t('wealth'), 'capitalize')} value={HeroLogic.getWealth(props.hero)} />
 								</StatsRow>
 								<Flex gap={10}>
-									<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
-										<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+									<StatsRow caption={i18next.format(t('statistics_other'), 'capitalize')} style={{ flex: '5 5 0' }}>
+										<Statistic title={i18next.format(t('size'), 'capitalize')} value={size.value} suffix={sizeSuffix} />
 										<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
-										<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-										<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
-										<Statistic title='Save' value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
+										<Statistic title={i18next.format(t('stability'), 'capitalize')} value={HeroLogic.getStability(props.hero)} />
+										<Statistic title={i18next.format(t('disengage'), 'capitalize')} value={HeroLogic.getDisengage(props.hero)} />
+										<Statistic title={i18next.format(t('save'), 'capitalize')} value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
 									</StatsRow>
-									<StatsRow caption='Vitals' onClick={onShowVitals} style={{ flex: '3 3 0' }}>
-										<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
-										<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
-										<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+									<StatsRow caption={i18next.format(t('vitals'), 'capitalize')} onClick={onShowVitals} style={{ flex: '3 3 0' }}>
+										<Statistic title={i18next.format(t('stamina'), 'capitalize')} value={stamina} suffix={staminaSuffix} />
+										<Statistic title={i18next.format(t('recovery_other'), 'capitalize')} value={recoveries} suffix={recoveriesSuffix} />
+										<Statistic title={i18next.format(t('recoveryValue'), 'capitalize')} value={HeroLogic.getRecoveryValue(props.hero)} />
 									</StatsRow>
 								</Flex>
 							</>
@@ -575,56 +578,59 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>Ancestry: <b>{props.hero.ancestry.name}</b></div>
+									<div>{t('ancestry', { format: 'capitalize' })}: <b>{i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectAncestry}>
-									<HeaderText>Ancestry</HeaderText>
-									<Field label='Ancestry' value={props.hero.ancestry.name} />
-									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
+									<HeaderText>{t('ancestry')}</HeaderText>
+									<Field
+										label={i18next.format(t('ancestry'), 'capitalize')}
+										value={i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
+									/>
+									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={i18next.format(t(`${a.languageKey}.name_one`), 'capitalize')} />)}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Ancestry</HeaderText>
-								<div className='ds-text dimmed-text'>No ancestry chosen</div>
+								<HeaderText>{t('ancestry', { format: 'capitalize' })}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noAncestryChosen')}</div>
 							</div>
 					}
 					{
 						props.hero.culture ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCulture}>
-									<div>Culture: <b>{props.hero.culture.name}</b></div>
+									<div>{t('culture', 'capitalize')}: <b>{i18next.format(t(`culture:${props.hero.culture.languageKey}.name_one`), 'capitalize')}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
-									<HeaderText>Culture</HeaderText>
-									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
-									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
-									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
-									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
+									<HeaderText>{i18next.format(t('culture'), 'capitalize')}</HeaderText>
+									{props.hero.culture ? <Field label={i18next.format(t('culture'), 'capitalize')} value={i18next.format(t(`culture:${props.hero.culture.languageKey}.name_one`), 'capitalize')} /> : null}
+									{props.hero.culture.environment ? <Field label={i18next.format(t('environment'), 'capitalize')} value={i18next.format(t(`environment:${props.hero.culture.environment.languageKey}`), 'capitalize')} /> : null}
+									{props.hero.culture.organization ? <Field label={i18next.format(t('organization'), 'capitalize')} value={i18next.format(t(`organization:${props.hero.culture.organization.languageKey}`), 'capitalize')} /> : null}
+									{props.hero.culture.upbringing ? <Field label={i18next.format(t('upbringing'), 'capitalize')} value={i18next.format(t(`upbringing:${props.hero.culture.upbringing.languageKey}`), 'capitalize')} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Culture</HeaderText>
-								<div className='ds-text dimmed-text'>No culture chosen</div>
+								<HeaderText>{i18next.format(t('culture'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noCultureChosen')}</div>
 							</div>
 					}
 					{
 						props.hero.career ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectCareer}>
-									<div>Career: <b>{props.hero.career.name}</b></div>
+									<div>{i18next.format(t('career'), 'capitalize')}: <b>{props.hero.career.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectCareer}>
-									<HeaderText>Career</HeaderText>
-									<Field label='Career' value={props.hero.career.name} />
+									<HeaderText>{i18next.format(t('career'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('career'), 'capitalize')} value={props.hero.career.name} />
 									{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Career</HeaderText>
-								<div className='ds-text dimmed-text'>No career chosen</div>
+								<HeaderText>{i18next.format(t('career'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noCareerChosen')}</div>
 							</div>
 					}
 					{
@@ -633,26 +639,26 @@ export const HeroPanel = (props: Props) => {
 								<div className='selectable-row clickable' onClick={onSelectClass}>
 									{
 										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
+											<div>{i18next.format(t('class'), 'capitalize')}: <b>{i18next.format(t(props.hero.class.name), 'capitalize')} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => i18next.format(t(sc.name), 'capitalize')).join(' ')}, level {props.hero.class.level})</b></div>
 											:
-											<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
+											<div>{i18next.format(t('class'), 'capitalize')}: <b>{i18next.format(t(props.hero.class.name), 'capitalize')} (level {props.hero.class.level})</b></div>
 									}
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectClass}>
-									<HeaderText>Class</HeaderText>
-									<Field label='Class' value={props.hero.class.name} />
-									<Field label='Level' value={props.hero.class.level} />
+									<HeaderText>{i18next.format(t('class'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('class'), 'capitalize')} value={i18next.format(t(props.hero.class.name), 'capitalize')} />
+									<Field label={i18next.format(t('level'), 'capitalize')} value={props.hero.class.level} />
 									{
 										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+											<Field label={i18next.format(t(props.hero.class.subclassName), 'capitalize')} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => i18next.format(t(sc.name), 'capitalize')).join(', ') || ''} />
 											: null
 									}
 								</div>
 							:
 							<div className='overview-tile'>
-								<HeaderText>Class</HeaderText>
-								<div className='ds-text dimmed-text'>No class chosen</div>
+								<HeaderText>{i18next.format(t('class'), 'capitalize')}</HeaderText>
+								<div className='ds-text dimmed-text'>{t('hero:noClassChosen')}</div>
 							</div>
 					}
 					{
@@ -660,12 +666,12 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getDomains(props.hero).map(domain =>
 								useRows ?
 									<div key={domain.id} className='selectable-row clickable' onClick={() => onSelectDomain(domain)}>
-										<div>Domain: <b>{domain.name}</b></div>
+										<div>{i18next.format(t('domain'), 'capitalize')}: <b>{i18next.format(t(domain.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={domain.id} className='overview-tile clickable' onClick={() => onSelectDomain(domain)}>
-										<HeaderText>Domain</HeaderText>
-										<Field label='Domain' value={domain.name} />
+										<HeaderText>{i18next.format(t('domain'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('domain'), 'capitalize')} value={i18next.format(t(domain.name), 'capitalize')} />
 									</div>
 							)
 							:
@@ -676,14 +682,14 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getKits(props.hero).map(kit =>
 								useRows ?
 									<div key={kit.id} className='selectable-row clickable' onClick={() => onSelectKit(kit)}>
-										<div>Kit: <b>{kit.name}</b></div>
+										<div>{i18next.format(t('kit'), 'capitalize')}: <b>{i18next.format(t(kit.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={kit.id} className='overview-tile clickable' onClick={() => onSelectKit(kit)}>
-										<HeaderText>Kit</HeaderText>
-										<Field label='Kit' value={kit.name} />
-										{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
-										{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
+										<HeaderText>{i18next.format(t('kit'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('kit'), 'capitalize')} value={i18next.format(t(kit.name), 'capitalize')} />
+										{kit.armor.length > 0 ? <Field label={i18next.format(t('armor'), 'capitalize')} value={kit.armor.join(', ')} /> : null}
+										{kit.weapon.length > 0 ? <Field label={i18next.format(t('weapon_other'), 'capitalize')} value={kit.weapon.join(', ')} /> : null}
 									</div>
 							)
 							:
@@ -694,12 +700,12 @@ export const HeroPanel = (props: Props) => {
 							HeroLogic.getTitles(props.hero).map(title =>
 								useRows ?
 									<div key={title.id} className='selectable-row clickable' onClick={() => onSelectTitle(title)}>
-										<div>Title: <b>{title.name}</b></div>
+										<div>{i18next.format(t('title_one'), 'capitalize')}: <b>{i18next.format(t(title.name), 'capitalize')}</b></div>
 									</div>
 									:
 									<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
-										<HeaderText>Title</HeaderText>
-										<Field label='Title' value={title.name} />
+										<HeaderText>{i18next.format(t('title_one'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('title_one'), 'capitalize')} value={i18next.format(t(title.name), 'capitalize')} />
 									</div>
 							)
 							:
@@ -709,12 +715,12 @@ export const HeroPanel = (props: Props) => {
 						props.hero.complication ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectComplication}>
-									<div>Complication: <b>{props.hero.complication.name}</b></div>
+									<div>{i18next.format(t('complication'), 'capitalize')}: <b>{props.hero.complication.name}</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectComplication}>
-									<HeaderText>Complication</HeaderText>
-									<Field label='Complication' value={props.hero.complication.name} />
+									<HeaderText>{i18next.format(t('complication'), 'capitalize')}</HeaderText>
+									<Field label={i18next.format(t('complication'), 'capitalize')} value={i18next.format(t(props.hero.complication.name), 'capitalize')} />
 								</div>
 							:
 							null
@@ -724,13 +730,13 @@ export const HeroPanel = (props: Props) => {
 							props.hero.state.projects.map(project =>
 								useRows ?
 									<div key={project.id} className='selectable-row clickable' onClick={onSelectProject}>
-										<div>Project: <b>{project.name}</b></div>
+										<div>{i18next.format(t('project'), 'capitalize')}: <b>{project.name}</b></div>
 									</div>
 									:
 									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
-										<HeaderText>Project</HeaderText>
-										<Field label='Project' value={project.name} />
-										{project.progress ? <Field label='State' value={ProjectLogic.getStatus(project)} /> : null}
+										<HeaderText>{i18next.format(t('project'), 'capitalize')}</HeaderText>
+										<Field label={i18next.format(t('project'), 'capitalize')} value={i18next.format(t(project.name), 'capitalize')} />
+										{project.progress ? <Field label={i18next.format(t('state'), 'capitalize')} value={i18next.format(t(ProjectLogic.getStatus(project)), 'capitalize')} /> : null}
 									</div>
 							)
 							:
@@ -774,7 +780,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						mainFeatures.length > 0 ?
 							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
+								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{i18next.format(t('features'), 'capitalize')}</HeaderText> : null}
 								{
 									mainFeatures.map(f =>
 										useRows ?
@@ -798,7 +804,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						inventoryFeatures.length > 0 ?
 							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
+								<HeaderText level={props.options.compactView ? 3 : 1}>{i18next.format(t('inventory'), 'capitalize')}</HeaderText>
 								{
 									inventoryFeatures.map(f =>
 										useRows ?
@@ -838,17 +844,17 @@ export const HeroPanel = (props: Props) => {
 		const getRow = (data: { ability: Ability, source: string }) => {
 			return (
 				<div key={data.ability.id} className='selectable-row clickable' onClick={() => showAbility(data.ability)}>
-					<div><b>{data.ability.name}</b></div>
+					<div><b>{i18next.format(t(data.ability.name), 'capitalize')}</b></div>
 					<div>{data.ability.distance.map(d => AbilityLogic.getDistance(d, data.ability, props.hero)).join(' or ')}</div>
-					<div>{data.ability.target}</div>
-					{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
+					<div>{i18next.format(t(data.ability.target), 'capitalize')}</div>
+					{props.options.showSources ? <Tag variant='outlined'>{i18next.format(t(data.source), 'capitalize')}</Tag> : null}
 					{
 						data.ability.cost === 'signature' ?
-							<Pill>Signature</Pill>
+							<Pill>{t('common.signatureAbility')}</Pill>
 							:
 							(data.ability.cost > 0) ? <ResourcePill value={data.ability.cost} repeatable={data.ability.repeatable} /> : null
 					}
-					{data.ability.type.trigger ? <div>{data.ability.type.trigger}</div> : null}
+					{data.ability.type.trigger ? <div>{t(data.ability.type.trigger)}</div> : null}
 				</div>
 			);
 		};
@@ -861,7 +867,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='abilities-section'>
-					{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{title}</HeaderText> : null}
+					{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{t(title)}</HeaderText> : null}
 					{
 						(nonStandard.length === 0) && (standard.length === 0) ?
 							<Empty />
@@ -947,7 +953,7 @@ export const HeroPanel = (props: Props) => {
 										Collections.sort(monsters, m => m.monster.name).map(m =>
 											useRows ?
 												<div key={m.monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(m.monster, m.summon)}>
-													<div>Companion: <b>{m.monster.name}</b></div>
+													<div>{i18next.format(t('monsterCompanion_one'), 'capitalize')}: <b>{i18next.format(t(m.monster.name), 'capitalize')}</b></div>
 												</div>
 												:
 												<SelectablePanel key={m.monster.id} onSelect={() => onSelectMonster(m.monster, m.summon)}>
@@ -962,13 +968,13 @@ export const HeroPanel = (props: Props) => {
 					{
 						followers.length > 0 ?
 							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
+								<HeaderText level={props.options.compactView ? 3 : 1}>{i18next.format(t('follower_other'), 'capitalize')}</HeaderText>
 								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 									{
 										followers.map(follower =>
 											useRows ?
 												<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
-													<div>Follower: <b>{follower.name}</b></div>
+													<div>{i18next.format(t('follower_one'), 'capitalize')}: <b>{follower.name}</b></div>
 												</div>
 												:
 												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
@@ -1107,37 +1113,37 @@ export const HeroPanel = (props: Props) => {
 						ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={34} /> : null}
 						tags={props.hero.folder ? [ props.hero.folder ] : []}
 					>
-						{props.hero.name || 'Unnamed Hero'}
+						{props.hero.name || t('hero:unnamedHero')}
 					</HeaderText>
 					{
 						props.hero.ancestry ?
 							<Field
-								label='Ancestry'
-								value={props.hero.ancestry.name}
+								label={i18next.format(t('ancestry'), 'capitalize')}
+								value={i18next.format(t(`${props.hero.ancestry.languageKey}.name_one`), 'capitalize')}
 							/>
 							: null
 					}
 					{
 						background.length > 0 ?
 							<Field
-								label='Background'
-								value={background.join(' / ')}
+								label={i18next.format(t('background'), 'capitalize')}
+								value={background.map(b => i18next.format(t(b), 'capitalize')).join(' / ')}
 							/>
 							: null
 					}
 					{
 						props.hero.class ?
 							<Field
-								label='Class'
-								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name) ].join(' ')})`}
+								label={i18next.format(t('class'), 'capitalize')}
+								value={`${i18next.format(t(props.hero.class.name), 'capitalize')} (${[ i18next.format(t('levelWithCount_other', { count: props.hero.class.level }), 'capitalize'), ...props.hero.class.subclasses.filter(sc => sc.selected).map(sc => i18next.format(t(sc.name), 'capitalize')) ].join(' ')})`}
 							/>
 							: null
 					}
 					{
 						props.hero.complication ?
 							<Field
-								label='Complication'
-								value={props.hero.complication.name}
+								label={i18next.format(t('complication'), 'capitalize')}
+								value={i18next.format(t(props.hero.complication.name), 'capitalize')}
 							/>
 							: null
 					}

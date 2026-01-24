@@ -296,9 +296,10 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+	createHeroicResource = (data: { id: string, languageKey?: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 		return {
 			id: data.id,
+			languageKey: data.languageKey,
 			name: data.name,
 			description: data.description || '',
 			type: FeatureType.HeroicResource,
@@ -531,7 +532,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
+	createSkillChoice = (data: { id: string, languageKey?: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 		const count = data.count || 1;
 		const options = data.options || [];
 		let listOptions = data.listOptions || [];

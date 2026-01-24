@@ -4,6 +4,7 @@ import { LabeledTextField } from '@/components/panels/classic-sheet/components/l
 import { Options } from '@/models/options';
 
 import './hero-header-card.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	character: HeroSheet;
@@ -11,31 +12,34 @@ interface Props {
 }
 
 export const HeroHeaderCard = (props: Props) => {
+	const { t, i18n } = useTranslation([ 'common', 'hero', 'ancestry' ]);
 	const character = props.character;
 	const showState = props.options.includePlayState;
-
 	const currentVictories = (showState && character.currentVictories) || 0;
 	return (
 		<div className='hero-header card'>
+			<div>
+				{i18n.format(t('common:career'), 'capitalize')}
+			</div>
 			<HeaderImage />
 			<section className='hero-overview container'>
 				<LabeledTextField
-					label='Character Name'
+					label={t('hero:characterName')}
 					content={character.name}
 					additionalClasses={[ 'name', 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Ancestry'
-					content={character.ancestryName}
+					label={i18n.format(t('common:ancestry'), 'capitalize')}
+					content={character.ancestryName ? i18n.format(t(`ancestry:${character.ancestryName?.toLowerCase()}.name_one`), 'capitalize') : ''}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Class'
-					content={character.className}
+					label={i18n.format(t('common:class'), 'capitalize')}
+					content={character.className ? i18n.format(t(`class:${character.className}.name_one`), 'capitalize') : ''}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
-					label='Career'
+					label={i18n.format(t('common:career'), 'capitalize')}
 					content={character.career?.name || ''}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
@@ -48,7 +52,7 @@ export const HeroHeaderCard = (props: Props) => {
 			<section className='hero-advancement container'>
 				<div className='victories-level'>
 					<div className='victories'>
-						<h3>Victories:</h3>
+						<h3>{i18n.format(t('victory_other'), 'capitalize')}:</h3>
 						<div className='victories-boxes'>
 							<ol>
 								{[ ...Array(15) ].map((_o, i) => {
@@ -58,23 +62,23 @@ export const HeroHeaderCard = (props: Props) => {
 						</div>
 					</div>
 					<LabeledTextField
-						label='Level'
+						label={i18n.format(t('level'), 'capitalize')}
 						content={character.level}
 						additionalClasses={[ 'level', 'label-above', 'no-box' ]}
 					/>
 				</div>
 				<LabeledTextField
-					label='Wealth'
+					label={i18n.format(t('wealth'), 'capitalize')}
 					content={character.wealth}
 					additionalClasses={[ 'label-above', 'box-both' ]}
 				/>
 				<LabeledTextField
-					label='Renown'
+					label={i18n.format(t('renown'), 'capitalize')}
 					content={character.renown}
 					additionalClasses={[ 'label-above', 'box-both' ]}
 				/>
 				<LabeledTextField
-					label={character.level === 10 ? 'Epic' : 'XP'}
+					label={character.level === 10 ? 'Epic' : i18n.format(t('xp'), 'capitalize')}
 					content={character.xp}
 					additionalClasses={[ 'xp', 'label-above', 'box-both' ]}
 				/>

@@ -7,6 +7,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 
 export const wodeElf: Ancestry = {
 	id: 'ancestry-wode-elf',
+	languageKey: 'ancestry:wode-elf',
 	name: 'Elf (wode)',
 	description: 'Children of the sylvan celestials and masters of the elf-haunted forests called wodes, wode elves see all forests as their domain by birthright. They know and enjoy their reputation among humans for snatching children who wander too far into the woods. Humans should fear the trees.',
 	features: [

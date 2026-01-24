@@ -835,6 +835,7 @@ export class HeroLogic {
 
 				return {
 					id: f.id,
+					languageKey: f.languageKey,
 					name: f.name,
 					type: f.data.type,
 					gains: gains,

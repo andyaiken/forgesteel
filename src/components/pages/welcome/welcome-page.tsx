@@ -1,5 +1,5 @@
 import { Alert, Button, Flex, Segmented } from 'antd';
-import { BookOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, CloseOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
@@ -32,21 +32,20 @@ interface Props {
 
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const [ showBanner, setShowBanner ] = useState<boolean>(true);
 
 	if (isSmall) {
 		return (
 			<ErrorBoundary name='welcome-page'>
 				<div className='welcome-page'>
 					<AppHeader />
-					<ErrorBoundary>
-						<div className='welcome-page-content compact'>
-							<div className='welcome-column'>
-								<Welcome
-									onNewHero={props.onNewHero}
-								/>
-							</div>
+					<div className='welcome-page-content compact'>
+						<div className='welcome-column'>
+							<Welcome
+								onNewHero={props.onNewHero}
+							/>
 						</div>
-					</ErrorBoundary>
+					</div>
 					<AppFooter
 						page='welcome'
 						highlightAbout={props.highlightAbout}
@@ -55,6 +54,11 @@ export const WelcomePage = (props: Props) => {
 						showAbout={props.showAbout}
 						showSettings={props.showSettings}
 					/>
+					{
+						showBanner ?
+							<Banner onClose={() => setShowBanner(false)} />
+							: null
+					}
 				</div>
 			</ErrorBoundary>
 		);
@@ -88,6 +92,11 @@ export const WelcomePage = (props: Props) => {
 					showAbout={props.showAbout}
 					showSettings={props.showSettings}
 				/>
+				{
+					showBanner ?
+						<Banner onClose={() => setShowBanner(false)} />
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);
@@ -384,5 +393,24 @@ const Tips = () => {
 				onNext={tipIndex === tips.length - 1 ? undefined : nextTip}
 			/>
 		</ErrorBoundary>
+	);
+};
+
+interface BannerProps {
+	onClose: () => void;
+}
+
+const Banner = (props: BannerProps) => {
+	return (
+		<div className='banner-container' onClick={e => e.stopPropagation()}>
+			<div className='banner'>
+				<HeaderText extra={<Button type='text' icon={<CloseOutlined />} onClick={props.onClose} />}>
+					FORGE STEEL has a new home!
+				</HeaderText>
+				<div>
+					Export your heroes and homebrew sourcebooks <a href='https://andyaiken.github.io/forgesteel/#/backup'>here</a>, then join us at <a href='https://forgesteel.net'>https://forgesteel.net</a>.
+				</div>
+			</div>
+		</div>
 	);
 };

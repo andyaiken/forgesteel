@@ -175,6 +175,9 @@ export class SourcebookUpdateLogic {
 			domain.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
 			});
+			if (domain.defaultFeatures === undefined) {
+				domain.defaultFeatures = [];
+			}
 			domain.defaultFeatures.forEach(FeatureUpdateLogic.updateFeature);
 		});
 

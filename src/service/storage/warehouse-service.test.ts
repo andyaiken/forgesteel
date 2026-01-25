@@ -14,7 +14,8 @@ const defaultSettings: ConnectionSettings = {
 	warehouseHost: 'http://test-fake-host',
 	warehouseToken: 'abcd123',
 	patreonConnected: false,
-	usePatreonWarehouse: false
+	usePatreonWarehouse: false,
+	patreonConnections: []
 };
 
 describe('WarehouseService', () => {

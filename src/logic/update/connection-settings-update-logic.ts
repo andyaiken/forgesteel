@@ -21,5 +21,9 @@ export class ConnectionSettingsUpdateLogic {
 		if (settings.usePatreonWarehouse === undefined) {
 			settings.usePatreonWarehouse = false;
 		}
+
+		if (settings.patreonConnections === undefined) {
+			settings.patreonConnections = [];
+		}
 	};
 }

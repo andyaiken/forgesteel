@@ -1,4 +1,4 @@
-import { Flex, Segmented } from 'antd';
+import { Alert, Flex, Segmented } from 'antd';
 import { Domain } from '@/models/domain';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -67,6 +67,11 @@ export const DomainPanel = (props: Props) => {
 	const getAdditional = () => {
 		return (
 			<div className='domain-features-list'>
+				<Alert
+					type='info'
+					showIcon={true}
+					title='The features on this page are used by the Conduit class.'
+				/>
 				{
 					props.domain.resourceGains.length > 0 ?
 						<>

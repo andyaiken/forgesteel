@@ -126,6 +126,77 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 	culture: FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish')
 };
 
+const gallGuardian: Ancestry = {
+	id: 'ancestry-gall-guardian',
+	name: 'Gall Guardian',
+	description: `
+*By Heart of Arcana*
+
+Some oaklings choose to walk a different path than their kin. Though it often results in their departure from the wode, these oaklings choose to gain knowledge and power at the expense of permitting parasitic wasps to lay their eggs within their wooden flesh. This choice results in a transformation that turns them from a being of leaf and acorn into a distorted gall creature, riddled and pockmarked with holes, a guardian of the wode`,
+	features: [
+		FactoryLogic.feature.createMultiple({
+			id: 'gall-guardian-1',
+			name: 'Wode Ward',
+			features: [
+				FactoryLogic.feature.createSize({
+					id: 'gall-guardian-1a',
+					sizeValue: 1,
+					sizeMod: 'S'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'gall-guardian-1b',
+					conditions: [ ConditionType.Frightened ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'gall-guardian-1c',
+					name: 'Language of Insects',
+					description: 'You can speak the language of insects.'
+				}),
+				FactoryLogic.feature.createChoice({
+					id: 'gall-guardian-1d',
+					options: [
+						{
+							feature: FactoryLogic.feature.createDamageModifier({
+								id: 'gall-guardian-1da',
+								modifiers: [
+									FactoryLogic.damageModifier.createValuePlusPerLevel({
+										damageType: DamageType.Poison,
+										modifierType: DamageModifierType.Immunity,
+										value: 5,
+										perLevel: 1
+									})
+								]
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createDamageModifier({
+								id: 'gall-guardian-1db',
+								modifiers: [
+									FactoryLogic.damageModifier.createValuePlusPerLevel({
+										damageType: DamageType.Fire,
+										modifierType: DamageModifierType.Immunity,
+										value: 5,
+										perLevel: 1
+									})
+								]
+							}),
+							value: 1
+						}
+					]
+				}),
+				FactoryLogic.feature.create({
+					id: 'gall-guardian-1e',
+					name: 'Wode Ward',
+					description: 'You gain an edge on Presence tests made to intimidate, coerce, or bully, but have a bane on Presence tests made to empathize or persuade.'
+				})
+			]
+		})
+	],
+	ancestryPoints: 0,
+	culture: FactoryLogic.createCulture('Gall Guardian', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Yllyric')
+};
+
 const oakling: Ancestry = {
 	id: 'ancestry-oakling',
 	name: 'Oakling',
@@ -135,11 +206,9 @@ const oakling: Ancestry = {
 *Children of the oak. Wild soul-sparks dancing in the trees. Wonder and joy, their arms stretching upwards and outwards. Ever seeking. Their hearts like green tendrils grasping for light.*
 - Elder Druid Mogh Roith
 
-Native to the great wodes of Orden, oaklings are the children of great-grandmother oak trees. Sprouting like acorns from her branches, they live in her trunk and defend both her and the wode from threats. Though they are tiny in stature, they hold within them the strength and vigor of the mightiest, sturdiest oaks. 
+Native to the great wodes of Orden, oaklings are the children of great-grandmother oak trees. Sprouting like acorns from her branches, they live in her trunk and defend both her and the wode from threats. Though they are tiny in stature, they hold within them the strength and vigor of the mightiest, sturdiest oaks.
 
-Oaklings are as diverse as the oaks that bear them. Their distinction is evident in the color, size, and texture of their acorn cap. The combinations of the caps result in a colorful and diverse array of oakling presentations. 
-
-Some oaklings walk a different path. Though it often results in their departure from the wode, these oaklings choose to gain knowledge and power at the expense of permitting parasitic wasps to lay their eggs within their wooden flesh. A choice that results in a transformation from a being of leaf and acorn, into a distorted gall creature, riddled and pockmarked with holes.`,
+Oaklings are as diverse as the oaks that bear them. Their distinction is evident in the color, size, and texture of their acorn cap. The combinations of the caps result in a colorful and diverse array of oakling presentations.`,
 	features: [
 		FactoryLogic.feature.create({
 			id: 'oakling-1a',
@@ -4918,9 +4987,7 @@ export const communityPrerelease: Sourcebook = {
 	description: 'Selected community creations (pre-release).',
 	type: SourcebookType.Community,
 	adventures: [],
-	ancestries: [
-		oakling
-	],
+	ancestries: [],
 	careers: [],
 	classes: [],
 	complications: [],
@@ -4951,6 +5018,8 @@ export const community: Sourcebook = {
 	adventures: [],
 	ancestries: [
 		aranox,
+		gallGuardian,
+		oakling,
 		solar
 	],
 	careers: [],

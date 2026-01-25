@@ -76,7 +76,6 @@ export const DataLoader = (props: Props) => {
 			try {
 				const patreonSession = await patreonSvc.getPatreonSession();
 				settings.patreonConnections = patreonSession.connections;
-				console.info(settings.patreonConnections);
 				if (PatreonLogic.hasWarehouseAccess(patreonSession) && !settings.useManualWarehouse) {
 					settings.usePatreonWarehouse = true;
 					source = 'Patron';

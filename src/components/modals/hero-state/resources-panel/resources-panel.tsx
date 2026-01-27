@@ -42,7 +42,7 @@ export const ResourcesPanel = (props: Props) => {
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
 			const copy = Utils.copy(hero);
-			HeroLogic.getFeatures(copy)
+			HeroLogic.getFeaturesWithoutCustomizations(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.filter(f => f.id === featureID)
@@ -53,7 +53,7 @@ export const ResourcesPanel = (props: Props) => {
 
 		const gainResource = (featureID: string, value: number) => {
 			const copy = Utils.copy(hero);
-			HeroLogic.getFeatures(copy)
+			HeroLogic.getFeaturesWithoutCustomizations(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.filter(f => f.id === featureID)
@@ -67,7 +67,7 @@ export const ResourcesPanel = (props: Props) => {
 		const startEncounter = (featureID: string) => {
 			const copy = Utils.copy(hero);
 
-			HeroLogic.getFeatures(copy)
+			HeroLogic.getFeaturesWithoutCustomizations(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.filter(f => f.id === featureID)
@@ -80,7 +80,7 @@ export const ResourcesPanel = (props: Props) => {
 		const endEncounter = (featureID: string) => {
 			const copy = Utils.copy(hero);
 
-			HeroLogic.getFeatures(copy)
+			HeroLogic.getFeaturesWithoutCustomizations(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.filter(f => f.id === featureID)

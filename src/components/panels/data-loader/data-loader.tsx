@@ -323,8 +323,9 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={connectionSettingsState}>
 							Connection Settings
 							{
-								dataSource &&
-									<Tag>{dataSource}</Tag>
+								dataSource ?
+									<Tag variant='outlined'>{dataSource}</Tag>
+									: null
 							}
 						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>

@@ -302,7 +302,7 @@ export class AbilityLogic {
 					return `${total} ${damage}`;
 				}
 
-				if (hero && (n === 0) && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
+				if (hero && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
 					let value = 0;
 					let sign = '+';
 					let vertical = false;

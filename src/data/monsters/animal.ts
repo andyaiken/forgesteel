@@ -106,11 +106,11 @@ The Example Animals table breaks out a number of animals using this notation. Se
 		}),
 		FactoryLogic.createMonster({
 			id: 'animal-2',
-			name: 'Swarm',
+			name: 'Animal Swarm',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Hexer),
 			keywords: [ 'Animal', 'Swarm' ],
-			encounterValue: 16,
+			encounterValue: 12,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 40,

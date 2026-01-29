@@ -349,7 +349,9 @@ export class HeroUpdateLogic {
 					const id = origItem.id;
 					const item = SourcebookLogic.getItems(sourcebooks).find(itm => itm.id === id);
 					if (item) {
-						return Utils.copy(item);
+						const copiedItem = Utils.copy(item);
+						copiedItem.count = origItem.count;
+						return copiedItem;
 					} else {
 						return origItem;
 					}
@@ -508,7 +510,14 @@ export class HeroUpdateLogic {
 					const selectedIDs = oFeature.data.selected.map(i => i.id);
 					feature.data.selected = SourcebookLogic.getItems(sourcebooks)
 						.filter(i => selectedIDs.includes(i.id))
-						.map(i => Utils.copy(i));
+						.map(i => {
+							const copiedItem = Utils.copy(i);
+							const origItem = oFeature.data.selected.find(oi => oi.id === i.id);
+							if (origItem) {
+								copiedItem.count = origItem.count;
+							}
+							return copiedItem;
+						});
 					break;
 				}
 				case FeatureType.Kit: {

@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
@@ -349,7 +349,9 @@ export class HeroUpdateLogic {
 					const id = origItem.id;
 					const item = SourcebookLogic.getItems(sourcebooks).find(itm => itm.id === id);
 					if (item) {
-						return Utils.copy(item);
+						const copiedItem = Utils.copy(item);
+						copiedItem.count = origItem.count;
+						return copiedItem;
 					} else {
 						return origItem;
 					}
@@ -468,6 +470,11 @@ export class HeroUpdateLogic {
 					feature.data.selected = oFeature.data.selected;
 					break;
 				}
+				case FeatureType.Retainer: {
+					const oFeature = originalFeature as FeatureRetainer;
+					feature.data.selected = oFeature.data.selected;
+					break;
+				}
 				case FeatureType.Domain: {
 					const oFeature = originalFeature as FeatureDomain;
 
@@ -508,7 +515,14 @@ export class HeroUpdateLogic {
 					const selectedIDs = oFeature.data.selected.map(i => i.id);
 					feature.data.selected = SourcebookLogic.getItems(sourcebooks)
 						.filter(i => selectedIDs.includes(i.id))
-						.map(i => Utils.copy(i));
+						.map(i => {
+							const copiedItem = Utils.copy(i);
+							const origItem = oFeature.data.selected.find(oi => oi.id === i.id);
+							if (origItem) {
+								copiedItem.count = origItem.count;
+							}
+							return copiedItem;
+						});
 					break;
 				}
 				case FeatureType.Kit: {

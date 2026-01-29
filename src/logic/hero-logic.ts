@@ -78,7 +78,7 @@ export class HeroLogic {
 		return Collections.sort(features, f => f.feature.name);
 	};
 
-	static getFeatures = (hero: Hero) => {
+	static getFeatures = (hero: Hero): readonly { feature: Readonly<Feature>, source: string }[] => {
 		const customizedFeatures = HeroLogic.getFeaturesWithoutCustomizations(hero).map(f => {
 			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id) || null;
 			if (customization) {

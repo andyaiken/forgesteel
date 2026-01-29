@@ -74,7 +74,7 @@ export const HeroCustomizeModal = (props: Props) => {
 
 	const setFeatureData = (featureID: string, data: FeatureData) => {
 		const heroCopy = Utils.copy(hero);
-		const feature = HeroLogic.getFeatures(heroCopy)
+		const feature = HeroLogic.getFeaturesWithoutCustomizations(heroCopy)
 			.map(f => f.feature)
 			.find(f => f.id === featureID);
 		if (feature) {

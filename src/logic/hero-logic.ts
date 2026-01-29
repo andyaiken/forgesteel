@@ -78,6 +78,9 @@ export class HeroLogic {
 		return Collections.sort(features, f => f.feature.name);
 	};
 
+	// Returns all hero features with customizations applied. When customizations are applied,
+	// the feature is copied, so modifying it won't change the original feature of the hero.
+	// To avoid issues, the return type is marked as readonly.
 	static getFeatures = (hero: Hero): readonly { feature: Readonly<Feature>, source: string }[] => {
 		const customizedFeatures = HeroLogic.getFeaturesWithoutCustomizations(hero).map(f => {
 			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id) || null;

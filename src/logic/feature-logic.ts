@@ -475,6 +475,7 @@ export class FeatureLogic {
 			FeatureType.DamageModifier,
 			FeatureType.Domain,
 			FeatureType.DomainFeature,
+			FeatureType.Fixture,
 			FeatureType.Follower,
 			FeatureType.HeroicResource,
 			FeatureType.HeroicResourceGain,

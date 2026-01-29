@@ -8,8 +8,8 @@
 	"scripts": {
 		"start": "vite --host",
 		"update": "npx npm-check-updates --interactive --format group",
-		"lint": "eslint \"src/**/*.{ts,tsx}\"",
-		"fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+		"lint": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto",
+		"fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",
 		"test": "vitest",
 		"check": "npm run lint && tsc -p tsconfig.json && vitest run && npm audit",
 		"build": "vite build",

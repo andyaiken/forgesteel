@@ -19,6 +19,9 @@ export class FeatureUpdateLogic {
 				}
 				break;
 			case FeatureType.Choice:
+				if (feature.data.respiteChange === undefined) {
+					feature.data.respiteChange = false;
+				}
 				if (feature.data.options === undefined) {
 					feature.data.options = [];
 				}

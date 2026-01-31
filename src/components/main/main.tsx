@@ -30,6 +30,8 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
+import { Fixture } from '@/models/fixture';
+import { FixtureModal } from '../modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
 import { FollowerModal } from '@/components/modals/follower/follower-modal';
 import { Format } from '@/utils/format';
@@ -1512,6 +1514,19 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectFixture = (fixture: Fixture) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
+		setDrawer(
+			<FixtureModal
+				fixture={fixture}
+				sourcebooks={sourcebooks}
+				options={options}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
 			<RollModal
@@ -1735,6 +1750,7 @@ export const Main = (props: Props) => {
 									showTitle={title => onSelectLibraryElement(title, 'title')}
 									showMonster={(monster, summon) => onSelectMonster(monster, undefined, summon)}
 									showFollower={onSelectFollower}
+									showFixture={onSelectFixture}
 									showCharacteristic={onSelectCharacteristic}
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}

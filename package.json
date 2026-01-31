@@ -1,15 +1,15 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "12.110.0",
+	"version": "12.111.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
 		"start": "npm ci && vite --host",
 		"update": "npx npm-check-updates --interactive --format group",
-		"lint": "eslint \"src/**/*.{ts,tsx}\"",
-		"fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+		"lint": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto",
+		"fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",
 		"test": "vitest",
 		"check": "npm run lint && tsc -p tsconfig.json && vitest run && npm audit",
 		"build": "vite build",

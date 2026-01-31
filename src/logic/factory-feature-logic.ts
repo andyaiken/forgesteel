@@ -169,7 +169,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number | 'ancestry' }): FeatureChoice => {
+	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], respiteChange?: boolean, count?: number | 'ancestry' }): FeatureChoice => {
 		return {
 			id: data.id,
 			name: data.name || 'Choice',
@@ -177,6 +177,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Choice,
 			data: {
 				options: data.options,
+				respiteChange: data.respiteChange || false,
 				count: data.count || 1,
 				selected: []
 			}

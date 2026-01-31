@@ -1458,10 +1458,6 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showReference = () => {
-		onShowReference(null);
-	};
-
 	const onSelectLibraryElement = (element: Element, category: SourcebookElementKind) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 
@@ -1582,8 +1578,14 @@ export const Main = (props: Props) => {
 	};
 
 	const onShowHeroRespite = (hero: Hero) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => hero.settingIDs.includes(sb.id));
+
 		setDrawer(
 			<RespiteModal
+				hero={hero}
+				sourcebooks={sourcebooks}
+				options={options}
 				onTakeRespite={() => {
 					const copy = Utils.copy(hero);
 					HeroLogic.takeRespite(copy);
@@ -1595,6 +1597,7 @@ export const Main = (props: Props) => {
 						placement: 'top'
 					});
 				}}
+				onChange={hero => persistHero(hero)}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1694,8 +1697,8 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={showRoll}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								onNewHero={() => newHero('')}
@@ -1712,8 +1715,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									addHero={newHero}
@@ -1778,8 +1781,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									saveChanges={saveHero}
@@ -1817,8 +1820,8 @@ export const Main = (props: Props) => {
 									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
@@ -1846,8 +1849,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showMonster={onSelectMonster}
@@ -1881,8 +1884,8 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showPlayerView={showPlayerView}
@@ -1910,8 +1913,8 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
 								/>
@@ -1924,8 +1927,8 @@ export const Main = (props: Props) => {
 							<AuthPage
 								connectionSettings={connectionSettings}
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={showRoll}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								setConnectionSettings={persistConnectionSettings}
@@ -1942,8 +1945,8 @@ export const Main = (props: Props) => {
 								homebrewSourcebooks={homebrewSourcebooks}
 								options={options}
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={showRoll}
 								showAbout={showAbout}
 								showSettings={showSettings}
 							/>

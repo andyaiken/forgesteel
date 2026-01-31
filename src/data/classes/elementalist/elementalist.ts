@@ -215,7 +215,8 @@ If you have a kit, you can’t take this enchantment.`,
 							}),
 							value: 1
 						}
-					]
+					],
+					respiteChange: true
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'elementalist-1-8',
@@ -362,7 +363,8 @@ If you have a kit, you can’t take this enchantment.`,
 							}),
 							value: 1
 						}
-					]
+					],
+					respiteChange: true
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-1-9',

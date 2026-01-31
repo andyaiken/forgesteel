@@ -184,7 +184,8 @@ This ability remains active even after an encounter ends. It ends only if you ar
 							}),
 							value: 1
 						}
-					]
+					],
+					respiteChange: true
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'null-1-8',

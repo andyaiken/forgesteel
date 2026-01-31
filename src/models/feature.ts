@@ -89,6 +89,7 @@ export type FeatureCharacteristicBonus = FeatureOf<FeatureType.CharacteristicBon
 
 export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
+	respiteChange: boolean;
 	count: number | 'ancestry';
 	selected: Feature[];
 }

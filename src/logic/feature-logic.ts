@@ -596,6 +596,7 @@ export class FeatureLogic {
 			case FeatureType.Choice: {
 				const data: FeatureChoiceData = {
 					options: [],
+					respiteChange: false,
 					count: 1,
 					selected: []
 				};

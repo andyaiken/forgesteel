@@ -302,6 +302,14 @@ export class HeroLogic {
 			});
 	};
 
+	static getFixtures = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Fixture)
+			.map(f => f.data.fixture)
+			.sort((a, b) => a.name.localeCompare(b.name));
+	};
+
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
 

@@ -26,6 +26,8 @@ import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
+import { Fixture } from '@/models/fixture';
+import { FixturePanel } from '../elements/fixture-panel/fixture-panel';
 import { Follower } from '@/models/follower';
 import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
 import { FormatLogic } from '@/logic/format-logic';
@@ -73,6 +75,7 @@ interface Props {
 	onSelectTitle?: (title: Title) => void;
 	onSelectMonster?: (monster: Monster, summon?: SummoningInfo) => void;
 	onSelectFollower?: (follower: Follower) => void;
+	onSelectFixture?: (fixture: Fixture) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectFeature?: (feature: Feature) => void;
 	onSelectAbility?: (ability: Ability) => void;
@@ -926,6 +929,12 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const onSelectFixture = (fixture: Fixture) => {
+			if (props.onSelectFixture) {
+				props.onSelectFixture(fixture);
+			}
+		};
+
 		const useRows = props.options.compactView;
 
 		const monsters: { monster: Monster, summon?: SummoningInfo }[] = [
@@ -935,6 +944,7 @@ export const HeroPanel = (props: Props) => {
 		];
 
 		const followers = HeroLogic.getFollowers(props.hero);
+		const fixtures = HeroLogic.getFixtures(props.hero);
 
 		return (
 			<ErrorBoundary>
@@ -973,6 +983,27 @@ export const HeroPanel = (props: Props) => {
 												:
 												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
 													<FollowerPanel follower={follower} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						fixtures.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Fixtures</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										fixtures.map(fixture =>
+											useRows ?
+												<div key={fixture.id} className='selectable-row clickable' onClick={() => onSelectFixture(fixture)}>
+													<div>Fixture: <b>{fixture.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={fixture.id} onSelect={() => onSelectFixture(fixture)}>
+													<FixturePanel fixture={fixture} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -1021,7 +1052,7 @@ export const HeroPanel = (props: Props) => {
 			tabs.push('Free Strikes');
 		}
 
-		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length;
+		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length + HeroLogic.getFixtures(props.hero).length;
 		if (retinue > 0) {
 			tabs.push('Retinue');
 		}

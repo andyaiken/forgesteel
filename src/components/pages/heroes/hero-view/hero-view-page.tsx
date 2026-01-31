@@ -14,6 +14,7 @@ import { Domain } from '@/models/domain';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
+import { Fixture } from '@/models/fixture';
 import { Follower } from '@/models/follower';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
@@ -63,6 +64,7 @@ interface Props {
 	showTitle: (title: Title) => void;
 	showMonster: (monster: Monster, summon?: SummoningInfo) => void;
 	showFollower: (follower: Follower) => void;
+	showFixture: (fixture: Fixture) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
@@ -109,6 +111,7 @@ export const HeroViewPage = (props: Props) => {
 						onSelectTitle={props.showTitle}
 						onSelectMonster={props.showMonster}
 						onSelectFollower={props.showFollower}
+						onSelectFixture={props.showFixture}
 						onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
 						onSelectFeature={feature => props.showFeature(feature, hero)}
 						onSelectAbility={ability => props.showAbility(ability, hero)}

@@ -1449,7 +1449,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showRoll = (hero?: Hero) => {
+	const showRoll = (hero: Hero | null) => {
 		setDrawer(
 			<RollModal
 				hero={hero}
@@ -1698,7 +1698,7 @@ export const Main = (props: Props) => {
 							<WelcomePage
 								highlightAbout={errors.length > 0}
 								showReference={() => onShowReference(null)}
-								showRoll={showRoll}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								onNewHero={() => newHero('')}
@@ -1716,7 +1716,7 @@ export const Main = (props: Props) => {
 									options={props.options}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									addHero={newHero}
@@ -1782,7 +1782,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									saveChanges={saveHero}
@@ -1821,7 +1821,7 @@ export const Main = (props: Props) => {
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
@@ -1850,7 +1850,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showMonster={onSelectMonster}
@@ -1885,7 +1885,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showPlayerView={showPlayerView}
@@ -1914,7 +1914,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showReference={() => onShowReference(null)}
-									showRoll={showRoll}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 								/>
@@ -1928,7 +1928,7 @@ export const Main = (props: Props) => {
 								connectionSettings={connectionSettings}
 								highlightAbout={errors.length > 0}
 								showReference={() => onShowReference(null)}
-								showRoll={showRoll}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								setConnectionSettings={persistConnectionSettings}
@@ -1946,7 +1946,7 @@ export const Main = (props: Props) => {
 								options={options}
 								highlightAbout={errors.length > 0}
 								showReference={() => onShowReference(null)}
-								showRoll={showRoll}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 							/>

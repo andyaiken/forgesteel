@@ -15,7 +15,7 @@ import './roll-modal.scss';
 
 interface Props {
 	characteristics?: Characteristic[];
-	hero?: Hero;
+	hero: Hero | null;
 	onClose: () => void;
 }
 

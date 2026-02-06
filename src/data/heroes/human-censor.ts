@@ -148,13 +148,13 @@ export const humanCensor = {
 							feature: {
 								id: 'human-feature-2-4',
 								name: 'Determination',
-								description: 'A tolerance for pain and dsitress allows you to push through difficult situations.',
+								description: 'A tolerance for pain and distress allows you to push through difficult situations.',
 								type: 'Ability',
 								data: {
 									ability: {
 										id: 'human-feature-2-4',
 										name: 'Determination',
-										description: 'A tolerance for pain and dsitress allows you to push through difficult situations.',
+										description: 'A tolerance for pain and distress allows you to push through difficult situations.',
 										type: {
 											usage: 'Maneuver',
 											free: false,

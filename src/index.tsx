@@ -11,14 +11,15 @@ import './index.scss';
 
 initializeTheme();
 
-const unregisterServiceWorker = async () => {
-	if ('serviceWorker' in navigator) {
-		const registrations = await navigator.serviceWorker.getRegistrations();
-		for (const registration of registrations) {
-			await registration.unregister();
-		}
-	}
-};
+// Register Service Worker for PWA functionality
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker.register('/sw.js')
+			.catch(registrationError => {
+				console.error('SW registration failed: ', registrationError);
+			});
+	});
+}
 
 const onDataLoaded = (data: LoadedData) => {
 	if ('serviceWorker' in navigator) {

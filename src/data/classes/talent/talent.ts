@@ -121,17 +121,21 @@ Whenever you use an ability with a strain effect outside of combat, you can take
 								description: `
 You can wear light armor and wield light weapons effectively, even though you don’t have a kit.
 
-You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this augmentation.`,
+* While you wear light armor, you gain a +3 bonus to Stamina, and that bonus increases by 3 at 4th, 7th, and 10th levels.
+* While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.
+* You can use light armor treasures and light weapon treasures.
+
+If you have a kit, you can’t take this augmentation.`,
 								features: [
-									FactoryLogic.feature.create({
-										id: 'talent-1-5aa',
-										name: 'Battle Augmentation',
-										description: 'While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.'
-									}),
 									FactoryLogic.feature.createBonus({
-										id: 'talent-1-5ab',
+										id: 'talent-1-5aa',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
+									}),
+									FactoryLogic.feature.createAbilityDamage({
+										id: 'talent-1-5ab',
+										keywords: [ AbilityKeyword.Weapon ],
+										value: 1
 									}),
 									FactoryLogic.feature.createProficiency({
 										id: 'talent-1-5ac',
@@ -198,7 +202,8 @@ You can use light armor treasures and light weapon treasures. If you have a kit,
 							}),
 							value: 1
 						}
-					]
+					],
+					respiteChange: true
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-1-6',
@@ -245,7 +250,8 @@ You can use light armor treasures and light weapon treasures. If you have a kit,
 							}),
 							value: 1
 						}
-					]
+					],
+					respiteChange: true
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-7',

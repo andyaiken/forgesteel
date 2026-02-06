@@ -126,6 +126,13 @@ export const EditChoice = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setRespiteChange = (value: boolean) => {
+		const copy = Utils.copy(data) as FeatureChoiceData;
+		copy.respiteChange = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText
@@ -166,6 +173,8 @@ export const EditChoice = (props: EditProps) => {
 			<HeaderText>Count</HeaderText>
 			<Toggle label='Use ancestry points' value={data.count === 'ancestry'} onChange={value => setChoiceCount(value ? 'ancestry' : 3)} />
 			{data.count !== 'ancestry' ? <NumberSpin min={1} value={data.count} onChange={setChoiceCount} /> : null}
+			<HeaderText>Respite Change</HeaderText>
+			<Toggle label='Can change during a respite' value={data.respiteChange} onChange={setRespiteChange} />
 		</Space>
 	);
 };

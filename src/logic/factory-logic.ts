@@ -1081,10 +1081,12 @@ export class FactoryLogic {
 
 	static createConnectionSettings = (): ConnectionSettings => {
 		return {
-			useWarehouse: false,
+			useManualWarehouse: false,
 			warehouseHost: '',
 			warehouseToken: '',
-			patreonConnected: false
+			patreonConnected: false,
+			usePatreonWarehouse: false,
+			patreonConnections: []
 		};
 	};
 

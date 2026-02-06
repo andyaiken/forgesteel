@@ -63,10 +63,22 @@ export class ImbuedImplementData {
 			goal: 150
 		}),
 		level: 1,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-forceful-i',
 			name: 'Forceful I',
-			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 2 squares.'
+			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 2 squares.',
+			features: [
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-i-push',
+					field: FeatureField.ForcedMovementPush,
+					value: 2
+				}),
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-i-pull',
+					field: FeatureField.ForcedMovementPull,
+					value: 2
+				})
+			]
 		})
 	});
 
@@ -119,7 +131,7 @@ export class ImbuedImplementData {
 		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-seeking',
 			name: 'Seeking',
-			description: 'Your ranged magic or psionic abilities gain a +2 distance bonus.',
+			description: 'Your ranged magic or psionic abilities gain a +2 distance bonus. Additionally, if you think the name of a specific creature, place, or object to the implement, the implement points toward that target, provided you are on the same world.',
 			features: [
 				FactoryLogic.feature.createAbilityDistance({
 					id: 'imbuement-seeking-magic',
@@ -156,7 +168,7 @@ export class ImbuedImplementData {
 		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-thought-sending',
 			name: 'Thought Sending',
-			description: 'Your ranged magic and psionic abilities gain a +2 distance bonus.',
+			description: 'Your ranged magic and psionic abilities gain a +2 distance bonus. Additionally, you can telepathically communicate with any willing creature who knows a language and whose name you know, provided they are on the same world as you. You must initiate the conversation, but once you do, the creature can respond until you end the conversation.',
 			features: [
 				FactoryLogic.feature.createAbilityDistance({
 					id: 'imbuement-thought-sending-magic',
@@ -276,10 +288,22 @@ export class ImbuedImplementData {
 			goal: 150
 		}),
 		level: 5,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-forceful-ii',
 			name: 'Forceful II',
-			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 3 squares. This replaces the benefit of Forceful I.'
+			description: 'Whenever you use a magic or psionic ability to push or pull a creature, you can move that creature an additional 3 squares. This replaces the benefit of Forceful I.',
+			features: [
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-ii-push',
+					field: FeatureField.ForcedMovementPush,
+					value: 1
+				}),
+				FactoryLogic.feature.createBonus({
+					id: 'imbuement-forceful-ii-pull',
+					field: FeatureField.ForcedMovementPull,
+					value: 1
+				})
+			]
 		})
 	});
 

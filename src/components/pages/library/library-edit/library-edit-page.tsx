@@ -144,7 +144,6 @@ export const LibraryEditPage = (props: Props) => {
 		return Utils.copy(original) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	const [ revision, setRevision ] = useState<number>(0);
 
 	const getSubheader = () => {
 		return `${Format.capitalize(kind!.split('-').join(' '))} Builder`;
@@ -156,7 +155,6 @@ export const LibraryEditPage = (props: Props) => {
 		const copy = Utils.copy(element);
 		setElement(copy);
 		setDirty(true);
-		setRevision(revision + 1);
 	};
 
 	const getEditSection = () => {
@@ -165,6 +163,7 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<div className='adventure-container'>
 						<AdventureEditPanel
+							key={element.id}
 							adventure={element as Adventure}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
@@ -242,6 +241,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'encounter':
 				return (
 					<EncounterEditPanel
+						key={element.id}
 						encounter={element as Encounter}
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
@@ -293,11 +293,13 @@ export const LibraryEditPage = (props: Props) => {
 						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
+						onSelectMonster={props.showMonster}
 					/>
 				);
 			case 'montage':
 				return (
 					<MontageEditPanel
+						key={element.id}
 						montage={element as Montage}
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
@@ -309,6 +311,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'negotiation':
 				return (
 					<NegotiationEditPanel
+						key={element.id}
 						negotiation={element as Negotiation}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -353,6 +356,7 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<div className='tactical-map-container'>
 						<TacticalMapPanel
+							key={element.id}
 							map={element as TacticalMap}
 							display={TacticalMapDisplayType.DirectorEdit}
 							sourcebooks={props.sourcebooks}

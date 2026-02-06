@@ -567,6 +567,11 @@ export class HeroUpdateLogic {
 					});
 					break;
 				}
+				case FeatureType.Retainer: {
+					const oFeature = originalFeature as FeatureRetainer;
+					feature.data.selected = oFeature.data.selected;
+					break;
+				}
 				case FeatureType.SkillChoice: {
 					const oFeature = originalFeature as FeatureSkillChoice;
 

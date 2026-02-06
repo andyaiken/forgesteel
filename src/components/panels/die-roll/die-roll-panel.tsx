@@ -18,7 +18,7 @@ interface Props {
 	type: 'Power Roll' | 'Saving Throw';
 	modifiers: number[];
 	rollState: RollState;
-	hero?: Hero;
+	hero: Hero | null;
 	onRollStateChange: (value: RollState) => void;
 	onRoll?: (tier: number) => void;
 }

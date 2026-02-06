@@ -30,6 +30,8 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
+import { Fixture } from '@/models/fixture';
+import { FixtureModal } from '../modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
 import { FollowerModal } from '@/components/modals/follower/follower-modal';
 import { Format } from '@/utils/format';
@@ -76,6 +78,7 @@ import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
+import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
 import { SubClass } from '@/models/subclass';
 import { SummoningInfo } from '@/models/summon';
 import { TacticalMap } from '@/models/tactical-map';
@@ -120,6 +123,8 @@ export const Main = (props: Props) => {
 		return opts;
 	});
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
+	const [ dataService, setDataService ] = useState<DataService>(props.dataService);
+
 	const [ errors, setErrors ] = useState<Event[]>([]);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
@@ -150,7 +155,7 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHeroes = (heroes: Hero[]) => {
-		return props.dataService
+		return dataService
 			.saveHeroes(Collections.sort(heroes, h => h.name))
 			.then(
 				setHeroes,
@@ -178,7 +183,7 @@ export const Main = (props: Props) => {
 	};
 
 	const persistSession = (session: Session) => {
-		return props.dataService
+		return dataService
 			.saveSession(session)
 			.then(
 				setSession,
@@ -201,7 +206,7 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
-		return props.dataService
+		return dataService
 			.saveHomebrew(homebrew)
 			.then(
 				setHomebrewSourcebooks,
@@ -217,7 +222,7 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
-		return props.dataService
+		return dataService
 			.saveHiddenSettingIds(ids)
 			.then(
 				setHiddenSourcebookIDs,
@@ -233,7 +238,7 @@ export const Main = (props: Props) => {
 	};
 
 	const persistOptions = (options: Options) => {
-		return props.dataService
+		return dataService
 			.saveOptions(options)
 			.then(
 				setOptions,
@@ -261,7 +266,12 @@ export const Main = (props: Props) => {
 						placement: 'top'
 					});
 				}
-			);
+			).then(() => {
+				const storage = StorageServiceFactory.fromConnectionSettings(connectionSettings);
+				const ds = new DataService(storage);
+				ds.initialize();
+				setDataService(ds);
+			});
 	};
 
 	// #endregion
@@ -1431,7 +1441,7 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
-				dataService={props.dataService}
+				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
@@ -1439,17 +1449,13 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showRoll = (hero?: Hero) => {
+	const showRoll = (hero: Hero | null) => {
 		setDrawer(
 			<RollModal
 				hero={hero}
 				onClose={() => setDrawer(null)}
 			/>
 		);
-	};
-
-	const showReference = () => {
-		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, category: SourcebookElementKind) => {
@@ -1499,6 +1505,19 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<FollowerModal
 				follower={follower}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const onSelectFixture = (fixture: Fixture) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
+		setDrawer(
+			<FixtureModal
+				fixture={fixture}
+				sourcebooks={sourcebooks}
+				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1559,8 +1578,14 @@ export const Main = (props: Props) => {
 	};
 
 	const onShowHeroRespite = (hero: Hero) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => hero.settingIDs.includes(sb.id));
+
 		setDrawer(
 			<RespiteModal
+				hero={hero}
+				sourcebooks={sourcebooks}
+				options={options}
 				onTakeRespite={() => {
 					const copy = Utils.copy(hero);
 					HeroLogic.takeRespite(copy);
@@ -1572,6 +1597,7 @@ export const Main = (props: Props) => {
 						placement: 'top'
 					});
 				}}
+				onChange={hero => persistHero(hero)}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1671,8 +1697,8 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								onNewHero={() => newHero('')}
@@ -1689,8 +1715,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									addHero={newHero}
@@ -1727,6 +1753,7 @@ export const Main = (props: Props) => {
 									showTitle={title => onSelectLibraryElement(title, 'title')}
 									showMonster={(monster, summon) => onSelectMonster(monster, undefined, summon)}
 									showFollower={onSelectFollower}
+									showFixture={onSelectFixture}
 									showCharacteristic={onSelectCharacteristic}
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}
@@ -1754,8 +1781,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									saveChanges={saveHero}
@@ -1793,8 +1820,8 @@ export const Main = (props: Props) => {
 									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
@@ -1822,8 +1849,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showMonster={onSelectMonster}
@@ -1857,8 +1884,8 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 									showPlayerView={showPlayerView}
@@ -1886,8 +1913,8 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
+									showReference={() => onShowReference(null)}
+									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
 								/>
@@ -1898,11 +1925,10 @@ export const Main = (props: Props) => {
 						path='oauth-redirect'
 						element={
 							<AuthPage
-								connectionSettings={props.connectionSettings}
-								dataService={props.dataService}
+								connectionSettings={connectionSettings}
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 								setConnectionSettings={persistConnectionSettings}
@@ -1919,8 +1945,8 @@ export const Main = (props: Props) => {
 								homebrewSourcebooks={homebrewSourcebooks}
 								options={options}
 								highlightAbout={errors.length > 0}
-								showReference={showReference}
-								showRoll={() => showRoll()}
+								showReference={() => onShowReference(null)}
+								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
 								showSettings={showSettings}
 							/>
@@ -1933,8 +1959,6 @@ export const Main = (props: Props) => {
 						element={
 							<TransferPage
 								connectionSettings={connectionSettings}
-								heroes={heroes}
-								homebrewSourcebooks={homebrewSourcebooks}
 								options={options}
 							/>
 						}

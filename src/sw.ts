@@ -24,9 +24,9 @@ const swSelf = self as unknown as ServiceWorkerGlobalScope;
 const CACHE_VERSION = new Date().toISOString().replace(/[:.]/g, '-');
 const CACHE_NAME = `forgesteel-${CACHE_VERSION}`;
 const STATIC_CACHE_URLS = [
-	'/forgesteel/',
-	'/forgesteel/index.html',
-	'/forgesteel/manifest.json'
+	'/',
+	'/index.html',
+	'/manifest.json'
 ];
 
 // Install event - cache static assets
@@ -89,7 +89,7 @@ self.addEventListener('fetch', (event: Event) => {
 				const response = await fetch(fetchEvent.request);
 
 				// Cache for offline use only
-				if (response && response.status === 200 && fetchEvent.request.url.includes('/forgesteel/')) {
+				if (response && response.status === 200 && fetchEvent.request.url.includes('/')) {
 					const cache = await caches.open(CACHE_NAME);
 					await cache.put(fetchEvent.request, response.clone());
 				}
@@ -104,7 +104,7 @@ self.addEventListener('fetch', (event: Event) => {
 
 				// Fallback to main page for navigation
 				if (fetchEvent.request.destination === 'document') {
-					const fallback = await caches.match('/forgesteel/index.html');
+					const fallback = await caches.match('/index.html');
 					if (fallback) {
 						return fallback;
 					}
@@ -132,8 +132,8 @@ self.addEventListener('push', (event: Event) => {
 		const data = pushEvent.data.json() as { title: string; body: string };
 		const options: NotificationOptions = {
 			body: data.body,
-			icon: '/forgesteel/src/assets/shield.png',
-			badge: '/forgesteel/src/assets/shield.png',
+			icon: '/src/assets/shield.png',
+			badge: '/src/assets/shield.png',
 			data: {
 				dateOfArrival: Date.now(),
 				primaryKey: 1

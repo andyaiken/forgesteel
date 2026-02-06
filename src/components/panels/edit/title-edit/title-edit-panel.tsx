@@ -35,20 +35,25 @@ interface Props {
 
 export const TitleEditPanel = (props: Props) => {
 	const [ title, setTitle ] = useState<Title>(props.title);
+	const [ revision, setRevision ] = useState<number>(0);
+
+	const updateTitle = (value: Title) => {
+		setTitle(value);
+		setRevision(revision + 1);
+		props.onChange(value);
+	};
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
 			const copy = Utils.copy(title);
 			copy.name = value;
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		const setDescription = (value: string) => {
 			const copy = Utils.copy(title);
 			copy.description = value;
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		return (
@@ -74,15 +79,13 @@ export const TitleEditPanel = (props: Props) => {
 		const setEchelon = (value: number) => {
 			const copy = Utils.copy(title);
 			copy.echelon = value;
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		const setPrerequisites = (value: string) => {
 			const copy = Utils.copy(title);
 			copy.prerequisites = value;
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		return (
@@ -108,8 +111,7 @@ export const TitleEditPanel = (props: Props) => {
 				name: '',
 				description: ''
 			}));
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		const changeFeature = (feature: Feature) => {
@@ -118,23 +120,20 @@ export const TitleEditPanel = (props: Props) => {
 			if (index !== -1) {
 				copy.features[index] = feature;
 			}
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
 			const copy = Utils.copy(title);
 			const index = copy.features.findIndex(f => f.id === feature.id);
 			copy.features = Collections.move(copy.features, index, direction);
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		const deleteFeature = (feature: Feature) => {
 			const copy = Utils.copy(title);
 			copy.features = copy.features.filter(f => f.id !== feature.id);
-			setTitle(copy);
-			props.onChange(copy);
+			updateTitle(copy);
 		};
 
 		return (
@@ -211,6 +210,7 @@ export const TitleEditPanel = (props: Props) => {
 										children: (
 											<SelectablePanel>
 												<TitlePanel
+													key={revision}
 													title={title}
 													sourcebooks={props.sourcebooks}
 													options={props.options}

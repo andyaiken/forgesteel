@@ -67,6 +67,14 @@ export class HeroLogic {
 
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
+		hero.state.titles.forEach(title => {
+			try {
+				features.push(...FeatureLogic.getFeaturesFromTitle(title, hero));
+			} catch (ex) {
+				console.error(ex);
+			}
+		});
+
 		hero.state.inventory.forEach(item => {
 			try {
 				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
@@ -292,6 +300,14 @@ export class HeroLogic {
 				}
 				return result;
 			});
+	};
+
+	static getFixtures = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Fixture)
+			.map(f => f.data.fixture)
+			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
@@ -656,6 +672,32 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Wealth)
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
+
+		return value;
+	};
+
+	static getForcedMovementBonus = (hero: Hero, type: 'push' | 'pull' | 'slide') => {
+		let value = 0;
+
+		let field = FeatureField.ForcedMovementPush;
+		switch (type) {
+			case 'push':
+				field = FeatureField.ForcedMovementPush;
+				break;
+			case 'pull':
+				field = FeatureField.ForcedMovementPull;
+				break;
+			case 'slide':
+				field = FeatureField.ForcedMovementSlide;
+				break;
+		}
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === field)
 			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;

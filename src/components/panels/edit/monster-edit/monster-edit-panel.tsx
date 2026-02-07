@@ -1,5 +1,5 @@
 import { Button, Divider, Drawer, Flex, Segmented, Select, Space, Tabs, Upload } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { DownloadOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DamageType } from '@/enums/damage-type';
@@ -10,6 +10,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
+import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -539,13 +540,9 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
-		const addFeature = () => {
+		const onChange = (features: Feature[]) => {
 			const copy = Utils.copy(monster);
-			copy.features.push(FactoryLogic.feature.create({
-				id: Utils.guid(),
-				name: '',
-				description: ''
-			}));
+			copy.features = Utils.copy(features);
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -556,31 +553,6 @@ export const MonsterEditPanel = (props: Props) => {
 
 			const copy = Utils.copy(monster);
 			copy.features.push(featureCopy);
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		const changeFeature = (feature: Feature) => {
-			const copy = Utils.copy(monster);
-			const index = copy.features.findIndex(f => f.id === feature.id);
-			if (index !== -1) {
-				copy.features[index] = feature;
-			}
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const copy = Utils.copy(monster);
-			const index = copy.features.findIndex(f => f.id === feature.id);
-			copy.features = Collections.move(copy.features, index, direction);
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		const deleteFeature = (feature: Feature) => {
-			const copy = Utils.copy(monster);
-			copy.features = copy.features.filter(f => f.id !== feature.id);
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -606,40 +578,14 @@ export const MonsterEditPanel = (props: Props) => {
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText
-					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
-					}
-				>
-					Features
-				</HeaderText>
-				{
-					monster.features.map(f => (
-						<Expander
-							key={f.id}
-							title={f.name || 'Unnamed Feature'}
-							tags={[ FeatureLogic.getFeatureTag(f) ]}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
-							]}
-						>
-							<FeatureEditPanel
-								feature={f}
-								sourcebooks={props.sourcebooks}
-								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
-								options={props.options}
-								onChange={changeFeature}
-							/>
-						</Expander>
-					))
-				}
-				{
-					monster.features.length === 0 ?
-						<Empty />
-						: null
-				}
+				<FeatureListEditPanel
+					title='Features'
+					features={monster.features}
+					allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					onChange={onChange}
+				/>
 				{getSimilarMonsters().length > 0 ? <Divider /> : null}
 				{
 					getSimilarMonsters().length > 0 ?

@@ -59,7 +59,7 @@ export const human: Ancestry = {
 						ability: FactoryLogic.createAbility({
 							id: 'human-feature-2-4',
 							name: 'Determination',
-							description: 'A tolerance for pain and dsitress allows you to push through difficult situations.',
+							description: 'A tolerance for pain and distress allows you to push through difficult situations.',
 							type: FactoryLogic.type.createManeuver(),
 							sections: [
 								FactoryLogic.createAbilitySectionText('You immediately end one of the frightened, slowed, or weakened conditions on yourself.')

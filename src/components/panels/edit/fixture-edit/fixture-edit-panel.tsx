@@ -1,20 +1,17 @@
-import { Button, Segmented, Select, Space, Tabs } from 'antd';
+import { Segmented, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
-import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -31,36 +28,19 @@ export const FixtureEditPanel = (props: Props) => {
 	const [ fixture, setFixture ] = useState<Fixture>(props.fixture);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(fixture);
-			copy.name = value;
-			setFixture(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(fixture);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setFixture(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={fixture.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={fixture.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={fixture.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={fixture}
+				onChange={onChange}
+			/>
 		);
 	};
 

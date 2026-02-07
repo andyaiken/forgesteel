@@ -14,6 +14,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -31,33 +32,19 @@ export const AbilityEditPanel = (props: Props) => {
 	const [ ability, setAbility ] = useState<Ability>(props.ability);
 
 	const getAbilityPage = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(ability);
-			copy.name = value;
-			setAbility(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(ability);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setAbility(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<div>
-				<HeaderText>Name</HeaderText>
-				<TextInput
-					status={ability.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					value={ability.name}
-					onChange={setName}
-				/>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={ability.description} onChange={setDescription} />
-			</div>
+			<NameDescEditPanel
+				element={ability}
+				onChange={onChange}
+			/>
 		);
 	};
 

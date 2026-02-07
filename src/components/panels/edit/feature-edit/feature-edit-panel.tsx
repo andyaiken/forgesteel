@@ -9,7 +9,7 @@ import { FeatureType } from '@/enums/feature-type';
 import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -17,7 +17,6 @@ import { PerkList } from '@/enums/perk-list';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -38,16 +37,10 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const isPerk = (feature as Perk).list !== undefined;
 
-	const setName = (value: string) => {
+	const setNameDesc = (name: string, desc: string) => {
 		const copy = Utils.copy(feature);
-		copy.name = value;
-		setFeature(copy);
-		props.onChange(copy);
-	};
-
-	const setDescription = (value: string) => {
-		const copy = Utils.copy(feature);
-		copy.description = value;
+		copy.name = name;
+		copy.description = desc;
 		setFeature(copy);
 		props.onChange(copy);
 	};
@@ -84,18 +77,10 @@ export const FeatureEditPanel = (props: Props) => {
 								key: '1',
 								label: isPerk ? 'Perk' : 'Feature',
 								children: (
-									<div>
-										<HeaderText>Name</HeaderText>
-										<TextInput
-											status={feature.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											value={feature.name}
-											onChange={setName}
-										/>
-										<HeaderText>Description</HeaderText>
-										<MarkdownEditor value={feature.description} onChange={setDescription} />
-									</div>
+									<NameDescEditPanel
+										element={feature}
+										onChange={setNameDesc}
+									/>
 								)
 							},
 							{

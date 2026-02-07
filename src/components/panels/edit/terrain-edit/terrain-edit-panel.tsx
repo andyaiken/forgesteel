@@ -1,5 +1,5 @@
 import { Button, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { FeatureAbility, FeatureText } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -17,7 +17,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -53,34 +53,18 @@ export const TerrainEditPanel = (props: Props) => {
 	};
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(terrain);
-			copy.name = value;
-			updateTerrain(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(terrain);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			updateTerrain(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={terrain.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={terrain.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={terrain.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={terrain}
+				onChange={onChange}
+			/>
 		);
 	};
 

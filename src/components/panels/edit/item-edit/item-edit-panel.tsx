@@ -1,4 +1,4 @@
-import { Button, Select, Space, Tabs } from 'antd';
+import { Select, Space, Tabs } from 'antd';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -12,15 +12,13 @@ import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -39,36 +37,19 @@ export const ItemEditPanel = (props: Props) => {
 	const [ item, setItem ] = useState<Item>(props.item);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(item);
-			copy.name = value;
-			setItem(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(item);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setItem(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={item.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={item.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={item.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={item}
+				onChange={onChange}
+			/>
 		);
 	};
 

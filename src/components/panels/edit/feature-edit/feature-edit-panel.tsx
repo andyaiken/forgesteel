@@ -92,7 +92,7 @@ export const FeatureEditPanel = (props: Props) => {
 											(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
 												<>
 													<HeaderText>Feature Type</HeaderText>
-													<Flex align='center' justify='space-between'>
+													<Flex align='center' justify='space-between' gap={5}>
 														<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
 														<Button onClick={() => setTypeSelectorVisible(true)}>
 															<EditOutlined />

@@ -1,6 +1,6 @@
 import { Button, Drawer, Flex, Select, Space, Tabs, Upload } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
+import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Feature, FeatureAddOn } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Element } from '@/models/element';
@@ -11,9 +11,9 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureAddOnType } from '@/enums/feature-addon-type';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterGroup } from '@/models/monster-group';
@@ -23,12 +23,11 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -49,16 +48,10 @@ export const MonsterGroupEditPanel = (props: Props) => {
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const setNameDesc = (name: string, description: string) => {
 			const copy = Utils.copy(monsterGroup);
-			copy.name = value;
-			setMonsterGroup(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(monsterGroup);
-			copy.description = value;
+			copy.name = name;
+			copy.description = description;
 			setMonsterGroup(copy);
 			props.onChange(copy);
 		};
@@ -70,8 +63,13 @@ export const MonsterGroupEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const picture = (
-			<>
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<NameDescEditPanel
+					element={monsterGroup}
+					showNameGenerator={true}
+					onChange={setNameDesc}
+				/>
 				<HeaderText>Portrait</HeaderText>
 				{
 					monsterGroup.picture ?
@@ -102,25 +100,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							</Button>
 						</Upload>
 				}
-			</>
-		);
-
-		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={monsterGroup.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={monsterGroup.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={monsterGroup.description} onChange={setDescription} />
-				{picture}
 			</Space>
 		);
 	};
@@ -199,81 +178,22 @@ export const MonsterGroupEditPanel = (props: Props) => {
 	};
 
 	const getMaliceEditSection = () => {
-		const addMaliceFeature = () => {
+		const onChange = (features: Feature[]) => {
 			const copy = Utils.copy(monsterGroup);
-			copy.malice.push(FactoryLogic.feature.createMalice({
-				id: Utils.guid(),
-				name: '',
-				cost: 3,
-				sections: [
-					''
-				]
-			}));
-			setMonsterGroup(copy);
-			props.onChange(copy);
-		};
-
-		const changeMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility) => {
-			const copy = Utils.copy(monsterGroup);
-			const index = copy.malice.findIndex(f => f.id === feature.id);
-			if (index !== -1) {
-				copy.malice[index] = feature;
-			}
-			setMonsterGroup(copy);
-			props.onChange(copy);
-		};
-
-		const moveMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility, direction: 'up' | 'down') => {
-			const copy = Utils.copy(monsterGroup);
-			const index = copy.malice.findIndex(f => f.id === feature.id);
-			copy.malice = Collections.move(copy.malice, index, direction);
-			setMonsterGroup(copy);
-			props.onChange(copy);
-		};
-
-		const deleteMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility) => {
-			const copy = Utils.copy(monsterGroup);
-			copy.malice = copy.malice.filter(f => f.id !== feature.id);
+			copy.malice = Utils.copy(features);
 			setMonsterGroup(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText
-					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={addMaliceFeature} />
-					}
-				>
-					Malice
-				</HeaderText>
-				{
-					monsterGroup.malice.map(f => (
-						<Expander
-							key={f.id}
-							title={f.name || 'Unnamed Malice Feature'}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMaliceFeature(f); }} />
-							]}
-						>
-							<FeatureEditPanel
-								feature={f}
-								allowedTypes={[ FeatureType.Malice, FeatureType.MaliceAbility ]}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureMaliceAbility)}
-							/>
-						</Expander>
-					))
-				}
-				{
-					monsterGroup.malice.length === 0 ?
-						<Empty />
-						: null
-				}
-			</Space>
+			<FeatureListEditPanel
+				title='Malice'
+				features={monsterGroup.malice}
+				allowedTypes={[ FeatureType.Malice, FeatureType.MaliceAbility ]}
+				sourcebooks={props.sourcebooks}
+				options={props.options}
+				onChange={onChange}
+			/>
 		);
 	};
 

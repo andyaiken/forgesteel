@@ -56,6 +56,7 @@ export const AncestryEditPanel = (props: Props) => {
 		return (
 			<NameDescEditPanel
 				element={ancestry}
+				showNameGenerator={true}
 				onChange={onChange}
 			/>
 		);

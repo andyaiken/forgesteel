@@ -36,6 +36,7 @@ export const FollowerEditPanel = (props: Props) => {
 		return (
 			<NameDescEditPanel
 				element={follower}
+				showNameGenerator={true}
 				onChange={onChange}
 			/>
 		);

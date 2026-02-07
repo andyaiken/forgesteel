@@ -26,7 +26,7 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -59,16 +59,10 @@ export const MonsterEditPanel = (props: Props) => {
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const setNameDesc = (name: string, desc: string) => {
 			const copy = Utils.copy(monster);
-			copy.name = value;
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(monster);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -80,29 +74,13 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setRandomName = () => {
-			if (props.monsterGroup && props.monsterGroup.name) {
-				setName(`${props.monsterGroup.name} ${NameGenerator.generateName()}`);
-			} else {
-				setName(NameGenerator.generateName());
-			}
-		};
-
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={monster.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={monster.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={setRandomName} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={monster.description} onChange={setDescription} />
+				<NameDescEditPanel
+					element={monster}
+					showNameGenerator={true}
+					onChange={setNameDesc}
+				/>
 				<HeaderText>Portrait</HeaderText>
 				{
 					monster.picture ?

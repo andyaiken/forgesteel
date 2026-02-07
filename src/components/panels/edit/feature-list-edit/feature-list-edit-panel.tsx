@@ -1,14 +1,15 @@
-import { Button, Space } from 'antd';
+import { Button, Drawer, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
+import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -28,14 +29,19 @@ interface Props {
 
 export const FeatureListEditPanel = (props: Props) => {
 	const [ features, setFeatures ] = useState(Utils.copy(props.features));
+	const [ typeSelectorVisible, setTypeSelectorVisible ] = useState<boolean>(false);
 
-	const addFeature = () => {
-		const copy = Utils.copy(features);
-		copy.push(FactoryLogic.feature.create({
+	const addFeature = (type: FeatureType) => {
+		const f = {
 			id: Utils.guid(),
 			name: '',
-			description: ''
-		}));
+			description: '',
+			type: type,
+			data: FeatureLogic.getFeatureData(type)
+		} as Feature;
+
+		const copy = Utils.copy(features);
+		copy.push(f);
 		setFeatures(copy);
 		props.onChange(copy);
 	};
@@ -66,43 +72,52 @@ export const FeatureListEditPanel = (props: Props) => {
 	};
 
 	return (
-		<div className='feature-list-edit-panel'>
-			<HeaderText
-				extra={
-					<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature()} />
-				}
-			>
-				{props.title}
-			</HeaderText>
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				{
-					features.map(f => (
-						<Expander
-							key={f.id}
-							title={f.name || 'Unnamed Feature'}
-							tags={[ FeatureLogic.getFeatureTag(f) ]}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
-							]}
-						>
-							<FeatureEditPanel
-								feature={f}
-								allowedTypes={props.allowedTypes}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								onChange={feature => changeFeature(feature)}
-							/>
-						</Expander>
-					))
-				}
-				{
-					features.length === 0 ?
-						<Empty />
-						: null
-				}
-			</Space>
-		</div>
+		<ErrorBoundary>
+			<div className='feature-list-edit-panel'>
+				<HeaderText
+					extra={
+						<Button type='text' icon={<PlusOutlined />} onClick={() => setTypeSelectorVisible(true)} />
+					}
+				>
+					{props.title}
+				</HeaderText>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					{
+						features.map(f => (
+							<Expander
+								key={f.id}
+								title={f.name || 'Unnamed Feature'}
+								tags={[ FeatureLogic.getFeatureTag(f) ]}
+								extra={[
+									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
+									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
+									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
+								]}
+							>
+								<FeatureEditPanel
+									feature={f}
+									allowedTypes={props.allowedTypes}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									onChange={feature => changeFeature(feature)}
+								/>
+							</Expander>
+						))
+					}
+					{
+						features.length === 0 ?
+							<Empty />
+							: null
+					}
+				</Space>
+			</div>
+			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} size={500}>
+				<FeatureTypeSelectModal
+					types={props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()}
+					onSelect={type => { addFeature(type); setTypeSelectorVisible(false); }}
+					onClose={() => setTypeSelectorVisible(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
 	);
 };

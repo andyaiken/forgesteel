@@ -1,16 +1,13 @@
 import { Button, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Collections } from '@/utils/collections';
+import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
-import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeatureLogic } from '@/logic/feature-logic';
+import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
@@ -70,54 +67,11 @@ export const DomainEditPanel = (props: Props) => {
 	};
 
 	const getFeaturesByLevelEditSection = () => {
-		const addFeature = (level: number) => {
+		const onChange = (level: number, features: Feature[]) => {
 			const copy = Utils.copy(domain);
 			copy.featuresByLevel
 				.filter(lvl => lvl.level === level)
-				.forEach(lvl => {
-					lvl.features.push(FactoryLogic.feature.create({
-						id: Utils.guid(),
-						name: '',
-						description: ''
-					}));
-				});
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const changeFeature = (level: number, feature: Feature) => {
-			const copy = Utils.copy(domain);
-			copy.featuresByLevel
-				.filter(lvl => lvl.level === level)
-				.forEach(lvl => {
-					const index = lvl.features.findIndex(f => f.id === feature.id);
-					if (index !== -1) {
-						lvl.features[index] = feature;
-					}
-				});
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-			const copy = Utils.copy(domain);
-			copy.featuresByLevel
-				.filter(lvl => lvl.level === level)
-				.forEach(lvl => {
-					const index = lvl.features.findIndex(f => f.id === feature.id);
-					lvl.features = Collections.move(lvl.features, index, direction);
-				});
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const deleteFeature = (level: number, feature: Feature) => {
-			const copy = Utils.copy(domain);
-			copy.featuresByLevel
-				.filter(lvl => lvl.level === level)
-				.forEach(lvl => {
-					lvl.features = lvl.features.filter(f => f.id !== feature.id);
-				});
+				.forEach(lvl => lvl.features = Utils.copy(features));
 			setDomain(copy);
 			props.onChange(copy);
 		};
@@ -126,43 +80,14 @@ export const DomainEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					domain.featuresByLevel.map(lvl => (
-						<div key={lvl.level}>
-							<HeaderText
-								extra={
-									<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
-								}
-							>
-								Level {lvl.level.toString()}
-							</HeaderText>
-							<Space orientation='vertical' style={{ width: '100%' }}>
-								{
-									lvl.features.map(f => (
-										<Expander
-											key={f.id}
-											title={f.name || 'Unnamed Feature'}
-											tags={[ FeatureLogic.getFeatureTag(f) ]}
-											extra={[
-												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
-												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
-												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
-											]}
-										>
-											<FeatureEditPanel
-												feature={f}
-												sourcebooks={props.sourcebooks}
-												options={props.options}
-												onChange={feature => changeFeature(lvl.level, feature)}
-											/>
-										</Expander>
-									))
-								}
-								{
-									lvl.features.length === 0 ?
-										<Empty />
-										: null
-								}
-							</Space>
-						</div>
+						<FeatureListEditPanel
+							key={lvl.level}
+							title={`Level ${lvl.level}`}
+							features={lvl.features}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onChange={features => onChange(lvl.level, features)}
+						/>
 					))
 				}
 			</Space>
@@ -279,80 +204,21 @@ export const DomainEditPanel = (props: Props) => {
 	};
 
 	const getDefaultFeaturesEditSection = () => {
-		const addFeature = () => {
+		const onChange = (features: Feature[]) => {
 			const copy = Utils.copy(domain);
-			copy.defaultFeatures.push(FactoryLogic.feature.create({
-				id: Utils.guid(),
-				name: '',
-				description: ''
-			}));
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const changeFeature = (feature: Feature) => {
-			const copy = Utils.copy(domain);
-			const index = copy.defaultFeatures.findIndex(f => f.id === feature.id);
-			if (index !== -1) {
-				copy.defaultFeatures[index] = feature;
-			}
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const copy = Utils.copy(domain);
-			const index = copy.defaultFeatures.findIndex(f => f.id === feature.id);
-			copy.defaultFeatures = Collections.move(copy.defaultFeatures, index, direction);
-			setDomain(copy);
-			props.onChange(copy);
-		};
-
-		const deleteFeature = (feature: Feature) => {
-			const copy = Utils.copy(domain);
-			copy.defaultFeatures = copy.defaultFeatures.filter(f => f.id !== feature.id);
+			copy.defaultFeatures = Utils.copy(features);
 			setDomain(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText
-					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature()} />
-					}
-				>
-					Default Features
-				</HeaderText>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						domain.defaultFeatures.map(f => (
-							<Expander
-								key={f.id}
-								title={f.name || 'Unnamed Feature'}
-								tags={[ FeatureLogic.getFeatureTag(f) ]}
-								extra={[
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
-								]}
-							>
-								<FeatureEditPanel
-									feature={f}
-									sourcebooks={props.sourcebooks}
-									options={props.options}
-									onChange={feature => changeFeature(feature)}
-								/>
-							</Expander>
-						))
-					}
-					{
-						domain.defaultFeatures.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
-			</Space>
+			<FeatureListEditPanel
+				title='Features'
+				features={domain.defaultFeatures}
+				sourcebooks={props.sourcebooks}
+				options={props.options}
+				onChange={onChange}
+			/>
 		);
 	};
 

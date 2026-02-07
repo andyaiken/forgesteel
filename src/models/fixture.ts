@@ -7,5 +7,8 @@ export interface Fixture extends Element {
 	role: TerrainRole;
 	baseStamina: number;
 	size: Size;
-	featuresByLevel: { level: number, features: Feature[] }[]
+	featuresByLevel: {
+		level: number;
+		features: Feature[];
+	}[]
 }

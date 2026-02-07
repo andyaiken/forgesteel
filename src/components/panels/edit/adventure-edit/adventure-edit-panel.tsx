@@ -11,6 +11,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Plot } from '@/models/plot';
@@ -86,19 +87,11 @@ export const AdventureEditPanel = (props: Props) => {
 	};
 
 	const getAdventureEditor = () => {
-		const setName = (value: string) => {
+		const setNameDesc = (name: string, desc: string) => {
 			const copy = Utils.copy(adventure);
-			copy.name = value;
-			copy.plot.name = value;
-			setAdventure(copy);
-			if (props.onChange) {
-				props.onChange(copy);
-			}
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(adventure);
-			copy.description = value;
+			copy.name = name;
+			copy.plot.name = name;
+			copy.description = desc;
 			setAdventure(copy);
 			if (props.onChange) {
 				props.onChange(copy);
@@ -186,18 +179,10 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '1',
 						label: 'Adventure',
 						children: (
-							<Space orientation='vertical' style={{ width: '100%' }}>
-								<HeaderText>Name</HeaderText>
-								<TextInput
-									status={adventure.name === '' ? 'warning' : ''}
-									placeholder='Name'
-									allowClear={true}
-									value={adventure.name}
-									onChange={setName}
-								/>
-								<HeaderText>Description</HeaderText>
-								<MarkdownEditor value={adventure.description} onChange={setDescription} />
-							</Space>
+							<NameDescEditPanel
+								element={adventure}
+								onChange={setNameDesc}
+							/>
 						)
 					},
 					{

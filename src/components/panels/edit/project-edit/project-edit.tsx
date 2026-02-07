@@ -1,9 +1,8 @@
-import { Button, Select, Space, Tabs } from 'antd';
+import { Select, Space, Tabs } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
@@ -11,7 +10,6 @@ import { ProjectPanel } from '@/components/panels/elements/project-panel/project
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -29,36 +27,19 @@ export const ProjectEditPanel = (props: Props) => {
 	const [ project, setProject ] = useState<Project>(props.project);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(project);
-			copy.name = value;
-			setProject(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(project);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setProject(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={project.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={project.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={project.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={project}
+				onChange={onChange}
+			/>
 		);
 	};
 

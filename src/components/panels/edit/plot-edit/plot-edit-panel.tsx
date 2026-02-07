@@ -19,6 +19,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -128,33 +129,19 @@ export const PlotEditPanel = (props: Props) => {
 	};
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(plot);
-			copy.name = value;
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(plot);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setPlot(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<TextInput
-					status={plot.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					value={plot.name}
-					onChange={setName}
-				/>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={plot.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={plot}
+				onChange={onChange}
+			/>
 		);
 	};
 

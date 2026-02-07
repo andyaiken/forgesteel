@@ -1,7 +1,6 @@
 import { Button, Segmented, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureChoice } from '@/models/feature';
-import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryLogic } from '@/logic/ancestry-logic';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
@@ -18,11 +17,11 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -46,36 +45,19 @@ export const AncestryEditPanel = (props: Props) => {
 	const [ featureSearch, setFeatureSearch ] = useState<string>('');
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(ancestry);
-			copy.name = value;
-			setAncestry(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(ancestry);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setAncestry(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={ancestry.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={ancestry.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={ancestry.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={ancestry}
+				onChange={onChange}
+			/>
 		);
 	};
 

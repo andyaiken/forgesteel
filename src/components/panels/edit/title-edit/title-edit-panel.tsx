@@ -1,17 +1,15 @@
-import { Button, Space, Tabs } from 'antd';
+import { Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
@@ -38,34 +36,18 @@ export const TitleEditPanel = (props: Props) => {
 	};
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(title);
-			copy.name = value;
-			updateTitle(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(title);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			updateTitle(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={title.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={title.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={title.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={title}
+				onChange={onChange}
+			/>
 		);
 	};
 

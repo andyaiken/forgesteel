@@ -1,18 +1,14 @@
-import { Button, Space, Tabs } from 'antd';
 import { Complication } from '@/models/complication';
 import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
-import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
+import { Tabs } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -30,36 +26,19 @@ export const ComplicationEditPanel = (props: Props) => {
 	const [ complication, setComplication ] = useState<Complication>(props.complication);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(complication);
-			copy.name = value;
-			setComplication(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(complication);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setComplication(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={complication.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={complication.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={complication.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={complication}
+				onChange={onChange}
+			/>
 		);
 	};
 

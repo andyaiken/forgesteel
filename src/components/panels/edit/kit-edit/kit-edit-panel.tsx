@@ -1,4 +1,4 @@
-import { Alert, Button, Select, Slider, Space, Tabs } from 'antd';
+import { Alert, Select, Slider, Space, Tabs } from 'antd';
 import { ReactNode, useState } from 'react';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { Collections } from '@/utils/collections';
@@ -11,8 +11,7 @@ import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '@/enums/kit-weapon';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -20,7 +19,6 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
@@ -38,36 +36,19 @@ export const KitEditPanel = (props: Props) => {
 	const [ kit, setKit ] = useState<Kit>(props.kit);
 
 	const getNameAndDescriptionSection = () => {
-		const setName = (value: string) => {
+		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(kit);
-			copy.name = value;
-			setKit(copy);
-			props.onChange(copy);
-		};
-
-		const setDescription = (value: string) => {
-			const copy = Utils.copy(kit);
-			copy.description = value;
+			copy.name = name;
+			copy.description = desc;
 			setKit(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={kit.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={kit.name}
-						onChange={setName}
-					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-				</Space.Compact>
-				<HeaderText>Description</HeaderText>
-				<MarkdownEditor value={kit.description} onChange={setDescription} />
-			</Space>
+			<NameDescEditPanel
+				element={kit}
+				onChange={onChange}
+			/>
 		);
 	};
 

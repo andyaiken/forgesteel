@@ -42,7 +42,7 @@ export class HeroLogic {
 		return `Level ${hero.class.level} ${hero.ancestry.name} ${hero.class.name}`;
 	};
 
-	static getFeatures = (hero: Hero) => {
+	static getFeatures = (hero: Hero, includeCustomizations = true) => {
 		const features: { feature: Feature, source: string }[] = [];
 
 		if (hero.ancestry) {
@@ -83,9 +83,18 @@ export class HeroLogic {
 			}
 		});
 
-		return Collections.sort(features, f => f.feature.name).map(f => {
-			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id) || null;
-			if (customization) {
+		return Collections
+			.sort(features, f => f.feature.name)
+			.map(f => {
+				if (!includeCustomizations) {
+					return f;
+				}
+
+				const customization = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id) || null;
+				if (!customization) {
+					return f;
+				}
+
 				const feature = Utils.copy(f.feature);
 
 				feature.name = customization.name || feature.name;
@@ -96,10 +105,7 @@ export class HeroLogic {
 				}
 
 				return { feature: feature, source: f.source };
-			}
-
-			return f;
-		});
+			});
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], standardAbilityIDs: string[]) => {

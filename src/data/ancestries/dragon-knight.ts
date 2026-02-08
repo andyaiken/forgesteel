@@ -155,11 +155,14 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'dragon-knight-feature-2-8',
-						name: 'Remember your Oath',
-						description: `
-As a maneuver, you can recite the following oath. Until the start of your next turn, whenever you make a saving throw, you succeed on a 4 or higher.
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'dragon-knight-feature-2-8',
+							name: 'Remember your Oath',
+							type: FactoryLogic.type.createManeuver(),
+							sections: [
+								FactoryLogic.createAbilitySectionText(`
+As a maneuver, you can recite the following oath.
 
 > Even should the sun stop in the sky
 > Even should the night last a thousand years
@@ -170,7 +173,11 @@ As a maneuver, you can recite the following oath. Until the start of your next t
 > I will yield no ground
 > I will speak no lies
 > I will stand against all tyrants
-> Until the last villain dies.`
+> Until the last villain dies.
+ 
+Until the start of your next turn, whenever you make a saving throw, you succeed on a 4 or higher.`)
+							]
+						})
 					}),
 					value: 1
 				},

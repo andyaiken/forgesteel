@@ -204,7 +204,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 	}
 	if (allOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
 		allOptions = allOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-		const additionalOptions = HeroLogic.getFormerAncestries(props.hero!)
+		const additionalOptions = HeroLogic.getFormerAncestries(props.hero)
 			.flatMap(a => a.features)
 			.filter(f => f.type === FeatureType.Choice)
 			.flatMap(f => f.data.options)
@@ -217,7 +217,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 		const original = allOptions.find(o => o.feature.id === id);
 		return original ? original.value : 0;
 	});
-	const pointsMax = props.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(props.hero!) : props.data.count;
+	const pointsMax = props.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(props.hero) : props.data.count;
 	const pointsLeft = pointsMax - pointsUsed;
 
 	let unavailableIDs: string[] = [];
@@ -289,7 +289,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 				(pointsLeft > 0) && (props.data.count === 'ancestry') ?
 					<>
 						<Divider />
-						<Toggle label='Choose a feature from a different ancestry' value={comprehensive} onChange={setComprehensive} />
+						<Toggle label='Choose a feature from any ancestry' value={comprehensive} onChange={setComprehensive} />
 					</>
 					: null
 			}

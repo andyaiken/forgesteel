@@ -66,7 +66,7 @@ export const HeroLevelUpModal = (props: Props) => {
 		<Modal
 			toolbar={
 				<>
-					<Button type='primary' disabled={features.some(f => !FeatureLogic.isChosen(f, hero))} onClick={() => props.onAccept(hero)}>Accept Changes</Button>
+					<Button type='primary' disabled={features.some(f => !FeatureLogic.isChosen(f, hero, props.soucebooks))} onClick={() => props.onAccept(hero)}>Accept Changes</Button>
 					<Button onClick={() => props.onClose()}>Cancel</Button>
 				</>
 			}

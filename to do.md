@@ -1,11 +1,5 @@
 # Development Plans
 
-### Bugs
-
-* Choosing features from other ancestries
-  * Doesn't trigger ancestry completed
-  * Doesn't persist correctly
-
 ### Heroes
 
 * Classic Sheet

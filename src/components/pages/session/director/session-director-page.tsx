@@ -42,6 +42,7 @@ interface Props {
 	session: Session;
 	options: Options;
 	highlightAbout: boolean;
+	setOptions: (options: Options) => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -421,6 +422,8 @@ export const SessionDirectorPage = (props: Props) => {
 				<AppFooter
 					page='session'
 					highlightAbout={props.highlightAbout}
+					options={props.options}
+					setOptions={props.setOptions}
 					showReference={props.showReference}
 					showRoll={props.showRoll}
 					showAbout={props.showAbout}

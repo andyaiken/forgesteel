@@ -1427,7 +1427,6 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<AboutModal
 				options={options}
-				setOptions={persistOptions}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1697,6 +1696,8 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								highlightAbout={errors.length > 0}
+								options={options}
+								setOptions={persistOptions}
 								showReference={() => onShowReference(null)}
 								showRoll={() => showRoll(null)}
 								showAbout={showAbout}
@@ -1715,6 +1716,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1733,6 +1735,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={onShowReference}
 									showRoll={showRoll}
 									showAbout={showAbout}
@@ -1781,6 +1784,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1820,6 +1824,7 @@ export const Main = (props: Props) => {
 									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1849,6 +1854,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1884,6 +1890,7 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1913,6 +1920,7 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
+									setOptions={persistOptions}
 									showReference={() => onShowReference(null)}
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
@@ -1927,6 +1935,8 @@ export const Main = (props: Props) => {
 							<AuthPage
 								connectionSettings={connectionSettings}
 								highlightAbout={errors.length > 0}
+								options={options}
+								setOptions={persistOptions}
 								showReference={() => onShowReference(null)}
 								showRoll={() => showRoll(null)}
 								showAbout={showAbout}

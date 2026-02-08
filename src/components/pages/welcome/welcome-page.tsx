@@ -6,6 +6,7 @@ import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
+import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Tip } from '@/models/tip';
 import { TipData } from '@/data/tip-data';
@@ -22,6 +23,8 @@ type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
 	highlightAbout: boolean;
+	options: Options;
+	setOptions: (options: Options) => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -49,6 +52,8 @@ export const WelcomePage = (props: Props) => {
 					<AppFooter
 						page='welcome'
 						highlightAbout={props.highlightAbout}
+						options={props.options}
+						setOptions={props.setOptions}
 						showReference={props.showReference}
 						showRoll={props.showRoll}
 						showAbout={props.showAbout}
@@ -82,6 +87,8 @@ export const WelcomePage = (props: Props) => {
 				<AppFooter
 					page='welcome'
 					highlightAbout={props.highlightAbout}
+					options={props.options}
+					setOptions={props.setOptions}
 					showReference={props.showReference}
 					showRoll={props.showRoll}
 					showAbout={props.showAbout}

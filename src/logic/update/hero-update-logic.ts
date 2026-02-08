@@ -438,12 +438,18 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureChoice;
 
 					const selectedIDs = oFeature.data.selected.map(s => s.id);
-					const availableOptions = sourcebooks
-						.flatMap(sb => sb.ancestries)
-						.flatMap(a => a.features)
-						.filter(f => f.type === FeatureType.Choice)
-						.filter(f => f.data.count === 'ancestry')
-						.flatMap(f => f.data.options);
+
+					const availableOptions = [ ...feature.data.options ];
+					if (feature.data.count === 'ancestry') {
+						availableOptions.push(
+							...sourcebooks
+								.flatMap(sb => sb.ancestries)
+								.flatMap(a => a.features)
+								.filter(f => f.type === FeatureType.Choice)
+								.filter(f => f.data.count === 'ancestry')
+								.flatMap(f => f.data.options)
+						);
+					}
 
 					feature.data.selected = availableOptions.map(o => o.feature).filter(o => selectedIDs.includes(o.id));
 					feature.data.selected.forEach(child => {

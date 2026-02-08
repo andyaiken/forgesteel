@@ -50,8 +50,9 @@ enum PageState {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	highlightAbout: boolean;
+	options: Options;
+	setOptions: (options: Options) => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -624,6 +625,8 @@ export const HeroEditPage = (props: Props) => {
 				<AppFooter
 					page='heroes'
 					highlightAbout={props.highlightAbout}
+					options={props.options}
+					setOptions={props.setOptions}
 					showReference={props.showReference}
 					showRoll={props.showRoll}
 					showAbout={props.showAbout}

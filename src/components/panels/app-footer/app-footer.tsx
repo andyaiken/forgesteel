@@ -1,9 +1,12 @@
-import { Badge, Button, Divider, Flex } from 'antd';
+import { Badge, Button, Divider, Drawer, Flex, Space } from 'antd';
 import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useState } from 'react';
 
 import './app-footer.scss';
 
@@ -12,6 +15,8 @@ import shield from '@/assets/shield.png';
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
 	highlightAbout: boolean;
+	options: Options;
+	setOptions: (options: Options) => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -21,6 +26,16 @@ interface Props {
 export const AppFooter = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
+	const [ showSidebar, setShowSidebar ] = useState<boolean>(false);
+
+	const onOK = () => {
+		props.setOptions({ ...props.options, cookieConsent: true });
+		setShowSidebar(false);
+	};
+
+	const onCancel = () => {
+		window.location.assign('https://www.google.com');
+	};
 
 	return (
 		<ErrorBoundary>
@@ -45,6 +60,16 @@ export const AppFooter = (props: Props) => {
 							</Button>
 						</Flex>
 				}
+				{
+					!props.options.cookieConsent ?
+						<Button
+							block={true}
+							onClick={() => setShowSidebar(true)}
+						>
+							Cookies
+						</Button>
+						: null
+				}
 				<div className='action-buttons-panel'>
 					<SyncStatus />
 					<Button type='text' onClick={props.showReference}>
@@ -68,6 +93,26 @@ export const AppFooter = (props: Props) => {
 					</Button>
 				</div>
 			</div>
+			<Drawer open={showSidebar} onClose={() => setShowSidebar(false)} closeIcon={null} size={500}>
+				<Modal
+					content={
+						showSidebar ?
+							<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
+								<div className='ds-text'>
+									Just so you know, <b>FORGE STEEL</b> uses cookies. We good?
+								</div>
+								<Button type='primary' block={true} onClick={onOK}>
+									Yes, obviously that's completely fine
+								</Button>
+								<Button block={true} onClick={onCancel}>
+									I'm not OK with that, I had a bad experience with cookies as a child
+								</Button>
+							</Space>
+							: null
+					}
+					onClose={() => setShowSidebar(false)}
+				/>
+			</Drawer>
 		</ErrorBoundary>
 	);
 };

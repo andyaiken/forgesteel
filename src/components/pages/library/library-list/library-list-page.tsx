@@ -85,6 +85,7 @@ interface Props {
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	highlightAbout: boolean;
+	setOptions: (options: Options) => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -613,6 +614,8 @@ export const LibraryListPage = (props: Props) => {
 				<AppFooter
 					page='library'
 					highlightAbout={props.highlightAbout}
+					options={props.options}
+					setOptions={props.setOptions}
 					showReference={props.showReference}
 					showRoll={props.showRoll}
 					showAbout={props.showAbout}

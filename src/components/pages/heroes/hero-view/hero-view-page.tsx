@@ -42,8 +42,9 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	highlightAbout: boolean;
+	options: Options;
+	setOptions: (options: Options) => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
 	showRoll: (hero: Hero) => void;
 	showAbout: () => void;
@@ -234,6 +235,8 @@ export const HeroViewPage = (props: Props) => {
 				<AppFooter
 					page='heroes'
 					highlightAbout={props.highlightAbout}
+					options={props.options}
+					setOptions={props.setOptions}
 					showReference={() => props.showReference(hero)}
 					showRoll={() => props.showRoll(hero)}
 					showAbout={props.showAbout}

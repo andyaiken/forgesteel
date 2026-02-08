@@ -631,12 +631,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.class ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectClass}>
-									{
-										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
-											:
-											<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
-									}
+									<div>Class: <b>{props.hero.class.name} ({[`level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero)].join(' ')})</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectClass}>
@@ -644,8 +639,8 @@ export const HeroPanel = (props: Props) => {
 									<Field label='Class' value={props.hero.class.name} />
 									<Field label='Level' value={props.hero.class.level} />
 									{
-										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-											<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+										HeroLogic.getClassSpecialization(props.hero).length > 0 ?
+											<Field label={props.hero.class.subclassName || 'Domains'} value={HeroLogic.getClassSpecialization(props.hero).join(', ')} />
 											: null
 									}
 								</div>
@@ -1129,7 +1124,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.class ?
 							<Field
 								label='Class'
-								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name) ].join(' ')})`}
+								value={`${props.hero.class.name} (${[`Level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero)].join(' ')})`}
 							/>
 							: null
 					}

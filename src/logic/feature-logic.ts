@@ -20,6 +20,7 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
@@ -937,23 +938,19 @@ export class FeatureLogic {
 		return false;
 	};
 
-	static isChosen = (feature: Feature, hero: Hero) => {
+	static isChosen = (feature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
 		switch (feature.type) {
 			case FeatureType.AncestryChoice:
 				return !!feature.data.selected;
 			case FeatureType.AncestryFeatureChoice:
 				return !!feature.data.selected;
 			case FeatureType.Choice: {
-				let availableOptions = [ ...feature.data.options ];
-				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
-					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					const additionalOptions = HeroLogic.getFormerAncestries(hero)
-						.flatMap(a => a.features)
-						.filter(f => f.type === FeatureType.Choice)
-						.flatMap(f => f.data.options)
-						.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					availableOptions.push(...additionalOptions);
-				}
+				const availableOptions = sourcebooks
+					.flatMap(sb => sb.ancestries)
+					.flatMap(a => a.features)
+					.filter(f => f.type === FeatureType.Choice)
+					.filter(f => f.data.count === 'ancestry')
+					.flatMap(f => f.data.options);
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))
 					.filter(opt => !!opt);

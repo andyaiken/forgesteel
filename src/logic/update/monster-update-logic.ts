@@ -1,7 +1,7 @@
+import { FeatureMaliceAbility, FeatureMaliceAbilityData } from '@/models/feature';
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureMaliceAbilityData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Monster } from '@/models/monster';
@@ -34,12 +34,17 @@ export class MonsterUpdateLogic {
 						}),
 						echelon: 0
 					};
-					f.data = data;
+					(f as FeatureMaliceAbility).data = data;
 				}
 			}
 
-			if (f.data.echelon === undefined) {
-				f.data.echelon = 1;
+			switch (f.type) {
+				case FeatureType.Malice:
+				case FeatureType.MaliceAbility:
+					if (f.data.echelon === undefined) {
+						f.data.echelon = 1;
+					}
+					break;
 			}
 		});
 

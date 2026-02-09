@@ -93,13 +93,15 @@ const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice | FeaturePerk) 
 	let choiceType;
 	switch (feature.type) {
 		case FeatureType.SkillChoice:
-			if (!isAllSkillLists(feature.data.listOptions))
+			if (!isAllSkillLists(feature.data.listOptions)) {
 				listNames = feature.data.listOptions.map(l => l.toString());
+			}
 			choiceType = 'Skill';
 			break;
 		case FeatureType.Perk:
-			if (!isAllPerkLists(feature.data.lists))
+			if (!isAllPerkLists(feature.data.lists)) {
 				listNames = feature.data.lists.map(l => l.toString());
+			}
 			choiceType = 'Perk';
 			break;
 	}
@@ -219,8 +221,9 @@ const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
 		abilityCost += ' Cost';
 	}
 	let ability = 'Ability';
-	if (feature.data.count > 1)
+	if (feature.data.count > 1) {
 		ability = 'Abilities';
+	}
 
 	let selectedOptions;
 	if (feature.data.selectedIDs.length) {

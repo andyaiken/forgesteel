@@ -9,7 +9,7 @@ import { FeatureType } from '@/enums/feature-type';
 import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';

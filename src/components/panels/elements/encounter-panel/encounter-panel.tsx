@@ -203,17 +203,39 @@ export const EncounterPanel = (props: Props) => {
 								<HeaderText level={1}>{group.name} Malice</HeaderText>
 								<div className='encounter-malice'>
 									{
-										group.malice.filter(m => m.data.echelon <= maxEchelon).map(m => (
-											<SelectablePanel key={m.id}>
-												<FeaturePanel
-													feature={m}
-													options={props.options}
-													mode={PanelMode.Full}
-													cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
-													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-												/>
-											</SelectablePanel>
-										))
+										group.malice
+											.filter(m => {
+												let echelon = 1;
+												switch (m.type) {
+													case FeatureType.Malice:
+													case FeatureType.MaliceAbility:
+														echelon = m.data.echelon;
+														break;
+												}
+												return echelon <= maxEchelon;
+											})
+											.map(m => {
+												let cost = undefined;
+												switch (m.type) {
+													case FeatureType.Malice:
+														cost = m.data.cost;
+														break;
+													case FeatureType.MaliceAbility:
+														cost = m.data.ability.cost;
+														break;
+												}
+												return (
+													<SelectablePanel key={m.id}>
+														<FeaturePanel
+															feature={m}
+															options={props.options}
+															mode={PanelMode.Full}
+															cost={cost}
+															repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+														/>
+													</SelectablePanel>
+												);
+											})
 									}
 								</div>
 							</div>

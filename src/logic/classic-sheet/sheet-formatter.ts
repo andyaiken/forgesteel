@@ -213,8 +213,9 @@ export class SheetFormatter {
 								wide: referenceContent.wide,
 								section: referenceContent.section
 							});
-							if (!referenceContent.leftover.length)
+							if (!referenceContent.leftover.length) {
 								return;
+							}
 							f.description = referenceContent.leftover;
 						}
 						// re-check size without table to see if needs to go in reference
@@ -225,8 +226,9 @@ export class SheetFormatter {
 							addToReference = false;
 						}
 					}
-					if (addToReference)
+					if (addToReference) {
 						reference.push(sourcedFeature);
+					}
 
 					if (this.isVERYLongFeature(f)) {
 						fSize = 2;
@@ -707,8 +709,9 @@ export class SheetFormatter {
 		size += this.countLines(ability.rollT2Effect, rollLineLen);
 		size += this.countLines(ability.rollT3Effect, rollLineLen);
 
-		if (ability.trigger)
+		if (ability.trigger) {
 			size += this.countLines(ability.trigger, lineWidth);
+		}
 
 		if (ability.effect) {
 			if (ability.hasPowerRoll) {
@@ -778,8 +781,9 @@ export class SheetFormatter {
 				size += 0.3 + this.countLines(ability.rollT2Effect, rollLineLen);
 				size += 0.3 + this.countLines(ability.rollT3Effect, rollLineLen);
 			}
-			if (ability.trigger)
+			if (ability.trigger) {
 				size += 1 + this.countLines(ability.trigger, lineWidth);
+			}
 			if (ability.effect) {
 				if (ability.hasPowerRoll) {
 					size += 0.5; // extra padding when effect follows power roll

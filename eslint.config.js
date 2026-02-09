@@ -42,6 +42,9 @@ export default defineConfig({
 			'error',
 			'consistent'
 		],
+		'curly': [
+			'error'
+		],
 		'no-trailing-spaces': [
 			'error'
 		],

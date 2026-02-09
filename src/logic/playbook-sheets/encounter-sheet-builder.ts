@@ -5,6 +5,7 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterSlot } from '@/models/encounter-slot';
+import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -58,7 +59,16 @@ export class EncounterSheetBuilder {
 				const maxLvl = encounterMonsters.reduce((maxLvl, monster) => Math.max(maxLvl, monster.level), 0);
 				const echelon = CreatureLogic.getEchelon(maxLvl);
 				const usableMalice = groupMalice.features
-					.filter(m => m.data.echelon <= echelon)
+					.filter(m => {
+						let e = 1;
+						switch (m.type) {
+							case FeatureType.Malice:
+							case FeatureType.MaliceAbility:
+								e = m.data.echelon;
+								break;
+						}
+						return e <= echelon;
+					})
 					.filter(m => !encounter.hiddenMaliceFeatures.includes(m.id))
 					.filter(m => seenMalice.has(m.id) ? false : seenMalice.add(m.id));
 				return ({ monster: groupMalice.group, malice: usableMalice });

@@ -7,7 +7,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Imbuement } from '@/models/imbuement';
 import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
 import { ItemType } from '@/enums/item-type';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';

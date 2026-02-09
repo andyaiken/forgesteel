@@ -1,6 +1,6 @@
 import { Button, Progress } from 'antd';
-import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Options } from '@/models/options';
@@ -11,14 +11,22 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import './malice-panel.scss';
 
 interface Props {
-	malice: FeatureMalice | FeatureMaliceAbility;
+	malice: Feature;
 	options: Options;
 	currentMalice?: number
 	updateCurrentMalice?: (value: number) => void;
 }
 
 export const MalicePanel = (props: Props) => {
-	const cost = props.malice.type === FeatureType.MaliceAbility ? props.malice.data.ability.cost as number : props.malice.data.cost;
+	let cost = 0;
+	switch (props.malice.type) {
+		case FeatureType.Malice:
+			cost = props.malice.data.cost as number;
+			break;
+		case FeatureType.MaliceAbility:
+			cost = props.malice.data.ability.cost as number;
+			break;
+	}
 
 	return (
 		<ErrorBoundary>

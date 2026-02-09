@@ -1,4 +1,4 @@
-import { PatreonConnection } from './patreon-connection';
+import { PatreonConnection } from '@/models/patreon-connection';
 
 export interface ConnectionSettings {
 	useManualWarehouse: boolean;

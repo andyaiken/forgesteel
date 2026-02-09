@@ -1,4 +1,3 @@
-import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -7,6 +6,7 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { Feature } from '@/models/feature';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -479,16 +479,35 @@ export class MonsterLogic {
 	};
 
 	static getMaliceOptions = (monster: Monster, group?: MonsterGroup) => {
-		const options: (FeatureMalice | FeatureMaliceAbility)[] = [ ...MonsterData.malice ];
+		const options: Feature[] = [ ...MonsterData.malice ];
 		if (group) {
 			const level = MonsterLogic.getMonsterLevel(monster);
-			options.push(...group.malice.filter(f => f.data.echelon <= CreatureLogic.getEchelon(level)));
+			options.push(...group.malice.filter(f => {
+				let echelon = 1;
+				switch (f.type) {
+					case FeatureType.Malice:
+					case FeatureType.MaliceAbility:
+						echelon = f.data.echelon;
+						break;
+				}
+				return echelon <= CreatureLogic.getEchelon(level);
+			}));
 		}
 
 		return options.sort((a, b) => {
-			const getCost = (malice: FeatureMalice | FeatureMaliceAbility) => {
-				let cost = (malice.type === FeatureType.MaliceAbility) ? malice.data.ability.cost as number : malice.data.cost;
-				const repeatable = (malice.type === FeatureType.MaliceAbility) ? malice.data.ability.repeatable : malice.data.repeatable;
+			const getCost = (malice: Feature) => {
+				let cost = 0;
+				let repeatable = false;
+				switch (malice.type) {
+					case FeatureType.Malice:
+						cost = malice.data.cost as number;
+						repeatable = malice.data.repeatable || false;
+						break;
+					case FeatureType.MaliceAbility:
+						cost = malice.data.ability.cost as number;
+						repeatable = malice.data.ability.repeatable;
+						break;
+				}
 				if (repeatable) {
 					cost += 0.5;
 				}

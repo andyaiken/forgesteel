@@ -71,8 +71,9 @@ export class WarehouseService implements StorageService {
 	async initialize(): Promise<boolean> {
 		this.api.interceptors.request.use(async config => {
 			if (!this.useNewAuth) {
-				if (this.jwt === null)
+				if (this.jwt === null) {
 					await this.ensureAuth();
+				}
 				config.headers.Authorization = `Bearer ${this.jwt}`;
 			}
 			return config;
@@ -81,8 +82,9 @@ export class WarehouseService implements StorageService {
 		const NO_RETRY_HEADER = 'X-NO-RETRY';
 		this.api.interceptors.response.use(undefined, async error => {
 			if (this.isExpiredTokenError(error)) {
-				if (error.config.headers && error.config.headers[NO_RETRY_HEADER])
+				if (error.config.headers && error.config.headers[NO_RETRY_HEADER]) {
 					return Promise.reject(error);
+				}
 
 				this.jwt = null;
 				await this.refreshJwt();

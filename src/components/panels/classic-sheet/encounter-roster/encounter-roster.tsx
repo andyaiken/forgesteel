@@ -66,8 +66,9 @@ export const EncounterRosterCard = (props: Props) => {
 												const monster = slot.monster;
 												let extra = null;
 												if (slot.isMinion) {
-													if (slot.count > 1)
+													if (slot.count > 1) {
 														extra = slot.count.toString();
+													}
 												} else if (minionSlots === 1 && nonMinionSlots === 1) {
 													extra = 'Captain';
 												}

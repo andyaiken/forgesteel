@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { LocalService } from './local-service';
-import { StorageServiceFactory } from './storage-service-factory';
-import { WarehouseService } from './warehouse-service';
+import { LocalService } from '@/service/storage/local-service';
+import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
+import { WarehouseService } from '@/service/storage/warehouse-service';
 
 describe('StorageServiceFactory', () => {
 	describe('fromConnectionSettings', () => {

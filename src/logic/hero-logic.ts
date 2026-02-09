@@ -210,6 +210,15 @@ export class HeroLogic {
 		];
 	};
 
+	static getClassSpecialization = (hero: Hero): string[] => {
+		if (!hero.class) return [];
+		const selected = hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name);
+		if (selected.length > 0) return selected;
+		const domains = HeroLogic.getDomains(hero).map(d => d.name);
+		if (domains.length > 0) return [domains.join('/')];
+		return [];
+	};
+
 	static getDomains = (hero: Hero) => {
 		return HeroLogic.getFeatures(hero)
 			.map(f => f.feature)

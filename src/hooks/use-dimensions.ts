@@ -19,7 +19,9 @@ export const useDimensions = <T extends HTMLElement>(): [ (node: T | null) => vo
 	}, [ ref ]);
 
 	useLayoutEffect(() => {
-		if (!ref) return;
+		if (!ref) {
+			return;
+		}
 
 		handleSize();
 

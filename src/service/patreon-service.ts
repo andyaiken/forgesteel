@@ -24,8 +24,9 @@ export class PatreonService {
 				&& axios.isAxiosError(error)
 				&& error.config
 				&& error.response?.status === 401) {
-				if (error.config.headers && error.config.headers[NO_RETRY_HEADER])
+				if (error.config.headers && error.config.headers[NO_RETRY_HEADER]) {
 					return Promise.reject(error);
+				}
 
 				error.config.headers ||= {} as AxiosRequestHeaders;
 				error.config.headers[NO_RETRY_HEADER] = 'true';

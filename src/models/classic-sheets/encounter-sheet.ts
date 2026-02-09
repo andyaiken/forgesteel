@@ -1,4 +1,4 @@
-import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
+import { Feature } from '@/models/feature';
 import { Monster } from '@/models/monster';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Terrain } from '@/models/terrain';
@@ -22,7 +22,7 @@ export interface EncounterSheet {
 	successCondition?: string;
 	failureCondition?: string;
 
-	malice?: { monster: string, malice: (FeatureMalice | FeatureMaliceAbility)[] }[];
+	malice?: { monster: string, malice: Feature[] }[];
 	groups?: EncounterGroupSheet[];
 
 	terrain?: Terrain[];

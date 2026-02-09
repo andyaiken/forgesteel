@@ -436,10 +436,12 @@ export class HeroSheetBuilder {
 			}
 			case FeatureType.AbilityDistance:
 				value = ModifierLogic.calculateModifierValue(feature.data, hero);
-				if (feature.data.keywords.includes(AbilityKeyword.Melee))
+				if (feature.data.keywords.includes(AbilityKeyword.Melee)) {
 					sheet.modifierMeleeDistance = value;
-				if (feature.data.keywords.includes(AbilityKeyword.Ranged))
+				}
+				if (feature.data.keywords.includes(AbilityKeyword.Ranged)) {
 					sheet.modifierRangedDistance = value;
+				}
 				break;
 		}
 	};

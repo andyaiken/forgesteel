@@ -1,6 +1,6 @@
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 

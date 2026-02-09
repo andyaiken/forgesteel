@@ -1,6 +1,6 @@
 import { PatreonSession, PatronTier } from '@/models/patreon-connection';
 import { describe, expect, test } from 'vitest';
-import { PatreonLogic } from './patreon-logic';
+import { PatreonLogic } from '@/logic/patreon-logic';
 
 describe('PatreonLogic', () => {
 	describe('hasWarehouseAccess', () => {

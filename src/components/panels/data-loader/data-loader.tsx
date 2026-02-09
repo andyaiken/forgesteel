@@ -97,8 +97,9 @@ export const DataLoader = (props: Props) => {
 		}
 		// Don't show the tag for the oauth-redirect page
 		const url = window.location.toString();
-		if (!url.match(/oauth-redirect/))
+		if (!url.match(/oauth-redirect/)) {
 			setDataSource(source);
+		}
 
 		return settings;
 	};

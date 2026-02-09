@@ -14,7 +14,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';

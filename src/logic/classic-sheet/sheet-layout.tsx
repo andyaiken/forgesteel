@@ -96,8 +96,9 @@ export class SheetLayout {
 				// new row
 				availableLinesY -= rowH;
 				slotsToFillInRow = layout.perRow;
-				if (rowH > 0)
+				if (rowH > 0) {
 					availableLinesY -= 2.5; // For vertical card gap between rows
+				}
 				rowH = 0;
 			}
 			// console.log('Available space in current row:', spaceInRow, 'current rowH:', rowH, 'overall H:', availableLinesY);
@@ -187,16 +188,18 @@ export class SheetLayout {
 						req.shown = false;
 					} else {
 						const opt = extraCards.optional.find(c => c.element === card);
-						if (opt)
+						if (opt) {
 							opt.shown = false;
+						}
 					}
 				});
 				refCards = refCards.slice(0, newEnd);
 			}
 			return refCards;
 		}
-		if (availableLinesY > 0 && extraCards.optional.length > 0)
+		if (availableLinesY > 0 && extraCards.optional.length > 0) {
 			console.warn('Got through all cards?', extraCards);
+		}
 		return refCards;
 	};
 
@@ -253,8 +256,9 @@ export class SheetLayout {
 				let currentSlotCards: { card: AbilitySheet, h: number }[] = [];
 				rowAbilities.every(a => {
 					// if row was just filled, break out
-					if (rowIsFilled)
+					if (rowIsFilled) {
 						return false;
+					}
 
 					// Calculate the next ability card height
 					const aH = SheetFormatter.calculateAbilitySize(a, layout.cardLineLen);
@@ -284,8 +288,9 @@ export class SheetLayout {
 							rowSlotsFilled += 1;
 							rowIsFilled = rowSlotsFilled === layout.perRow;
 
-							if (rowIsFilled)
+							if (rowIsFilled) {
 								return false;
+							}
 						}
 					}
 
@@ -306,8 +311,9 @@ export class SheetLayout {
 
 							for (let i = rowSlotsFilled; i > 0; --i) {
 								const slot = pageAbilityGrid.pop();
-								if (slot)
+								if (slot) {
 									currentRow.unshift(slot);
+								}
 							}
 
 							const slotHeights = currentRow.map(arr => arr.reduce((h, ash) => h += ash.h, 0));
@@ -340,8 +346,9 @@ export class SheetLayout {
 				}
 
 				// If we didn't fill this row, break out to start getting filler cards
-				if (!rowIsFilled)
+				if (!rowIsFilled) {
 					break;
+				}
 			}
 			const filledSlotsInLastRow = (pageAbilityGrid.length % layout.perRow) || layout.perRow;
 			// console.log('last row:', abilitiesInLastRow, 'pageH', pageH, 'lines', layout.linesY);

@@ -1,9 +1,9 @@
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
-import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { MonsterData } from '@/data/monster-data';
 import { MonsterLogic } from '@/logic/monster-logic';
@@ -249,9 +249,9 @@ export class EncounterLogic {
 		return malice;
 	};
 
-	static getAllMaliceFeatures = (encounter: Encounter, sourcebooks: Sourcebook[]): { group: string, features: (FeatureMalice | FeatureMaliceAbility)[] }[] => {
+	static getAllMaliceFeatures = (encounter: Encounter, sourcebooks: Sourcebook[]): { group: string, features: Feature[] }[] => {
 		const monsterGroups = this.getMonsterGroups(encounter, sourcebooks);
-		const result: { group: string, features: (FeatureMalice | FeatureMaliceAbility)[] }[] = [
+		const result: { group: string, features: Feature[] }[] = [
 			{ group: 'Basic', features: MonsterData.malice }
 		];
 		monsterGroups.filter(group => group.malice.length > 0)

@@ -31,7 +31,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { Fixture } from '@/models/fixture';
-import { FixtureModal } from '../modals/fixture/fixture-modal';
+import { FixtureModal } from '@/components/modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
 import { FollowerModal } from '@/components/modals/follower/follower-modal';
 import { Format } from '@/utils/format';

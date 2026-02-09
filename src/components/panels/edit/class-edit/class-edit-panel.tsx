@@ -11,11 +11,11 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroClass } from '@/models/class';
 import { Modal } from '@/components/modals/modal/modal';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';

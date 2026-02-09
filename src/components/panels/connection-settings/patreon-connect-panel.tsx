@@ -43,8 +43,9 @@ export const PatreonConnectPanel = (props: Props) => {
 	const hasRun = useRef(false);
 
 	const updateSession = () => {
-		if (hasRun.current)
+		if (hasRun.current) {
 			return;
+		}
 		hasRun.current = true;
 
 		setLoadingSession(true);

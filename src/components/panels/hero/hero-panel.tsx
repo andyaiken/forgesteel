@@ -27,7 +27,7 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
-import { FixturePanel } from '../elements/fixture-panel/fixture-panel';
+import { FixturePanel } from '@/components/panels/elements/fixture-panel/fixture-panel';
 import { Follower } from '@/models/follower';
 import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
 import { FormatLogic } from '@/logic/format-logic';
@@ -634,7 +634,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.class ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectClass}>
-									<div>Class: <b>{props.hero.class.name} ({[`level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero)].join(' ')})</b></div>
+									<div>Class: <b>{props.hero.class.name} ({[ `level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero) ].join(' ')})</b></div>
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectClass}>
@@ -1155,7 +1155,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.class ?
 							<Field
 								label='Class'
-								value={`${props.hero.class.name} (${[`Level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero)].join(' ')})`}
+								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero) ].join(' ')})`}
 							/>
 							: null
 					}

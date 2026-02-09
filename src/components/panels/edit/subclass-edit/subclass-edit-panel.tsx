@@ -1,8 +1,8 @@
 import { Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '../feature-list-edit/feature-list-edit-panel';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

@@ -5,7 +5,7 @@ import { CulturePanel } from '@/components/panels/elements/culture-panel/culture
 import { CultureType } from '@/enums/culture-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

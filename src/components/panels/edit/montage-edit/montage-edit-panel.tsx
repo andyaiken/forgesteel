@@ -13,7 +13,7 @@ import { Hero } from '@/models/hero';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';

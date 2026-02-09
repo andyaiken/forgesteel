@@ -9,7 +9,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameDescEditPanel } from '../name-desc-edit/name-desc-edit-panel';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';

@@ -265,8 +265,9 @@ export class ClassicSheetBuilder {
 								tier3: SheetFormatter.addSign(k.tier3) || ''
 							};
 						});
-					if (meleeBonuses.length > 1)
+					if (meleeBonuses.length > 1) {
 						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(meleeBonuses);
+					}
 				}
 				if (isRanged && rangedKits.length > 1) {
 					const bestT1 = Math.max(...rangedKits.map(k => k.tier1));
@@ -284,8 +285,9 @@ export class ClassicSheetBuilder {
 								tier3: SheetFormatter.addSign(k.tier3) || ''
 							};
 						});
-					if (rangedBonuses.length > 1)
+					if (rangedBonuses.length > 1) {
 						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(rangedBonuses);
+					}
 				}
 			}
 		}

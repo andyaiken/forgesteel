@@ -1,4 +1,4 @@
-import { Utils } from './utils';
+import { Utils } from '@/utils/utils';
 
 export class Config {
 	static getTokenHandlerHost = (): string => {

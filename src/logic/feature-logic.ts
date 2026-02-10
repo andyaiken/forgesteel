@@ -945,16 +945,14 @@ export class FeatureLogic {
 			case FeatureType.AncestryFeatureChoice:
 				return !!feature.data.selected;
 			case FeatureType.Choice: {
-				const availableOptions = [ ...feature.data.options ];
+				let availableOptions = [ ...feature.data.options ];
 				if (feature.data.count === 'ancestry') {
-					availableOptions.push(
-						...sourcebooks
-							.flatMap(sb => sb.ancestries)
-							.flatMap(a => a.features)
-							.filter(f => f.type === FeatureType.Choice)
-							.filter(f => f.data.count === 'ancestry')
-							.flatMap(f => f.data.options)
-					);
+					availableOptions = sourcebooks
+						.flatMap(sb => sb.ancestries)
+						.flatMap(a => a.features)
+						.filter(f => f.type === FeatureType.Choice)
+						.filter(f => f.data.count === 'ancestry')
+						.flatMap(f => f.data.options);
 				}
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))

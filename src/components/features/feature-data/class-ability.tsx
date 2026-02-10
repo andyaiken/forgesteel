@@ -7,7 +7,6 @@ import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability
 import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
-import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -231,17 +230,12 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 		return null;
 	}
 
-	const currentAbilityIDs = HeroLogic.getFeatures(props.hero)
-		.map(f => f.feature)
-		.filter(f => f.id !== props.feature.id)
-		.filter(f => f.type === FeatureType.ClassAbility)
-		.flatMap(f => f.data.selectedIDs);
+	const currentAbilityIDs = HeroLogic.getAbilities(props.hero, props.sourcebooks, []).map(a => a.ability.id);
 
 	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels)
 		.filter(a => a.cost === props.data.cost)
-		.filter(a => a.minLevel <= props.data.minLevel)
-		.filter(a => !currentAbilityIDs.includes(a.id));
-	const distinctAbilities = Collections.distinct(abilities, a => a.name);
+		.filter(a => a.minLevel <= props.data.minLevel);
+	const distinctAbilities = Collections.distinct(abilities.filter(a => !currentAbilityIDs.includes(a.id)), a => a.name);
 	const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
 	const getAddButton = () => {

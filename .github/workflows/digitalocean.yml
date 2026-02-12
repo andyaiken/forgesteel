@@ -135,4 +135,6 @@ jobs:
               done <<< "$(echo -e "$tagged_list" | sort -rn)" # Sort tagged list newest first
               echo "Completed cleanup for repository: $repo"
           done
+          echo "=== Running Garbage collection ==="
+          doctl registry garbage-collection start -f
           echo "=== Registry cleanup finished successfully ==="

@@ -5,6 +5,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -68,6 +69,7 @@ export const StartSection = (props: Props) => {
 							{
 								props.sourcebooks
 									.filter(sb => sb.type === type)
+									.filter(sb => SourcebookLogic.getElements(sb).length > 0)
 									.map(sb => (
 										<Toggle
 											key={sb.id}

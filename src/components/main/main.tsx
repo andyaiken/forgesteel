@@ -1,3 +1,4 @@
+import { Feature, FeatureCompanion, FeatureRetainer } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
@@ -28,8 +29,8 @@ import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
+import { FeatureType } from '@/enums/feature-type';
 import { Fixture } from '@/models/fixture';
 import { FixtureModal } from '@/components/modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
@@ -1471,7 +1472,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup, summon?: SummoningInfo) => {
+	const onSelectMonster = (hero: Hero | undefined, monster: Monster, monsterGroup?: MonsterGroup, summon?: SummoningInfo) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 
 		setDrawer(
@@ -1481,6 +1482,22 @@ export const Main = (props: Props) => {
 				summon={summon}
 				sourcebooks={sourcebooks}
 				options={options}
+				onChange={
+					hero ?
+						monster => {
+							const heroCopy = Utils.copy(hero);
+							const feature = HeroLogic.getFeatures(heroCopy)
+								.map(f => f.feature)
+								.filter(f => [ FeatureType.Companion, FeatureType.Retainer ].includes(f.type))
+								.map(f => f as FeatureCompanion | FeatureRetainer)
+								.find(f => !!f.data.selected && f.data.selected.id === monster.id);
+							if (feature) {
+								feature.data.selected = Utils.copy(monster);
+								persistHero(heroCopy);
+							}
+						}
+						: undefined
+				}
 				onClose={() => setDrawer(null)}
 				exportElementData={exportLibraryElementData}
 			/>
@@ -1500,10 +1517,25 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectFollower = (follower: Follower) => {
+	const onSelectFollower = (hero: Hero, follower: Follower) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
 		setDrawer(
 			<FollowerModal
 				follower={follower}
+				sourcebooks={sourcebooks}
+				options={options}
+				onChange={follower => {
+					const heroCopy = Utils.copy(hero);
+					const feature = HeroLogic.getFeatures(heroCopy)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.Follower)
+						.find(f => f.data.follower.id === follower.id);
+					if (feature) {
+						feature.data.follower = Utils.copy(follower);
+						persistHero(heroCopy);
+					}
+				}}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1754,7 +1786,7 @@ export const Main = (props: Props) => {
 									showDomain={domain => onSelectLibraryElement(domain, 'domain')}
 									showKit={kit => onSelectLibraryElement(kit, 'kit')}
 									showTitle={title => onSelectLibraryElement(title, 'title')}
-									showMonster={(monster, summon) => onSelectMonster(monster, undefined, summon)}
+									showMonster={(hero, monster, summon) => onSelectMonster(hero, monster, undefined, summon)}
 									showFollower={onSelectFollower}
 									showFixture={onSelectFixture}
 									showCharacteristic={onSelectCharacteristic}
@@ -1830,7 +1862,7 @@ export const Main = (props: Props) => {
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
-									showMonster={onSelectMonster}
+									showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
 									showEncounterTools={showEncounterTools}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
 									importElement={importLibraryElement}
@@ -1859,7 +1891,7 @@ export const Main = (props: Props) => {
 									showRoll={() => showRoll(null)}
 									showAbout={showAbout}
 									showSettings={showSettings}
-									showMonster={onSelectMonster}
+									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
 									showTerrain={onSelectTerrain}
 									saveChanges={saveLibraryElement}
 								/>

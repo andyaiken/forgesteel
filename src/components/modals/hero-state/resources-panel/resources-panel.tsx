@@ -1,18 +1,23 @@
 import { Alert, Button, Drawer, Flex, Progress, Space } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
+import { FollowerType } from '@/enums/follower-type';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLevelUpModal } from '@/components/modals/hero-level-up/hero-level-up-modal';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
+import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -38,6 +43,7 @@ export const ResourcesPanel = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ expression, setExpression ] = useState<Expression | null>(null);
 	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
+	const [ showRetainers, setShowRetainers ] = useState<boolean>(false);
 
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
@@ -269,54 +275,113 @@ export const ResourcesPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const addFollower = (type: FollowerType) => {
+			const follower = FactoryLogic.feature.createFollower({
+				id: Utils.guid(),
+				follower: FactoryLogic.createFollower(type)
+			});
+
+			const copy = Utils.copy(hero);
+			copy.features.push(follower);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const addRetainer = (monster: Monster) => {
+			const retainer = FactoryLogic.feature.createRetainer({
+				id: Utils.guid(),
+				retainer: monster
+			});
+
+			const copy = Utils.copy(hero);
+			copy.features.push(retainer);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<>
-				<HeaderText>Stats</HeaderText>
-				<Flex gap={20}>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Surges'
-							value={hero.state.surges}
-							min={0}
-							onChange={setSurges}
-						/>
-						<NumberSpin
-							label='Victories'
-							value={hero.state.victories}
-							min={0}
-							onChange={setVictories}
-						/>
-					</Space>
-					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-						<NumberSpin
-							label='Renown'
-							value={hero.state.renown}
-							format={() => HeroLogic.getRenown(hero).toString()}
-							onChange={setRenown}
-						/>
-						<NumberSpin
-							label='Wealth'
-							value={hero.state.wealth}
-							format={() => HeroLogic.getWealth(hero).toString()}
-							onChange={setWealth}
-						/>
-					</Space>
-				</Flex>
+				<HeaderText>Surges</HeaderText>
+				<NumberSpin
+					value={hero.state.surges}
+					min={0}
+					onChange={setSurges}
+				/>
 				{
 					hero.state.surges > 0 ?
 						<Alert
 							type='info'
 							title={
 								<>
-									<div className='alert-text'>
+									<div>
 										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
 									</div>
-									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
+									{
+										hero.state.surges >= 2 ?
+											<div>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div>
+											: null
+									}
 								</>
 							}
 						/>
 						: null
 				}
+				<HeaderText>Victories</HeaderText>
+				<NumberSpin
+					value={hero.state.victories}
+					min={0}
+					onChange={setVictories}
+				/>
+				<HeaderText>Renown</HeaderText>
+				<NumberSpin
+					value={hero.state.renown}
+					format={() => HeroLogic.getRenown(hero).toString()}
+					onChange={setRenown}
+				/>
+				{
+					hero.features.filter(f => [ FeatureType.Follower, FeatureType.Retainer ].includes(f.type)).length < Math.floor(HeroLogic.getRenown(hero) / 3) ?
+						<Alert
+							type='info'
+							title={
+								<>
+									<div>
+										You can gain a follower (an artisan, a sage, or a retainer).
+									</div>
+									<Flex gap={10} style={{ margin: '5px 0' }}>
+										<Button block={true} onClick={() => addFollower(FollowerType.Artisan)}>Add an artisan</Button>
+										<Button block={true} onClick={() => addFollower(FollowerType.Sage)}>Add a sage</Button>
+										<Button block={true} onClick={() => setShowRetainers(true)}>Add a retainer</Button>
+									</Flex>
+								</>
+							}
+						/>
+						: null
+				}
+				<HeaderText>Wealth</HeaderText>
+				<NumberSpin
+					value={hero.state.wealth}
+					format={() => HeroLogic.getWealth(hero).toString()}
+					onChange={setWealth}
+				/>
+				<Drawer open={showRetainers} onClose={() => setShowRetainers(false)} closeIcon={null} size={500}>
+					<RetainerSelectModal
+						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelect={monster => {
+							setShowRetainers(false);
+
+							const monsterCopy = Utils.copy(monster) as Monster;
+							if (monsterCopy.retainer) {
+								// Retainers match hero level
+								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
+							}
+
+							addRetainer(monsterCopy);
+						}}
+						onClose={() => setShowRetainers(false)}
+					/>
+				</Drawer>
 			</>
 		);
 	};
@@ -392,28 +457,28 @@ export const ResourcesPanel = (props: Props) => {
 				<Alert
 					type='info'
 					title={
-						<Space orientation='vertical'>
-							<div className='alert-text'>
+						<>
+							<div>
 								Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.
 							</div>
 							{
 								hero.state.heroTokens > 0 ?
 									<Flex align='center' justify='space-between' gap={10}>
-										<div className='alert-text'>Spend a hero token to gain two surges.</div>
+										<div>Spend a hero token to gain two surges.</div>
 										<Button onClick={gainSurges}>+2 Surges</Button>
 									</Flex>
 									: null
 							}
 							{
 								hero.state.heroTokens > 0 ?
-									<div className='alert-text'>
+									<div>
 										Spend a hero token when you fail a saving throw to succeed on it instead.
 									</div>
 									: null
 							}
 							{
 								hero.state.heroTokens > 0 ?
-									<div className='alert-text'>
+									<div>
 										Spend a hero token to reroll a test. You must use the new roll.
 									</div>
 									: null
@@ -421,7 +486,7 @@ export const ResourcesPanel = (props: Props) => {
 							{
 								hero.state.heroTokens >= 2 ?
 									<Flex align='center' justify='space-between' gap={10}>
-										<div className='alert-text'>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your recovery value before taking the damage.</div>
+										<div>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your recovery value before taking the damage.</div>
 										<div>
 											<Field
 												innerStyle={{ color: 'rgba(0, 0, 0, 0.88)' }}
@@ -434,7 +499,7 @@ export const ResourcesPanel = (props: Props) => {
 									</Flex>
 									: null
 							}
-						</Space>
+						</>
 					}
 				/>
 			</>

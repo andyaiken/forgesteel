@@ -63,8 +63,8 @@ interface Props {
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
 	showTitle: (title: Title) => void;
-	showMonster: (monster: Monster, summon?: SummoningInfo) => void;
-	showFollower: (follower: Follower) => void;
+	showMonster: (hero: Hero, monster: Monster, summon?: SummoningInfo) => void;
+	showFollower: (hero: Hero, follower: Follower) => void;
 	showFixture: (fixture: Fixture) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showFeature: (feature: Feature, hero: Hero) => void;

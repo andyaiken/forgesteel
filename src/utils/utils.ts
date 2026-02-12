@@ -14,12 +14,20 @@ export class Utils {
 
 	static guid = () => {
 		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-		let id = '';
-		while (id.length < 16) {
-			const n = Random.randomNumber(letters.length);
-			id += letters[n];
+		const sectionCount = 6;
+		const tokenLength = 5;
+
+		const sections = [];
+		while (sections.length < sectionCount) {
+			let id = '';
+			while (id.length < tokenLength) {
+				const n = Random.randomNumber(letters.length);
+				id += letters[n];
+			}
+			sections.push(id);
 		}
-		return id;
+
+		return sections.join('-');
 	};
 
 	// From: https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js

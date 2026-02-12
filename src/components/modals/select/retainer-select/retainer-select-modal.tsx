@@ -66,7 +66,7 @@ export const RetainerSelectModal = (props: Props) => {
 							sortedMonsters.map(m => (
 								<SelectablePanel
 									key={m.id}
-									onSelect={() => props.onSelect(m)}
+									onSelect={() => props.onSelect(Utils.copy(m))}
 								>
 									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>

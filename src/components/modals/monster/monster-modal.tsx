@@ -2,6 +2,7 @@ import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
+import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Modal } from '@/components/modals/modal/modal';
@@ -11,6 +12,7 @@ import { MonsterHealthPanel } from '@/components/panels/health/health-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
+import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
@@ -28,6 +30,7 @@ interface Props {
 	summon?: SummoningInfo;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	onChange?: (monster: Monster) => void;
 	onClose: () => void;
 	updateMonster?: (monster: Monster) => void;
 	updateEncounter?: (encounter: Encounter) => void;
@@ -79,6 +82,16 @@ export const MonsterModal = (props: Props) => {
 	};
 
 	const getContent = () => {
+		const onChange = (name: string, desc: string) => {
+			if (props.onChange) {
+				const copy = Utils.copy(monster);
+				copy.name = name;
+				copy.description = desc;
+				setMonster(copy);
+				props.onChange(copy);
+			}
+		};
+
 		switch (page) {
 			case 'Vitals':
 				return (
@@ -124,14 +137,29 @@ export const MonsterModal = (props: Props) => {
 				);
 			case 'Stat Block':
 				return (
-					<MonsterPanel
-						monster={monster}
-						monsterGroup={props.monsterGroup}
-						summon={props.summon}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						mode={PanelMode.Full}
-					/>
+					<>
+						{
+							props.onChange ?
+								<div style={{ padding: '20px' }}>
+									<Expander title='Customize'>
+										<NameDescEditPanel
+											element={monster}
+											showNameGenerator={true}
+											onChange={onChange}
+										/>
+									</Expander>
+								</div>
+								: null
+						}
+						<MonsterPanel
+							monster={monster}
+							monsterGroup={props.monsterGroup}
+							summon={props.summon}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</>
 				);
 			case 'Malice':
 				return (

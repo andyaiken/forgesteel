@@ -15,6 +15,7 @@ import { FormatLogic } from '@/logic/format-logic';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
@@ -493,14 +494,14 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createRetainer = (data: { id: string, name?: string, description?: string }): FeatureRetainer => {
+	createRetainer = (data: { id: string, name?: string, description?: string, retainer?: Monster }): FeatureRetainer => {
 		return {
 			id: data.id,
 			name: data.name || 'Retainer',
 			description: data.description || '',
 			type: FeatureType.Retainer,
 			data: {
-				selected: null
+				selected: data.retainer || null
 			}
 		};
 	};

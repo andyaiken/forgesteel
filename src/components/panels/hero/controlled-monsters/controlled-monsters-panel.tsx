@@ -88,7 +88,7 @@ export const ControlledMonstersPanel = (props: Props) => {
 			>
 				<Button block={true}>
 					<PlusOutlined />
-					Add a controlled monster
+					Track Retinue Stats
 				</Button>
 			</Popover>
 		);

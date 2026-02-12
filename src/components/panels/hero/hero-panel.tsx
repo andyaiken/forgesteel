@@ -73,8 +73,8 @@ interface Props {
 	onSelectDomain?: (domain: Domain) => void;
 	onSelectKit?: (kit: Kit) => void;
 	onSelectTitle?: (title: Title) => void;
-	onSelectMonster?: (monster: Monster, summon?: SummoningInfo) => void;
-	onSelectFollower?: (follower: Follower) => void;
+	onSelectMonster?: (hero: Hero, monster: Monster, summon?: SummoningInfo) => void;
+	onSelectFollower?: (hero: Hero, follower: Follower) => void;
 	onSelectFixture?: (fixture: Fixture) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectFeature?: (feature: Feature) => void;
@@ -914,13 +914,13 @@ export const HeroPanel = (props: Props) => {
 	const getRetinueSection = () => {
 		const onSelectMonster = (monster: Monster, summon?: SummoningInfo) => {
 			if (props.onSelectMonster) {
-				props.onSelectMonster(monster, summon);
+				props.onSelectMonster(props.hero, monster, summon);
 			}
 		};
 
 		const onSelectFollower = (follower: Follower) => {
 			if (props.onSelectFollower) {
-				props.onSelectFollower(follower);
+				props.onSelectFollower(props.hero, follower);
 			}
 		};
 

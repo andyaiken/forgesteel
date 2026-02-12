@@ -225,12 +225,13 @@ export const HeroCustomizeModal = (props: Props) => {
 								block={true}
 								onClick={() => {
 									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createCompanion({
-										id: Utils.guid()
+									addFeature(FactoryLogic.feature.createFollower({
+										id: Utils.guid(),
+										follower: FactoryLogic.createFollower(FollowerType.Artisan)
 									}));
 								}}
 							>
-								Companion / Mount
+								Artisan
 							</Button>
 							<Button
 								block={true}
@@ -238,11 +239,11 @@ export const HeroCustomizeModal = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createFollower({
 										id: Utils.guid(),
-										follower: FactoryLogic.createFollower(FollowerType.Artisan)
+										follower: FactoryLogic.createFollower(FollowerType.Sage)
 									}));
 								}}
 							>
-								Follower
+								Sage
 							</Button>
 							<Button
 								block={true}
@@ -254,6 +255,17 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Retainer
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createCompanion({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Companion / Mount
 							</Button>
 						</div>
 						<HeaderText level={3}>Miscellaneous</HeaderText>

@@ -281,6 +281,7 @@ export const AncestryEditPanel = (props: Props) => {
 		const cherryPick = (feature: Feature, value: number) => {
 			const copy = Utils.copy(ancestry);
 			const featureCopy = Utils.copy(feature);
+			featureCopy.id = Utils.guid();
 			if (value === 0) {
 				// Signature
 				copy.features.push(featureCopy);

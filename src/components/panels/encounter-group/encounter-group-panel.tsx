@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Flex, Popover, Segmented, Space, Tag, Tooltip } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
@@ -164,7 +164,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								<Flex gap={3}>
 									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
 									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-									{props.hero.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									{props.hero.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 								</Flex>
 							</div>
 							{
@@ -466,7 +466,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 							<div className='conditions-column'>
 								<Flex gap={3}>
 									{getMinionCaptainTag()}
-									{props.slot.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									{props.slot.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 								</Flex>
 							</div>
 							<Button
@@ -549,7 +549,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									<Flex gap={3}>
 										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
 										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-										{monster.state.conditions.map(c => <Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag>)}
+										{monster.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 									</Flex>
 								</div>
 							</div>

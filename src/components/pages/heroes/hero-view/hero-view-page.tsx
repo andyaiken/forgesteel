@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Popover, Space } from 'antd';
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Popover } from 'antd';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { Ancestry } from '@/models/ancestry';
@@ -18,9 +18,9 @@ import { Fixture } from '@/models/fixture';
 import { Follower } from '@/models/follower';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
+import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
-import { HeroStatePage } from '@/enums/hero-state-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
@@ -69,9 +69,7 @@ interface Props {
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
-	showHeroState: (hero: Hero, page: HeroStatePage) => void;
-	showHeroRespite: (hero: Hero) => void;
-	showHeroCustomize: (hero: Hero) => void;
+	showHeroState: (hero: Hero, type: HeroModalType) => void;
 	setNotes: (hero: Hero, value: string) => void;
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
@@ -86,7 +84,6 @@ export const HeroViewPage = (props: Props) => {
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<string>('modern');
 	const [ showExportPopover, setShowExportPopover ] = useState<boolean>(false);
-	const [ showToolsPopover, setShowToolsPopover ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
@@ -206,24 +203,6 @@ export const HeroViewPage = (props: Props) => {
 						mode='block'
 						onConfirm={() => props.deleteHero(hero)}
 					/>
-					<div className='divider' />
-					<Popover
-						trigger='click'
-						open={showToolsPopover}
-						onOpenChange={setShowToolsPopover}
-						content={
-							<Space orientation='vertical' style={{ width: '100%' }}>
-								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroState(hero, HeroStatePage.Resources); }}>Manage Your Hero</Button>
-								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroRespite(hero); }}>Take A Respite</Button>
-								<Divider />
-								<Button block={true} onClick={() => { setShowToolsPopover(false); props.showHeroCustomize(hero); }}>Customize</Button>
-							</Space>
-						}
-					>
-						<Button icon={<ToolOutlined />}>
-							Tools
-						</Button>
-					</Popover>
 					<div className='divider' />
 					<ViewSelector value={view} mode='hero' onChange={setView} />
 				</AppHeader>

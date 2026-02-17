@@ -14,8 +14,7 @@ import { GridSquarePanel } from '@/components/panels/elements/tactical-map-panel
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
-import { HeroStatePage } from '@/enums/hero-state-page';
+import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
 import { MapMiniPanel } from '@/components/panels/elements/tactical-map-panel/map-mini/map-mini';
 import { MapTilePanel } from '@/components/panels/elements/tactical-map-panel/map-tile/map-tile';
 import { MapWallPanel } from '@/components/panels/elements/tactical-map-panel/map-wall/map-wall';
@@ -1590,11 +1589,8 @@ export const TacticalMapPanel = (props: Props) => {
 			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} size={500}>
 				{
 					selectedHero ?
-						<HeroStateModal
+						<HeroVitalsModal
 							hero={selectedHero}
-							sourcebooks={props.sourcebooks || []}
-							options={props.options}
-							startPage={HeroStatePage.Vitals}
 							showEncounterControls={true}
 							onClose={() => setSelectedHero(null)}
 							onChange={hero => {

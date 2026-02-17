@@ -12,7 +12,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
-import './respite-modal.scss';
+import './hero-respite-modal.scss';
 
 interface Props {
 	hero: Hero;
@@ -23,7 +23,7 @@ interface Props {
 	onClose: () => void;
 }
 
-export const RespiteModal = (props: Props) => {
+export const HeroRespiteModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 
 	const respiteFeatures = HeroLogic.getFeatures(hero)
@@ -43,7 +43,7 @@ export const RespiteModal = (props: Props) => {
 		<ErrorBoundary>
 			<Modal
 				content={
-					<div className='respite-modal'>
+					<div className='hero-respite-modal'>
 						<HeaderText>Respite</HeaderText>
 						<div className='ds-text'>
 							Taking a respite has the following effects:

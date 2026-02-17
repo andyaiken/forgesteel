@@ -40,13 +40,18 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroCustomizeModal } from '@/components/modals/hero-customize/hero-customize-modal';
 import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
+import { HeroInventoryModal } from '@/components/modals/hero-inventory/hero-inventory-modal';
 import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '@/logic/hero-logic';
+import { HeroModalType } from '@/enums/hero-modal-type';
+import { HeroProjectsModal } from '@/components/modals/hero-projects/hero-projects-modal';
+import { HeroResourcesModal } from '@/components/modals/hero-resources/hero-resources-modal';
+import { HeroRespiteModal } from '@/components/modals/hero-respite/hero-respite-modal';
 import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
-import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
-import { HeroStatePage } from '@/enums/hero-state-page';
+import { HeroTitlesModal } from '@/components/modals/hero-titles/hero-titles-modal';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { HeroViewPage } from '@/components/pages/heroes/hero-view/hero-view-page';
+import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
@@ -67,7 +72,6 @@ import { Perk } from '@/models/perk';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
 import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
-import { RespiteModal } from '@/components/modals/respite/respite-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { Session } from '@/models/session';
@@ -1591,62 +1595,101 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = (hero: Hero, page: HeroStatePage) => {
+	const onShowHeroState = (hero: Hero, type: HeroModalType) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
 			.filter(sb => hero.settingIDs.includes(sb.id));
 
-		setDrawer(
-			<HeroStateModal
-				hero={hero}
-				sourcebooks={sourcebooks}
-				options={options}
-				startPage={page}
-				showEncounterControls={false}
-				onClose={() => setDrawer(null)}
-				onChange={persistHero}
-			/>
-		);
-	};
+		const takeRespite = () => {
+			const copy = Utils.copy(hero);
+			HeroLogic.takeRespite(copy);
+			persistHero(copy);
 
-	const onShowHeroRespite = (hero: Hero) => {
-		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
-			.filter(sb => hero.settingIDs.includes(sb.id));
+			notify.info({
+				title: 'Respite',
+				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
+				placement: 'top'
+			});
+		};
 
-		setDrawer(
-			<RespiteModal
-				hero={hero}
-				sourcebooks={sourcebooks}
-				options={options}
-				onTakeRespite={() => {
-					const copy = Utils.copy(hero);
-					HeroLogic.takeRespite(copy);
-					persistHero(copy);
-
-					notify.info({
-						title: 'Respite',
-						description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
-						placement: 'top'
-					});
-				}}
-				onChange={hero => persistHero(hero)}
-				onClose={() => setDrawer(null)}
-			/>
-		);
-	};
-
-	const onShowHeroCustomize = (hero: Hero) => {
-		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
-			.filter(sb => hero.settingIDs.includes(sb.id));
-
-		setDrawer(
-			<HeroCustomizeModal
-				hero={hero}
-				sourcebooks={sourcebooks}
-				options={options}
-				onClose={() => setDrawer(null)}
-				onChange={persistHero}
-			/>
-		);
+		switch (type) {
+			case HeroModalType.Customize:
+				setDrawer(
+					<HeroCustomizeModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Inventory:
+				setDrawer(
+					<HeroInventoryModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Projects:
+				setDrawer(
+					<HeroProjectsModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Resources:
+				setDrawer(
+					<HeroResourcesModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Respite:
+				setDrawer(
+					<HeroRespiteModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onTakeRespite={takeRespite}
+						onChange={hero => persistHero(hero)}
+						onClose={() => setDrawer(null)}
+					/>
+				);
+				break;
+			case HeroModalType.Titles:
+				setDrawer(
+					<HeroTitlesModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Vitals:
+				setDrawer(
+					<HeroVitalsModal
+						hero={hero}
+						showEncounterControls={false}
+						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+		}
 	};
 
 	const onShowParty = (folder: string) => {
@@ -1793,8 +1836,6 @@ export const Main = (props: Props) => {
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
-									showHeroRespite={onShowHeroRespite}
-									showHeroCustomize={onShowHeroCustomize}
 									setNotes={setNotes}
 									onAddSquad={addSquad}
 									onRemoveSquad={removeSquad}

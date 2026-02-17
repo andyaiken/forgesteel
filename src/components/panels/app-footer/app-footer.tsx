@@ -1,5 +1,6 @@
 import { Badge, Button, Divider, Drawer, Flex, Space } from 'antd';
 import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
@@ -70,28 +71,27 @@ export const AppFooter = (props: Props) => {
 						</Button>
 						: null
 				}
-				<div className='action-buttons-panel'>
-					<SyncStatus />
-					<Button type='text' onClick={props.showReference}>
-						{ isSmall ? 'Ref' : 'Reference' }
-					</Button>
-					<Divider orientation='vertical' />
-					<Button type='text' onClick={props.showRoll}>
-						Roll
-					</Button>
-					<Divider orientation='vertical' />
-					<Badge dot={props.highlightAbout}>
-						<Button type='text' onClick={props.showSettings}>
-							<SettingOutlined />
-							{ isSmall ? '' : 'Settings' }
-						</Button>
-					</Badge>
-					<Divider orientation='vertical' />
-					<Button type='text' onClick={props.showAbout}>
-						<InfoCircleOutlined />
-						{ isSmall ? '' : 'About' }
-					</Button>
-				</div>
+				<SyncStatus />
+				{
+					isSmall ?
+						<ButtonGroup
+							buttons={[
+								{ label: 'Ref', onClick: props.showReference },
+								{ label: 'Roll', onClick: props.showRoll },
+								{ icon: <Badge dot={props.highlightAbout}><SettingOutlined /></Badge>, tooltip: 'Settings', onClick: props.showSettings },
+								{ icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.showAbout }
+							]}
+						/>
+						:
+						<ButtonGroup
+							buttons={[
+								{ label: 'Reference', onClick: props.showReference },
+								{ label: 'Roll', onClick: props.showRoll },
+								{ label: 'Settings', icon: <Badge dot={props.highlightAbout}><SettingOutlined /></Badge>, onClick: props.showSettings },
+								{ label: 'About', icon: <InfoCircleOutlined />, onClick: props.showAbout }
+							]}
+						/>
+				}
 			</div>
 			<Drawer open={showSidebar} onClose={() => setShowSidebar(false)} closeIcon={null} size={500}>
 				<Modal

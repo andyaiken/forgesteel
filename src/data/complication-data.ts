@@ -96,12 +96,8 @@ export class ComplicationData {
 		name: 'Artifact Bonded',
 		description: 'A powerful artifact has bonded to you. You might be destined to wield the artifact or to destroy it. You’re not powerful enough to use it at the moment, although you might be some day. For now, though, the artifact has no effect beyond getting you in trouble.',
 		features: [
-			FactoryLogic.feature.createItemChoice({
-				id: 'comp-artifactBonded-b1',
-				types: [ ItemType.Artifact ]
-			}),
 			FactoryLogic.feature.create({
-				id: 'comp-artifactBonded-b2',
+				id: 'comp-artifactBonded-b',
 				name: 'Artifact Bonded Benefit',
 				description: 'The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first.'
 			}),

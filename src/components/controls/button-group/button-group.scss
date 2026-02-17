@@ -1,0 +1,20 @@
+.button-group {
+	border-radius: 8px;
+	background-color: white;
+	padding: 2px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+
+	.ant-divider-vertical {
+		margin-inline: 1px;
+	}
+}
+
+html[data-theme="dark"] {
+	.button-group {
+		.ant-btn-text {
+			color: rgba(0, 0, 0, 0.88);
+		}
+	}
+}

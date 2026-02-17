@@ -1,4 +1,4 @@
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, ToolOutlined } from '@ant-design/icons';
 import { Divider, Flex, Segmented, Select, Space, Statistic, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Ability } from '@/models/ability';
@@ -7,6 +7,7 @@ import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -36,7 +37,7 @@ import { HealthGauge } from '@/components/panels/health-gauge/health-gauge';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
-import { HeroStatePage } from '@/enums/hero-state-page';
+import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroToken } from '@/components/panels/token/token';
 import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -79,7 +80,7 @@ interface Props {
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectFeature?: (feature: Feature) => void;
 	onSelectAbility?: (ability: Ability) => void;
-	onShowState?: (page: HeroStatePage) => void;
+	onShowState?: (type: HeroModalType) => void;
 	onShowReference?: (page: RulesPage) => void;
 	onAddSquad?: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad?: (hero: Hero, slotID: string) => void;
@@ -93,12 +94,31 @@ export const HeroPanel = (props: Props) => {
 	const [ tab, setTab ] = useState<string>('Hero');
 
 	const getNameSection = () => {
+		const showState = (type: HeroModalType) => {
+			if (props.onShowState) {
+				props.onShowState(type);
+			}
+		};
+
 		return (
 			<HeaderText
 				style={{ marginTop: '0' }}
 				level={props.options.compactView ? 2 : 1}
 				ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
 				tags={props.hero.folder ? [ props.hero.folder ] : []}
+				extra={
+					<ButtonGroup
+						buttons={[
+							{ label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
+							{ label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
+							{ label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
+							{ label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
+							{ label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
+							{ label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
+							{ icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
+						]}
+					/>
+				}
 			>
 				{props.hero.name || 'Unnamed Hero'}
 			</HeaderText>
@@ -108,13 +128,13 @@ export const HeroPanel = (props: Props) => {
 	const getSidebarSection = () => {
 		const onShowStats = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Resources);
+				props.onShowState(HeroModalType.Resources);
 			}
 		};
 
 		const onShowVitals = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Vitals);
+				props.onShowState(HeroModalType.Vitals);
 			}
 		};
 
@@ -416,13 +436,13 @@ export const HeroPanel = (props: Props) => {
 
 		const onShowResources = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Resources);
+				props.onShowState(HeroModalType.Resources);
 			}
 		};
 
 		const onShowVitals = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Vitals);
+				props.onShowState(HeroModalType.Vitals);
 			}
 		};
 
@@ -560,7 +580,7 @@ export const HeroPanel = (props: Props) => {
 
 		const onSelectProject = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Projects);
+				props.onShowState(HeroModalType.Projects);
 			}
 		};
 
@@ -1067,7 +1087,6 @@ export const HeroPanel = (props: Props) => {
 			case 'Hero':
 				return (
 					<>
-						{getNameSection()}
 						{getStatsSection()}
 						{getChoicesSection()}
 						{isSmall || props.options.singlePage ? getSidebarSection() : null}
@@ -1138,6 +1157,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.ancestry ?
 							<Field
+								compact={true}
 								label='Ancestry'
 								value={props.hero.ancestry.name}
 							/>
@@ -1146,6 +1166,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						background.length > 0 ?
 							<Field
+								compact={true}
 								label='Background'
 								value={background.join(' / ')}
 							/>
@@ -1154,6 +1175,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.class ?
 							<Field
+								compact={true}
 								label='Class'
 								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero) ].join(' ')})`}
 							/>
@@ -1162,6 +1184,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.complication ?
 							<Field
+								compact={true}
 								label='Complication'
 								value={props.hero.complication.name}
 							/>
@@ -1175,6 +1198,7 @@ export const HeroPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
+				{getNameSection()}
 				<div className='hero-main-section'>
 					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>

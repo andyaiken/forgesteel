@@ -28,27 +28,13 @@
 			margin-inline: 1px;
 		}
 	}
-
-	.action-buttons-panel {
-		border-radius: 8px;
-		background-color: white;
-		padding: 2px;
-		display: flex;
-		align-items: center;
-		gap: 2px;
-
-		.ant-divider-vertical {
-			margin-inline: 1px;
-		}
-	}
 }
 
 html[data-theme="dark"] {
 	.app-footer {
 		background-color: rgb(0, 0, 0);
 
-		.navigation-buttons-panel,
-		.action-buttons-panel {
+		.navigation-buttons-panel {
 			.ant-btn-text {
 				color: rgba(0, 0, 0, 0.88);
 			}

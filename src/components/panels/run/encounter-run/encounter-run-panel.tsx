@@ -4,6 +4,7 @@ import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '@/components/panels/encounter-group/encounter-group-panel';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
@@ -19,8 +20,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSelectModal } from '@/components/modals/select/hero-select/hero-select-modal';
-import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
-import { HeroStatePage } from '@/enums/hero-state-page';
+import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -763,10 +763,12 @@ export const EncounterRunPanel = (props: Props) => {
 							onChange={setTab}
 							tabBarExtraContent={
 								tab === 'combatants' ?
-									<Flex gap={5}>
-										<Button type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
-										<Button onClick={() => setAddingMonsters(true)}>Add a monster</Button>
-									</Flex>
+									<ButtonGroup
+										buttons={[
+											{ label: 'Add hero(es)', onClick: () => setAddingHeroes(true) },
+											{ label: 'Add a monster', onClick: () => setAddingMonsters(true) }
+										]}
+									/>
 									: null
 							}
 						/>
@@ -870,11 +872,8 @@ export const EncounterRunPanel = (props: Props) => {
 			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} size={500}>
 				{
 					selectedHero ?
-						<HeroStateModal
+						<HeroVitalsModal
 							hero={selectedHero}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							startPage={HeroStatePage.Vitals}
 							showEncounterControls={true}
 							onClose={() => setSelectedHero(null)}
 							onChange={hero => {

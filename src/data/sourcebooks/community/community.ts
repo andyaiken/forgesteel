@@ -291,21 +291,45 @@ const siabhra: Ancestry = {
 	description: `
 *By Andy Aiken*
 
-The síabhra (SHEE-vra) are fey shapeshifters - sometimes called changelings.
+The síabhra (SHEEV-rah) are fey shapeshifters, sometimes called changelings (though few would use the term kindly).
 
-They typically live alongside humans (or, more rarely, other humanoids) and can remain undetected for decades.`,
+Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can borrow a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel real. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
+
+In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth. It is a shape few ever see.
+
+### Social Parasites
+
+The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging so perfectly that even lifelong friends might never suspect the truth. They see themselves as survivors; others see them as parasites, for a síabhra inhabits the social space of their mark. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
+
+### Identity Without An Anchor
+
+Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are as themselves, when they are stripped of their borrowed faces, as their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs.
+
+Some embrace this fluidity as freedom. Why be bound to one identity when you can be many?
+
+Others fear it.
+
+There are whispered stories among síabhra of those who have Borrowed too often, who have changed shapes so completely and so frequently that they cannot return to their natural form, unsure which shape was original; a hollow creature of masks, without a face beneath.
+
+### Suspicion vs Trust
+
+In lands where síabhra are known to exist, rumors cling to them, and although they are often dismissed as old wives' tales, nobles fear infiltration, guilds fear espionage, clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best.
+
+And yet, trust is not impossible. A síabhra who openly declares their nature can become a valuable ally - a diplomat, an infiltrator, a spy in service of a cause greater than themselves. Some bind themselves to communities that know their secret and accept it. In rare cases, a síabhra will choose one identity and live it faithfully for a lifetime, proving through consistency what others assume they cannot possess: loyalty.
+
+But even then, there is always a lingering question: if they can truly be anyone, who are they when they are with me?`,
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'siabhra-1',
 			name: 'Culture',
-			description: 'Since síabhra have no culture of their own, they are quick to learn the customs of the people they live alongside.',
+			description: 'Síabhra do not possess shared traditions; instead, they are quick to learn the customs of those they live alongside.',
 			selected: [ 'Culture' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({
 			id: 'siabhra-2',
-			name: 'Disguise',
-			description: 'All síabhra have an innate aptitude for changing their appearance.',
-			selected: [ 'Disguise' ]
+			name: 'Disguise, Perform',
+			description: 'All síabhra have an innate aptitude for presenting themselves as a different person.',
+			selected: [ 'Disguise', 'Perform' ]
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
@@ -318,7 +342,7 @@ They typically live alongside humans (or, more rarely, other humanoids) and can 
 				target: 'One creature',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
-You can touch an adjacent creature (your **mark**) and borrow some aspect of their essence. All síabhra can use *Borrow Visage*, but many can borrow other aspects.
+You can use your maneuver to touch an adjacent creature (your **mark**) and mimic some aspect of their essence. All síabhra can use *Borrow Visage*, but many can borrow other aspects.
 
 Touching your mark is automatic if the mark is a willing ally; if the mark is an enemy or is otherwise unwilling, you and the mark must make an opposed Agility test.`),
 					FactoryLogic.createAbilitySectionField({
@@ -337,7 +361,7 @@ Touching your mark is automatic if the mark is a willing ally; if the mark is an
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'solar-2-1',
 						name: 'Borrow Aptitude',
-						description: 'Select one skill the mark is proficient in; you are proficient in that skill for one hour.',
+						description: 'Select one skill the mark is proficient in; you are proficient in that skill for one hour, or until you use *Borrow Aptitude* again.',
 						tag: 'borrow'
 					}),
 					value: 1
@@ -355,7 +379,7 @@ Touching your mark is automatic if the mark is a willing ally; if the mark is an
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'solar-2-3',
 						name: 'Borrow Technique',
-						description: 'Select one of the mark\'s signature abilities; you can use that ability until the end of your next turn (you also gain any necessary weapon proficiencies).',
+						description: 'Select one of the mark\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies).',
 						tag: 'borrow'
 					}),
 					value: 1
@@ -364,7 +388,7 @@ Touching your mark is automatic if the mark is a willing ally; if the mark is an
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'solar-2-4',
 						name: 'Borrow Tongue',
-						description: 'Select a language the mark knows; you know that language for one hour.',
+						description: 'Select a language the mark knows; you know that language for one hour, or until you use *Borrow Tongue* again.',
 						tag: 'borrow'
 					}),
 					value: 1
@@ -5091,9 +5115,7 @@ export const communityPrerelease: Sourcebook = {
 	description: 'Selected community creations (pre-release).',
 	type: SourcebookType.Community,
 	adventures: [],
-	ancestries: [
-		siabhra
-	],
+	ancestries: [],
 	careers: [],
 	classes: [],
 	complications: [],
@@ -5126,6 +5148,7 @@ export const community: Sourcebook = {
 		aranox,
 		gallGuardian,
 		oakling,
+		siabhra,
 		solar
 	],
 	careers: [],

@@ -9,7 +9,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
 import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { Sourcebook } from '@/models/sourcebook';
@@ -132,18 +132,13 @@ export const EditDamageModifier = (props: EditProps) => {
 								value={mod.type}
 								onChange={value => setDamageModifierType(data, n, value)}
 							/>
-							<NumberSpin label='Value' min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Characteristics'
-								mode='multiple'
-								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={mod.valueCharacteristics}
-								onChange={value => setDamageModifierValueCharacteristics(data, n, value)}
+							<ModifierEditor
+								modifier={mod}
+								setValue={value => setDamageModifierValue(data, n, value)}
+								setValuePerLevel={value => setDamageModifierValuePerLevel(data, n, value)}
+								setValuePerEchelon={value => setDamageModifierValuePerEchelon(data, n, value)}
+								setValueCharacteristics={value => setDamageModifierValueCharacteristics(data, n, value)}
 							/>
-							<NumberSpin label='Per Level After 1st' min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
-							<NumberSpin label='Per Echelon' min={0} value={mod.valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(data, n, value)} />
 							<DangerButton mode='block' onConfirm={() => deleteDamageModifier(data, n)} />
 						</Space>
 					</Expander>

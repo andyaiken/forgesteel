@@ -24,6 +24,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { Modal } from '@/components/modals/modal/modal';
+import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
@@ -528,17 +529,12 @@ export const HeroCustomizeModal = (props: Props) => {
 							onChange={setValueField}
 						/>
 						<HeaderText>Value</HeaderText>
-						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={setValueBonus} />
-						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.valuePerLevel} onChange={setValuePerLevel} />
-						<NumberSpin label='Per Echelon' min={0} value={feature.data.valuePerEchelon} onChange={setValuePerEchelon} />
-						<Select
-							style={{ width: '100%' }}
-							placeholder='Characteristics'
-							mode='multiple'
-							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={feature.data.valueCharacteristics}
-							onChange={setValueCharacteristics}
+						<ModifierEditor
+							modifier={feature.data}
+							setValue={setValueBonus}
+							setValuePerLevel={setValuePerLevel}
+							setValuePerEchelon={setValuePerEchelon}
+							setValueCharacteristics={setValueCharacteristics}
 						/>
 					</Space>
 				);
@@ -620,17 +616,12 @@ export const HeroCustomizeModal = (props: Props) => {
 							onChange={setDamageModifierType}
 						/>
 						<HeaderText>Value</HeaderText>
-						<NumberSpin label='Value' min={0} value={feature.data.modifiers[0].value} onChange={setDamageModifierBonus} />
-						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.modifiers[0].valuePerLevel} onChange={setDamageModifierValuePerLevel} />
-						<NumberSpin label='Per Echelon' min={0} value={feature.data.modifiers[0].valuePerEchelon} onChange={setDamageModifierValuePerEchelon} />
-						<Select
-							style={{ width: '100%' }}
-							placeholder='Characteristics'
-							mode='multiple'
-							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={feature.data.modifiers[0].valueCharacteristics}
-							onChange={setDamageModifierCharacteristics}
+						<ModifierEditor
+							modifier={feature.data.modifiers[0]}
+							setValue={setDamageModifierBonus}
+							setValuePerLevel={setDamageModifierValuePerLevel}
+							setValuePerEchelon={setDamageModifierValuePerEchelon}
+							setValueCharacteristics={setDamageModifierCharacteristics}
 						/>
 					</Space>
 				);

@@ -285,6 +285,110 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 	culture: FactoryLogic.createCulture('Oakling', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Yllyric')
 };
 
+const siabhra: Ancestry = {
+	id: 'ancestry-siabhra',
+	name: 'Síabhra',
+	description: `
+*By Andy Aiken*
+
+The síabhra (SHEE-vra) are fey shapeshifters - sometimes called changelings.
+
+They typically live alongside humans (or, more rarely, other humanoids) and can remain undetected for decades.`,
+	features: [
+		FactoryLogic.feature.createSkillChoice({
+			id: 'siabhra-1',
+			name: 'Culture',
+			description: 'Since síabhra have no culture of their own, they are quick to learn the customs of the people they live alongside.',
+			selected: [ 'Culture' ]
+		}),
+		FactoryLogic.feature.createSkillChoice({
+			id: 'siabhra-2',
+			name: 'Disguise',
+			description: 'All síabhra have an innate aptitude for changing their appearance.',
+			selected: [ 'Disguise' ]
+		}),
+		FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: 'siabhra-3',
+				name: 'Borrow',
+				description: '',
+				type: FactoryLogic.type.createManeuver(),
+				keywords: [],
+				distance: [ FactoryLogic.distance.createMelee() ],
+				target: 'One creature',
+				sections: [
+					FactoryLogic.createAbilitySectionText(`
+You can touch an adjacent creature (your **mark**) and borrow some aspect of their essence. All síabhra can use *Borrow Visage*, but many can borrow other aspects.
+
+Touching your mark is automatic if the mark is a willing ally; if the mark is an enemy or is otherwise unwilling, you and the mark must make an opposed Agility test.`),
+					FactoryLogic.createAbilitySectionField({
+						name: 'Borrow Visage',
+						effect: 'You take on the mark\'s appearance. Your clothing does not change, but your size can become 1S, 1M, or 1L to match your mark. You retain this appearance until you dismiss it (which requires no action), you use *Borrow Visage* again to take on a different appearance, or you die.'
+					}),
+					FactoryLogic.createAbilitySectionPackage('borrow')
+				]
+			})
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'solar-2',
+			name: 'Síabhra Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'solar-2-1',
+						name: 'Borrow Aptitude',
+						description: 'Select one skill the mark is proficient in; you are proficient in that skill for one hour.',
+						tag: 'borrow'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'solar-2-2',
+						name: 'Borrow Characteristic',
+						description: 'Select a characteristic; you can use the higher of your value or the mark\'s value for that characteristic until the end of your next turn.',
+						tag: 'borrow'
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'solar-2-3',
+						name: 'Borrow Technique',
+						description: 'Select one of the mark\'s signature abilities; you can use that ability until the end of your next turn (you also gain any necessary weapon proficiencies).',
+						tag: 'borrow'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'solar-2-4',
+						name: 'Borrow Tongue',
+						description: 'Select a language the mark knows; you know that language for one hour.',
+						tag: 'borrow'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'solar-2-5',
+						name: 'Borrow Vitality',
+						description: `
+If the mark has recoveries, they lose a recovery; you regain stamina equal to their recovery value.
+
+If the mark does not have recoveries, roll 1d10; the mark loses that amount of stamina, and you regain that amount of stamina.`,
+						tag: 'borrow'
+					}),
+					value: 2
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 3,
+	culture: undefined
+};
+
 const solar: Ancestry = {
 	id: 'ancestry-solar',
 	name: 'Solar',
@@ -571,11 +675,11 @@ Additionally, you add your level to project rolls to craft projects and whenever
 							}),
 							FactoryLogic.createAbilitySectionSpend({
 								effect: `
-	For each wonder spent, choose one of the following enhancements:
+For each wonder spent, choose one of the following enhancements:
 
-	* A target can spend a Recovery.
-	* A target can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.
-	* The target gains one additional surge.`,
+* A target can spend a Recovery.
+* A target can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.
+* The target gains one additional surge.`,
 								repeatable: true
 							})
 						]
@@ -4987,7 +5091,9 @@ export const communityPrerelease: Sourcebook = {
 	description: 'Selected community creations (pre-release).',
 	type: SourcebookType.Community,
 	adventures: [],
-	ancestries: [],
+	ancestries: [
+		siabhra
+	],
 	careers: [],
 	classes: [],
 	complications: [],

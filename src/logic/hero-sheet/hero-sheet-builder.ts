@@ -63,7 +63,7 @@ export class HeroSheetBuilder {
 		coveredFeatureIds.push(...packageContents.map(p => p.feature.id));
 
 		sheet.currentVictories = hero.state.victories;
-		sheet.wealth = hero.state.wealth;
+		sheet.wealth = HeroLogic.getWealth(hero);
 		sheet.renown = HeroLogic.getRenown(hero);
 		sheet.xp = hero.state.xp;
 

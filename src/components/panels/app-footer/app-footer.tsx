@@ -63,12 +63,11 @@ export const AppFooter = (props: Props) => {
 				}
 				{
 					!props.options.cookieConsent ?
-						<Button
-							block={true}
-							onClick={() => setShowSidebar(true)}
-						>
-							Cookies
-						</Button>
+						<ButtonGroup
+							buttons={[
+								{ label: 'Cookies', onClick: () => setShowSidebar(true) }
+							]}
+						/>
 						: null
 				}
 				<SyncStatus />

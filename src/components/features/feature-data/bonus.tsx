@@ -6,7 +6,7 @@ import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -83,17 +83,12 @@ export const EditBonus = (props: EditProps) => {
 				onChange={setField}
 			/>
 			<HeaderText>Value</HeaderText>
-			<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
-			<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
-			<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
-			<Select
-				style={{ width: '100%' }}
-				placeholder='Characteristics'
-				mode='multiple'
-				options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-				value={data.valueCharacteristics}
-				onChange={setValueCharacteristics}
+			<ModifierEditor
+				modifier={data}
+				setValue={setValue}
+				setValuePerLevel={setValuePerLevel}
+				setValuePerEchelon={setValuePerEchelon}
+				setValueCharacteristics={setValueCharacteristics}
 			/>
 		</Space>
 	);

@@ -1189,9 +1189,9 @@ Until the start of your next turn, the area gains the following effects:
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
-					tier1: '8 + M fire damage',
-					tier2: '13 + M fire damage',
-					tier3: '17 + M fire damage'
+					tier1: '8 + R fire damage',
+					tier2: '13 + R fire damage',
+					tier3: '17 + R fire damage'
 				})),
 				FactoryLogic.createAbilitySectionText('When the target ends their next turn, or if they drop to 0 Stamina before then, each enemy adjacent to them takes fire damage equal to twice your Reason score. Each affected enemy then gains this same effect.')
 			]

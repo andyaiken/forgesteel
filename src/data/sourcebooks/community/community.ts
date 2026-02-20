@@ -291,29 +291,27 @@ const siabhra: Ancestry = {
 	description: `
 *By Andy Aiken*
 
-The síabhra (SHEEV-rah) are fey shapeshifters, sometimes called changelings (though few would use the term kindly).
+The síabhra (SHEEV-rah) are fey shapeshifters, sometimes called changelings. Few would use the term kindly.
 
-Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can borrow a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel real. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
+Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can mimic a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel real. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
 
 In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth. It is a shape few ever see.
 
 ### Social Parasites
 
-The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging so perfectly that even lifelong friends might never suspect the truth. They see themselves as survivors; others see them as parasites, for a síabhra inhabits the social space of their mark. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
+The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging so perfectly that even lifelong friends might never suspect the truth. They see themselves as survivors; others see them as parasites. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
 
 ### Identity Without An Anchor
 
-Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are as themselves, when they are stripped of their borrowed faces, as their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs.
+Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are when stripped of their mirrored faces. Their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs.
 
 Some embrace this fluidity as freedom. Why be bound to one identity when you can be many?
 
-Others fear it.
-
-There are whispered stories among síabhra of those who have Borrowed too often, who have changed shapes so completely and so frequently that they cannot return to their natural form, unsure which shape was original; a hollow creature of masks, without a face beneath.
+Others fear it. There are whispered stories among síabhra of those who have Echoed too often, who have changed shapes so completely and so frequently that they cannot return to their natural form, unsure which shape was original; a hollow creature of masks, without a face beneath.
 
 ### Suspicion vs Trust
 
-In lands where síabhra are known to exist, rumors cling to them, and although they are often dismissed as old wives' tales, nobles fear infiltration, guilds fear espionage, clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best.
+In lands where síabhra are known to exist, rumors cling to them. Although often dismissed as old wives' tales, nobles fear infiltration. Guilds fear espionage. Clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best.
 
 And yet, trust is not impossible. A síabhra who openly declares their nature can become a valuable ally - a diplomat, an infiltrator, a spy in service of a cause greater than themselves. Some bind themselves to communities that know their secret and accept it. In rare cases, a síabhra will choose one identity and live it faithfully for a lifetime, proving through consistency what others assume they cannot possess: loyalty.
 
@@ -334,74 +332,85 @@ But even then, there is always a lingering question: if they can truly be anyone
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'siabhra-3',
-				name: 'Borrow',
-				description: '',
+				name: 'Echo',
+				description: 'Hold a mirror up to society.',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [],
+				keywords: [ AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: 'One creature',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
-You can use your maneuver to touch an adjacent creature (your **mark**) and mimic some aspect of their essence. All síabhra can use *Borrow Visage*, but many can borrow other aspects.
+You can use your maneuver to touch an adjacent creature (your **mark**) and echo some aspect of their essence. All síabhra can use *Echo Visage*, but many can echo other aspects.
 
-Touching your mark is automatic if the mark is a willing ally; if the mark is an enemy or is otherwise unwilling, you and the mark must make an opposed Agility test.`),
+Touching your mark is automatic if the mark is a willing ally; if the mark is an enemy or is otherwise unwilling, you and the mark must make an opposed Agility test.
+
+Identity fragmentation comes with a cost: if you use *Echo* on a different creature before the end of your next turn, you suffer psychic damage equal to your level.`),
 					FactoryLogic.createAbilitySectionField({
-						name: 'Borrow Visage',
-						effect: 'You take on the mark\'s appearance. Your clothing does not change, but your size can become 1S, 1M, or 1L to match your mark. You retain this appearance until you dismiss it (which requires no action), you use *Borrow Visage* again to take on a different appearance, or you die.'
+						name: 'Echo Visage',
+						effect: 'You take on the mark\'s appearance. Your clothing does not change, but your size can become 1S, 1M, or 1L to match your mark. You retain this appearance until you dismiss it (which requires no action), you use *Echo Visage* again to take on a different appearance, or you die.'
 					}),
-					FactoryLogic.createAbilitySectionPackage('borrow')
+					FactoryLogic.createAbilitySectionPackage('echo')
 				]
 			})
 		}),
 		FactoryLogic.feature.createChoice({
-			id: 'solar-2',
-			name: 'Síabhra Traits',
+			id: 'siabhra-2',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'solar-2-1',
-						name: 'Borrow Aptitude',
-						description: 'Select one skill the mark is proficient in; you are proficient in that skill for one hour, or until you use *Borrow Aptitude* again.',
-						tag: 'borrow'
+						id: 'siabhra-2-1',
+						name: 'Echo Aptitude',
+						description: 'Select one skill the mark is proficient in; you are proficient in that skill until you use *Echo Aptitude* again.',
+						tag: 'echo'
 					}),
 					value: 1
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'solar-2-2',
-						name: 'Borrow Characteristic',
+						id: 'siabhra-2-2',
+						name: 'Echo Aspect',
 						description: 'Select a characteristic; you can use the higher of your value or the mark\'s value for that characteristic until the end of your next turn.',
-						tag: 'borrow'
-					}),
-					value: 2
-				},
-				{
-					feature: FactoryLogic.feature.createPackageContent({
-						id: 'solar-2-3',
-						name: 'Borrow Technique',
-						description: 'Select one of the mark\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies).',
-						tag: 'borrow'
+						tag: 'echo'
 					}),
 					value: 1
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'solar-2-4',
-						name: 'Borrow Tongue',
-						description: 'Select a language the mark knows; you know that language for one hour, or until you use *Borrow Tongue* again.',
-						tag: 'borrow'
+						id: 'siabhra-2-3',
+						name: 'Echo Technique',
+						description: 'Select one of the mark\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies). When you use the ability, you take a bane on any power rolls you make as part of it.',
+						tag: 'echo'
 					}),
 					value: 1
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'solar-2-5',
-						name: 'Borrow Vitality',
+						id: 'siabhra-2-4',
+						name: 'Echo Tongue',
+						description: 'Select a language the mark knows; you know that language until you use *Echo Tongue* again.',
+						tag: 'echo'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'siabhra-2-5',
+						name: 'Siphon Affliction',
+						description: 'Select one condition affecting the mark; the condition is removed from the mark and transferred to you, even if you would ordinarily be immune to it.',
+						tag: 'echo'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createPackageContent({
+						id: 'siabhra-2-6',
+						name: 'Siphon Vitality',
 						description: `
 If the mark has recoveries, they lose a recovery; you regain stamina equal to their recovery value.
 
 If the mark does not have recoveries, roll 1d10; the mark loses that amount of stamina, and you regain that amount of stamina.`,
-						tag: 'borrow'
+						tag: 'echo'
 					}),
 					value: 2
 				}

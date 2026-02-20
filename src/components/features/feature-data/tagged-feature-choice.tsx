@@ -35,13 +35,9 @@ export const InfoTaggedFeatureChoice = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} '{props.data.tag}' {props.data.count > 1 ? 'features' : 'feature'}.</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} '{props.data.tag}' {props.data.count > 1 ? 'features' : 'feature'}.</div>
+	);
 };
 
 interface EditProps {

@@ -18,13 +18,9 @@ interface InfoProps {
 }
 
 export const InfoSaveThreshold = (props: InfoProps) => {
-	if (!props.feature.description) {
-		return (
-			<Field label='Value' value={`${props.data.value}+`} />
-		);
-	}
-
-	return null;
+	return (
+		<Field label='Value' value={`${props.data.value}+`} />
+	);
 };
 
 interface EditProps {

@@ -41,13 +41,9 @@ export const InfoPerk = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'perks' : 'perk'}.</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'perks' : 'perk'}.</div>
+	);
 };
 
 interface EditProps {

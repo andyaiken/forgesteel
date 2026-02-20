@@ -43,18 +43,14 @@ export const InfoSummonChoice = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<>
-				<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'monsters' : 'monster'}.</div>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{props.data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
-				</Space>
-			</>
-		);
-	}
-
-	return null;
+	return (
+		<>
+			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'monsters' : 'monster'}.</div>
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{props.data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
+			</Space>
+		</>
+	);
 };
 
 interface EditProps {

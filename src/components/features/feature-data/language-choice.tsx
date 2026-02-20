@@ -29,13 +29,9 @@ export const InfoLanguageChoice = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'languages' : 'language'}.</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'languages' : 'language'}.</div>
+	);
 };
 
 interface EditProps {

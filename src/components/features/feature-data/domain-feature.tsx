@@ -25,17 +25,13 @@ export const InfoDomainFeature = (props: InfoProps) => {
 		return null;
 	}
 
-	if (!props.feature.description) {
-		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				{
-					props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
-				}
-			</Space>
-		);
-	}
-
-	return null;
+	return (
+		<Space orientation='vertical' style={{ width: '100%' }}>
+			{
+				props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
+			}
+		</Space>
+	);
 };
 
 interface EditProps {

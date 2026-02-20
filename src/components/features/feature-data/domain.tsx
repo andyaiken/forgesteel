@@ -39,13 +39,9 @@ export const InfoDomain = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'domains' : 'domain'}.</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'domains' : 'domain'}.</div>
+	);
 };
 
 interface EditProps {

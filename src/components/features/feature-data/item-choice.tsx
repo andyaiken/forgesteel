@@ -36,23 +36,19 @@ export const InfoItemChoice = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		let types = props.data.types.join(', ') || 'item';
-		if (props.data.count > 1) {
-			types = `${props.data.count} ${types}s`;
+	let types = props.data.types.join(', ') || 'item';
+	if (props.data.count > 1) {
+		types = `${props.data.count} ${types}s`;
+	} else {
+		if (Format.startsWithVowel(types)) {
+			types = `an ${types}`;
 		} else {
-			if (Format.startsWithVowel(types)) {
-				types = `an ${types}`;
-			} else {
-				types = `a ${types}`;
-			}
+			types = `a ${types}`;
 		}
-		return (
-			<div className='ds-text'>Choose {types}.</div>
-		);
 	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {types}.</div>
+	);
 };
 
 interface EditProps {

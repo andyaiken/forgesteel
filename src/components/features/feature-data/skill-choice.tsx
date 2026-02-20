@@ -31,23 +31,19 @@ export const InfoSkillChoice = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		const count = props.data.count || 1;
+	const count = props.data.count || 1;
 
-		let str = '';
-		if (props.data.listOptions.length === 5) {
-			str = (count > 1 ? `Choose ${count} skills.` : 'Choose a skill.');
-		} else {
-			const names = (Collections.sort(props.data.options, o => o) || []).concat((Collections.sort(props.data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
-			str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
-		}
-
-		return (
-			<div className='ds-text'>{str}</div>
-		);
+	let str = '';
+	if (props.data.listOptions.length === 5) {
+		str = (count > 1 ? `Choose ${count} skills.` : 'Choose a skill.');
+	} else {
+		const names = (Collections.sort(props.data.options, o => o) || []).concat((Collections.sort(props.data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
+		str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
 	}
 
-	return null;
+	return (
+		<div className='ds-text'>{str}</div>
+	);
 };
 
 interface EditProps {

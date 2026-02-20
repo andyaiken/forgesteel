@@ -65,15 +65,11 @@ export const InfoClassAbility = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>
-				Choose {props.data.count > 1 ? props.data.count : 'a'} {(props.data.cost === 'signature') || (props.data.cost === 0) ? 'signature' : `${props.data.cost}pt`} {props.data.count > 1 ? 'abilities' : 'ability'}{props.data.classID ? ` from the ${heroClass.name}` : ''}.
-			</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>
+			Choose {props.data.count > 1 ? props.data.count : 'a'} {(props.data.cost === 'signature') || (props.data.cost === 0) ? 'signature' : `${props.data.cost}pt`} {props.data.count > 1 ? 'abilities' : 'ability'}{props.data.classID ? ` from the ${heroClass.name}` : ''}.
+		</div>
+	);
 };
 
 interface EditProps {

@@ -25,15 +25,11 @@ interface InfoProps {
 }
 
 export const InfoDamageModifier = (props: InfoProps) => {
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>
-				{props.data.modifiers.map(FormatLogic.getDamageModifier).join(', ')}
-			</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>
+			{props.data.modifiers.map(FormatLogic.getDamageModifier).join(', ')}
+		</div>
+	);
 };
 
 interface EditProps {

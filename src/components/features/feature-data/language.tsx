@@ -18,13 +18,9 @@ interface InfoProps {
 }
 
 export const InfoLanguage = (props: InfoProps) => {
-	if (!props.feature.description) {
-		return (
-			<Field label='Language' value={props.data.language} />
-		);
-	}
-
-	return null;
+	return (
+		<Field label='Language' value={props.data.language} />
+	);
 };
 
 interface EditProps {

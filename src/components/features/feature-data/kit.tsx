@@ -39,13 +39,9 @@ export const InfoKit = (props: InfoProps) => {
 		);
 	}
 
-	if (!props.feature.description) {
-		return (
-			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.types.join(', ')} {props.data.count > 1 ? 'kits' : 'kit'}.</div>
-		);
-	}
-
-	return null;
+	return (
+		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.types.join(', ')} {props.data.count > 1 ? 'kits' : 'kit'}.</div>
+	);
 };
 
 interface EditProps {

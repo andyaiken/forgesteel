@@ -291,7 +291,7 @@ const siabhra: Ancestry = {
 	description: `
 *By Andy Aiken*
 
-The síabhra (SHEEV-rah) are fey shapeshifters, sometimes called changelings or hollowfolk. Few would use these terms kindly.
+The síabhra (*SHEEV-rah*) are fey shapeshifters, sometimes called changelings or hollowfolk. Few would use these terms kindly.
 
 Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can mimic a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel real. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
 
@@ -326,14 +326,14 @@ In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a na
 				target: 'One creature',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
-You can use your maneuver to touch an adjacent creature (your **mark**) and echo some aspect of their essence. All síabhra can use *Echo Visage*, but many can echo other aspects.
+You can use your maneuver to touch an adjacent creature (your **prime**) and echo some aspect of their essence. All síabhra can use *Echo Visage*, but many can echo other aspects.
 
-Touching your mark is automatic if the mark is a willing ally; if the mark is an enemy or is otherwise unwilling, you and the mark must make an opposed Agility test.
+Touching your prime is automatic if they are a willing ally; if the prime is an enemy or is otherwise unwilling, you and the prime must make an opposed Agility test.
 
 Identity fragmentation comes with a cost: if you use *Echo* on a different creature before the end of your next turn, you suffer psychic damage equal to your level.`),
 					FactoryLogic.createAbilitySectionField({
 						name: 'Echo Visage',
-						effect: 'You take on the physical appearance of the mark. Your clothing doesn\'t change, but your size can become 1S, 1M, or 1L to match your mark. This is a purely cosmetic change; you don\'t gain any abilities that the mark has due to their physiology. You retain this appearance until you dismiss it (which requires no action), you use *Echo Visage* again to take on a different appearance, or you die.'
+						effect: 'You take on the physical appearance of your prime. Your clothing doesn\'t change, but your size can become 1S, 1M, or 1L to match your prime. This is a purely cosmetic change; you don\'t gain any abilities that your prime has due to their physiology. You retain this appearance until you dismiss it (which requires no action), you use *Echo Visage* again to take on a different appearance, or you die.'
 					}),
 					FactoryLogic.createAbilitySectionPackage('echo')
 				]
@@ -347,7 +347,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-2-1',
 						name: 'Echo Aptitude',
-						description: 'Select one skill the mark is proficient in; you are proficient in that skill until you use *Echo Aptitude* again.',
+						description: 'Select one skill your prime is proficient in; you are proficient in that skill until you use *Echo Aptitude* again.',
 						tag: 'echo'
 					}),
 					value: 1
@@ -356,7 +356,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-2-2',
 						name: 'Echo Aspect',
-						description: 'Select a characteristic; you can use the higher of your value or the mark\'s value for tests using that characteristic until the end of your next turn.',
+						description: 'Select a characteristic; you can use the higher of your value or your prime\'s value for tests using that characteristic until the end of your next turn.',
 						tag: 'echo'
 					}),
 					value: 1
@@ -365,16 +365,16 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-2-3',
 						name: 'Echo Technique',
-						description: 'Select one of the mark\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies). When you use the echoed ability, you take a bane on any power rolls you make as part of it.',
+						description: 'Select one of your prime\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies). When you use the echoed ability, you take a bane on any power rolls you make as part of it.',
 						tag: 'echo'
 					}),
-					value: 1
+					value: 2
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-2-4',
 						name: 'Echo Tongue',
-						description: 'Select a language the mark knows; you know that language until you use *Echo Tongue* again.',
+						description: 'Select a language your prime knows; you know that language until you use *Echo Tongue* again.',
 						tag: 'echo'
 					}),
 					value: 1
@@ -383,7 +383,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-2-5',
 						name: 'Siphon Affliction',
-						description: 'Select one condition affecting the mark; the condition is removed from the mark and transferred to you, even if you would ordinarily be immune to it.',
+						description: 'Select one condition affecting your prime; the condition is removed from your prime and transferred to you, even if you would ordinarily be immune to it.',
 						tag: 'echo'
 					}),
 					value: 1
@@ -393,9 +393,9 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 						id: 'siabhra-2-6',
 						name: 'Siphon Vitality',
 						description: `
-If the mark has recoveries, they lose a recovery; you regain stamina equal to their recovery value.
+If your prime has recoveries, they lose a recovery; you regain stamina equal to their recovery value.
 
-If the mark does not have recoveries, roll 1d10; the mark loses that amount of stamina, and you regain that amount of stamina.`,
+If your prime does not have recoveries, roll 1d10 and add your level; your prime loses that amount of stamina, and you regain that amount of stamina.`,
 						tag: 'echo'
 					}),
 					value: 2

@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Info } from '@/components/controls/info/info';
 import { Options } from '@/models/options';
 import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
@@ -58,7 +59,12 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='encounter-difficulty-panel'>
 				{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
-				<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}.</div>
+				<div className='ds-text'>
+					Difficulty for {OptionsLogic.getPartyDescription(props.options)}.
+					<Info>
+						<p>You can change the party size and level in Settings.</p>
+					</Info>
+				</div>
 				<div className='encounter-slider'>
 					<Slider
 						range={true}

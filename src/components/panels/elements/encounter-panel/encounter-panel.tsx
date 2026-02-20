@@ -1,5 +1,6 @@
-import { Button, Segmented, Space } from 'antd';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
+import { Segmented, Space } from 'antd';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
@@ -13,7 +14,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
@@ -316,7 +316,11 @@ export const EncounterPanel = (props: Props) => {
 					tags={tags}
 					extra={
 						props.showTools ?
-							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
+							<ButtonGroup
+								buttons={[
+									{ label: 'Tools', onClick: props.showTools }
+								]}
+							/>
 							: null
 					}
 				>

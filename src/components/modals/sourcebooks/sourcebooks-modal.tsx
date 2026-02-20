@@ -1,10 +1,11 @@
-import { Button, Flex, Popover, Segmented, Space, Upload } from 'antd';
-import { DownloadOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Flex, Segmented, Space, Upload } from 'antd';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Info } from '@/components/controls/info/info';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -84,13 +85,9 @@ export const SourcebooksModal = (props: Props) => {
 						<HeaderText
 							level={1}
 							extra={
-								<Popover
-									content={
-										<Markdown text={'If you\'d like your company\'s content to be featured here, [get in touch](mailto:andy.aiken@live.co.uk).'} />
-									}
-								>
-									<Button type='text' icon={<InfoCircleOutlined />} />
-								</Popover>
+								<Info>
+									<Markdown text={'If you\'d like your company\'s content to be featured here, [get in touch](mailto:andy.aiken@live.co.uk).'} />
+								</Info>
 							}
 						>
 							Third-Party Sourcebooks
@@ -125,13 +122,9 @@ export const SourcebooksModal = (props: Props) => {
 						<HeaderText
 							level={1}
 							extra={
-								<Popover
-									content={
-										<Markdown text={'If you\'d like your creations to be featured here, just fill in [this form](https://forms.cloud.microsoft/r/mmxqfnFzx4).'} />
-									}
-								>
-									<Button type='text' icon={<InfoCircleOutlined />} />
-								</Popover>
+								<Info>
+									<Markdown text={'If you\'d like your creations to be featured here, just fill in [this form](https://forms.cloud.microsoft/r/mmxqfnFzx4).'} />
+								</Info>
 							}
 						>
 							Community Sourcebooks

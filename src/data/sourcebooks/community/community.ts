@@ -340,12 +340,12 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 			})
 		}),
 		FactoryLogic.feature.createChoice({
-			id: 'siabhra-2',
+			id: 'siabhra-4',
 			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-1',
+						id: 'siabhra-4-1',
 						name: 'Echo Aptitude',
 						description: 'Select one skill your prime is proficient in; you are proficient in that skill until you use *Echo Aptitude* again.',
 						tag: 'echo'
@@ -354,7 +354,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-2',
+						id: 'siabhra-4-2',
 						name: 'Echo Aspect',
 						description: 'Select a characteristic; you can use the higher of your value or your prime\'s value for tests using that characteristic until the end of your next turn.',
 						tag: 'echo'
@@ -363,7 +363,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-3',
+						id: 'siabhra-4-3',
 						name: 'Echo Technique',
 						description: 'Select one of your prime\'s signature abilities; you can use that ability once before the end of your next turn (you also gain any necessary weapon proficiencies). When you use the echoed ability, you take a bane on any power rolls you make as part of it.',
 						tag: 'echo'
@@ -372,7 +372,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-4',
+						id: 'siabhra-4-4',
 						name: 'Echo Tongue',
 						description: 'Select a language your prime knows; you know that language until you use *Echo Tongue* again.',
 						tag: 'echo'
@@ -381,7 +381,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-5',
+						id: 'siabhra-4-5',
 						name: 'Siphon Affliction',
 						description: 'Select one condition affecting your prime; the condition is removed from your prime and transferred to you, even if you would ordinarily be immune to it.',
 						tag: 'echo'
@@ -390,7 +390,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 				},
 				{
 					feature: FactoryLogic.feature.createPackageContent({
-						id: 'siabhra-2-6',
+						id: 'siabhra-4-6',
 						name: 'Siphon Vitality',
 						description: `
 If your prime has recoveries, they lose a recovery; you regain stamina equal to their recovery value.

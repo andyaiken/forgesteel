@@ -2,6 +2,7 @@ import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDa
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
+import { AncestryLogic } from './ancestry-logic';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -949,10 +950,7 @@ export class FeatureLogic {
 				if (feature.data.count === 'ancestry') {
 					availableOptions = sourcebooks
 						.flatMap(sb => sb.ancestries)
-						.flatMap(a => a.features)
-						.filter(f => f.type === FeatureType.Choice)
-						.filter(f => f.data.count === 'ancestry')
-						.flatMap(f => f.data.options);
+						.flatMap(a => AncestryLogic.getPurchasedFeatures(a));
 				}
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))

@@ -315,21 +315,9 @@ In lands where síabhra are known to exist, rumors cling to them. Though often d
 
 In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a shockingly narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth; limbs that are long and ungainly. It is a shape few ever see.`,
 	features: [
-		FactoryLogic.feature.createSkillChoice({
-			id: 'siabhra-1',
-			name: 'Social Parasite',
-			description: 'Síabhra are adept at learning the customs of those they live alongside and presenting themselves as a different person.',
-			options: [ 'Culture', 'Disguise', 'Perform', 'Read Person', 'Society' ],
-			count: 2
-		}),
-		FactoryLogic.feature.create({
-			id: 'siabhra-2',
-			name: 'Lightweight',
-			description: 'Due to your unnatural physiology, your body is unnaturally light. Whenever another creature attempts to force move you, you treat your size as one size smaller than it is.'
-		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'siabhra-3',
+				id: 'siabhra-1',
 				name: 'Echo',
 				description: '"To hold, as ’twere, the mirror up to nature."',
 				type: FactoryLogic.type.createManeuver(),
@@ -350,6 +338,18 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					FactoryLogic.createAbilitySectionPackage('echo')
 				]
 			})
+		}),
+		FactoryLogic.feature.create({
+			id: 'siabhra-2',
+			name: 'Lightweight',
+			description: 'Due to your unnatural physiology, your body is unnaturally light. Whenever another creature attempts to force move you, you treat your size as one size smaller than it is.'
+		}),
+		FactoryLogic.feature.createSkillChoice({
+			id: 'siabhra-3',
+			name: 'Social Parasite',
+			description: 'Síabhra are adept at learning the customs of those they live alongside and presenting themselves as a different person.',
+			options: [ 'Culture', 'Disguise', 'Perform', 'Read Person', 'Society' ],
+			count: 2
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'siabhra-4',

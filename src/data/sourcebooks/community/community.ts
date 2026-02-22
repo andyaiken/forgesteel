@@ -291,17 +291,29 @@ const siabhra: Ancestry = {
 	description: `
 *By Andy Aiken*
 
+> "You call it *theft*, but a mirror does not steal as it reflects.
+>
+> You think your face belongs to you, simply because you were born wearing it. You think your voice is yours, because you have heard it the longest. To me, they are simply aspects of an endlessly captivating pattern. And patterns... patterns can be copied.
+>
+> When I touch you, I do not steal; I *observe*. I note the set of your shoulders, the cadence of your breath, the shape your thoughts make when they settle. You are my prime, my original; I become your reflection.
+>
+> When I wear your face, I learn how the world receives you. When I take your strength into myself, I learn what you are made of.
+>
+> You fear becoming replaceable, but you have not understood. You have *always* been repeatable. That is what makes you so delightfully *fascinating*."
+
+## On Síabhra
+
 The síabhra (*SHEEV-rah*) are fey shapeshifters, sometimes called changelings or hollowfolk. Few would use these terms kindly.
 
-Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can mimic a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel real. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
+Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can mimic a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel *real*. Not perfectly, of course; always there is some subtle giveaway, a tell that the síabhra is somehow... wrong. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
 
-The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging so perfectly that even lifelong friends might never suspect the truth. They see themselves as survivors; others see them as parasites. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
+The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging. They see themselves as survivors; others see them as parasites. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
 
-Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are when stripped of their mirrored faces. Their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs. Some embrace this fluidity as freedom. Why be bound to one identity when you can have many? Others fear it. There are whispered stories among síabhra of those who have Echoed too often, who have changed shapes so frequently and so completely that they cannot return to their original form; a hollow creature of masks, without a face beneath.
+Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are when stripped of their mirrored faces. Their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs. Some embrace this fluidity as freedom - why be bound to one identity when you can have many? Others fear it. There are whispered stories among síabhra of those who have Echoed too often, who have changed shapes so frequently and so completely that they cannot return to their original form; a hollow creature of masks, without a face beneath.
 
-In lands where síabhra are known to exist, rumors cling to them. Although often dismissed as old wives' tales, nobles fear infiltration. Guilds fear espionage. Clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best. And yet, trust is not impossible. A síabhra who openly declares their nature can become a valuable ally - a diplomat, an infiltrator, a spy in service of a cause greater than themselves. Some bind themselves to communities that know their secret and accept it. In rare cases, a síabhra will choose one identity and live it faithfully for a lifetime, proving through consistency what others assume they cannot possess: loyalty.
+In lands where síabhra are known to exist, rumors cling to them. Though often dismissed as old wives' tales, nobles fear infiltration. Guilds fear espionage. Clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best. And yet, trust is not impossible. A síabhra who openly declares their nature can become a valuable ally - a diplomat, an infiltrator, a spy in service of a cause greater than themselves. Some bind themselves to communities that know their secret and accept it. In rare cases, a síabhra will choose one identity and live it faithfully for a lifetime, proving through consistency what others assume they cannot possess: loyalty.
 
-In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth; limbs that are long and ungainly. It is a shape few ever see.`,
+In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a shockingly narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth; limbs that are long and ungainly. It is a shape few ever see.`,
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'siabhra-1',
@@ -319,7 +331,7 @@ In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a na
 			ability: FactoryLogic.createAbility({
 				id: 'siabhra-3',
 				name: 'Echo',
-				description: 'Hold a mirror up to nature.',
+				description: '"To hold, as ’twere, the mirror up to nature."',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.createMelee() ],
@@ -328,9 +340,9 @@ In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a na
 					FactoryLogic.createAbilitySectionText(`
 You can use your maneuver to touch an adjacent creature (your **prime**) and echo some aspect of their essence. All síabhra can use *Echo Visage*, but many can echo other aspects.
 
-Touching your prime is automatic if they are a willing ally; if the prime is an enemy or is otherwise unwilling, you and the prime must make an opposed Agility test.
+Touching your prime is automatic if they are a willing ally; if your prime is an enemy or is otherwise unwilling, you and your prime must make an opposed Agility test.
 
-Identity fragmentation comes with a cost: if you use *Echo* on a different creature before the end of your next turn, you suffer psychic damage equal to your level.`),
+Identity fragmentation comes with a cost: if you use *Echo* on a different creature before the end of your next turn, you take psychic damage equal to your level.`),
 					FactoryLogic.createAbilitySectionField({
 						name: 'Echo Visage',
 						effect: 'You take on the physical appearance of your prime. Your clothing doesn\'t change, but your size can become 1S, 1M, or 1L to match your prime. This is a purely cosmetic change; you don\'t gain any abilities that your prime has due to their physiology. You retain this appearance until you dismiss it (which requires no action), you use *Echo Visage* again to take on a different appearance, or you die.'
@@ -383,7 +395,7 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					feature: FactoryLogic.feature.createPackageContent({
 						id: 'siabhra-4-5',
 						name: 'Siphon Affliction',
-						description: 'Select one condition affecting your prime; the condition is removed from your prime and transferred to you, even if you would ordinarily be immune to it.',
+						description: 'Select one condition affecting your prime. That condition is removed from your prime and transferred to you, even if you would ordinarily be immune to it.',
 						tag: 'echo'
 					}),
 					value: 1

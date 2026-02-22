@@ -11,7 +11,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Fixture } from '@/models/fixture';
 import { Follower } from '@/models/follower';
 import { Format } from '@/utils/format';
-import { FormatLogic } from '@/logic/format-logic';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
@@ -237,7 +236,7 @@ export class FactoryFeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Damage Modifier',
-			description: data.description || data.modifiers.map(FormatLogic.getDamageModifier).join(', '),
+			description: data.description || '',
 			type: FeatureType.DamageModifier,
 			data: {
 				modifiers: data.modifiers

@@ -85,10 +85,20 @@ export const devil: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'devil-feature-2-7',
 						name: 'Wings',
-						description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While using your wings to fly at 3rd level or lower, you have damage weakness 5.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'devil-feature-2-7a',
+								name: 'Wings',
+								description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While using your wings to fly at 3rd level or lower, you have damage weakness 5.'
+							}),
+							FactoryLogic.feature.createMovementMode({
+								id: 'devil-feature-2-7b',
+								mode: 'Fly'
+							})
+						]
 					}),
 					value: 2
 				}

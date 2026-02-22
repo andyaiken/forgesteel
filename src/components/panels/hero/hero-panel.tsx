@@ -1,5 +1,5 @@
 import { ArrowDownOutlined, ArrowUpOutlined, ToolOutlined } from '@ant-design/icons';
-import { Divider, Flex, Segmented, Select, Space, Statistic, Tag } from 'antd';
+import { Button, Divider, Flex, Popover, Segmented, Select, Space, Statistic, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
@@ -102,22 +102,40 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<HeaderText
-				style={{ marginTop: '0' }}
+				style={{ margin: '0 5px 10px 5px' }}
 				level={props.options.compactView ? 2 : 1}
 				ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
 				tags={props.hero.folder ? [ props.hero.folder ] : []}
 				extra={
-					<ButtonGroup
-						buttons={[
-							{ label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
-							{ label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
-							{ label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
-							{ label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
-							{ label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
-							{ label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
-							{ icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
-						]}
-					/>
+					isSmall ?
+						<Popover
+							content={
+								<Space orientation='vertical'>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Resources)}>Resources</Button>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Vitals)}>Vitals</Button>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Inventory)}>Inventory</Button>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Projects)}>Projects</Button>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Titles)}>Titles</Button>
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Respite)}>Respite</Button>
+									<Divider />
+									<Button block={true} type='text' onClick={() => showState(HeroModalType.Customize)}>Customize</Button>
+								</Space>
+							}
+						>
+							<Button>Tools</Button>
+						</Popover>
+						:
+						<ButtonGroup
+							buttons={[
+								{ label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
+								{ label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
+								{ label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
+								{ label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
+								{ label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
+								{ label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
+								{ icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
+							]}
+						/>
 				}
 			>
 				{props.hero.name || 'Unnamed Hero'}

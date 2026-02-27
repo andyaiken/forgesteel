@@ -291,29 +291,11 @@ const siabhra: Ancestry = {
 	description: `
 *By Andy Aiken*
 
-> "You call it *theft*, but a mirror does not steal as it reflects.
->
-> You think your face belongs to you, simply because you were born wearing it. You think your voice is yours, because you have heard it the longest. To me, they are simply aspects of an endlessly captivating pattern. And patterns... patterns can be copied.
->
-> When I touch you, I do not steal; I *observe*. I note the set of your shoulders, the cadence of your breath, the shape your thoughts make when they settle. You are my prime, my original; I become your reflection.
->
-> When I wear your face, I learn how the world receives you. When I take your strength into myself, I learn what you are made of.
->
-> You fear becoming replaceable, but you have not understood. You have *always* been repeatable. That is what makes you so delightfully *fascinating*."
-
-## On Síabhra
-
 The síabhra (*SHEEV-rah*) are fey shapeshifters, sometimes called changelings or hollowfolk. Few would use these terms kindly.
 
 Síabhra live alongside humans (and, rarely, other humanoids), often undetected for decades. With a touch, a síabhra can mimic a face, a voice, a posture, even the subtle rhythms of speech and gesture that make a person feel *real*. Not perfectly, of course; always there is some subtle giveaway, a tell that the síabhra is somehow... wrong. Some síabhra maintain a single identity for years, carefully crafting lives from stolen mannerisms; others drift through crowded cities like ghosts in borrowed skin, changing their appearance every time they turn a corner.
 
-The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging. They see themselves as survivors; others see them as parasites. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.
-
-Living so long in assumed shapes can leave a scar. Some síabhra struggle to articulate who they are when stripped of their mirrored faces. Their sense of self is fluid, adaptive, contextual. A síabhra who has lived as a soldier for twenty years may think like a soldier; one who has worn the face of a scholar may begin to dream in footnotes and theories that were never truly theirs. Some embrace this fluidity as freedom - why be bound to one identity when you can have many? Others fear it. There are whispered stories among síabhra of those who have Echoed too often, who have changed shapes so frequently and so completely that they cannot return to their original form; a hollow creature of masks, without a face beneath.
-
-In lands where síabhra are known to exist, rumors cling to them. Though often dismissed as old wives' tales, nobles fear infiltration. Guilds fear espionage. Clergy fear blasphemous imitation of the faithful. Anyone with something to lose fears a síabhra. In some realms, merely being revealed as a síabhra is enough to invite exile, at best. And yet, trust is not impossible. A síabhra who openly declares their nature can become a valuable ally - a diplomat, an infiltrator, a spy in service of a cause greater than themselves. Some bind themselves to communities that know their secret and accept it. In rare cases, a síabhra will choose one identity and live it faithfully for a lifetime, proving through consistency what others assume they cannot possess: loyalty.
-
-In their natural form, síabhra are unsettling: wrinkled, pale blue skin on a shockingly narrow frame; stringy white hair that hangs like a spider's web; small purple eyes above an overwide mouth crowded with fine, pale teeth; limbs that are long and ungainly. It is a shape few ever see.`,
+The síabhra have no homeland, no ancestral cities, no songs that are truly their own. They are a people without a people. Instead, they embed themselves into the cultures of others, adopting customs and mimicking belonging. They see themselves as survivors; others see them as parasites. They learn what is loved, what is feared, what is admired. They slip into roles that already exist and wear them convincingly. They are rarely leaders, rarely revolutionaries. They thrive in the spaces between - in borrowed offices, borrowed homes, borrowed affections.`,
 	features: [
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({

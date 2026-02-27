@@ -1,4 +1,4 @@
-import { ArrowDownOutlined, ArrowUpOutlined, ToolOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, EllipsisOutlined, ToolOutlined } from '@ant-design/icons';
 import { Button, Divider, Flex, Popover, Segmented, Select, Space, Statistic, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Ability } from '@/models/ability';
@@ -40,6 +40,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroToken } from '@/components/panels/token/token';
 import { Kit } from '@/models/kit';
+import { LabelControl } from '@/components/controls/label-control/label-control';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
@@ -47,6 +48,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { ProjectLogic } from '@/logic/project-logic';
 import { RulesPage } from '@/enums/rules-page';
+import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Skill } from '@/models/skill';
@@ -56,6 +58,7 @@ import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
@@ -92,6 +95,8 @@ interface Props {
 export const HeroPanel = (props: Props) => {
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
+	const [ featureSearch, setFeatureSearch ] = useState<string>('');
+	const [ featureSort, setFeatureSort ] = useState<string>('az');
 
 	const getNameSection = () => {
 		const showState = (type: HeroModalType) => {
@@ -778,18 +783,61 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
-		const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
-
-		const features = HeroLogic.getFeatures(props.hero)
-			.filter(f => featureTypes.includes(f.feature.type));
-
 		const showFeature = (feature: Feature) => {
 			if (props.onSelectFeature) {
 				props.onSelectFeature(feature);
 			}
 		};
 
-		const getRow = (data: { feature: Feature, source: string }) => {
+		const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
+
+		const features = HeroLogic.getFeatures(props.hero)
+			.filter(f => featureTypes.includes(f.feature.type))
+			.filter(f => Utils.textMatches([ f.feature.name, f.feature.description ], featureSearch))
+			.sort((a, b) => {
+				switch (featureSort) {
+					case 'az':
+						return a.feature.name.localeCompare(b.feature.name);
+					case 'lvl':
+						return (a.level || 0) - (b.level || 0) || a.feature.name.localeCompare(b.feature.name);
+					case 'src':
+						return a.source.localeCompare(b.source) || a.feature.name.localeCompare(b.feature.name);
+				}
+
+				return 0;
+			});
+
+		const getBucketName = (feature: { feature: Feature, source: string, level: number | undefined }) => {
+			switch (featureSort) {
+				case 'az':
+					return 'Features';
+				case 'lvl':
+					return `Level ${feature.level || 1}`;
+				case 'src':
+					return feature.source || 'Features';
+			}
+
+			return '';
+		};
+
+		let buckets: { name: string, features: { feature: Feature, source: string, level: number | undefined }[] }[] = [];
+		features.forEach(f => {
+			const bucketName = getBucketName(f);
+			let bucketIndex = buckets.findIndex(b => b.name === bucketName);
+			if (bucketIndex === -1) {
+				bucketIndex = buckets.length;
+				buckets.push({ name: bucketName, features: [] });
+			}
+			buckets[bucketIndex].features.push(f);
+		});
+		if (featureSort !== 'lvl') {
+			buckets = Collections.sort(buckets, b => b.name);
+		}
+		if (buckets.length === 0) {
+			buckets.push({ name: 'Features', features: [] });
+		}
+
+		const getRow = (data: { feature: Feature, source: string, level: number | undefined }) => {
 			return (
 				<div key={data.feature.id} className='selectable-row clickable' onClick={() => showFeature(data.feature)}>
 					<div><b>{data.feature.name}</b></div>
@@ -798,69 +846,73 @@ export const HeroPanel = (props: Props) => {
 			);
 		};
 
-		const itemNames = props.hero.state.inventory.map(i => i.name);
-		const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || !itemNames.includes(f.source));
-		const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && itemNames.includes(f.source));
-
 		const useRows = props.options.compactView;
+
+		const controls = (
+			<Space>
+				<SearchBox searchTerm={featureSearch} setSearchTerm={setFeatureSearch} />
+				<Popover
+					trigger='click'
+					content={
+						<LabelControl
+							label='Organize'
+							control={
+								<Select
+									options={[
+										{ label: 'Alphabetical', value: 'az' },
+										{ label: 'By Level', value: 'lvl' },
+										{ label: 'By Source', value: 'src' }
+									]}
+									optionRender={o => <div className='ds-text'>{o.label}</div>}
+									value={featureSort}
+									onChange={setFeatureSort}
+								/>
+							}
+						/>
+					}
+				>
+					<Button icon={<EllipsisOutlined />} />
+				</Popover>
+			</Space>
+		);
 
 		return (
 			<ErrorBoundary>
 				<div className='features-section'>
 					{
-						mainFeatures.length > 0 ?
-							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
-								{
-									mainFeatures.map(f =>
-										useRows ?
-											getRow(f)
-											:
-											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
-												<FeaturePanel
-													feature={f.feature}
-													source={props.options.showSources ? f.source : undefined}
-													options={props.options}
-													hero={props.hero}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-									)
-								}
+						buckets.map((bucket, n) =>
+							<div key={n}>
+								<HeaderText extra={n === 0 ? controls : null}>
+									{bucket.name}
+								</HeaderText>
+								<Space orientation='vertical' style={{ width: '100%' }}>
+									{
+										bucket.features.map(f =>
+											useRows ?
+												getRow(f)
+												:
+												<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
+													<FeaturePanel
+														feature={f.feature}
+														source={props.options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
+														options={props.options}
+														hero={props.hero}
+														sourcebooks={props.sourcebooks}
+														mode={PanelMode.Full}
+													/>
+												</SelectablePanel>
+										)
+									}
+								</Space>
 							</div>
-							: null
-					}
-					{
-						inventoryFeatures.length > 0 ?
-							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
-								{
-									inventoryFeatures.map(f =>
-										useRows ?
-											getRow(f)
-											:
-											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
-												<FeaturePanel
-													feature={f.feature}
-													source={props.options.showSources ? f.source : undefined}
-													options={props.options}
-													hero={props.hero}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-									)
-								}
-							</div>
-							: null
+						)
 					}
 				</div>
 			</ErrorBoundary>
 		);
 	};
 
-	const getAbilitiesSection = (title: string, abilities: { ability: Ability, source: string }[]) => {
+	const getAbilitiesSection = (title: string, abilities: { ability: Ability, source: string, level: number | undefined }[]) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -915,7 +967,7 @@ export const HeroPanel = (props: Props) => {
 											hero={props.hero}
 											options={props.options}
 											mode={PanelMode.Full}
-											tags={props.options.showSources ? [ a.source ] : undefined}
+											tags={props.options.showSources ? [ a.level ? `${a.source} (level ${a.level})` : a.source ] : undefined}
 										/>
 									</SelectablePanel>
 							)
@@ -1121,8 +1173,8 @@ export const HeroPanel = (props: Props) => {
 						{getAbilitiesSection('Triggered Actions', triggers)}
 						{getAbilitiesSection('Other Abilities', others)}
 						{getAbilitiesSection('Free Strikes', [
-							{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
-							{ ability: AbilityData.freeStrikeRanged, source: 'Standard' }
+							{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
+							{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined }
 						])}
 					</>
 				);
@@ -1138,8 +1190,8 @@ export const HeroPanel = (props: Props) => {
 				return getAbilitiesSection('Other Abilities', others);
 			case 'Free Strikes':
 				return getAbilitiesSection('Free Strikes', [
-					{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
-					{ ability: AbilityData.freeStrikeRanged, source: 'Standard' },
+					{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
+					{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined },
 					...abilities.filter(a => a.ability.type.freeStrike)
 				]);
 			case 'Retinue':

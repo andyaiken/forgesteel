@@ -28,29 +28,30 @@ import { Utils } from '@/utils/utils';
 
 export class FeatureLogic {
 	static getFeaturesFromAncestry = (ancestry: Ancestry, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		features.push(...ancestry.features.map(f => ({ feature: f, source: ancestry.name })));
+		features.push(...ancestry.features.map(f => ({ feature: f, source: ancestry.name, level: undefined })));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push({
 			feature: culture.language,
-			source: culture.name
+			source: culture.name,
+			level: undefined
 		});
 
 		if (culture.environment) {
-			features.push({ feature: culture.environment, source: culture.name });
+			features.push({ feature: culture.environment, source: culture.name, level: undefined });
 		}
 		if (culture.organization) {
-			features.push({ feature: culture.organization, source: culture.name });
+			features.push({ feature: culture.organization, source: culture.name, level: undefined });
 		}
 		if (culture.upbringing) {
-			features.push({ feature: culture.upbringing, source: culture.name });
+			features.push({ feature: culture.upbringing, source: culture.name, level: undefined });
 		}
 
 		features.push({
@@ -59,22 +60,23 @@ export class FeatureLogic {
 				name: `${culture.name} Culture`.trim(),
 				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
 			}),
-			source: culture.name
+			source: culture.name,
+			level: undefined
 		});
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromCareer = (career: Career, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		features.push(...career.features.map(f => ({ feature: f, source: career.name })));
+		features.push(...career.features.map(f => ({ feature: f, source: career.name, level: undefined })));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromClass = (heroClass: HeroClass, hero: Hero) => {
-		const features: { feature: Feature, source: string, level: number }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const classLevel = heroClass.level;
 
@@ -98,23 +100,23 @@ export class FeatureLogic {
 	};
 
 	static getFeaturesFromComplication = (complication: Complication, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		features.push(...complication.features.map(f => ({ feature: f, source: complication.name })));
+		features.push(...complication.features.map(f => ({ feature: f, source: complication.name, level: undefined })));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromTitle = (title: Title, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		features.push(...title.features.filter(f => f.id === title.selectedFeatureID).map(f => ({ feature: f, source: title.name })));
+		features.push(...title.features.filter(f => f.id === title.selectedFeatureID).map(f => ({ feature: f, source: title.name, level: undefined })));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromCustomization = (hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...hero.features.map(f => {
 			let source = 'Customization';
@@ -127,21 +129,21 @@ export class FeatureLogic {
 					source = 'Follower';
 					break;
 			}
-			return ({ feature: f, source: source });
+			return ({ feature: f, source: source, level: undefined });
 		}));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromItem = (item: Item, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const ft = FactoryLogic.feature.create({
 			id: item.id,
 			name: item.count === 1 ? item.name : `${item.name} x${item.count}`,
 			description: item.effect || item.description
 		});
-		features.push({ feature: ft, source: item.name });
+		features.push({ feature: ft, source: item.name, level: undefined });
 
 		const heroLevel = hero.class?.level || 1;
 		item.featuresByLevel
@@ -158,7 +160,7 @@ export class FeatureLogic {
 							ft.description += f.description;
 						}
 					} else {
-						features.push({ feature: f, source: item.name });
+						features.push({ feature: f, source: item.name, level: undefined });
 					}
 				});
 			});
@@ -175,7 +177,7 @@ export class FeatureLogic {
 						ft.description += feature.description;
 					}
 				} else {
-					features.push({ feature: feature, source: item.name });
+					features.push({ feature: feature, source: item.name, level: undefined });
 				}
 			});
 
@@ -191,7 +193,8 @@ export class FeatureLogic {
 						field: FeatureField.Stamina,
 						value: 6
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl5) {
@@ -201,7 +204,8 @@ export class FeatureLogic {
 						field: FeatureField.Stamina,
 						value: 6
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl9) {
@@ -211,7 +215,8 @@ export class FeatureLogic {
 						field: FeatureField.Stamina,
 						value: 9
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 		}
@@ -224,7 +229,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Magic ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 				features.push({
 					feature: FactoryLogic.feature.createAbilityDamage({
@@ -232,7 +238,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Psionic ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl5) {
@@ -242,7 +249,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Magic ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 				features.push({
 					feature: FactoryLogic.feature.createAbilityDamage({
@@ -250,7 +258,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Psionic ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl9) {
@@ -260,14 +269,16 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Magic ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 				features.push({
 					feature: FactoryLogic.feature.createAbilityDamage({
 						id: item.name + '-bonus-9b',
 						keywords: [ AbilityKeyword.Psionic ],
 						value: 1
-					}), source: item.name
+					}), source: item.name,
+					level: undefined
 				});
 			}
 		}
@@ -280,7 +291,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Weapon ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl5) {
@@ -290,7 +302,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Weapon ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 			if (hasLvl9) {
@@ -300,7 +313,8 @@ export class FeatureLogic {
 						keywords: [ AbilityKeyword.Weapon ],
 						value: 1
 					}),
-					source: item.name
+					source: item.name,
+					level: undefined
 				});
 			}
 		}
@@ -308,10 +322,10 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static simplifyFeatures = (features: { feature: Feature, source: string, level?: number }[], hero: Hero) => {
-		const list: { feature: Feature, source: string, level?: number }[] = [];
+	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], hero: Hero) => {
+		const list: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		const addFeature = (feature: Feature, source: string, level?: number) => {
+		const addFeature = (feature: Feature, source: string, level: number | undefined) => {
 			if (!feature) {
 				return;
 			}
@@ -341,7 +355,7 @@ export class FeatureLogic {
 					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, hero).forEach(f => addFeature(f.feature, f.source, level)));
 					break;
 				case FeatureType.Kit:
-					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name, level)));
+					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name, undefined)));
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(f => addFeature(f, source, level));

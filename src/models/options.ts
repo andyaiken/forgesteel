@@ -9,7 +9,6 @@ export interface Options {
 	xpPerLevel: number;
 	// Hero: Modern Sheet
 	singlePage: boolean;
-	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
 	showSources: boolean;
 	compactView: boolean;

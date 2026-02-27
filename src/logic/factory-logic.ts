@@ -1044,7 +1044,6 @@ export class FactoryLogic {
 			xpPerLevel: 16,
 			// Hero: Modern Sheet
 			singlePage: false,
-			separateInventoryFeatures: false,
 			showSkillsInGroups: false,
 			showSources: true,
 			compactView: false,

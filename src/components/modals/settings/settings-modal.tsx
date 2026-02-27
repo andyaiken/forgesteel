@@ -170,13 +170,6 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getHeroesInteractive = () => {
-		const setSeparateInventoryFeatures = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.separateInventoryFeatures = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
 		const setShowSkillsInGroups = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showSkillsInGroups = value;
@@ -215,7 +208,6 @@ export const SettingsModal = (props: Props) => {
 		return (
 			<Expander title='Heroes - Interactive View'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 					<Toggle label='Show feature / ability sources' value={options.showSources} onChange={setShowSources} />
 					<LabelControl

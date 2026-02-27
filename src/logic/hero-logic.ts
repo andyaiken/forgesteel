@@ -43,7 +43,7 @@ export class HeroLogic {
 	};
 
 	static getFeatures = (hero: Hero, includeCustomizations = true) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		if (hero.ancestry) {
 			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
@@ -104,17 +104,17 @@ export class HeroLogic {
 					feature.description += `\n\n${customization.notes}`;
 				}
 
-				return { feature: feature, source: f.source };
+				return { feature: feature, source: f.source, level: f.level };
 			});
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], standardAbilityIDs: string[]) => {
-		const choices: { ability: Ability, source: string }[] = [];
+		const choices: { ability: Ability, source: string, level: number | undefined }[] = [];
 
 		HeroLogic.getFeatures(hero)
 			.filter(f => f.feature.type === FeatureType.Ability)
 			.forEach(f => {
-				choices.push({ ability: (f.feature as FeatureAbility).data.ability, source: f.source });
+				choices.push({ ability: (f.feature as FeatureAbility).data.ability, source: f.source, level: f.level });
 			});
 
 		HeroLogic.getFeatures(hero)
@@ -131,7 +131,7 @@ export class HeroLogic {
 					feature.data.selectedIDs.forEach(abilityID => {
 						const ability = abilities.find(a => a.id === abilityID);
 						if (ability) {
-							choices.push({ ability: ability, source: f.source });
+							choices.push({ ability: ability, source: f.source, level: f.level });
 						}
 					});
 				}
@@ -155,7 +155,7 @@ export class HeroLogic {
 
 		AbilityData.standardAbilities
 			.filter(a => standardAbilityIDs.includes(a.id))
-			.forEach(a => abilities.push({ ability: a, source: 'Standard' }));
+			.forEach(a => abilities.push({ ability: a, source: 'Standard', level: undefined }));
 
 		return abilities.map(a => {
 			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === a.ability.id) || null;
@@ -179,7 +179,7 @@ export class HeroLogic {
 					ability.sections.push(FactoryLogic.createAbilitySectionField({ name: 'Notes', effect: customization.notes }));
 				}
 
-				return { ability: ability, source: a.source };
+				return { ability: ability, source: a.source, level: a.level };
 			}
 
 			return a;

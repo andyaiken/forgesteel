@@ -16,10 +16,6 @@ export class OptionsUpdateLogic {
 			options.singlePage = false;
 		}
 
-		if (options.separateInventoryFeatures === undefined) {
-			options.separateInventoryFeatures = false;
-		}
-
 		if (options.showSources === undefined) {
 			options.showSources = false;
 		}

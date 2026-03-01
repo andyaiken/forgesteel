@@ -871,7 +871,7 @@ export const HeroPanel = (props: Props) => {
 						/>
 					}
 				>
-					<Button icon={<EllipsisOutlined />} />
+					<Button type='text' icon={<EllipsisOutlined />} />
 				</Popover>
 			</Space>
 		);

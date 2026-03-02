@@ -372,6 +372,33 @@ export class AbilityLogic {
 				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'strong')}`);
 		}
 
+		// N + [Characteristic]
+		if (hero) {
+			const regex = /(\d+)\s*\+\s*(M|A|R|I|P)/gi;
+			text = text.replace(regex, (_match, value, characteristic) => {
+				let ch = 0;
+				switch (characteristic.toUpperCase()) {
+					case 'M':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Might);
+						break;
+					case 'A':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
+						break;
+					case 'R':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
+						break;
+					case 'I':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
+						break;
+					case 'P':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
+						break;
+				}
+				const total = Number(value) + ch;
+				return `${total}`;
+			});
+		}
+
 		// Equal to [N times] your [Characteristic(s)] score
 		if (hero) {
 			const charRegex = /(equal to(?: or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;

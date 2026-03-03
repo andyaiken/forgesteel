@@ -63,7 +63,7 @@ export const StartSection = (props: Props) => {
 					This hero can use content from the following sourcebooks:
 				</div>
 				{
-					[ SourcebookType.Official, SourcebookType.ThirdParty, SourcebookType.Community, SourcebookType.Homebrew ]
+					[ SourcebookType.Official, SourcebookType.Homebrew, SourcebookType.ThirdParty, SourcebookType.Community ]
 						.map(type => ({ type: type, sourcebooks: props.sourcebooks.filter(sb => sb.type === type).filter(sb => SourcebookLogic.getElements(sb).length > 0) }))
 						.filter(item => item.sourcebooks.length > 0)
 						.map(item => (

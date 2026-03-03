@@ -58,6 +58,7 @@ import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
@@ -97,6 +98,7 @@ export const HeroPanel = (props: Props) => {
 	const [ tab, setTab ] = useState<string>('Hero');
 	const [ featureSearch, setFeatureSearch ] = useState<string>('');
 	const [ featureSort, setFeatureSort ] = useState<string>('az');
+	const [ featureAll, setFeatureAll ] = useState<boolean>(false);
 
 	const getNameSection = () => {
 		const showState = (type: HeroModalType) => {
@@ -789,10 +791,16 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
-
 		const features = HeroLogic.getFeatures(props.hero)
-			.filter(f => featureTypes.includes(f.feature.type))
+			.filter(f => {
+				if (featureAll) {
+					const featureTypes = [ FeatureType.Ability, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.Follower, FeatureType.Retainer ];
+					return !featureTypes.includes(f.feature.type);
+				}
+
+				const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
+				return featureTypes.includes(f.feature.type);
+			})
 			.filter(f => Utils.textMatches([ f.feature.name, f.feature.description ], featureSearch))
 			.sort((a, b) => {
 				switch (featureSort) {
@@ -854,21 +862,24 @@ export const HeroPanel = (props: Props) => {
 				<Popover
 					trigger='click'
 					content={
-						<LabelControl
-							label='Organize'
-							control={
-								<Select
-									options={[
-										{ label: 'Alphabetical', value: 'az' },
-										{ label: 'By Level', value: 'lvl' },
-										{ label: 'By Source', value: 'src' }
-									]}
-									optionRender={o => <div className='ds-text'>{o.label}</div>}
-									value={featureSort}
-									onChange={setFeatureSort}
-								/>
-							}
-						/>
+						<Space orientation='vertical'>
+							<LabelControl
+								label='Organize'
+								control={
+									<Select
+										options={[
+											{ label: 'Alphabetical', value: 'az' },
+											{ label: 'By Level', value: 'lvl' },
+											{ label: 'By Source', value: 'src' }
+										]}
+										optionRender={o => <div className='ds-text'>{o.label}</div>}
+										value={featureSort}
+										onChange={setFeatureSort}
+									/>
+								}
+							/>
+							<Toggle label='All Features' value={featureAll} onChange={setFeatureAll} />
+						</Space>
 					}
 				>
 					<Button type='text' icon={<EllipsisOutlined />} />

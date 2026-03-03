@@ -47,6 +47,7 @@ export class SourcebookLogic {
 			SourcebookData.lookOut,
 			SourcebookData.magazineBlacksmith,
 			SourcebookData.magazineRatcatcher,
+			SourcebookData.steelEchoes,
 			SourcebookData.triglav
 		];
 

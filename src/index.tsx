@@ -1,4 +1,4 @@
-import { DataLoader, LoadedData } from '@/components/panels/data-loader/data-loader';
+import { DataLoader } from '@/components/panels/data-loader/data-loader';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HashRouter } from 'react-router';
 import { Main } from '@/components/main/main.tsx';
@@ -20,27 +20,31 @@ if ('serviceWorker' in navigator) {
 	});
 }
 
-const onDataLoaded = (data: LoadedData) => {
-	root.render(
-		<StrictMode>
-			<HashRouter>
-				<Main
-					heroes={data.heroes}
-					homebrewSourcebooks={data.homebrew}
-					hiddenSourcebookIDs={data.hiddenSourcebookIDs}
-					session={data.session}
-					options={data.options}
-					connectionSettings={data.connectionSettings}
-					dataService={data.service}
-				/>
-			</HashRouter>
-		</StrictMode>
-	);
-};
-
 const root = createRoot(document.getElementById('root')!);
 root.render(
 	<ErrorBoundary>
-		<DataLoader onComplete={onDataLoaded} />
+		<StrictMode>
+			<DataLoader
+				onComplete={data => {
+					root.render(
+						<ErrorBoundary>
+							<StrictMode>
+								<HashRouter>
+									<Main
+										heroes={data.heroes}
+										homebrewSourcebooks={data.homebrew}
+										hiddenSourcebookIDs={data.hiddenSourcebookIDs}
+										session={data.session}
+										options={data.options}
+										connectionSettings={data.connectionSettings}
+										dataService={data.service}
+									/>
+								</HashRouter>
+							</StrictMode>
+						</ErrorBoundary>
+					);
+				}}
+			/>
+		</StrictMode>
 	</ErrorBoundary>
 );

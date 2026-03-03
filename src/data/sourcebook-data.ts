@@ -5,6 +5,7 @@ import { lookOut } from '@/data/sourcebooks/third-party/look-out';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { patreon } from '@/data/sourcebooks/official/patreon';
 import { ratcatcher } from '@/data/sourcebooks/third-party/magazine-ratcatcher';
+import { steelEchoes } from '@/data/sourcebooks/third-party/steel-echoes';
 import { summonerSourcebook } from '@/data/sourcebooks/official/summoner';
 import { triglav } from '@/data/sourcebooks/third-party/triglav';
 
@@ -19,6 +20,7 @@ export class SourcebookData {
 	static lookOut = lookOut;
 	static magazineBlacksmith = blacksmith;
 	static magazineRatcatcher = ratcatcher;
+	static steelEchoes = steelEchoes;
 	static triglav = triglav;
 
 	// Community

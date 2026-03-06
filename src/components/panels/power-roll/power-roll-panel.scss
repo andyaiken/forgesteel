@@ -1,3 +1,5 @@
+@use '../../pages/classic-sheet/common.scss';
+
 .power-roll-panel {
 	position: relative;
 	margin: 10px 0;
@@ -8,6 +10,7 @@
 
 	.power-roll-row {
 		display: flex;
+		align-items: center;
 		gap: 5px;
 		border-radius: 5px;
 		transition:
@@ -37,9 +40,11 @@
 		}
 
 		.tier {
-			flex: 0 0 55px;
+			@include common.font-glyphs();
+			font-size: 22px;
+			flex: 0 0 42px;
 			border-right: 1px solid rgba(5, 5, 5, 0.06);
-			padding: 5px;
+			padding-top: 3px;
 		}
 
 		.effect {

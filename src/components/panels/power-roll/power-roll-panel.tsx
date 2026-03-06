@@ -206,17 +206,17 @@ export const PowerRollPanel = (props: Props) => {
 					</Space>
 				</div>
 				<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>≤ 11</div>
+					<div className='tier'>!</div>
 					<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
 					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 1).length}%</div> : null}
 				</div>
 				<div className={props.highlightTier === 2 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>12 - 16</div>
+					<div className='tier'>@</div>
 					<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
 					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 2).length}%</div> : null}
 				</div>
 				<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>≥ 17</div>
+					<div className='tier'>#</div>
 					<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
 					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 3).length}%</div> : null}
 				</div>

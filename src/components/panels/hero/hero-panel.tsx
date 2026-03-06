@@ -862,15 +862,16 @@ export const HeroPanel = (props: Props) => {
 				<Popover
 					trigger='click'
 					content={
-						<Space orientation='vertical'>
+						<Space orientation='vertical' style={{ width: '300px' }}>
 							<LabelControl
 								label='Organize'
 								control={
 									<Select
+										style={{ width: '100%' }}
 										options={[
 											{ label: 'Alphabetical', value: 'az' },
-											{ label: 'By Level', value: 'lvl' },
-											{ label: 'By Source', value: 'src' }
+											{ label: 'Group by level', value: 'lvl' },
+											{ label: 'Group by source', value: 'src' }
 										]}
 										optionRender={o => <div className='ds-text'>{o.label}</div>}
 										value={featureSort}

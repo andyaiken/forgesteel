@@ -292,7 +292,7 @@ const Characteristics = (props: CharacteristicsProps) => {
 	};
 
 	const [ array, setArray ] = useState<number[] | null>(getArray);
-	const [ values, setValues ] = useState<{ characteristic: Characteristic, value: number }[] | null>(null);
+	const [ values, setValues ] = useState<{ characteristic: Characteristic, value: number }[] | null>(props.heroClass.characteristics);
 
 	if ((props.heroClass.primaryCharacteristicsOptions.length > 0) && (props.heroClass.primaryCharacteristics.length === 0)) {
 		return (

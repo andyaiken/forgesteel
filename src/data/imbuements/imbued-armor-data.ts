@@ -484,7 +484,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '2 damage; push 3',
+							tier1: '8 damage; push 3',
 							tier2: '12 damage; push 4',
 							tier3: '15 damage; push 5'
 						})

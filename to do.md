@@ -1,8 +1,10 @@
 # Development Plans
 
+* Add titles checklist (list all titles with their echelons and prerequisites)
 * Update:
   * Vampire
   * Scion
+  * Vessel
 * Monster customization should include:
   * Monster group add-ons
   * Retainer level up choices

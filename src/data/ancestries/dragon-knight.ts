@@ -72,7 +72,8 @@ export const dragonKnight: Ancestry = {
 					}),
 					value: 1
 				}
-			]
+			],
+			respiteChange: true
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-2',

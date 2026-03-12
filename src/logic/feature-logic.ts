@@ -2,7 +2,7 @@ import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDa
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
-import { AncestryLogic } from './ancestry-logic';
+import { AncestryLogic } from '@/logic/ancestry-logic';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';

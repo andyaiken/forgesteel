@@ -521,41 +521,93 @@ export class MonsterLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static getSuggestedStats = (monster: Monster) => {
+		const characteristics = { m: '0', a: '0', r: '0', i: '0', p: '0' };
 		let roleMod = 0;
 		let damageMod = 0;
 		let orgMod = 0;
 		let staminaMod = 0;
 		let characteristicMod = 0;
+		const actions = {
+			main: '0',
+			maneuver: '0',
+			triggered: '0',
+			villain: '0'
+		};
 
 		switch (monster.role.type) {
 			case MonsterRoleType.Ambusher:
+				characteristics.m = '0';
+				characteristics.a = '2';
+				characteristics.r = '0';
+				characteristics.i = '1';
+				characteristics.p = '0';
 				roleMod = 20;
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Artillery:
+				characteristics.m = '0';
+				characteristics.a = '2';
+				characteristics.r = '1';
+				characteristics.i = '0';
+				characteristics.p = '0';
 				roleMod = 10;
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Brute:
+				characteristics.m = '2';
+				characteristics.a = '1';
+				characteristics.r = '-1';
+				characteristics.i = '0';
+				characteristics.p = '0';
 				roleMod = 30;
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Controller:
+				characteristics.m = '0';
+				characteristics.a = '1';
+				characteristics.r = '2';
+				characteristics.i = '2';
+				characteristics.p = '1';
 				roleMod = 10;
 				break;
 			case MonsterRoleType.Defender:
+				characteristics.m = '2';
+				characteristics.a = '1';
+				characteristics.r = '0';
+				characteristics.i = '1';
+				characteristics.p = '1';
 				roleMod = 30;
 				break;
 			case MonsterRoleType.Harrier:
+				characteristics.m = '1';
+				characteristics.a = '2';
+				characteristics.r = '0';
+				characteristics.i = '0';
+				characteristics.p = '0';
 				roleMod = 20;
 				break;
 			case MonsterRoleType.Hexer:
+				characteristics.m = '0';
+				characteristics.a = '1';
+				characteristics.r = '1';
+				characteristics.i = '1';
+				characteristics.p = '2';
 				roleMod = 10;
 				break;
 			case MonsterRoleType.Mount:
+				characteristics.m = '2';
+				characteristics.a = '2';
+				characteristics.r = '-1';
+				characteristics.i = '0';
+				characteristics.p = '-1';
 				roleMod = 20;
 				break;
 			case MonsterRoleType.Support:
+				characteristics.m = '1';
+				characteristics.a = '1';
+				characteristics.r = '0';
+				characteristics.i = '2';
+				characteristics.p = '1';
 				roleMod = 20;
 				break;
 		}
@@ -568,29 +620,52 @@ export class MonsterLogic {
 			case MonsterOrganizationType.Horde:
 				staminaMod = 0.5;
 				orgMod = 0.5;
+				actions.maneuver = '0 - 1';
 				break;
 			case MonsterOrganizationType.Platoon:
 				staminaMod = 1;
 				orgMod = 1;
+				actions.main = '0 - 1';
+				actions.maneuver = '0 - 1';
 				break;
 			case MonsterOrganizationType.Elite:
 				damageMod += 1; // Add 1, because this one stacks
 				staminaMod = 2;
 				orgMod = 2;
+				actions.main = '1';
+				actions.maneuver = '0 - 1';
+				actions.triggered = '0 - 1';
 				break;
 			case MonsterOrganizationType.Leader:
+				characteristics.m = '2 - 4';
+				characteristics.a = '2 - 3';
+				characteristics.r = '2 - 4';
+				characteristics.i = '2 - 3';
+				characteristics.p = '3 - 5';
 				damageMod = 1;
 				roleMod += 30;
 				staminaMod = 2;
 				orgMod = 2;
 				characteristicMod = 1;
+				actions.maneuver = '1';
+				actions.triggered = '1';
+				actions.villain = '3';
 				break;
 			case MonsterOrganizationType.Solo:
+				characteristics.m = '2 - 4';
+				characteristics.a = '2 - 3';
+				characteristics.r = '2 - 4';
+				characteristics.i = '2 - 3';
+				characteristics.p = '3 - 5';
 				damageMod = 2;
 				roleMod += 30;
 				staminaMod = 5;
 				orgMod = 6;
 				characteristicMod = 1;
+				actions.main = '2';
+				actions.maneuver = '1';
+				actions.triggered = '1 - 2';
+				actions.villain = '3';
 				break;
 		}
 
@@ -602,10 +677,12 @@ export class MonsterLogic {
 		const dmg3 = (4 + monster.level + damageMod) * 1.4;
 
 		return {
+			characteristics: characteristics,
 			highestCharacteristic: 1 + CreatureLogic.getEchelon(monster.level) + characteristicMod,
 			ev: Math.ceil(ev),
 			stamina: Math.ceil(stamina),
 			freeStrikeDamage: Math.ceil(dmg1),
+			actions: actions,
 			damage: {
 				tier1: Math.ceil(dmg1),
 				tier2: Math.ceil(dmg2),

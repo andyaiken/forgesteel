@@ -293,7 +293,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 		const setMovementModes = (value: string) => {
 			const copy = Utils.copy(monster);
-			copy.speed.modes = [ value ];
+			copy.speed.modes = value ? [ value ] : [];
 			setMonster(copy);
 			props.onChange(copy);
 		};

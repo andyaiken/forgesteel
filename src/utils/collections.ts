@@ -59,6 +59,43 @@ export class Collections {
 		return Collections.sum(collection, callback) / collection.length;
 	};
 
+	static median = <T>(collection: T[], callback: (item: T) => number): number => {
+		if (collection.length === 0) {
+			return 0;
+		}
+
+		const values = collection.map(callback).sort((a, b) => a - b);
+		const len = values.length;
+		if (len % 2 === 1) {
+			return values[Math.floor(len / 2)];
+		} else {
+			const mid1 = values[len / 2 - 1];
+			const mid2 = values[len / 2];
+			return (mid1 + mid2) / 2;
+		}
+	};
+
+	static mode = <T>(collection: T[], callback: (item: T) => number): number => {
+		if (collection.length === 0) {
+			return 0;
+		}
+
+		const values = collection.map(callback);
+		const freq: Map<number, number> = new Map();
+		for (const val of values) {
+			freq.set(val, (freq.get(val) || 0) + 1);
+		}
+		let maxFreq = 0;
+		let mode = 0;
+		for (const [ val, count ] of freq) {
+			if (count > maxFreq) {
+				maxFreq = count;
+				mode = val;
+			}
+		}
+		return mode;
+	};
+
 	static min = <T>(collection: T[], callback: (item: T) => number): T | null => {
 		let item = null;
 		let min = Number.MAX_VALUE;

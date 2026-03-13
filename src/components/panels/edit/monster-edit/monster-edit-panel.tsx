@@ -531,6 +531,31 @@ export const MonsterEditPanel = (props: Props) => {
 		const similarMonsters = getSimilarMonsters();
 		const stats = MonsterLogic.getSuggestedStats(monster);
 
+		const getChart = (title: string, getValue: (m: Monster) => number, onChange: (value: number) => void) => {
+			const values = similarMonsters.map(getValue);
+			const selected = getValue(monster);
+
+			const min = Math.max(0, Math.min(...values, selected) - 3);
+			const max = Math.max(...values, selected) + 3;
+			const median = Math.round(Collections.median(values, x => x));
+
+			return (
+				<div style={{ width: '350px' }}>
+					<Flex align='center' justify='space-between'>
+						<b>{title}</b>
+						<Field label='Median' compact={true} value={median} />
+					</Flex>
+					<Divider />
+					{
+						values.length > 0 ?
+							<HistogramPanel min={min} max={max} values={values} selected={selected} onSelect={onChange} />
+							:
+							<Empty text='No similar monsters' />
+					}
+				</div>
+			);
+		};
+
 		return (
 			<div>
 				<Alert
@@ -539,7 +564,7 @@ export const MonsterEditPanel = (props: Props) => {
 					title={
 						<>
 							<div>This page shows typical values for a <b>{MonsterLogic.getMonsterDescription(monster)}</b> monster.</div>
-							<div>Click on any <InfoCircleOutlined /> to see explanations and values from similar monsters.</div>
+							<div>Click on any <InfoCircleOutlined /> to see explanations and actual values from similar monsters.</div>
 						</>
 					}
 				/>
@@ -552,19 +577,7 @@ export const MonsterEditPanel = (props: Props) => {
 								EV
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Encounter Value</b>
-											<Divider />
-											<HistogramPanel
-												min={Math.max(0, Math.min(...similarMonsters.map(m => m.encounterValue), monster.encounterValue) - 5)}
-												max={Math.max(...similarMonsters.map(m => m.encounterValue), monster.encounterValue) + 5}
-												values={similarMonsters.map(m => m.encounterValue)}
-												selected={monster.encounterValue}
-												onSelect={setEncounterValue}
-											/>
-										</div>
-									}
+									content={getChart('Encounter Value', m => m.encounterValue, setEncounterValue)}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -579,18 +592,7 @@ export const MonsterEditPanel = (props: Props) => {
 								Speed
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Speed</b>
-											<Divider />
-											<HistogramPanel
-												min={0}
-												values={similarMonsters.map(m => m.speed.value)}
-												selected={monster.speed.value}
-												onSelect={setSpeedValue}
-											/>
-										</div>
-									}
+									content={getChart('Speed', m => m.speed.value, setSpeedValue)}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -605,19 +607,7 @@ export const MonsterEditPanel = (props: Props) => {
 								Stamina
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Stamina</b>
-											<Divider />
-											<HistogramPanel
-												min={Math.max(0, Math.min(...similarMonsters.map(m => m.stamina), monster.stamina) - 5)}
-												max={Math.max(...similarMonsters.map(m => m.stamina), monster.stamina) + 5}
-												values={similarMonsters.map(m => m.stamina)}
-												selected={monster.stamina}
-												onSelect={setStamina}
-											/>
-										</div>
-									}
+									content={getChart('Stamina', m => m.stamina, setStamina)}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -632,18 +622,7 @@ export const MonsterEditPanel = (props: Props) => {
 								Stability
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Stability</b>
-											<Divider />
-											<HistogramPanel
-												min={0}
-												values={similarMonsters.map(m => m.stability)}
-												selected={monster.stability}
-												onSelect={setStability}
-											/>
-										</div>
-									}
+									content={getChart('Stability', m => m.stability, setStability)}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -658,18 +637,7 @@ export const MonsterEditPanel = (props: Props) => {
 								Free Strike
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Free Strike Damage</b>
-											<Divider />
-											<HistogramPanel
-												min={0}
-												values={similarMonsters.map(m => m.freeStrikeDamage)}
-												selected={monster.freeStrikeDamage}
-												onSelect={setFreeStrikeDamage}
-											/>
-										</div>
-									}
+									content={getChart('Free Strike Damage', m => m.freeStrikeDamage, setFreeStrikeDamage)}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -693,19 +661,7 @@ export const MonsterEditPanel = (props: Props) => {
 								M
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Might</b>
-											<Divider />
-											<HistogramPanel
-												min={-5}
-												max={5}
-												values={similarMonsters.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Might))}
-												selected={MonsterLogic.getCharacteristic(monster, Characteristic.Might)}
-												onSelect={value => setCharacteristic(Characteristic.Might, value)}
-											/>
-										</div>
-									}
+									content={getChart('Might', m => MonsterLogic.getCharacteristic(m, Characteristic.Might), value => setCharacteristic(Characteristic.Might, value))}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -720,19 +676,7 @@ export const MonsterEditPanel = (props: Props) => {
 								A
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Agility</b>
-											<Divider />
-											<HistogramPanel
-												min={-5}
-												max={5}
-												values={similarMonsters.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Agility))}
-												selected={MonsterLogic.getCharacteristic(monster, Characteristic.Agility)}
-												onSelect={value => setCharacteristic(Characteristic.Agility, value)}
-											/>
-										</div>
-									}
+									content={getChart('Agility', m => MonsterLogic.getCharacteristic(m, Characteristic.Agility), value => setCharacteristic(Characteristic.Agility, value))}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -747,19 +691,7 @@ export const MonsterEditPanel = (props: Props) => {
 								R
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Reason</b>
-											<Divider />
-											<HistogramPanel
-												min={-5}
-												max={5}
-												values={similarMonsters.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Reason))}
-												selected={MonsterLogic.getCharacteristic(monster, Characteristic.Reason)}
-												onSelect={value => setCharacteristic(Characteristic.Reason, value)}
-											/>
-										</div>
-									}
+									content={getChart('Reason', m => MonsterLogic.getCharacteristic(m, Characteristic.Reason), value => setCharacteristic(Characteristic.Reason, value))}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -774,19 +706,7 @@ export const MonsterEditPanel = (props: Props) => {
 								I
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Intuition</b>
-											<Divider />
-											<HistogramPanel
-												min={-5}
-												max={5}
-												values={similarMonsters.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Intuition))}
-												selected={MonsterLogic.getCharacteristic(monster, Characteristic.Intuition)}
-												onSelect={value => setCharacteristic(Characteristic.Intuition, value)}
-											/>
-										</div>
-									}
+									content={getChart('Intuition', m => MonsterLogic.getCharacteristic(m, Characteristic.Intuition), value => setCharacteristic(Characteristic.Intuition, value))}
 								>
 									<InfoCircleOutlined />
 								</Popover>
@@ -801,19 +721,7 @@ export const MonsterEditPanel = (props: Props) => {
 								P
 								<Popover
 									trigger='click'
-									content={
-										<div style={{ width: '350px' }}>
-											<b>Presence</b>
-											<Divider />
-											<HistogramPanel
-												min={-5}
-												max={5}
-												values={similarMonsters.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Presence))}
-												selected={MonsterLogic.getCharacteristic(monster, Characteristic.Presence)}
-												onSelect={value => setCharacteristic(Characteristic.Presence, value)}
-											/>
-										</div>
-									}
+									content={getChart('Presence', m => MonsterLogic.getCharacteristic(m, Characteristic.Presence), value => setCharacteristic(Characteristic.Presence, value))}
 								>
 									<InfoCircleOutlined />
 								</Popover>

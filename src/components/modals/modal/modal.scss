@@ -2,6 +2,7 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	background-color: rgb(230, 230, 230);
 
 	.modal-toolbar {
 		flex: 0 0 50px;
@@ -16,7 +17,6 @@
 	.modal-content {
 		flex: 1 1 0;
 		overflow-y: auto;
-		background-color: rgb(230, 230, 230);
 	}
 
 	.modal-footer {
@@ -36,13 +36,11 @@
 
 html[data-theme="dark"] {
 	.modal {
+		background-color: rgb(55, 55, 55);
+
 		.modal-toolbar,
 		.modal-footer {
 			background-color: rgb(0, 0, 0);
-		}
-
-		.modal-content {
-			background-color: rgb(55, 55, 55);
 		}
 	}
 }

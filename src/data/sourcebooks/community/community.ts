@@ -197,6 +197,206 @@ Some oaklings choose to walk a different path than their kin. Though it often re
 	culture: FactoryLogic.createCulture('Gall Guardian', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Yllyric')
 };
 
+const ironbound: Ancestry = {
+	id: 'ancestry-ironbound',
+	name: 'Ironbound',
+	description: `
+*By Andy Aiken*
+
+The ironbound are living machines: bodies of iron, brass, and rune-etched steel animated by a mysterious spark. Though they resemble humanoids in shape, their forms are unmistakably artificial.`,
+	features: [
+		FactoryLogic.feature.createChoice({
+			id: 'ironbound-1',
+			name: 'Adaptive Chassis',
+			description: 'Your body is built from modular mechanisms that can reconfigure into different modes when needed.',
+			options: [
+				{
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'ironbound-1a',
+						name: 'Assault Mode',
+						features: [
+							FactoryLogic.feature.createAbilityDamage({
+								id: 'ironbound-1a-1',
+								keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
+								valuePerEchelon: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'ironbound-1a-2',
+								field: FeatureField.Speed,
+								value: 1
+							})
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'ironbound-1b',
+						name: 'Bulwark Mode',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'ironbound-1b-1',
+								name: 'Bulwark Mode',
+								description: 'You gain an edge on tests to keep your footing on unstable surfaces such as ice, narrow ledges, swaying bridges, or collapsing ground.'
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'ironbound-1b-2',
+								field: FeatureField.Stability,
+								value: 1
+							})
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-1c',
+						name: 'Guardian Mode',
+						description: 'When an adjacent ally is targeted by a strike, you can use a triggered action to swap places with your ally and become the target of the attack'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-1d',
+						name: 'Infiltration Mode',
+						description: `
+* You can move at full speed while sneaking
+* You gain an edge on Hide and Sneak tests`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-1e',
+						name: 'Precision Mode',
+						description: `
+* Your attacks ignore partial cover
+* You gain an edge on Eavesdrop and Track tests`
+					}),
+					value: 1
+				}
+			],
+			respiteChange: true
+		}),
+		FactoryLogic.feature.createMultiple({
+			id: 'ironbound-2',
+			name: 'Iron Body',
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'ironbound-2a',
+					modifiers: [
+						FactoryLogic.damageModifier.createPerLevel({
+							damageType: DamageType.Poison,
+							modifierType: DamageModifierType.Immunity,
+							value: 1
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Lightning,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
+				FactoryLogic.feature.create({
+					id: 'ironbound-2b',
+					name: 'Iron Body',
+					description: 'You can’t suffocate, and you don’t need to eat or drink to stay alive.'
+				})
+			]
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'ironbound-3',
+			name: 'Purchased Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-3a',
+						name: 'Ablative Plating',
+						description: 'When an enemy attacks you and scores a tier 3 result, you can use a triggered action to lose 1d6 Stamina and turn the tier 3 result into a tier 2 result.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-3b',
+						name: 'Appraisal Engine',
+						description: `
+Your senses are built to read stress, weakness, and structural failure.
+
+You gain an edge on tests to understand or analyze constructs, mechanisms, vehicles, and damaged objects.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createSize({
+						id: 'ironbound-3c',
+						name: 'Big!',
+						sizeValue: 1,
+						sizeMod: 'L'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-3d',
+						name: 'Internal Reserves',
+						description: `
+Your body stores emergency power for moments of strain.
+
+The first time in an encounter you become winded, you gain temporary Stamina equal to your level.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'ironbound-3e',
+							name: 'Overdrive',
+							description: 'You can briefly push your mechanisms beyond safe limits, for a cost.',
+							type: FactoryLogic.type.createManeuver(),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionField({
+									name: 'Note',
+									effect: 'You cannot use this maneuver if you are dazed or weakened.'
+								}),
+								FactoryLogic.createAbilitySectionText('You can take one additional main action.'),
+								FactoryLogic.createAbilitySectionText('When your turn ends, you lose Stamina equal to 1d6 plus your level and become dazed (save ends); when the dazed condition ends, you become weakened (save ends).')
+							]
+						})
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-3f',
+						name: 'Replay Memory',
+						description: 'You gain an edge on tests made to recall previous events.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'ironbound-3g',
+						name: 'Restoration Engine',
+						description: `
+When your Stamina reaches the negative of your winded value, you become inert instead of dying. You fall prone and can’t stand.
+
+You continue to observe your surroundings, but you can’t speak, take main actions, maneuvers, move actions, or triggered actions. While inert this way, if you take any lightning damage, your body is destroyed and you die. Otherwise, after 12 hours, you regain Stamina equal to your recovery value.`
+					}),
+					value: 2
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 2,
+	culture: FactoryLogic.createCulture('Ironbound', 'Urban, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.martial, 'Zaliac')
+};
+
 const oakling: Ancestry = {
 	id: 'ancestry-oakling',
 	name: 'Oakling',
@@ -4241,6 +4441,7 @@ export const community: Sourcebook = {
 	ancestries: [
 		aranox,
 		gallGuardian,
+		ironbound,
 		oakling,
 		siabhra,
 		solar

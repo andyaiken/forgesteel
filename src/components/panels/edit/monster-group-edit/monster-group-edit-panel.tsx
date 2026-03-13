@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Select, Space, Tabs, Upload } from 'antd';
+import { Button, Drawer, Flex, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureAddOn } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -246,6 +246,46 @@ export const MonsterGroupEditPanel = (props: Props) => {
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Popover
+							trigger='click'
+							content={
+								<Space orientation='vertical'>
+									<Button block={true} icon={<PlusOutlined />} onClick={addMonster}>
+										Add a new monster
+									</Button>
+									<Upload
+										accept='.drawsteel-monster,.ds-monster'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const monster = JSON.parse(json) as Monster;
+													copyMonster(monster);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} onClick={() => null}>
+											<DownloadOutlined />
+											Import a monster
+										</Button>
+									</Upload>
+									<Button block={true} onClick={() => setDrawerOpen(true)}>
+										<CopyOutlined />
+										Copy an existing monster
+									</Button>
+								</Space>
+							}
+						>
+							<Button type='text' icon={<PlusOutlined />} />
+						</Popover>
+					}
+				>
+					Monsters
+				</HeaderText>
 				{
 					monsterGroup.monsters.map(m => (
 						<Expander
@@ -272,33 +312,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Flex gap={10}>
-					<Button block={true} icon={<PlusOutlined />} onClick={addMonster}>
-						Add a new monster
-					</Button>
-					<Upload
-						accept='.drawsteel-monster,.ds-monster'
-						showUploadList={false}
-						beforeUpload={file => {
-							file
-								.text()
-								.then(json => {
-									const monster = JSON.parse(json) as Monster;
-									copyMonster(monster);
-								});
-							return false;
-						}}
-					>
-						<Button block={true} onClick={() => null}>
-							<DownloadOutlined />
-							Import a monster
-						</Button>
-					</Upload>
-					<Button block={true} onClick={() => setDrawerOpen(true)}>
-						<CopyOutlined />
-						Copy an existing monster
-					</Button>
-				</Flex>
 				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} size={500}>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}

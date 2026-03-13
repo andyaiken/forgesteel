@@ -1030,6 +1030,8 @@ export class FeatureLogic {
 						return MonsterFeatureCategory.Maneuver;
 					case AbilityUsage.Trigger:
 						return MonsterFeatureCategory.Trigger;
+					case AbilityUsage.VillainAction:
+						return MonsterFeatureCategory.Villain;
 				}
 				return MonsterFeatureCategory.Other;
 			case FeatureType.ConditionImmunity:

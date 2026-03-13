@@ -5,5 +5,6 @@ export enum MonsterFeatureCategory {
 	Action = 'Main Action',
 	Maneuver = 'Maneuver',
 	Trigger = 'Triggered Action',
+	Villain = 'Villain Action',
 	Other = 'Other Ability'
 };

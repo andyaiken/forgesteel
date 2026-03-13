@@ -53,7 +53,7 @@ interface Props {
 
 export const MonsterEditPanel = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(props.monster);
-	const [ selectedCategory, setSelectedCategory ] = useState<MonsterFeatureCategory>(MonsterFeatureCategory.Text);
+	const [ selectedCategory, setSelectedCategory ] = useState<MonsterFeatureCategory>(MonsterFeatureCategory.Signature);
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
@@ -912,7 +912,7 @@ export const MonsterEditPanel = (props: Props) => {
 									trigger='click'
 									content={
 										<div>
-											<p>Ability affects one extra target / standard rider</p>
+											<p>Ability affects one extra target / has a typical rider</p>
 											<Divider />
 											<p>Common riders:</p>
 											<ul>

@@ -117,8 +117,13 @@ If you are in the same area as a creature using this or a similar feature who ha
 			features: [
 				FactoryLogic.feature.create({
 					id: 'domain-storm-7',
-					name: 'Thunderstruck',
-					description: 'Lightning and thunder infuse your body. Whenever you use an ability to deal lightning or sonic damage to another creature, you gain 1 surge. Additionally, if you use an ability that force moves a creature, the forced movement distance gains a bonus equal to your Intuition score.'
+					name: 'Ride the Lightning / Thunderstruck',
+					description: `
+Lightning and thunder infuse your body.
+
+Ride the Lightning (Censor): Whenever you use an ability to deal rolled damage to another creature, the ability deals extra lightning damage equal to your Presence score. Additionally, if you use an ability that force moves a creature, the forced movement distance gains a bonus equal to your Presence score. While you are under the effect of your Windwalk feature, lightning enhances your locomotion to grant you a bonus to speed equal to your Might score. If Windwalk already grants you a bonus to speed, this bonus adds to that.
+
+Thunderstruck (Conduit): Whenever you use an ability to deal lightning or sonic damage to another creature, you gain 1 surge. Additionally, if you use an ability that force moves a creature, the forced movement distance gains a bonus equal to your Intuition score.`
 				})
 			]
 		},

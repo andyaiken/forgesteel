@@ -39,10 +39,6 @@ export class HeroUpdateLogic {
 		hero.settingIDs = hero.settingIDs.map(id => id === '' ? SourcebookData.core.id : id);
 
 		if (hero.ancestry) {
-			hero.ancestry.features
-				.filter(f => f.type === FeatureType.Choice)
-				.forEach(f => f.data.count = 'ancestry');
-
 			hero.ancestry.features.forEach(FeatureUpdateLogic.updateFeature);
 
 			if (hero.ancestry.ancestryPoints === undefined) {
@@ -449,7 +445,12 @@ export class HeroUpdateLogic {
 							.flatMap(f => f.data.options);
 					}
 
-					feature.data.selected = availableOptions.map(o => o.feature).filter(o => selectedIDs.includes(o.id));
+					selectedIDs.forEach(id => {
+						const option = availableOptions.find(o => o.feature.id === id);
+						if (option) {
+							feature.data.selected.push(option.feature);
+						}
+					});
 					feature.data.selected.forEach(child => {
 						const oChild = oFeature.data.selected.find(x => x.id === child.id);
 						if (oChild) {

@@ -478,6 +478,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					</div>
 					:
 					<MonsterEditPanel
+						key={monsterID}
 						monster={monsterGroup.monsters.find(m => m.id === monsterID) as Monster}
 						sourcebooks={props.sourcebooks}
 						options={props.options}

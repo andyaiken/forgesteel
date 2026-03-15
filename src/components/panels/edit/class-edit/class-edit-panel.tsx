@@ -503,6 +503,7 @@ export const ClassEditPanel = (props: Props) => {
 					</div>
 					:
 					<SubClassEditPanel
+						key={subclassID}
 						subClass={heroClass.subclasses.find(sc => sc.id === subclassID) as SubClass}
 						sourcebooks={props.sourcebooks}
 						options={props.options}

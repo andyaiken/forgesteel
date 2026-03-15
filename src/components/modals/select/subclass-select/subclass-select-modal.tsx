@@ -79,18 +79,20 @@ export const SubClassSelectModal = (props: Props) => {
 							customSubclasses.length > 0 ?
 								<>
 									<Divider />
-									<Space orientation='vertical' style={{ width: '100%' }}>
-										{
-											customSubclasses.map(sc => (
-												<SelectablePanel
-													key={sc.id}
-													onSelect={() => props.onSelect(sc)}
-												>
-													<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
-												</SelectablePanel>
-											))
-										}
-									</Space>
+									<Expander title='Homebrew subclasses'>
+										<Space orientation='vertical' style={{ width: '100%' }}>
+											{
+												customSubclasses.map(sc => (
+													<SelectablePanel
+														key={sc.id}
+														onSelect={() => props.onSelect(sc)}
+													>
+														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
+													</SelectablePanel>
+												))
+											}
+										</Space>
+									</Expander>
 								</>
 								: null
 						}

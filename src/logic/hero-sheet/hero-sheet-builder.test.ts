@@ -200,11 +200,11 @@ describe('buildHeroSheet', () => {
 		const options = {} as Options;
 
 		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue([
-			{ feature: mockFeatureRetainer, source: 'test' },
-			{ feature: mockFeatureFollower, source: 'test' },
-			{ feature: mockFeatureCompanion, source: 'test' },
-			{ feature: mockSummonChoiceFeature, source: 'test' },
-			{ feature: mockSummonFeature, source: 'test' }
+			{ feature: mockFeatureRetainer, source: 'test', level: 1 },
+			{ feature: mockFeatureFollower, source: 'test', level: 1 },
+			{ feature: mockFeatureCompanion, source: 'test', level: 1 },
+			{ feature: mockSummonChoiceFeature, source: 'test', level: 1 },
+			{ feature: mockSummonFeature, source: 'test', level: 1 }
 		]);
 
 		const result = HeroSheetBuilder.buildHeroSheet(hero, sourcebooks, options);

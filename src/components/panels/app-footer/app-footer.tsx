@@ -1,5 +1,5 @@
-import { Badge, Button, Divider, Drawer, Flex, Space } from 'antd';
 import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { Button, Divider, Drawer, Flex, Space } from 'antd';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
@@ -77,7 +77,7 @@ export const AppFooter = (props: Props) => {
 							buttons={[
 								{ label: 'Ref', onClick: props.showReference },
 								{ label: 'Roll', onClick: props.showRoll },
-								{ icon: <Badge dot={props.highlightAbout}><SettingOutlined /></Badge>, tooltip: 'Settings', onClick: props.showSettings },
+								{ icon: <SettingOutlined className={props.highlightAbout ? 'danger' : ''} />, tooltip: 'Settings', onClick: props.showSettings },
 								{ icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.showAbout }
 							]}
 						/>
@@ -86,7 +86,7 @@ export const AppFooter = (props: Props) => {
 							buttons={[
 								{ label: 'Reference', onClick: props.showReference },
 								{ label: 'Roll', onClick: props.showRoll },
-								{ label: 'Settings', icon: <Badge dot={props.highlightAbout}><SettingOutlined /></Badge>, onClick: props.showSettings },
+								{ label: 'Settings', icon: <SettingOutlined className={props.highlightAbout ? 'danger' : ''} />, onClick: props.showSettings },
 								{ label: 'About', icon: <InfoCircleOutlined />, onClick: props.showAbout }
 							]}
 						/>

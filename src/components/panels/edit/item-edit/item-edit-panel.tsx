@@ -35,13 +35,20 @@ interface Props {
 
 export const ItemEditPanel = (props: Props) => {
 	const [ item, setItem ] = useState<Item>(props.item);
+	const [ revision, setRevision ] = useState<number>(0);
+
+	const updateItem = (value: Item) => {
+		setItem(value);
+		setRevision(revision + 1);
+		props.onChange(value);
+	};
 
 	const getNameAndDescriptionSection = () => {
 		const onChange = (name: string, desc: string) => {
 			const copy = Utils.copy(item);
 			copy.name = name;
 			copy.description = desc;
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
@@ -57,21 +64,21 @@ export const ItemEditPanel = (props: Props) => {
 		const setType = (value: ItemType) => {
 			const copy = Utils.copy(item);
 			copy.type = value;
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
 		const setKeywords = (value: (AbilityKeyword | KitArmor | KitWeapon)[]) => {
 			const copy = Utils.copy(item);
 			copy.keywords = value;
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
 		const setEffect = (value: string) => {
 			const copy = Utils.copy(item);
 			copy.effect = value;
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
@@ -109,7 +116,7 @@ export const ItemEditPanel = (props: Props) => {
 			copy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => lvl.features = Utils.copy(features));
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
@@ -137,14 +144,14 @@ export const ItemEditPanel = (props: Props) => {
 			copy.crafting = value ?
 				FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name })
 				: null;
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
 		const setCrafting = (value: Project) => {
 			const copy = Utils.copy(item);
 			copy.crafting = Utils.copy(value);
-			setItem(copy);
+			updateItem(copy);
 			props.onChange(copy);
 		};
 
@@ -205,6 +212,7 @@ export const ItemEditPanel = (props: Props) => {
 										children: (
 											<SelectablePanel>
 												<ItemPanel
+													key={revision}
 													item={item}
 													sourcebooks={props.sourcebooks}
 													options={props.options}

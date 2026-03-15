@@ -831,12 +831,12 @@ export const HeroPanel = (props: Props) => {
 		let buckets: { name: string, features: { feature: Feature, source: string, level: number | undefined }[] }[] = [];
 		features.forEach(f => {
 			const bucketName = getBucketName(f);
-			let bucketIndex = buckets.findIndex(b => b.name === bucketName);
-			if (bucketIndex === -1) {
-				bucketIndex = buckets.length;
-				buckets.push({ name: bucketName, features: [] });
+			let bucket = buckets.find(b => b.name === bucketName);
+			if (!bucket) {
+				bucket = { name: bucketName, features: [] };
+				buckets.push(bucket);
 			}
-			buckets[bucketIndex].features.push(f);
+			bucket.features.push(f);
 		});
 		if (featureSort !== 'lvl') {
 			buckets = Collections.sort(buckets, b => b.name);

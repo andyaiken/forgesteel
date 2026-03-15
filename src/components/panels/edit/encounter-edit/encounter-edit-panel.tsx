@@ -57,11 +57,37 @@ interface Props {
 
 export const EncounterEditPanel = (props: Props) => {
 	const [ encounter, setEncounter ] = useState<Encounter>(props.encounter);
+	const [ activeLeftTabKey, setActiveLeftTabKey ] = useState<string>('encounter');
+	const [ activeRightTabKey, setActiveRightTabKey ] = useState<string>('monsters');
 	const [ filterVisible, setFilterVisible ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 	const [ draggedMonster, setDraggedMonster ] = useState<Monster | null>(null);
 	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
+
+	const switchLeftTab = (key: string) => {
+		setActiveLeftTabKey(key);
+		switch (key) {
+			case 'monsters':
+				setActiveRightTabKey('monsters');
+				break;
+			case 'terrain':
+				setActiveRightTabKey('terrain');
+				break;
+		}
+	};
+
+	const switchRightTab = (key: string) => {
+		setActiveRightTabKey(key);
+		switch (key) {
+			case 'monsters':
+				setActiveLeftTabKey('monsters');
+				break;
+			case 'terrain':
+				setActiveLeftTabKey('terrain');
+				break;
+		}
+	};
 
 	const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 		const copy = Utils.copy(encounter);
@@ -81,6 +107,8 @@ export const EncounterEditPanel = (props: Props) => {
 			group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
 			copy.groups.push(group);
 		}
+
+		copy.groups = copy.groups.filter(g => g.slots.length > 0);
 
 		setEncounter(copy);
 		props.onChange(copy);
@@ -315,7 +343,7 @@ export const EncounterEditPanel = (props: Props) => {
 				}
 				{
 					encounter.groups.length === 0 ?
-						<div className='ds-text dimmed-text centered-text'>None</div>
+						<div className='ds-text dimmed-text centered-text'>Add a monster from the list on the right.</div>
 						: null
 				}
 			</Space>
@@ -763,9 +791,14 @@ export const EncounterEditPanel = (props: Props) => {
 	const onDragStart = (event: DragStartEvent) => {
 		const data = event.active.data.current as { type: string, element: Element };
 		switch (data.type) {
-			case 'monster':
+			case 'monster': {
 				setDraggedMonster(data.element as Monster);
+				const copy = Utils.copy(encounter);
+				copy.groups.push(FactoryLogic.createEncounterGroup());
+				setEncounter(copy);
+				props.onChange(copy);
 				break;
+			}
 			case 'terrain':
 				setDraggedTerrain(data.element as Terrain);
 				break;
@@ -775,12 +808,22 @@ export const EncounterEditPanel = (props: Props) => {
 	const onDragCancel = () => {
 		setDraggedMonster(null);
 		setDraggedTerrain(null);
+
+		const copy = Utils.copy(encounter);
+		copy.groups = copy.groups.filter(g => g.slots.length > 0);
+		setEncounter(copy);
+		props.onChange(copy);
 	};
 
 	const onDragEnd = (event: DragEndEvent) => {
 		if (draggedMonster && event.over) {
 			const groupID = event.over.id.toString();
 			addMonster(draggedMonster, groupID);
+		} else {
+			const copy = Utils.copy(encounter);
+			copy.groups = copy.groups.filter(g => g.slots.length > 0);
+			setEncounter(copy);
+			props.onChange(copy);
 		}
 
 		if (draggedTerrain && event.over) {
@@ -803,36 +846,38 @@ export const EncounterEditPanel = (props: Props) => {
 						<Tabs
 							items={[
 								{
-									key: '1',
+									key: 'encounter',
 									label: 'Encounter',
 									children: getNameAndDescriptionSection()
 								},
 								{
-									key: '2',
+									key: 'monsters',
 									label: 'Monsters',
 									children: getMonstersSection()
 								},
 								{
-									key: '3',
+									key: 'terrain',
 									label: 'Terrain',
 									children: getTerrainSection()
 								},
 								{
-									key: '4',
+									key: 'objective',
 									label: 'Objective',
 									children: getObjectiveSection()
 								},
 								{
-									key: '5',
+									key: 'notes',
 									label: 'Notes',
 									children: getNotesSection()
 								},
 								{
-									key: '6',
+									key: 'malice',
 									label: 'Malice',
 									children: getMaliceSection()
 								}
 							]}
+							activeKey={activeLeftTabKey}
+							onChange={switchLeftTab}
 						/>
 					</div>
 					<div className='encounter-list-column'>
@@ -840,16 +885,18 @@ export const EncounterEditPanel = (props: Props) => {
 						<Tabs
 							items={[
 								{
-									key: '1',
+									key: 'monsters',
 									label: 'Monsters',
 									children: getMonsterListSection()
 								},
 								{
-									key: '2',
+									key: 'terrain',
 									label: 'Terrain',
 									children: getTerrainListSection()
 								}
 							]}
+							activeKey={activeRightTabKey}
+							onChange={switchRightTab}
 							tabBarExtraContent={
 								<Button
 									className='filter-button'
@@ -1000,7 +1047,7 @@ const TerrainDropTarget = (props: TerrainDropTargetProps) => {
 				{props.encounter.terrain.map(slot => props.getSlot(slot))}
 				{
 					props.encounter.terrain.length === 0 ?
-						<div className='ds-text dimmed-text centered-text'>No terrain</div>
+						<div className='ds-text dimmed-text centered-text'>Add terrain from the list on the right.</div>
 						: null
 				}
 			</Space>

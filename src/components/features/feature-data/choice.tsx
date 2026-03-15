@@ -211,6 +211,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 			.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
 		allOptions.push(...additionalOptions);
 	}
+	allOptions = Collections.distinct(allOptions, opt => opt.feature.id);
 
 	const selectedIDs = props.data.selected.map(f => f.id);
 	const pointsUsed = Collections.sum(selectedIDs, id => {

@@ -1,6 +1,5 @@
 import { Plugin, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 // Base manifest template
 const BASE_MANIFEST = {
@@ -89,7 +88,6 @@ export default defineConfig({
 	},
 	plugins: [
 		react(),
-		tsconfigPaths(),
 		manifestPlugin(),
 		// Dev server plugin to serve manifest.json and sw.js
 		{
@@ -129,6 +127,9 @@ export default defineConfig({
 		}
 	],
 	publicDir: 'public',
+	resolve: {
+		tsconfigPaths: true
+	},
 	server: {
 		headers: {
 			'Service-Worker-Allowed': '/'

@@ -1,5 +1,6 @@
 import { Feature, FeaturePackageData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -32,10 +33,7 @@ export const InfoPackage = (props: InfoProps) => {
 					.filter(f => f.type === FeatureType.PackageContent)
 					.filter(f => f.data.tag === props.data.tag)
 					.map(f => (
-						<div key={f.id}>
-							<div className='ds-text bold-text'>{f.name}</div>
-							<Markdown text={f.description} />
-						</div>
+						<Field key={f.id} label={f.name} value={<Markdown useSpan={true} text={f.description} />} />
 					))
 			}
 		</>

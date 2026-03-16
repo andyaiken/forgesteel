@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { SashPanel } from '@/components/panels/sash/sash-panel';
 
 import './ability-info-panel.scss';
@@ -68,7 +69,7 @@ export const AbilityInfoPanel = (props: Props) => {
 						<Field
 							compact={true}
 							label={props.ability.target !== distance ? 'Distance' : 'Distance / Target'}
-							value={distance}
+							value={<Markdown useSpan={true} text={distance} />}
 						/>
 						: null
 				}
@@ -77,7 +78,7 @@ export const AbilityInfoPanel = (props: Props) => {
 						<Field
 							compact={true}
 							label='Target'
-							value={props.ability.target}
+							value={<Markdown useSpan={true} text={props.ability.target} />}
 						/>
 						: null
 				}
@@ -86,7 +87,7 @@ export const AbilityInfoPanel = (props: Props) => {
 						<Field
 							compact={true}
 							label='Trigger'
-							value={props.ability.type.trigger}
+							value={<Markdown useSpan={true} text={props.ability.type.trigger} />}
 						/>
 						: null
 				}

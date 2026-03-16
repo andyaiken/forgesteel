@@ -1,7 +1,7 @@
 import { Button, Segmented, Select, Space } from 'antd';
 import { CloseOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { Feature, FeatureData } from '@/models/feature';
+import { Feature, FeatureClassAbilityData, FeatureData } from '@/models/feature';
 import { Hero, HeroEditTab } from '@/models/hero';
 import { useMemo, useState } from 'react';
 import { Ancestry } from '@/models/ancestry';
@@ -333,6 +333,18 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = Utils.copy(hero);
 		if (heroCopy.class) {
 			heroCopy.class.subclasses.filter(sc => sc.id === subclassID).forEach(sc => sc.selected = false);
+
+			// Remove any abilities that come from this subclass
+			const subclass = heroCopy.class.subclasses.find(sc => sc.id === subclassID);
+			if (subclass) {
+				const abilityIDs = subclass.abilities.map(a => a.id);
+				HeroLogic.getFeatures(heroCopy)
+					.filter(f => f.feature.type === FeatureType.ClassAbility)
+					.forEach(f => {
+						const data = f.feature.data as FeatureClassAbilityData;
+						data.selectedIDs = data.selectedIDs.filter(id => !abilityIDs.includes(id));
+					});
+			}
 		}
 		setHero(heroCopy);
 		setDirty(true);

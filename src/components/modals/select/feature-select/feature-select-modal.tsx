@@ -7,6 +7,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -16,6 +17,7 @@ import './feature-select-modal.scss';
 interface Props {
 	features: { feature: Feature, value: number }[];
 	hero?: Hero;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (feature: Feature) => void;
@@ -49,8 +51,10 @@ export const FeatureSelectModal = (props: Props) => {
 									<FeaturePanel
 										feature={f.feature}
 										cost={showCosts ? f.value : undefined}
-										mode={PanelMode.Full}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
+										mode={PanelMode.Full}
 									/>
 								</SelectablePanel>
 							))

@@ -307,6 +307,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 				<FeatureSelectModal
 					features={sortedOptions}
 					hero={props.hero}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onSelect={feature => {
 						setChoiceSelectorOpen(false);

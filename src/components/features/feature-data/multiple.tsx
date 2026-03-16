@@ -21,6 +21,10 @@ export const InfoMultiple = (props: InfoProps) => {
 		return null;
 	}
 
+	if (props.feature.description) {
+		return null;
+	}
+
 	return (
 		<div>
 			{

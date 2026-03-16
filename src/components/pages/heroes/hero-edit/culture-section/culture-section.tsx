@@ -267,6 +267,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onSelect={f => {
 						setShowEnvironment(false);
@@ -278,6 +279,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onSelect={f => {
 						setShowOrganization(false);
@@ -289,6 +291,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onSelect={f => {
 						setShowUpbringing(false);

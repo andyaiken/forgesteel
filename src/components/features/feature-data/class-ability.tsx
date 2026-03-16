@@ -56,6 +56,9 @@ export const InfoClassAbility = (props: InfoProps) => {
 				{
 					props.data.selectedIDs.map(id => {
 						const ability = abilities.find(a => a.id === id) as Ability;
+						if (!ability) {
+							return null;
+						}
 						return (
 							<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
 						);
@@ -256,6 +259,9 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 			{
 				props.data.selectedIDs.map(id => {
 					const ability = abilities.find(a => a.id === id) as Ability;
+					if (!ability) {
+						return null;
+					}
 					return (
 						<Flex key={ability.id} className='selection-box' align='center' gap={10}>
 							<Field

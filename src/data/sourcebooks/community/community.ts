@@ -126,6 +126,464 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 	culture: FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish')
 };
 
+const beastfolk: Ancestry = {
+	id: 'ancestry-beastfolk',
+	name: 'Beastfolk',
+	description: `
+*By Andy Aiken*
+
+Across the world - and across many worlds - humanoid cultures sometimes arise that resemble the animals around them.
+
+"Beastfolk" is not the name of a single people; it is a convenient term used by scholars and travelers to describe a wide variety of humanoid peoples who bear the traits of animals. Wolf-headed hunters, feathered skyfolk, scaled serpentkin, nimble catfolk, and countless others are all grouped under this broad label.`,
+	features: [
+		FactoryLogic.feature.createChoice({
+			id: 'beastfolk-1',
+			name: 'Primal Instinct',
+			description: 'The animal spirit within you emerges in moments of danger.',
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-1',
+						name: 'Pack Instinct',
+						description: `
+*You fight best beside your allies.*
+
+You gain an edge on melee strikes against enemies who are  adjacent to at least two of your allies.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-2',
+						name: 'Predator Instinct',
+						description: `
+*You know how to finish the hunt.*
+
+You gain a bonus to strike damage equal to your echelon against winded enemies. 
+
+You gain an edge on Track tests.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-3',
+						name: 'Rampager Instinct',
+						description: `
+*You overwhelm enemies through sheer force.*
+
+When you force move a creature, you deal damage to it equal to the distance moved.
+
+You gain an edge on Intimidate tests.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'beastfolk-1-4',
+						name: 'Skirmisher Instinct',
+						description: 'You strike and vanish before retaliation',
+						features: [
+							FactoryLogic.feature.createBonus({
+								id: 'beastfolk-1-4a',
+								field: FeatureField.Disengage,
+								value: 1
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-4b',
+								name: 'Skirmisher Instinct',
+								description: 'You gain an edge on Gymnastics and Jump tests.'
+							})
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-5',
+						name: 'Stalker Instinct',
+						description: `
+*You are patient and unseen.*
+
+You gain an edge on Hide and Sneak tests.
+
+Your first strike against a creature that hasn’t acted yet this encounter gains an edge.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-6',
+						name: 'Survivor Instinct',
+						description: `
+*You refuse to fall.*
+
+When you become winded, you gain temporary Stamina equal to your level.
+
+You gain an edge on Alertness and Endurance tests.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-1-7',
+						name: 'Trickster Instinct',
+						description: `
+*You survive through misdirection and cleverness.*
+
+When a creature misses you with a strike, you can use a triggered action to shift up to 2 squares. 
+
+You gain an edge on Lie and Persuade tests.`
+					}),
+					value: 1
+				}
+			]
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'beastfolk-2',
+			name: 'Purchased Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-1',
+						name: 'Natural Armor',
+						description: `
+*Your skin is dense or leathery, or you have an exoskeleton.*
+
+You have a +3 bonus to Stamina, and that bonus increases by 3 at 4th, 7th, and 10th levels.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-2',
+						name: 'Regeneration',
+						description: `
+*Your body heals with unnatural speed.*
+
+If you are winded at the start of your turn, you immediately regain Stamina equal to your echelon.`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-3',
+						name: 'Slippery Body',
+						description: `
+*Your scales or skin make you difficult to restrain.*
+
+You gain the Escape Artist skill.
+
+Enemies suffer a bane on attempts to grab you.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-4',
+						name: 'Spines',
+						description: `
+*Your body is covered in quills or barbs.*
+
+When a creature attempts to grab you, it takes damage equal to your echelon.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-5',
+						name: 'Echolocation',
+						description: `
+*You perceive your surroundings through reflected sound.*
+
+You ignore concealment and invisibility against creatures within 3 squares that are not hidden.
+
+You suffer a bane on Alertness and Eavesdrop tests in areas of loud noise.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-6',
+						name: 'Tremor Sense',
+						description: `
+*You feel vibrations through the ground.*
+
+You can detect the location of any creatures touching the ground within 3 squares, even if they are hidden or invisible or you lack line of effect to them.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-7',
+						name: 'Airborne',
+						description: `
+*You can fly.*
+
+You gain the Fly movement mode.
+
+While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-8',
+						name: 'Amphibious',
+						description: `
+*You are at home in the water.*
+
+You gain the Swim movement mode.
+
+You can hold your breath for 1 hour.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-9',
+						name: 'Climber',
+						description: `
+*You move easily across vertical surfaces.*
+
+You gain the Climb movement mode.
+
+When a creature misses you with a melee strike while you are adjacent to a climbable surface, you can shift 1.
+
+You gain an edge on Climb tests.`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-10',
+						name: 'Fey Stepper',
+						description: `
+*Your instincts echo the strange movement of fey beasts.*
+
+When you take the Disengage move action, you can teleport that distance rather than shifting.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-11',
+						name: 'Leaper',
+						description: `
+*Your legs are built for explosive jumps.*
+
+You gain the Jump skill.
+
+When you jump, increase the distance by 2 squares.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-12',
+						name: 'Tunnel-Dweller',
+						description: `
+*Using claws or mandibles, you can move through the earth.*
+
+You gain the Burrow movement mode.`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-13',
+						name: 'Big!',
+						description: 'Your size is 1L.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-14',
+						name: 'Camouflage',
+						description: `
+*Your body blends naturally with your surroundings.*
+
+You gain the Hide skill.
+
+You gain an edge on Hide tests.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-15',
+						name: 'Hold Fast',
+						description: `
+*Your body is adapted for seizing prey.*
+
+When you take the Grab maneuver you have an edge on your power roll; when you have a creature grabbed, they take a bane on their roll to escape your grab.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-16',
+						name: 'Pack Tactics',
+						description: `
+*You and your allies know how to bring prey down together.*
+
+When you use the Knockdown maneuver against an enemy adjacent to one of your allies, you gain an edge on the power roll.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-17',
+						name: 'Powerful Build',
+						description: `
+*You possess the mass and strength of powerful beasts.*
+
+You gain the Lift skill.
+
+You gain an edge on Might tests, and your Might score is treated as 1 higher for the purpose of resisting potencies.`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-18',
+						name: 'Prehensile Tail',
+						description: `
+*Your tail is dexterous.*
+
+You gain the Climb and Gymnastics skills.
+
+You can retrieve small items without using your hands.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'beastfolk-2-19',
+							name: 'Terrifying Roar',
+							description: 'Your roar carries the authority of a primal predator.',
+							type: FactoryLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Area ],
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+							target: 'Each enemy in the area',
+							sections: [
+								FactoryLogic.createAbilitySectionText('The target suffers a bane on its next strike.')
+							]
+						})
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-20',
+						name: 'Ambush Predator',
+						description: `
+*You strike hardest from concealment.*
+
+If you are hidden when you use a strike ability, you gain a double edge on your power roll (rather than the single edge you would normally get for being hidden).`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-21',
+						name: 'Constrictor',
+						description: `
+*Your body coils with crushing strength.*
+
+Creatures you have grabbed take damage equal to your echelon at the start of their turn.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-22',
+						name: 'Gore',
+						description: `
+*You possess horns, antlers, tusks, or similar natural weapons built for driving attacks.*
+
+When you take the Charge action, your strike gains +1d6 damage.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-23',
+						name: 'Pounce',
+						description: `
+*You leap upon prey with predatory force.*
+
+When you score a tier 3 result with a melee strike, you can knock the target prone.
+
+You gain the Jump skill.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-24',
+						name: 'Ram',
+						description: `
+*You strike with horns or antlers.*
+
+Whenever you force move a creature or object, the forced movement distance gains a +1 bonus.`
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-25',
+						name: 'Rending Claws',
+						description: `
+*Your claws tear flesh with savage force.*
+
+When you score a tier 3 result with a melee strike, the target becomes bleeding (save ends).`
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'beastfolk-2-26',
+							name: 'Tail Lash',
+							description: 'Your hands aren’t the only things they need to watch out for.',
+							type: FactoryLogic.type.createMain(),
+							keywords: [ AbilityKeyword.Melee ],
+							distance: [ FactoryLogic.distance.createMelee(2) ],
+							target: 'One enemy',
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility ],
+									tier1: '4 + M or A damage; push 1; M < 0 prone',
+									tier2: '4 + M or A damage; push 1; M < 1 prone',
+									tier3: '4 + M or A damage; push 1; M < 2 prone'
+								}))
+							]
+						})
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'beastfolk-2-27',
+						name: 'Venomous',
+						description: `
+*You can inject poison from your fangs, claws, or spines.*
+
+When you score a tier 3 result with a melee strike, you can deal an additional 1d6 poison damage.`
+					}),
+					value: 1
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Beastfolk', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Khamish')
+};
+
 const gallGuardian: Ancestry = {
 	id: 'ancestry-gall-guardian',
 	name: 'Gall Guardian',
@@ -4931,6 +5389,7 @@ export const community: Sourcebook = {
 	adventures: [],
 	ancestries: [
 		aranox,
+		beastfolk,
 		gallGuardian,
 		ironbound,
 		oakling,

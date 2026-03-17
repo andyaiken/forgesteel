@@ -368,12 +368,12 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		buttons.push(
 			<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 		);
+		buttons.push(
+			<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
+		);
 		if (sourcebook.type === SourcebookType.Homebrew) {
 			buttons.push(
 				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
-			);
-			buttons.push(
-				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
 			);
 			if (props.onDelete) {
 				const heroes = props.heroes.filter(h => h.settingIDs.includes(sourcebook.id));

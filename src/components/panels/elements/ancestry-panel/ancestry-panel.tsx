@@ -1,6 +1,7 @@
 import { Segmented, Space } from 'antd';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryLogic } from '@/logic/ancestry-logic';
+import { Collections } from '@/utils/collections';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -38,7 +39,7 @@ export const AncestryPanel = (props: Props) => {
 	};
 
 	const getSignatureFeatures = () => {
-		const features = AncestryLogic.getSignatureFeatures(props.ancestry);
+		const features = Collections.sort(AncestryLogic.getSignatureFeatures(props.ancestry), f => f.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
@@ -55,7 +56,7 @@ export const AncestryPanel = (props: Props) => {
 	};
 
 	const getPurchasedFeatures = () => {
-		const features = AncestryLogic.getPurchasedFeatures(props.ancestry);
+		const features = Collections.sort(AncestryLogic.getPurchasedFeatures(props.ancestry), f => f.feature.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>

@@ -413,11 +413,11 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createMovementMode = (data: { id: string, name?: string, mode: string }): FeatureMovementMode => {
+	createMovementMode = (data: { id: string, name?: string, description?: string, mode: string }): FeatureMovementMode => {
 		return {
 			id: data.id,
 			name: data.name || 'Movement Mode',
-			description: '',
+			description: data.description || '',
 			type: FeatureType.MovementMode,
 			data: {
 				mode: data.mode

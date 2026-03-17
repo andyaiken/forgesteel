@@ -244,13 +244,13 @@ You gain an edge on Lie and Persuade tests.`
 			name: 'Purchased Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'beastfolk-2-1',
 						name: 'Natural Armor',
-						description: `
-*Your skin is dense or leathery, or you have an exoskeleton.*
-
-You have a +3 bonus to Stamina, and that bonus increases by 3 at 4th, 7th, and 10th levels.`
+						description: 'Your skin is dense or leathery, or you have an exoskeleton.',
+						field: FeatureField.Stamina,
+						value: 3,
+						valuePerLevel: 3
 					}),
 					value: 1
 				},
@@ -266,15 +266,21 @@ If you are winded at the start of your turn, you immediately regain Stamina equa
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-3',
 						name: 'Slippery Body',
-						description: `
-*Your scales or skin make you difficult to restrain.*
-
-You gain the Escape Artist skill.
-
-Enemies suffer a bane on attempts to grab you.`
+						description: 'Your scales or skin make you difficult to restrain.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-3a',
+								selected: [ 'Escape Artist' ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-3b',
+								name: 'Slippery Body',
+								description: 'Enemies suffer a bane on attempts to grab you.'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -314,43 +320,62 @@ You can detect the location of any creatures touching the ground within 3 square
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-7',
 						name: 'Airborne',
-						description: `
-*You can fly.*
-
-You gain the Fly movement mode.
-
-While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.`
+						description: 'You can fly.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-7a',
+								name: 'Airborne',
+								description: 'While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.'
+							}),
+							FactoryLogic.feature.createMovementMode({
+								id: 'beastfolk-2-7b',
+								mode: 'Fly'
+							})
+						]
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-8',
 						name: 'Amphibious',
-						description: `
-*You are at home in the water.*
-
-You gain the Swim movement mode.
-
-You can hold your breath for 1 hour.`
+						description: 'You are at home in the water.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-8a',
+								name: 'Amphibious',
+								description: 'You can hold your breath for 1 hour.'
+							}),
+							FactoryLogic.feature.createMovementMode({
+								id: 'beastfolk-2-8b',
+								mode: 'Swim'
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-9',
 						name: 'Climber',
-						description: `
-*You move easily across vertical surfaces.*
-
-You gain the Climb movement mode.
-
+						description: 'You move easily across vertical surfaces.',
+						features: [
+							FactoryLogic.feature.createMovementMode({
+								id: 'beastfolk-2-9a',
+								mode: 'Climb'
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-9b',
+								name: 'Climber',
+								description: `
 When a creature misses you with a melee strike while you are adjacent to a climbable surface, you can shift 1.
 
 You gain an edge on Climb tests.`
+							})
+						]
 					}),
 					value: 2
 				},
@@ -366,47 +391,58 @@ When you take the Disengage move action, you can teleport that distance rather t
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-11',
 						name: 'Leaper',
-						description: `
-*Your legs are built for explosive jumps.*
-
-You gain the Jump skill.
-
-When you jump, increase the distance by 2 squares.`
+						description: 'Your legs are built for explosive jumps.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-11a',
+								selected: [ 'Jump' ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-11b',
+								name: 'Leaper',
+								description: 'When you jump, increase the distance by 2 squares.'
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMovementMode({
 						id: 'beastfolk-2-12',
 						name: 'Tunnel-Dweller',
-						description: `
-*Using claws or mandibles, you can move through the earth.*
-
-You gain the Burrow movement mode.`
+						description: 'Using claws or mandibles, you can move through the earth.',
+						mode: 'Burrow'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSize({
 						id: 'beastfolk-2-13',
 						name: 'Big!',
-						description: 'Your size is 1L.'
+						sizeValue: 1,
+						sizeMod: 'L'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-14',
 						name: 'Camouflage',
-						description: `
-*Your body blends naturally with your surroundings.*
-
-You gain the Hide skill.
-
-You gain an edge on Hide tests.`
+						description: 'Your body blends naturally with your surroundings.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-14',
+								selected: [ 'Hide' ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-14',
+								name: 'Camouflage',
+								description: 'You gain an edge on Hide tests.'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -433,28 +469,40 @@ When you use the Knockdown maneuver against an enemy adjacent to one of your all
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-17',
 						name: 'Powerful Build',
-						description: `
-*You possess the mass and strength of powerful beasts.*
-
-You gain the Lift skill.
-
-You gain an edge on Might tests, and your Might score is treated as 1 higher for the purpose of resisting potencies.`
+						description: 'You possess the mass and strength of powerful beasts.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-17a',
+								selected: [ 'Lift' ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-17b',
+								name: 'Powerful Build',
+								description: 'You gain an edge on Might tests, and your Might score is treated as 1 higher for the purpose of resisting potencies.'
+							})
+						]
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-18',
 						name: 'Prehensile Tail',
-						description: `
-*Your tail is dexterous.*
-
-You gain the Climb and Gymnastics skills.
-
-You can retrieve small items without using your hands.`
+						description: 'Your tail is dexterous.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-18a',
+								selected: [ 'Climb', 'Gymnastics' ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-18b',
+								name: 'Prehensile Tail',
+								description: 'You can retrieve small items without using your hands.'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -509,15 +557,21 @@ When you take the Charge action, your strike gains +1d6 damage.`
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-23',
 						name: 'Pounce',
-						description: `
-*You leap upon prey with predatory force.*
-
-When you score a tier 3 result with a melee strike, you can knock the target prone.
-
-You gain the Jump skill.`
+						description: 'You leap upon prey with predatory force.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-23a',
+								name: 'Pounce',
+								description: 'When you score a tier 3 result with a melee strike, you can knock the target prone.'
+							}),
+							FactoryLogic.feature.createSkillChoice({
+								id: 'beastfolk-2-23b',
+								selected: [ 'Jump' ]
+							})
+						]
 					}),
 					value: 1
 				},

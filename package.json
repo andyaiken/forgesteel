@@ -7,7 +7,7 @@
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
 		"start": "npm ci && vite --host",
-		"update": "npx npm-check-updates --interactive --format group",
+		"update": "npx npm-check-updates --peer --interactive --format group",
 		"lint": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto",
 		"fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",
 		"test": "vitest",
@@ -36,7 +36,7 @@
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.2",
+		"@eslint/js": "^10.0.1",
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"@types/gtag.js": "^0.0.20",
 		"@types/react": "^19.2.14",
@@ -45,8 +45,7 @@
 		"@vitest/coverage-v8": "^4.1.0",
 		"axios-mock-adapter": "^2.1.0",
 		"esbuild": "^0.27.4",
-		"eslint": "^9.39.2",
-		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint": "^10.0.3",
 		"globals": "^17.4.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.1",

@@ -400,7 +400,7 @@ export class TacticalMapLogic {
 		room.dimensions.width = Random.die(6) + Random.die(6) + 2;
 		room.dimensions.height = Random.die(6) + Random.die(6) + 2;
 
-		let extra = null;
+		let extra;
 
 		const dimensions = this.getMapBoundaries(map);
 		if (dimensions) {

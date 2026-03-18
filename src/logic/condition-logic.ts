@@ -31,7 +31,7 @@ export class ConditionLogic {
 	};
 
 	static getFullDescription = (condition: Condition) => {
-		let type = '';
+		let type;
 		switch (condition.type) {
 			case ConditionType.Custom:
 			case ConditionType.Quick:

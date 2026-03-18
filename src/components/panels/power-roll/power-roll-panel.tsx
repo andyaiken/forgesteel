@@ -43,7 +43,7 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		if ((CreatureLogic.isHero(props.creature) || (CreatureLogic.isMonster(props.creature) && props.creature.retainer)) && props.autoCalc) {
-			let bonus = 0;
+			let bonus;
 			if (props.ability) {
 				bonus = AbilityLogic.getPowerRollBonusValue(props.ability, props.creature);
 			} else {

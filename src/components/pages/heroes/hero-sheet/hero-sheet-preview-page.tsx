@@ -290,7 +290,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			card.addEventListener('mouseleave', cardLeave);
 			card.addEventListener('click', cardClick);
 		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

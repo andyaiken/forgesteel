@@ -123,7 +123,7 @@ export const MontagePanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		let content = null;
+		let content;
 		switch (page) {
 			case 'overview':
 				content = getOverview();

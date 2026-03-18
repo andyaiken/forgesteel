@@ -24,7 +24,6 @@ export const MultiLine = (props: Props) => {
 
 	useEffect(
 		() => props.onChange(debouncedValue),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ debouncedValue ]
 	);
 

@@ -316,7 +316,7 @@ export class SheetLayout {
 								}
 							}
 
-							const slotHeights = currentRow.map(arr => arr.reduce((h, ash) => h += ash.h, 0));
+							const slotHeights = currentRow.map(arr => arr.reduce((h, ash) => h + ash.h, 0));
 							if (slotHeights[slotHeights.length - 1] + slotHeights[slotHeights.length - 2] <= slotH) {
 								const combined = currentRow.slice(-2).flat(1);
 								currentRow = currentRow.slice(0, -2);

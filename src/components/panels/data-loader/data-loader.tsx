@@ -308,7 +308,6 @@ export const DataLoader = (props: Props) => {
 		loadData,
 		// dependencies here needs to be an empty array so that it only runs once
 		// otherwise, it runs several times as things change.
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 

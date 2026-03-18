@@ -33,7 +33,7 @@ export const InfoSkillChoice = (props: InfoProps) => {
 
 	const count = props.data.count || 1;
 
-	let str = '';
+	let str;
 	if (props.data.listOptions.length === 5) {
 		str = (count > 1 ? `Choose ${count} skills.` : 'Choose a skill.');
 	} else {

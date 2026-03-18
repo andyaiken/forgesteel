@@ -120,7 +120,7 @@ export const ConfigTaggedFeatureChoice = (props: ConfigProps) => {
 						optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 						value={props.data.count === 1 ? (props.data.selected.length > 0 ? props.data.selected[0].id : null) : props.data.selected.map(k => k.id)}
 						onChange={value => {
-							let ids: string[] = [];
+							let ids: string[];
 							if (props.data.count === 1) {
 								ids = value !== undefined ? [ value as string ] : [];
 							} else {

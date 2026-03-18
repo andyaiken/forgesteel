@@ -976,7 +976,7 @@ export class HeroLogic {
 
 		return Collections.distinct(Collections.getPermutations(array), item => item.join(', ')).map(arr => {
 			return all.map(ch => {
-				let value = 0;
+				let value;
 				if (primary.includes(ch)) {
 					value = 2;
 				} else {

@@ -7,7 +7,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 
 export class ModifierLogic {
 	static calculateModifierValue = (modifier: Modifier, creature: Hero | Monster) => {
-		let value = 0;
+		let value;
 
 		if (modifier.valueFromController) {
 			value = CreatureLogic.getField(creature, modifier.valueFromController);
@@ -21,7 +21,7 @@ export class ModifierLogic {
 			value += characteristicValue * multiplier;
 		}
 
-		let level = 0;
+		let level;
 		if (CreatureLogic.isMonster(creature)) {
 			level = MonsterLogic.getMonsterLevel(creature);
 		} else {

@@ -42,7 +42,6 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 
 	useEffect(
 		() => props.onChange(debouncedValue),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ debouncedValue ]
 	);
 

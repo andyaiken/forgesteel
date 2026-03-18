@@ -89,7 +89,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(Utils.copy(props.sourcebook));
 	const [ isEditing, setIsEditing ] = useState<boolean>(false);
 
-	let content: ReactNode = null;
+	let content: ReactNode;
 	const buttons: ReactNode[] = [];
 
 	if (isEditing) {

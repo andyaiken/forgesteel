@@ -92,12 +92,8 @@ export class FormatLogic {
 	static getDice = (text: string) => {
 		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*/);
 		if (diceMatch && diceMatch.groups) {
-			let throws = 0;
-			let sides = 0;
-
-			throws = parseInt(diceMatch.groups['throws']);
-			sides = parseInt(diceMatch.groups['sides']);
-
+			const throws = parseInt(diceMatch.groups['throws']);
+			const sides = parseInt(diceMatch.groups['sides']);
 			return `${throws}d${sides}`;
 		}
 

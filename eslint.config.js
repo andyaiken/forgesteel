@@ -2,7 +2,6 @@ import { defineConfig } from 'eslint/config';
 
 import js from '@eslint/js'
 import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
 import stylistic from '@stylistic/eslint-plugin'
 import tseslint from 'typescript-eslint'
 
@@ -29,10 +28,8 @@ export default defineConfig({
 		}
 	},
 	plugins: {
-		'react-hooks': reactHooks
 	},
 	rules: {
-		...reactHooks.configs.recommended.rules,
 		// Errors
 		'array-bracket-newline': [
 			'error',
@@ -122,9 +119,6 @@ export default defineConfig({
 			}
 		],
 		// Off
-		'react-hooks/set-state-in-effect': [
-			'off'
-		],
 		'@stylistic/brace-style': [
 			'off'
 		],

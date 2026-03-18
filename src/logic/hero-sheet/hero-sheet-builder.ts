@@ -222,8 +222,8 @@ export class HeroSheetBuilder {
 				.flatMap(f => (f.type === FeatureType.Perk) ? f.data.selected.map(p => p.id) : f.id);
 			classFeatures = classFeatures.filter(f => !perkIds.includes(f.feature.id));
 
-			let classFeatureSpace = 0;
-			let classFeatureLineLen = 0;
+			let classFeatureSpace;
+			let classFeatureLineLen;
 			let numCols = 2;
 			if (options.pageOrientation === 'portrait') {
 				if (options.classicSheetPageSize === SheetPageSize.Letter) {
@@ -344,8 +344,8 @@ export class HeroSheetBuilder {
 			.map(p => ({ feature: p as Feature, source: 'Perks' }))
 		);
 
-		let perkSpace = 0;
-		let perkLineLen = 0;
+		let perkSpace;
+		let perkLineLen;
 		if (options.pageOrientation === 'portrait') {
 			if (options.classicSheetPageSize === SheetPageSize.Letter) {
 				perkSpace = 42;

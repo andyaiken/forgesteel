@@ -45,7 +45,7 @@ export const DieRollPanel = (props: Props) => {
 
 	const setTierResult = (rolls: number[], rollState: RollState) => {
 		if (props.onRoll) {
-			let tier = 1;
+			let tier;
 
 			const total = Collections.sum([ ...rolls, ...props.modifiers, RollLogic.getBonus(rollState) ], r => r);
 			if (total <= 11) {

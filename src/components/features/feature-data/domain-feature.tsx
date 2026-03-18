@@ -109,7 +109,7 @@ export const ConfigDomainFeature = (props: ConfigProps) => {
 				optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 				value={props.data.count === 1 ? (props.data.selected.length > 0 ? props.data.selected[0].id : null) : props.data.selected.map(f => f.id)}
 				onChange={value => {
-					let ids: string[] = [];
+					let ids: string[];
 					if (props.data.count === 1) {
 						ids = value !== undefined ? [ value as string ] : [];
 					} else {

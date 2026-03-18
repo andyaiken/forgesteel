@@ -34,7 +34,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getDescription = () => {
-		let desc = '';
+		let desc;
 
 		if (props.feature.type === FeatureType.Ability) {
 			desc = props.feature.data.ability.description;

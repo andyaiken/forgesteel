@@ -764,7 +764,7 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					feature: FactoryLogic.feature.create({
 						id: 'ironbound-1c',
 						name: 'Guardian Mode',
-						description: 'When an adjacent ally is targeted by a strike, you can use a triggered action to swap places with your ally and become the target of the attack'
+						description: 'When an adjacent ally is targeted by a strike, you can use a triggered action to swap places with the ally and become the new target of the strike, provided you are a valid target'
 					}),
 					value: 1
 				},
@@ -825,7 +825,7 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					feature: FactoryLogic.feature.create({
 						id: 'ironbound-3a',
 						name: 'Ablative Plating',
-						description: 'When an enemy attacks you and scores a tier 3 result, you can use a triggered action to lose 1d6 Stamina and turn the tier 3 result into a tier 2 result.'
+						description: 'When an enemy attacks you with a strike and scores a tier 3 result, you can use a triggered action to lose Stamina equal to 1d6 plus your level and turn the tier 3 result into a tier 2 result.'
 					}),
 					value: 1
 				},

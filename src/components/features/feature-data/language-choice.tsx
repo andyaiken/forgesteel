@@ -76,7 +76,7 @@ export const EditLanguageChoice = (props: EditProps) => {
 				style={{ width: '100%' }}
 				status={data.options.length === 0 ? 'warning' : ''}
 				placeholder='Options'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 				optionRender={option => <Field label={option.data.value} value={option.data.description} />}
@@ -90,7 +90,7 @@ export const EditLanguageChoice = (props: EditProps) => {
 				style={{ width: '100%' }}
 				placeholder='Selection'
 				allowClear={true}
-				mode='multiple'
+				mode='tags'
 				options={sortedLanguages.map(option => ({ value: option.name }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 				value={data.selected}

@@ -286,7 +286,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 										/>
 										<Select
 											style={{ width: '100%' }}
-											mode='multiple'
+											mode='tags'
 											allowClear={true}
 											placeholder='Select related languages'
 											options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}

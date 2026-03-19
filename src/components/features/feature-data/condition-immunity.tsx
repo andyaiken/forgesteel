@@ -46,7 +46,7 @@ export const EditConditionImmunity = (props: EditProps) => {
 			<Select
 				style={{ width: '100%' }}
 				placeholder='Select conditions'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}

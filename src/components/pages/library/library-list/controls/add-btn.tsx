@@ -144,7 +144,7 @@ export const AddBtn = (props: Props) => {
 						/>
 						<Select
 							style={{ width: '100%', margin: '10px 0' }}
-							mode='multiple'
+							mode='tags'
 							placeholder='Use monsters with any keywords'
 							options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: kw }))}
 							optionRender={opt => <div className='ds-text'>{opt.data.value}</div>}

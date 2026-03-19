@@ -86,7 +86,7 @@ export const EditAbilityDamage = (props: EditProps) => {
 			<Select
 				style={{ width: '100%' }}
 				placeholder='Select keywords'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}

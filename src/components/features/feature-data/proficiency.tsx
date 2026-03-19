@@ -57,7 +57,7 @@ export const EditProficiency = (props: EditProps) => {
 			<Select
 				style={{ width: '100%' }}
 				placeholder='Weapons'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
@@ -68,7 +68,7 @@ export const EditProficiency = (props: EditProps) => {
 			<Select
 				style={{ width: '100%' }}
 				placeholder='Armor'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}

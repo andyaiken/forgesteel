@@ -96,7 +96,7 @@ export const EditSkillChoice = (props: EditProps) => {
 				style={{ width: '100%' }}
 				placeholder='Skills'
 				allowClear={true}
-				mode='multiple'
+				mode='tags'
 				options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 				optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 				value={data.options}
@@ -120,7 +120,7 @@ export const EditSkillChoice = (props: EditProps) => {
 				style={{ width: '100%' }}
 				placeholder='Selection'
 				allowClear={true}
-				mode='multiple'
+				mode='tags'
 				options={sortedSkills.map(option => ({ value: option.name }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 				value={data.selected}

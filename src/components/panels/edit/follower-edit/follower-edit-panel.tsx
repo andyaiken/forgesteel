@@ -113,7 +113,7 @@ export const FollowerEditPanel = (props: Props) => {
 				<HeaderText>Skills</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					mode='multiple'
+					mode='tags'
 					maxCount={4}
 					allowClear={true}
 					placeholder='Skills'
@@ -125,7 +125,7 @@ export const FollowerEditPanel = (props: Props) => {
 				<HeaderText>Languages</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					mode='multiple'
+					mode='tags'
 					maxCount={2}
 					allowClear={true}
 					placeholder='Languages'

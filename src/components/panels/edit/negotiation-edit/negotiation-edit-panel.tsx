@@ -92,7 +92,7 @@ export const NegotiationEditPanel = (props: Props) => {
 				<HeaderText>Languages</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					mode='multiple'
+					mode='tags'
 					placeholder='Select languages'
 					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ value: l.name, label: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}

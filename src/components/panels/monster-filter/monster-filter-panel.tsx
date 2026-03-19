@@ -85,7 +85,7 @@ export const MonsterFilterPanel = (props: Props) => {
 					}
 					<Select
 						style={{ width: '100%' }}
-						mode='multiple'
+						mode='tags'
 						allowClear={true}
 						placeholder='Keywords'
 						options={keywords.map(k => ({ label: k, value: k }))}

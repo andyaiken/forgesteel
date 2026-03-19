@@ -83,16 +83,19 @@ export const KitEditPanel = (props: Props) => {
 					value={kit.type}
 					onChange={setType}
 				/>
-				<Alert
-					type='info'
-					showIcon={true}
-					title='If your kit has a Type, it can only be selected from a kit feature that specifies this value.'
-				/>
+				{
+					kit.type ?
+						<Alert
+							type='info'
+							showIcon={true}
+							title='If your kit has a Type, it can only be selected from a kit feature that specifies this value.'
+						/>
+						: null
+				}
 				<HeaderText>Armor</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					status={kit.armor.length === 0 ? 'warning' : ''}
-					mode='multiple'
+					mode='tags'
 					allowClear={true}
 					placeholder='Select armor'
 					options={[ KitArmor.Light, KitArmor.Medium, KitArmor.Heavy, KitArmor.Shield ].map(option => ({ value: option }))}
@@ -103,8 +106,7 @@ export const KitEditPanel = (props: Props) => {
 				<HeaderText>Weapons</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					status={kit.weapon.length === 0 ? 'warning' : ''}
-					mode='multiple'
+					mode='tags'
 					allowClear={true}
 					placeholder='Select weapon'
 					options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}

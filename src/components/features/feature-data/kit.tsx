@@ -75,7 +75,7 @@ export const EditKit = (props: EditProps) => {
 				style={{ width: '100%' }}
 				status={data.types.length === 0 ? 'warning' : ''}
 				placeholder='Kit types'
-				mode='multiple'
+				mode='tags'
 				allowClear={true}
 				options={Collections.sort(Collections.distinct(SourcebookLogic.getKits(props.sourcebooks).map(k => k.type), x => x), x => x).map(type => ({ value: type, label: !type ? 'Standard' : type }))}
 				optionRender={option => <div className='ds-text'>{option.data.label}</div>}

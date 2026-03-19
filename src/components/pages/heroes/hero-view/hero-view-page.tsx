@@ -150,10 +150,6 @@ export const HeroViewPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-view-page'>
 				<AppHeader subheader='Hero'>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
-						Close
-					</Button>
-					<div className='divider' />
 					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
 						Edit
 					</Button>
@@ -199,12 +195,13 @@ export const HeroViewPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<DangerButton
-						mode='block'
-						onConfirm={() => props.deleteHero(hero)}
-					/>
+					<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
 					<div className='divider' />
 					<ViewSelector value={view} mode='hero' onChange={setView} />
+					<div className='divider' />
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
+						Close
+					</Button>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>

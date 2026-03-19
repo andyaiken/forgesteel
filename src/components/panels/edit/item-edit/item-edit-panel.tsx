@@ -97,7 +97,7 @@ export const ItemEditPanel = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Keywords'
-					mode='multiple'
+					mode='tags'
 					allowClear={true}
 					options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}

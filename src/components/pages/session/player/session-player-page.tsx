@@ -1,4 +1,4 @@
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
 import { Empty } from '@/components/controls/empty/empty';
@@ -20,13 +20,8 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	session: Session;
-	highlightAbout: boolean;
 	options: Options;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 }
 
 export const SessionPlayerPage = (props: Props) => {
@@ -106,13 +101,8 @@ export const SessionPlayerPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='player-view'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

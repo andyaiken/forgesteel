@@ -1,3 +1,4 @@
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { Button, Flex, Segmented } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, FilterFilled, FilterOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
@@ -7,7 +8,6 @@ import { Adventure } from '@/models/adventure';
 import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
@@ -84,12 +84,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	hiddenSourcebookIDs: string[];
-	highlightAbout: boolean;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	showSourcebooks: () => void;
 	showMonster: (monster: Monster) => void;
 	showEncounterTools: (encounter: Encounter) => void;
@@ -613,13 +608,8 @@ export const LibraryListPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='library'
-					highlightAbout={props.highlightAbout}
+					params={props.params}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
 				/>
 			</div>
 		</ErrorBoundary>

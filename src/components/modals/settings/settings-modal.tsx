@@ -1,5 +1,5 @@
 import { Alert, Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
-import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
+import { FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -18,7 +18,6 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
 import { PatreonConnectPanel } from '@/components/panels/connection-settings/patreon-connect-panel';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -32,13 +31,11 @@ import './settings-modal.scss';
 
 interface Props {
 	options: Options;
-	errors: Event[];
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 	setConnectionSettings: (settings: ConnectionSettings) => void
-	clearErrors: () => void;
 	onClose: () => void;
 }
 
@@ -709,68 +706,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getErrors = () => {
-		const clearErrors = () => {
-			props.clearErrors();
-			props.onClose();
-		};
-
-		const getError = (event: Event, index: number) => {
-			let message = '';
-			let output = '';
-			const fields: { label: string, value: string }[] = [
-				{ label: 'Type', value: `${event.type}` }
-			];
-
-			if (event.type === 'error') {
-				const error = event as ErrorEvent;
-
-				message = error.message;
-				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
-
-				fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
-				fields.push({ label: 'Data', value: JSON.stringify(error.error) });
-			}
-
-			if (event.type === 'unhandledrejection') {
-				const error = event as PromiseRejectionEvent;
-
-				message = JSON.stringify(error.reason);
-				output = `reason ${JSON.stringify(error.reason)}`;
-			}
-
-			return (
-				<SelectablePanel key={index}>
-					<HeaderText
-						extra={
-							<Button
-								type='text'
-								icon={<CopyOutlined />}
-								onClick={() => navigator.clipboard.writeText(output)}
-							/>
-						}
-					>
-						{message}
-					</HeaderText>
-					{fields.map((field, n) => <Field key={n} label={field.label} value={field.value} />)}
-				</SelectablePanel>
-			);
-		};
-
-		return props.errors.length > 0 ?
-			<Expander
-				title='Logs'
-				extra={[
-					<DangerButton key='clear' mode='clear' onConfirm={clearErrors} />
-				]}
-			>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{props.errors.map(getError)}
-				</Space>
-			</Expander>
-			: null;
-	};
-
 	const getContent = () => {
 		switch (page) {
 			case 'Settings':
@@ -788,11 +723,10 @@ export const SettingsModal = (props: Props) => {
 						{getConnections()}
 					</Space>
 				);
-			case 'Admin':
+			case 'Advanced':
 				return (
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
-						{getErrors()}
 					</Space>
 				);
 		}
@@ -806,7 +740,7 @@ export const SettingsModal = (props: Props) => {
 				<Flex align='center' justify='center' style={{ width: '100%' }}>
 					<Segmented
 						name='tabs'
-						options={[ 'Settings', 'Admin' ]}
+						options={[ 'Settings', 'Advanced' ]}
 						value={page}
 						onChange={setPage}
 					/>

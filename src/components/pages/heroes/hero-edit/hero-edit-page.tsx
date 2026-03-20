@@ -1,3 +1,4 @@
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { Button, Segmented, Select, Space } from 'antd';
 import { CloseOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
@@ -6,7 +7,6 @@ import { Hero, HeroEditTab } from '@/models/hero';
 import { useMemo, useState } from 'react';
 import { Ancestry } from '@/models/ancestry';
 import { AncestrySection } from '@/components/pages/heroes/hero-edit/ancestry-section/ancestry-section';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { CareerSection } from '@/components/pages/heroes/hero-edit/career-section/career-section';
@@ -50,13 +50,8 @@ enum PageState {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	highlightAbout: boolean;
 	options: Options;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	saveChanges: (hero: Hero) => void;
 	importSourcebook: (sourcebook: Sourcebook) => void;
 }
@@ -636,13 +631,8 @@ export const HeroEditPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

@@ -15,11 +15,6 @@ interface Props {
 	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
 	options: Options;
-	highlightAbout: boolean;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
 }
 
 export const BackupPage = (props: Props) => {

@@ -51,7 +51,6 @@ import sessionNegotiation from '@/assets/screenshots/session-negotiation.png';
 import appAbout from '@/assets/screenshots/footer.png';
 import appNavigation from '@/assets/screenshots/navigation.png';
 import appReference from '@/assets/screenshots/footer-reference.png';
-import appRoll from '@/assets/screenshots/footer-roll.png';
 import appSettings from '@/assets/screenshots/footer-settings.png';
 
 export class TipData {
@@ -265,10 +264,6 @@ export class TipData {
 			FactoryLogic.createTip({
 				image: appReference,
 				content: 'Press the Reference button, at the bottom right of the screen, to access the reference section.'
-			}),
-			FactoryLogic.createTip({
-				image: appRoll,
-				content: 'Press the Roll button, at the bottom right of the screen, to make a power roll or saving throw.'
 			}),
 			FactoryLogic.createTip({
 				image: appSettings,

@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Segmented } from 'antd';
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { BookOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -22,13 +22,8 @@ import './welcome-page.scss';
 type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
-	highlightAbout: boolean;
 	options: Options;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	onNewHero: () => void;
 }
 
@@ -51,13 +46,8 @@ export const WelcomePage = (props: Props) => {
 					</ErrorBoundary>
 					<AppFooter
 						page='welcome'
-						highlightAbout={props.highlightAbout}
 						options={props.options}
-						setOptions={props.setOptions}
-						showReference={props.showReference}
-						showRoll={props.showRoll}
-						showAbout={props.showAbout}
-						showSettings={props.showSettings}
+						params={props.params}
 					/>
 				</div>
 			</ErrorBoundary>
@@ -86,13 +76,8 @@ export const WelcomePage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

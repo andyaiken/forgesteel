@@ -1,7 +1,7 @@
 import { Alert, Button, Popover, Segmented, Space } from 'antd';
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { DownOutlined, ReadOutlined } from '@ant-design/icons';
 import { AdventureLogic } from '@/logic/adventure-logic';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Counter } from '@/models/counter';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
@@ -41,12 +41,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	session: Session;
 	options: Options;
-	highlightAbout: boolean;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	showPlayerView: () => void;
 	startEncounter: (encounter: Encounter) => Promise<string>;
 	startMontage: (montage: Montage) => Promise<string>;
@@ -421,13 +416,8 @@ export const SessionDirectorPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='session'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

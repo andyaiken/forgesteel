@@ -1,5 +1,6 @@
-import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined, WarningFilled } from '@ant-design/icons';
 import { Button, Divider, Drawer, Flex, Space } from 'antd';
+import { ReactNode, useState } from 'react';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
@@ -7,21 +8,24 @@ import { Options } from '@/models/options';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useState } from 'react';
 
 import './app-footer.scss';
 
 import shield from '@/assets/shield.png';
 
-interface Props {
-	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
-	highlightAbout: boolean;
-	options: Options;
-	setOptions: (options: Options) => void;
+export interface FooterParams {
+	errorsExist: boolean;
 	showReference: () => void;
-	showRoll: () => void;
 	showAbout: () => void;
 	showSettings: () => void;
+	showErrors: () => void;
+	setOptions: (options: Options) => void;
+}
+
+interface Props {
+	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
+	options: Options;
+	params: FooterParams;
 }
 
 export const AppFooter = (props: Props) => {
@@ -30,13 +34,27 @@ export const AppFooter = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(false);
 
 	const onOK = () => {
-		props.setOptions({ ...props.options, cookieConsent: true });
+		props.params.setOptions({ ...props.options, cookieConsent: true });
 		setShowSidebar(false);
 	};
 
 	const onCancel = () => {
 		window.location.assign('https://www.google.com');
 	};
+
+	const actions: {
+		label?: ReactNode;
+		icon?: ReactNode;
+		tooltip?: string;
+		onClick: () => void
+	}[] = [
+		{ label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: props.params.showReference },
+		{ label: isSmall ? undefined : 'Settings', icon: <SettingOutlined />, tooltip: 'Settings', onClick: props.params.showSettings },
+		{ label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout }
+	];
+	if (props.params.errorsExist) {
+		actions.push({ icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
+	}
 
 	return (
 		<ErrorBoundary>
@@ -71,26 +89,7 @@ export const AppFooter = (props: Props) => {
 						: null
 				}
 				<SyncStatus />
-				{
-					isSmall ?
-						<ButtonGroup
-							buttons={[
-								{ label: 'Ref', onClick: props.showReference },
-								{ label: 'Roll', onClick: props.showRoll },
-								{ icon: <SettingOutlined className={props.highlightAbout ? 'danger' : ''} />, tooltip: 'Settings', onClick: props.showSettings },
-								{ icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.showAbout }
-							]}
-						/>
-						:
-						<ButtonGroup
-							buttons={[
-								{ label: 'Reference', onClick: props.showReference },
-								{ label: 'Roll', onClick: props.showRoll },
-								{ label: 'Settings', icon: <SettingOutlined className={props.highlightAbout ? 'danger' : ''} />, onClick: props.showSettings },
-								{ label: 'About', icon: <InfoCircleOutlined />, onClick: props.showAbout }
-							]}
-						/>
-				}
+				<ButtonGroup buttons={actions} />
 			</div>
 			<Drawer open={showSidebar} onClose={() => setShowSidebar(false)} closeIcon={null} size={500}>
 				<Modal

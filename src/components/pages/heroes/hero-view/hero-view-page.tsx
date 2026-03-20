@@ -1,9 +1,9 @@
 import { Alert, Button, Divider, Popover } from 'antd';
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { Ancestry } from '@/models/ancestry';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
@@ -42,13 +42,8 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	highlightAbout: boolean;
 	options: Options;
-	setOptions: (options: Options) => void;
-	showReference: (hero: Hero, page?: RulesPage) => void;
-	showRoll: (hero: Hero) => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	exportHeroData: (hero: Hero) => void;
 	exportHeroImage: (hero: Hero) => void;
 	exportHeroPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
@@ -70,6 +65,7 @@ interface Props {
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, type: HeroModalType) => void;
+	showHeroReference: (hero: Hero, page: RulesPage) => void;
 	setNotes: (hero: Hero, value: string) => void;
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
@@ -114,7 +110,7 @@ export const HeroViewPage = (props: Props) => {
 						onSelectFeature={feature => props.showFeature(feature, hero)}
 						onSelectAbility={ability => props.showAbility(ability, hero)}
 						onShowState={page => props.showHeroState(hero, page)}
-						onShowReference={page => props.showReference(hero, page)}
+						onShowReference={page => props.showHeroReference(hero, page)}
 						onAddSquad={props.onAddSquad}
 						onRemoveSquad={props.onRemoveSquad}
 						onAddMonsterToSquad={props.onAddMonsterToSquad}
@@ -210,13 +206,8 @@ export const HeroViewPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={() => props.showReference(hero)}
-					showRoll={() => props.showRoll(hero)}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

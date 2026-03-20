@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Space } from 'antd';
+import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { useEffect, useState } from 'react';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -19,13 +19,8 @@ import './auth-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
-	highlightAbout: boolean;
 	options: Options;
-	setOptions: (options: Options) => void;
-	showReference: () => void;
-	showRoll: () => void;
-	showAbout: () => void;
-	showSettings: () => void;
+	params: FooterParams;
 	setConnectionSettings: (settings: ConnectionSettings) => void
 }
 
@@ -147,13 +142,8 @@ export const AuthPage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
-					highlightAbout={props.highlightAbout}
 					options={props.options}
-					setOptions={props.setOptions}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
+					params={props.params}
 				/>
 			</div>
 		</ErrorBoundary>

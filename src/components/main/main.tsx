@@ -28,6 +28,7 @@ import { Encounter } from '@/models/encounter';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { ErrorsModal } from '../modals/errors/errors-modal';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { FeatureType } from '@/enums/feature-type';
@@ -35,6 +36,7 @@ import { Fixture } from '@/models/fixture';
 import { FixtureModal } from '@/components/modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
 import { FollowerModal } from '@/components/modals/follower/follower-modal';
+import { FooterParams } from '@/components/panels/app-footer/app-footer';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
@@ -1441,22 +1443,21 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<SettingsModal
 				options={options}
-				errors={errors}
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
 				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
-				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
 		);
 	};
 
-	const showRoll = (hero: Hero | null) => {
+	const showErrors = () => {
 		setDrawer(
-			<RollModal
-				hero={hero}
+			<ErrorsModal
+				errors={errors}
+				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1754,6 +1755,15 @@ export const Main = (props: Props) => {
 
 	// #endregion
 
+	const footerParams: FooterParams = {
+		errorsExist: errors.length > 0,
+		setOptions: persistOptions,
+		showReference: () => onShowReference(null, RulesPage.Rules),
+		showAbout: showAbout,
+		showSettings: showSettings,
+		showErrors: showErrors
+	};
+
 	return (
 		<ErrorBoundary name='main'>
 			<Routes>
@@ -1770,13 +1780,8 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<WelcomePage
-								highlightAbout={errors.length > 0}
 								options={options}
-								setOptions={persistOptions}
-								showReference={() => onShowReference(null)}
-								showRoll={() => showRoll(null)}
-								showAbout={showAbout}
-								showSettings={showSettings}
+								params={footerParams}
 								onNewHero={() => newHero('')}
 							/>
 						}
@@ -1790,12 +1795,7 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 									addHero={newHero}
 									importHero={importHero}
 									showParty={onShowParty}
@@ -1809,12 +1809,7 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={onShowReference}
-									showRoll={showRoll}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 									exportHeroData={exportHeroData}
 									exportHeroImage={exportHeroImage}
 									exportHeroPdf={exportHeroPdf}
@@ -1836,6 +1831,7 @@ export const Main = (props: Props) => {
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
+									showHeroReference={onShowReference}
 									setNotes={setNotes}
 									onAddSquad={addSquad}
 									onRemoveSquad={removeSquad}
@@ -1856,12 +1852,7 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 									saveChanges={saveHero}
 									importSourcebook={sourcebook => {
 										const copy = Utils.copy(homebrewSourcebooks);
@@ -1896,13 +1887,8 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
+									params={footerParams}
 									showSourcebooks={showSourcebooks}
-									showSettings={showSettings}
 									showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
 									showEncounterTools={showEncounterTools}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
@@ -1926,12 +1912,7 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
 									showTerrain={onSelectTerrain}
 									saveChanges={saveLibraryElement}
@@ -1962,12 +1943,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									session={session}
 									options={options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
 									startMontage={startMontage}
@@ -1992,12 +1968,7 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									session={session}
 									options={options}
-									highlightAbout={errors.length > 0}
-									setOptions={persistOptions}
-									showReference={() => onShowReference(null)}
-									showRoll={() => showRoll(null)}
-									showAbout={showAbout}
-									showSettings={showSettings}
+									params={footerParams}
 								/>
 							}
 						/>
@@ -2007,13 +1978,8 @@ export const Main = (props: Props) => {
 						element={
 							<AuthPage
 								connectionSettings={connectionSettings}
-								highlightAbout={errors.length > 0}
 								options={options}
-								setOptions={persistOptions}
-								showReference={() => onShowReference(null)}
-								showRoll={() => showRoll(null)}
-								showAbout={showAbout}
-								showSettings={showSettings}
+								params={footerParams}
 								setConnectionSettings={persistConnectionSettings}
 							/>
 						}
@@ -2027,11 +1993,6 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								homebrewSourcebooks={homebrewSourcebooks}
 								options={options}
-								highlightAbout={errors.length > 0}
-								showReference={() => onShowReference(null)}
-								showRoll={() => showRoll(null)}
-								showAbout={showAbout}
-								showSettings={showSettings}
 							/>
 						}
 					/>

@@ -1,13 +1,13 @@
 import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined, WarningFilled } from '@ant-design/icons';
 import { Button, Divider, Drawer, Flex, Space } from 'antd';
-import { ReactNode, useState } from 'react';
-import { ButtonGroup } from '@/components/controls/button-group/button-group';
+import { ButtonConfig, ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useState } from 'react';
 
 import './app-footer.scss';
 
@@ -42,18 +42,13 @@ export const AppFooter = (props: Props) => {
 		window.location.assign('https://www.google.com');
 	};
 
-	const actions: {
-		label?: ReactNode;
-		icon?: ReactNode;
-		tooltip?: string;
-		onClick: () => void
-	}[] = [
-		{ label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: props.params.showReference },
-		{ label: isSmall ? undefined : 'Settings', icon: <SettingOutlined />, tooltip: 'Settings', onClick: props.params.showSettings },
-		{ label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout }
+	const actions: ButtonConfig[] = [
+		{ type: 'button', label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: props.params.showReference },
+		{ type: 'button', label: isSmall ? undefined : 'Settings', icon: <SettingOutlined />, tooltip: 'Settings', onClick: props.params.showSettings },
+		{ type: 'button', label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout }
 	];
 	if (props.params.errorsExist) {
-		actions.push({ icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
+		actions.push({ type: 'button', icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
 	}
 
 	return (
@@ -83,7 +78,7 @@ export const AppFooter = (props: Props) => {
 					!props.options.cookieConsent ?
 						<ButtonGroup
 							buttons={[
-								{ label: 'Cookies', onClick: () => setShowSidebar(true) }
+								{ type: 'button', label: 'Cookies', onClick: () => setShowSidebar(true) }
 							]}
 						/>
 						: null

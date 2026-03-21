@@ -318,7 +318,7 @@ export const EncounterPanel = (props: Props) => {
 						props.showTools ?
 							<ButtonGroup
 								buttons={[
-									{ label: 'Tools', onClick: props.showTools }
+									{ type: 'button', label: 'Tools', onClick: props.showTools }
 								]}
 							/>
 							: null

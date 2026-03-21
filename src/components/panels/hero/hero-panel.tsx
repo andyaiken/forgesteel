@@ -134,13 +134,13 @@ export const HeroPanel = (props: Props) => {
 						:
 						<ButtonGroup
 							buttons={[
-								{ label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
-								{ label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
-								{ label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
-								{ label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
-								{ label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
-								{ label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
-								{ icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
+								{ type: 'button', label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
+								{ type: 'button', label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
+								{ type: 'button', label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
+								{ type: 'button', label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
+								{ type: 'button', label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
+								{ type: 'button', label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
+								{ type: 'button', icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
 							]}
 						/>
 				}

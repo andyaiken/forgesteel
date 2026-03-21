@@ -1,11 +1,11 @@
-import { Alert, Button, Popover, Segmented, Space } from 'antd';
+import { Alert, Button, Segmented, Space } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { DownOutlined, ReadOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, ReadOutlined } from '@ant-design/icons';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Counter } from '@/models/counter';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
-import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
 import { EncounterData } from '@/data/encounter-data';
@@ -30,6 +30,7 @@ import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
@@ -58,6 +59,7 @@ interface Props {
 }
 
 export const SessionDirectorPage = (props: Props) => {
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
 		const options = AdventureLogic.getContentOptions(props.session);
@@ -377,36 +379,30 @@ export const SessionDirectorPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='session-director-page'>
 				<AppHeader subheader='Session'>
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '500px', overflowY: 'auto' }}>
-								<Segmented
-									name='startelements'
-									block={true}
-									options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-									value={startElement}
-									onChange={setStartElement}
-								/>
-								{getStartContent()}
-							</div>
-						)}
-					>
-						<Button type='primary'>
-							Start
-							<DownOutlined />
-						</Button>
-					</Popover>
-					{
-						selectedElementID ?
-							<DangerButton
-								label='Finish'
-								onConfirm={finish}
-							/>
-							: null
-					}
-					<div className='divider' />
-					<Button onClick={props.showPlayerView}>Player View</Button>
+					<ButtonGroup
+						buttons={[
+							{
+								type: 'dropdown',
+								label: isSmall ? undefined : 'Start',
+								icon: <PlayCircleOutlined />,
+								primary: true,
+								popover: (
+									<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '500px', overflowY: 'auto' }}>
+										<Segmented
+											name='startelements'
+											block={true}
+											options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+											value={startElement}
+											onChange={setStartElement}
+										/>
+										{getStartContent()}
+									</div>
+								)
+							},
+							{ type: 'danger', label: isSmall ? undefined : 'Finish', disabled: !selectedElementID, onClick: finish },
+							{ type: 'button', label: isSmall ? undefined : 'Player View', icon: <PlayCircleOutlined />, onClick: props.showPlayerView }
+						]}
+					/>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='session-director-page-content'>

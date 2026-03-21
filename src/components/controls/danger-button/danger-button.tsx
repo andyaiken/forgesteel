@@ -6,11 +6,11 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import './danger-button.scss';
 
 interface Props {
-	mode?: 'default' | 'block' | 'clear' | 'icon';
-	disabled?: boolean;
+	mode?: 'default' | 'block' | 'inline' | 'clear' | 'icon';
 	label?: string;
 	icon?: ReactNode;
 	message?: ReactNode;
+	disabled?: boolean;
 	disabledMessage?: ReactNode;
 	onConfirm: (e: MouseEvent) => void;
 }
@@ -26,6 +26,12 @@ export const DangerButton = (props: Props) => {
 			case 'block':
 				return (
 					<Button icon={icon} block={true} disabled={disabled} danger={true}>
+						{props.label || 'Delete'}
+					</Button>
+				);
+			case 'inline':
+				return (
+					<Button type='text' icon={icon} block={true} disabled={disabled} danger={true}>
 						{props.label || 'Delete'}
 					</Button>
 				);

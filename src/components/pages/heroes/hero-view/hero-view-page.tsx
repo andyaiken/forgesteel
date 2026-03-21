@@ -1,15 +1,15 @@
-import { Alert, Button, Divider, Popover } from 'antd';
+import { Alert, Button, Divider } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DeleteOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { Ancestry } from '@/models/ancestry';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
-import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -79,7 +79,6 @@ export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<string>('modern');
-	const [ showExportPopover, setShowExportPopover ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
@@ -146,58 +145,49 @@ export const HeroViewPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-view-page'>
 				<AppHeader subheader='Hero'>
-					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
-						Edit
-					</Button>
-					<Button icon={<CopyOutlined />} onClick={() => props.copyHero(hero)}>
-						Copy
-					</Button>
-					<Popover
-						trigger='click'
-						open={showExportPopover}
-						onOpenChange={setShowExportPopover}
-						content={(
-							<div style={{ width: '325px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								{
-									![ 'classic', 'abilities' ].includes(view) ?
-										<Alert
-											type='info'
-											showIcon={true}
-											title='If you want to export your hero as a PDF, switch to Classic view.'
-											action={<Button onClick={() => setView('classic')}>Classic</Button>}
-										/>
-										: null
-								}
-								{
-									view === 'classic' ?
-										<>
-											<Button onClick={() => { setShowExportPopover(false); props.exportHeroPdf(hero, 'standard'); }}>Export as PDF</Button>
-											<Button onClick={() => { setShowExportPopover(false); props.exportHeroPdf(hero, 'high'); }}>Export as PDF (high res)</Button>
-										</>
-										: null
-								}
-								{
-									view === 'abilities' ?
-										<Button onClick={() => { setShowExportPopover(false); props.exportStandardAbilities(); }}>Export as PDF</Button>
-										: null
-								}
-								<Divider />
-								<Button onClick={() => { setShowExportPopover(false); props.exportHeroData(hero); }}>Export as Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
-							<DownOutlined />
-						</Button>
-					</Popover>
-					<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
-					<div className='divider' />
-					<ViewSelector value={view} mode='hero' onChange={setView} />
-					<div className='divider' />
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
-						Close
-					</Button>
+					<ButtonGroup
+						buttons={[
+							{ type: 'button', label: isSmall ? undefined : 'Edit', icon: <EditOutlined />, onClick: () => navigation.goToHeroEdit(heroID!, 'details') },
+							{ type: 'button', label: isSmall ? undefined : 'Copy', icon: <CopyOutlined />, onClick: () => props.copyHero(hero) },
+							{
+								type: 'dropdown',
+								label: isSmall ? undefined : 'Export',
+								icon: <UploadOutlined />,
+								popover: (
+									<div style={{ width: '325px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{
+											![ 'classic', 'abilities' ].includes(view) ?
+												<Alert
+													type='info'
+													showIcon={true}
+													title='If you want to export your hero as a PDF, switch to Classic view.'
+													action={<Button onClick={() => setView('classic')}>Classic</Button>}
+												/>
+												: null
+										}
+										{
+											view === 'classic' ?
+												<>
+													<Button onClick={() => props.exportHeroPdf(hero, 'standard')}>Export as PDF</Button>
+													<Button onClick={() => props.exportHeroPdf(hero, 'high')}>Export as PDF (high res)</Button>
+												</>
+												: null
+										}
+										{
+											view === 'abilities' ?
+												<Button onClick={() => props.exportStandardAbilities()}>Export as PDF</Button>
+												: null
+										}
+										<Divider />
+										<Button onClick={() => props.exportHeroData(hero)}>Export as Data</Button>
+									</div>
+								)
+							},
+							{ type: 'danger', label: isSmall ? undefined : 'Delete', icon: <DeleteOutlined />, onClick: () => props.deleteHero(hero) },
+							{ type: 'control', control: <ViewSelector value={view} mode='hero' onChange={setView} /> },
+							{ type: 'button', label: isSmall ? undefined : 'Close', icon: <CloseOutlined />, onClick: () => navigation.goToHeroList(hero.folder) }
+						]}
+					/>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>

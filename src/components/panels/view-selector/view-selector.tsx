@@ -46,6 +46,7 @@ export const ViewSelector = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<Segmented
+				block={true}
 				options={getOptions()}
 				value={props.value}
 				onChange={props.onChange}

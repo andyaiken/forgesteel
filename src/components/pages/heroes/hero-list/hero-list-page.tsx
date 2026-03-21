@@ -1,7 +1,8 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { Button, Divider, Popover, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Button, Divider, Space, Tabs, Upload } from 'antd';
+import { DownloadOutlined, PlusOutlined, TeamOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -16,6 +17,7 @@ import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -34,6 +36,7 @@ interface Props {
 }
 
 export const HeroListPage = (props: Props) => {
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { folder } = useParams<{ folder: string }>();
 	const [ previousTab, setPreviousTab ] = useState<string | undefined>(folder);
@@ -100,66 +103,58 @@ export const HeroListPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-list-page'>
 				<AppHeader subheader='Heroes'>
-					<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-					<div className='divider' />
-					<Popover
-						trigger='click'
-						content={(
-							<Space orientation='vertical' style={{ width: '300px' }}>
-								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
-									Create a New Hero
-								</Button>
-								<Divider />
-								<Upload
-									style={{ width: '100%' }}
-									accept='.drawsteel-hero,.ds-hero'
-									showUploadList={false}
-									beforeUpload={file => {
-										file
-											.text()
-											.then(json => {
-												const hero = JSON.parse(json) as Hero;
-												props.importHero(hero, currentTab);
-											});
-										return false;
-									}}
-								>
-									<Button block={true} icon={<DownloadOutlined />}>
-										Import a Hero File
-									</Button>
-								</Upload>
-								<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
-									Generate a Random Hero
-								</Button>
-								<Expander title='Use a premade example'>
-									<Space orientation='vertical' style={{ width: '100%', maxHeight: '200px', overflowY: 'auto' }}>
-										{
-											exampleHeroes.map(h => (
-												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
-													<HeroInfo hero={h} />
-												</Button>
-											))
-										}
+					<ButtonGroup
+						buttons={[
+							{ type: 'control', control: <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> },
+							{
+								type: 'dropdown',
+								label: isSmall ? undefined : 'Add',
+								icon: <PlusOutlined />,
+								primary: true,
+								popover: (
+									<Space orientation='vertical' style={{ width: '300px' }}>
+										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
+											Create a New Hero
+										</Button>
+										<Divider />
+										<Upload
+											style={{ width: '100%' }}
+											accept='.drawsteel-hero,.ds-hero'
+											showUploadList={false}
+											beforeUpload={file => {
+												file
+													.text()
+													.then(json => {
+														const hero = JSON.parse(json) as Hero;
+														props.importHero(hero, currentTab);
+													});
+												return false;
+											}}
+										>
+											<Button block={true} icon={<DownloadOutlined />}>
+												Import a Hero File
+											</Button>
+										</Upload>
+										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+											Generate a Random Hero
+										</Button>
+										<Expander title='Use a premade example'>
+											<Space orientation='vertical' style={{ width: '100%', maxHeight: '200px', overflowY: 'auto' }}>
+												{
+													exampleHeroes.map(h => (
+														<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
+															<HeroInfo hero={h} />
+														</Button>
+													))
+												}
+											</Space>
+										</Expander>
 									</Space>
-								</Expander>
-							</Space>
-						)}
-					>
-						<Button type='primary'>
-							Add
-							<DownOutlined />
-						</Button>
-					</Popover>
-					{
-						getHeroes(currentTab).length > 1 ?
-							<>
-								<div className='divider' />
-								<Button onClick={() => props.showParty(currentTab)}>
-									Party Overview
-								</Button>
-							</>
-							: null
-					}
+								)
+							},
+							{ type: 'button', label: isSmall ? undefined : 'Party', icon: <TeamOutlined />, disabled: getHeroes(currentTab).length < 2, onClick: () => props.showParty(currentTab) }
+						]}
+					/>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='hero-list-page-content'>

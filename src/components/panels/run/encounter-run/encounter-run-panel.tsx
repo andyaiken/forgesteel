@@ -765,8 +765,8 @@ export const EncounterRunPanel = (props: Props) => {
 								tab === 'combatants' ?
 									<ButtonGroup
 										buttons={[
-											{ label: 'Add hero(es)', onClick: () => setAddingHeroes(true) },
-											{ label: 'Add a monster', onClick: () => setAddingMonsters(true) }
+											{ type: 'button', label: 'Add hero(es)', onClick: () => setAddingHeroes(true) },
+											{ type: 'button', label: 'Add a monster', onClick: () => setAddingMonsters(true) }
 										]}
 									/>
 									: null

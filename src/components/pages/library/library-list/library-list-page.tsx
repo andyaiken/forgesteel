@@ -1,6 +1,7 @@
+import { Alert, Button, Divider, Flex, Segmented } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { Button, Flex, Segmented } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined, FilterFilled, FilterOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, EditOutlined, FilterFilled, FilterOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { ButtonConfig, ButtonGroup, DangerConfig, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { AddBtn } from '@/components/pages/library/library-list/controls/add-btn';
@@ -17,10 +18,10 @@ import { Complication } from '@/models/complication';
 import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
 import { Culture } from '@/models/culture';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
+import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
-import { ElementToolbar } from '@/components/pages/library/library-list/controls/element-toolbar';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
@@ -73,6 +74,7 @@ import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
@@ -95,13 +97,14 @@ interface Props {
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
 	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
-	startEncounter: (encounter: Encounter) => Promise<string>;
-	startMontage: (montage: Montage) => Promise<string>;
-	startNegotiation: (negotiation: Negotiation) => Promise<string>;
-	startMap: (map: TacticalMap) => Promise<string>;
+	startEncounter: (encounter: Encounter) => void;
+	startMontage: (montage: Montage) => void;
+	startNegotiation: (negotiation: Negotiation) => void;
+	startMap: (map: TacticalMap) => void;
 }
 
 export const LibraryListPage = (props: Props) => {
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { kind, elementID } = useParams<{ kind: SourcebookElementKind, elementID: string }>();
 	const [ category, setCategory ] = useState<SourcebookElementKind>(kind || 'ancestry');
@@ -488,6 +491,305 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	const getElementToolbarItems = () => {
+		const element = getList(category).find(item => item.id == selectedID);
+		if (!element) {
+			return [];
+		}
+
+		const sourcebook = LibraryLogic.getSourcebook(element, category, props.sourcebooks, showMonsters);
+		if (!sourcebook) {
+			if (category === 'subclass') {
+				const c = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.subclasses.some(sc => sc.id === element.id));
+				if (c) {
+					return [
+						{
+							type: 'button',
+							label: `Open ${c.name}`,
+							onClick: () => navigation.goToLibrary('class', c.id)
+						} as ButtonConfig
+					];
+				}
+			}
+
+			return [];
+		}
+
+		const getStart = () => {
+			switch (category) {
+				case 'encounter':
+					return {
+						type: 'button',
+						label: isSmall ? undefined : 'Start',
+						icon: <PlayCircleOutlined />,
+						onClick: () => props.startEncounter(element as Encounter)
+					} as ButtonConfig;
+				case 'montage':
+					return {
+						type: 'button',
+						label: isSmall ? undefined : 'Start',
+						icon: <PlayCircleOutlined />,
+						onClick: () => props.startMontage(element as Montage)
+					} as ButtonConfig;
+				case 'negotiation':
+					return {
+						type: 'button',
+						label: isSmall ? undefined : 'Start',
+						icon: <PlayCircleOutlined />,
+						onClick: () => props.startNegotiation(element as Negotiation)
+					} as ButtonConfig;
+				case 'tactical-map':
+					return {
+						type: 'button',
+						label: isSmall ? undefined : 'Start',
+						icon: <PlayCircleOutlined />,
+						onClick: () => props.startMap(element as TacticalMap)
+					} as ButtonConfig;
+			}
+
+			return null;
+		};
+
+		const getCreateHomebrew = () => {
+			if ((category === 'monster-group') && showMonsters) {
+				return {
+					type: 'dropdown',
+					label: isSmall ? undefined : 'Create Homebrew Version',
+					icon: <CopyOutlined />,
+					popover: (
+						<Alert
+							type='info'
+							showIcon={true}
+							title='To create a homebrew version of this monster, switch to Group view.'
+							action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
+						/>
+					)
+				} as DropdownConfig;
+			}
+
+			if (sourcebook.type !== SourcebookType.Homebrew) {
+				return {
+					type: 'dropdown',
+					label: isSmall ? undefined : 'Create Homebrew Version',
+					icon: <CopyOutlined />,
+					popover: (
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+							<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={sourcebookID} setSourcebookID={setSourcebookID} />
+							<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>Create</Button>
+						</div>
+					)
+				} as DropdownConfig;
+			}
+
+			return null;
+		};
+
+		const getEdit = () => {
+			if (sourcebook.type !== SourcebookType.Homebrew) {
+				return null;
+			}
+
+			return {
+				type: 'button',
+				label: isSmall ? undefined : 'Edit',
+				icon: <EditOutlined />,
+				onClick: () => navigation.goToLibraryEdit(category, sourcebook.id, element.id)
+			} as ButtonConfig;
+		};
+
+		const getCopy = () => {
+			if (sourcebook.type !== SourcebookType.Homebrew) {
+				return null;
+			}
+
+			return {
+				type: 'dropdown',
+				label: isSmall ? undefined : 'Copy',
+				icon: <CopyOutlined />,
+				popover: (
+					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={sourcebookID} setSourcebookID={setSourcebookID} />
+						<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>Create a Copy</Button>
+					</div>
+				)
+			} as DropdownConfig;
+		};
+
+		const getMove = () => {
+			if (sourcebook.type !== SourcebookType.Homebrew) {
+				return null;
+			}
+
+			return {
+				type: 'dropdown',
+				label: isSmall ? undefined : 'Move',
+				icon: <ArrowRightOutlined />,
+				popover: (
+					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						<div>This currently lives in <b>{sourcebook.name || 'Unnamed Sourcebook'}</b>.</div>
+						<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={sourcebookID} setSourcebookID={setSourcebookID} />
+						<Button type='primary' disabled={sourcebook.id === sourcebookID} onClick={() => props.moveElement(category, sourcebookID, element)}>Move</Button>
+					</div>
+				)
+			} as DropdownConfig;
+		};
+
+		const getExport = () => {
+			const cat = ((category === 'monster-group') && showMonsters) ? 'monster' : category;
+
+			let canExportAsImage = false;
+			let canExportAsPDF = false;
+			switch (cat) {
+				case 'encounter':
+				case 'montage':
+				case 'negotiation':
+					canExportAsImage = false;
+					canExportAsPDF = true;
+					break;
+			}
+
+			const imageOrPDF = canExportAsImage || canExportAsPDF ?
+				view === 'classic' ?
+					<>
+						{
+							canExportAsImage ?
+								<>
+									<Button onClick={() => props.exportElementImage(cat, element)}>
+										Export As Image
+									</Button>
+								</>
+								: null
+						}
+						{canExportAsImage && canExportAsPDF ? <Divider /> : null}
+						{
+							canExportAsPDF ?
+								<>
+									<Button onClick={() => props.exportElementPdf(cat, element, 'standard')}>
+										Export As PDF
+									</Button>
+									<Button onClick={() => props.exportElementPdf(cat, element, 'high')}>
+										Export As PDF (high res)
+									</Button>
+								</>
+								: null
+						}
+					</>
+					:
+					<Alert
+						type='info'
+						showIcon={true}
+						title='If you want to export as a PDF, switch to Classic view.'
+						action={<Button onClick={() => setView('classic')}>Classic</Button>}
+					/>
+				: null;
+
+			const externalContent = LibraryLogic.getExternalContent(element, category, props.sourcebooks);
+
+			return {
+				type: 'dropdown',
+				label: isSmall ? undefined : 'Export',
+				icon: <UploadOutlined />,
+				popover: (
+					<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+						{imageOrPDF}
+						{imageOrPDF ? <Divider /> : null}
+						{
+							externalContent.length > 0 ?
+								<Alert
+									type='warning'
+									title={
+										<>
+											<HeaderText level={3}>External Content</HeaderText>
+											<div>Some homebrew content used in this {cat} is located in a different sourcebook.</div>
+											<div>The exported file won't contain the following items:</div>
+											<ul>
+												{externalContent.map(ec => <li key={ec.element.id}><b>{ec.element.name}</b> in {ec.sourcebook.name}</li>)}
+											</ul>
+										</>
+									}
+								/>
+								: null
+						}
+						<Button onClick={() => props.exportElementData(cat, element)}>
+							Export as Data
+						</Button>
+					</div>
+				)
+			} as DropdownConfig;
+		};
+
+		const getDelete = () => {
+			if (sourcebook.type !== SourcebookType.Homebrew) {
+				return null;
+			}
+
+			const elements = [ element ];
+			if (category === 'class') {
+				const c = element as HeroClass;
+				if (c.subclasses) {
+					elements.push(...c.subclasses);
+				} else {
+					// This is a subclass, not a class - can't be deleted here
+					return null;
+				}
+			}
+			if (category === 'monster-group') {
+				const g = element as MonsterGroup;
+				if (g.monsters) {
+					elements.push(...g.monsters);
+				} else {
+					// This is a monster, not a group - can't be deleted here
+					return null;
+				}
+			}
+
+			const used: { element: Element, container: Element }[] = [];
+			elements.forEach(e => {
+				SourcebookLogic.getUsedIn(props.sourcebooks, e.id)
+					.filter(x => !elements.map(e => e.id).includes(x.id))
+					.forEach(x => {
+						used.push({ element: e, container: x });
+					});
+			});
+
+			let msg = undefined;
+			if (used.length > 0) {
+				msg = (
+					<>
+						<div>Cannot delete:</div>
+						<ul>
+							{
+								used.map(x => (
+									<li key={x.element.id}>
+										<b>{x.element.name || 'Unnamed Element'}</b> is used in <b>{x.container.name || 'Unnamed Element'}</b>
+									</li>
+								))
+							}
+						</ul>
+					</>
+				);
+			}
+
+			return {
+				type: 'danger',
+				label: isSmall ? undefined : 'Delete',
+				disabled: !!msg,
+				disabledMessage: msg,
+				onClick: () => props.deleteElement(category, sourcebook.id, element)
+			} as DangerConfig;
+		};
+
+		return [
+			getStart(),
+			getCreateHomebrew(),
+			getEdit(),
+			getCopy(),
+			getMove(),
+			getExport(),
+			getDelete()
+		].filter(item => !!item);
+	};
+
 	const getViewSelector = () => {
 		if (!selectedID) {
 			return null;
@@ -536,62 +838,29 @@ export const LibraryListPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='library-list-page'>
 				<AppHeader subheader='Library'>
-					<AddBtn
-						category={category}
-						heroes={props.heroes}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						showMonsters={showMonsters}
-						sourcebookID={sourcebookID}
-						setShowMonsters={setShowMonsters}
-						setSourcebookID={setSourcebookID}
-						createElement={props.createElement}
-						importElement={props.importElement}
+					<ButtonGroup
+						buttons={[
+							{
+								type: 'control',
+								control: (
+									<AddBtn
+										category={category}
+										heroes={props.heroes}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										showMonsters={showMonsters}
+										sourcebookID={sourcebookID}
+										setShowMonsters={setShowMonsters}
+										setSourcebookID={setSourcebookID}
+										createElement={props.createElement}
+										importElement={props.importElement}
+									/>
+								)
+							},
+							...getElementToolbarItems(),
+							{ type: 'control', control: getViewSelector() }
+						]}
 					/>
-					{
-						selected ?
-							<ElementToolbar
-								element={selected}
-								category={category}
-								sourcebooks={props.sourcebooks}
-								showMonsters={showMonsters}
-								sourcebookID={sourcebookID}
-								view={view}
-								setShowMonsters={setShowMonsters}
-								setSourcebookID={setSourcebookID}
-								setView={setView}
-								createElement={props.createElement}
-								importElement={props.importElement}
-								moveElement={props.moveElement}
-								deleteElement={props.deleteElement}
-								exportElementData={props.exportElementData}
-								exportElementImage={props.exportElementImage}
-								exportElementPdf={props.exportElementPdf}
-								startElement={() => {
-									switch (category) {
-										case 'encounter':
-											props.startEncounter(selected as Encounter);
-											break;
-										case 'montage':
-											props.startMontage(selected as Montage);
-											break;
-										case 'negotiation':
-											props.startNegotiation(selected as Negotiation);
-											break;
-										case 'tactical-map':
-											props.startMap(selected as TacticalMap);
-											break;
-									}
-								}}
-							/>
-							: null
-					}
-					{
-						getViewSelector() ?
-							<div className='divider' />
-							: null
-					}
-					{getViewSelector()}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>

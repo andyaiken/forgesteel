@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 import { Ancestry } from '@/models/ancestry';
 import { AncestrySection } from '@/components/pages/heroes/hero-edit/ancestry-section/ancestry-section';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Career } from '@/models/career';
 import { CareerSection } from '@/components/pages/heroes/hero-edit/career-section/career-section';
 import { Characteristic } from '@/enums/characteristic';
@@ -614,14 +615,13 @@ export const HeroEditPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-edit-page'>
 				<AppHeader subheader='Hero Builder'>
-					<SearchBox disabled={!allowSearch()} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-					<div className='divider' />
-					<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
-						Save Changes
-					</Button>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroView(heroID!)}>
-						Cancel
-					</Button>
+					<ButtonGroup
+						buttons={[
+							{ type: 'control', control: <SearchBox disabled={!allowSearch()} searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> },
+							{ type: 'button', label: isSmall ? undefined : 'Save Changes', icon: <SaveOutlined />, primary: true, disabled: !dirty, onClick: saveChanges },
+							{ type: 'button', label: isSmall ? undefined : 'Cancel', icon: <CloseOutlined />, onClick: () => navigation.goToHeroView(heroID!) }
+						]}
+					/>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>

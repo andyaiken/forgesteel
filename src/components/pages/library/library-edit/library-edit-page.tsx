@@ -6,7 +6,7 @@ import { AdventureEditPanel } from '@/components/panels/edit/adventure-edit/adve
 import { Ancestry } from '@/models/ancestry';
 import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
 import { AppHeader } from '@/components/panels/app-header/app-header';
-import { Button } from 'antd';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Career } from '@/models/career';
 import { CareerEditPanel } from '@/components/panels/edit/career-edit/career-edit-panel';
 import { ClassEditPanel } from '@/components/panels/edit/class-edit/class-edit-panel';
@@ -52,6 +52,7 @@ import { TerrainEditPanel } from '@/components/panels/edit/terrain-edit/terrain-
 import { Title } from '@/models/title';
 import { TitleEditPanel } from '@/components/panels/edit/title-edit/title-edit-panel';
 import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -70,6 +71,7 @@ interface Props {
 }
 
 export const LibraryEditPage = (props: Props) => {
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { kind, sourcebookID, elementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string }>();
 	const [ element, setElement ] = useState<Element>(() => {
@@ -393,12 +395,12 @@ export const LibraryEditPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='library-edit-page'>
 				<AppHeader subheader={getSubheader()}>
-					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
-						Save Changes
-					</Button>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
-						Cancel
-					</Button>
+					<ButtonGroup
+						buttons={[
+							{ type: 'button', label: isSmall ? undefined : 'Save Changes', icon: <SaveOutlined />, primary: true, disabled: !dirty, onClick: () => props.saveChanges(kind!, sourcebookID!, element) },
+							{ type: 'button', label: isSmall ? undefined : 'Cancel', icon: <CloseOutlined />, onClick: () => navigation.goToLibrary(kind!, elementID!) }
+						]}
+					/>
 				</AppHeader>
 				<div className='library-edit-page-content'>
 					{getEditSection()}

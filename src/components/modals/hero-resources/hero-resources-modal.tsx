@@ -99,7 +99,7 @@ export const HeroResourcesModal = (props: Props) => {
 		};
 
 		return (
-			<>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					HeroLogic.getHeroicResources(hero)
 						.map(hr => (
@@ -242,7 +242,7 @@ export const HeroResourcesModal = (props: Props) => {
 						onClose={() => setExpression(null)}
 					/>
 				</Drawer>
-			</>
+			</Space>
 		);
 	};
 
@@ -300,7 +300,7 @@ export const HeroResourcesModal = (props: Props) => {
 		};
 
 		return (
-			<>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Surges</HeaderText>
 				<NumberSpin
 					value={hero.state.surges}
@@ -382,7 +382,7 @@ export const HeroResourcesModal = (props: Props) => {
 						onClose={() => setShowRetainers(false)}
 					/>
 				</Drawer>
-			</>
+			</Space>
 		);
 	};
 
@@ -397,7 +397,7 @@ export const HeroResourcesModal = (props: Props) => {
 		const minXP = HeroLogic.getMinXP(hero.class!.level, props.options);
 
 		return (
-			<>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>XP</HeaderText>
 				<NumberSpin
 					min={minXP}
@@ -418,7 +418,7 @@ export const HeroResourcesModal = (props: Props) => {
 						/>
 						: null
 				}
-			</>
+			</Space>
 		);
 	};
 
@@ -447,7 +447,7 @@ export const HeroResourcesModal = (props: Props) => {
 		};
 
 		return (
-			<>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Hero Tokens</HeaderText>
 				<NumberSpin
 					value={hero.state.heroTokens}
@@ -502,7 +502,7 @@ export const HeroResourcesModal = (props: Props) => {
 						</>
 					}
 				/>
-			</>
+			</Space>
 		);
 	};
 
@@ -510,7 +510,7 @@ export const HeroResourcesModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='hero-resources-modal'>
-					<div className='resources-panel'>
+					<div style={{ paddingBottom: '20px' }}>
 						{getHeroicResourceSection()}
 						{getStatsSection()}
 						{getExperienceSection()}

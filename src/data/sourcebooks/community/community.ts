@@ -825,7 +825,7 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					feature: FactoryLogic.feature.create({
 						id: 'ironbound-3a',
 						name: 'Ablative Plating',
-						description: 'When an enemy attacks you with a strike and scores a tier 3 result, you can use a triggered action to lose Stamina equal to 1d6 plus your level and turn the tier 3 result into a tier 2 result.'
+						description: 'When an enemy scores a tier 3 result against you with a strike, you can use a triggered action to lose Stamina equal to 1d6 plus your level and turn the tier 3 result into a tier 2 result.'
 					}),
 					value: 1
 				},

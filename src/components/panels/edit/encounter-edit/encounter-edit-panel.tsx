@@ -1091,7 +1091,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<HeaderText>Adjust Level</HeaderText>
 					<NumberSpin
-						min={originalMonster.level - 1}
+						min={1 - originalMonster.level}
 						value={props.slot.customization.levelAdjustment}
 						format={value => `${value + originalMonster.level}`}
 						onChange={value => props.setSlotLevelAdjustment(props.group.id, props.slot.id, value)}

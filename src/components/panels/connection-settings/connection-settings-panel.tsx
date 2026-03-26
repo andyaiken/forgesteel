@@ -1,5 +1,5 @@
 import { Alert, Button, Flex, Input, Space } from 'antd';
-import { CloudServerOutlined, SaveFilled } from '@ant-design/icons';
+import { CloudServerOutlined, SaveOutlined } from '@ant-design/icons';
 import { JSX, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -159,7 +159,7 @@ export const ConnectionSettingsPanel = (props: Props) => {
 				<Button
 					color='primary'
 					variant='solid'
-					icon={<SaveFilled />}
+					icon={<SaveOutlined />}
 					onClick={saveWarehouseSettings}
 					disabled={!connectionSettingsChanged}
 				>

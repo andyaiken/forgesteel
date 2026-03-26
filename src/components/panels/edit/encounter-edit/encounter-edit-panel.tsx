@@ -1089,26 +1089,38 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 		const getCustomizePanel = () => {
 			return (
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<HeaderText>Customize</HeaderText>
-					<NumberSpin label='Adjust level' value={props.slot.customization.levelAdjustment} onChange={value => props.setSlotLevelAdjustment(props.group.id, props.slot.id, value)} />
-					{
-						monsterGroup.addOns.length > 0 ?
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select'
-								mode='multiple'
-								options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-								optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
-								value={props.slot.customization.addOnIDs}
-								onChange={ids => props.setSlotAddOnIDs(props.group.id, props.slot.id, ids)}
-							/>
-							: null
-					}
+					<HeaderText>Adjust Level</HeaderText>
+					<NumberSpin
+						min={originalMonster.level - 1}
+						value={props.slot.customization.levelAdjustment}
+						format={value => `${value + originalMonster.level}`}
+						onChange={value => props.setSlotLevelAdjustment(props.group.id, props.slot.id, value)}
+					/>
 					{
 						(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
-							<Toggle label='Turn this monster into a Solo' value={props.slot.customization.convertToSolo} onChange={value => props.setSlotConvertToSolo(props.group.id, props.slot.id, value)} />
+							<>
+								<HeaderText>Promote</HeaderText>
+								<Toggle label='Turn this monster into a Solo' value={props.slot.customization.convertToSolo} onChange={value => props.setSlotConvertToSolo(props.group.id, props.slot.id, value)} />
+							</>
 							: null
 					}
+					{
+						monsterGroup.addOns.length > 0 ?
+							<>
+								<HeaderText>Customize</HeaderText>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Select'
+									mode='multiple'
+									options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+									optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+									value={props.slot.customization.addOnIDs}
+									onChange={ids => props.setSlotAddOnIDs(props.group.id, props.slot.id, ids)}
+								/>
+							</>
+							: null
+					}
+					<HeaderText>Items</HeaderText>
 					{
 						props.slot.customization.itemIDs.map(itemID => {
 							const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === itemID);
@@ -1171,8 +1183,8 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 							<MonsterInfo monster={monster} />
 							<Flex align='center'>
 								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
-								<Button type='text' title='Customize' icon={showCustomize ? <EditFilled /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
-								<Popover content={getMenu()}>
+								<Button type='text' title='Customize' icon={showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
+								<Popover trigger='click' content={getMenu()}>
 									<Button type='text' icon={<EllipsisOutlined />} />
 								</Popover>
 							</Flex>
@@ -1237,7 +1249,7 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 							<TerrainInfo terrain={terrain} />
 							<Flex align='center'>
 								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />
-								{terrain.upgrades.length > 0 ? <Button type='text' title='Customize' icon={showCustomize ? <EditFilled /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} /> : null}
+								{terrain.upgrades.length > 0 ? <Button type='text' title='Customize' icon={showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} /> : null}
 							</Flex>
 						</Flex>
 						{showCustomize ? getCustomizePanel() : null}

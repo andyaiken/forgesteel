@@ -13,8 +13,9 @@
 
 html[data-theme="dark"] {
 	.button-group {
-		.ant-btn-text {
-			color: rgba(0, 0, 0, 0.88) !important;
+		.ant-btn.ant-btn-text,
+		.ant-btn-icon {
+			color: rgba(0, 0, 0, 0.88);
 		}
 	}
 }

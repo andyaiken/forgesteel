@@ -1,5 +1,5 @@
 import { Button, Drawer, Flex, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Feature, FeatureCompanionData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -9,7 +9,7 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -99,7 +99,7 @@ export const ConfigCompanion = (props: ConfigProps) => {
 								value={props.data.selected.name}
 								onChange={setName}
 							/>
-							<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+							<NameSuggestions onSelect={setName} />
 						</Space.Compact>
 					</Expander>
 					: null

@@ -1,10 +1,9 @@
-import { Button, Space } from 'antd';
 import { Element } from '@/models/element';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
+import { Space } from 'antd';
 import { TextInput } from '@/components/controls/text-input/text-input';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -46,7 +45,7 @@ export const NameDescEditPanel = (props: Props) => {
 				/>
 				{
 					props.showNameGenerator ?
-						<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+						<NameSuggestions onSelect={setName} />
 						: null
 				}
 			</Space.Compact>

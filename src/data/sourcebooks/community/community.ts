@@ -906,7 +906,7 @@ You continue to observe your surroundings, but you can’t speak, take main acti
 		})
 	],
 	ancestryPoints: 2,
-	culture: FactoryLogic.createCulture('Ironbound', 'Urban, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.martial, 'Zaliac')
+	culture: FactoryLogic.createCulture('Ironbound', 'Urban, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.martial, 'Rallarian')
 };
 
 const oakling: Ancestry = {
@@ -1076,7 +1076,10 @@ While flying, you can stay aloft for a number of rounds equal to your Might scor
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-2a',
 								name: 'Aura',
-								description: 'If the target is an ally, the target gains +1 Stability until they leave your aura.',
+								description: `
+If the target is an ally, the target gains +1 Stability until they leave your aura.
+
+If the target is an enemy, each square adjacent to you is considered to be difficult terrain for that enemy until the start of its next turn.`,
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1094,7 +1097,10 @@ While flying, you can stay aloft for a number of rounds equal to your Might scor
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-2d',
 								name: 'Nature',
-								description: 'Choose two skills from: Architecture, Blacksmithing, Carpentry, Endurance, and Jewelry.',
+								description: `
+Choose two skills from: Architecture, Blacksmithing, Carpentry, Endurance, Jewelry, and Lift.
+
+In addition, your carrying capacity is doubled.`,
 								tag: 'elemental-nature'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1106,13 +1112,13 @@ While flying, you can stay aloft for a number of rounds equal to your Might scor
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-2f',
 								name: 'Surge',
-								description: 'When you are subjected to forced movement, you can spend a surge to gain +2 Stability.',
+								description: 'When you are subjected to forced movement, you can spend a surge to gain Stability equal to twice your echelon.',
 								tag: 'elemental-surge'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-2g',
 								name: 'Ward',
-								description: 'If you would be knocked prone, you can make a saving throw; if you succeed, you are not knocked prone.',
+								description: 'You cannot be made Prone.',
 								tag: 'elemental-ward'
 							})
 						]
@@ -1345,7 +1351,7 @@ When an enemy attempts to grab you, they take fire damage equal to your echelon`
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-7b',
 								name: 'Gift',
-								description: 'When you shift, you can slide one adjacent creature 1 square.',
+								description: 'When you shift, you can slide one adjacent creature 1 square. If the creature is willing, you can slide it one additional square.',
 								tag: 'elemental-gift'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1366,7 +1372,7 @@ When you disengage, you can move 1 additional square.`,
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-7e',
 								name: 'Passage',
-								description: 'You gain the Swim movement mode.',
+								description: 'You gain the Swim movement mode. In addition, occupied squares do not count as difficult terrain for you.',
 								tag: 'elemental-passage'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1395,10 +1401,10 @@ When you disengage, you can move 1 additional square.`,
 				type: FactoryLogic.type.createTrigger(`
 Any of the following:
 
-* You roll a critical success
+* You roll a natural 19 or 20
 * The first time you become winded in an encounter
 * The first time you become dying in an encounter
-* You die`),
+* You die`, { free: true }),
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 				target: 'Each creature in the area',
@@ -1409,6 +1415,8 @@ Any of the following:
 						tier2: '3 damage',
 						tier3: '5 damage'
 					})),
+					FactoryLogic.createAbilitySectionText('When this ability’s trigger condition is met, you must use this ability.'),
+					FactoryLogic.createAbilitySectionText('When you use this ability, you can spend a surge to affect only enemies.'),
 					FactoryLogic.createAbilitySectionPackage('elemental-instability')
 				]
 			})
@@ -1433,7 +1441,7 @@ Any of the following:
 							]
 						})
 					}),
-					value: 2
+					value: 1
 				},
 				{
 					feature: FactoryLogic.feature.createPackage({

@@ -1,5 +1,5 @@
 import { Button, Flex, Segmented, Select, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
@@ -13,7 +13,7 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -242,7 +242,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 						value={sourcebook.name}
 						onChange={setName}
 					/>
-					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+					<NameSuggestions onSelect={setName} />
 				</Space.Compact>
 				<Expander title='Description'>
 					<HeaderText>Description</HeaderText>
@@ -275,7 +275,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 												value={lang.name}
 												onChange={value => setLanguageName(n, value)}
 											/>
-											<Button icon={<ThunderboltOutlined />} onClick={() => setLanguageName(n, NameGenerator.generateName())} />
+											<NameSuggestions onSelect={value => setLanguageName(n, value)} />
 										</Space.Compact>
 										<MarkdownEditor placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
 										<Segmented
@@ -332,7 +332,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 												value={skill.name}
 												onChange={value => setSkillName(n, value)}
 											/>
-											<Button icon={<ThunderboltOutlined />} onClick={() => setSkillName(n, NameGenerator.generateName())} />
+											<NameSuggestions onSelect={value => setSkillName(n, value)} />
 										</Space.Compact>
 										<MarkdownEditor placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
 										<Select

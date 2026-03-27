@@ -1,5 +1,5 @@
 import { Button, Drawer, Flex, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Feature, FeatureRetainerData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
@@ -10,7 +10,7 @@ import { Monster } from '@/models/monster';
 import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { NameGenerator } from '@/utils/name-generator';
+import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
 import { Options } from '@/models/options';
 import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
@@ -109,7 +109,7 @@ export const ConfigRetainer = (props: ConfigProps) => {
 										value={props.data.selected.name}
 										onChange={setName}
 									/>
-									<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+									<NameSuggestions onSelect={setName} />
 								</Space.Compact>
 							</div>
 							{

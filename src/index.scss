@@ -423,6 +423,12 @@ html[data-theme="dark"] {
 		}
 	}
 
+	.ant-select-content {
+		.ds-text {
+			color: rgba(0, 0, 0, 0.88);
+		}
+	}
+
 	.ant-select-dropdown {
 		background-color: rgb(30, 30, 30);
 

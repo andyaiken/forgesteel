@@ -34,7 +34,7 @@ export class MontageSheetBuilder {
 		let eventsNotes = '';
 		montage.sections.forEach(section => {
 			section.challenges.forEach(challenge => {
-				hazards += `\n**${challenge.name}** (${challenge.characteristics.join(', ')})`;
+				hazards += `\n**${challenge.name}** ${challenge.description} (${challenge.characteristics.join(', ')})`;
 			});
 			section.twists.forEach(twist => {
 				eventsNotes += `\n**${twist.name}**\n${twist.description}`;

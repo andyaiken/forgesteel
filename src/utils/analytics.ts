@@ -1,6 +1,8 @@
 import { Hero } from '@/models/hero';
 import { SourcebookElementKind } from '@/models/sourcebook';
 
+declare let gtag: (...args: unknown[]) => void;
+
 export class Analytics {
 	static logHeroCreated = (hero: Hero) => {
 		gtag('event', 'hero_created', {

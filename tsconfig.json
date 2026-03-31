@@ -22,9 +22,8 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		/* Importing */
-		"baseUrl": "src",
 		"paths": {
-			"@/*": ["*"]
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": [

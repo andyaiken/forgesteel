@@ -149,8 +149,7 @@ export const Main = (props: Props) => {
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
 			return persistHeroes(list);
-		}
-		else {
+		} else {
 			Analytics.logHeroCreated(hero);
 
 			const copy = Utils.copy(heroes);

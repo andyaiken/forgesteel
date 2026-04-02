@@ -36,7 +36,7 @@ interface Props {
 	heroes: Hero[];
 	options: Options;
 	mode?: PanelMode;
-	showTools?: () => void;
+	showTools?: (tool: string) => void;
 }
 
 export const EncounterPanel = (props: Props) => {
@@ -318,7 +318,7 @@ export const EncounterPanel = (props: Props) => {
 						props.showTools ?
 							<ButtonGroup
 								buttons={[
-									{ type: 'button', label: 'Tools', onClick: props.showTools }
+									{ type: 'button', label: 'Minis', onClick: () => props.showTools!('minis') }
 								]}
 							/>
 							: null

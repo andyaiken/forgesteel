@@ -89,7 +89,7 @@ interface Props {
 	params: FooterParams;
 	showSourcebooks: () => void;
 	showMonster: (monster: Monster) => void;
-	showEncounterTools: (encounter: Encounter) => void;
+	showEncounterTools: (encounter: Encounter, tool: string) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	moveElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -275,7 +275,7 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
 				case 'encounter':
-					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
 					break;
 				case 'imbuement':
 					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;

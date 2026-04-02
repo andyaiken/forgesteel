@@ -1730,15 +1730,19 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showEncounterTools = (encounter: Encounter) => {
-		setDrawer(
-			<EncounterToolsModal
-				encounter={encounter}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
-				onClose={() => setDrawer(null)}
-			/>
-		);
+	const showEncounterTools = (encounter: Encounter, tool: string) => {
+		switch (tool) {
+			case 'minis':
+				setDrawer(
+					<EncounterToolsModal
+						encounter={encounter}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+						options={options}
+						onClose={() => setDrawer(null)}
+					/>
+				);
+				break;
+		}
 	};
 
 	const showPlayerView = () => {

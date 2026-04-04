@@ -1,5 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
-import { Flex, Tag } from 'antd';
+import { CSSProperties, ReactNode } from 'react';\
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './header-text.scss';
@@ -19,17 +18,17 @@ export const HeaderText = (props: Props) => {
 	}
 
 	return (
-    <ErrorBoundary>
-      <div
-        className={`header-text-panel level-${props.level || 2}`}
-        style={props.style}
-      >
-        <div className="header-text-content">
-          <div className="header-text">{props.children}</div>
-          {props.ribbon}
-        </div>
-        {props.extra}
-      </div>
-    </ErrorBoundary>
-  );
+		<ErrorBoundary>
+			<div
+				className={`header-text-panel level-${props.level || 2}`}
+				style={props.style}
+			>
+				<div className='header-text-content'>
+					<div className='header-text'>{props.children}</div>
+					{props.ribbon}
+				</div>
+				{props.extra}
+			</div>
+		</ErrorBoundary>
+	);
 };

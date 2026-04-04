@@ -308,84 +308,92 @@ export const AbilityPanel = (props: Props) => {
 	}
 
 	return (
-    <ErrorBoundary>
-      <div
-        className="ability-panel"
-        id={SheetFormatter.getPageId("ability", props.ability.id)}
-      >
-        <Space
-          orientation="vertical"
-          style={{ marginTop: "15px", width: "100%" }}
-        >
-          {getWarnings().map((warn, n) => (
-            <Alert
-              key={n}
-              type="warning"
-              showIcon={true}
-              title={
-                <div>
-                  <b>{warn.label}</b>: {warn.text}
-                </div>
-              }
-            />
-          ))}
-        </Space>
-        <HeaderText
-          ribbon={getRibbon()}
-          tags={props.tags}
-          extra={
-            autoCalcAvailable() ? (
-              <Button
-                type="text"
-                title="Auto-calculate damage, potency, etc"
-                icon={
-                  autoCalc ? (
-                    <ThunderboltFilled style={{ color: "rgb(22, 119, 255)" }} />
-                  ) : (
-                    <ThunderboltOutlined />
-                  )
-                }
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setAutoCalc(!autoCalc);
-                }}
-              />
-            ) : null
-          }
-        >
-          {props.ability.name || "Unnamed Ability"}
-        </HeaderText>
-        {props.ability.keywords.length > 0 ? (
-          <Flex gap={3} justify="between">
-            <>
-              {props.ability.keywords.map((k, n) => (
-                <Tag key={n} variant="outlined">
-                  {k}
-                </Tag>
-              ))}
-            </>
-            {props.tags?.map((t, n) => (
-              <Tag key={n} variant="outlined" color="blue">
-                {t}
-              </Tag>
-            ))}
-          </Flex>
-        ) : null}
-        <Markdown
-          text={props.ability.description}
-          className="ability-description-text"
-        />
-        <AbilityInfoPanel ability={props.ability} hero={props.hero} />
-        {(props.ability.sections || []).map(getSection)}
-        {props.ability.keywords.includes(AbilityKeyword.Charge) &&
-        props.ability.id !== AbilityData.freeStrikeMelee.id ? (
-          <Alert
-            type="info"
-            showIcon={true}
-            title="This ability can be used in place of a melee free strike when you take the Charge action."
-          />
-        ) : null}
-      </div>
-    </ErrorBoundary>
-  );
+		<ErrorBoundary>
+			<div
+				className='ability-panel'
+				id={SheetFormatter.getPageId('ability', props.ability.id)}
+			>
+				<Space
+					orientation='vertical'
+					style={{ marginTop: '15px', width: '100%' }}
+				>
+					{getWarnings().map((warn, n) => (
+						<Alert
+							key={n}
+							type='warning'
+							showIcon={true}
+							title={
+								<div>
+									<b>{warn.label}</b>: {warn.text}
+								</div>
+							}
+						/>
+					))}
+				</Space>
+				<HeaderText
+					ribbon={getRibbon()}
+					tags={props.tags}
+					extra={
+						autoCalcAvailable()
+							? (
+								<Button
+									type='text'
+									title='Auto-calculate damage, potency, etc'
+									icon={
+										autoCalc
+											? (
+												<ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} />
+											)
+											: (
+												<ThunderboltOutlined />
+											)
+									}
+									onClick={e => {
+										e.stopPropagation();
+										setAutoCalc(!autoCalc);
+									}}
+								/>
+							)
+							: null
+					}
+				>
+					{props.ability.name || 'Unnamed Ability'}
+				</HeaderText>
+				{props.ability.keywords.length > 0
+					? (
+						<Flex gap={3} justify='between'>
+							<>
+								{props.ability.keywords.map((k, n) => (
+									<Tag key={n} variant='outlined'>
+										{k}
+									</Tag>
+								))}
+							</>
+							{props.tags?.map((t, n) => (
+								<Tag key={n} variant='outlined' color='blue'>
+									{t}
+								</Tag>
+							))}
+						</Flex>
+					)
+					: null}
+				<Markdown
+					text={props.ability.description}
+					className='ability-description-text'
+				/>
+				<AbilityInfoPanel ability={props.ability} hero={props.hero} />
+				{(props.ability.sections || []).map(getSection)}
+				{props.ability.keywords.includes(AbilityKeyword.Charge) &&
+        props.ability.id !== AbilityData.freeStrikeMelee.id
+					? (
+						<Alert
+							type='info'
+							showIcon={true}
+							title='This ability can be used in place of a melee free strike when you take the Charge action.'
+						/>
+					)
+					: null}
+			</div>
+		</ErrorBoundary>
+	);
 };

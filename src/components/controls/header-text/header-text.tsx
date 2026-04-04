@@ -19,19 +19,17 @@ export const HeaderText = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
-				<div className='header-text-content'>
-					{props.ribbon}
-					<div className='header-text'>{props.children}</div>
-					{
-						props.tags ?
-							<Flex gap={3}>{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}</Flex>
-							: null
-					}
-				</div>
-				{props.extra}
-			</div>
-		</ErrorBoundary>
-	);
+    <ErrorBoundary>
+      <div
+        className={`header-text-panel level-${props.level || 2}`}
+        style={props.style}
+      >
+        <div className="header-text-content">
+          <div className="header-text">{props.children}</div>
+          {props.ribbon}
+        </div>
+        {props.extra}
+      </div>
+    </ErrorBoundary>
+  );
 };

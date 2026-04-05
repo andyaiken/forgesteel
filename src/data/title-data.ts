@@ -5,6 +5,7 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { ItemType } from '@/enums/item-type';
 import { Title } from '@/models/title';
 
 export class TitleData {
@@ -573,7 +574,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 
 	static troupeTactics: Title = {
 		id: 'title-troupe-tactics',
-		name: 'Troupe Tactics',
+		name: 'Troupe Leading Player',
 		description: '“We’re actors! We’re the opposite of people!”',
 		echelon: 1,
 		prerequisites: 'The party has successfully performed as a troupe of actors, circus performers, or other entertainers.',
@@ -1829,6 +1830,54 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				id: 'title-peace-bringer-4',
 				name: 'Many Paths to Peace',
 				description: 'Your choice of your Reason or Presence increases by 1 (to a maximum of 6). When you make a test with a skill from the interpersonal skill group, you can use any characteristic of your choice for the test.'
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static reborn: Title = {
+		id: 'title-reborn',
+		name: 'Reborn',
+		description: '“I remember this world. I suppose my task is not yet complete.”',
+		echelon: 4,
+		prerequisites: 'You died in glorious battle while on a quest for a higher power.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-reborn-1',
+				name: 'Effect',
+				description: 'A god or other powerful being has determined that it is not yet your time to die. Your body fades away, but you reappear alive 24 hours later in a location of your choice. You regain all your Stamina and Recoveries, and your choice of your Intuition or Presence increases by 1 (to a maximum of 6). Additionally, choose one of the following benefits:\n\n* Holy Weapon: You have a leveled treasure of the Director’s choice.\n* Kill Me Once, Shame On You: Choose a creature keyword belonging to one of the creatures who defeated you. Any creature with that keyword takes a bane on ability rolls against you.\n* Memories of the Beyond: You have two skills of your choice.\n\nSpecial: If a hakaan gains this title as a result of using their Doomsight trait, they lose that trait.'
+			}),
+			FactoryLogic.feature.createChoice({
+				id: 'title-reborn-2',
+				name: 'Option',
+				options: [
+					{
+						feature: FactoryLogic.feature.createItemChoice({
+							id: 'title-reborn-2a',
+							name: 'Holy Weapon',
+							description: 'You have a leveled treasure of the Director’s choice.',
+							types: [ ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon ]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.create({
+							id: 'title-reborn-2b',
+							name: 'Kill Me Once, Shame On You',
+							description: 'Choose a creature keyword belonging to one of the creatures who defeated you. Any creature with that keyword takes a bane on ability rolls against you.'
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createSkillChoice({
+							id: 'title-reborn-2c',
+							name: 'Memories of the Beyond',
+							description: 'You have two skills of your choice.',
+							count: 2
+						}),
+						value: 1
+					}
+				]
 			})
 		],
 		selectedFeatureID: ''

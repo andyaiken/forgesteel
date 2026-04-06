@@ -1,0 +1,25 @@
+.abilities-section {
+	padding: 5px;
+
+	.abilities-grid {
+		display: grid;
+		gap: 10px;
+
+		&.compact {
+			display: block;
+		}
+
+		&.narrow {
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		}
+		&.medium {
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		}
+		&.wide {
+			grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		}
+		&.extra-wide {
+			grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+		}
+	}
+}

@@ -1,65 +1,43 @@
-import { ArrowDownOutlined, ArrowUpOutlined, EllipsisOutlined, ToolOutlined } from '@ant-design/icons';
-import { Button, Divider, Flex, Popover, Segmented, Select, Space, Statistic, Tag } from 'antd';
-import { Pill, ResourcePill } from '@/components/controls/pill/pill';
+import { Flex, Segmented, Select } from 'antd';
+import { AbilitiesPanel } from '@/components/panels/hero/abilities/abilities-panel';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { AbilityLogic } from '@/logic/ability-logic';
-import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
-import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
-import { Collections } from '@/utils/collections';
+import { ChoicesPanel } from '@/components/panels/hero/choices/choices-panel';
 import { Complication } from '@/models/complication';
-import { ConditionLogic } from '@/logic/condition-logic';
-import { ConditionType } from '@/enums/condition-type';
-import { ControlledMonstersPanel } from '@/components/panels/hero/controlled-monsters/controlled-monsters-panel';
 import { Culture } from '@/models/culture';
 import { CultureData } from '@/data/culture-data';
-import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Domain } from '@/models/domain';
-import { Element } from '@/models/element';
-import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
-import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
-import { FeatureType } from '@/enums/feature-type';
+import { FeaturesPanel } from '@/components/panels/hero/features/features-panel';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
-import { FixturePanel } from '@/components/panels/elements/fixture-panel/fixture-panel';
 import { Follower } from '@/models/follower';
-import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
-import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { HealthGauge } from '@/components/panels/health-gauge/health-gauge';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroToken } from '@/components/panels/token/token';
 import { Kit } from '@/models/kit';
-import { LabelControl } from '@/components/controls/label-control/label-control';
-import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
-import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { NamePanel } from '@/components/panels/hero/name/name-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { ProjectLogic } from '@/logic/project-logic';
+import { RetinuePanel } from '@/components/panels/hero/retinue/retinue-panel';
 import { RulesPage } from '@/enums/rules-page';
-import { SearchBox } from '@/components/controls/text-input/text-input';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
-import { Skill } from '@/models/skill';
-import { SkillList } from '@/enums/skill-list';
+import { SidebarPanel } from '@/components/panels/hero/sidebar/sidebar-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { StatsPanel } from '@/components/panels/hero/stats/stats-panel';
 import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
-import { Toggle } from '@/components/controls/toggle/toggle';
-import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
@@ -96,1022 +74,6 @@ interface Props {
 export const HeroPanel = (props: Props) => {
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
-	const [ featureSearch, setFeatureSearch ] = useState<string>('');
-	const [ featureSort, setFeatureSort ] = useState<string>('az');
-	const [ featureAll, setFeatureAll ] = useState<boolean>(false);
-
-	const getNameSection = () => {
-		const showState = (type: HeroModalType) => {
-			if (props.onShowState) {
-				props.onShowState(type);
-			}
-		};
-
-		return (
-			<HeaderText
-				style={{ margin: '0 5px 10px 5px' }}
-				level={props.options.compactView ? 2 : 1}
-				ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
-				tags={props.hero.folder ? [ props.hero.folder ] : []}
-				extra={
-					isSmall ?
-						<Popover
-							content={
-								<Space orientation='vertical'>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Resources)}>Resources</Button>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Vitals)}>Vitals</Button>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Inventory)}>Inventory</Button>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Projects)}>Projects</Button>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Titles)}>Titles</Button>
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Respite)}>Respite</Button>
-									<Divider />
-									<Button block={true} type='text' onClick={() => showState(HeroModalType.Customize)}>Customize</Button>
-								</Space>
-							}
-						>
-							<Button>Tools</Button>
-						</Popover>
-						:
-						<ButtonGroup
-							buttons={[
-								{ type: 'button', label: 'Resources', onClick: () => showState(HeroModalType.Resources) },
-								{ type: 'button', label: 'Vitals', onClick: () => showState(HeroModalType.Vitals) },
-								{ type: 'button', label: 'Inventory', onClick: () => showState(HeroModalType.Inventory) },
-								{ type: 'button', label: 'Projects', onClick: () => showState(HeroModalType.Projects) },
-								{ type: 'button', label: 'Titles', onClick: () => showState(HeroModalType.Titles) },
-								{ type: 'button', label: 'Respite', onClick: () => showState(HeroModalType.Respite) },
-								{ type: 'button', icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => showState(HeroModalType.Customize) }
-							]}
-						/>
-				}
-			>
-				{props.hero.name || 'Unnamed Hero'}
-			</HeaderText>
-		);
-	};
-
-	const getSidebarSection = () => {
-		const onShowStats = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroModalType.Resources);
-			}
-		};
-
-		const onShowVitals = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroModalType.Vitals);
-			}
-		};
-
-		const onShowConditions = () => {
-			if (props.onShowReference) {
-				props.onShowReference(RulesPage.Conditions);
-			}
-		};
-
-		const onShowSkills = () => {
-			if (props.onShowReference) {
-				props.onShowReference(RulesPage.Skills);
-			}
-		};
-
-		const onShowLanguages = () => {
-			if (props.onShowReference) {
-				props.onShowReference(RulesPage.Languages);
-			}
-		};
-
-		const conditionImmunities = HeroLogic.getConditionImmunities(props.hero);
-		const damageImmunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-		const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
-
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
-		const heroicResources = HeroLogic.getHeroicResources(props.hero);
-		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
-		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
-
-		const useRows = props.options.singlePage && props.options.compactView;
-
-		const getTrigger = (ability: Ability) => {
-			const showTarget = ability.type.trigger.toLowerCase().includes('the target');
-			const distance = ability.distance.map(d => AbilityLogic.getDistance(d, ability, props.hero)).join(' or ');
-
-			return (
-				<div key={ability.id}>
-					{
-						ability.type.trigger ?
-							<Field
-								compact={true}
-								label={ability.name || 'Unnamed Ability'}
-								value={ability.type.trigger}
-							/>
-							: null
-					}
-					{
-						showTarget && distance ?
-							<Field
-								compact={true}
-								label={ability.target !== distance ? 'Distance' : 'Distance / Target'}
-								value={distance}
-							/>
-							: null
-					}
-					{
-						showTarget && ability.target && (ability.target !== distance) ?
-							<Field
-								compact={true}
-								label='Target'
-								value={ability.target}
-							/>
-							: null
-					}
-				</div>
-			);
-		};
-
-		const getSkills = (label: string, skills: Skill[]) => {
-			return skills.length > 0 ?
-				useRows ?
-					<div className='selectable-row clickable' onClick={onShowSkills}>
-						<div>{label}: <b>{skills.map(s => s.name).join(', ')}</b></div>
-					</div>
-					:
-					<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
-						<HeaderText>{label}</HeaderText>
-						{
-							skills.map(s => (
-								<div key={s.name} className='ds-text'>
-									{s.name} {props.options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
-								</div>
-							))
-						}
-					</div>
-				: null;
-		};
-
-		let display = 'column';
-		if (props.options.singlePage) {
-			display = 'grid';
-		}
-		if (useRows) {
-			display = 'list';
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className={`hero-sidebar ${display}`}>
-					{
-						HeroLogic.getCombatState(props.hero) === 'dying' ?
-							useRows ?
-								<div className='selectable-row danger clickable' onClick={onShowVitals}>
-									<div><b>Dying</b></div>
-								</div>
-								:
-								<div className='overview-tile danger clickable' onClick={onShowVitals}>
-									<HeaderText>Dying</HeaderText>
-									<div className='ds-text'>
-										You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
-									</div>
-									<div className='ds-text'>
-										Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
-									</div>
-								</div>
-							: null
-					}
-					{
-						props.hero.state.conditions.map(c =>
-							useRows ?
-								<div key={c.id} className='selectable-row warning clickable' onClick={onShowVitals}>
-									<div>Condition: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
-								</div>
-								:
-								<div key={c.id} className='overview-tile warning clickable' onClick={onShowVitals}>
-									<HeaderText tags={[ c.ends ]}>{c.type}</HeaderText>
-									<Markdown text={c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)} />
-								</div>
-						)
-					}
-					{
-						useRows ?
-							null
-							:
-							<div className='overview-tile clickable' style={{ display: 'flex', justifyContent: 'center', padding: '0' }} onClick={onShowVitals}>
-								<HealthGauge
-									stamina={{
-										staminaMax: HeroLogic.getStamina(props.hero),
-										staminaDamage: props.hero.state.staminaDamage,
-										state: HeroLogic.getCombatState(props.hero)
-									}}
-									staminaTemp={{
-										staminaTemp: props.hero.state.staminaTemp
-									}}
-									recoveries={{
-										recoveriesMax: HeroLogic.getRecoveries(props.hero),
-										recoveriesUsed: props.hero.state.recoveriesUsed
-									}}
-								/>
-							</div>
-					}
-					{
-						(heroicResources.length > 0) && !props.options.singlePage ?
-							<>
-								{
-									heroicResources.map(hr =>
-										useRows ?
-											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
-												<div>Resource: <b>{hr.name}</b></div>
-												<div>{hr.value}</div>
-											</div>
-											:
-											<div key={hr.id} className={hr.value >= 0 ? 'overview-tile clickable' : 'overview-tile warning clickable'} onClick={onShowStats}>
-												<HeaderText
-													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
-												>
-													{hr.name}
-												</HeaderText>
-												{
-													hr.gains.map((g, n) => (
-														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{g.trigger}</div>
-															<Pill>+{g.value}</Pill>
-														</Flex>
-													))
-												}
-											</div>
-									)
-								}
-							</>
-							: null
-					}
-					<ControlledMonstersPanel
-						hero={props.hero}
-						onAddSquad={props.onAddSquad!}
-						onRemoveSquad={props.onRemoveSquad!}
-						onAddMonsterToSquad={props.onAddMonsterToSquad!}
-						onSelectControlledMonster={props.onSelectControlledMonster!}
-						onSelectControlledSquad={props.onSelectControlledSquad!}
-					/>
-					{
-						(triggers.length > 0) && !props.options.singlePage ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={() => setTab('Triggers')}>
-									<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
-									<HeaderText>Triggered Actions</HeaderText>
-									<Space orientation='vertical'>
-										{triggers.map(t => getTrigger(t.ability))}
-									</Space>
-								</div>
-							: null
-					}
-					{
-						conditionImmunities.length > 0 ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onShowConditions}>
-									<div>Cannot Be: <b>{conditionImmunities.join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onShowConditions}>
-									<HeaderText>Cannot Be</HeaderText>
-									{conditionImmunities.map((c, n) => <div key={n} className='ds-text'>{c}</div>)}
-								</div>
-							: null
-					}
-					{
-						damageImmunities.length > 0 ?
-							useRows ?
-								<div className='selectable-row'>
-									<div>Immunities: <b>{damageImmunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile'>
-									<HeaderText>Immunities</HeaderText>
-									{damageImmunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
-								</div>
-							: null
-					}
-					{
-						damageWeaknesses.length > 0 ?
-							useRows ?
-								<div className='selectable-row'>
-									<div>Weaknesses: <b>{damageWeaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile'>
-									<HeaderText>Weaknesses</HeaderText>
-									{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
-								</div>
-							: null
-					}
-					{
-						useRows ?
-							<div className='selectable-row clickable' onClick={onShowLanguages}>
-								<div>Languages: <b>{languages.map(l => l.name).join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile clickable' onClick={onShowLanguages}>
-								<HeaderText>Languages</HeaderText>
-								{
-									languages.length > 0 ?
-										languages.map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
-										:
-										<div className='ds-text dimmed-text'>None</div>
-								}
-							</div>
-					}
-					{
-						(props.options.showSkillsInGroups || false) ?
-							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ]
-								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
-							:
-							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	};
-
-	const getStatsSection = () => {
-		const useRows = props.options.compactView;
-
-		const xpSuffix = HeroLogic.canLevelUp(props.hero, props.options) ? <ArrowUpOutlined /> : undefined;
-
-		const size = HeroLogic.getSize(props.hero);
-		const sizeSuffix = size.mod || undefined;
-
-		const speed = HeroLogic.getSpeed(props.hero);
-		const speedSuffix = HeroLogic.getSpeedModified(props.hero) ? <ArrowDownOutlined /> : undefined;
-		const speedStr = speed.modes.length === 0 ? 'Speed' : `Speed (${FormatLogic.getSpeedModes(speed.modes).toLowerCase()})`;
-
-		const maxStamina = HeroLogic.getStamina(props.hero);
-		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
-		const staminaSuffix = props.hero.state.staminaDamage === 0 ? null : `/ ${maxStamina}`;
-
-		const maxRecoveries = HeroLogic.getRecoveries(props.hero);
-		const recoveries = props.hero.state.recoveriesUsed === 0 ? maxRecoveries : maxRecoveries - props.hero.state.recoveriesUsed;
-		const recoveriesSuffix = props.hero.state.recoveriesUsed === 0 ? null : `/ ${maxRecoveries}`;
-
-		const onSelectCharacteristic = (characteristic: Characteristic) => {
-			if (props.onSelectCharacteristic) {
-				props.onSelectCharacteristic(characteristic);
-			}
-		};
-
-		const onShowResources = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroModalType.Resources);
-			}
-		};
-
-		const onShowVitals = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroModalType.Vitals);
-			}
-		};
-
-		return (
-			<ErrorBoundary>
-				<div className='stats-section'>
-					<Flex gap={10}>
-						<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
-							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
-						</StatsRow>
-						<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
-							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-						</StatsRow>
-						<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
-							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-						</StatsRow>
-						<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
-							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-						</StatsRow>
-						<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
-							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-						</StatsRow>
-					</Flex>
-					{
-						useRows ?
-							<>
-								<div className='selectable-row clickable' onClick={onShowResources}>
-									{
-										HeroLogic.getHeroicResources(props.hero).map(hr => (
-											<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
-										))
-									}
-									<div>Surges: <b>{props.hero.state.surges}</b></div>
-									<div>Victories: <b>{props.hero.state.victories}</b></div>
-									<div>XP: <b>{props.hero.state.xp}</b></div>
-									<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
-									<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
-								</div>
-								<div className='selectable-row'>
-									<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
-									<div>{speedStr}: <b>{speed.value}</b></div>
-									<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
-									<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
-									<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
-								</div>
-								<div className='selectable-row clickable' onClick={onShowVitals}>
-									<div>Stamina: <b>{stamina}</b></div>
-									<div>Recoveries: <b>{recoveries}</b></div>
-									<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
-								</div>
-							</>
-							:
-							<>
-								<StatsRow caption='Resources' onClick={onShowResources}>
-									{
-										HeroLogic.getHeroicResources(props.hero).map(hr => (
-											<Statistic key={hr.id} title={hr.name} value={hr.value} />
-										))
-									}
-									<Statistic title='Surges' value={props.hero.state.surges} />
-									<Statistic title='Victories' value={props.hero.state.victories} />
-									<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
-									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
-									<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
-								</StatsRow>
-								<Flex gap={10}>
-									<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
-										<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
-										<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
-										<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-										<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
-										<Statistic title='Save' value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
-									</StatsRow>
-									<StatsRow caption='Vitals' onClick={onShowVitals} style={{ flex: '3 3 0' }}>
-										<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
-										<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
-										<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
-									</StatsRow>
-								</Flex>
-							</>
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	};
-
-	const getChoicesSection = () => {
-		const onSelectAncestry = () => {
-			if (props.hero.ancestry && props.onSelectAncestry) {
-				props.onSelectAncestry(props.hero.ancestry);
-			}
-		};
-
-		const onSelectCulture = () => {
-			if (props.hero.culture && props.onSelectCulture) {
-				props.onSelectCulture(props.hero.culture);
-			}
-		};
-
-		const onSelectCareer = () => {
-			if (props.hero.career && props.onSelectCareer) {
-				props.onSelectCareer(props.hero.career);
-			}
-		};
-
-		const onSelectClass = () => {
-			if (props.hero.class && props.onSelectClass) {
-				props.onSelectClass(props.hero.class);
-			}
-		};
-
-		const onSelectComplication = () => {
-			if (props.hero.complication && props.onSelectComplication) {
-				props.onSelectComplication(props.hero.complication);
-			}
-		};
-
-		const onSelectDomain = (domain: Domain) => {
-			if (props.onSelectDomain) {
-				props.onSelectDomain(domain);
-			}
-		};
-
-		const onSelectKit = (kit: Kit) => {
-			if (props.onSelectKit) {
-				props.onSelectKit(kit);
-			}
-		};
-
-		const onSelectTitle = (title: Title) => {
-			if (props.onSelectTitle) {
-				props.onSelectTitle(title);
-			}
-		};
-
-		const onSelectProject = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroModalType.Projects);
-			}
-		};
-
-		let incitingIncident: Element | null = null;
-		if (props.hero.career) {
-			incitingIncident = props.hero.career.incitingIncidents.selected;
-		}
-
-		const useRows = props.options.compactView;
-
-		return (
-			<ErrorBoundary>
-				<div className={`choices-section ${useRows ? 'compact' : ''}`}>
-					{
-						props.hero.ancestry ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectAncestry}>
-									<div>Ancestry: <b>{props.hero.ancestry.name}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onSelectAncestry}>
-									<HeaderText>Ancestry</HeaderText>
-									<Field label='Ancestry' value={props.hero.ancestry.name} />
-									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
-								</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Ancestry</HeaderText>
-								<div className='ds-text dimmed-text'>No ancestry chosen</div>
-							</div>
-					}
-					{
-						props.hero.culture ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectCulture}>
-									<div>Culture: <b>{props.hero.culture.name}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onSelectCulture}>
-									<HeaderText>Culture</HeaderText>
-									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
-									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
-									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
-									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
-								</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Culture</HeaderText>
-								<div className='ds-text dimmed-text'>No culture chosen</div>
-							</div>
-					}
-					{
-						props.hero.career ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectCareer}>
-									<div>Career: <b>{props.hero.career.name}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onSelectCareer}>
-									<HeaderText>Career</HeaderText>
-									<Field label='Career' value={props.hero.career.name} />
-									{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
-								</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Career</HeaderText>
-								<div className='ds-text dimmed-text'>No career chosen</div>
-							</div>
-					}
-					{
-						props.hero.class ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectClass}>
-									<div>Class: <b>{props.hero.class.name} ({[ `level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero) ].join(' ')})</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onSelectClass}>
-									<HeaderText>Class</HeaderText>
-									<Field label='Class' value={props.hero.class.name} />
-									<Field label='Level' value={props.hero.class.level} />
-									{
-										HeroLogic.getClassSpecialization(props.hero).length > 0 ?
-											<Field label={props.hero.class.subclassName || 'Domains'} value={HeroLogic.getClassSpecialization(props.hero).join(', ')} />
-											: null
-									}
-								</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Class</HeaderText>
-								<div className='ds-text dimmed-text'>No class chosen</div>
-							</div>
-					}
-					{
-						HeroLogic.getDomains(props.hero).length > 0 ?
-							HeroLogic.getDomains(props.hero).map(domain =>
-								useRows ?
-									<div key={domain.id} className='selectable-row clickable' onClick={() => onSelectDomain(domain)}>
-										<div>Domain: <b>{domain.name}</b></div>
-									</div>
-									:
-									<div key={domain.id} className='overview-tile clickable' onClick={() => onSelectDomain(domain)}>
-										<HeaderText>Domain</HeaderText>
-										<Field label='Domain' value={domain.name} />
-									</div>
-							)
-							:
-							null
-					}
-					{
-						HeroLogic.getKits(props.hero).length > 0 ?
-							HeroLogic.getKits(props.hero).map(kit =>
-								useRows ?
-									<div key={kit.id} className='selectable-row clickable' onClick={() => onSelectKit(kit)}>
-										<div>Kit: <b>{kit.name}</b></div>
-									</div>
-									:
-									<div key={kit.id} className='overview-tile clickable' onClick={() => onSelectKit(kit)}>
-										<HeaderText>Kit</HeaderText>
-										<Field label='Kit' value={kit.name} />
-										{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
-										{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
-									</div>
-							)
-							:
-							null
-					}
-					{
-						HeroLogic.getTitles(props.hero).length > 0 ?
-							HeroLogic.getTitles(props.hero).map(title =>
-								useRows ?
-									<div key={title.id} className='selectable-row clickable' onClick={() => onSelectTitle(title)}>
-										<div>Title: <b>{title.name}</b></div>
-									</div>
-									:
-									<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
-										<HeaderText>Title</HeaderText>
-										<Field label='Title' value={title.name} />
-									</div>
-							)
-							:
-							null
-					}
-					{
-						props.hero.complication ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectComplication}>
-									<div>Complication: <b>{props.hero.complication.name}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onSelectComplication}>
-									<HeaderText>Complication</HeaderText>
-									<Field label='Complication' value={props.hero.complication.name} />
-								</div>
-							:
-							null
-					}
-					{
-						props.hero.state.projects.length > 0 ?
-							props.hero.state.projects.map(project =>
-								useRows ?
-									<div key={project.id} className='selectable-row clickable' onClick={onSelectProject}>
-										<div>Project: <b>{project.name}</b></div>
-									</div>
-									:
-									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
-										<HeaderText>Project</HeaderText>
-										<Field label='Project' value={project.name} />
-										{project.progress ? <Field label='State' value={ProjectLogic.getStatus(project)} /> : null}
-									</div>
-							)
-							:
-							null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	};
-
-	const getFeaturesSection = () => {
-		const showFeature = (feature: Feature) => {
-			if (props.onSelectFeature) {
-				props.onSelectFeature(feature);
-			}
-		};
-
-		const features = HeroLogic.getFeatures(props.hero)
-			.filter(f => {
-				if (featureAll) {
-					const featureTypes = [ FeatureType.Ability, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.Follower, FeatureType.Retainer ];
-					return !featureTypes.includes(f.feature.type);
-				}
-
-				const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
-				return featureTypes.includes(f.feature.type);
-			})
-			.filter(f => Utils.textMatches([ f.feature.name, f.feature.description ], featureSearch))
-			.sort((a, b) => {
-				switch (featureSort) {
-					case 'az':
-						return a.feature.name.localeCompare(b.feature.name);
-					case 'lvl':
-						return (a.level || 0) - (b.level || 0) || a.feature.name.localeCompare(b.feature.name);
-					case 'src':
-						return a.source.localeCompare(b.source) || a.feature.name.localeCompare(b.feature.name);
-				}
-
-				return 0;
-			});
-
-		const getBucketName = (feature: { feature: Feature, source: string, level: number | undefined }) => {
-			switch (featureSort) {
-				case 'az':
-					return 'Features';
-				case 'lvl':
-					return `Level ${feature.level || 1}`;
-				case 'src':
-					return feature.source || 'Features';
-			}
-
-			return '';
-		};
-
-		let buckets: { name: string, features: { feature: Feature, source: string, level: number | undefined }[] }[] = [];
-		features.forEach(f => {
-			const bucketName = getBucketName(f);
-			let bucket = buckets.find(b => b.name === bucketName);
-			if (!bucket) {
-				bucket = { name: bucketName, features: [] };
-				buckets.push(bucket);
-			}
-			bucket.features.push(f);
-		});
-		if (featureSort !== 'lvl') {
-			buckets = Collections.sort(buckets, b => b.name);
-		}
-		if (buckets.length === 0) {
-			buckets.push({ name: 'Features', features: [] });
-		}
-
-		const getRow = (data: { feature: Feature, source: string, level: number | undefined }) => {
-			return (
-				<div key={data.feature.id} className='selectable-row clickable' onClick={() => showFeature(data.feature)}>
-					<div><b>{data.feature.name}</b></div>
-					{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
-				</div>
-			);
-		};
-
-		const useRows = props.options.compactView;
-
-		const controls = (
-			<Space>
-				<SearchBox searchTerm={featureSearch} setSearchTerm={setFeatureSearch} />
-				<Popover
-					trigger='click'
-					content={
-						<Space orientation='vertical' style={{ width: '300px' }}>
-							<LabelControl
-								label='Organize'
-								control={
-									<Select
-										style={{ width: '100%' }}
-										options={[
-											{ label: 'Alphabetical', value: 'az' },
-											{ label: 'Group by level', value: 'lvl' },
-											{ label: 'Group by source', value: 'src' }
-										]}
-										optionRender={o => <div className='ds-text'>{o.label}</div>}
-										value={featureSort}
-										onChange={setFeatureSort}
-									/>
-								}
-							/>
-							<Toggle label='All Features' value={featureAll} onChange={setFeatureAll} />
-						</Space>
-					}
-				>
-					<Button type='text' icon={<EllipsisOutlined />} />
-				</Popover>
-			</Space>
-		);
-
-		return (
-			<ErrorBoundary>
-				<div className='features-section'>
-					{
-						buckets.map((bucket, n) =>
-							<div key={n}>
-								<HeaderText extra={n === 0 ? controls : null}>
-									{bucket.name}
-								</HeaderText>
-								<Space orientation='vertical' style={{ width: '100%' }}>
-									{
-										bucket.features.map(f =>
-											useRows ?
-												getRow(f)
-												:
-												<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
-													<FeaturePanel
-														feature={f.feature}
-														source={props.options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
-														options={props.options}
-														hero={props.hero}
-														sourcebooks={props.sourcebooks}
-														mode={PanelMode.Full}
-													/>
-												</SelectablePanel>
-										)
-									}
-								</Space>
-							</div>
-						)
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	};
-
-	const getAbilitiesSection = (title: string, abilities: { ability: Ability, source: string, level: number | undefined }[]) => {
-		if (abilities.length === 0) {
-			return null;
-		}
-
-		const showAbility = (ability: Ability) => {
-			if (props.onSelectAbility) {
-				props.onSelectAbility(ability);
-			}
-		};
-
-		const getRow = (data: { ability: Ability, source: string }) => {
-			return (
-				<div key={data.ability.id} className='selectable-row clickable' onClick={() => showAbility(data.ability)}>
-					<div><b>{data.ability.name}</b></div>
-					<div>{data.ability.distance.map(d => AbilityLogic.getDistance(d, data.ability, props.hero)).join(' or ')}</div>
-					<div>{data.ability.target}</div>
-					{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
-					{
-						data.ability.cost === 'signature' ?
-							<Pill>Signature</Pill>
-							:
-							(data.ability.cost > 0) ? <ResourcePill value={data.ability.cost} repeatable={data.ability.repeatable} /> : null
-					}
-					{data.ability.type.trigger ? <div>{data.ability.type.trigger}</div> : null}
-				</div>
-			);
-		};
-
-		const nonStandard = abilities.filter(a => a.source !== 'Standard');
-		const standard = abilities.filter(a => a.source === 'Standard');
-
-		const useRows = props.options.compactView;
-
-		return (
-			<ErrorBoundary>
-				<div className='abilities-section'>
-					{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{title}</HeaderText> : null}
-					{
-						(nonStandard.length === 0) && (standard.length === 0) ?
-							<Empty />
-							: null
-					}
-					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-						{
-							nonStandard.map(a =>
-								useRows ?
-									getRow(a)
-									:
-									<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
-										<AbilityPanel
-											ability={a.ability}
-											hero={props.hero}
-											options={props.options}
-											mode={PanelMode.Full}
-											tags={props.options.showSources ? [ a.level ? `${a.source} (level ${a.level})` : a.source ] : undefined}
-										/>
-									</SelectablePanel>
-							)
-						}
-					</div>
-					{
-						(nonStandard.length > 0) && (standard.length > 0) ?
-							<Divider />
-							: null
-					}
-					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-						{
-							standard.map(a =>
-								useRows ?
-									getRow(a)
-									:
-									<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
-										<AbilityPanel
-											ability={a.ability}
-											hero={props.hero}
-											options={props.options}
-											mode={PanelMode.Full}
-											tags={props.options.showSources ? [ a.source ] : undefined}
-										/>
-									</SelectablePanel>
-							)
-						}
-					</div>
-				</div>
-			</ErrorBoundary>
-		);
-	};
-
-	const getRetinueSection = () => {
-		const onSelectMonster = (monster: Monster, summon?: SummoningInfo) => {
-			if (props.onSelectMonster) {
-				props.onSelectMonster(props.hero, monster, summon);
-			}
-		};
-
-		const onSelectFollower = (follower: Follower) => {
-			if (props.onSelectFollower) {
-				props.onSelectFollower(props.hero, follower);
-			}
-		};
-
-		const onSelectFixture = (fixture: Fixture) => {
-			if (props.onSelectFixture) {
-				props.onSelectFixture(fixture);
-			}
-		};
-
-		const useRows = props.options.compactView;
-
-		const monsters: { monster: Monster, summon?: SummoningInfo }[] = [
-			...HeroLogic.getCompanions(props.hero).map(m => ({ monster: m, summon: undefined })),
-			...HeroLogic.getRetainers(props.hero).map(m => ({ monster: m, summon: undefined })),
-			...HeroLogic.getSummons(props.hero).map(m => ({ monster: m.monster, summon: m.info }))
-		];
-
-		const followers = HeroLogic.getFollowers(props.hero);
-		const fixtures = HeroLogic.getFixtures(props.hero);
-
-		return (
-			<ErrorBoundary>
-				<div className='retinue-section'>
-					{
-						monsters.length > 0 ?
-							<>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-									{
-										Collections.sort(monsters, m => m.monster.name).map(m =>
-											useRows ?
-												<div key={m.monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(m.monster, m.summon)}>
-													<div>Companion: <b>{m.monster.name}</b></div>
-												</div>
-												:
-												<SelectablePanel key={m.monster.id} onSelect={() => onSelectMonster(m.monster, m.summon)}>
-													<MonsterPanel monster={m.monster} summon={m.summon} sourcebooks={props.sourcebooks} options={props.options} />
-												</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						followers.length > 0 ?
-							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-									{
-										followers.map(follower =>
-											useRows ?
-												<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
-													<div>Follower: <b>{follower.name}</b></div>
-												</div>
-												:
-												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
-													<FollowerPanel follower={follower} />
-												</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						fixtures.length > 0 ?
-							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Fixtures</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-									{
-										fixtures.map(fixture =>
-											useRows ?
-												<div key={fixture.id} className='selectable-row clickable' onClick={() => onSelectFixture(fixture)}>
-													<div>Fixture: <b>{fixture.name}</b></div>
-												</div>
-												:
-												<SelectablePanel key={fixture.id} onSelect={() => onSelectFixture(fixture)}>
-													<FixturePanel fixture={fixture} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
-												</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	};
 
 	const getTabs = () => {
 		const tabs: string[] = [];
@@ -1165,17 +127,70 @@ export const HeroPanel = (props: Props) => {
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const others = abilities.filter(a => (a.ability.type.usage === AbilityUsage.Other) || (a.ability.type.usage === AbilityUsage.NoAction));
 
+		const getAbilitiesSection = (title: string, abilities: { ability: Ability, source: string, level: number | undefined }[]) => {
+			return (
+				<AbilitiesPanel
+					title={title}
+					abilities={abilities}
+					hero={props.hero}
+					options={props.options}
+					onSelectAbility={props.onSelectAbility!}
+				/>
+			);
+		};
+
 		switch (tab) {
 			case 'Hero':
 				return (
 					<>
-						{getStatsSection()}
-						{getChoicesSection()}
-						{isSmall || props.options.singlePage ? getSidebarSection() : null}
+						<StatsPanel
+							hero={props.hero}
+							options={props.options}
+							onSelectCharacteristic={props.onSelectCharacteristic!}
+							onShowState={props.onShowState!}
+						/>
+						<ChoicesPanel
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onSelectAncestry={props.onSelectAncestry!}
+							onSelectCulture={props.onSelectCulture!}
+							onSelectCareer={props.onSelectCareer!}
+							onSelectClass={props.onSelectClass!}
+							onSelectComplication={props.onSelectComplication!}
+							onSelectDomain={props.onSelectDomain!}
+							onSelectKit={props.onSelectKit!}
+							onSelectTitle={props.onSelectTitle!}
+							onShowState={props.onShowState!}
+						/>
+						{
+							isSmall || props.options.singlePage ?
+								<SidebarPanel
+									hero={props.hero}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									setTab={setTab}
+									onShowState={props.onShowState!}
+									onShowReference={props.onShowReference!}
+									onAddSquad={props.onAddSquad!}
+									onRemoveSquad={props.onRemoveSquad!}
+									onAddMonsterToSquad={props.onAddMonsterToSquad!}
+									onSelectControlledMonster={props.onSelectControlledMonster!}
+									onSelectControlledSquad={props.onSelectControlledSquad!}
+								/>
+								: null
+						}
 					</>
 				);
 			case 'Features':
-				return getFeaturesSection();
+				return (
+					<FeaturesPanel
+						hero={props.hero}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelectFeature={props.onSelectFeature!}
+					/>
+				);
 			case 'Abilities':
 				return (
 					<>
@@ -1207,7 +222,16 @@ export const HeroPanel = (props: Props) => {
 					...abilities.filter(a => a.ability.type.freeStrike)
 				]);
 			case 'Retinue':
-				return getRetinueSection();
+				return (
+					<RetinuePanel
+						hero={props.hero}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelectMonster={props.onSelectMonster!}
+						onSelectFollower={props.onSelectFollower!}
+						onSelectFixture={props.onSelectFixture!}
+					/>
+				);
 		}
 
 		return null;
@@ -1280,7 +304,11 @@ export const HeroPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
-				{getNameSection()}
+				<NamePanel
+					hero={props.hero}
+					options={props.options}
+					onShowState={props.onShowState!}
+				/>
 				<div className='hero-main-section'>
 					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>
@@ -1331,7 +359,23 @@ export const HeroPanel = (props: Props) => {
 							}
 						</div>
 					</div>
-					{!isSmall && !props.options.singlePage ? getSidebarSection() : null}
+					{
+						!isSmall && !props.options.singlePage ?
+							<SidebarPanel
+								hero={props.hero}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								setTab={setTab}
+								onShowState={props.onShowState!}
+								onShowReference={props.onShowReference!}
+								onAddSquad={props.onAddSquad!}
+								onRemoveSquad={props.onRemoveSquad!}
+								onAddMonsterToSquad={props.onAddMonsterToSquad!}
+								onSelectControlledMonster={props.onSelectControlledMonster!}
+								onSelectControlledSquad={props.onSelectControlledSquad!}
+							/>
+							: null
+					}
 				</div>
 			</div>
 		</ErrorBoundary>

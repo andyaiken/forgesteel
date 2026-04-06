@@ -1,0 +1,13 @@
+.choices-section {
+	margin: 20px 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10px;
+
+	&.compact {
+		padding: 5px;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+}

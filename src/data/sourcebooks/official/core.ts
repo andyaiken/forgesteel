@@ -669,6 +669,7 @@ export const core: Sourcebook = {
 		TitleData.forsaken,
 		TitleData.monarch,
 		TitleData.peaceBringer,
+		TitleData.reborn,
 		TitleData.theoreticalWarrior,
 		TitleData.tireless,
 		TitleData.unchained,

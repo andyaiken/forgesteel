@@ -1,0 +1,27 @@
+.hero-sidebar {
+	&.column {
+		flex: 0 0 250px;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&.grid {
+		flex: 1 1 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 10px;
+	}
+
+	&.list {
+		flex: 1 1 0;
+		display: block;
+		padding: 0 5px;
+	}
+
+	.damage-modifier {
+		display: flex;
+		justify-content: space-between;
+	}
+}

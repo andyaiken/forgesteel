@@ -42,14 +42,14 @@
 		.tier {
 			@include common.font-glyphs();
 			font-size: 22px;
-			flex: 0 0 42px;
-			border-right: 1px solid rgba(5, 5, 5, 0.06);
-			padding-top: 3px;
+			flex: 0 0 35px;
+			height: 23px;
 		}
 
 		.effect {
 			flex: 1 1 0;
 			padding: 5px;
+			border-left: 1px solid rgba(5, 5, 5, 0.06);
 
 			p {
 				margin: 0;

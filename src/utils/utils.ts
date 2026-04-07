@@ -53,7 +53,7 @@ export class Utils {
 		return JSON.parse(JSON.stringify(object)) as T;
 	};
 
-	static wait = (ms: number = 1000) => {
+	static wait = (ms: number) => {
 		return new Promise<void>(resolve => setTimeout(resolve, ms));
 	};
 

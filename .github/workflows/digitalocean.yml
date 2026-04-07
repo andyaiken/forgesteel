@@ -3,7 +3,7 @@ name: Build and deploy
 on:
   push:
     branches:
-      - host-deployment
+      - main
   workflow_dispatch:
     inputs:
       label:

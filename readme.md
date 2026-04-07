@@ -41,7 +41,7 @@ Here we can see a homebrew kit being created.
 If you would like to contribute, you can:
 
 * Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
-* Fork the repository, switch to the `host-deployment` branch, make your changes to the code, and raise a pull request
+* Fork the repository, make your changes to the code, and raise a pull request
 
 To run the app locally, run the following commands:
 

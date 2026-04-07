@@ -15,25 +15,27 @@ interface Props {
 export const Expander = (props: Props) => {
 	return (
 		<ErrorBoundary>
-			<Collapse
-				items={[
-					{
-						key: '1',
-						label: props.tags ?
-							<Flex align='center' gap={5}>
-								{props.title}
-								{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}
-							</Flex>
-							: props.title,
-						children: props.children,
-						extra: props.extra ?
-							<>{props.extra}</>
-							: null
-					}
-				]}
-				defaultActiveKey={props.expandedByDefault ? '1' : undefined}
-				expandIconPlacement='end'
-			/>
+			<div onClick={e => e.stopPropagation()}>
+				<Collapse
+					items={[
+						{
+							key: '1',
+							label: props.tags ?
+								<Flex align='center' gap={5}>
+									{props.title}
+									{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}
+								</Flex>
+								: props.title,
+							children: props.children,
+							extra: props.extra ?
+								<>{props.extra}</>
+								: null
+						}
+					]}
+					defaultActiveKey={props.expandedByDefault ? '1' : undefined}
+					expandIconPlacement='end'
+				/>
+			</div>
 		</ErrorBoundary>
 	);
 };

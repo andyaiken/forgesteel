@@ -167,7 +167,7 @@ export const DataLoader = (props: Props) => {
 					updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState),
-					updateLoadingStatus(Utils.wait(), setSplinesState)
+					updateLoadingStatus(Utils.wait(1000), setSplinesState)
 				];
 
 				Promise.all(promises).then(results => {

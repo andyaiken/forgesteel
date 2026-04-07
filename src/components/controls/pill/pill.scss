@@ -10,11 +10,23 @@
 	text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	&.satisfied {
+		border-color: rgb(22, 119, 0);
+		background-color: rgb(230, 244, 230);
+		color: rgb(22, 119, 0);
+	}
 }
 
 html[data-theme="dark"] {
 	.pill {
 		background-color: rgb(230, 244, 255);
 		color: rgba(0, 0, 0, 0.88);
+
+		&.satisfied {
+			border-color: rgb(22, 119, 0);
+			background-color: rgb(230, 244, 230);
+			color: rgb(22, 119, 0);
+		}
 	}
 }

@@ -196,22 +196,13 @@ export const AbilityPanel = (props: Props) => {
 
 		const cost = getCost();
 		if (cost > 0) {
-			const resourceCanBeNegative = props.hero ? HeroLogic.getHeroicResources(props.hero).some(hr => hr.canBeNegative) : false;
 			const resource = props.hero ? Collections.sum(HeroLogic.getHeroicResources(props.hero), r => r.value) : 0;
 			return (
 				<ResourcePill
-					style={
-						props.hero && !resourceCanBeNegative && (cost > resource) ?
-							{ backgroundColor: '#fff1f0', color: '#cf1322', borderColor: '#ffa39e' }
-							: undefined
-					}
-					value={
-						props.hero && (cost > resource) ?
-							`${resource} of ${cost}`
-							: cost
-					}
+					value={cost}
 					units={cost === 1 ? 'pt' : 'pts'}
 					repeatable={props.repeatable ?? props.ability.repeatable}
+					satisfied={props.hero && (cost <= resource)}
 				/>
 			);
 		}
@@ -228,7 +219,6 @@ export const AbilityPanel = (props: Props) => {
 			}
 			case 'field': {
 				const cost = getCost() + section.value;
-				const resourceCanBeNegative = props.hero ? HeroLogic.getHeroicResources(props.hero).some(hr => hr.canBeNegative) : false;
 				const resource = props.hero ? Collections.sum(HeroLogic.getHeroicResources(props.hero), r => r.value) : 0;
 				return (
 					<Field
@@ -238,13 +228,9 @@ export const AbilityPanel = (props: Props) => {
 						labelTag={
 							section.value ?
 								<ResourcePill
-									style={
-										(section.value > 0) && props.hero && (cost > resource) && !resourceCanBeNegative ?
-											{ backgroundColor: '#fff1f0', color: '#cf1322', borderColor: '#ffa39e' }
-											: undefined
-									}
 									value={section.value}
 									repeatable={section.repeatable}
+									satisfied={props.hero && (cost <= resource)}
 								/>
 								: null
 						}

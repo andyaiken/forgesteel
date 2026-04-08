@@ -126,6 +126,112 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 	culture: FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish')
 };
 
+const asomath: Ancestry = {
+	id: 'ancestry-asomath',
+	name: 'Asomath',
+	description: `
+*by Dima Serbin*
+
+Far from the center of the multiverse lies the obscure, toxic world of Hazzox, the homeworld of beings known throughout the timescape as asomaths — sentient, formless clouds composed entirely of gas. Their gaseous nature does not prevent them from building cities or shaping the world around them to suit their needs, as they are capable of compressing their forms to generate pressure. Particularly valued within asomath society are those gifted with psionic talent, able to shape and create matter with nothing more than a thought.
+
+After encountering visitors from outer space, the asomaths came to realize that other worlds existed beyond their own — worlds largely inhospitable to the sentient gases of Hazzox. The only protection they possess against dissipating in these alien atmospheres are their environmental suits, which they control through subtle shifts in internal pressure. Now, though rarely, one might encounter a walking heap of metal in the shape of a person — and hope that the asomath inside is one of the good ones.`,
+	features: [
+		FactoryLogic.feature.createChoice({
+			id: 'asomath-feature-1',
+			name: 'Purchased Traits',
+			description: '',
+			options: [
+				{
+					feature: FactoryLogic.feature.createBonus({
+						id: 'asomath-feature-1a',
+						name: 'Grounded',
+						description: 'Your heavy metal suit makes it difficult for others to move you.',
+						field: FeatureField.Stability,
+						value: 1
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'asomath-feature-1b',
+						name: 'Hard Body',
+						description: 'Whenever you are force moved or fall, any creature or object you collide with takes an additional 2 damage.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createBonus({
+						id: 'asomath-feature-1c',
+						name: 'Hardened Plates',
+						description: 'Your envirosuit is reinforced with hardened metal plates.',
+						field: FeatureField.Stamina,
+						valuePerEchelon: 6
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'asomath-feature-1d',
+						name: 'Stand Tough',
+						description: 'Your body is made to withstand the blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'asomath-feature-1e',
+							name: 'Teleplasty',
+							description: 'As the gas fills the mechanism, it suddenly starts to move.',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createMelee() ],
+							target: 'Special',
+							sections: [
+								FactoryLogic.createAbilitySectionText(`
+Your gaseous body can enter an inanimate mechanical object, gaining an edge on any power roll made to interact with it. You don’t need any additional tools that you would usually need to interact with the object, such as requiring lockpicks to pick a lock.
+
+Alternatively, you can enter an intact corpse of a creature, taking full control over it until the end of your turn. You can spend 1 Recovery at the end of that turn to continue controlling the corpse until you leave it. While you are controlling the corpse, you are considered unconscious, except that you perceive your surroundings through the corpse. The corpse acts on your turn, using the creature’s stat block with its Stamina at winded value, and your Reason, Intuition, and Presence scores. You can't use the creature's main action and your main action on the same turn. If you leave the corpse or it is destroyed, you immediately stop being unconscious, standing up from prone as a free maneuver. You can leave the corpse as a free maneuver.
+
+You can’t use this ability again until you earn 1 or more Victories.`)
+							]
+						})
+					}),
+					value: 2
+				}
+			],
+			count: 'ancestry'
+		}),
+		FactoryLogic.feature.createMultiple({
+			id: 'asomath-feature-2',
+			name: 'Envirosuit',
+			features: [
+				FactoryLogic.feature.create({
+					id: 'asomath-feature-2a',
+					name: 'Envirosuit',
+					description: 'You possess an environmental suit that serves as your container, allowing you to better interact with the environment alien to your ancestry. You can’t suffocate, and you don’t need to eat or drink to stay alive.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'asomath-feature-2b',
+					name: 'Poison Immunity',
+					modifiers: [
+						FactoryLogic.damageModifier.createPerLevel({
+							damageType: DamageType.Poison,
+							modifierType: DamageModifierType.Immunity,
+							value: 1
+						})
+					]
+				})
+			]
+		}),
+		FactoryLogic.feature.create({
+			id: 'asomath-feature-3',
+			name: 'Heavyweight',
+			description: 'Whenever another creature attempts to force move you, you treat your size as one size larger than it is.'
+		})
+	],
+	ancestryPoints: 3
+};
+
 const beastfolk: Ancestry = {
 	id: 'ancestry-beastfolk',
 	name: 'Beastfolk',
@@ -5451,6 +5557,7 @@ export const community: Sourcebook = {
 	adventures: [],
 	ancestries: [
 		aranox,
+		asomath,
 		beastfolk,
 		gallGuardian,
 		ironbound,

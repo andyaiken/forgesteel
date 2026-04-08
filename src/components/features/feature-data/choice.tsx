@@ -56,13 +56,15 @@ export const InfoChoice = (props: InfoProps) => {
 						`Choose ${props.data.count} of the following options:`
 				}
 			</div>
-			{
-				props.data.options.map(o => (
-					<div key={o.feature.id} className='container'>
-						<FeaturePanel feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
-					</div>
-				))
-			}
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{
+					props.data.options.map(o => (
+						<Expander key={o.feature.id} title={o.feature.name}>
+							<FeaturePanel feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
+						</Expander>
+					))
+				}
+			</Space>
 		</div>
 	);
 };

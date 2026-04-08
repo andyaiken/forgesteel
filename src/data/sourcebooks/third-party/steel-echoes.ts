@@ -57,9 +57,9 @@ As a Scion, you are the the quiet before the storm. You move like the wind, and 
 							tag: 'Weapon 1'
 						},
 						{
-							tag: 'Magic 1',
 							trigger: 'The first time in a combat round that you or an ally within 10 squares of you uses an ability with a Magic tag',
-							value: '1'
+							value: '1',
+							tag: 'Magic 1'
 						}
 					]
 				}),
@@ -96,11 +96,10 @@ As a Scion, you are the the quiet before the storm. You move like the wind, and 
 Choose one of the following effects, which applies to one target of the next damaging melee weapon ability you use:
 
 * **Flame Strike**: Damage becomes fire. The target takes fire damage equal to triple your Reason score.
-* **Gale Strike**: Damage becomes lightning. You can either push the target, or yourself away from the target, a distance equal to double your Reason score.
+* **Lightning Strike**: Damage becomes lightning. Each enemy in range 2 of the target is dealt lightning damage equal to your Reason score.
+* **Gale Strike**: Damage becomes sonic. You can either push the target, or yourself away from the target, a distance equal to double your Reason score.
 * **Freeze Strike**: Damage becomes cold. The target takes cold damage equal to your Reason score. The target is slowed (save ends).
 * **Crimson Strike**: Damage becomes corruption. The target is bleeding (save ends).
-* **Umbral Strike**: Damage becomes psychic. The target has damage weakness equal to your Reason score (save ends).
-* **Explosive Strike**: Damage becomes sonic. Each enemy in range 2 of the target is dealt sonic damage equal to your Reason score.
 
 Effects other than the changing of the damage type are applied after the ability is resolved. If you use this ability more than once before it applies to an ability, you can choose one of the damage types to apply to the affected ability, but apply all of the effects.
 
@@ -141,7 +140,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.feature.create({
 					id: 'scion-OVUKkhTfFMlLKdd6',
 					name: 'Cascading Enweave',
-					description: 'When using Enweave, you may spend 1 balance to make the chosen effect apply to an additional target within range 5 of the target of your next melee weapon ability. You may choose to use this spend effect more than once, each time costing 1 more balance than the previous time. Each additional target needs to be within range 5 of the previous affected target.'
+					description: 'When using Enweave, you may spend 2 balance to make the chosen effect apply to an additional target within range 5 of the target of your next melee weapon ability. You may choose to use this spend effect more than once - if you do, each additional target needs to be within range 5 of the previous affected target.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'scion-nHkXlESMAT6WMexB',
@@ -161,15 +160,15 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
+				FactoryLogic.createAbilitySectionText('Before choosing the target of this ability and resolving the power roll, choose a creature or object within range 5, then either vertical pull 4 the chosen creature or object, or vertical pull yourself 4 the chosen from the creature or object\'s space. When a creature is pulled into the air this way and it can\'t fly, you may choose to make it stay aloft until the end of your turn.'),
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '2 + A damage',
+						tier1: '3 + A damage',
 						tier2: '5 + A damage',
 						tier3: '8 + A damage'
 					})
-				),
-				FactoryLogic.createAbilitySectionText('Before choosing the target of this ability and resolving the power roll, choose a creature or object within range 5, then either vertical pull 4 the chosen creature or object, or vertical pull 4 yourself from the chosen creature or object\'s space. When a creature is pulled into the air this way, you may choose to make it so they stay aloft until the end of your turn, and lose all stability while in the air.')
+				)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -179,7 +178,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-			target: 'Each creature within area',
+			target: 'Each enemy in the area',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -200,7 +199,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 3, within: 1 }) ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -211,7 +210,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						tier3: '7 damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('The wall area is only used for targeting, and does not create an actual wall. Each increase to the wall\'s length is doubled.')
+				FactoryLogic.createAbilitySectionText('The wall area is only used for targeting. Each increase to the wall\'s length is doubled.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -221,18 +220,18 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One creature or object',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '6 + R damage',
-						tier2: '8 + R damage',
-						tier3: '11 + R damage'
+						tier1: '5 + R psychic damage, R < [weak], disoriented (save ends)',
+						tier2: '8 + R psychic damage, R < [average], disoriented (save ends)',
+						tier3: '11 + R psychic damage, R < [strong], disoriented (save ends)'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('The target’s characteristic scores are treated as lower by 1 for the sake of resisting potencies (save ends).')
+				FactoryLogic.createAbilitySectionText('A disoriented creature has line of effect only within 2 squares.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -254,6 +253,47 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					})
 				),
 				FactoryLogic.createAbilitySectionText('If the target willingly moves before the end of their next turn, they take damage equal to twice your Reason score.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'scion-rage',
+			name: 'Your Rage Betrays You',
+			description: 'A well-placed strike turns their attention wholly to you.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Agility,
+						tier1: '3 + A damage, I < [weak], taunted (save ends)',
+						tier2: '6 + A damage, I < [average], taunted (save ends)',
+						tier3: '9 + A damage, I < [strong], taunted (save ends)'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'scion-cut',
+			name: 'Cut to the Core',
+			description: 'You cut through your foe\'s defenses, leaving them vulnerable.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Agility,
+						tier1: '3 + A damage',
+						tier2: '5 + A damage',
+						tier3: '8 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The target\'s characteristic scores are treated as lower by 1 for the sake of resisting potencies until the end of their next turn.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -284,7 +324,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -315,7 +355,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						tier3: '16 + R damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('Create a 1 burst area of mist which provides concealment to allies that lasts until the end of your next turn. Allies inside the mist can hide even while observed.')
+				FactoryLogic.createAbilitySectionText('Create a 1 burst area of mist which provides concealment to yourself and allies that lasts until the end of your next turn. You and allies inside the mist can hide even while observed.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -341,20 +381,20 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 		}),
 		FactoryLogic.createAbility({
 			id: 'scion-XZxWE6QBTKjvPCYM',
-			name: 'Lightning Strike',
+			name: 'Lightning Flash',
 			description: 'You become lightning, flashing from one place to another, leaving ruin in your wake.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '6 lightning damage',
-						tier2: '10 lightning damage',
-						tier3: '14 lightning damage'
+						tier1: '4 lightning damage',
+						tier2: '8 lightning damage',
+						tier3: '12 lightning damage'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You teleport to a square on the opposite side of the area before making the power roll.')
@@ -367,7 +407,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -387,7 +427,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -414,9 +454,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '6 + A psychic damage; I < [weak], dazed (save ends)',
-						tier2: '10 + A psychic damage; I < [average], dazed (save ends)',
-						tier3: '14 + A psychic damage; I < [strong], dazed (save ends)'
+						tier1: '4 + A psychic damage; I < [weak], dazed (save ends)',
+						tier2: '8 + A psychic damage; I < [average], dazed (save ends)',
+						tier3: '12 + A psychic damage; I < [strong], dazed (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('While dazed this way, the target\'s characteristic scores are treated as lower by 1 for the sake of resisting potencies.')
@@ -429,7 +469,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 			distance: [ FactoryLogic.distance.createSpecial('Four 5 x 1 lines within 1') ],
-			target: 'Each enemy within area',
+			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -449,11 +489,11 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			description: 'You surge with arcane power, moving with impossible speed.',
 			type: FactoryLogic.type.createManeuver({ free: true }),
 			keywords: [ AbilityKeyword.Magic ],
-			distance: [ FactoryLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('For the rest of the combat encounter you have an additional maneuver per turn, and gain a +5 bonus to speed.')
+				FactoryLogic.createAbilitySectionText('For the rest of the combat encounter, you have an additional maneuver per turn and gain a +5 bonus to speed.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -463,7 +503,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: 'One creature or object',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -474,7 +514,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						tier3: '24 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If this ability reduces a creature to 0 Stamina, gain 5 balance.')
+				FactoryLogic.createAbilitySectionText('If this ability reduces a non-minion creature to 0 Stamina, gain 5 balance.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -487,7 +527,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			target: 'Self',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Place a d6 die set to 6 to track this effect. Once a turn you may reduce the die by any amount up to its current value. Then, distribute that many spectral blades among enemies within range 5 as you choose. Each blade deals 4 + your Reason score in damage. You cannot assign more than one blade per enemy. In addition, whenever an enemy in range 5 is affected by a potency effect, you may reduce the die by 1 to increase the potency of the ability by 1.')
+				FactoryLogic.createAbilitySectionText('Place a d6 die set to 6 to track this effect. Once on your turn, you may reduce the die by any amount up to its current value. Then, distribute that many spectral blades among enemies within range 5 as you choose. Each blade deals 4 + your Reason score in damage. You cannot assign more than one blade per enemy. In addition, whenever an enemy in range 5 is affected by a potency effect, you may reduce the die by 1 to increase the potency of the ability by 1.')
 			]
 		})
 	],
@@ -506,7 +546,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						}),
 						FactoryLogic.feature.createMultiple({
 							id: 'scion-d7U62IAB3V2YaasD',
-							name: 'Phase Step',
+							name: 'Phasewalk',
 							features: [
 								FactoryLogic.feature.create({
 									id: 'scion-d7U62IAB3V2YaasDa',
@@ -524,6 +564,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 							ability: FactoryLogic.createAbility({
 								id: 'scion-UZK6xyl5g71nt7t8',
 								name: 'Blink',
+								description: '... And you miss it.',
 								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createSelf() ],
@@ -589,7 +630,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 														tier3: '9 damage'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('Choose a target within range 5, teleport to an unoccupied space adjacent to it, then apply the power roll result to it. Repeat this effect up to 3 more times. The same target cannot be chosen more than once.')
+												FactoryLogic.createAbilitySectionText('Choose a target within range 5, teleport to an unoccupied space adjacent to it. Repeat this effect up to 3 more times. The same target cannot be chosen more than once. Then, apply the power roll result to all chosen targets.')
 											]
 										})
 									}),
@@ -649,14 +690,14 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 							ability: FactoryLogic.createAbility({
 								id: 'scion-PG0F4c5cIccZlDl4',
 								name: 'Runebrand',
-								description: 'You imprint a runic sigil on your target, priming it for detonation.',
+								description: 'You brand a volatile rune on your target, priming it for detonation.',
 								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'One creature or object',
 								cost: 1,
 								sections: [
-									FactoryLogic.createAbilitySectionText('When using this ability, choose one of the Enweave effects, ignoring the component that changes the damage type of your next strike. You brand your target with a rune imbued by the effect you chose, priming it for detonation. At the end of your turn, the rune is primed. When a rune is primed, the next time the branded target is damaged, the rune detonates, applying its effect to every enemy within range 2 of it. If the branded effect already has an area, it is increased by 2 instead. If the branded effect has a push effect, it is relative to the branded target’s location.'),
+									FactoryLogic.createAbilitySectionText('When using this ability, choose one of the Enweave effects that can only affect a single target, ignoring the component that changes the damage type of your next weapon ability. You brand your target with a rune imbued by the effect you chose, priming it for detonation. At the end of your turn, the rune is primed. When a rune is primed, the next time the branded target is damaged, the rune detonates, applying its effect to the target and each enemy within range 2 of it. If the branded effect has a push effect, it is relative to the branded target\'s location and doesn\'t affect the branded target.'),
 									FactoryLogic.createAbilitySectionSpend({
 										value: 2,
 										effect: 'The rune is immediately primed, allowing you to detonate it this turn.'
@@ -704,14 +745,14 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 											type: FactoryLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-											target: 'Each enemy within area',
+											target: 'Special',
 											cost: 5,
 											sections: [
 												FactoryLogic.createAbilitySectionText(`
 The area remains until the end of the encounter or you are dying. Choose one of the following effects to apply to the area:
 
 * **Writ of Flame**: Each enemy who enters the area for the first time in a combat round or starts their turn there takes damage equal to triple your Reason score.
-* **Writ of Sanctuary**: Each ally, or yourself, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
+* **Writ of Sanctuary**: Each ally, or youreslf, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
 											]
 										})
 									}),

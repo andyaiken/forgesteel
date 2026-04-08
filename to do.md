@@ -2,7 +2,6 @@
 
 * Update:
   * Vampire
-  * Scion
   * Vessel
 * Monster customization should include:
   * Monster group add-ons

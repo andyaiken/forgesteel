@@ -4,8 +4,6 @@
   * Vampire
   * Scion
   * Vessel
-* Add
-  * Asomaths
 * Monster customization should include:
   * Monster group add-ons
   * Retainer level up choices

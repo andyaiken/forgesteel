@@ -66,7 +66,7 @@ export const DangerButton = (props: Props) => {
 						}
 						{
 							!props.disabledMessage ?
-								<Button danger={true} onClick={e => { setOpen(false); props.onConfirm(e); }}>
+								<Button danger={true} onClick={e => { e.stopPropagation(); setOpen(false); props.onConfirm(e); }}>
 									{props.label || 'Delete'}
 								</Button>
 								: null

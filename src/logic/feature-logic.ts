@@ -927,6 +927,22 @@ export class FeatureLogic {
 		return null;
 	};
 
+	static changeFeatureIDs = (feature: Feature) => {
+		feature.id = Utils.guid();
+
+		switch (feature.type) {
+			case FeatureType.Ability:
+				feature.data.ability.id = Utils.guid();
+				break;
+			case FeatureType.Choice:
+				feature.data.options.map(f => f.feature).forEach(FeatureLogic.changeFeatureIDs);
+				break;
+			case FeatureType.Multiple:
+				feature.data.features.forEach(FeatureLogic.changeFeatureIDs);
+				break;
+		}
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static isChoice = (feature: Feature) => {

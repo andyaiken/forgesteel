@@ -1109,7 +1109,7 @@ const planeKin: Ancestry = {
 	description: `
 *By Andy Aiken*
 
-Across many lands there are those whose bodies and spirits carry the imprint of the world’s primal forces. Known collectively as the plane-kin, these individuals embody an elemental principle so strongly that it becomes part of their nature.`,
+Across many lands there are those whose bodies and spirits carry the imprint of the world’s primal forces. Known collectively as the plane-kin, these individuals embody an elemental principle in their blood - if indeed they have blood, as it would perhaps be more accurate to think of them as the very manifestations of the elements themselves.`,
 	features: [
 		FactoryLogic.feature.createChoice({
 			id: 'plane-kin-1',
@@ -1267,7 +1267,10 @@ When an enemy attempts to grab you, they take fire damage equal to your echelon`
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-3e',
 								name: 'Passage',
-								description: 'If you are adjacent to a square of fire, you can use a move action to teleport adjacent to any other square of fire within 5 squares.',
+								description: `
+If you are adjacent to a square of fire, you can use one square of movement to teleport adjacent to any other square of fire on the encounter map.
+
+In addition, you can use a maneuver to summon a magical ember in an adjacent square; this ember lasts until the end of the encounter and counts as a square of fire for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
 								tag: 'elemental-passage'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1319,7 +1322,10 @@ When an enemy attempts to grab you, they take fire damage equal to your echelon`
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-4e',
 								name: 'Passage',
-								description: 'If you are adjacent to a square of vegetation, you can use a move action to teleport adjacent to any other square of vegetation within 5 squares.',
+								description: `
+If you are adjacent to a square of vegetation, you can use one square of movement to teleport adjacent to any other square of vegetation on the encounter map.
+
+In addition, you can use a maneuver to summon vines that fill an adjacent square; these vines last until the end of the encounter and counts as a square of vegetation for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
 								tag: 'elemental-passage'
 							}),
 							FactoryLogic.feature.createPackageContent({
@@ -1423,7 +1429,10 @@ When an enemy attempts to grab you, they take fire damage equal to your echelon`
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-6e',
 								name: 'Passage',
-								description: 'If you are adjacent to a square in darkness, you can use a move action to teleport adjacent to any other square in darkness within 5 squares.',
+								description: `
+If you are adjacent to a square in darkness, you can use one square of movement to teleport adjacent to any other square in darkness on the encounter map.
+
+In addition, you can use a maneuver to fill an adjacent square with magical shade; this shade lasts until the end of the encounter and counts as a square of darkness for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
 								tag: 'elemental-passage'
 							}),
 							FactoryLogic.feature.createPackageContent({

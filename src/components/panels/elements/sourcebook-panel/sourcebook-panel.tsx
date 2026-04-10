@@ -1,4 +1,4 @@
-import { Button, Flex, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { ReactNode, useState } from 'react';
@@ -13,6 +13,7 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
+import { NameDescEditPanel } from '../../edit/name-desc-edit/name-desc-edit-panel';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
 import { PanelMode } from '@/enums/panel-mode';
 import { SkillList } from '@/enums/skill-list';
@@ -79,16 +80,10 @@ export const SourcebookPanel = (props: Props) => {
 			const distinctLanguages = Collections.distinct(languages, l => l.name);
 			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
-			const setName = (value: string) => {
+			const setNameAndDescription = (name: string, desc: string) => {
 				const copy = Utils.copy(sourcebook);
-				copy.name = value;
-				setSourcebook(copy);
-				props.onChange!(copy);
-			};
-
-			const setDescription = (value: string) => {
-				const copy = Utils.copy(sourcebook);
-				copy.description = value;
+				copy.name = name;
+				copy.description = desc;
 				setSourcebook(copy);
 				props.onChange!(copy);
 			};
@@ -186,126 +181,135 @@ export const SourcebookPanel = (props: Props) => {
 
 			return (
 				<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
-					<Space.Compact style={{ width: '100%' }}>
-						<TextInput
-							status={sourcebook.name === '' ? 'warning' : ''}
-							placeholder='Name'
-							allowClear={true}
-							value={sourcebook.name}
-							onChange={setName}
-						/>
-						<NameSuggestions onSelect={setName} />
-					</Space.Compact>
-					<Expander title='Description'>
-						<HeaderText>Description</HeaderText>
-						<MarkdownEditor value={sourcebook.description} onChange={setDescription} />
-					</Expander>
-					<Expander title='Languages'>
-						<HeaderText
-							extra={<Button type='text' icon={<PlusOutlined />} onClick={addLanguage} />}
-						>
-							Languages
-						</HeaderText>
-						<Space orientation='vertical' style={{ width: '100%' }}>
+					<Tabs
+						items={[
 							{
-								sourcebook.languages.map((lang, n) => (
-									<Expander
-										key={n}
-										title={lang.name || 'Unnamed Language'}
-										extra={[
-											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
-											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
-											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
-										]}
-									>
-										<Space orientation='vertical' style={{ width: '100%' }}>
-											<Space.Compact style={{ width: '100%' }}>
-												<TextInput
-													status={lang.name === '' ? 'warning' : ''}
-													placeholder='Name'
-													allowClear={true}
-													value={lang.name}
-													onChange={value => setLanguageName(n, value)}
-												/>
-												<NameSuggestions onSelect={value => setLanguageName(n, value)} />
-											</Space.Compact>
-											<MarkdownEditor placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
-											<Segmented
-												block={true}
-												options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
-												value={lang.type}
-												onChange={value => setLanguageType(n, value)}
-											/>
-											<Select
-												style={{ width: '100%' }}
-												mode='tags'
-												allowClear={true}
-												placeholder='Select related languages'
-												options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-												optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-												value={lang.related}
-												onChange={value => setLanguageRelated(n, value)}
-											/>
-										</Space>
-									</Expander>
-								))
-							}
+								key: 'sourcebook',
+								label: 'Sourcebook',
+								children: (
+									<NameDescEditPanel
+										element={sourcebook}
+										showNameGenerator={true}
+										onChange={setNameAndDescription}
+									/>
+								)
+							},
 							{
-								sourcebook.languages.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</Expander>
-					<Expander title='Skills'>
-						<HeaderText
-							extra={<Button type='text' icon={<PlusOutlined />} onClick={addSkill} />}
-						>
-							Skills
-						</HeaderText>
-						<Space orientation='vertical' style={{ width: '100%' }}>
+								key: 'languages',
+								label: 'Languages',
+								children: (
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										<HeaderText
+											extra={<Button type='text' icon={<PlusOutlined />} onClick={addLanguage} />}
+										>
+											Languages
+										</HeaderText>
+										{
+											sourcebook.languages.map((lang, n) => (
+												<Expander
+													key={n}
+													title={lang.name || 'Unnamed Language'}
+													extra={[
+														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
+														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
+													]}
+												>
+													<Space orientation='vertical' style={{ width: '100%' }}>
+														<Space.Compact style={{ width: '100%' }}>
+															<TextInput
+																status={lang.name === '' ? 'warning' : ''}
+																placeholder='Name'
+																allowClear={true}
+																value={lang.name}
+																onChange={value => setLanguageName(n, value)}
+															/>
+															<NameSuggestions onSelect={value => setLanguageName(n, value)} />
+														</Space.Compact>
+														<MarkdownEditor placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
+														<Segmented
+															block={true}
+															options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
+															value={lang.type}
+															onChange={value => setLanguageType(n, value)}
+														/>
+														<Select
+															style={{ width: '100%' }}
+															mode='tags'
+															allowClear={true}
+															placeholder='Select related languages'
+															options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+															optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+															value={lang.related}
+															onChange={value => setLanguageRelated(n, value)}
+														/>
+													</Space>
+												</Expander>
+											))
+										}
+										{
+											sourcebook.languages.length === 0 ?
+												<Empty />
+												: null
+										}
+									</Space>
+								)
+							},
 							{
-								sourcebook.skills.map((skill, n) => (
-									<Expander
-										key={n}
-										title={skill.name || 'Unnamed Skill'}
-										extra={[
-											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
-											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
-											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
-										]}
-									>
-										<Space orientation='vertical' style={{ width: '100%' }}>
-											<Space.Compact style={{ width: '100%' }}>
-												<TextInput
-													status={skill.name === '' ? 'warning' : ''}
-													placeholder='Name'
-													allowClear={true}
-													value={skill.name}
-													onChange={value => setSkillName(n, value)}
-												/>
-												<NameSuggestions onSelect={value => setSkillName(n, value)} />
-											</Space.Compact>
-											<MarkdownEditor placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Skill List'
-												options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(option => ({ value: option }))}
-												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-												value={skill.list}
-												onChange={list => setSkillList(n, list)}
-											/>
-										</Space>
-									</Expander>
-								))
+								key: 'skills',
+								label: 'Skills',
+								children: (
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										<HeaderText
+											extra={<Button type='text' icon={<PlusOutlined />} onClick={addSkill} />}
+										>
+											Skills
+										</HeaderText>
+										{
+											sourcebook.skills.map((skill, n) => (
+												<Expander
+													key={n}
+													title={skill.name || 'Unnamed Skill'}
+													extra={[
+														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
+														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
+													]}
+												>
+													<Space orientation='vertical' style={{ width: '100%' }}>
+														<Space.Compact style={{ width: '100%' }}>
+															<TextInput
+																status={skill.name === '' ? 'warning' : ''}
+																placeholder='Name'
+																allowClear={true}
+																value={skill.name}
+																onChange={value => setSkillName(n, value)}
+															/>
+															<NameSuggestions onSelect={value => setSkillName(n, value)} />
+														</Space.Compact>
+														<MarkdownEditor placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
+														<Select
+															style={{ width: '100%' }}
+															placeholder='Skill List'
+															options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(option => ({ value: option }))}
+															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+															value={skill.list}
+															onChange={list => setSkillList(n, list)}
+														/>
+													</Space>
+												</Expander>
+											))
+										}
+										{
+											sourcebook.skills.length === 0 ?
+												<Empty />
+												: null
+										}
+									</Space>
+								)
 							}
-							{
-								sourcebook.skills.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</Expander>
+						]}
+					/>
 				</Space>
 			);
 		}

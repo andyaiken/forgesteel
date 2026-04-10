@@ -30,6 +30,7 @@ import { EncounterToolsModal } from '@/components/modals/encounter-tools/encount
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ErrorsModal } from '../modals/errors/errors-modal';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { FeatureType } from '@/enums/feature-type';
 import { Fixture } from '@/models/fixture';
@@ -72,6 +73,7 @@ import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
+import { Plot } from '@/models/plot';
 import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
@@ -463,6 +465,13 @@ export const Main = (props: Props) => {
 			if (original) {
 				adventure = Utils.copy(original);
 				adventure.id = Utils.guid();
+
+				const updatePlot = (plot: Plot) => {
+					plot.id = Utils.guid();
+					plot.plots.forEach(updatePlot);
+				};
+
+				updatePlot(adventure.plot);
 			} else {
 				adventure = FactoryLogic.createAdventure();
 			}
@@ -476,6 +485,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				ancestry = Utils.copy(original);
 				ancestry.id = Utils.guid();
+				ancestry.features.forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				ancestry = FactoryLogic.createAncestry();
 			}
@@ -489,6 +499,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				career = Utils.copy(original);
 				career.id = Utils.guid();
+				career.features.forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				career = FactoryLogic.createCareer();
 			}
@@ -518,6 +529,12 @@ export const Main = (props: Props) => {
 						});
 					}
 				});
+
+				heroClass.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
+				heroClass.abilities.forEach(a => a.id = Utils.guid());
+				heroClass.subclasses.forEach(sc => sc.id = Utils.guid());
+				heroClass.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
+				heroClass.subclasses.flatMap(sc => sc.abilities).forEach(a => a.id = Utils.guid());
 			} else {
 				heroClass = FactoryLogic.createClass();
 			}
@@ -531,6 +548,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				complication = Utils.copy(original);
 				complication.id = Utils.guid();
+				complication.features.forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				complication = FactoryLogic.createComplication();
 			}
@@ -565,6 +583,8 @@ export const Main = (props: Props) => {
 						features: []
 					});
 				}
+
+				domain.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				domain = FactoryLogic.createDomain();
 			}
@@ -578,6 +598,8 @@ export const Main = (props: Props) => {
 			if (original) {
 				encounter = Utils.copy(original);
 				encounter.id = Utils.guid();
+				encounter.groups.forEach(g => g.id = Utils.guid());
+				encounter.groups.flatMap(g => g.slots).forEach(s => s.id = Utils.guid());
 			} else {
 				encounter = FactoryLogic.createEncounter();
 			}
@@ -591,6 +613,10 @@ export const Main = (props: Props) => {
 			if (original) {
 				imbuement = Utils.copy(original);
 				imbuement.id = Utils.guid();
+				if (imbuement.crafting) {
+					imbuement.crafting.id = Utils.guid();
+				}
+				FeatureLogic.changeFeatureIDs(imbuement.feature);
 			} else {
 				imbuement = FactoryLogic.createImbuement({
 					type: ItemType.Consumable1st,
@@ -613,6 +639,10 @@ export const Main = (props: Props) => {
 			if (original) {
 				item = Utils.copy(original);
 				item.id = Utils.guid();
+				if (item.crafting) {
+					item.crafting.id = Utils.guid();
+				}
+				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				item = FactoryLogic.createItem({
 					id: Utils.guid(),
@@ -632,6 +662,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				kit = Utils.copy(original);
 				kit.id = Utils.guid();
+				kit.features.forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				kit = FactoryLogic.createKit();
 			}
@@ -645,7 +676,9 @@ export const Main = (props: Props) => {
 			if (original) {
 				monsterGroup = Utils.copy(original);
 				monsterGroup.id = Utils.guid();
+				monsterGroup.malice.forEach(FeatureLogic.changeFeatureIDs);
 				monsterGroup.monsters.forEach(m => m.id = Utils.guid());
+				monsterGroup.monsters.flatMap(m => m.features).forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				monsterGroup = FactoryLogic.createMonsterGroup();
 			}
@@ -659,6 +692,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				montage = Utils.copy(original);
 				montage.id = Utils.guid();
+				montage.sections.forEach(s => s.id = Utils.guid());
 			} else {
 				montage = FactoryLogic.createMontage();
 			}
@@ -684,7 +718,7 @@ export const Main = (props: Props) => {
 			let perk: Perk;
 			if (original) {
 				perk = Utils.copy(original);
-				perk.id = Utils.guid();
+				FeatureLogic.changeFeatureIDs(perk);
 			} else {
 				perk = FactoryLogic.createPerk();
 			}
@@ -719,6 +753,9 @@ export const Main = (props: Props) => {
 						features: []
 					});
 				}
+
+				sc.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
+				sc.abilities.forEach(a => a.id = Utils.guid());
 			} else {
 				sc = FactoryLogic.createSubclass();
 			}
@@ -745,6 +782,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				terrain = Utils.copy(original);
 				terrain.id = Utils.guid();
+				terrain.sections.forEach(s => s.id = Utils.guid());
 			} else {
 				terrain = FactoryLogic.createTerrain();
 			}
@@ -758,6 +796,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				title = Utils.copy(original);
 				title.id = Utils.guid();
+				title.features.forEach(FeatureLogic.changeFeatureIDs);
 			} else {
 				title = FactoryLogic.createTitle();
 			}

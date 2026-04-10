@@ -1,6 +1,7 @@
-import { Select, Space, Tabs } from 'antd';
+import { Button, Flex, Select, Space, Tabs } from 'antd';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
+import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -120,6 +121,17 @@ export const ItemEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const onAddLevel = (level: number) => {
+			const copy = Utils.copy(item);
+			copy.featuresByLevel.push({ level, features: [] });
+			copy.featuresByLevel = Collections.sort(copy.featuresByLevel, lvl => `${lvl.level}`);
+			updateItem(copy);
+			props.onChange(copy);
+		};
+
+		const currentLevels = item.featuresByLevel.map(lvl => lvl.level);
+		const extraLevels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ].filter(lvl => !currentLevels.includes(lvl));
+
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
@@ -133,6 +145,16 @@ export const ItemEditPanel = (props: Props) => {
 							onChange={features => onChange(lvl.level, features)}
 						/>
 					))
+				}
+				{
+					extraLevels.length > 0 ?
+						<>
+							<HeaderText>Add a Level</HeaderText>
+							<Flex align='center' justify='space-between' gap={5}>
+								{extraLevels.map(lvl => <Button key={lvl} onClick={() => onAddLevel(lvl)}>Level {lvl}</Button>)}
+							</Flex>
+						</>
+						: null
 				}
 			</Space>
 		);

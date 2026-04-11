@@ -511,6 +511,8 @@ export class FeatureLogic {
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
 			FeatureType.Summon,
+			FeatureType.SwitchOptions,
+			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,
 			FeatureType.TaggedFeatureChoice,
 			FeatureType.TitleChoice
@@ -1138,6 +1140,10 @@ export class FeatureLogic {
 				return 'This feature specifies monsters you can summon.';
 			case FeatureType.SummonChoice:
 				return 'This feature allows you to choose monsters you can summon.';
+			case FeatureType.SwitchOptions:
+				return 'This feature grants one out of a set of features based on a switch value.';
+			case FeatureType.SwitchValue:
+				return 'This feature specifies a switch value for a \'switch options\' feature.';
 			case FeatureType.TaggedFeature:
 				return 'This feature describes a tagged feature.';
 			case FeatureType.TaggedFeatureChoice:

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
@@ -43,7 +43,7 @@ export class HeroLogic {
 	};
 
 	static getFeatures = (hero: Hero, includeCustomizations = true) => {
-		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
+		let features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		if (hero.ancestry) {
 			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
@@ -82,6 +82,25 @@ export class HeroLogic {
 				console.error(ex);
 			}
 		});
+
+		// Handle switches
+		const switchValues = features.filter(f => f.feature.type === FeatureType.SwitchValue).map(f => f.feature) as FeatureSwitchValue[];
+		const valueMap = switchValues.reduce((map, sv) => {
+			map[sv.data.switch] = sv.data.value;
+			return map;
+		}, {} as { [key: string]: string });
+		features.filter(f => f.feature.type === FeatureType.SwitchOptions).forEach(f => {
+			const optionsFeature = f.feature as FeatureSwitchOptions;
+			const value = valueMap[optionsFeature.data.switch];
+			if (value) {
+				const option = optionsFeature.data.options.find(o => o.value === value);
+				if (option) {
+					const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
+					features.push(...simplified);
+				}
+			}
+		});
+		features = features.filter(f => f.feature.type !== FeatureType.SwitchOptions);
 
 		return Collections
 			.sort(features, f => f.feature.name)

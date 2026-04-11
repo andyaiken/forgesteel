@@ -11,7 +11,9 @@ import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { InfoFeature } from '../feature';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -27,16 +29,38 @@ interface InfoProps {
 }
 
 export const InfoSwitchOptions = (props: InfoProps) => {
+	const getDescription = (feature: Feature) => {
+		switch (feature.type) {
+			case FeatureType.Text:
+				return <Markdown text={feature.description} />;
+			default:
+				return <InfoFeature feature={feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+		}
+	};
+
+	if (props.hero) {
+		const featureValue = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SwitchValue)
+			.find(f => f.data.switch === props.data.switch);
+		if (featureValue) {
+			const option = props.data.options.find(o => o.value === featureValue.data.value);
+			return option ? getDescription(option.feature) : null;
+		}
+	}
+
 	return (
 		<>
 			<Field label='Switch' value={props.data.switch} />
-			{
-				props.data.options.map(f => (
-					<Expander key={f.feature.id} title={f.value}>
-						<InfoFeature feature={f.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
-					</Expander>
-				))
-			}
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{
+					props.data.options.map(f => (
+						<Expander key={f.feature.id} title={f.value}>
+							{getDescription(f.feature)}
+						</Expander>
+					))
+				}
+			</Space>
 		</>
 	);
 };

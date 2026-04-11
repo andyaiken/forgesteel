@@ -900,7 +900,8 @@ export class FeatureLogic {
 			case FeatureType.SwitchOptions: {
 				const data: FeatureSwitchOptionsData = {
 					switch: '',
-					options: []
+					options: [],
+					defaultOption: null
 				};
 				return data;
 			}

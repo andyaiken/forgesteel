@@ -286,6 +286,7 @@ export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSum
 export interface FeatureSwitchOptionsData extends _FeatureData {
 	switch: string;
 	options: { value: string, feature: Feature }[];
+	defaultOption: Feature | null;
 };
 export type FeatureSwitchOptions = FeatureOf<FeatureType.SwitchOptions, FeatureSwitchOptionsData>;
 

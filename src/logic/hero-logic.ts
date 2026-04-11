@@ -84,23 +84,28 @@ export class HeroLogic {
 		});
 
 		// Handle switches
-		const switchValues = features.filter(f => f.feature.type === FeatureType.SwitchValue).map(f => f.feature) as FeatureSwitchValue[];
-		const valueMap = switchValues.reduce((map, sv) => {
-			map[sv.data.switch] = sv.data.value;
-			return map;
-		}, {} as { [key: string]: string });
-		features.filter(f => f.feature.type === FeatureType.SwitchOptions).forEach(f => {
-			const optionsFeature = f.feature as FeatureSwitchOptions;
-			const value = valueMap[optionsFeature.data.switch];
-			if (value) {
-				const option = optionsFeature.data.options.find(o => o.value === value);
-				if (option) {
-					const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
-					features.push(...simplified);
+		while (features.some(f => f.feature.type === FeatureType.SwitchOptions)) {
+			const switchValues = features.filter(f => f.feature.type === FeatureType.SwitchValue).map(f => f.feature) as FeatureSwitchValue[];
+			const valueMap = switchValues.reduce((map, sv) => {
+				map[sv.data.switch] = sv.data.value;
+				return map;
+			}, {} as { [key: string]: string });
+
+			features.filter(f => f.feature.type === FeatureType.SwitchOptions).forEach(f => {
+				const optionsFeature = f.feature as FeatureSwitchOptions;
+				const value = valueMap[optionsFeature.data.switch];
+				if (value) {
+					const option = optionsFeature.data.options.find(o => o.value === value);
+					if (option) {
+						const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
+						features.push(...simplified);
+					}
+				} else if (optionsFeature.data.defaultOption) {
+					features.push({ feature: optionsFeature.data.defaultOption, source: f.source, level: f.level });
 				}
-			}
-		});
-		features = features.filter(f => f.feature.type !== FeatureType.SwitchOptions);
+			});
+			features = features.filter(f => f.feature.type !== FeatureType.SwitchOptions);
+		}
 
 		return Collections
 			.sort(features, f => f.feature.name)

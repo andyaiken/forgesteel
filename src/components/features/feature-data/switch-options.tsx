@@ -4,6 +4,7 @@ import { Feature, FeatureSwitchOptionsData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -17,6 +18,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -45,7 +47,7 @@ export const InfoSwitchOptions = (props: InfoProps) => {
 			.find(f => f.data.switch === props.data.switch);
 		if (featureValue) {
 			const option = props.data.options.find(o => o.value === featureValue.data.value);
-			return option ? getDescription(option.feature) : null;
+			return option ? getDescription(option.feature) : (props.data.defaultOption ? getDescription(props.data.defaultOption) : null);
 		}
 	}
 
@@ -59,6 +61,15 @@ export const InfoSwitchOptions = (props: InfoProps) => {
 							{getDescription(f.feature)}
 						</Expander>
 					))
+				}
+				{props.data.options.length === 0 ? <Empty /> : null}
+				{
+					props.data.defaultOption ?
+						<>
+							<HeaderText>Default Option</HeaderText>
+							{getDescription(props.data.defaultOption)}
+						</>
+						: null
 				}
 			</Space>
 		</>
@@ -127,6 +138,20 @@ export const EditSwitchOptions = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setHasDefaultOption = (value: boolean) => {
+		const copy = Utils.copy(data);
+		copy.defaultOption = value ? FactoryLogic.feature.create({ id: Utils.guid(), name: '', description: '' }) : null;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const changeDefaultOption = (value: Feature) => {
+		const copy = Utils.copy(data);
+		copy.defaultOption = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Switch</HeaderText>
@@ -181,6 +206,23 @@ export const EditSwitchOptions = (props: EditProps) => {
 						: null
 				}
 			</Space>
+			<HeaderText>Default Option</HeaderText>
+			<Toggle
+				label='Has Default Option'
+				value={data.defaultOption !== null}
+				onChange={setHasDefaultOption}
+			/>
+			{
+				data.defaultOption ?
+					<FeatureEditPanel
+						feature={data.defaultOption}
+						allowedTypes={FeatureLogic.getSelectableFeatureTypes()}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={changeDefaultOption}
+					/>
+					: null
+			}
 			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} size={500}>
 				<FeatureTypeSelectModal
 					types={FeatureLogic.getSelectableFeatureTypes()}

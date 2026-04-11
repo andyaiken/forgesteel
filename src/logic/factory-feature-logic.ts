@@ -613,7 +613,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSwitchOptions = (data: { id: string, name?: string, description?: string, switch: string, options: { value: string, feature: Feature }[] }): FeatureSwitchOptions => {
+	createSwitchOptions = (data: { id: string, name?: string, description?: string, switch: string, options: { value: string, feature: Feature }[], defaultOption?: Feature }): FeatureSwitchOptions => {
 		return {
 			id: data.id,
 			name: data.name || 'Switch Options',
@@ -621,7 +621,8 @@ export class FactoryFeatureLogic {
 			type: FeatureType.SwitchOptions,
 			data: {
 				switch: data.switch,
-				options: data.options
+				options: data.options,
+				defaultOption: data.defaultOption || null
 			}
 		};
 	};
@@ -629,7 +630,7 @@ export class FactoryFeatureLogic {
 	createSwitchValue = (data: { id: string, name?: string, description?: string, switch: string, value: string }): FeatureSwitchValue => {
 		return {
 			id: data.id,
-			name: data.name || 'Switch Value',
+			name: data.name || data.switch || 'Switch Value',
 			description: data.description || '',
 			type: FeatureType.SwitchValue,
 			data: {

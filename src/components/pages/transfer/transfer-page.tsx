@@ -253,7 +253,7 @@ export const TransferPage = (props: Props) => {
 						<div className='sourcebook-section'>
 							{
 								localHomebrewSourcebooks.map(sb => (
-									<SourcebookPanel key={`local-sb-${sb.id}`} sourcebook={sb} />
+									<SourcebookPanel key={`local-sb-${sb.id}`} sourcebook={sb} heroes={[]} sourcebooks={[]} />
 								))
 							}
 						</div>
@@ -272,7 +272,7 @@ export const TransferPage = (props: Props) => {
 							<Flex wrap={true} gap='20px'>
 								{
 									remoteHomebrewSourcebooks.map(sb => (
-										<SourcebookPanel key={`remote-sb-${sb.id}`} sourcebook={sb} />
+										<SourcebookPanel key={`remote-sb-${sb.id}`} sourcebook={sb} heroes={[]} sourcebooks={[]} />
 									))
 								}
 							</Flex>

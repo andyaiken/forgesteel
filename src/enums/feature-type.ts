@@ -39,6 +39,8 @@ export enum FeatureType {
 	Speed = 'Speed',
 	Summon = 'Summon',
 	SummonChoice = 'Summon Choice',
+	SwitchOptions = 'Switch Options',
+	SwitchValue = 'Switch Value',
 	TaggedFeature = 'Tagged Feature',
 	TaggedFeatureChoice = 'Tagged Feature Choice',
 	TitleChoice = 'Title'

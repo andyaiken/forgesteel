@@ -50,7 +50,12 @@ export class Utils {
 			return structuredClone<T>(object);
 		}
 
-		return JSON.parse(JSON.stringify(object)) as T;
+		return JSON.parse(JSON.stringify(object, (key, value) => {
+			if (key === 'id') {
+				return Utils.guid();
+			}
+			return value;
+		})) as T;
 	};
 
 	static wait = (ms: number) => {

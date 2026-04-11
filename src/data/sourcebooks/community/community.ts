@@ -1121,53 +1121,22 @@ Across many lands there are those whose bodies and spirits carry the imprint of 
 						name: 'Air',
 						description: 'Air is the element of movement. Plane-kin with this elemental core are known as Storm-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-1a',
-								name: 'Aura',
-								description: 'If the target is an enemy, you push the target a number of squares equal to your echelon.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Air'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-1b',
-								name: 'Gift',
-								description: 'When you disengage, you can move 1 additional square.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'If the target is an enemy, you push the target a number of squares equal to your echelon.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-1c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals lightning damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1d',
-								name: 'Nature',
-								description: `
-You gain the Jump skill.
-
-You gain +1 Speed`,
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1e',
-								name: 'Passage',
-								description: `
-You gain the Fly movement mode. 
-
-While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.`,
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1f',
-								name: 'Surge',
-								description: 'When an enemy moves adjacent to you, you may spend a surge to immediately shift 1 square.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1g',
-								name: 'Ward',
-								description: 'You gain immunity to lightning damage equal to your level.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1179,8 +1148,13 @@ While flying, you can stay aloft for a number of rounds equal to your Might scor
 						name: 'Earth',
 						description: 'Earth is the element of permanence. Plane-kin with this elemental core are known as Stone-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-2a',
+								switch: 'Elemental Core',
+								value: 'Earth'
+							}),
+							FactoryLogic.feature.createPackageContent({
+								id: 'plane-kin-1-2b',
 								name: 'Aura',
 								description: `
 If the target is an ally, the target gains +1 Stability until they leave your aura.
@@ -1189,43 +1163,10 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2b',
-								name: 'Gift',
-								description: 'When you take damage, you can use a triggered action to reduce it by your level.',
-								tag: 'elemental-gift'
-							}),
-							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-2c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals untyped damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2d',
-								name: 'Nature',
-								description: `
-Choose two skills from: Architecture, Blacksmithing, Carpentry, Endurance, Jewelry, and Lift.
-
-In addition, your carrying capacity is doubled.`,
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2e',
-								name: 'Passage',
-								description: 'You gain the Burrow movement mode.',
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2f',
-								name: 'Surge',
-								description: 'When you are subjected to forced movement, you can spend a surge to gain Stability equal to twice your echelon.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2g',
-								name: 'Ward',
-								description: 'You cannot be made Prone.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1237,53 +1178,22 @@ In addition, your carrying capacity is doubled.`,
 						name: 'Fire',
 						description: 'Fire is the element of destruction. Plane-kin with this elemental core are known as Ember-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-3a',
-								name: 'Aura',
-								description: 'If the target is an enemy, the target takes fire damage equal to your echelon.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Fire'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-3b',
-								name: 'Gift',
-								description: 'When you reduce an enemy to 0 Stamina, your next strike deals bonus damage equal to your echelon.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'If the target is an enemy, the target takes fire damage equal to your echelon.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-3c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals fire damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3d',
-								name: 'Nature',
-								description: `
-You gain the Sabotage skill.
-
-When an enemy attempts to grab you, they take fire damage equal to your echelon`,
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3e',
-								name: 'Passage',
-								description: `
-If you are adjacent to a square of fire, you can use one square of movement to teleport adjacent to any other square of fire on the encounter map.
-
-In addition, you can use a maneuver to summon a magical ember in an adjacent square; this ember lasts until the end of the encounter and counts as a square of fire for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3f',
-								name: 'Surge',
-								description: 'On your turn, you can spend a surge to deal additional fire damage equal to your echelon on all your strikes this turn.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3g',
-								name: 'Ward',
-								description: 'You gain immunity to fire damage equal to your level.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1295,50 +1205,22 @@ In addition, you can use a maneuver to summon a magical ember in an adjacent squ
 						name: 'Green',
 						description: 'Green is the element of creation and growth. Plane-kin with this elemental core are known as Wild-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-4a',
-								name: 'Aura',
-								description: 'If the target is an ally, the target gains temporary Stamina equal to your level.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Green'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-4b',
-								name: 'Gift',
-								description: 'If you are winded at the start of your turn, you immediately regain 1 Stamina.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'If the target is an ally, the target gains temporary Stamina equal to your level.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-4c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals poison damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4d',
-								name: 'Nature',
-								description: 'Choose two skills from: Handle Animal, Monsters, Nature, and Ride.',
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4e',
-								name: 'Passage',
-								description: `
-If you are adjacent to a square of vegetation, you can use one square of movement to teleport adjacent to any other square of vegetation on the encounter map.
-
-In addition, you can use a maneuver to summon vines that fill an adjacent square; these vines last until the end of the encounter and counts as a square of vegetation for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4f',
-								name: 'Surge',
-								description: 'Any time you or an ally within 5 squares spends a Recovery, you can spend a surge to allow an ally within 5 squares to regain Stamina equal to your level.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4g',
-								name: 'Ward',
-								description: 'You gain immunity to either acid or poison damage equal to your level.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1350,47 +1232,22 @@ In addition, you can use a maneuver to summon vines that fill an adjacent square
 						name: 'Rot',
 						description: 'Rot is the element of decay. Plane-kin with this elemental core are known as Grave-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-5a',
-								name: 'Aura',
-								description: 'If the target is an enemy, the target takes a bane on their next power roll.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Rot'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-5b',
-								name: 'Gift',
-								description: 'When you reduce an enemy to 0 Stamina, one adjacent enemy takes damage equal to your echelon.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'If the target is an enemy, the target takes a bane on their next power roll.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-5c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals corruption damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5d',
-								name: 'Nature',
-								description: 'When an adjacent creature drops to 0 Stamina, you gain Stamina equal to your echelon.',
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5e',
-								name: 'Passage',
-								description: 'If you are adjacent to a dead creature (at least size 1M), you can use a move action to teleport adjacent to any other dead creature within 5 squares',
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5f',
-								name: 'Surge',
-								description: 'When you target an enemy with a strike, you can spend a surge to impose the bleeding condition (EoT).',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5g',
-								name: 'Ward',
-								description: 'You gain immunity to corruption damage equal to your level',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1402,50 +1259,22 @@ In addition, you can use a maneuver to summon vines that fill an adjacent square
 						name: 'Void',
 						description: 'Void is the element of the mystery. Plane-kin with this elemental core are known as Rift-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-6a',
-								name: 'Aura',
-								description: 'You teleport the target to a different unoccupied square adjacent to you. This affects both allies and enemies.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Void'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-6b',
-								name: 'Gift',
-								description: 'Once per encounter when you are targeted by an attack, you may teleport 3 squares before the attack resolves.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'You teleport the target to a different unoccupied square adjacent to you. This affects both allies and enemies.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-6c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals psychic damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6d',
-								name: 'Nature',
-								description: 'You gain the Magic and Psionics skills.',
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6e',
-								name: 'Passage',
-								description: `
-If you are adjacent to a square in darkness, you can use one square of movement to teleport adjacent to any other square in darkness on the encounter map.
-
-In addition, you can use a maneuver to fill an adjacent square with magical shade; this shade lasts until the end of the encounter and counts as a square of darkness for the purposes of your Passage teleportation feature, but has no other mechanical effect.`,
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6f',
-								name: 'Surge',
-								description: 'When an enemy targets you with a strike, you can spend a surge to impose a bane on the power roll.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6g',
-								name: 'Ward',
-								description: 'You gain immunity to psychic damage equal to your level.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1457,50 +1286,22 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 						name: 'Water',
 						description: 'Water is the element of change. Plane-kin with this elemental core are known as Tide-kin.',
 						features: [
-							FactoryLogic.feature.createPackageContent({
+							FactoryLogic.feature.createSwitchValue({
 								id: 'plane-kin-1-7a',
-								name: 'Aura',
-								description: 'You slide the target 1 square. This affects both allies and enemies.',
-								tag: 'elemental-aura'
+								switch: 'Elemental Core',
+								value: 'Water'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-7b',
-								name: 'Gift',
-								description: 'When you shift, you can slide one adjacent creature 1 square. If the creature is willing, you can slide it one additional square.',
-								tag: 'elemental-gift'
+								name: 'Aura',
+								description: 'You slide the target 1 square. This affects both allies and enemies.',
+								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
 								id: 'plane-kin-1-7c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals cold damage.',
 								tag: 'elemental-instability'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7d',
-								name: 'Nature',
-								description: `
-You gain the Swim skill.
-
-When you disengage, you can move 1 additional square.`,
-								tag: 'elemental-nature'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7e',
-								name: 'Passage',
-								description: 'You gain the Swim movement mode. In addition, occupied squares do not count as difficult terrain for you.',
-								tag: 'elemental-passage'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7f',
-								name: 'Surge',
-								description: 'When you are subjected to a save ends condition, you can spend a surge to change its duration to end of your next turn.',
-								tag: 'elemental-surge'
-							}),
-							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7g',
-								name: 'Ward',
-								description: 'You gain immunity to cold damage equal to your level.',
-								tag: 'elemental-ward'
 							})
 						]
 					}),
@@ -1559,47 +1360,449 @@ Any of the following:
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createPackage({
+					feature: FactoryLogic.feature.createSwitchOptions({
 						id: 'plane-kin-3-2',
 						name: 'Elemental Gift',
 						description: 'You gain a feature related to your element.',
-						tag: 'elemental-gift'
+						switch: 'Elemental Core',
+						options: [
+							{
+								value: 'Air',
+								feature: FactoryLogic.feature.createBonus({
+									id: 'plane-kin-3-2a',
+									field: FeatureField.Disengage,
+									value: 1
+								})
+							},
+							{
+								value: 'Earth',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2b',
+									name: 'Elemental Gift',
+									description: 'When you take damage, you can use a triggered action to reduce it by your level.'
+								})
+							},
+							{
+								value: 'Fire',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2c',
+									name: 'Elemental Gift',
+									description: 'When you reduce an enemy to 0 Stamina, your next strike deals bonus damage equal to your echelon.'
+								})
+							},
+							{
+								value: 'Green',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2d',
+									name: 'Elemental Gift',
+									description: 'If you are winded at the start of your turn, you immediately regain 1 Stamina.'
+								})
+							},
+							{
+								value: 'Rot',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2e',
+									name: 'Elemental Gift',
+									description: 'When you reduce an enemy to 0 Stamina, one adjacent enemy takes damage equal to your echelon.'
+								})
+							},
+							{
+								value: 'Void',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2f',
+									name: 'Elemental Gift',
+									description: 'Once per encounter when you are targeted by an attack, you may teleport 3 squares before the attack resolves.'
+								})
+							},
+							{
+								value: 'Water',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-3-2g',
+									name: 'Elemental Gift',
+									description: 'When you shift, you can slide one adjacent creature 1 square. If the creature is willing, you can slide it one additional square.'
+								})
+							}
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createPackage({
+					feature: FactoryLogic.feature.createSwitchOptions({
 						id: 'plane-kin-3-3',
 						name: 'Elemental Nature',
 						description: 'You manifest an affinity for your element.',
-						tag: 'elemental-nature'
+						switch: 'Elemental Core',
+						options: [
+							{
+								value: 'Air',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-1d',
+									features: [
+										FactoryLogic.feature.createSkillChoice({
+											id: 'plane-kin-1-1d-skill',
+											selected: [ 'Jump' ]
+										}),
+										FactoryLogic.feature.createBonus({
+											id: 'plane-kin-1-1d-speed',
+											field: FeatureField.Speed,
+											value: 1
+										})
+									]
+								})
+							},
+							{
+								value: 'Earth',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-2d',
+									features: [
+										FactoryLogic.feature.createSkillChoice({
+											id: 'plane-kin-1-2d-skill',
+											options: [ 'Architecture', 'Blacksmithing', 'Carpentry', 'Endurance', 'Jewelry', 'Lift' ],
+											count: 2
+										}),
+										FactoryLogic.feature.create({
+											id: 'plane-kin-1-2d-carry',
+											name: 'Elemental Nature',
+											description: 'Your carrying capacity is doubled.'
+										})
+									]
+								})
+							},
+							{
+								value: 'Fire',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-3d',
+									features: [
+										FactoryLogic.feature.createSkillChoice({
+											id: 'plane-kin-1-3d-skill',
+											selected: [ 'Sabotage' ]
+										}),
+										FactoryLogic.feature.create({
+											id: 'plane-kin-1-3d-grab',
+											name: 'Elemental Nature',
+											description: 'When an enemy attempts to grab you, they take fire damage equal to your echelon.'
+										})
+									]
+								})
+							},
+							{
+								value: 'Green',
+								feature: FactoryLogic.feature.createSkillChoice({
+									id: 'plane-kin-1-4d',
+									options: [ 'Handle Animal', 'Monsters', 'Nature', 'Ride' ],
+									count: 2
+								})
+							},
+							{
+								value: 'Rot',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-5d',
+									name: 'Nature',
+									description: 'When an adjacent creature drops to 0 Stamina, you gain Stamina equal to your echelon.'
+								})
+							},
+							{
+								value: 'Void',
+								feature: FactoryLogic.feature.createSkillChoice({
+									id: 'plane-kin-1-6d',
+									selected: [ 'Magic', 'Psionics' ]
+								})
+							},
+							{
+								value: 'Water',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-7d',
+									features: [
+										FactoryLogic.feature.createSkillChoice({
+											id: 'plane-kin-1-7d-skill',
+											selected: [ 'Swim' ]
+										}),
+										FactoryLogic.feature.createBonus({
+											id: 'plane-kin-1-7d-disengage',
+											field: FeatureField.Disengage,
+											value: 1
+										})
+									]
+								})
+							}
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createPackage({
+					feature: FactoryLogic.feature.createSwitchOptions({
 						id: 'plane-kin-3-4',
 						name: 'Elemental Passage',
 						description: 'You gain a special mobility feature based on your elemental core.',
-						tag: 'elemental-passage'
+						switch: 'Elemental Core',
+						options: [
+							{
+								value: 'Air',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-1e',
+									features: [
+										FactoryLogic.feature.createMovementMode({
+											id: 'plane-kin-1-1e-fly',
+											mode: 'Fly'
+										}),
+										FactoryLogic.feature.create({
+											id: 'plane-kin-1-1e-flying',
+											name: 'Elemental Passage',
+											description: 'While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.'
+										})
+									]
+								})
+							},
+							{
+								value: 'Earth',
+								feature: FactoryLogic.feature.createMovementMode({
+									id: 'plane-kin-1-2e',
+									mode: 'Burrow'
+								})
+							},
+							{
+								value: 'Fire',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-3e',
+									name: 'Passage',
+									description: `
+If you are adjacent to a square of fire, you can use one square of movement to teleport adjacent to any other square of fire on the encounter map.
+
+In addition, you can use a maneuver to summon a magical ember in an adjacent square; this ember lasts until the end of the encounter and counts as a square of fire for the purposes of your Passage teleportation feature, but has no other mechanical effect.`
+								})
+							},
+							{
+								value: 'Green',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-4e',
+									name: 'Passage',
+									description: `
+If you are adjacent to a square of vegetation, you can use one square of movement to teleport adjacent to any other square of vegetation on the encounter map.
+
+In addition, you can use a maneuver to summon vines that fill an adjacent square; these vines last until the end of the encounter and counts as a square of vegetation for the purposes of your Passage teleportation feature, but has no other mechanical effect.`
+								})
+							},
+							{
+								value: 'Rot',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-5e',
+									name: 'Passage',
+									description: 'If you are adjacent to a dead creature (at least size 1M), you can use a move action to teleport adjacent to any other dead creature within 5 squares'
+								})
+							},
+							{
+								value: 'Void',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-6e',
+									name: 'Passage',
+									description: `
+If you are adjacent to a square in darkness, you can use one square of movement to teleport adjacent to any other square in darkness on the encounter map.
+
+In addition, you can use a maneuver to fill an adjacent square with magical shade; this shade lasts until the end of the encounter and counts as a square of darkness for the purposes of your Passage teleportation feature, but has no other mechanical effect.`
+								})
+							},
+							{
+								value: 'Water',
+								feature: FactoryLogic.feature.createMultiple({
+									id: 'plane-kin-1-7e',
+									features: [
+										FactoryLogic.feature.createMovementMode({
+											id: 'plane-kin-1-7e-swim',
+											mode: 'Swim'
+										}),
+										FactoryLogic.feature.create({
+											id: 'plane-kin-1-7e-water',
+											name: 'Elemental Passage',
+											description: 'Occupied squares do not count as difficult terrain for you.'
+										})
+									]
+								})
+							}
+						]
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createPackage({
+					feature: FactoryLogic.feature.createSwitchOptions({
 						id: 'plane-kin-3-5',
 						name: 'Elemental Surge',
 						description: 'You gain a reactive feature based on your elemental core.',
-						tag: 'elemental-surge'
+						switch: 'Elemental Core',
+						options: [
+							{
+								value: 'Air',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-1f',
+									name: 'Surge',
+									description: 'When an enemy moves adjacent to you, you may spend a surge to immediately shift 1 square.'
+								})
+							},
+							{
+								value: 'Earth',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-2f',
+									name: 'Surge',
+									description: 'When you are subjected to forced movement, you can spend a surge to gain Stability equal to twice your echelon.'
+								})
+							},
+							{
+								value: 'Fire',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-3f',
+									name: 'Surge',
+									description: 'On your turn, you can spend a surge to deal additional fire damage equal to your echelon on all your strikes this turn.'
+								})
+							},
+							{
+								value: 'Green',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-4f',
+									name: 'Surge',
+									description: 'Any time you or an ally within 5 squares spends a Recovery, you can spend a surge to allow an ally within 5 squares to regain Stamina equal to your level.'
+								})
+							},
+							{
+								value: 'Rot',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-5f',
+									name: 'Surge',
+									description: 'When you target an enemy with a strike, you can spend a surge to impose the bleeding condition (EoT).'
+								})
+							},
+							{
+								value: 'Void',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-6f',
+									name: 'Surge',
+									description: 'When an enemy targets you with a strike, you can spend a surge to impose a bane on the power roll.'
+								})
+							},
+							{
+								value: 'Water',
+								feature: FactoryLogic.feature.create({
+									id: 'plane-kin-1-7f',
+									name: 'Surge',
+									description: 'When you are subjected to a save ends condition, you can spend a surge to change its duration to end of your next turn.'
+								})
+							}
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createPackage({
+					feature: FactoryLogic.feature.createSwitchOptions({
 						id: 'plane-kin-3-6',
 						name: 'Elemental Ward',
 						description: 'You gain a resistance feature based on your elemental core.',
-						tag: 'elemental-ward'
+						switch: 'Elemental Core',
+						options: [
+							{
+								value: 'Air',
+								feature: FactoryLogic.feature.createDamageModifier({
+									id: 'plane-kin-1-1g',
+									modifiers: [
+										FactoryLogic.damageModifier.createPerLevel({
+											damageType: DamageType.Lightning,
+											modifierType: DamageModifierType.Immunity,
+											value: 1
+										})
+									]
+								})
+							},
+							{
+								value: 'Earth',
+								feature: FactoryLogic.feature.createConditionImmunity({
+									id: 'plane-kin-1-2g',
+									conditions: [ ConditionType.Prone ]
+								})
+							},
+							{
+								value: 'Fire',
+								feature: FactoryLogic.feature.createDamageModifier({
+									id: 'plane-kin-1-3g',
+									modifiers: [
+										FactoryLogic.damageModifier.createPerLevel({
+											damageType: DamageType.Fire,
+											modifierType: DamageModifierType.Immunity,
+											value: 1
+										})
+									]
+								})
+							},
+							{
+								value: 'Green',
+								feature: FactoryLogic.feature.createChoice({
+									id: 'plane-kin-1-4g',
+									options: [
+										{
+											feature: FactoryLogic.feature.createDamageModifier({
+												id: 'plane-kin-1-4ga',
+												modifiers: [
+													FactoryLogic.damageModifier.createPerLevel({
+														damageType: DamageType.Acid,
+														modifierType: DamageModifierType.Immunity,
+														value: 1
+													})
+												]
+											}),
+											value: 1
+										},
+										{
+											feature: FactoryLogic.feature.createDamageModifier({
+												id: 'plane-kin-1-4gb',
+												modifiers: [
+													FactoryLogic.damageModifier.createPerLevel({
+														damageType: DamageType.Poison,
+														modifierType: DamageModifierType.Immunity,
+														value: 1
+													})
+												]
+											}),
+											value: 1
+										}
+									]
+								})
+							},
+							{
+								value: 'Rot',
+								feature: FactoryLogic.feature.createDamageModifier({
+									id: 'plane-kin-1-5g',
+									modifiers: [
+										FactoryLogic.damageModifier.createPerLevel({
+											damageType: DamageType.Corruption,
+											modifierType: DamageModifierType.Immunity,
+											value: 1
+										})
+									]
+								})
+							},
+							{
+								value: 'Void',
+								feature: FactoryLogic.feature.createDamageModifier({
+									id: 'plane-kin-1-6g',
+									modifiers: [
+										FactoryLogic.damageModifier.createPerLevel({
+											damageType: DamageType.Psychic,
+											modifierType: DamageModifierType.Immunity,
+											value: 1
+										})
+									]
+								})
+							},
+							{
+								value: 'Water',
+								feature: FactoryLogic.feature.createDamageModifier({
+									id: 'plane-kin-1-7g',
+									modifiers: [
+										FactoryLogic.damageModifier.createPerLevel({
+											damageType: DamageType.Cold,
+											modifierType: DamageModifierType.Immunity,
+											value: 1
+										})
+									]
+								})
+							}
+						]
 					}),
 					value: 1
 				}

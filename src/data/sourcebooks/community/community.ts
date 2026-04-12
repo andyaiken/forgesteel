@@ -1103,37 +1103,37 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 	culture: FactoryLogic.createCulture('Oakling', 'Wilderness, communal, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.martial, 'Yllyric')
 };
 
-const planeKin: Ancestry = {
-	id: 'ancestry-plane-kin',
-	name: 'Plane-Kin',
+const deva: Ancestry = {
+	id: 'ancestry-deva',
+	name: 'Deva',
 	description: `
 *By Andy Aiken*
 
-Across many lands there are those whose bodies and spirits carry the imprint of the world’s primal forces. Known collectively as the plane-kin, these individuals embody an elemental principle in their blood - if indeed they have blood, as it would perhaps be more accurate to think of them as the very manifestations of the elements themselves.`,
+Across many lands there are those whose bodies and spirits carry the imprint of the world’s primal forces. Known collectively as devas, these individuals embody an elemental principle in their blood - if indeed they have blood, as it would perhaps be more accurate to think of them as the very manifestations of the elements themselves.`,
 	features: [
 		FactoryLogic.feature.createChoice({
-			id: 'plane-kin-1',
+			id: 'deva-1',
 			name: 'Elemental Core',
 			options: [
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-1',
+						id: 'deva-1-1',
 						name: 'Air',
-						description: 'Air is the element of movement. Plane-kin with this elemental core are known as Storm-kin.',
+						description: 'Air is the element of movement. Devas with this elemental core are known as Storm-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-1a',
+								id: 'deva-1-1a',
 								switch: 'Elemental Core',
 								value: 'Air'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1b',
+								id: 'deva-1-1b',
 								name: 'Aura',
 								description: 'If the target is an enemy, you push the target a number of squares equal to your echelon.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-1c',
+								id: 'deva-1-1c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals lightning damage.',
 								tag: 'elemental-instability'
@@ -1144,17 +1144,17 @@ Across many lands there are those whose bodies and spirits carry the imprint of 
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-2',
+						id: 'deva-1-2',
 						name: 'Earth',
-						description: 'Earth is the element of permanence. Plane-kin with this elemental core are known as Stone-kin.',
+						description: 'Earth is the element of permanence. Devas with this elemental core are known as Stone-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-2a',
+								id: 'deva-1-2a',
 								switch: 'Elemental Core',
 								value: 'Earth'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2b',
+								id: 'deva-1-2b',
 								name: 'Aura',
 								description: `
 If the target is an ally, the target gains +1 Stability until they leave your aura.
@@ -1163,7 +1163,7 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-2c',
+								id: 'deva-1-2c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals untyped damage.',
 								tag: 'elemental-instability'
@@ -1174,23 +1174,23 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-3',
+						id: 'deva-1-3',
 						name: 'Fire',
-						description: 'Fire is the element of destruction. Plane-kin with this elemental core are known as Ember-kin.',
+						description: 'Fire is the element of destruction. Devas with this elemental core are known as Ember-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-3a',
+								id: 'deva-1-3a',
 								switch: 'Elemental Core',
 								value: 'Fire'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3b',
+								id: 'deva-1-3b',
 								name: 'Aura',
 								description: 'If the target is an enemy, the target takes fire damage equal to your echelon.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-3c',
+								id: 'deva-1-3c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals fire damage.',
 								tag: 'elemental-instability'
@@ -1201,23 +1201,23 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-4',
+						id: 'deva-1-4',
 						name: 'Green',
-						description: 'Green is the element of creation and growth. Plane-kin with this elemental core are known as Wild-kin.',
+						description: 'Green is the element of creation and growth. Devas with this elemental core are known as Wild-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-4a',
+								id: 'deva-1-4a',
 								switch: 'Elemental Core',
 								value: 'Green'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4b',
+								id: 'deva-1-4b',
 								name: 'Aura',
 								description: 'If the target is an ally, the target gains temporary Stamina equal to your level.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-4c',
+								id: 'deva-1-4c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals poison damage.',
 								tag: 'elemental-instability'
@@ -1228,23 +1228,23 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-5',
+						id: 'deva-1-5',
 						name: 'Rot',
-						description: 'Rot is the element of decay. Plane-kin with this elemental core are known as Grave-kin.',
+						description: 'Rot is the element of decay. Devas with this elemental core are known as Grave-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-5a',
+								id: 'deva-1-5a',
 								switch: 'Elemental Core',
 								value: 'Rot'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5b',
+								id: 'deva-1-5b',
 								name: 'Aura',
 								description: 'If the target is an enemy, the target takes a bane on their next power roll.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-5c',
+								id: 'deva-1-5c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals corruption damage.',
 								tag: 'elemental-instability'
@@ -1255,23 +1255,23 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-6',
+						id: 'deva-1-6',
 						name: 'Void',
-						description: 'Void is the element of the mystery. Plane-kin with this elemental core are known as Rift-kin.',
+						description: 'Void is the element of the mystery. Devas with this elemental core are known as Rift-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-6a',
+								id: 'deva-1-6a',
 								switch: 'Elemental Core',
 								value: 'Void'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6b',
+								id: 'deva-1-6b',
 								name: 'Aura',
 								description: 'You teleport the target to a different unoccupied square adjacent to you. This affects both allies and enemies.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-6c',
+								id: 'deva-1-6c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals psychic damage.',
 								tag: 'elemental-instability'
@@ -1282,23 +1282,23 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
-						id: 'plane-kin-1-7',
+						id: 'deva-1-7',
 						name: 'Water',
-						description: 'Water is the element of change. Plane-kin with this elemental core are known as Tide-kin.',
+						description: 'Water is the element of change. Devas with this elemental core are known as Tide-kin.',
 						features: [
 							FactoryLogic.feature.createSwitchValue({
-								id: 'plane-kin-1-7a',
+								id: 'deva-1-7a',
 								switch: 'Elemental Core',
 								value: 'Water'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7b',
+								id: 'deva-1-7b',
 								name: 'Aura',
 								description: 'You slide the target 1 square. This affects both allies and enemies.',
 								tag: 'elemental-aura'
 							}),
 							FactoryLogic.feature.createPackageContent({
-								id: 'plane-kin-1-7c',
+								id: 'deva-1-7c',
 								name: 'Instability',
 								description: 'Your Elemental Instability ability deals cold damage.',
 								tag: 'elemental-instability'
@@ -1311,7 +1311,7 @@ If the target is an enemy, each square adjacent to you is considered to be diffi
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'plane-kin-2',
+				id: 'deva-2',
 				name: 'Elemental Instability',
 				description: 'You explode with barely-controlled energy.',
 				type: FactoryLogic.type.createTrigger(`
@@ -1338,13 +1338,13 @@ Any of the following:
 			})
 		}),
 		FactoryLogic.feature.createChoice({
-			id: 'plane-kin-3',
+			id: 'deva-3',
 			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
-							id: 'plane-kin-3-1',
+							id: 'deva-3-1',
 							name: 'Elemental Aura',
 							description: '“You want to see what I’m made of? Poor choice of words.”',
 							type: FactoryLogic.type.createManeuver(),
@@ -1361,7 +1361,7 @@ Any of the following:
 				},
 				{
 					feature: FactoryLogic.feature.createSwitchOptions({
-						id: 'plane-kin-3-2',
+						id: 'deva-3-2',
 						name: 'Elemental Gift',
 						description: 'You gain a feature related to your element.',
 						switch: 'Elemental Core',
@@ -1369,7 +1369,7 @@ Any of the following:
 							{
 								value: 'Air',
 								feature: FactoryLogic.feature.createBonus({
-									id: 'plane-kin-3-2a',
+									id: 'deva-3-2a',
 									field: FeatureField.Disengage,
 									value: 1
 								})
@@ -1377,7 +1377,7 @@ Any of the following:
 							{
 								value: 'Earth',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2b',
+									id: 'deva-3-2b',
 									name: 'Elemental Gift',
 									description: 'When you take damage, you can use a triggered action to reduce it by your level.'
 								})
@@ -1385,7 +1385,7 @@ Any of the following:
 							{
 								value: 'Fire',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2c',
+									id: 'deva-3-2c',
 									name: 'Elemental Gift',
 									description: 'When you reduce an enemy to 0 Stamina, your next strike deals bonus damage equal to your echelon.'
 								})
@@ -1393,7 +1393,7 @@ Any of the following:
 							{
 								value: 'Green',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2d',
+									id: 'deva-3-2d',
 									name: 'Elemental Gift',
 									description: 'If you are winded at the start of your turn, you immediately regain 1 Stamina.'
 								})
@@ -1401,7 +1401,7 @@ Any of the following:
 							{
 								value: 'Rot',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2e',
+									id: 'deva-3-2e',
 									name: 'Elemental Gift',
 									description: 'When you reduce an enemy to 0 Stamina, one adjacent enemy takes damage equal to your echelon.'
 								})
@@ -1409,15 +1409,15 @@ Any of the following:
 							{
 								value: 'Void',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2f',
+									id: 'deva-3-2f',
 									name: 'Elemental Gift',
-									description: 'Once per encounter when you are targeted by an attack, you may teleport 3 squares before the attack resolves.'
+									description: 'Once per encounter when you are targeted by a strike, you may teleport 3 squares before the attack resolves.'
 								})
 							},
 							{
 								value: 'Water',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-3-2g',
+									id: 'deva-3-2g',
 									name: 'Elemental Gift',
 									description: 'When you shift, you can slide one adjacent creature 1 square. If the creature is willing, you can slide it one additional square.'
 								})
@@ -1428,7 +1428,7 @@ Any of the following:
 				},
 				{
 					feature: FactoryLogic.feature.createSwitchOptions({
-						id: 'plane-kin-3-3',
+						id: 'deva-3-3',
 						name: 'Elemental Nature',
 						description: 'You manifest an affinity for your element.',
 						switch: 'Elemental Core',
@@ -1436,14 +1436,14 @@ Any of the following:
 							{
 								value: 'Air',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-1d',
+									id: 'deva-1-1d',
 									features: [
 										FactoryLogic.feature.createSkillChoice({
-											id: 'plane-kin-1-1d-skill',
+											id: 'deva-1-1d-skill',
 											selected: [ 'Jump' ]
 										}),
 										FactoryLogic.feature.createBonus({
-											id: 'plane-kin-1-1d-speed',
+											id: 'deva-1-1d-speed',
 											field: FeatureField.Speed,
 											value: 1
 										})
@@ -1453,15 +1453,15 @@ Any of the following:
 							{
 								value: 'Earth',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-2d',
+									id: 'deva-1-2d',
 									features: [
 										FactoryLogic.feature.createSkillChoice({
-											id: 'plane-kin-1-2d-skill',
+											id: 'deva-1-2d-skill',
 											options: [ 'Architecture', 'Blacksmithing', 'Carpentry', 'Endurance', 'Jewelry', 'Lift' ],
 											count: 2
 										}),
 										FactoryLogic.feature.create({
-											id: 'plane-kin-1-2d-carry',
+											id: 'deva-1-2d-carry',
 											name: 'Elemental Nature',
 											description: 'Your carrying capacity is doubled.'
 										})
@@ -1471,14 +1471,14 @@ Any of the following:
 							{
 								value: 'Fire',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-3d',
+									id: 'deva-1-3d',
 									features: [
 										FactoryLogic.feature.createSkillChoice({
-											id: 'plane-kin-1-3d-skill',
+											id: 'deva-1-3d-skill',
 											selected: [ 'Sabotage' ]
 										}),
 										FactoryLogic.feature.create({
-											id: 'plane-kin-1-3d-grab',
+											id: 'deva-1-3d-grab',
 											name: 'Elemental Nature',
 											description: 'When an enemy attempts to grab you, they take fire damage equal to your echelon.'
 										})
@@ -1488,7 +1488,7 @@ Any of the following:
 							{
 								value: 'Green',
 								feature: FactoryLogic.feature.createSkillChoice({
-									id: 'plane-kin-1-4d',
+									id: 'deva-1-4d',
 									options: [ 'Handle Animal', 'Monsters', 'Nature', 'Ride' ],
 									count: 2
 								})
@@ -1496,7 +1496,7 @@ Any of the following:
 							{
 								value: 'Rot',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-5d',
+									id: 'deva-1-5d',
 									name: 'Nature',
 									description: 'When an adjacent creature drops to 0 Stamina, you gain Stamina equal to your echelon.'
 								})
@@ -1504,21 +1504,21 @@ Any of the following:
 							{
 								value: 'Void',
 								feature: FactoryLogic.feature.createSkillChoice({
-									id: 'plane-kin-1-6d',
+									id: 'deva-1-6d',
 									selected: [ 'Magic', 'Psionics' ]
 								})
 							},
 							{
 								value: 'Water',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-7d',
+									id: 'deva-1-7d',
 									features: [
 										FactoryLogic.feature.createSkillChoice({
-											id: 'plane-kin-1-7d-skill',
+											id: 'deva-1-7d-skill',
 											selected: [ 'Swim' ]
 										}),
 										FactoryLogic.feature.createBonus({
-											id: 'plane-kin-1-7d-disengage',
+											id: 'deva-1-7d-disengage',
 											field: FeatureField.Disengage,
 											value: 1
 										})
@@ -1531,7 +1531,7 @@ Any of the following:
 				},
 				{
 					feature: FactoryLogic.feature.createSwitchOptions({
-						id: 'plane-kin-3-4',
+						id: 'deva-3-4',
 						name: 'Elemental Passage',
 						description: 'You gain a special mobility feature based on your elemental core.',
 						switch: 'Elemental Core',
@@ -1539,14 +1539,14 @@ Any of the following:
 							{
 								value: 'Air',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-1e',
+									id: 'deva-1-1e',
 									features: [
 										FactoryLogic.feature.createMovementMode({
-											id: 'plane-kin-1-1e-fly',
+											id: 'deva-1-1e-fly',
 											mode: 'Fly'
 										}),
 										FactoryLogic.feature.create({
-											id: 'plane-kin-1-1e-flying',
+											id: 'deva-1-1e-flying',
 											name: 'Elemental Passage',
 											description: 'While flying, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While flying at 3rd level or lower, you have damage weakness 5.'
 										})
@@ -1556,14 +1556,14 @@ Any of the following:
 							{
 								value: 'Earth',
 								feature: FactoryLogic.feature.createMovementMode({
-									id: 'plane-kin-1-2e',
+									id: 'deva-1-2e',
 									mode: 'Burrow'
 								})
 							},
 							{
 								value: 'Fire',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-3e',
+									id: 'deva-1-3e',
 									name: 'Passage',
 									description: `
 If you are adjacent to a square of fire, you can use one square of movement to teleport adjacent to any other square of fire on the encounter map.
@@ -1574,7 +1574,7 @@ In addition, you can use a maneuver to summon a magical ember in an adjacent squ
 							{
 								value: 'Green',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-4e',
+									id: 'deva-1-4e',
 									name: 'Passage',
 									description: `
 If you are adjacent to a square of vegetation, you can use one square of movement to teleport adjacent to any other square of vegetation on the encounter map.
@@ -1585,7 +1585,7 @@ In addition, you can use a maneuver to summon vines that fill an adjacent square
 							{
 								value: 'Rot',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-5e',
+									id: 'deva-1-5e',
 									name: 'Passage',
 									description: 'If you are adjacent to a dead creature (at least size 1M), you can use a move action to teleport adjacent to any other dead creature within 5 squares'
 								})
@@ -1593,7 +1593,7 @@ In addition, you can use a maneuver to summon vines that fill an adjacent square
 							{
 								value: 'Void',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-6e',
+									id: 'deva-1-6e',
 									name: 'Passage',
 									description: `
 If you are adjacent to a square in darkness, you can use one square of movement to teleport adjacent to any other square in darkness on the encounter map.
@@ -1604,14 +1604,14 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Water',
 								feature: FactoryLogic.feature.createMultiple({
-									id: 'plane-kin-1-7e',
+									id: 'deva-1-7e',
 									features: [
 										FactoryLogic.feature.createMovementMode({
-											id: 'plane-kin-1-7e-swim',
+											id: 'deva-1-7e-swim',
 											mode: 'Swim'
 										}),
 										FactoryLogic.feature.create({
-											id: 'plane-kin-1-7e-water',
+											id: 'deva-1-7e-water',
 											name: 'Elemental Passage',
 											description: 'Occupied squares do not count as difficult terrain for you.'
 										})
@@ -1624,7 +1624,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 				},
 				{
 					feature: FactoryLogic.feature.createSwitchOptions({
-						id: 'plane-kin-3-5',
+						id: 'deva-3-5',
 						name: 'Elemental Surge',
 						description: 'You gain a reactive feature based on your elemental core.',
 						switch: 'Elemental Core',
@@ -1632,7 +1632,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Air',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-1f',
+									id: 'deva-1-1f',
 									name: 'Surge',
 									description: 'When an enemy moves adjacent to you, you may spend a surge to immediately shift 1 square.'
 								})
@@ -1640,7 +1640,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Earth',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-2f',
+									id: 'deva-1-2f',
 									name: 'Surge',
 									description: 'When you are subjected to forced movement, you can spend a surge to gain Stability equal to twice your echelon.'
 								})
@@ -1648,7 +1648,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Fire',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-3f',
+									id: 'deva-1-3f',
 									name: 'Surge',
 									description: 'On your turn, you can spend a surge to deal additional fire damage equal to your echelon on all your strikes this turn.'
 								})
@@ -1656,7 +1656,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Green',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-4f',
+									id: 'deva-1-4f',
 									name: 'Surge',
 									description: 'Any time you or an ally within 5 squares spends a Recovery, you can spend a surge to allow an ally within 5 squares to regain Stamina equal to your level.'
 								})
@@ -1664,7 +1664,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Rot',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-5f',
+									id: 'deva-1-5f',
 									name: 'Surge',
 									description: 'When you target an enemy with a strike, you can spend a surge to impose the bleeding condition (EoT).'
 								})
@@ -1672,7 +1672,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Void',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-6f',
+									id: 'deva-1-6f',
 									name: 'Surge',
 									description: 'When an enemy targets you with a strike, you can spend a surge to impose a bane on the power roll.'
 								})
@@ -1680,7 +1680,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Water',
 								feature: FactoryLogic.feature.create({
-									id: 'plane-kin-1-7f',
+									id: 'deva-1-7f',
 									name: 'Surge',
 									description: 'When you are subjected to a save ends condition, you can spend a surge to change its duration to end of your next turn.'
 								})
@@ -1691,7 +1691,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 				},
 				{
 					feature: FactoryLogic.feature.createSwitchOptions({
-						id: 'plane-kin-3-6',
+						id: 'deva-3-6',
 						name: 'Elemental Ward',
 						description: 'You gain a resistance feature based on your elemental core.',
 						switch: 'Elemental Core',
@@ -1699,7 +1699,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Air',
 								feature: FactoryLogic.feature.createDamageModifier({
-									id: 'plane-kin-1-1g',
+									id: 'deva-1-1g',
 									modifiers: [
 										FactoryLogic.damageModifier.createPerLevel({
 											damageType: DamageType.Lightning,
@@ -1712,14 +1712,14 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Earth',
 								feature: FactoryLogic.feature.createConditionImmunity({
-									id: 'plane-kin-1-2g',
+									id: 'deva-1-2g',
 									conditions: [ ConditionType.Prone ]
 								})
 							},
 							{
 								value: 'Fire',
 								feature: FactoryLogic.feature.createDamageModifier({
-									id: 'plane-kin-1-3g',
+									id: 'deva-1-3g',
 									modifiers: [
 										FactoryLogic.damageModifier.createPerLevel({
 											damageType: DamageType.Fire,
@@ -1732,11 +1732,11 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Green',
 								feature: FactoryLogic.feature.createChoice({
-									id: 'plane-kin-1-4g',
+									id: 'deva-1-4g',
 									options: [
 										{
 											feature: FactoryLogic.feature.createDamageModifier({
-												id: 'plane-kin-1-4ga',
+												id: 'deva-1-4ga',
 												modifiers: [
 													FactoryLogic.damageModifier.createPerLevel({
 														damageType: DamageType.Acid,
@@ -1749,7 +1749,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 										},
 										{
 											feature: FactoryLogic.feature.createDamageModifier({
-												id: 'plane-kin-1-4gb',
+												id: 'deva-1-4gb',
 												modifiers: [
 													FactoryLogic.damageModifier.createPerLevel({
 														damageType: DamageType.Poison,
@@ -1766,7 +1766,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Rot',
 								feature: FactoryLogic.feature.createDamageModifier({
-									id: 'plane-kin-1-5g',
+									id: 'deva-1-5g',
 									modifiers: [
 										FactoryLogic.damageModifier.createPerLevel({
 											damageType: DamageType.Corruption,
@@ -1779,7 +1779,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Void',
 								feature: FactoryLogic.feature.createDamageModifier({
-									id: 'plane-kin-1-6g',
+									id: 'deva-1-6g',
 									modifiers: [
 										FactoryLogic.damageModifier.createPerLevel({
 											damageType: DamageType.Psychic,
@@ -1792,7 +1792,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 							{
 								value: 'Water',
 								feature: FactoryLogic.feature.createDamageModifier({
-									id: 'plane-kin-1-7g',
+									id: 'deva-1-7g',
 									modifiers: [
 										FactoryLogic.damageModifier.createPerLevel({
 											damageType: DamageType.Cold,
@@ -1811,7 +1811,7 @@ In addition, you can use a maneuver to fill an adjacent square with magical shad
 		})
 	],
 	ancestryPoints: 3,
-	culture: FactoryLogic.createCulture('Plane-Kin', 'Nomadic, communal, labor.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.labor, 'Low Kuric')
+	culture: FactoryLogic.createCulture('Deva', 'Nomadic, communal, labor.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.labor, 'Low Kuric')
 };
 
 const siabhra: Ancestry = {
@@ -5771,10 +5771,10 @@ export const community: Sourcebook = {
 		aranox,
 		asomath,
 		beastfolk,
+		deva,
 		gallGuardian,
 		ironbound,
 		oakling,
-		planeKin,
 		siabhra,
 		solar
 	],

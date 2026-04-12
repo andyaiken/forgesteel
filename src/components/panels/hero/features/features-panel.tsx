@@ -1,4 +1,5 @@
-import { Button, Popover, Select, Space, Tag } from 'antd';
+import { Select, Space, Tag } from 'antd';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -98,35 +99,42 @@ export const FeaturesPanel = (props: Props) => {
 	const useRows = props.options.compactView;
 
 	const controls = (
-		<Space>
-			<SearchBox searchTerm={featureSearch} setSearchTerm={setFeatureSearch} />
-			<Popover
-				trigger='click'
-				content={
-					<Space orientation='vertical' style={{ width: '300px' }}>
-						<LabelControl
-							label='Organize'
-							control={
-								<Select
-									style={{ width: '100%' }}
-									options={[
-										{ label: 'Alphabetical', value: 'az' },
-										{ label: 'Group by level', value: 'lvl' },
-										{ label: 'Group by source', value: 'src' }
-									]}
-									optionRender={o => <div className='ds-text'>{o.label}</div>}
-									value={featureSort}
-									onChange={setFeatureSort}
-								/>
-							}
-						/>
-						<Toggle label='All Features' value={featureAll} onChange={setFeatureAll} />
-					</Space>
+		<ButtonGroup
+			buttons={[
+				{
+					type: 'control',
+					control: (
+						<SearchBox searchTerm={featureSearch} setSearchTerm={setFeatureSearch} />
+					)
+				},
+				{
+					type: 'dropdown',
+					tooltip: 'Feature Options',
+					icon: <EllipsisOutlined />,
+					popover: (
+						<Space orientation='vertical' style={{ width: '300px' }}>
+							<LabelControl
+								label='Organize'
+								control={
+									<Select
+										style={{ width: '100%' }}
+										options={[
+											{ label: 'Alphabetical', value: 'az' },
+											{ label: 'Group by level', value: 'lvl' },
+											{ label: 'Group by source', value: 'src' }
+										]}
+										optionRender={o => <div className='ds-text'>{o.label}</div>}
+										value={featureSort}
+										onChange={setFeatureSort}
+									/>
+								}
+							/>
+							<Toggle label='All Features' value={featureAll} onChange={setFeatureAll} />
+						</Space>
+					)
 				}
-			>
-				<Button type='text' icon={<EllipsisOutlined />} />
-			</Popover>
-		</Space>
+			]}
+		/>
 	);
 
 	return (

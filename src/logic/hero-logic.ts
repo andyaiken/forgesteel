@@ -101,7 +101,8 @@ export class HeroLogic {
 						features.push(...simplified);
 					}
 				} else if (optionsFeature.data.defaultOption) {
-					features.push({ feature: optionsFeature.data.defaultOption, source: f.source, level: f.level });
+					const simplified = FeatureLogic.simplifyFeatures([ { feature: optionsFeature.data.defaultOption, source: f.source, level: f.level } ], hero);
+					features.push(...simplified);
 				}
 			});
 			features = features.filter(f => f.feature.type !== FeatureType.SwitchOptions);

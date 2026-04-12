@@ -1,7 +1,8 @@
 import { Alert, Button, Flex, Segmented } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { BookOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -29,6 +30,12 @@ interface Props {
 
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const [ tips ] = useState<Tip[]>([
+		...Collections.shuffle(TipData.getTips().filter(t => t.isNew)),
+		...Collections.shuffle(TipData.getTips().filter(t => !t.isNew))
+	]);
+	const [ showTips, setShowTips ] = useState<boolean>(true);
+	const [ tipIndex, setTipIndex ] = useState<number>(0);
 
 	if (isSmall) {
 		return (
@@ -66,13 +73,46 @@ export const WelcomePage = (props: Props) => {
 				/>
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
-						<Welcome
-							onNewHero={props.onNewHero}
-						/>
+						<Welcome onNewHero={props.onNewHero} />
 					</div>
-					<div className='tip-column'>
-						<Tips />
-					</div>
+					{
+						showTips ?
+							<div className='tip-column'>
+								<Flex justify='center'>
+									<ButtonGroup
+										buttons={[
+											{
+												type: 'button',
+												tooltip: 'Previous Tip',
+												icon: <DoubleLeftOutlined />,
+												disabled: tipIndex <= 0,
+												onClick: () => setTipIndex(tipIndex - 1)
+											},
+											{
+												type: 'button',
+												tooltip: 'Hide Tips',
+												icon: <BulbFilled style={{ color: 'rgba(64, 150, 255)' }} />,
+												onClick: () => setShowTips(false)
+											},
+											{
+												type: 'button',
+												tooltip: 'Next Tip',
+												icon: <DoubleRightOutlined />,
+												onClick: () => setTipIndex(tipIndex + 1)
+											}
+										]}
+									/>
+								</Flex>
+								<TipPanel tip={tips[tipIndex % tips.length]} />
+							</div>
+							:
+							<Button
+								type='text'
+								icon={<BulbOutlined />}
+								title='Show Tips'
+								onClick={() => setShowTips(true)}
+							/>
+					}
 				</div>
 				<AppFooter
 					page='welcome'
@@ -325,34 +365,6 @@ const Welcome = (props: WelcomeProps) => {
 					{getContent()}
 				</SelectablePanel>
 			</div>
-		</ErrorBoundary>
-	);
-};
-
-const Tips = () => {
-	const [ tips ] = useState<Tip[]>([
-		...Collections.shuffle(TipData.getTips().filter(t => t.isNew)),
-		...Collections.shuffle(TipData.getTips().filter(t => !t.isNew))
-	]);
-	const [ tipIndex, setTipIndex ] = useState<number>(0);
-
-	const prevTip = () => {
-		const index = tipIndex - 1;
-		setTipIndex(Math.max(index, 0));
-	};
-
-	const nextTip = () => {
-		const index = tipIndex + 1;
-		setTipIndex(Math.min(index, tips.length - 1));
-	};
-
-	return (
-		<ErrorBoundary>
-			<TipPanel
-				tip={tips[tipIndex]}
-				onPrevious={tipIndex === 0 ? undefined : prevTip}
-				onNext={tipIndex === tips.length - 1 ? undefined : nextTip}
-			/>
 		</ErrorBoundary>
 	);
 };

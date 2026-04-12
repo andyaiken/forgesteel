@@ -25,7 +25,6 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
-import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 
 import './data-loader.scss';
@@ -55,11 +54,15 @@ export const DataLoader = (props: Props) => {
 	const [ playbookState, setPlaybookState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
-	const [ splinesState, setSplinesState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ dataSource, setDataSource ] = useState<DataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
+
+	const log = (text: string) => {
+		// eslint-disable-next-line no-console
+		console.info(text);
+	};
 
 	async function initializeConnectionSettings() {
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
@@ -145,11 +148,12 @@ export const DataLoader = (props: Props) => {
 		setSessionState(undefined);
 		setOptionsState(undefined);
 		setHiddenSettingsState(undefined);
-		setSplinesState(undefined);
 
 		initializeConnectionSettings().then(settings => {
 			setConnectionSettings(settings);
 			getDataService(settings).then(dataService => {
+				log('* Loading');
+
 				setConnectionSettingsState('success');
 
 				setHomebrewState('pending');
@@ -158,7 +162,6 @@ export const DataLoader = (props: Props) => {
 				setSessionState('pending');
 				setOptionsState('pending');
 				setHiddenSettingsState('pending');
-				setSplinesState('pending');
 
 				const promises = [
 					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
@@ -166,11 +169,13 @@ export const DataLoader = (props: Props) => {
 					updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
 					updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
-					updateLoadingStatus(dataService.getOptions(), setOptionsState),
-					updateLoadingStatus(Utils.wait(1000), setSplinesState)
+					updateLoadingStatus(dataService.getOptions(), setOptionsState)
 				];
 
 				Promise.all(promises).then(results => {
+					log('  * Loaded data');
+					log('  * Loading homebrew sourcebooks');
+
 					// #region Homebrew sourcebooks
 					let sourcebooks = results[0] as Sourcebook[] | null;
 					if (!sourcebooks) {
@@ -178,11 +183,11 @@ export const DataLoader = (props: Props) => {
 					}
 
 					sourcebooks.forEach(sourcebook => {
+						log(`    * Loading ${sourcebook.name}`);
+
 						sourcebook.type = SourcebookType.Homebrew;
 						SourcebookUpdateLogic.updateSourcebook(sourcebook);
-					});
 
-					SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
 						sourcebook.items.forEach(item => {
 							if (item.crafting) {
 								item.crafting.id = `${item.id}-crafting`;
@@ -198,7 +203,11 @@ export const DataLoader = (props: Props) => {
 							}
 						});
 					});
+
 					// #endregion
+
+					log('  * Loaded homebrew sourcebooks');
+					log('  * Loading heroes');
 
 					// #region Heroes
 					let heroes = results[1] as Hero[] | null;
@@ -207,9 +216,14 @@ export const DataLoader = (props: Props) => {
 					}
 
 					heroes.forEach(hero => {
+						log(`    * Loading ${hero.name}`);
+
 						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
 					});
 					// #endregion
+
+					log('  * Loaded heroes');
+					log('  * Loading hidden sourcebook IDs');
 
 					// #region Hidden sourcebook IDs
 					let hiddenSourcebookIDs = results[2] as string[] | null;
@@ -217,6 +231,9 @@ export const DataLoader = (props: Props) => {
 						hiddenSourcebookIDs = [];
 					}
 					// #endregion
+
+					log('  * Loaded hidden sourcebook IDs');
+					log('  * Loading playbook');
 
 					// #region Playbook
 					const playbook = results[3] as Playbook | null;
@@ -258,6 +275,9 @@ export const DataLoader = (props: Props) => {
 					}
 					// #endregion
 
+					log('  * Loaded playbook');
+					log('  * Loading session');
+
 					// #region Session
 					let session = results[4] as Session | null;
 					if (!session) {
@@ -267,6 +287,9 @@ export const DataLoader = (props: Props) => {
 					SessionUpdateLogic.updateSession(session);
 					// #endregion
 
+					log('  * Loaded session');
+					log('  * Loading options');
+
 					// #region Options
 					let options = results[5] as Options | null;
 					if (!options) {
@@ -275,6 +298,8 @@ export const DataLoader = (props: Props) => {
 
 					OptionsUpdateLogic.updateOptions(options);
 					// #endregion
+
+					log('  * Loaded options');
 
 					setOverallLoadState('success');
 
@@ -287,6 +312,8 @@ export const DataLoader = (props: Props) => {
 						session: session,
 						options: options
 					});
+
+					log('* Loading complete');
 				}).catch(reason => {
 					console.error(reason);
 					setError(reason.message);
@@ -334,7 +361,6 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSettingsState}>Identifying Manifold</CheckLabel>
-						<CheckLabel state={splinesState}>Reticulating Splines</CheckLabel>
 					</Flex>
 					{
 						error ?

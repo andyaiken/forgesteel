@@ -80,6 +80,31 @@ export class Utils {
 		}
 	};
 
+	static getResizedImage = (data: string): Promise<string> => {
+		return new Promise(resolve => {
+			const img = new Image();
+			img.onload = () => {
+				const maxSize = 500;
+				const canvas = document.createElement('canvas');
+				canvas.width = maxSize;
+				canvas.height = maxSize;
+				const ctx = canvas.getContext('2d');
+				if (ctx) {
+					const scale = Math.min(maxSize / img.width, maxSize / img.height);
+					const scaledWidth = img.width * scale;
+					const scaledHeight = img.height * scale;
+					const offsetX = (maxSize - scaledWidth) / 2;
+					const offsetY = (maxSize - scaledHeight) / 2;
+					ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
+					resolve(canvas.toDataURL('image/png'));
+				} else {
+					resolve(data);
+				}
+			};
+			img.src = data;
+		});
+	};
+
 	static exportData = (name: string, obj: unknown, ext: string) => {
 		Utils.saveFile(obj, name, ext);
 	};

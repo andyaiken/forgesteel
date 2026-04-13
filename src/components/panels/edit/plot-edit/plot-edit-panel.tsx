@@ -330,10 +330,11 @@ export const PlotEditPanel = (props: Props) => {
 													showUploadList={false}
 													beforeUpload={file => {
 														const reader = new FileReader();
-														reader.onload = progress => {
+														reader.onload = async progress => {
 															if (progress.target) {
 																const content = progress.target.result as string;
-																setImageData(c.id, content);
+																const resized = await Utils.getResizedImage(content);
+																setImageData(c.id, resized);
 															}
 														};
 														reader.readAsDataURL(file);

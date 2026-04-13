@@ -14,6 +14,7 @@ import { NameSuggestions } from '@/components/panels/name-suggestions/name-sugge
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { Utils } from '@/utils/utils';
 
 import './details-section.scss';
 
@@ -60,12 +61,13 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 							style={{ width: '100%' }}
 							accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
 							showUploadList={false}
-							beforeUpload={file => {
+							beforeUpload={async file => {
 								const reader = new FileReader();
-								reader.onload = progress => {
+								reader.onload = async progress => {
 									if (progress.target) {
 										const content = progress.target.result as string;
-										props.setPicture(content);
+										const resized = await Utils.getResizedImage(content);
+										props.setPicture(resized);
 									}
 								};
 								reader.readAsDataURL(file);

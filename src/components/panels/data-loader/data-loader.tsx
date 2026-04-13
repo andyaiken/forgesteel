@@ -59,9 +59,15 @@ export const DataLoader = (props: Props) => {
 	const [ dataSource, setDataSource ] = useState<DataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
 
+	let start = Date.now();
+
 	const log = (text: string) => {
+		const now = Date.now();
+		const diff = Math.round((now - start) / 1000);
+		start = now;
+
 		// eslint-disable-next-line no-console
-		console.info(text);
+		console.info(`${text} (${diff}s)`);
 	};
 
 	async function initializeConnectionSettings() {

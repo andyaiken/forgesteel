@@ -7,7 +7,12 @@ export class LocalService implements StorageService {
 	}
 
 	get<T>(key: string): Promise<T | null> {
-		return localforage.getItem<T>(key);
+		try {
+			return localforage.getItem<T>(key);
+		} catch (error) {
+			console.error(`Error getting ${key}`, error);
+			return Promise.resolve(null);
+		}
 	}
 
 	put<T>(key: string, value: T): Promise<T> {

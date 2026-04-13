@@ -16,6 +16,7 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 interface Props {
@@ -175,10 +176,11 @@ export const AddBtn = (props: Props) => {
 								showUploadList={false}
 								beforeUpload={file => {
 									const reader = new FileReader();
-									reader.onload = progress => {
+									reader.onload = async progress => {
 										if (progress.target) {
 											const content = progress.target.result as string;
-											setMapImportData(content);
+											const resized = await Utils.getResizedImage(content);
+											setMapImportData(resized);
 										}
 									};
 									reader.readAsDataURL(file);

@@ -84,10 +84,11 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							showUploadList={false}
 							beforeUpload={file => {
 								const reader = new FileReader();
-								reader.onload = progress => {
+								reader.onload = async progress => {
 									if (progress.target) {
 										const content = progress.target.result as string;
-										setPicture(content);
+										const resized = await Utils.getResizedImage(content);
+										setPicture(resized);
 									}
 								};
 								reader.readAsDataURL(file);

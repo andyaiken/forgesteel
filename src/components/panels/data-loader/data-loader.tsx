@@ -208,6 +208,8 @@ export const DataLoader = (props: Props) => {
 								imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
 							}
 						});
+
+						log(`    * Loaded ${sourcebook.name}`);
 					});
 
 					// #endregion
@@ -225,6 +227,8 @@ export const DataLoader = (props: Props) => {
 						log(`    * Loading ${hero.name}`);
 
 						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+
+						log(`    * Loaded ${hero.name}`);
 					});
 					// #endregion
 

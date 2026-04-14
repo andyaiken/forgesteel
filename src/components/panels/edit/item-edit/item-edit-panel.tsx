@@ -22,6 +22,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { Format } from '@/utils/format';
 import { useState } from 'react';
 
 import './item-edit-panel.scss';
@@ -49,6 +50,10 @@ export const ItemEditPanel = (props: Props) => {
 			const copy = Utils.copy(item);
 			copy.name = name;
 			copy.description = desc;
+			if (copy.crafting) {
+				copy.crafting.name = `Craft ${name}`;
+				copy.crafting.description = `Craft ${Format.startsWithVowel(name) ? 'an' : 'a'} ${name}.`;
+			}
 			updateItem(copy);
 			props.onChange(copy);
 		};

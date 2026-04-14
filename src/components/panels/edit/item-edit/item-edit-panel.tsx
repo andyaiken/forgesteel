@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
@@ -22,7 +23,6 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { Format } from '@/utils/format';
 import { useState } from 'react';
 
 import './item-edit-panel.scss';

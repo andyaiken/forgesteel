@@ -37,6 +37,10 @@ export const ImbuementEditPanel = (props: Props) => {
 			const copy = Utils.copy(imbuement);
 			copy.name = name;
 			copy.description = desc;
+			if (copy.crafting) {
+				copy.crafting.name = `Imbue ${name}`;
+				copy.crafting.description = `Imbue an item with ${name}.`;
+			}
 			setImbuement(copy);
 			props.onChange(copy);
 		};

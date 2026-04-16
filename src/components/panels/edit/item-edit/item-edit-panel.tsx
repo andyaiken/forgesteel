@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
@@ -49,6 +50,10 @@ export const ItemEditPanel = (props: Props) => {
 			const copy = Utils.copy(item);
 			copy.name = name;
 			copy.description = desc;
+			if (copy.crafting) {
+				copy.crafting.name = `Craft ${name}`;
+				copy.crafting.description = `Craft ${Format.startsWithVowel(name) ? 'an' : 'a'} ${name}.`;
+			}
 			updateItem(copy);
 			props.onChange(copy);
 		};

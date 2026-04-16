@@ -47,7 +47,13 @@ export const InfoSummonChoice = (props: InfoProps) => {
 		<>
 			<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'monsters' : 'monster'}.</div>
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{props.data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
+				{
+					props.data.options.map(s => (
+						<Expander key={s.id} title={s.monster.name}>
+							<MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} />
+						</Expander>
+					))
+				}
 			</Space>
 		</>
 	);

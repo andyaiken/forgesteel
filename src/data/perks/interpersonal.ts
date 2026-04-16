@@ -98,7 +98,7 @@ export class InterpersonalPerkData {
 	static peopleSense: Perk = {
 		id: 'perk-people-sense',
 		name: 'People Sense',
-		description: '(Beastheart only) While you are within 5 squares of your companion, when you or your companion makes a test to determine a creature’s motives, emotions, or body language, their partner can make the same test as a free triggered action. You both use the higher result.',
+		description: '(Beastheart only) Whenever you or your companion makes a test to determine a creature’s motives, emotions, or body language while within 5 squares of each other, your partner can make the same test as a free triggered action. You both use the higher result.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Interpersonal
@@ -116,7 +116,7 @@ export class InterpersonalPerkData {
 	static youCanPetThem: Perk = {
 		id: 'perk-you-can-pet-them',
 		name: 'You Can Pet Them, They\'re Friendly',
-		description: '(Beastheart only) While you are within 5 squares of your companion, when you make a Presence test to interact with a creature, you can use your companion’s Presence instead of your own.',
+		description: '(Beastheart only) Whenever you make a Presence test to interact with a creature while you are within 5 squares of your companion, you can use your companion’s Presence instead of your own.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Interpersonal

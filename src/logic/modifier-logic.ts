@@ -10,7 +10,11 @@ export class ModifierLogic {
 		let value;
 
 		if (modifier.valueFromController) {
-			value = CreatureLogic.getField(creature, modifier.valueFromController);
+			if (CreatureLogic.isHero(creature)) {
+				value = CreatureLogic.getField(creature, modifier.valueFromController);
+			} else {
+				value = 0;
+			}
 		} else {
 			value = modifier.value;
 		}

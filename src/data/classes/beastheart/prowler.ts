@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { PerkData } from '@/data/perk-data';
 import { SubClass } from '@/models/subclass';
 
 export const prowler: SubClass = {
@@ -20,22 +19,39 @@ export const prowler: SubClass = {
 				FactoryLogic.feature.createPackageContent({
 					id: 'beastheart-sub-2-1-2',
 					name: 'Wild Nature Benefit',
-					description: 'The target is weakened until the start of your next turn.',
+					description: 'Each enemy target is weakened until the start of your next turn.',
 					tag: 'feral-strike'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'beastheart-sub-2-1-3',
-						name: 'While No One’s Looking',
-						description: 'While everyone’s eyes are drawn to your foe, you take the opportunity to blend into the scenery.',
-						type: FactoryLogic.type.createTrigger('An enemy deals damage to a creature other than you.'),
+						name: 'Lightning Leap',
+						description: 'You summon a lightning bolt and ride it into battle.',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target takes damage equal to 3 + your Might score. Before you use this ability, you can jump up to a number of squares equal to your Intuition score in a straight line. During this jump, enemies’ spaces don’t count as difficult terrain for you. The target takes extra lightning damage equal to the number of squares you jumped this way.'),
+							FactoryLogic.createAbilitySectionSpend({
+								effect: 'Your jump doesn’t provoke opportunity attacks.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'beastheart-sub-2-1-4',
+						name: 'Shadow in the Mist',
+						description: 'While everyone’s eyes are drawn to your foe, you wreathe yourself in obscuring mist.',
+						type: FactoryLogic.type.createTrigger('An enemy within 10 squares deals damage to a creature other than you.'),
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('You become invisible, use the Hide maneuver, and move up to a number of squares equal to your Intuition score, in any order. You remain invisible until the end of your next turn or you deal damage.'),
+							FactoryLogic.createAbilitySectionText('You become invisible until the end of your next turn or you deal damage. You can then use the Hide maneuver even if you are observed and can move up to a number of squares equal to your Intuition score before or after using that maneuver.'),
 							FactoryLogic.createAbilitySectionSpend({
-								effect: 'The distance of your move is doubled, and it ignores difficult terrain.'
+								effect: 'You can move up to a number of squares equal to twice your Intuition score and ignore difficult terrain during this movement.'
 							})
 						]
 					})
@@ -45,14 +61,10 @@ export const prowler: SubClass = {
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerk({
-					id: 'beastheart-sub-2-2-1a',
-					selected: [ PerkData.bornTracker ]
-				}),
 				FactoryLogic.feature.create({
 					id: 'beastheart-sub-2-2-1b',
-					name: 'Keen Smell',
-					description: 'While a creature is adjacent to your companion, the creature can’t be concealed or hidden from your companion.'
+					name: 'Supersniffer',
+					description: 'While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.'
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'beastheart-sub-2-2-2',
@@ -65,11 +77,15 @@ export const prowler: SubClass = {
 									name: 'Jump Scare',
 									description: 'Surprised to see me?',
 									type: FactoryLogic.type.createMain(),
-									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Area, AbilityKeyword.Magic ],
+									keywords: [ AbilityKeyword.Area, AbilityKeyword.Companion, AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-									target: 'Each enemy in the area with line of effect',
+									target: 'Each enemy in the area',
 									cost: 5,
 									sections: [
+										FactoryLogic.createAbilitySectionField({
+											name: 'Special',
+											effect: 'This ability targets only enemies with line of effect to your companion.'
+										}),
 										FactoryLogic.createAbilitySectionText('Your companion shifts up to a number of squares equal to their Intuition score. During this movement, they are invisible. They then make a power roll.'),
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
@@ -88,7 +104,7 @@ export const prowler: SubClass = {
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-2-2-2b',
-									name: 'Close Combat',
+									name: 'On You Like Your Shadow',
 									description: 'Your companion darts around their target, staying out of reach and using them as a shield.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Charge, AbilityKeyword.Companion, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -104,7 +120,7 @@ export const prowler: SubClass = {
 												tier3: '12 + M damage'
 											})
 										),
-										FactoryLogic.createAbilitySectionText('Your companion enters the target’s space. Until your companion is no longer in the target’s space, your companion can end their turn in the target’s space, strikes against your companion also affect the target, and your strikes against the target gain an edge.')
+										FactoryLogic.createAbilitySectionText('Your companion enters the target’s space. Until your companion is no longer in the target’s space, they can end their turn in that space, strikes against them also affect the target, and your strikes against the target gain an edge.')
 									]
 								})
 							}),
@@ -127,8 +143,8 @@ export const prowler: SubClass = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'beastheart-sub-2-5-1',
-					name: 'I Hate Being the Center of Attention',
-					description: 'You or your companion can use While No One’s Looking even when targeted by the triggering attack.'
+					name: 'Melt Away',
+					description: 'You or your companion can use your Shadow in the Mist ability even when targeted by the triggering ability.'
 				})
 			]
 		},
@@ -142,27 +158,9 @@ export const prowler: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'beastheart-sub-2-6-1a',
-									name: 'Phantom Form',
-									description: 'Your companion becomes a soul-freezing wraith.',
-									type: FactoryLogic.type.createMove(),
-									keywords: [ AbilityKeyword.Magic ],
-									distance: [ FactoryLogic.distance.createSelf() ],
-									target: 'Self',
-									cost: 9,
-									sections: [
-										FactoryLogic.createAbilitySectionText('You and your companion shift up to your speeds. During this movement, you are both invisible and can move through enemies, objects, and difficult terrain without spending additional squares of movement. You deal corruption damage equal to your Intuition score to each enemy you pass through during this movement. Each of you can damage each enemy once in this way.')
-									]
-								})
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createAbility({
-								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-2-6-1b',
-									name: 'Raking Lunge',
-									description: 'Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable to further attacks.',
+									name: 'Soft Underbelly',
+									description: 'Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -177,7 +175,25 @@ export const prowler: SubClass = {
 												tier3: '20 + M damage; A < [strong], bleeding (save ends)'
 											})
 										),
-										FactoryLogic.createAbilitySectionText('While the target is bleeding, they have damage weakness 5.')
+										FactoryLogic.createAbilitySectionText('While bleeding this way, the target has damage weakness 5.')
+									]
+								})
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'beastheart-sub-2-6-1a',
+									name: 'Wraith Heart',
+									description: 'You and your companion become soul-freezing wraiths.',
+									type: FactoryLogic.type.createMove(),
+									keywords: [ AbilityKeyword.Magic ],
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									cost: 9,
+									sections: [
+										FactoryLogic.createAbilitySectionText('You and your companion shift up to your speeds. During this movement, you are both invisible, can move through enemies and objects, and ignore difficult terrain. You each deal corruption damage equal to your own Intuition score to each enemy you pass through during this movement. You can both damage each enemy once this way.')
 									]
 								})
 							}),
@@ -197,7 +213,7 @@ export const prowler: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'beastheart-sub-2-8-1',
 					name: 'Born to Run',
-					description: 'Your and your companion’s speed increases by 2.'
+					description: 'You and your companion gain a +2 bonus to speed.'
 				})
 			]
 		},
@@ -211,29 +227,8 @@ export const prowler: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'beastheart-sub-2-9-1a',
-									name: 'Chaos Duel',
-									description: 'You or your companion drag your chosen foe into storms of the Primordial Plane.',
-									type: FactoryLogic.type.createMain(),
-									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Magic ],
-									distance: [ FactoryLogic.distance.createMelee() ],
-									target: 'One creature',
-									cost: 11,
-									sections: [
-										FactoryLogic.createAbilitySectionText(`
-You, your companion, and the target enter a tiny pocket of Quintessence. The three of you can’t affect or be affected by any creatures except each other. Creatures in this pocket can’t move or teleport away from each other and are always adjacent to each other, but can otherwise act normally.
-
-While on Quintessence, the target takes 5 cold damage, 5 fire damage, 5 lightning damage, and 5 sonic damage at the start of each of your turns. You can end the effect as a free maneuver, and the target can make a save at the end of each of their turns to end the effect. The effect also ends when one of you dies. When the effect ends, you each return to the closest unoccupied space from the space you departed. If the target dies in the Quintessence, their remains do not return.`)
-									]
-								})
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createAbility({
-								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-2-9-1b',
-									name: 'Nightmare Apparition',
+									name: 'Behold the Face of Chaos',
 									description: 'Your companion appears next to their victim in the guise of a heart-stopping nightmare.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -250,6 +245,29 @@ While on Quintessence, the target takes 5 cold damage, 5 fire damage, 5 lightnin
 												tier3: '27 + I psychic damage; P < [strong], frightened (save ends)'
 											})
 										)
+									]
+								})
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'beastheart-sub-2-9-1a',
+									name: 'Let’s Take This Outside',
+									description: 'Your companion drags your chosen foe into storms of the Primordial Plane.',
+									type: FactoryLogic.type.createMain(),
+									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Magic ],
+									distance: [ FactoryLogic.distance.createMelee() ],
+									target: 'One creature',
+									cost: 11,
+									sections: [
+										FactoryLogic.createAbilitySectionText(`
+You, your companion, and the target enter the heart of an eternal storm on Quintessence. The three of you can’t affect or be affected by any creatures except each other. Creatures in this area are always adjacent to each other and can’t move or teleport away from each other, but can otherwise act normally.
+
+While on Quintessence, the target takes 5 cold damage, 5 fire damage, 5 lightning damage, and 5 sonic damage at the start of each of your turns.
+
+The effect ends when one of you dies or you end it as a free maneuver. The target can make a save at the end of each of their turns to end the effect early. When the effect ends, you each reappear in the space you left or the nearest unoccupied space. If the target dies on Quintessence, their remains do not return.`)
 									]
 								})
 							}),

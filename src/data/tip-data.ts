@@ -18,6 +18,7 @@ import heroBuilderPregens from '@/assets/screenshots/hero-pregens.png';
 import heroBuilderRandom from '@/assets/screenshots/hero-random.png';
 import heroBuilderSourcebooks from '@/assets/screenshots/hero-edit-sourcebooks.png';
 
+import libraryBeastheart from '@/assets/screenshots/library-beastheart.png';
 import libraryMain from '@/assets/screenshots/library.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 import libraryThirdParty from '@/assets/screenshots/third-party.png';
@@ -95,8 +96,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetRetinue,
-				content: 'If your hero has a mount, a retainer, or can summon monsters, you\'ll see them in your **Retinue** tab.',
-				isNew: true
+				content: 'If your hero has a mount, a retainer, or can summon monsters, you\'ll see them in your **Retinue** tab.'
 			}),
 			// #endregion
 
@@ -134,7 +134,11 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: libraryThirdParty,
-				content: 'Forge Steel now includes third-party content from the Blacksmith\'s Guild, Ratcatcher magazine, Triglav Games, and the Draw Steel homebrew community.',
+				content: 'Forge Steel now includes third-party content from the Blacksmith\'s Guild, Ratcatcher magazine, Triglav Games, and the Draw Steel homebrew community.'
+			}),
+			FactoryLogic.createTip({
+				image: libraryBeastheart,
+				content: 'Forge Steel now includes the Beastheart class.',
 				isNew: true
 			}),
 			// #endregion
@@ -150,13 +154,11 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: homebrewKitTuning,
-				content: 'When you\'re creating a homebrew kit, Forge Steel helps you to make sure your kit isn\'t overpowered.',
-				isNew: true
+				content: 'When you\'re creating a homebrew kit, Forge Steel helps you to make sure your kit isn\'t overpowered.'
 			}),
 			FactoryLogic.createTip({
 				image: homebrewMonsterBuilderGenesplice,
-				content: 'When you\'re creating a homebrew monster, you can use the **Genesplice** tool to quickly jumble existing creatures together to create something new.',
-				isNew: true
+				content: 'When you\'re creating a homebrew monster, you can use the **Genesplice** tool to quickly jumble existing creatures together to create something new.'
 			}),
 			// #endregion
 
@@ -174,8 +176,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: playbookEncounterTools,
-				content: 'If you tap the Information icon in the encounter header, you\'ll see information that\'ll help you pick minis for this encounter.',
-				isNew: true
+				content: 'If you tap the Minis button in the encounter header, you\'ll see information that\'ll help you pick minis for this encounter.'
 			}),
 			FactoryLogic.createTip({
 				image: playbookEncounterClassic,
@@ -187,8 +188,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: playbookEncounterRandom,
-				content: 'If you need an encounter in a hurry, Forge Steel can generate one - you just specify the difficulty and, optionally, the sort of monsters you want it to showcase.',
-				isNew: true
+				content: 'If you need an encounter in a hurry, Forge Steel can generate one - you just specify the difficulty and, optionally, the sort of monsters you want it to showcase.'
 			}),
 			// #endregion
 

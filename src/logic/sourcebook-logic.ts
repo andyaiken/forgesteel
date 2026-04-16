@@ -41,6 +41,7 @@ export class SourcebookLogic {
 			// Official
 			SourcebookData.core,
 			SourcebookData.orden,
+			SourcebookData.beastheart,
 
 			// Third Party
 			SourcebookData.community,

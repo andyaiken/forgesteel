@@ -1,8 +1,5 @@
-import { KitData } from '@/data/kit-data';
-import { PerkData } from '@/data/perk-data';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { beastheart } from '@/data/classes/beastheart/beastheart';
 
 export const patreon: Sourcebook = {
 	id: 'patreon',
@@ -12,34 +9,18 @@ export const patreon: Sourcebook = {
 	adventures: [],
 	ancestries: [],
 	careers: [],
-	classes: [
-		beastheart
-	],
+	classes: [],
 	complications: [],
 	cultures: [],
 	domains: [],
 	encounters: [],
 	imbuements: [],
 	items: [],
-	kits: [
-		KitData.outrider,
-		KitData.predator,
-		KitData.stormcrow,
-		KitData.warBeast
-	],
+	kits: [],
 	monsterGroups: [],
 	montages: [],
 	negotiations: [],
-	perks: [
-		PerkData.bornTracker,
-		PerkData.rideAlong,
-		PerkData.wildRumpus,
-		PerkData.wildsExplorer,
-		PerkData.peopleSense,
-		PerkData.voiceOfTheWild,
-		PerkData.youCanPetThem,
-		PerkData.trainedThief
-	],
+	perks: [],
 	projects: [],
 	subclasses: [],
 	tacticalMaps: [],

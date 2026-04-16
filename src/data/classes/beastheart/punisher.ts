@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { PerkData } from '@/data/perk-data';
 import { SubClass } from '@/models/subclass';
 
 export const punisher: SubClass = {
@@ -20,22 +19,39 @@ export const punisher: SubClass = {
 				FactoryLogic.feature.createPackageContent({
 					id: 'beastheart-sub-3-1-2',
 					name: 'Wild Nature Benefit',
-					description: 'Your companion slides the target up to a number of squares equal to their Might score.',
+					description: 'Your companion slides each target up to a number of squares equal to their Might score.',
 					tag: 'feral-strike'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'beastheart-sub-3-1-3',
-						name: 'Swat Away',
-						description: 'You bat away an attacker.',
-						type: FactoryLogic.type.createTrigger('An enemy adjacent to you deals damage to a creature.'),
+						name: 'Avalanche Rush',
+						description: 'You ride a cascade of ice over your foes.',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target takes damage equal to 3 + your Might score, and if they have M<[average], they are knocked prone. You can move up to 3 squares before and after you use this ability. During this movement, a prone enemy’s space doesn’t count as difficult terrain, and the first time you enter a prone enemy’s space, that enemy takes cold damage equal to your Might score.'),
+							FactoryLogic.createAbilitySectionSpend({
+								effect: 'If the target has M<[strong], they are knocked prone.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'beastheart-sub-3-1-4',
+						name: 'Thunderclap',
+						description: 'The force of your counterattack cracks the air.',
+						type: FactoryLogic.type.createTrigger('The target deals damage to a creature.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('You deal damage equal to your Might score to the target and push them up to a number of squares equal to your Might score + 1. If this movement causes the enemy to move farther from the creature they damaged, the triggering damage is halved.'),
+							FactoryLogic.createAbilitySectionText('You deal sonic damage equal to your Might score to the target and push them up to a number of squares equal to 1 + your Might score. If this forced movement pushes the target away from the creature they damaged, the creature takes half the triggering damage.'),
 							FactoryLogic.createAbilitySectionSpend({
-								effect: 'You can push the enemy twice the distance.'
+								effect: 'The forced movement distance is doubled.'
 							})
 						]
 					})
@@ -45,22 +61,18 @@ export const punisher: SubClass = {
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerk({
-					id: 'beastheart-sub-3-2-1a',
-					selected: [ PerkData.youCanPetThem ]
-				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'beastheart-sub-3-2-1b',
-						name: 'No, You Take Him',
+						name: 'This One\'s Yours',
 						description: 'When someone is pushed into you, you reach out to steady an ally or send a foe careening off in another direction.',
-						type: FactoryLogic.type.createTrigger('A creature being force moved by another creature enters a space adjacent to you.', { free: true }),
+						type: FactoryLogic.type.createTrigger('A creature force moved by another creature enters a space adjacent to you.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('You end the forced movement. You can then push the creature up to a number of squares equal to your Might score + 1. The creature takes 1 damage for each square they are moved in this way.'),
+							FactoryLogic.createAbilitySectionText('You end the forced movement. You can then push the creature up to a number of squares equal to 1 + your Might score. The creature takes 1 damage for each square they are force moved this way.'),
 							FactoryLogic.createAbilitySectionSpend({
-								effect: 'You can each use this free triggered action on the same turn.'
+								effect: 'You and your companions can each use this free triggered action on the same turn.'
 							})
 						]
 					})
@@ -89,7 +101,7 @@ export const punisher: SubClass = {
 												tier3: '8 + M damage; push 4; M < [strong], prone'
 											})
 										),
-										FactoryLogic.createAbilitySectionText('If the target is force moved at least 1 square, at the end of this movement an enemy adjacent to the target is also targeted by this ability’s power roll but not this additional effect.')
+										FactoryLogic.createAbilitySectionText('If the target is force moved at least 1 square, an enemy adjacent to the target at the end of this forced movement is also targeted by this ability’s power roll, but they don’t trigger this effect.')
 									]
 								})
 							}),
@@ -99,15 +111,15 @@ export const punisher: SubClass = {
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-4-2-2b',
-									name: 'Psych Up',
+									name: 'One Roar and We’re Back In the Fight',
 									description: 'Your companion builds up courage with a roar, growl, or aggressive display.',
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Companion ],
 									distance: [ FactoryLogic.distance.createRanged(5) ],
-									target: 'One creature',
+									target: 'One ally',
 									cost: 5,
 									sections: [
-										FactoryLogic.createAbilitySectionText('Your companion and an ally within range can gain two surges, spend up to two Recoveries, and end one (EoT) or (Save Ends) condition or effect on themselves.')
+										FactoryLogic.createAbilitySectionText('Your companion and the target can each gain 2 surges, spend up to 2 Recoveries, and end one condition or effect on them that is ended by a saving throw or that ends at the end of their turn.')
 									]
 								})
 							}),
@@ -130,8 +142,8 @@ export const punisher: SubClass = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'beastheart-sub-3-5-1',
-					name: 'Self Sacrifice',
-					description: 'When you or your companion uses Swat Away and halves an attack’s damage, they can take the remaining damage instead of the original target. The damage is transferred before immunity and weakness is applied.'
+					name: 'I Can Take It',
+					description: 'When you or your companion uses your Thunderclap ability and halves the triggering damage, whoever uses the ability can take the remaining damage instead of the original target. The damage is transferred before immunity and weakness are applied.'
 				})
 			]
 		},
@@ -146,15 +158,15 @@ export const punisher: SubClass = {
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-3-6-1a',
-									name: 'Howling Advance',
-									description: 'Roaring like a pack of wild beasts, your companion and your allies rush toward the foe.',
+									name: 'Lead the Pack',
+									description: 'Roaring like wild beasts, your companion and your allies rush toward the foe.',
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Companion ],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									cost: 9,
 									sections: [
-										FactoryLogic.createAbilitySectionText('Your companion shifts up to their speed and can make a free strike. If within 10 squares of the square from which this movement started, you and up to 10 allies can also shift up to their speed and make free strikes.')
+										FactoryLogic.createAbilitySectionText('Your companion shifts up to their speed and can make a melee free strike. As a free triggered action, you and up to 10 allies within 10 squares of your companion’s starting position can shift up to their speed and make free strikes.')
 									]
 								})
 							}),
@@ -164,7 +176,7 @@ export const punisher: SubClass = {
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-3-6-1b',
-									name: 'Thundering Strike',
+									name: 'Rolling Thunder',
 									description: 'The rumble of your companion’s dash is a rolling thunderclap, their impact an earthquake.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Companion, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
@@ -172,7 +184,7 @@ export const punisher: SubClass = {
 									target: 'Self',
 									cost: 9,
 									sections: [
-										FactoryLogic.createAbilitySectionText('Your companion shifts up to their speed. Your companion makes one power roll that targets each enemy your companion comes adjacent to during the shift. If your companion only targets one enemy with this ability, the power roll has an edge.'),
+										FactoryLogic.createAbilitySectionText('Your companion shifts up to their speed and makes one power roll that targets each enemy they come adjacent to during the shift. If your companion targets only one enemy with this ability, the power roll gains an edge.'),
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: Characteristic.Might,
@@ -183,7 +195,7 @@ export const punisher: SubClass = {
 										),
 										FactoryLogic.createAbilitySectionSpend({
 											value: 2,
-											effect: 'You can move up to your speed. The power roll also affects any enemy you come adjacent to during the move.'
+											effect: 'You can move up to your speed. The power roll also targets each enemy you come adjacent to during the move.'
 										})
 									]
 								})
@@ -203,8 +215,8 @@ export const punisher: SubClass = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'beastheart-sub-3-8-1',
-					name: 'Overhand Throw',
-					description: 'When you or your companion uses a maneuver that deals damage, the damage increases by 2. When you or your companion pushes a creature, the push is a vertical push.'
+					name: 'Built for Violence',
+					description: 'You and your companion gain a +2 damage bonus to maneuvers that deal damage. When you or your companion pushes a creature, you can vertical push that creature.'
 				})
 			]
 		},
@@ -224,18 +236,23 @@ export const punisher: SubClass = {
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Companion, AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-									target: 'Creatures of your choice',
+									target: 'Special',
 									cost: 11,
 									sections: [
+										FactoryLogic.createAbilitySectionField({
+											name: 'Special',
+											effect: 'This ability targets only creatures you choose within distance.'
+										}),
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: Characteristic.Might,
-												tier1: 'P < [weak], battle frenzied',
-												tier2: 'P < [average], battle frenzied',
-												tier3: 'battle frenzied'
+												tier1: 'P < [weak], the target is battle-frenzied',
+												tier2: 'P < [average], the target is battle-frenzied',
+												tier3: 'the target is battle-frenzied'
 											})
 										),
-										FactoryLogic.createAbilitySectionText('A battle frenzied creature uses a free triggered action to make a melee free strike against themself or a creature adjacent to them and then they are no longer battle frenzied. You choose each creature’s target. A creature that would normally be unaffected by this ability can choose to be affected.')
+										FactoryLogic.createAbilitySectionText('If a target resists the potency, they can choose to become battle-frenzied.'),
+										FactoryLogic.createAbilitySectionText('A battle-frenzied creature must use a free triggered action to make a melee free strike against themself or a creature adjacent to them. You choose each creature’s target. After making this strike, they are no longer battle frenzied.')
 									]
 								})
 							}),
@@ -245,8 +262,8 @@ export const punisher: SubClass = {
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'beastheart-sub-3-9-1b',
-									name: 'Send \'Em Flying',
-									description: 'Your companion plows through the front lines, tossing enemies—and allies—this way and that.',
+									name: 'Juggernaut',
+									description: 'Your companion plows through the front lines, tossing enemies — and allies — this way and that.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Companion ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],

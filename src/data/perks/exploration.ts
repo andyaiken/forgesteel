@@ -144,11 +144,13 @@ export class ExplorationPerkData {
 				target: 'Companion',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
-Your body disappears, and your consciousness shares your companion’s body. While riding along, you can sense what your companion senses. You can communicate with your companion telepathically but not control them. You can’t be detected, targeted, or affected by any effect. Any condition or effect on you is temporarily suspended until you regain your body.
+Your body disappears, and your consciousness rides along in your companion’s body. While you are riding along, you can sense what your companion senses and communicate with them telepathically, but you can’t control them. You can’t be detected, targeted, or affected by any effect. Any condition or effect on you is temporarily negated until you regain your body.
 
-While you are riding along, your companion continues to benefit normally from any magic treasure you are wearing.
+Whenever your companion takes damage while you are riding along, you take the same amount of damage, which can’t be reduced in any way. You are unaffected by any effects that don’t deal damage that affect your companion.
 
-While riding along with your companion, you can’t act, except to spend a free maneuver to regain your body. You also regain your body if your companion dies or chooses to eject you. When you regain your body, you reappear in a space adjacent to your companion.`)
+While you are riding along, your companion continues to benefit from any magic treasure you are wearing.
+
+While you are riding along, you can’t act except to spend a free maneuver to regain your body. You also regain your body if your companion dies or chooses to eject you. When you regain your body, you reappear in a space adjacent to your companion.`)
 				]
 			})
 		},
@@ -169,7 +171,7 @@ While riding along with your companion, you can’t act, except to spend a free 
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
-					FactoryLogic.createAbilitySectionText('Until the end of your next turn you and your companion gain each others’ movement tags as well as your own. You and your companion both use your speed or your companion’s speed, whichever is higher. Once you have used this ability once, each additional time you use it before you finish a respite or gain 1 or more Victories you take damage equal to your level. This Stamina loss can’t be prevented in any way.')
+					FactoryLogic.createAbilitySectionText('For one minute or until you or your companion takes damage, you and your companion gain each other’s movement types in addition to your own. You and your companion both use your speed or your companion’s speed, whichever is higher. Each additional time you use this ability after the first, you take damage equal to your level until you finish a respite or gain 1 or more Victories. This damage can’t be reduced in any way and doesn’t end this ability’s effect.')
 				]
 			})
 		},
@@ -179,7 +181,7 @@ While riding along with your companion, you can’t act, except to spend a free 
 	static wildsExplorer: Perk = {
 		id: 'perk-wilds-explorer',
 		name: 'Wilds Explorer',
-		description: '(Beastheart only) You and your companion have an edge on tests made to overcome environmental cold, heat, weather, unsteady ground, or challenging terrain. During your turn each of you can ignore the extra cost for the first square of difficult terrain you enter.',
+		description: '(Beastheart only) You and your companion gain an edge on tests made to overcome environmental cold, heat, weather, unsteady ground, or challenging terrain. During your turn, you and your companion can ignore the first square of difficult terrain you each enter.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Exploration

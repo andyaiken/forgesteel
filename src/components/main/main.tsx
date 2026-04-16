@@ -83,8 +83,8 @@ import { SessionDirectorPage } from '@/components/pages/session/director/session
 import { SessionLogic } from '@/logic/session-logic';
 import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
 import { SettingsModal } from '@/components/modals/settings/settings-modal';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
 import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
@@ -287,7 +287,11 @@ export const Main = (props: Props) => {
 	// #region Welcome
 
 	const newHero = (folder: string) => {
-		const hero = FactoryLogic.createHero([ SourcebookData.core.id, SourcebookData.orden.id ]);
+		const sourcebookIDs = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => sb.type === SourcebookType.Official)
+			.map(sb => sb.id);
+
+		const hero = FactoryLogic.createHero(sourcebookIDs);
 		hero.folder = folder;
 
 		setDrawer(null);

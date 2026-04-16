@@ -1,4 +1,5 @@
 import { community, communityPrerelease } from '@/data/sourcebooks/community/community';
+import { beastheartSourcebook } from './sourcebooks/official/beastheart';
 import { blacksmith } from '@/data/sourcebooks/third-party/magazine-blacksmith';
 import { core } from '@/data/sourcebooks/official/core';
 import { lookOut } from '@/data/sourcebooks/third-party/look-out';
@@ -14,6 +15,7 @@ export class SourcebookData {
 	static core = core;
 	static orden = orden;
 	static patreon = patreon;
+	static beastheart = beastheartSourcebook;
 	static summoner = summonerSourcebook;
 
 	// Third Party

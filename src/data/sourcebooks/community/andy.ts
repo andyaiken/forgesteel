@@ -398,7 +398,7 @@ When you use the Knockdown maneuver against an enemy adjacent to one of your all
 							description: 'Your roar carries the authority of a primal predator.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Area ],
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 							target: 'Each enemy in the area',
 							sections: [
 								FactoryLogic.createAbilitySectionText('The target suffers a bane on its next strike.')

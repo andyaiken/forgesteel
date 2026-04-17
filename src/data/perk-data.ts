@@ -23,10 +23,6 @@ export class PerkData {
 	static teamwork = ExplorationPerkData.teamwork;
 	static teamLeader = ExplorationPerkData.teamLeader;
 	static woodWise = ExplorationPerkData.woodWise;
-	static bornTracker = ExplorationPerkData.bornTracker;
-	static rideAlong = ExplorationPerkData.rideAlong;
-	static wildRumpus = ExplorationPerkData.wildRumpus;
-	static wildsExplorer = ExplorationPerkData.wildsExplorer;
 
 	static charmingLiar = InterpersonalPerkData.charmingLiar;
 	static dazzler = InterpersonalPerkData.dazzler;
@@ -38,9 +34,6 @@ export class PerkData {
 	static powerPlayer = InterpersonalPerkData.powerPlayer;
 	static soTellMe = InterpersonalPerkData.soTellMe;
 	static spotTheTell = InterpersonalPerkData.spotTheTell;
-	static peopleSense = InterpersonalPerkData.peopleSense;
-	static voiceOfTheWild = InterpersonalPerkData.voiceOfTheWild;
-	static youCanPetThem = InterpersonalPerkData.youCanPetThem;
 
 	static criminalContacts = IntriguePerkData.criminalContacts;
 	static forgettableFace = IntriguePerkData.forgettableFace;
@@ -48,7 +41,6 @@ export class PerkData {
 	static luckyDog = IntriguePerkData.luckyDog;
 	static masterOfDisguise = IntriguePerkData.masterOfDisguise;
 	static slippedLead = IntriguePerkData.slippedLead;
-	static trainedThief = IntriguePerkData.trainedThief;
 
 	static butIKnowWhoDoes = LorePerkData.butIKnowWhoDoes;
 	static eideticMemory = LorePerkData.eideticMemory;

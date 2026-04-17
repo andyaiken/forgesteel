@@ -69,15 +69,4 @@ export class IntriguePerkData {
 		data: null,
 		list: PerkList.Intrigue
 	};
-
-	// Beastheart Perks
-
-	static trainedThief: Perk = {
-		id: 'perk-trained-thief',
-		name: 'Trained Thief',
-		description: '(Beastheart only) You have the Conceal Object or Pick Pocket skill. Your companion can make a test using that skill as a maneuver.',
-		type: FeatureType.Text,
-		data: null,
-		list: PerkList.Intrigue
-	};
 }

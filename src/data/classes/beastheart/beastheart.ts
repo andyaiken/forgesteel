@@ -114,7 +114,7 @@ const bear = FactoryLogic.createSummon({
 		speed: FactoryLogic.createSpeed(5, 'climb'),
 		stamina: 0,
 		stability: 2,
-		freeStrikeDamage: 2,
+		freeStrikeDamage: 1,
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({

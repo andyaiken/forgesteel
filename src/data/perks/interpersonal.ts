@@ -92,33 +92,4 @@ export class InterpersonalPerkData {
 		data: null,
 		list: PerkList.Interpersonal
 	};
-
-	// Beastheart Perks
-
-	static peopleSense: Perk = {
-		id: 'perk-people-sense',
-		name: 'People Sense',
-		description: '(Beastheart only) Whenever you or your companion makes a test to determine a creature’s motives, emotions, or body language while within 5 squares of each other, your partner can make the same test as a free triggered action. You both use the higher result.',
-		type: FeatureType.Text,
-		data: null,
-		list: PerkList.Interpersonal
-	};
-
-	static voiceOfTheWild: Perk = {
-		id: 'perk-voice-of-the-wild',
-		name: 'Voice of the Wild',
-		description: '(Beastheart only) Your companion can speak any language you can speak.',
-		type: FeatureType.Text,
-		data: null,
-		list: PerkList.Interpersonal
-	};
-
-	static youCanPetThem: Perk = {
-		id: 'perk-you-can-pet-them',
-		name: 'You Can Pet Them, They\'re Friendly',
-		description: '(Beastheart only) Whenever you make a Presence test to interact with a creature while you are within 5 squares of your companion, you can use your companion’s Presence instead of your own.',
-		type: FeatureType.Text,
-		data: null,
-		list: PerkList.Interpersonal
-	};
 }

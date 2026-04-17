@@ -83,7 +83,8 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 				<HeaderText>Folder</HeaderText>
 				<AutoComplete
 					value={props.hero.folder}
-					options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: <div className='ds-text'>{option}</div> }))}
+					options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: option }))}
+					optionRender={o => <div className='ds-text'>{o.data.label}</div>}
 					placeholder='Folder'
 					onSelect={value => props.setFolder(value)}
 					onChange={value => props.setFolder(value)}

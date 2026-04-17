@@ -56,17 +56,6 @@ export const DataLoader = (props: Props) => {
 	const [ dataSource, setDataSource ] = useState<DataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
 
-	let start = Date.now();
-
-	const log = (text: string) => {
-		const now = Date.now();
-		const diff = Math.round((now - start) / 1000);
-		start = now;
-
-		// eslint-disable-next-line no-console
-		console.info(`${text} (${diff}s)`);
-	};
-
 	async function initializeConnectionSettings() {
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
 		if (!settings) {
@@ -154,8 +143,6 @@ export const DataLoader = (props: Props) => {
 		initializeConnectionSettings().then(settings => {
 			setConnectionSettings(settings);
 			getDataService(settings).then(dataService => {
-				log('* Loading');
-
 				setConnectionSettingsState('success');
 
 				setHomebrewState('pending');
@@ -173,9 +160,6 @@ export const DataLoader = (props: Props) => {
 				];
 
 				Promise.all(promises).then(results => {
-					log('  * Loaded data');
-					log('  * Loading homebrew sourcebooks');
-
 					// #region Homebrew sourcebooks
 					let sourcebooks = results[0] as Sourcebook[] | null;
 					if (!sourcebooks) {
@@ -183,18 +167,10 @@ export const DataLoader = (props: Props) => {
 					}
 
 					sourcebooks.forEach(sourcebook => {
-						log(`    * Loading ${sourcebook.name}`);
-
 						sourcebook.type = SourcebookType.Homebrew;
 						SourcebookUpdateLogic.updateSourcebook(sourcebook);
-
-						log(`    * Loaded ${sourcebook.name}`);
 					});
-
 					// #endregion
-
-					log('  * Loaded homebrew sourcebooks');
-					log('  * Loading heroes');
 
 					// #region Heroes
 					let heroes = results[1] as Hero[] | null;
@@ -203,16 +179,9 @@ export const DataLoader = (props: Props) => {
 					}
 
 					heroes.forEach(hero => {
-						log(`    * Loading ${hero.name}`);
-
 						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
-
-						log(`    * Loaded ${hero.name}`);
 					});
 					// #endregion
-
-					log('  * Loaded heroes');
-					log('  * Loading hidden sourcebook IDs');
 
 					// #region Hidden sourcebook IDs
 					let hiddenSourcebookIDs = results[2] as string[] | null;
@@ -220,9 +189,6 @@ export const DataLoader = (props: Props) => {
 						hiddenSourcebookIDs = [];
 					}
 					// #endregion
-
-					log('  * Loaded hidden sourcebook IDs');
-					log('  * Loading session');
 
 					// #region Session
 					let session = results[3] as Session | null;
@@ -233,9 +199,6 @@ export const DataLoader = (props: Props) => {
 					SessionUpdateLogic.updateSession(session);
 					// #endregion
 
-					log('  * Loaded session');
-					log('  * Loading options');
-
 					// #region Options
 					let options = results[4] as Options | null;
 					if (!options) {
@@ -244,8 +207,6 @@ export const DataLoader = (props: Props) => {
 
 					OptionsUpdateLogic.updateOptions(options);
 					// #endregion
-
-					log('  * Loaded options');
 
 					setOverallLoadState('success');
 
@@ -258,8 +219,6 @@ export const DataLoader = (props: Props) => {
 						session: session,
 						options: options
 					});
-
-					log('* Loading complete');
 				}).catch(reason => {
 					console.error(reason);
 					setError(reason.message);

@@ -1803,11 +1803,11 @@ export const Main = (props: Props) => {
 
 	const footerParams: FooterParams = {
 		errorsExist: errors.length > 0,
-		setOptions: persistOptions,
 		showReference: () => onShowReference(null, RulesPage.Rules),
 		showAbout: showAbout,
 		showSettings: showSettings,
-		showErrors: showErrors
+		showErrors: showErrors,
+		setOptions: persistOptions
 	};
 
 	return (

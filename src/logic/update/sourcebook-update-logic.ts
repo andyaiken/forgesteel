@@ -5,6 +5,7 @@ import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
+import { Format } from '@/utils/format';
 import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 import { LanguageType } from '@/enums/language-type';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
@@ -282,6 +283,21 @@ export class SourcebookUpdateLogic {
 
 			if (e.hiddenMaliceFeatures === undefined) {
 				e.hiddenMaliceFeatures = [];
+			}
+		});
+
+		sourcebook.items.forEach(item => {
+			if (item.crafting) {
+				item.crafting.id = `${item.id}-crafting`;
+				item.crafting.name = `Craft ${item.name}`;
+				item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
+			}
+		});
+		sourcebook.imbuements.forEach(imbuement => {
+			if (imbuement.crafting) {
+				imbuement.crafting.id = `${imbuement.id}-crafting`;
+				imbuement.crafting.name = `Imbue ${imbuement.name}`;
+				imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
 			}
 		});
 

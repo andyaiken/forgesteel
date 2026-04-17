@@ -6,6 +6,10 @@ import { Session } from '@/models/session';
 
 export class SessionUpdateLogic {
 	static updateSession = (session: Session) => {
+		if (session.encounters === undefined) {
+			session.encounters = [];
+		}
+
 		session.encounters.forEach(e => {
 			e.groups.forEach(g => {
 				if (g.name === undefined) {

@@ -49,7 +49,6 @@ import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
-import { Playbook } from '@/models/playbook';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
 import { RetainerLogic } from '@/logic/retainer-logic';
@@ -152,16 +151,6 @@ export class FactoryLogic {
 			titles: [],
 			skills: [],
 			languages: []
-		};
-	};
-
-	static createPlaybook = (): Playbook => {
-		return {
-			adventures: [],
-			encounters: [],
-			montages: [],
-			negotiations: [],
-			tacticalMaps: []
 		};
 	};
 

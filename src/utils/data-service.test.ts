@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { DataService } from '@/utils/data-service';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
-import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/service/storage/storage-service';
@@ -20,7 +18,6 @@ const mockStorage = {} as StorageService;
 const mockOptions = {} as Options;
 const mockHeroes = [] as Hero[];
 const mockHomebrew = [] as Sourcebook[];
-const mockPlaybook = {} as Playbook;
 const mockSession = {} as Session;
 const mockHiddenSettingIds = [ 'one', 'two' ];
 
@@ -96,7 +93,7 @@ describe('DataService', () => {
 	});
 	// #endregion Heroes
 
-	// #region Playbook
+	// #region Homebrew
 	describe('getHomebrew', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
@@ -129,40 +126,6 @@ describe('DataService', () => {
 		});
 	});
 	// #endregion Homebrew
-
-	// #region Playbook
-	describe('getPlaybook', () => {
-		test('always calls localforage', async () => {
-			const ds = new DataService(mockStorage);
-
-			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(mockPlaybook));
-
-			await ds.getPlaybook()
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(localforage.getItem).toHaveBeenCalledWith('forgesteel-playbook');
-			expect(thenFn).toHaveBeenCalledWith(mockPlaybook);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('savePlaybook', () => {
-		test('always calls localforage', async () => {
-			const ds = new DataService(mockStorage);
-
-			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(mockPlaybook));
-
-			await ds.savePlaybook(mockPlaybook)
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(localforage.setItem).toHaveBeenCalledWith('forgesteel-playbook', mockPlaybook);
-			expect(thenFn).toHaveBeenCalledWith(mockPlaybook);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-	// #endregion Playbook
 
 	// #region Session
 	describe('getSession', () => {

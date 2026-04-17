@@ -9,7 +9,6 @@ import { DataService } from '@/utils/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
-import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
@@ -17,7 +16,6 @@ import { Options } from '@/models/options';
 import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
 import { PatreonLogic } from '@/logic/patreon-logic';
 import { PatreonService } from '@/service/patreon-service';
-import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
@@ -51,7 +49,6 @@ export const DataLoader = (props: Props) => {
 	const [ heroesState, setHeroesState ] = useState<LoadingStatus>(undefined);
 	const [ homebrewState, setHomebrewState ] = useState<LoadingStatus>(undefined);
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
-	const [ playbookState, setPlaybookState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
@@ -150,7 +147,6 @@ export const DataLoader = (props: Props) => {
 
 		setHomebrewState(undefined);
 		setHeroesState(undefined);
-		setPlaybookState(undefined);
 		setSessionState(undefined);
 		setOptionsState(undefined);
 		setHiddenSettingsState(undefined);
@@ -164,7 +160,6 @@ export const DataLoader = (props: Props) => {
 
 				setHomebrewState('pending');
 				setHeroesState('pending');
-				setPlaybookState('pending');
 				setSessionState('pending');
 				setOptionsState('pending');
 				setHiddenSettingsState('pending');
@@ -173,7 +168,6 @@ export const DataLoader = (props: Props) => {
 					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
 					updateLoadingStatus(dataService.getHeroes(), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
-					updateLoadingStatus(dataService.getPlaybook(), setPlaybookState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState)
 				];
@@ -193,21 +187,6 @@ export const DataLoader = (props: Props) => {
 
 						sourcebook.type = SourcebookType.Homebrew;
 						SourcebookUpdateLogic.updateSourcebook(sourcebook);
-
-						sourcebook.items.forEach(item => {
-							if (item.crafting) {
-								item.crafting.id = `${item.id}-crafting`;
-								item.crafting.name = `Craft ${item.name}`;
-								item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
-							}
-						});
-						sourcebook.imbuements.forEach(imbuement => {
-							if (imbuement.crafting) {
-								imbuement.crafting.id = `${imbuement.id}-crafting`;
-								imbuement.crafting.name = `Imbue ${imbuement.name}`;
-								imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
-							}
-						});
 
 						log(`    * Loaded ${sourcebook.name}`);
 					});
@@ -243,53 +222,10 @@ export const DataLoader = (props: Props) => {
 					// #endregion
 
 					log('  * Loaded hidden sourcebook IDs');
-					log('  * Loading playbook');
-
-					// #region Playbook
-					const playbook = results[3] as Playbook | null;
-					if (playbook) {
-						if (!playbook.adventures) {
-							playbook.adventures = [];
-						}
-						if (!playbook.encounters) {
-							playbook.encounters = [];
-						}
-						if (!playbook.montages) {
-							playbook.montages = [];
-						}
-						if (!playbook.negotiations) {
-							playbook.negotiations = [];
-						}
-						if (!playbook.tacticalMaps) {
-							playbook.tacticalMaps = [];
-						}
-
-						if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
-							// Copy everything from the playbook into a homebrew sourcebook
-							if (sourcebooks.length === 0) {
-								const sb = FactoryLogic.createSourcebook();
-								sb.name = 'Playbook';
-								sourcebooks.push(sb);
-							}
-
-							const sb = sourcebooks[0];
-
-							sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
-							sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));
-							sb.montages.push(...playbook.montages.filter(montage => !sb.montages.some(m => m.id === montage.id)));
-							sb.negotiations.push(...playbook.negotiations.filter(negotiation => !sb.negotiations.some(n => n.id === negotiation.id)));
-							sb.tacticalMaps.push(...playbook.tacticalMaps.filter(map => !sb.tacticalMaps.some(tm => tm.id === map.id)));
-
-							SourcebookUpdateLogic.updateSourcebook(sb);
-						};
-					}
-					// #endregion
-
-					log('  * Loaded playbook');
 					log('  * Loading session');
 
 					// #region Session
-					let session = results[4] as Session | null;
+					let session = results[3] as Session | null;
 					if (!session) {
 						session = FactoryLogic.createSession();
 					}
@@ -301,7 +237,7 @@ export const DataLoader = (props: Props) => {
 					log('  * Loading options');
 
 					// #region Options
-					let options = results[5] as Options | null;
+					let options = results[4] as Options | null;
 					if (!options) {
 						options = FactoryLogic.createOptions();
 					}
@@ -367,7 +303,6 @@ export const DataLoader = (props: Props) => {
 						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
-						<CheckLabel state={playbookState}>Playbook</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSettingsState}>Identifying Manifold</CheckLabel>

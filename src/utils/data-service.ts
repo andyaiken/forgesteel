@@ -1,6 +1,5 @@
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
-import { Playbook } from '@/models/playbook';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/service/storage/storage-service';
@@ -39,20 +38,6 @@ export class DataService {
 
 	async saveHomebrew(sourcebooks: Sourcebook[]): Promise<Sourcebook[]> {
 		return this.storageService.put<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
-	}
-
-	/**
-	 * On load will be combined into the homebrew sourcebooks, will eventually be deprecated and removed
-	 */
-	async getPlaybook(): Promise<Playbook | null> {
-		return localforage.getItem<Playbook>('forgesteel-playbook');
-	}
-
-	/**
-	 * @deprecated Playbook has been combined with homebrew sourcebooks - will eventually be removed
-	 */
-	async savePlaybook(playbook: Playbook): Promise<Playbook> {
-		return localforage.setItem<Playbook>('forgesteel-playbook', playbook);
 	}
 
 	async getSession(): Promise<Session | null> {

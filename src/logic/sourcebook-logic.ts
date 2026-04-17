@@ -30,6 +30,7 @@ import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookUpdateLogic } from './update/sourcebook-update-logic';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
@@ -60,6 +61,8 @@ export class SourcebookLogic {
 		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {
 			list.push(SourcebookData.communityPrerelease);
 		}
+
+		list.forEach(SourcebookUpdateLogic.updateSourcebook);
 
 		list.push(...homebrew);
 

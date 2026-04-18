@@ -54,13 +54,17 @@ export class WarehouseService implements StorageService {
 
 	private async refreshJwt() {
 		try {
-			const response = await axios.post(`${this.host}/refresh`, {}, {
-				headers: { Authorization: `Bearer ${this.refreshToken}` },
+			const refreshConfig = {
+				headers: {},
 				withCredentials: true,
 				withXSRFToken: true,
 				xsrfCookieName: 'csrf_refresh_token',
 				xsrfHeaderName: 'X-CSRF-TOKEN'
-			});
+			};
+			if (this.refreshToken) {
+				refreshConfig.headers = { Authorization: `Bearer ${this.refreshToken}` };
+			}
+			const response = await axios.post(`${this.host}/refresh`, {}, refreshConfig);
 			this.jwt = response.data.access_token;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);

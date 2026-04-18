@@ -284,7 +284,7 @@ export const Main = (props: Props) => {
 
 	// #endregion
 
-	// #region Welcome
+	// #region Heroes
 
 	const newHero = (folder: string) => {
 		const sourcebookIDs = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
@@ -297,10 +297,6 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
-
-	// #endregion
-
-	// #region Heroes
 
 	const deleteHero = (hero: Hero) => {
 		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
@@ -1829,6 +1825,7 @@ export const Main = (props: Props) => {
 								options={options}
 								params={footerParams}
 								onNewHero={() => newHero('')}
+								onNewEncounter={() => createLibraryElement('encounter', '', null)}
 							/>
 						}
 					/>

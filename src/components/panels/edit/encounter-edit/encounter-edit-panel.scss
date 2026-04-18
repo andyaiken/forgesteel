@@ -1,4 +1,5 @@
 .encounter-edit-panel {
+	height: 100%;
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
@@ -86,7 +87,8 @@
 
 	.encounter-list-column {
 		flex: 1 1 0;
-		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
 		padding: 0 5px;
 	}
 }

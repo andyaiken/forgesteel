@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -162,6 +162,17 @@ export const EncounterEditPanel = (props: Props) => {
 		const addGroup = () => {
 			const copy = Utils.copy(encounter);
 			copy.groups.push(FactoryLogic.createEncounterGroup());
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const copyGroup = (group: EncounterGroup) => {
+			const groupCopy = Utils.copy(group);
+			groupCopy.id = Utils.guid();
+			groupCopy.slots.forEach(s => s.id = Utils.guid());
+
+			const copy = Utils.copy(encounter);
+			copy.groups.push(groupCopy);
 			setEncounter(copy);
 			props.onChange(copy);
 		};
@@ -336,6 +347,7 @@ export const EncounterEditPanel = (props: Props) => {
 							options={props.options}
 							draggedMonster={draggedMonster}
 							setName={setName}
+							copyGroup={copyGroup}
 							deleteGroup={deleteGroup}
 							getSlot={getSlot}
 						/>
@@ -671,7 +683,7 @@ export const EncounterEditPanel = (props: Props) => {
 		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%', padding: '5px' }}>
 				{
 					filterVisible ?
 						<>
@@ -721,7 +733,7 @@ export const EncounterEditPanel = (props: Props) => {
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%', padding: '5px' }}>
 				{
 					filterVisible ?
 						<>
@@ -758,7 +770,7 @@ export const EncounterEditPanel = (props: Props) => {
 		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
 		return (
-			<Expander title='Difficulty' tags={[ difficulty ]}>
+			<Expander title='Difficulty' tags={[ difficulty ]} style={{ flex: '0 0 auto' }}>
 				<EncounterDifficultyPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
@@ -864,6 +876,7 @@ export const EncounterEditPanel = (props: Props) => {
 					<div className='encounter-list-column'>
 						{getDifficultySection()}
 						<Tabs
+							style={{ flex: '1 1 0', overflowY: 'auto' }}
 							items={[
 								{
 									key: 'monsters',
@@ -908,6 +921,7 @@ interface GroupPanelProps {
 	options: Options;
 	draggedMonster: Monster | null;
 	setName: (group: EncounterGroup, value: string) => void;
+	copyGroup: (group: EncounterGroup) => void;
 	deleteGroup: (group: EncounterGroup) => void;
 	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
 }
@@ -922,7 +936,8 @@ const GroupPanel = (props: GroupPanelProps) => {
 					level={3}
 					extra={
 						<Flex>
-							<Button key='edit' type='text' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+							<Button key='edit' type='text' title='Edit Group Name' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+							<Button key='copy' type='text' title='Duplicate Group' icon={<CopyOutlined />} onClick={() => props.copyGroup(props.group)} />
 							<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
 						</Flex>
 					}

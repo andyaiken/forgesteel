@@ -129,7 +129,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Heroes - General'>
+			<Expander title='Heroes'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<NumberSpin label='XP per level' min={1} value={options.xpPerLevel} onChange={setXPPerLevel} />
 					<div>

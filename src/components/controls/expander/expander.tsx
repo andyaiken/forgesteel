@@ -1,6 +1,6 @@
+import { CSSProperties, ReactNode } from 'react';
 import { Collapse, Flex, Tag } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { ReactNode } from 'react';
 
 import './expander.scss';
 
@@ -10,12 +10,13 @@ interface Props {
 	children: ReactNode;
 	expandedByDefault?: boolean;
 	extra?: ReactNode[];
+	style?: CSSProperties
 }
 
 export const Expander = (props: Props) => {
 	return (
 		<ErrorBoundary>
-			<div onClick={e => e.stopPropagation()}>
+			<div style={props.style} onClick={e => e.stopPropagation()}>
 				<Collapse
 					items={[
 						{

@@ -26,6 +26,7 @@ interface Props {
 	options: Options;
 	params: FooterParams;
 	onNewHero: () => void;
+	onNewEncounter: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -47,6 +48,7 @@ export const WelcomePage = (props: Props) => {
 							<div className='welcome-column'>
 								<Welcome
 									onNewHero={props.onNewHero}
+									onNewEncounter={props.onNewEncounter}
 								/>
 							</div>
 						</div>
@@ -73,7 +75,10 @@ export const WelcomePage = (props: Props) => {
 				/>
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
-						<Welcome onNewHero={props.onNewHero} />
+						<Welcome
+							onNewHero={props.onNewHero}
+							onNewEncounter={props.onNewEncounter}
+						/>
 					</div>
 					{
 						showTips ?
@@ -126,6 +131,7 @@ export const WelcomePage = (props: Props) => {
 
 interface WelcomeProps {
 	onNewHero: () => void;
+	onNewEncounter: () => void;
 }
 
 const Welcome = (props: WelcomeProps) => {
@@ -213,6 +219,7 @@ const Welcome = (props: WelcomeProps) => {
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
 								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Library</Button>
+								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
 							</Flex>
 						</div>
 					</div>

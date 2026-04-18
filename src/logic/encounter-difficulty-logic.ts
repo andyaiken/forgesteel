@@ -3,6 +3,7 @@ import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -46,6 +47,12 @@ export class EncounterDifficultyLogic {
 		if (options.heroParty) {
 			const party = heroes.filter(h => h.folder === options.heroParty);
 			heroCount = party.length;
+			party.forEach(h => {
+				const retainers = HeroLogic.getRetainers(h);
+				if (retainers.length > 0) {
+					heroCount += 1;
+				}
+			});
 			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
 			heroVictories = Math.round(Collections.mean(party, h => h.state.victories));
 		}

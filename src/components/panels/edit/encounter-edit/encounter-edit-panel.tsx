@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
@@ -668,32 +668,23 @@ export const EncounterEditPanel = (props: Props) => {
 	};
 
 	const getMonsterListSection = () => {
-		const setMonsterFilterName = (name: string) => {
-			const copy = Utils.copy(monsterFilter);
-			copy.name = name;
-			setMonsterFilter(copy);
-		};
-
 		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				<TextInput
-					placeholder='Search'
-					allowClear={true}
-					value={monsterFilter.name}
-					onChange={setMonsterFilterName}
-				/>
 				{
 					filterVisible ?
-						<MonsterFilterPanel
-							monsterFilter={monsterFilter}
-							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-							includeNameFilter={false}
-							includeOrgFilter={true}
-							includeEVFilter={true}
-							onChange={setMonsterFilter}
-						/>
+						<>
+							<MonsterFilterPanel
+								monsterFilter={monsterFilter}
+								monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+								includeNameFilter={true}
+								includeOrgFilter={true}
+								includeEVFilter={true}
+								onChange={setMonsterFilter}
+							/>
+							<Divider size='small' />
+						</>
 						: null
 				}
 				{
@@ -726,31 +717,21 @@ export const EncounterEditPanel = (props: Props) => {
 	};
 
 	const getTerrainListSection = () => {
-		const setTerrainFilterName = (name: string) => {
-			const copy = Utils.copy(terrainFilter);
-			copy.name = name;
-			setTerrainFilter(copy);
-		};
-
 		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				<TextInput
-					placeholder='Search'
-					allowClear={true}
-					value={terrainFilter.name}
-					onChange={setTerrainFilterName}
-				/>
 				{
 					filterVisible ?
-						<TerrainFilterPanel
-							terrainFilter={terrainFilter}
-							terrain={allTerrains}
-							includeNameFilter={false}
-							onChange={setTerrainFilter}
-						/>
+						<>
+							<TerrainFilterPanel
+								terrainFilter={terrainFilter}
+								terrain={allTerrains}
+								onChange={setTerrainFilter}
+							/>
+							<Divider size='small' />
+						</>
 						: null
 				}
 				{
@@ -903,7 +884,9 @@ export const EncounterEditPanel = (props: Props) => {
 									type='text'
 									icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
 									onClick={() => setFilterVisible(!filterVisible)}
-								/>
+								>
+									Search
+								</Button>
 							}
 						/>
 

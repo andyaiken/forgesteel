@@ -399,9 +399,36 @@ export class AbilityLogic {
 			});
 		}
 
+		// N + your [Characteristic] score
+		if (hero) {
+			const regex = /(\d+)\s*(\+|plus)\s*your\s*(Might|Agility|Reason|Intuition|Presence)\s*score/gi;
+			text = text.replace(regex, (_match, value, _plus, characteristic) => {
+				let ch = 0;
+				switch (characteristic.toLowerCase()) {
+					case 'might':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Might);
+						break;
+					case 'agility':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
+						break;
+					case 'reason':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
+						break;
+					case 'intuition':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
+						break;
+					case 'presence':
+						ch = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
+						break;
+				}
+				const total = Number(value) + ch;
+				return `${total}`;
+			});
+		}
+
 		// Equal to [N times] your [Characteristic(s)] score
 		if (hero) {
-			const charRegex = /(equal to(?: or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;
+			const charRegex = /(equal to(?: or (?:greater|less) than)?)[^,.;:]*? your ([^,.;:]*) score/gi;
 			[ ...text.matchAll(charRegex) ].forEach(match => {
 				const options: number[] = [];
 				[

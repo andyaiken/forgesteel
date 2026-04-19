@@ -59,7 +59,6 @@ import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { Project } from '@/models/project';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SearchBox } from '@/components/controls/text-input/text-input';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -349,7 +348,7 @@ export const LibraryListPage = (props: Props) => {
 							</Flex>
 							{
 								showMonsters && showMonsterFilter ?
-									<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
+									<div style={{ paddingTop: '5px' }}>
 										<MonsterFilterPanel
 											monsterFilter={monsterFilter}
 											monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
@@ -358,7 +357,7 @@ export const LibraryListPage = (props: Props) => {
 											includeEVFilter={true}
 											onChange={setMonsterFilter}
 										/>
-									</SelectablePanel>
+									</div>
 									: null
 							}
 						</div>

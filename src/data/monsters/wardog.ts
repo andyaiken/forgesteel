@@ -125,7 +125,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				id: 'wardog-1st-malice-2',
 				name: 'Fire for Effect',
 				type: FactoryLogic.type.createManeuver(),
-				cost: 3,
+				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the area',

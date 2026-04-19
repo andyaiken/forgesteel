@@ -192,6 +192,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									target: 'One creature',
 									cost: 9,
 									sections: [
+										FactoryLogic.createAbilitySectionText('You shift up to your speed.'),
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],

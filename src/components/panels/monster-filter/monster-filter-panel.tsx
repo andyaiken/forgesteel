@@ -96,8 +96,8 @@ export const MonsterFilterPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='monster-filter-panel'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<Flex align='center' justify='center' gap={5}>
-						<Tag.CheckableTag checked={showName} onChange={setShowName}>Name</Tag.CheckableTag>
+					<Flex align='center' justify='center' gap={5} wrap={true}>
+						{props.includeNameFilter ? <Tag.CheckableTag checked={showName} onChange={setShowName}>Name</Tag.CheckableTag> : null}
 						<Tag.CheckableTag checked={showKeywords} onChange={setShowKeywords}>Keywords</Tag.CheckableTag>
 						<Tag.CheckableTag checked={showRole} onChange={setShowRole}>Role</Tag.CheckableTag>
 						{props.includeOrgFilter ? <Tag.CheckableTag checked={showOrg} onChange={setShowOrg}>Organization</Tag.CheckableTag> : null}

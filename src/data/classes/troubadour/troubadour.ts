@@ -235,7 +235,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'bPZ0jgAHVi08ZX2X',
 								name: 'Melodrama #1',
-								tag: '',
+								tag: 'crit-fail',
 								trigger: 'Whenever a creature rolls a natural 2 on a power roll.',
 								value: '2'
 							}),
@@ -245,7 +245,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'Jlp0a0yANrSIoeXp',
 								name: 'Melodrama #2',
-								tag: '',
+								tag: 'villain-malice',
 								trigger: 'The first time the Director deals damage to a hero using a Villain action or an ability that costs Malice.',
 								value: '2'
 							}),
@@ -255,7 +255,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: '05FGfz1LetwQOlGm',
 								name: 'Melodrama #3',
-								tag: '',
+								tag: 'falls',
 								trigger: 'The first time a hero unwillingly falls 5 or more squares.',
 								value: '2'
 							}),
@@ -265,7 +265,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'bnEzQSbTNyay2M51',
 								name: 'Melodrama #4',
-								tag: '',
+								tag: 'surges',
 								trigger: 'The first time a hero deals damage with 3 surges.',
 								value: '2'
 							}),
@@ -275,7 +275,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'lbGOgNoNt9SsiBDB',
 								name: 'Melodrama #5',
-								tag: '',
+								tag: 'last-recovery',
 								trigger: 'Whenever a hero spends their last Recovery.',
 								value: '2'
 							}),

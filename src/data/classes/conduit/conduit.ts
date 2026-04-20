@@ -363,10 +363,12 @@ A creature with a willing soul returns to life at the end of the respite with fu
 		{
 			level: 4,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'conduit-4-1',
 					name: 'Blessed Domain',
-					description: 'Whenever you gain piety from a domain effect, you gain 1 additional piety.'
+					tag: 'domain',
+					trigger: 'You gain piety from a domain effect.',
+					value: '1'
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'conduit-4-1a',

@@ -30,6 +30,26 @@ export const MonsterFilterPanel = (props: Props) => {
 	const [ showLevel, setShowLevel ] = useState<boolean>(false);
 	const [ showEV, setShowEV ] = useState<boolean>(false);
 
+	const toggleName = (value: boolean) => {
+		setFilterName('');
+		setShowName(value);
+	};
+
+	const toggleKeywords = (value: boolean) => {
+		setFilterKeywords([]);
+		setShowKeywords(value);
+	};
+
+	const toggleRoles = (value: boolean) => {
+		setFilterRoles([ MonsterRoleType.Ambusher ]);
+		setShowRole(value);
+	};
+
+	const toggleOrg = (value: boolean) => {
+		setFilterOrganizations([ MonsterOrganizationType.Platoon ]);
+		setShowOrg(value);
+	};
+
 	const toggleSize = (value: boolean) => {
 		setFilterSize(value ? [ 1, 2 ] : []);
 		setShowSize(value);
@@ -97,10 +117,10 @@ export const MonsterFilterPanel = (props: Props) => {
 			<div className='monster-filter-panel'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Flex align='center' justify='center' gap={5} wrap={true}>
-						{props.includeNameFilter ? <Tag.CheckableTag checked={showName} onChange={setShowName}>Name</Tag.CheckableTag> : null}
-						<Tag.CheckableTag checked={showKeywords} onChange={setShowKeywords}>Keywords</Tag.CheckableTag>
-						<Tag.CheckableTag checked={showRole} onChange={setShowRole}>Role</Tag.CheckableTag>
-						{props.includeOrgFilter ? <Tag.CheckableTag checked={showOrg} onChange={setShowOrg}>Organization</Tag.CheckableTag> : null}
+						{props.includeNameFilter ? <Tag.CheckableTag checked={showName} onChange={toggleName}>Name</Tag.CheckableTag> : null}
+						<Tag.CheckableTag checked={showKeywords} onChange={toggleKeywords}>Keywords</Tag.CheckableTag>
+						<Tag.CheckableTag checked={showRole} onChange={toggleRoles}>Role</Tag.CheckableTag>
+						{props.includeOrgFilter ? <Tag.CheckableTag checked={showOrg} onChange={toggleOrg}>Organization</Tag.CheckableTag> : null}
 						<Tag.CheckableTag checked={showSize} onChange={toggleSize}>Size</Tag.CheckableTag>
 						<Tag.CheckableTag checked={showLevel} onChange={toggleLevel}>Level</Tag.CheckableTag>
 						{props.includeEVFilter ? <Tag.CheckableTag checked={showEV} onChange={toggleEV}>EV</Tag.CheckableTag> : null}

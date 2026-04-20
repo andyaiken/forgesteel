@@ -1740,7 +1740,7 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-enlightened-3',
-				name: 'Worshippers',
+				name: 'Rearrange the Game Pieces',
 				description: 'Your choice of your Reason or Intuition increases by 1 (to a maximum of 6). You can reach behind the curtain and alter reality. At the start of combat, choose yourself or any creature within 5 squares. The chosen target must move up to their speed to a space you choose, but can’t enter damaging terrain or terrain that could impose a condition on them. The target doesn’t appear to move or teleport to that space—they are simply there. No one but you has any memory of the target’s previous position.'
 			})
 		],

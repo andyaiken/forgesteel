@@ -25,6 +25,21 @@ export const TerrainFilterPanel = (props: Props) => {
 	const [ showLevel, setShowLevel ] = useState<boolean>(false);
 	const [ showEV, setShowEV ] = useState<boolean>(false);
 
+	const toggleName = (value: boolean) => {
+		setFilterName('');
+		setShowName(value);
+	};
+
+	const toggleRoles = (value: boolean) => {
+		setFilterRoles([ MonsterRoleType.Ambusher ]);
+		setShowRole(value);
+	};
+
+	const toggleType = (value: boolean) => {
+		setFilterTerrainRoles([ TerrainRoleType.Fortification ]);
+		setShowType(value);
+	};
+
 	const toggleLevel = (value: boolean) => {
 		setFilterLevel(value ? [ 1, 2 ] : []);
 		setShowLevel(value);
@@ -73,9 +88,9 @@ export const TerrainFilterPanel = (props: Props) => {
 			<div className='terrain-filter-panel'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Flex align='center' justify='center' gap={5}>
-						<Tag.CheckableTag checked={showName} onChange={setShowName}>Name</Tag.CheckableTag>
-						<Tag.CheckableTag checked={showRole} onChange={setShowRole}>Role</Tag.CheckableTag>
-						<Tag.CheckableTag checked={showType} onChange={setShowType}>Terrain Type</Tag.CheckableTag>
+						<Tag.CheckableTag checked={showName} onChange={toggleName}>Name</Tag.CheckableTag>
+						<Tag.CheckableTag checked={showRole} onChange={toggleRoles}>Role</Tag.CheckableTag>
+						<Tag.CheckableTag checked={showType} onChange={toggleType}>Terrain Type</Tag.CheckableTag>
 						<Tag.CheckableTag checked={showLevel} onChange={toggleLevel}>Level</Tag.CheckableTag>
 						<Tag.CheckableTag checked={showEV} onChange={toggleEV}>EV</Tag.CheckableTag>
 					</Flex>

@@ -949,13 +949,26 @@ export class FeatureLogic {
 
 		switch (feature.type) {
 			case FeatureType.Ability:
-				feature.data.ability.id = Utils.guid();
+				feature.data.ability.id = feature.id;
 				break;
 			case FeatureType.Choice:
 				feature.data.options.map(f => f.feature).forEach(FeatureLogic.changeFeatureIDs);
 				break;
+			case FeatureType.Companion:
+				if (feature.data.selected) {
+					feature.data.selected.id = Utils.guid();
+				}
+				break;
+			case FeatureType.Follower:
+				feature.data.follower.id = Utils.guid();
+				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(FeatureLogic.changeFeatureIDs);
+				break;
+			case FeatureType.Retainer:
+				if (feature.data.selected) {
+					feature.data.selected.id = Utils.guid();
+				}
 				break;
 		}
 	};

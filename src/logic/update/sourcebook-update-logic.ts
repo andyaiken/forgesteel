@@ -6,12 +6,10 @@ import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Format } from '@/utils/format';
-import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 import { LanguageType } from '@/enums/language-type';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
 import { PlotContentReference } from '@/models/plot';
 import { Sourcebook } from '@/models/sourcebook';
-import { Utils } from '@/utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
@@ -157,21 +155,6 @@ export class SourcebookUpdateLogic {
 			c.abilities.forEach(AbilityUpdateLogic.updateAbility);
 		});
 
-		sourcebook.cultures.forEach(culture => {
-			/* eslint-disable @typescript-eslint/no-deprecated */
-
-			if (culture.language === undefined) {
-				culture.language = FactoryLogic.feature.createLanguageChoice({
-					id: Utils.guid(),
-					selected: culture.languages
-				});
-
-				culture.languages = [];
-			}
-
-			/* eslint-enable @typescript-eslint/no-deprecated */
-		});
-
 		sourcebook.domains.forEach(domain => {
 			domain.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
@@ -300,26 +283,6 @@ export class SourcebookUpdateLogic {
 				imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
 			}
 		});
-
-		/* eslint-disable @typescript-eslint/no-deprecated */
-		sourcebook.items.forEach(item => {
-			if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
-				item.customizationsByLevel.forEach(level => {
-					level.features.map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
-					level.features.forEach(feature => {
-						if (!sourcebook.imbuements.find(imbuement => imbuement.id === feature.feature.id)) {
-							sourcebook.imbuements.push(FactoryLogic.createImbuement({
-								type: item.type,
-								level: level.level,
-								feature: feature.feature
-							}));
-						};
-					});
-				});
-			}
-			ItemUpdateLogic.updateItem(item);
-		});
-		/* eslint-enable @typescript-eslint/no-deprecated */
 
 		sourcebook.kits.forEach(kit => {
 			if (kit.type === 'Standard') {

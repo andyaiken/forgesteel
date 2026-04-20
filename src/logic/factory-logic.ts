@@ -840,16 +840,7 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
-			sections: data.sections,
-			// These are now deprecated
-			preEffect: '',
-			powerRoll: null,
-			test: null,
-			effect: '',
-			strained: '',
-			alternateEffects: [],
-			spend: [],
-			persistence: []
+			sections: data.sections
 		};
 	};
 

@@ -1,4 +1,3 @@
-import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
@@ -21,24 +20,6 @@ export class ItemUpdateLogic {
 		if (item.imbuements === undefined) {
 			item.imbuements = [];
 		}
-
-		/* eslint-disable @typescript-eslint/no-deprecated */
-		if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
-			item.customizationsByLevel.forEach(level => {
-				level.features.forEach(feature => {
-					if (feature.selected) {
-						item.imbuements.push(FactoryLogic.createImbuement({
-							type: item.type,
-							level: level.level,
-							feature: feature.feature
-						}));
-					}
-				});
-			});
-
-			item.customizationsByLevel = [];
-		}
-		/* eslint-enable @typescript-eslint/no-deprecated */
 
 		item.imbuements.map(imbuement => imbuement.feature).forEach(FeatureUpdateLogic.updateFeature);
 	};

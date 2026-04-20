@@ -5,7 +5,6 @@ import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
 import { CultureData } from '@/data/culture-data';
 import { CultureType } from '@/enums/culture-type';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
@@ -61,19 +60,6 @@ export class HeroUpdateLogic {
 			if (hero.culture.type === undefined) {
 				hero.culture.type = CultureType.Ancestral;
 			}
-
-			/* eslint-disable @typescript-eslint/no-deprecated */
-
-			if (hero.culture.language === undefined) {
-				hero.culture.language = FactoryLogic.feature.createLanguageChoice({
-					id: Utils.guid(),
-					selected: hero.culture.languages
-				});
-
-				hero.culture.languages = [];
-			}
-
-			/* eslint-enable @typescript-eslint/no-deprecated */
 		}
 
 		if (hero.career) {
@@ -82,21 +68,9 @@ export class HeroUpdateLogic {
 			if (hero.career.incitingIncidents === undefined) {
 				hero.career.incitingIncidents = {
 					options: [],
-					selected: null,
-					selectedID: null
+					selected: null
 				};
 			}
-
-			/* eslint-disable @typescript-eslint/no-deprecated */
-
-			if (hero.career.incitingIncidents.selected === undefined) {
-				const current = hero.career.incitingIncidents.options.find(ii => ii.id === hero.career!.incitingIncidents.selectedID);
-				if (current) {
-					hero.career.incitingIncidents.selected = Utils.copy(current);
-				}
-			}
-
-			/* eslint-enable @typescript-eslint/no-deprecated */
 		}
 
 		if (hero.class) {

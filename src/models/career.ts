@@ -6,10 +6,5 @@ export interface Career extends Element {
 	incitingIncidents: {
 		options: Element[];
 		selected: Element | null;
-
-		/**
-		 * @deprecated This field has been subsumed into the language field.
-		 */
-		selectedID: string | null;
 	};
 }

@@ -18,12 +18,4 @@ export interface Item extends Element {
 	}[];
 	imbuements: Imbuement[];
 	count: number;
-
-	/**
-	 * @deprecated This field has been subsumed into the imbuements field.
-	 */
-	customizationsByLevel: {
-		level: number;
-		features: { feature: Feature, selected: boolean }[];
-	}[],
 }

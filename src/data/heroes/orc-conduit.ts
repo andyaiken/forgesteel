@@ -371,15 +371,7 @@ export const orcConduit = {
 																	type: 'text',
 																	text: 'Until the end of the encounter or until you are dying, whenever a target starts their turn in the area, they can spend a Recovery.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -449,15 +441,7 @@ export const orcConduit = {
 																	type: 'text',
 																	text: 'Each target can spend any number of Recoveries. Additionally, each target can end one effect on themself that is ended by a saving throw or that ends at the end of their turn, or they can stand up if prone.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -523,15 +507,7 @@ export const orcConduit = {
 																	type: 'text',
 																	text: 'You can target yourself instead of one ally with this ability. Each target can spend any number of Recoveries, can end any effects on them that are ended by a saving throw or that end at the end of their turn, and can stand up if they are prone.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -659,15 +635,7 @@ export const orcConduit = {
 																	type: 'text',
 																	text: 'Each ally in the area deals fire damage equal to your Intuition score with their next strike made before the end of their next turn.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -737,15 +705,7 @@ export const orcConduit = {
 																	type: 'text',
 																	text: 'Until the end of the encounter or until you are dying, each enemy in the area takes a bane on power rolls, and you and each ally in the area gain 1 surge at the end of each of your turns.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -820,15 +780,7 @@ export const orcConduit = {
 																		tier3: '19 fire damage'
 																	}
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -964,15 +916,7 @@ export const orcConduit = {
 										repeatable: false,
 										effect: '\nFor each piety spent, you can choose one of the following enhancements:\n\n* You can target one additional ally within distance.\n* You can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.\n* A prone target can stand up.\n* A target can spend 1 additional Recovery.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1031,15 +975,7 @@ export const orcConduit = {
 										type: 'text',
 										text: 'You can have this ability deal holy damage.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1099,15 +1035,7 @@ export const orcConduit = {
 														repeatable: false,
 														effect: 'The power roll has a double edge.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -1162,15 +1090,7 @@ export const orcConduit = {
 														repeatable: false,
 														effect: 'The power roll has a double bane against the target.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -1227,15 +1147,7 @@ export const orcConduit = {
 													repeatable: false,
 													effect: 'The power roll has a double edge.'
 												}
-											],
-											preEffect: '',
-											powerRoll: null,
-											test: null,
-											effect: '',
-											strained: '',
-											alternateEffects: [],
-											spend: [],
-											persistence: []
+											]
 										}
 									}
 								}
@@ -2222,15 +2134,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'One ally within distance gains a number of surges equal to the tier outcome of your power roll.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-2',
@@ -2280,15 +2184,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'You or one ally within distance can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-3',
@@ -2334,15 +2230,7 @@ export const orcConduit = {
 							tier3: '8 + I holy damage; vertical pull 4'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-4',
@@ -2391,15 +2279,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'You can teleport yourself and each ally in the area to unoccupied spaces in the area.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-5',
@@ -2449,15 +2329,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Choose yourself or one ally within distance. That character can impose a bane on one power roll made against them before the end of their next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-6',
@@ -2503,15 +2375,7 @@ export const orcConduit = {
 							tier3: '8 + I holy damage; slide 3'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-7',
@@ -2561,15 +2425,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'You or one ally within distance gains temporary Stamina equal to your Intuition score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-8',
@@ -2615,15 +2471,7 @@ export const orcConduit = {
 							tier3: '8 + I corruption damage; P < [strong], the target takes a bane on their next power roll'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-9',
@@ -2673,15 +2521,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'You can push each willing ally in the area the same distance, ignoring stability.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-10',
@@ -2718,15 +2558,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. Any enemy who moves within 2 squares of the spirit for the first time in a combat round or starts their turn there takes holy damage equal to your Intuition score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-11',
@@ -2772,15 +2604,7 @@ export const orcConduit = {
 							tier3: '9 + I holy damage; A < [strong], prone and can’t stand (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-12',
@@ -2830,15 +2654,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'The first time on a turn that the target deals damage to another creature, the target of this ability takes 1d10 lightning damage (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-13',
@@ -2884,15 +2700,7 @@ export const orcConduit = {
 							tier3: '9 + I corruption damage; M < [strong], damage weakness 5 (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-14',
@@ -2938,15 +2746,7 @@ export const orcConduit = {
 							tier3: '13 + I holy damage; I < [strong], frightened (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-15',
@@ -2995,15 +2795,7 @@ export const orcConduit = {
 							tier3: 'The target gains 15 temporary Stamina'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-16',
@@ -3040,15 +2832,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Each target can spend a Recovery. Additionally, each target can use a free triggered action to end one effect on them that is ended by a saving throw or that ends at the end of their turn, or to stand up if prone.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-17',
@@ -3098,15 +2882,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Each target is frightened of you or a creature you choose within distance.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-18',
@@ -3143,15 +2919,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'The target gains 20 temporary Stamina and 3 surges.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-19',
@@ -3201,15 +2969,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'One ally within distance can spend any number of Recoveries.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-20',
@@ -3258,15 +3018,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Each ally in the area can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-21',
@@ -3316,15 +3068,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever you or any ally damages the target using an ability, that creature can spend a Recovery. If the target is reduced to 0 Stamina before the end of the encounter, you can use a free triggered action to move this effect to another creature within distance.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-22',
@@ -3370,15 +3114,7 @@ export const orcConduit = {
 							tier3: '11 corruption damage; I < [strong], prone and can’t stand (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-23',
@@ -3415,15 +3151,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'The target is removed from the encounter map until the start of their next turn and can spend any number of Recoveries. At the start of their turn, the target reappears in the space they left or the nearest unoccupied space of their choice.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-24',
@@ -3460,15 +3188,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'The first time the target is dying or winded before the end of the encounter, each enemy within 5 squares of them takes 15 holy damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-25',
@@ -3505,15 +3225,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'The target can spend any number of Recoveries, can end any effects on them that are ended by a saving throw or that end at the end of their turn, and can stand up if they are prone. Additionally, at the start of each of their turns until the end of the encounter or until they are dying, the target gains 3 surges.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-26',
@@ -3550,15 +3262,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Until the end of the encounter, any ability roll made against a target takes a bane and each target has damage immunity 5.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-27',
@@ -3595,15 +3299,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'At the end of each of your turns until the end of the encounter or until you are dying, each target gains 3 surges.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'conduit-ability-28',
@@ -3653,15 +3349,7 @@ export const orcConduit = {
 						type: 'text',
 						text: 'Each ally the target comes adjacent to during the forced movement can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [],

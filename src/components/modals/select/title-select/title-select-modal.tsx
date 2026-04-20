@@ -28,6 +28,7 @@ interface Props {
 	options: Options;
 	onClose: () => void;
 	onSelect: (title: Title) => void;
+	onCustomize?: () => void;
 }
 
 export const TitleSelectModal = (props: Props) => {
@@ -118,7 +119,17 @@ export const TitleSelectModal = (props: Props) => {
 								}
 								{
 									selectedTitle.features.length === 0 ?
-										<Empty />
+										props.onCustomize ?
+											<div>
+												<p>
+													Can't find what you're looking for? It might be in a sourcebook that your hero doesn't have access to.
+												</p>
+												<Button block={true} onClick={props.onCustomize}>
+													Click here to change your hero's sourcebooks
+												</Button>
+											</div>
+											:
+											<Empty text='Not found' />
 										: null
 								}
 							</Space>

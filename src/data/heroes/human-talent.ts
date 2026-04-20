@@ -52,15 +52,7 @@ export const humanTalent = {
 								type: 'text',
 								text: 'Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another world within 5 squares, even if you don’t have line of effect to that object or creature. You know if you’re detecting an item or a creature, and you know the nature of any creature you detect.'
 							}
-						],
-						preEffect: '',
-						powerRoll: null,
-						test: null,
-						effect: '',
-						strained: '',
-						alternateEffects: [],
-						spend: [],
-						persistence: []
+						]
 					}
 				}
 			},
@@ -130,15 +122,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'You halve the damage.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -183,15 +167,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'You immediately end one of the frightened, slowed, or weakened conditions on yourself.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -215,6 +191,7 @@ export const humanTalent = {
 							value: 2
 						}
 					],
+					respiteChange: false,
 					count: 'ancestry',
 					selected: [
 						{
@@ -255,15 +232,7 @@ export const humanTalent = {
 											type: 'text',
 											text: 'You halve the damage.'
 										}
-									],
-									preEffect: '',
-									powerRoll: null,
-									test: null,
-									effect: '',
-									strained: '',
-									alternateEffects: [],
-									spend: [],
-									persistence: []
+									]
 								}
 							}
 						},
@@ -537,15 +506,7 @@ export const humanTalent = {
 										repeatable: false,
 										effect: 'The target takes an extra 2 psychic damage. You also take 2 psychic damage that can’t be reduced in any way.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -825,15 +786,7 @@ export const humanTalent = {
 														type: 'text',
 														text: 'You can push your attacker up to a number of squares equal to your Reason score.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -900,15 +853,7 @@ export const humanTalent = {
 													type: 'text',
 													text: 'You can push your attacker up to a number of squares equal to your Reason score.'
 												}
-											],
-											preEffect: '',
-											powerRoll: null,
-											test: null,
-											effect: '',
-											strained: '',
-											alternateEffects: [],
-											spend: [],
-											persistence: []
+											]
 										}
 									}
 								}
@@ -1089,15 +1034,7 @@ export const humanTalent = {
 										type: 'text',
 										text: '\nWhile you are in this state, your body remains unconscious and prone, and your mind is a separate entity with size 1T. Your mind automatically has concealment, and can freely move through solid matter. If you end your turn inside solid matter, you are forced out into the space where you entered it.\n\nAny abilities or features you use originate from your mind. Both your mind and your body can take damage while separated, with any such damage applied to your Stamina. Your mind is instantly forced back into your body if you take any damage, and you can immediately return to your body as a free maneuver.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1688,15 +1625,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You gain 1 clarity when you obtain a tier 2 or tier 3 outcome on the power roll.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-2',
@@ -1750,15 +1679,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You are slowed until the end of your next turn. Additionally, a target slowed by this ability is restrained instead.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-3',
@@ -1817,15 +1738,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The size of the cube increases by 2, but the fire disappears at the end of your turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-4',
@@ -1878,15 +1791,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You must vertical push the target instead of sliding them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-5',
@@ -1939,15 +1844,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The size of the burst increases by 2, and you are bleeding until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-6',
@@ -2005,15 +1902,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The object explodes after the damage is dealt, and each creature adjacent to the target takes damage equal to your Reason score. You also take damage equal to your Reason score that can’t be reduced in any way.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-7',
@@ -2071,15 +1960,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You gain 1 surge that you can use immediately, and you take damage equal to your Reason score that can’t be reduced in any way.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-8',
@@ -2137,15 +2018,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The target takes an extra 3 damage. You also take 3 damage that can’t be reduced in any way.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-9',
@@ -2196,15 +2069,7 @@ export const humanTalent = {
 							tier3: '9 + P psychic damage; I < [strong], frightened (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-10',
@@ -2255,15 +2120,7 @@ export const humanTalent = {
 						type: 'text',
 						text: 'You can vertical pull the target up to 2 squares. If the target is made restrained by this ability, this forced movement ignores their stability.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-11',
@@ -2301,15 +2158,7 @@ export const humanTalent = {
 						type: 'text',
 						text: 'Ability rolls made against the target take a bane until the start of your next turn. Whenever the target takes damage while under this effect, they can use a triggered action to make a free strike against the source of the damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-12',
@@ -2360,15 +2209,7 @@ export const humanTalent = {
 							tier3: '9 + R damage; R < [strong], the target has weakness equal to 5 + your Reason score (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-13',
@@ -2413,15 +2254,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You take 1d6 damage and are slowed (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-14',
@@ -2466,15 +2299,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You are weakened (save ends). While you are weakened this way, whenever you are force moved, the forced movement distance gains a +5 bonus.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-15',
@@ -2519,15 +2344,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You can’t use maneuvers (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-16',
@@ -2572,15 +2389,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You take 1d6 damage, and you can’t use triggered actions (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-17',
@@ -2638,15 +2447,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You take 2d6 damage and permanently grow visibly older (the equivalent of 10 years for a human). If you obtain a tier 3 outcome on the power roll, you gain 2 clarity.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-18',
@@ -2704,15 +2505,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You create five orbs, and you are weakened while you have any orbs active.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-19',
@@ -2757,15 +2550,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The size of the aura increases by 1. Whenever your aura reflects an ability, you take 2d6 damage and forget a memory, as determined by you and the Director.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-20',
@@ -2823,15 +2608,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The potency of this ability increases by 1. You take 2d6 damage and gain 3 surges that you can use immediately.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-21',
@@ -2876,15 +2653,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'The target gains 2 surges. You are weakened and slowed (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-22',
@@ -2942,15 +2711,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'If you obtain a tier 2 outcome or better, you are slowed until the end of your turn and each target is slowed until the end of their turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-23',
@@ -3008,15 +2769,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'While slowed this way, the target instead takes 5 psychic damage for each square they willingly leave. You have a double bane on ability rolls made against the target while they are slowed this way.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-24',
@@ -3074,15 +2827,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You target yourself and three enemies instead.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-25',
@@ -3140,15 +2885,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You feel dispirited until you finish a respite. If you obtain a tier 3 outcome on the power roll, you and the target each have damage weakness 5 (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-26',
@@ -3206,15 +2943,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You take 3d6 damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-27',
@@ -3259,15 +2988,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You and the target both permanently grow visibly younger (the equivalent of 20 human years, to the minimum of an 18-year-old). Additionally, you are weakened and slowed (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'talent-ability-28',
@@ -3312,15 +3033,7 @@ export const humanTalent = {
 						repeatable: false,
 						effect: 'You can’t use maneuvers (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -3380,15 +3093,7 @@ export const humanTalent = {
 												repeatable: false,
 												effect: 'The target can use a maneuver.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -3433,15 +3138,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'You can use this ability after seeing the result of the triggering roll. The target must reroll the power roll and use the new roll.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3526,15 +3223,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'Your speed is halved until the end of the encounter.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3602,15 +3291,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The potency of this ability increases by 1 and you take 1d6 damage. At the start of each combat round while any target is affected by this ability, you take 1d6 damage. You can end the effect on all affected targets at any time (no action required).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3722,15 +3403,7 @@ export const humanTalent = {
 																	tier3: '17 + P psychic damage'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3799,15 +3472,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'Any creature or object force moved in the area takes 2 corruption damage for each square of the area they enter. Creatures and objects restrained in the area can be force moved. You are restrained until the effect ends.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3882,15 +3547,7 @@ export const humanTalent = {
 												repeatable: false,
 												effect: 'You can’t target yourself, and you take the damage and any additional effects instead of the target.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3968,15 +3625,7 @@ export const humanTalent = {
 																	tier3: '10 corruption damage; slowed (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4025,15 +3674,7 @@ export const humanTalent = {
 																type: 'text',
 																text: 'The targets share 6 of their Heroic Resource among themselves, as you determine. A target can’t gain more than 3 of their Heroic Resource this way. After using this ability, you can’t gain any clarity until the end of the next combat round.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4117,15 +3758,7 @@ export const humanTalent = {
 												repeatable: false,
 												effect: 'You can vertical slide the target.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4170,15 +3803,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'The target takes half the triggering damage, or the distance of the triggering forced movement is reduced by a number of squares equal to your Reason score. If the target took damage and was force moved, you choose the effect. If the forced movement is reduced to 0 squares, the target can push the source of the forced movement a number of squares equal to your Reason score.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4225,15 +3850,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'You reduce the falling damage by an amount equal to 2 + your Reason score.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4302,15 +3919,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The size of the burst increases by 1, and you are weakened until the end of your turn.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4375,15 +3984,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You take half the damage the target takes.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4496,15 +4097,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The size of the area increases by 2. You also target yourself and each ally within distance.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4569,15 +4162,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The forced movement ignores stability. You take 2d6 damage and are weakened (save ends).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4645,15 +4230,7 @@ export const humanTalent = {
 												repeatable: false,
 												effect: 'The effects last for 1 hour instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4738,15 +4315,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You can choose to reduce the size of the burst by 2 (to a minimum of 1 burst) to give the forced movement distance a +2 bonus. You take half the total damage all targets take from forced movement.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4814,15 +4383,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You are weakened (save ends). If you scored a critical hit with this ability, you die.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4892,15 +4453,7 @@ export const humanTalent = {
 												type: 'text',
 												text: 'The target takes psychic damage equal to half the triggering damage.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4952,15 +4505,7 @@ export const humanTalent = {
 												repeatable: false,
 												effect: 'You target one additional creature or object.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -5042,15 +4587,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You start crying, and you can’t use triggered actions or make free strikes until the end of the target’s next turn.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5118,15 +4655,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You take 1d6 damage and are weakened until the end of your turn.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5262,15 +4791,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'While the target is under this effect, you no longer consider your enemies to be your enemies when using your abilities and features.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5339,15 +4860,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The effect ends early if you take damage from an enemy’s ability.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5456,15 +4969,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'The ability roll scores a critical hit on a natural 17 or higher. You take half the damage the target takes, and you can’t reduce this damage in any way.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5532,15 +5037,7 @@ export const humanTalent = {
 																repeatable: false,
 																effect: 'You can’t use this ability if doing so would cause you to have negative clarity.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

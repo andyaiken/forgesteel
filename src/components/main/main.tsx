@@ -1656,8 +1656,14 @@ export const Main = (props: Props) => {
 					<HeroCustomizeModal
 						hero={hero}
 						sourcebooks={sourcebooks}
+						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						options={options}
 						onClose={() => setDrawer(null)}
+						onImportSourcebook={sourcebook => {
+							const copy = Utils.copy(homebrewSourcebooks);
+							copy.push(sourcebook);
+							persistHomebrewSourcebooks(copy);
+						}}
 						onChange={persistHero}
 					/>
 				);
@@ -1670,6 +1676,7 @@ export const Main = (props: Props) => {
 						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
+						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
 				break;
@@ -1681,6 +1688,7 @@ export const Main = (props: Props) => {
 						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
+						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
 				break;
@@ -1715,6 +1723,7 @@ export const Main = (props: Props) => {
 						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
+						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
 				break;

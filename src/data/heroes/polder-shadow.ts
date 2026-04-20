@@ -54,15 +54,7 @@ export const polderShadow = {
 								type: 'text',
 								text: '\nYou flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, and strikes against you and tests made to search for you take a bane. You can’t move or be force moved, and you can’t take main actions or maneuvers except to exit this form or to direct creates under your control, such as one you summon using an ability. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.\n\nIf the surface you are flattened against is destroyed, this ability ends and you take 1d6 damage that can’t be reduced in any way.'
 							}
-						],
-						preEffect: '',
-						powerRoll: null,
-						test: null,
-						effect: '',
-						strained: '',
-						alternateEffects: [],
-						spend: [],
-						persistence: []
+						]
 					}
 				}
 			},
@@ -173,15 +165,7 @@ export const polderShadow = {
 												type: 'text',
 												text: 'You shift 1 square after the forced movement is resolved.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -485,15 +469,7 @@ export const polderShadow = {
 										type: 'text',
 										text: 'You take your turn after the triggering hero.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -596,15 +572,7 @@ export const polderShadow = {
 																tier3: '7 + M or A damage; you shift up to 3 squares'
 															}
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -736,15 +704,7 @@ export const polderShadow = {
 										type: 'text',
 										text: 'As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -900,15 +860,7 @@ export const polderShadow = {
 										type: 'text',
 										text: 'The target takes half the damage. You remain hidden.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1061,15 +1013,7 @@ export const polderShadow = {
 										type: 'text',
 										text: '- You take a bane on Presence tests made to interact with other creatures.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					}
@@ -1442,15 +1386,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'One ally of your choice within 5 squares of the target gains 1 surge.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-2',
@@ -1509,15 +1445,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'If the target has none of your allies adjacent to them, you gain 1 surge before making the power roll.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-3',
@@ -1576,15 +1504,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'If any ally is adjacent to the target, you gain 1 surge before making the power roll.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-4',
@@ -1634,15 +1554,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'As long as you have one or more allies within 5 squares of the target, you gain 1 surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-5',
@@ -1692,15 +1604,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'You can shift into any square the target leaves when you slide them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-6',
@@ -1755,15 +1659,7 @@ export const polderShadow = {
 							tier3: '10 + A damage; A < [strong], bleeding (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-7',
@@ -1813,15 +1709,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'You can shift up to your speed, dividing that movement before or after your strike as desired.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-8',
@@ -1876,15 +1764,7 @@ export const polderShadow = {
 							tier3: '10 damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-9',
@@ -1939,15 +1819,7 @@ export const polderShadow = {
 							tier3: '2d6 + 16 + A damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-10',
@@ -1996,15 +1868,7 @@ export const polderShadow = {
 							tier3: '9 damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-11',
@@ -2050,15 +1914,7 @@ export const polderShadow = {
 							tier3: '13 + A damage; R < [strong], the target has damage weakness 5 (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-12',
@@ -2096,15 +1952,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'You use a strike signature ability twice.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-13',
@@ -2138,15 +1986,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever an enemy moves or is force moved adjacent to you or damages you, you can take the Disengage move action as a free triggered action.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-14',
@@ -2205,15 +2045,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'The target is taunted by a willing ally within 5 squares of you until the end of the target’s next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-15',
@@ -2259,15 +2091,7 @@ export const polderShadow = {
 							tier3: '16 + A damage; A < [strong], restrained (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-16',
@@ -2322,15 +2146,7 @@ export const polderShadow = {
 							tier3: '16 + A damage; M < [strong], prone and can’t stand (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-17',
@@ -2367,15 +2183,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'A black cloud fills the area until the end of your next turn, granting you and your allies concealment against enemies. While you are in the area, whenever an enemy ends their turn in the area, you can use a free triggered action to shift to a new location within the area and make a free strike against them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-18',
@@ -2426,15 +2234,7 @@ export const polderShadow = {
 							tier3: '17 + A corruption damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-19',
@@ -2484,15 +2284,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'You disappear before making the power roll. After the power roll is resolved, you appear in the first unoccupied space at the far end of the line.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-20',
@@ -2551,15 +2343,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'The target can’t communicate with anyone until the end of the encounter.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-21',
@@ -2609,15 +2393,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'A target who is not a minion, leader, or solo creature and who is winded after taking this damage is reduced to 0 Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-22',
@@ -2662,15 +2438,7 @@ export const polderShadow = {
 							tier3: '21 corruption damage; A < [strong] , restrained (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-23',
@@ -2706,15 +2474,7 @@ export const polderShadow = {
 						type: 'text',
 						text: 'You can use a strike signature ability four times, use a strike signature ability that gains an edge three times, or use a strike signature ability that has a double edge twice. You can shift up to 2 squares between each use.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'shadow-ability-24',
@@ -2760,15 +2520,7 @@ export const polderShadow = {
 							tier3: '24 damage; M < [strong] , slowed (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -2843,15 +2595,7 @@ export const polderShadow = {
 												repeatable: true,
 												effect: 'You teleport 1 additional square for each insight spent.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -2902,15 +2646,7 @@ export const polderShadow = {
 												repeatable: true,
 												effect: 'You teleport 1 additional square for each insight spent.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -2987,15 +2723,7 @@ export const polderShadow = {
 																	tier3: '14 + A damage; you can teleport the target up to 5 squares'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3045,15 +2773,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'You ignore any effects associated with the damage that triggered your In All This Confusion ability. Before you teleport, you can make a free strike against a creature who damaged you to trigger In All This Confusion. After you teleport, you can spend a Recovery.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3159,15 +2879,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'A creature force moved by this ability must be moved straight upward.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3214,15 +2926,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'Each target can teleport up to 5 squares. For each target in addition to you who teleports away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score. Additionally, a target who ends this movement in concealment or cover can use the Hide maneuver even if they are observed.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3316,15 +3020,7 @@ export const polderShadow = {
 																	tier3: 'An enemy takes 14 damage; an ally can teleport up to 7 squares.'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3386,15 +3082,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'On a critical hit, the target is grabbed by the demon and pulled through the portal before it closes, never to be seen again.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3484,15 +3172,7 @@ export const polderShadow = {
 												repeatable: true,
 												effect: 'For each insight you spend, you gain 1 additional surge.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -3548,15 +3228,7 @@ export const polderShadow = {
 												repeatable: false,
 												effect: 'The potency of any effects associated with the damage are reduced by 1 for you.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3625,15 +3297,7 @@ export const polderShadow = {
 																	tier3: '11 + A fire damage'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3693,15 +3357,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'The gas remains in the area until the end of the encounter. Any creature who starts their turn in the area and has M < [average] is weakened (save ends).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3792,15 +3448,7 @@ export const polderShadow = {
 																type: 'text',
 																text: '\nYou ready, hand, or lob a potion to each target, who can immediately quaff the potion (no action required). If they don’t drink the potion right away, they must use the Use Consumable maneuver to consume it later. The potion loses its potency at the end of the encounter.\n\nA creature who drinks the potion can spend up to 2 Recoveries, and has acid immunity, fire immunity, or poison immunity (their choice) equal to your level until the end of the encounter.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3859,15 +3507,7 @@ export const polderShadow = {
 																	tier3: 'The creature turns invisible until the end of their next turn.'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3942,15 +3582,7 @@ export const polderShadow = {
 												repeatable: true,
 												effect: 'For every 2 insight spent, you increase the cube’s size by 1 and gain 1 surge that can be used only with this ability.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4019,15 +3651,7 @@ export const polderShadow = {
 																	tier3: '15 damage'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4096,15 +3720,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'The ground beneath a 3-cube area around the target’s starting position is difficult terrain.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4196,15 +3812,7 @@ export const polderShadow = {
 												repeatable: false,
 												effect: 'Choose a creature whose size is no more than 1 greater than yours and who is within 10 squares. This ability’s illusion makes you appear as that creature. This illusion covers your entire body, including clothing and armor, and alters your voice to sound like that of the creature. You gain an edge on tests made to convince the creature’s allies that you are the creature.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4248,15 +3856,7 @@ export const polderShadow = {
 												type: 'text',
 												text: 'Choose an enemy within distance of the triggering strike, including the enemy who targeted you. The strike targets that enemy instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4327,15 +3927,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'This forced movement ignores stability. Instead, the forced movement is reduced by a number equal to the target’s Intuition score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4382,15 +3974,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'You use your Clever Trick ability with no insight cost against the triggering creature and strike. You can teleport to an unoccupied space within 3 squares of that creature and can make a free strike against them. You can then spend a Recovery.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4482,15 +4066,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'Until the start of your next turn, any ability roll made against a target gains an edge.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4552,15 +4128,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'You choose the new targets for the original target’s free strike or ability. Additionally, if you are hidden or disguised, using this ability doesn’t cause you to be revealed.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4641,15 +4209,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'Until the end of the encounter, you gain the target’s damage immunities and speed (if they are better than yours), and can use any types of movement they can use. You can also use the target’s signature ability, using their bonus for the power roll.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4710,15 +4270,7 @@ export const polderShadow = {
 																type: 'text',
 																text: 'If you are disguised as a creature the target knew using your I’m No Threat ability, this ability deals extra damage equal to three times your Agility score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

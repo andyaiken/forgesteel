@@ -413,15 +413,7 @@ export const highElfTactician = {
 															type: 'text',
 															text: 'The target is taunted until the end of their next turn.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -502,15 +494,7 @@ export const highElfTactician = {
 																tier3: '6 damage'
 															}
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -570,15 +554,7 @@ export const highElfTactician = {
 													type: 'package',
 													tag: 'mark'
 												}
-											],
-											preEffect: '',
-											powerRoll: null,
-											test: null,
-											effect: '',
-											strained: '',
-											alternateEffects: [],
-											spend: [],
-											persistence: []
+											]
 										}
 									}
 								},
@@ -624,15 +600,7 @@ export const highElfTactician = {
 													type: 'package',
 													tag: 'mark'
 												}
-											],
-											preEffect: '',
-											powerRoll: null,
-											test: null,
-											effect: '',
-											strained: '',
-											alternateEffects: [],
-											spend: [],
-											persistence: []
+											]
 										}
 									}
 								}
@@ -686,15 +654,7 @@ export const highElfTactician = {
 										repeatable: false,
 										effect: 'You target two allies instead of one.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1157,15 +1117,7 @@ export const highElfTactician = {
 							tier3: 'Each target gains 3 surges.'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-2',
@@ -1220,15 +1172,7 @@ export const highElfTactician = {
 							tier3: '8 + M damage; M < [strong], dazed (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-3',
@@ -1283,15 +1227,7 @@ export const highElfTactician = {
 							tier3: '8 + M damage; you and one ally within 10 squares of you can spend a Recovery, and each of you gains an edge on the next ability roll you make during the encounter'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-4',
@@ -1327,15 +1263,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target can move up to their speed.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-5',
@@ -1394,15 +1322,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'If the target is reduced to 0 Stamina before one or both chosen allies has made their strike, the ally or allies can pick a different target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-6',
@@ -1465,15 +1385,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Before the start of your next turn, the first time any ally deals damage to any target marked by you, that ally can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-7',
@@ -1510,15 +1422,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target can make a free strike.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-8',
@@ -1554,15 +1458,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target who hasn’t acted yet this combat round can take their turn in any order immediately after yours.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-9',
@@ -1596,15 +1492,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, the first time on a turn that you or any ally deals damage to a target marked by you, the creature who dealt the damage can push the target up to 2 squares and then shift up to 2 squares. Additionally, any ally using the Charge main action to target a creature marked by you can use a melee strike signature ability or a melee strike heroic ability instead of a melee free strike.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-10',
@@ -1638,15 +1526,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever you or any ally deals damage to a target marked by you, that creature gains 2 surges, which they can use immediately.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-11',
@@ -1680,15 +1560,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever you or any ally deals damage to a target marked by you who has R < [average], the target is frightened of the creature who dealt the damage (save ends).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-12',
@@ -1722,15 +1594,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever you or any ally deals damage to a target marked by you, the creature who dealt the damage can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-13',
@@ -1768,15 +1632,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'You and each ally adjacent to the target gain 10 temporary Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-14',
@@ -1812,15 +1668,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target gains 1 surge and can use a signature ability that has a double edge.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-15',
@@ -1856,15 +1704,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target gains 2 surges. Additionally, they can spend a Recovery, remove any conditions or effects on them, and stand up if they are prone.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-16',
@@ -1900,15 +1740,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'The target uses a heroic ability with the Strike keyword as a free triggered action, and deals extra damage with that ability equal to your Reason score. The ability has its Heroic Resource cost reduced by 1 + your Reason score (minimum cost 0).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-17',
@@ -1944,15 +1776,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'The target gains 2 surges and can use a signature or heroic ability as a free triggered action. The ability has a double edge on the power roll, ignores damage immunity, and increases the potency of any potency effects by 1.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-18',
@@ -1988,15 +1812,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'The target is killed. Additionally, the creature who caused the target to be winded can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-19',
@@ -2032,15 +1848,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'Each target gains 1 surge and can use a signature ability as a free triggered action. That ability gains an edge on the power roll and increases the potency of any potency effects by 1.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'tactician-ability-20',
@@ -2099,15 +1907,7 @@ export const highElfTactician = {
 						type: 'text',
 						text: 'One ally within 10 squares of you can use a heroic ability against the target as a free triggered action without spending any of their Heroic Resource, as long as they have enough Heroic Resource to pay for the ability. If the target is reduced to 0 Stamina before the chosen ally has used their ability, the ally can pick a different target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -2187,15 +1987,7 @@ export const highElfTactician = {
 												repeatable: false,
 												effect: 'If the damage has any potency effect associated with it, the potency is increased by 1.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -2266,15 +2058,7 @@ export const highElfTactician = {
 																repeatable: false,
 																effect: 'Until the end of the encounter, whenever you or any ally makes a strike against a creature marked by you, you can spend 2 focus to force that target to make a free strike against a creature of your choice within 5 squares of them.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2335,15 +2119,7 @@ export const highElfTactician = {
 																	tier3: '4 + R damage; R < [strong], frightened (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2434,15 +2210,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'If the target of the triggering ability is not a leader or solo creature, they are reduced to 0 Stamina. If the target of the triggering ability is a minion, the entire squad is killed. If the target of the triggering ability is a leader or solo creature, the triggering ability’s power roll automatically obtains a tier 3 outcome.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2512,15 +2280,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'If a target is force moved into another creature, they must make a free strike against that creature.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2610,15 +2370,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'Each target gains 2 surges, and can use a free triggered action to use a signature ability that gains an edge. After resolving their ability, each target can shift up to 2 squares and become hidden even if they have no cover or concealment, or if they are observed.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2679,15 +2431,7 @@ export const highElfTactician = {
 																	tier3: 'R < [strong], dazed (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2784,15 +2528,7 @@ export const highElfTactician = {
 												repeatable: false,
 												effect: 'If the target has R < [average], they are slowed (EoT).'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -2839,15 +2575,7 @@ export const highElfTactician = {
 												type: 'text',
 												text: 'You can change one target of the strike to you or another ally within your line of effect. The new target must be within distance of the ability and within line of effect of the creature using it.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -2913,15 +2641,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'One ally adjacent to the target can spend a Recovery.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2975,15 +2695,7 @@ export const highElfTactician = {
 																repeatable: false,
 																effect: 'Until the end of the encounter, whenever you or any ally makes a strike against a creature marked by you, you can spend 2 focus to add one additional target to the strike.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3083,15 +2795,7 @@ export const highElfTactician = {
 																repeatable: false,
 																effect: 'Until the end of the encounter, whenever you or any ally makes a strike against a creature marked by you, you can spend 2 focus to make the strike ignore damage immunity and deal extra damage equal to three times your Reason score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3138,15 +2842,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'You mark two enemies within 10 squares of you. Each target can shift up to their speed. You and each target gain 2 surges.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3236,15 +2932,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'Each target can make a ranged free strike that gains an edge against any enemy marked by you within distance of their ranged free strike. A target ignores banes and double banes when making this strike.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3289,15 +2977,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'You gain 6 surges. Until the end of the encounter or until you are dying, whenever the Director spends Malice, choose yourself or one ally within 10 squares. The chosen character gains 2 of their Heroic Resource.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3397,15 +3077,7 @@ export const highElfTactician = {
 												repeatable: false,
 												effect: 'This ability’s distance becomes Melee 1 + your Reason score, and you can shift up to a number of squares equal to your Reason score instead of 1 square.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3492,15 +3164,7 @@ export const highElfTactician = {
 																	tier3: 'R < [strong], the target is frightened of the triggering ally (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3547,15 +3211,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'Until the start of your next turn, each target has a bonus to stability equal to your Might score. Additionally, each target gains 2 surges.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3659,15 +3315,7 @@ export const highElfTactician = {
 																	tier3: 'A < [strong], dazed (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3729,15 +3377,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'If the target is hit with two or more strikes as part of this ability and they have R < [strong] , they are dazed (save ends). If the target is reduced to 0 Stamina before one or both allies has made their strike, the ally or allies can pick a different target.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3846,15 +3486,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'If you use this ability as part of the Charge main action, enemies’ spaces don’t count as difficult terrain for your movement. Additionally, if you move through any creature’s space, you can slide that creature 1 square out of the path of your charge.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3928,15 +3560,7 @@ export const highElfTactician = {
 																type: 'text',
 																text: 'Until the end of the encounter or until you are dying, you can use a signature or heroic ability instead of a free strike against any target marked by you.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

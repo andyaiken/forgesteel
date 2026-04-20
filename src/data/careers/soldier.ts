@@ -64,7 +64,6 @@ export const soldier: Career = {
 				description: 'You promised a fellow soldier that you’d protect his family if he ever fell in battle. When he did, you traveled to his village, but found its people slain or scattered by war. Driven by your vow, you have dedicated your life to finding any survivors and protecting others from a similar fate.'
 			}
 		],
-		selected: null,
-		selectedID: null
+		selected: null
 	}
 };

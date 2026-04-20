@@ -851,15 +851,7 @@ export const dwarfFury = {
 							tier3: '9 + M damage; push 4'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-2',
@@ -909,15 +901,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You can shift 1 square.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-3',
@@ -963,15 +947,7 @@ export const dwarfFury = {
 							tier3: '7 + M damage; M < [strong], grabbed'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-4',
@@ -1021,15 +997,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You gain 2 surges, and the target can make an opportunity attack against you as a free triggered action.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-5',
@@ -1075,15 +1043,7 @@ export const dwarfFury = {
 							tier3: '11 damage; push 3'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-6',
@@ -1133,15 +1093,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'When you slide the target, you can move into any square they leave. If you take damage from an opportunity attack by moving this way, the target takes the same damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-7',
@@ -1194,15 +1146,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'The last target you damage takes extra damage equal to your Might score for each opportunity attack you trigger during your move'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-8',
@@ -1252,15 +1196,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'While bleeding this way, the target takes damage equal to your Might score at the end of your turns.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-9',
@@ -1310,15 +1246,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You can deal 1d6 damage to yourself to deal an extra 1d6 damage to the target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-10',
@@ -1352,15 +1280,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You gain 1 surge, and the next ability roll you make this turn automatically obtains a tier 3 outcome.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-11',
@@ -1410,15 +1330,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'The targets are force moved one at a time, starting with the target nearest to you, and can be pushed into other targets in the same line.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-12',
@@ -1471,15 +1383,7 @@ export const dwarfFury = {
 						repeatable: false,
 						effect: 'While you are winded, this ability deals an extra 1d6 damage for each ferocity spent. While you are dying, it deals an extra 1d10 damage for each ferocity spent. In either case, you lose 1d6 Stamina after making this strike.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-13',
@@ -1515,15 +1419,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has P < [strong] is frightened until the end of their turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-14',
@@ -1559,15 +1455,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, each creature you make a melee strike against who has P < [average] is taunted until the end of their next turn. Additionally, when you use an ability that deals rolled damage against any enemy taunted by you, the ability deals extra damage equal to twice your Might score and increases its potency by 1.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-15',
@@ -1603,15 +1491,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You gain 20 temporary Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-16',
@@ -1649,15 +1529,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'If the target is not a leader or solo creature, they are reduced to 0 Stamina at the end of their next turn. If the target is a leader or solo creature, you gain 3 surges and can make a melee free strike against them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-17',
@@ -1707,15 +1579,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'While slowed this way, the target takes 1 damage for every square they move, including from forced movement.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-18',
@@ -1765,15 +1629,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-19',
@@ -1823,15 +1679,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'When a target would end this forced movement by colliding with a creature or object, they take damage as usual, then are pushed the remaining distance away from the creature or object in the direction they came from. As long as forced movement remains, this effect continues if the target collides with another creature or object.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-20',
@@ -1882,15 +1730,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'While the target is slowed this way, any other effect that would make the target slowed instead makes them restrained by this ability. Additionally, a creature who fails the saving throw while restrained this way is petrified until they are given a supernatural cure or you choose to reverse the effect (no action required).'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-21',
@@ -1926,15 +1766,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'You gain 10 temporary Stamina. Additionally, choose acid, cold, corruption, fire, lightning, poison, or sonic damage. Until the end of the encounter or until you are dying, whenever an enemy damages you, they take 10 damage of the chosen type. If this damage reduces the enemy to 0 Stamina, you gain 10 temporary Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-22',
@@ -1985,15 +1817,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'If the target is a minion or is winded but isn’t a leader or solo creature, they are reduced to 0 Stamina before this ability’s damage is dealt. If the target is killed by this damage, you can deal any damage over what was required to kill them to another creature within 5 squares of the target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-23',
@@ -2029,15 +1853,7 @@ export const dwarfFury = {
 						type: 'text',
 						text: 'Choose acid, cold, corruption, fire, lightning, poison, or sonic damage. Until the end of the encounter or until you are dying, you can choose one target of any ability you use, with that target taking an extra 15 damage of the chosen type. Additionally, whenever you gain ferocity from taking damage, the source of the damage takes 5 damage of the chosen type.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fury-ability-24',
@@ -2088,15 +1904,7 @@ export const dwarfFury = {
 							tier3: 'Any target whose Stamina is equal to or less than 17 dies.'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -2212,15 +2020,7 @@ export const dwarfFury = {
 																	type: 'text',
 																	text: 'You can move up to 3 squares straight toward the target before this strike, which deals extra damage equal to the number of squares you move this way.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -2284,15 +2084,7 @@ export const dwarfFury = {
 												repeatable: false,
 												effect: 'The forced movement distance gains a bonus equal to twice your Might score instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -2357,15 +2149,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'You vertically push the target up to 4 squares. This forced movement ignores the target’s stability, and the target takes no damage from colliding with creatures or objects. At the end of this movement, the target can make a free strike that deals extra damage equal to your Might score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2425,15 +2209,7 @@ export const dwarfFury = {
 																	tier3: 'Push 3'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2561,15 +2337,7 @@ export const dwarfFury = {
 																	tier3: '11 damage; push 3'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2630,15 +2398,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'When the target ends this forced movement, each creature within 2 squares of the target is pushed 3 squares.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2741,15 +2501,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'If this forced movement causes a target to be hurled through an object, that target takes an extra 10 damage.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2810,15 +2562,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'If this forced movement causes a target to slam into you, you take no damage from the collision and the target takes the damage you would have taken.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2936,15 +2680,7 @@ export const dwarfFury = {
 												repeatable: false,
 												effect: 'If the damage has any potency effects associated with it, the potency is reduced by 1 for you.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3044,15 +2780,7 @@ export const dwarfFury = {
 																	tier3: '8 + M damage; P < [strong], dazed and frightened (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3112,15 +2840,7 @@ export const dwarfFury = {
 																	tier3: '6 damage; A < [strong], dazed (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3222,15 +2942,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'You target a creature adjacent to you with the same strike, using the same power roll as the triggering strike.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3291,15 +3003,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'If a target who is not a leader or solo creature is winded by this strike, they are reduced to 0 Stamina and you choose an enemy within 5 squares of you. If that enemy has P < [average], they are frightened of you (save ends).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3402,15 +3106,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'Choose acid, cold, corruption, fire, lightning, poison, or sonic damage. The target loses any damage immunity to the chosen type and gains weakness 10 to the chosen type (save ends).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3471,15 +3167,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'Each enemy within 5 squares of you is distracted until the end of the round. While a creature is distracted this way, they can’t take triggered actions or free triggered actions, ability rolls made against them gain an edge, and their characteristic scores are considered 1 lower for the purpose of resisting potencies.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3597,15 +3285,7 @@ export const dwarfFury = {
 												repeatable: false,
 												effect: 'If you are not dying, you can spend a Recovery.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -3656,15 +3336,7 @@ export const dwarfFury = {
 												repeatable: false,
 												effect: 'As a free maneuver, you can shapeshift a second time, either into another animal form, into your hybrid form, or back into your true form.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3742,15 +3414,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'The target can’t be hidden from you for 24 hours. Until the end of the encounter, whenever the target willingly moves, you can use a free triggered action to move.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3810,15 +3474,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'This ability deals your primordial damage type.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3921,15 +3577,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'You can shift up to 4 squares, bringing the target with you. While grabbed this way, the target takes damage equal to twice your Might score at the start of each of your turns.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3981,15 +3629,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'When you use this ability outside of combat without spending ferocity, you must spend 1 uninterrupted minute summoning a primordial storm that fills the area, and you take 1d6 damage before the ability takes effect. The storm lasts for 1 hour or until a combat encounter begins.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4074,15 +3714,7 @@ export const dwarfFury = {
 																	tier3: '10 psychic damage; each target who is not a leader or solo creature is winded; any target who is a minion is reduced to 0 Stamina, as does one winded target who is not a leader or solo creature'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4143,15 +3775,7 @@ export const dwarfFury = {
 																type: 'text',
 																text: 'This ability deals your primordial damage type and ignores damage immunity.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

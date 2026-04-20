@@ -29,6 +29,7 @@ interface Props {
 	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
+	onCustomize: () => void;
 }
 
 export const HeroProjectsModal = (props: Props) => {
@@ -134,7 +135,12 @@ export const HeroProjectsModal = (props: Props) => {
 						}
 					</Space>
 					<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} size={500}>
-						<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
+						<ProjectSelectModal
+							sourcebooks={props.sourcebooks}
+							onSelect={addProject}
+							onCustomize={props.onCustomize}
+							onClose={() => setProjectsVisible(false)}
+						/>
 					</Drawer>
 				</div>
 			}

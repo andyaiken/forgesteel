@@ -52,15 +52,7 @@ export const humanCensor = {
 								type: 'text',
 								text: 'Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another world within 5 squares, even if you don’t have line of effect to that object or creature. You know if you’re detecting an item or a creature, and you know the nature of any creature you detect.'
 							}
-						],
-						preEffect: '',
-						powerRoll: null,
-						test: null,
-						effect: '',
-						strained: '',
-						alternateEffects: [],
-						spend: [],
-						persistence: []
+						]
 					}
 				}
 			},
@@ -130,15 +122,7 @@ export const humanCensor = {
 												type: 'text',
 												text: 'You halve the damage.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -183,15 +167,7 @@ export const humanCensor = {
 												type: 'text',
 												text: 'You immediately end one of the frightened, slowed, or weakened conditions on yourself.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -215,6 +191,7 @@ export const humanCensor = {
 							value: 2
 						}
 					],
+					respiteChange: false,
 					count: 'ancestry',
 					selected: [
 						{
@@ -255,15 +232,7 @@ export const humanCensor = {
 											type: 'text',
 											text: 'You halve the damage.'
 										}
-									],
-									preEffect: '',
-									powerRoll: null,
-									test: null,
-									effect: '',
-									strained: '',
-									alternateEffects: [],
-									spend: [],
-									persistence: []
+									]
 								}
 							}
 						},
@@ -547,15 +516,7 @@ export const humanCensor = {
 																	type: 'text',
 																	text: 'Until the end of the encounter or until you are dying, each target gains 1 surge at the end of each of your turns.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -634,15 +595,7 @@ export const humanCensor = {
 																		tier3: '16 + I damage; A < [strong], prone and restrained (save ends)'
 																	}
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -709,15 +662,7 @@ export const humanCensor = {
 																	type: 'text',
 																	text: 'The wall lasts until the end of the encounter or until you are dying, and can be placed in occupied squares. Creatures can enter and pass through the wall. Each enemy who enters the area for the first time in a combat round or starts their turn there takes 15 damage.'
 																}
-															],
-															preEffect: '',
-															powerRoll: null,
-															test: null,
-															effect: '',
-															strained: '',
-															alternateEffects: [],
-															spend: [],
-															persistence: []
+															]
 														}
 													}
 												}
@@ -796,15 +741,7 @@ export const humanCensor = {
 										type: 'package',
 										tag: 'censor-judgment'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -898,15 +835,7 @@ export const humanCensor = {
 															type: 'text',
 															text: 'If the target dealt damage to you since the end of your last turn, this strike deals additional damage equal to your Might or Agility score (your choice).'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -963,15 +892,7 @@ export const humanCensor = {
 										repeatable: false,
 										effect: 'You can end one effect on the target that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -1565,15 +1486,7 @@ export const humanCensor = {
 							tier3: '6 holy damage; push 3'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-2',
@@ -1623,15 +1536,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Each time the target willingly moves before the end of your next turn, they take 1 psychic damage for each square they move.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-3',
@@ -1677,15 +1582,7 @@ export const humanCensor = {
 							tier3: '7 + M holy damage; P < [strong], slowed (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-4',
@@ -1735,15 +1632,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Each enemy adjacent to the target is pushed away from the target up to a number of squares equal to your Presence score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-5',
@@ -1793,15 +1682,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the start of your next turn, enemies have a bane on ability rolls made against you and each ally adjacent to you.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-6',
@@ -1851,15 +1732,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'You can shift up to your speed in a straight line toward the target after pushing them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-7',
@@ -1910,15 +1783,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'You can spend a Recovery to allow yourself or one ally within 10 squares to regain Stamina equal to your recovery value.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-8',
@@ -1964,15 +1829,7 @@ export const humanCensor = {
 							tier3: '11 + P holy damage; I < [strong], dazed (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-9',
@@ -2023,15 +1880,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'If the target makes a strike against a creature while grabbed this way, you can spend 3 wrath to deal holy damage to them equal to your Presence score, then change the target of the strike to another target within the strike’s distance.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-10',
@@ -2091,15 +1940,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Each enemy frightened by this ability is pushed 2 squares away from the target and takes psychic damage equal to your Presence score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-11',
@@ -2149,15 +1990,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'When a target who is not a leader or solo creature is made winded by this ability, they are reduced to 0 Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-12',
@@ -2217,15 +2050,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'While the target has fire weakness from this ability, you can choose to have your abilities deal fire damage to the target instead of holy damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-13',
@@ -2262,15 +2087,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, each target takes holy damage equal to your Presence score at the end of each of your turns. A target takes an extra 2d6 holy damage if they are judged by you or if they are adjacent to any enemy.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-14',
@@ -2307,15 +2124,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever a target uses an ability that costs Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an extra 2d6 holy damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-15',
@@ -2352,15 +2161,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-16',
@@ -2397,15 +2198,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter or until you are dying, whenever a target moves or is force moved out of the area, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-17',
@@ -2441,15 +2234,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'The target ends any condition or effect on them that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up. The target then gains 2 surges, can shift up to their speed while ignoring difficult terrain, and can use a strike signature ability as a free triggered action.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-18',
@@ -2497,15 +2282,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'A target can end one effect on them that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-19',
@@ -2555,15 +2332,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever any ally deals damage to a target judged by you, that ally gains 1 surge.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-20',
@@ -2609,15 +2378,7 @@ export const humanCensor = {
 							tier3: '20 + M damage; you and each ally adjacent to you gain 20 temporary Stamina'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-21',
@@ -2667,15 +2428,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'At the end of each of your turns, a target weakened this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them. Additionally, a target weakened this way can’t be targeted by their allies’ abilities.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-22',
@@ -2725,15 +2478,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'Until the end of the encounter, while the target is judged by you, you can choose to make them the source of any of your abilities. Additionally, the target counts as an ally for the purpose of flanking.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-23',
@@ -2783,15 +2528,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'At the end of each of your turns, a target dazed this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'censor-ability-24',
@@ -2841,15 +2578,7 @@ export const humanCensor = {
 						type: 'text',
 						text: 'While the target is slowed this way, each of their allies who starts their turn within 5 squares of them must use a free maneuver to make a free strike against the target. Additionally, while the target is slowed this way, each of their allies within 5 squares of them who can make a triggered free strike against a different creature must make the free strike against the target instead.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -2967,15 +2696,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'If the target is already frightened of you or another creature and this ability would frighten them again, they instead take psychic damage equal to twice your Presence score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3023,15 +2744,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Each target takes holy damage equal to twice your Presence score. Additionally, each hidden target is automatically revealed and can’t become hidden again until the start of your next turn. You can then use your Judgment ability against one target as a free triggered action.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3124,15 +2837,7 @@ export const humanCensor = {
 																	tier3: '8 psychic damage; slide 7'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3180,15 +2885,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'The effect ends on the target and is applied to the creature who imposed the effect on them. That creature also takes damage equal to three times your Presence score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3282,15 +2979,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'This ability gains an edge against demons, devils, undead, and creatures not native to your current world. If you know the target’s true name, this ability has a double edge. While banished, the target is sent to another manifold in the timescape and removed from the encounter map. A banished target can do nothing but make saving throws, and takes 10 holy damage each time they do so. If the target is reduced to 0 Stamina while banished, they are lost to the timescape.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3351,15 +3040,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'While frightened this way, if a target who is a leader or solo creature is winded, they take an extra 25 psychic damage. If a target frightened this way is not a leader or solo creature and is winded, they are reduced to 0 Stamina.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3481,15 +3162,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'You can spend a Recovery to allow the target to regain Stamina equal to your recovery value. The target can then take their turn immediately before the triggering enemy.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3537,15 +3210,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'The target can use a free triggered action to use a strike signature ability or a strike heroic ability, and has a double edge on that ability. If a heroic ability is chosen, reduce its Heroic Resource cost by 3 (to a minimum cost of 0).'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3639,15 +3304,7 @@ export const humanCensor = {
 																	tier3: 'Slide 7; I < [strong], dazed (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3695,15 +3352,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Until the end of the encounter or until you are dying, whenever any target takes a triggered action or a free triggered action, that action is negated and the target takes holy damage equal to your Presence score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3784,15 +3433,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'The target obtains a tier 1 or tier 3 outcome on their power roll (your choice). You can then choose another target within distance, who obtains the opposite outcome on their next power roll.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3840,15 +3481,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'The target takes their turn after the triggering hero, and immediately removes all conditions and negative effects on themself. During their turn, the target has a double edge on power rolls.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3970,15 +3603,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Until the end of the encounter or until you are dying, each target in the aura gains 1 surge at the end of each of your turns.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4040,15 +3665,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'While the target is restrained this way, your abilities that impose forced movement can still move them.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4146,15 +3763,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Each ally can shift up to 2 squares and gains 2 surges before making the strike.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4202,15 +3811,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'The target is unaffected by the strike and you become the target instead, even if you aren’t a valid target for it. You take half the damage from the strike, and the target gains 3 surges.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4304,15 +3905,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Until the end of the encounter or until you are dying, the target has damage weakness 10.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4360,15 +3953,7 @@ export const humanCensor = {
 																type: 'text',
 																text: 'Until the end of the encounter or until you are dying, each target who starts their turn in the area gains 10 temporary Stamina.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

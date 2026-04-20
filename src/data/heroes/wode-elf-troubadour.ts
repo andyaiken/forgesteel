@@ -122,15 +122,7 @@ export const wodeElfTroubadour = {
 													tier3: '5 + M or A damage; A < [strong] restrained (save ends)'
 												}
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -470,15 +462,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'You can shift into any square the target leaves after you push them'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -543,15 +527,7 @@ export const wodeElfTroubadour = {
 										type: 'text',
 										text: 'While this performance is active, each target who starts their turn in the area gains a +2 bonus to speed until the end of their turn. '
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -597,15 +573,7 @@ export const wodeElfTroubadour = {
 										type: 'text',
 										text: 'At the end of each of your turns while this performance is active, you can choose up to a number of targets equal to your Presence score. Each chosen target can spend a Recovery.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -727,15 +695,7 @@ export const wodeElfTroubadour = {
 														type: 'text',
 														text: 'Whenever you take the first turn in a combat encounter, you can use a main action to introduce yourself and your allies to your opponents. Each ally can shift up to their speed, and ability rolls made against them have a double bane until the end of the combat round. Additionally, any surprised enemy is no longer surprised.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -1054,15 +1014,7 @@ export const wodeElfTroubadour = {
 										type: 'text',
 										text: 'While this performance is active, each target who starts their turn in the area gains 1 of their Heroic Resource. This Heroic Resource disappears at the end of the target’s turn if they don’t spend it.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					}
@@ -1363,15 +1315,7 @@ export const wodeElfTroubadour = {
 						repeatable: true,
 						effect: 'You can target one additional creature or object for every 2 drama spent.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'aiH7V95hu1z7bvnJ',
@@ -1418,15 +1362,7 @@ export const wodeElfTroubadour = {
 							tier3: '7 + P psychic damage; P < [strong] , bleeding (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'Dq8W50f8RkS1gCZR',
@@ -1476,15 +1412,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'The target is taunted by you or a willing ally adjacent to you until the end of the target’s next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'oklqgAHvGNBYvZ6Y',
@@ -1550,15 +1478,7 @@ export const wodeElfTroubadour = {
 						repeatable: false,
 						effect: 'The chosen ally can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'wuGWNezovUaXNrhz',
@@ -1617,15 +1537,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'The first time the target uses an ability before the start of your next turn, any effects from the ability’s tier outcomes other than damage are negated for all targets. Ability effects that always happen regardless of the power roll work as usual. '
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '48Ek5173XbbcaIuv',
@@ -1677,15 +1589,7 @@ export const wodeElfTroubadour = {
 						repeatable: true,
 						effect: 'The size of the burst increases by 1 for every 2 drama spent.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'D27ycyqsuILS0KXt',
@@ -1735,15 +1639,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'The area is difficult terrain for enemies.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'amyFFfmA2oAoiO8P',
@@ -1794,15 +1690,7 @@ export const wodeElfTroubadour = {
 							tier3: 'Taunted (EoT); A < [strong], prone and can’t stand (EoT)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'MKhak5HyGbRZdhWy',
@@ -1847,15 +1735,7 @@ export const wodeElfTroubadour = {
 							tier3: 'The target can shift up to 3 squares and make a free strike that gains an edge, then can spend a Recovery.'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'y4twMNJioffMnTAp',
@@ -1891,15 +1771,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: ' You turn invisible and create a magical illusion of your corpse falling in your space. While you are invisible, you gain a +3 bonus to speed and you ignore difficult terrain. The illusion and your invisibility last until the end of your next turn, or until the illusion is interacted with, you take damage, or you use a main action or a maneuver.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'wkTaIiJ4JOVGjFkE',
@@ -1936,15 +1808,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Each target can teleport up to 5 squares. Any teleported target who was slowed is no longer slowed.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'lHLPt6cUuyXcCdb0',
@@ -1994,15 +1858,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'You can become bleeding (save ends) to deal an extra 5 corruption damage to the target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'BlO52My4D7X4wdVh',
@@ -2051,15 +1907,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Instead of sliding a target, you can swap their location with another target as long as each can fit into the other’s space. You can’t slide targets into other creatures or objects using this ability.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '7vm0VdMiqgrZtpcu',
@@ -2110,15 +1958,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Each ally in the area can shift up to 2 squares.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '7vm0VdMiqgrZtpcu2',
@@ -2178,15 +2018,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'You can choose to have this ability deal sonic damage. Additionally, you can use this ability against the same target for the next 2 combat rounds without spending drama.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '7vm0VdMiqgrZtpcu3',
@@ -2223,15 +2055,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: '\nUntil the end of the encounter, both you and the target can target each other with abilities even if you are beyond distance, with the distance of this ability replacing those abilities’ distances. The target can’t be force moved by an ability used beyond distance this way.\n\nAdditionally, once on each of your turns, you can use a free maneuver to communicate a motivating or dispiriting message to the target, either granting them 2 surges or forcing them to take a bane on the next ability roll they make before the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'fyx732V0Vlq49a1N',
@@ -2281,15 +2105,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Unless you score a critical hit, this ability can’t reduce a non-minion target below 1 Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'HeBr76EpA6RIMDSX',
@@ -2326,15 +2142,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'The target is split into two separate entities, one of which remains in the target’s space while the other appears in an unoccupied space of your choice within distance. If the target is a creature, this creates a new creature under the Director’s control. Each entity has half the original target’s Stamina, is weakened, and takes 1d6 corruption damage at the start of each of their turns. If either entity is reduced to 0 Stamina, the other entity persists as the original entity and this effect ends. The effect also ends if both entities occupy the same space, causing them to automatically merge and combine their current Stamina.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'Q5GrFFZc8YjRIJjL',
@@ -2371,15 +2179,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'The target gains 20 temporary Stamina. Until the end of the encounter, whenever the target takes damage while you’re within distance, you can choose to take the damage instead of the target.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'ZrTkbAu3EcZ0C6Di',
@@ -2424,15 +2224,7 @@ export const wodeElfTroubadour = {
 							tier3: 'Three allies within distance can take their turns immediately after yours in any order. One of those allies can have already taken a turn this combat round.'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'SRHmnFY5rDCiCRuR',
@@ -2468,15 +2260,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever you reduce a creature to 0 Stamina using an ability, you can use a free triggered action to teleport an ally within distance of that ability into the creature’s space in a plume of rose petals. You or the teleported ally can then make a melee free strike.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '0rmeKAGMyn9Q6YMf',
@@ -2513,15 +2297,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever the target takes damage while winded, they can use a free triggered action to deal half the damage they took to the source of the damage.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: '2XIhjJCLHQuNte5I',
@@ -2557,15 +2333,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Until the end of the encounter, whenever you deal rolled damage to a creature or object, or enable a creature to spend a Recovery, you can use a free triggered action to give that creature or object one of the following effects until the start of your next turn. If this ability is triggered by multiple targets taking damage or multiple creatures spending Recoveries simultaneously, each target receives the same effect:\n* The target has damage weakness equal to your Presence score against any magic, psionic, or weapon ability.\n* The target has damage immunity equal to your Presence score.\n* The target has a bonus to stability and a penalty to speed equal to your Presence score.\n* The target has a bonus to speed and a penalty to stability equal to your Presence score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'zrzbOjJnBZb8eWUQ',
@@ -2615,15 +2383,7 @@ export const wodeElfTroubadour = {
 						type: 'text',
 						text: 'Each ally within distance can’t obtain lower than a tier 2 outcome on the next test they make before the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -2693,15 +2453,7 @@ export const wodeElfTroubadour = {
 												type: 'text',
 												text: 'At the end of each of your turns while this performance is active, you can choose up to a number of targets equal to your Presence score and teleport those targets to unoccupied spaces in the area. A target can’t be teleported in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. '
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -2753,15 +2505,7 @@ export const wodeElfTroubadour = {
 												repeatable: false,
 												effect: 'You can choose two targets for the chosen effect.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -2812,15 +2556,7 @@ export const wodeElfTroubadour = {
 												repeatable: false,
 												effect: 'An edge on the triggering roll becomes a double bane, or a double edge is negated. A bane becomes a double edge, or a double bane is negated.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -2878,15 +2614,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'A guest star appears to help you during the encounter: either a bystander within distance uplifted by your magic, or a mysterious new hero who appears in an unoccupied space within distance. This guest star is controlled by you, has their own turn, and shares your characteristics. Their Stamina maximum is half yours. They have no abilities other than your melee and ranged free strikes. At the end of the encounter, or when the guest star is reduced to 0 Stamina, they retreat or revert to a bystander. The same bystander can’t be uplifted this way more than once during an encounter. '
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -2934,15 +2662,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'A target who is not a leader or solo creature comes back to life with half their Stamina and becomes an ally under the Director’s control. The players can work with the Director to determine when the target takes their turn each combat round. At the end of the encounter, the target turns to dust and is blown away.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3034,15 +2754,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'While this performance is active, each target who starts their turn in the area can reroll the first power roll that turn that obtains a tier 2 outcome. They must use the new roll.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3115,15 +2827,7 @@ export const wodeElfTroubadour = {
 																	tier3: '7 psychic damage; P < [strong], frightened (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3171,15 +2875,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Until the end of the encounter, each target gains the speed bonus, weapon distance bonus, disengage bonus, and stability bonus of your currently equipped kit in addition to their own kit’s bonuses.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3281,15 +2977,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Choose one ally within distance. While the target is affected by this ability, each time they use an ability, that ally can make a free strike against them after the ability is resolved.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3337,15 +3025,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'The target gains 3 of their Heroic Resource, has a double edge on a power roll of their choice made during their next turn, is no longer slowed or weakened if they were before, and can immediately take their turn after yours if they have not taken their turn already this round.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3432,15 +3112,7 @@ export const wodeElfTroubadour = {
 												type: 'text',
 												text: 'While this performance is active, each target who starts their turn in the area can automatically obtain a tier 3 outcome on one test made to jump, tumble, or climb as part of their movement before the end of their turn.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -3489,15 +3161,7 @@ export const wodeElfTroubadour = {
 												repeatable: false,
 												effect: 'You gain a +4 bonus to speed instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -3541,15 +3205,7 @@ export const wodeElfTroubadour = {
 												type: 'text',
 												text: 'The target makes a free strike against the creature who made the triggering strike.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -3608,15 +3264,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Each target can shift up to 5 squares, including vertically, but must end this movement adjacent to the other target and on solid ground. Each target can then make a melee free strike that deals extra damage equal to twice their highest characteristic score.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3677,15 +3325,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'The target can make a melee free strike against you. If they do, you can make a melee free strike against the target.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3777,15 +3417,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'While this performance is active, a target who starts their turn in the area gains a bonus to the distance they can shift equal to your Presence score until the end of their turn.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3859,15 +3491,7 @@ export const wodeElfTroubadour = {
 																	tier3: '24 + A damage; bleeding (EoT), or if M < [strong], bleeding (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -3916,15 +3540,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'You and the target each make a melee free strike that targets each enemy within 3 squares of either of you, dividing the enemies between each of you. You choose which enemies your free strike targets and which enemies the target creature’s free strike targets. You then slide the target 5 squares, ignoring stability.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4015,15 +3631,7 @@ export const wodeElfTroubadour = {
 																	tier3: '28 + A damage; M < [strong], bleeding (save ends)'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4084,15 +3692,7 @@ export const wodeElfTroubadour = {
 																	tier3: 'You can choose any of the current effects on you and the target that are ended by a saving throw or that end at the end of your turns, apply the chosen effects to the target, and end the rest.'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4186,15 +3786,7 @@ export const wodeElfTroubadour = {
 													tier3: 'Push 3'
 												}
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4260,15 +3852,7 @@ export const wodeElfTroubadour = {
 																tier3: 'Lightning damage equal to 10 + your level'
 															}
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										},
@@ -4314,15 +3898,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'While this performance is active, each target who starts their turn in the area gains 1 surge.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -4376,15 +3952,7 @@ export const wodeElfTroubadour = {
 												repeatable: true,
 												effect: 'You can trigger this ability when a target uses an ability that has a Heroic Resource cost of 3 + each additional drama spent.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4442,15 +4010,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'You use an ability that you have observed being used this combat round. The ability must have the Strike keyword, cost 5 or fewer of a Heroic Resource, and cost no Malice. When you make the strike, you use your Presence score for any power rolls, and any damage you deal is sonic damage.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4511,15 +4071,7 @@ export const wodeElfTroubadour = {
 																	tier3: '12 corruption damage; M < [strong], pull 3 toward the center of the area'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4584,15 +4136,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'While this performance is active, each target who starts their turn in the area doesn’t take a bane on strikes against creatures with concealment. Once during their turn, they can search for hidden creatures as a free maneuver.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										},
@@ -4638,15 +4182,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'While this performance is active, each target who starts their turn dying while in the area gains an edge on power rolls and ignores the effects of bleeding until the end of their turn.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -4760,15 +4296,7 @@ export const wodeElfTroubadour = {
 																	tier3: '13 sonic damage; P < [strong], prone'
 																}
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4816,15 +4344,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Each target gains 1 surge, then gains 1 surge at the start of each combat round until the end of the encounter.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -4893,15 +4413,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'While this performance is active, each target who is dead can choose to continue taking turns after death. On each of their turns, a target can move and use either a main action or a maneuver, but can’t spend Recoveries or use triggered actions. At the end of the encounter, each target who chose to take turns this way turns to dust and blows away.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										},
@@ -4947,15 +4459,7 @@ export const wodeElfTroubadour = {
 															type: 'text',
 															text: 'While this performance is active, each target who starts their turn in the area ignores difficult terrain, and any ability they use that imposes forced movement gains a +2 bonus to the forced movement distance until the end of their turn. Additionally, once per combat round, each target can use a triggered action as a free triggered action.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -5028,15 +4532,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Each creature within distance gains a +5 bonus to speed until the end of their next turn. While under this effect, each target must use their full movement during their turn.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},
@@ -5106,15 +4602,7 @@ export const wodeElfTroubadour = {
 																type: 'text',
 																text: 'Forced movement from this ability ignores stability.'
 															}
-														],
-														preEffect: '',
-														powerRoll: null,
-														test: null,
-														effect: '',
-														strained: '',
-														alternateEffects: [],
-														spend: [],
-														persistence: []
+														]
 													}
 												}
 											},

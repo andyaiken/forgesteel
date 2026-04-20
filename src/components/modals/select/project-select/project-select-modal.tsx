@@ -1,3 +1,4 @@
+import { Button, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Modal } from '@/components/modals/modal/modal';
@@ -7,7 +8,6 @@ import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -17,6 +17,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
 	onSelect: (project: Project) => void;
+	onCustomize?: () => void;
 }
 
 export const ProjectSelectModal = (props: Props) => {
@@ -54,7 +55,17 @@ export const ProjectSelectModal = (props: Props) => {
 						}
 						{
 							projects.length === 0 ?
-								<Empty />
+								props.onCustomize ?
+									<div>
+										<p>
+											Can't find what you're looking for? It might be in a sourcebook that your hero doesn't have access to.
+										</p>
+										<Button block={true} onClick={props.onCustomize}>
+											Click here to change your hero's sourcebooks
+										</Button>
+									</div>
+									:
+									<Empty text='Not found' />
 								: null
 						}
 					</Space>

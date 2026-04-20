@@ -54,15 +54,7 @@ export const polderElementalist = {
 								type: 'text',
 								text: '\nYou flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, and strikes against you and tests made to search for you take a bane. You can’t move or be force moved, and you can’t take main actions or maneuvers except to exit this form or to direct creates under your control, such as one you summon using an ability. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.\n\nIf the surface you are flattened against is destroyed, this ability ends and you take 1d6 damage that can’t be reduced in any way.'
 							}
-						],
-						preEffect: '',
-						powerRoll: null,
-						test: null,
-						effect: '',
-						strained: '',
-						alternateEffects: [],
-						spend: [],
-						persistence: []
+						]
 					}
 				}
 			},
@@ -173,15 +165,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: 'You shift 1 square after the forced movement is resolved.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -496,15 +480,7 @@ export const polderElementalist = {
 										type: 'text',
 										text: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -556,15 +532,7 @@ export const polderElementalist = {
 										type: 'text',
 										text: '\nChoose one of the following effects:\n\n* You use the Knockback maneuver, but its distance becomes the range of your Hurl Element ability, and you use Reason instead of Might for the power roll.\n* You choose a creature within the distance of your Hurl Element ability and one of the following damage types: acid, cold, corruption, fire, lightning, poison, or sonic. That creature takes damage of the chosen type equal to your Reason score.\n* You teleport up to a number of squares equal to your Reason score. If you choose this option, you can spend essence to teleport 1 additional square for each essence spent.\n\t\t\t\t\t\t\t'
 									}
-								],
-								preEffect: '',
-								powerRoll: null,
-								test: null,
-								effect: '',
-								strained: '',
-								alternateEffects: [],
-								spend: [],
-								persistence: []
+								]
 							}
 						}
 					},
@@ -914,15 +882,7 @@ export const polderElementalist = {
 														type: 'text',
 														text: 'You slide the attacking creature up to a number of squares equal to your Reason score.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -967,15 +927,7 @@ export const polderElementalist = {
 														type: 'text',
 														text: 'You push that creature a number of squares equal to twice your Reason score.'
 													}
-												],
-												preEffect: '',
-												powerRoll: null,
-												test: null,
-												effect: '',
-												strained: '',
-												alternateEffects: [],
-												spend: [],
-												persistence: []
+												]
 											}
 										}
 									},
@@ -1684,15 +1636,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'Choose yourself or one ally within distance. That character can end one effect on them that is ended by a saving throw or that ends at the end of their turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-2',
@@ -1739,15 +1683,7 @@ export const polderElementalist = {
 							tier3: '6 fire damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-3',
@@ -1798,15 +1734,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You can teleport up to a number of squares equal to your Reason score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-4',
@@ -1857,15 +1785,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You slide one creature within 10 squares of the target up to 2 squares.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-5',
@@ -1912,15 +1832,7 @@ export const polderElementalist = {
 							tier3: '8 + R damage; push 4'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-6',
@@ -1967,15 +1879,7 @@ export const polderElementalist = {
 							tier3: '6 + R corruption damage; R < [strong], slowed (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-7',
@@ -2026,15 +1930,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'The ground beneath the area becomes difficult terrain for enemies.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-8',
@@ -2081,15 +1977,7 @@ export const polderElementalist = {
 							tier3: '7 + R fire damage; push 4'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-9',
@@ -2143,15 +2031,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-10',
@@ -2205,15 +2085,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'If the target is within distance at the start of your turn, make a power roll for this ability again.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-11',
@@ -2264,15 +2136,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'Mushrooms cover the target’s body. While the mushrooms are on the target, you and any ally adjacent to the target gain 1 surge whenever the target takes damage. The mushrooms can be removed by the target or an adjacent creature as a main action.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-12',
@@ -2322,15 +2186,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You must be touching the ground to use this ability. Additionally, you can choose a square of ground in the area that is unoccupied or is occupied by you or any ally. A pillar of earth rises out of the ground in that square, with a height in squares up to your Reason score. The pillar can’t collide with any creatures or objects, nor can it force creatures raised by it to collide with other creatures or objects.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-13',
@@ -2384,15 +2240,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-14',
@@ -2449,15 +2297,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'At the start of your turn, you open another hole, making a power roll against each creature who could fall into the hole when it opens without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-15',
@@ -2502,15 +2342,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The effect lasts until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-16',
@@ -2561,15 +2393,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You can end one effect on yourself that is ended by a saving throw or that ends at the end of your turn. Each ally in the area also gains this benefit.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-17',
@@ -2616,15 +2440,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The area remains until the start of your next turn. As a maneuver, you can move the area up to 5 squares. This ability ends if the area is ever not within your line of effect.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-18',
@@ -2676,15 +2492,7 @@ export const polderElementalist = {
 							tier3: '12 + R poison damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-19',
@@ -2735,15 +2543,7 @@ export const polderElementalist = {
 							tier3: '8 fire damage'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-20',
@@ -2791,15 +2591,7 @@ export const polderElementalist = {
 							tier3: '12 + R fire damage; A < [strong], restrained (save ends)'
 						}
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-21',
@@ -2854,15 +2646,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'Each target begins to fade from existence (save ends). On their first turn while fading from existence, a target takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, after which they reappear in their original space or the nearest unoccupied space.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-22',
@@ -2913,15 +2697,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'The ground in or directly beneath the area drops 3 squares.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-23',
@@ -2978,15 +2754,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'You make the power roll again to target each enemy in the area without spending essence, and the effect lasts until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-24',
@@ -3032,15 +2800,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The wall lasts until the start of your next turn, and you can add a number of squares to the wall equal to your Reason score.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-25',
@@ -3091,15 +2851,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'When the target ends their next turn, or if they drop to 0 Stamina before then, each enemy adjacent to them takes fire damage equal to twice your Reason score. Each affected enemy then gains this same effect.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-26',
@@ -3157,15 +2909,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The area remains until the start of your next turn, and you can move it up to 5 squares (no action required). As a maneuver, you can make the power roll again without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-27',
@@ -3219,15 +2963,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The target’s limited line of effect lasts until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-28',
@@ -3285,15 +3021,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The area remains until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-29',
@@ -3340,15 +3068,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The effect lasts until the start of your next turn.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-30',
@@ -3395,15 +3115,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The effect lasts until the start of your next turn. Additionally, at the start of your turn, the target can spend 2 Recoveries.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-31',
@@ -3455,15 +3167,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'If the target is teleported to a space where they would fall, they immediately do so, treating the fall as if their Agility score were 0. The target takes fire damage from the fall, and each enemy within 3 squares of where they land takes the same amount of fire damage. The ground within 3 squares of where the target lands is difficult terrain.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-32',
@@ -3510,15 +3214,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'The area remains until the start of your next turn. Additionally, at the start of your turn, each ally in the area can spend a Recovery.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-33',
@@ -3556,15 +3252,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'A size 5 tree appears in an unoccupied space within distance. The tree has 100 Stamina and can’t be force moved. You and any ally can touch the tree to use the Catch Breath maneuver as a free maneuver. Additionally, when you start your turn with line of effect to the tree, you can end one effect on yourself that is ended by a saving throw or that ends at the end of your turn, or you can stand up if you are prone. Each ally within distance also gains this benefit.\n\nEach enemy who ends their turn within 3 squares of the tree is restrained until the end of their next turn. A creature restrained this way can use a main action to end the effect early.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-34',
@@ -3616,15 +3304,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'The Director’s Malice can become negative as a result of this ability.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-35',
@@ -3663,15 +3343,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You create a size 1L vortex that lasts until the end of the encounter. At the start of each combat round while the vortex is unoccupied, the vortex vertical pulls 3 each enemy within 5 squares of it. Each enemy who enters the vortex or starts their turn there is knocked prone. At the end of the round, if a winded enemy who is not a leader or solo creature is in the vortex, they are instantly destroyed.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-36',
@@ -3721,15 +3393,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You create a fissure in the ground adjacent to you that is a 10 × 2 line and 6 squares deep. Each creature in the area who is prone and size 2 or smaller falls in. Other creatures can enter the fissure or can shift to the nearest unoccupied space of their choice outside it.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-37',
@@ -3783,15 +3447,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-38',
@@ -3836,15 +3492,7 @@ export const polderElementalist = {
 						repeatable: false,
 						effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-39',
@@ -3881,15 +3529,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'You use up to three heroic abilities whose essence costs total 11 or less, spending no additional essence beyond the cost of this ability. You can shift up to 2 squares between your use of each ability.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			},
 			{
 				id: 'elementalist-ability-40',
@@ -3940,15 +3580,7 @@ export const polderElementalist = {
 						type: 'text',
 						text: 'This damage ignores immunity.'
 					}
-				],
-				preEffect: '',
-				powerRoll: null,
-				test: null,
-				effect: '',
-				strained: '',
-				alternateEffects: [],
-				spend: [],
-				persistence: []
+				]
 			}
 		],
 		subclasses: [
@@ -4009,15 +3641,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: '\nYou touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.\n\nAlternatively, you touch a structure made of mundane dirt, stone, or metal that occupies 2 or more squares. You can open a 1-square opening in the structure where you touched it. You can instead touch an existing doorway or other opening that is 1 square or smaller in a mundane dirt, stone, or metal surface. The opening is sealed by the same material that makes up the surface.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4070,15 +3694,7 @@ export const polderElementalist = {
 												repeatable: false,
 												effect: 'If the damage has any potency effect associate with it, the potency is reduced by 1.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4147,15 +3763,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: 'You step into a mundane dirt, metal, or stone object (including a wall) that is as large as you or larger. You can remain inside the object for as long as you like. While inside the object, you can observe events and speak to creatures outside it, but you don’t have line of effect to anything outside the object and vice versa. You can travel through the object freely until you exit it. If the object you meld with is destroyed, you take 10 damage and exit the object.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4235,15 +3843,7 @@ export const polderElementalist = {
 															type: 'text',
 															text: 'You decrease your stability down to a minimum of 0, then increase the target’s stability by an amount equal to the stability you lost. This change lasts until the end of the round.'
 														}
-													],
-													preEffect: '',
-													powerRoll: null,
-													test: null,
-													effect: '',
-													strained: '',
-													alternateEffects: [],
-													spend: [],
-													persistence: []
+													]
 												}
 											}
 										}
@@ -4316,15 +3916,7 @@ export const polderElementalist = {
 												repeatable: false,
 												effect: 'The source takes another turn. They are dismissed at the start of your next turn.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4414,15 +4006,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: 'You heat the target and cause it to melt or combust, destroying it. If the object is larger than 1 square, then only the square of the object you touch is destroyed.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4475,15 +4059,7 @@ export const polderElementalist = {
 												repeatable: false,
 												effect: 'The forced movement distance gains a bonus equal to twice your Reason score instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4667,15 +4243,7 @@ export const polderElementalist = {
 												repeatable: true,
 												effect: 'The target can spend an additional Recovery for each essence spent.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4738,15 +4306,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: 'You see and hear any events that have occurred within 10 squares of the object within the last 12 hours, perceiving those events from the object’s location as if you were there.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -4891,15 +4451,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: 'For each Victory you have, you can target one creature. Each target gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of the Shared Void Sense ability.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							},
@@ -4952,15 +4504,7 @@ export const polderElementalist = {
 												repeatable: false,
 												effect: 'You teleport the target up to a number of squares equal to twice your Reason score instead.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -5011,15 +4555,7 @@ export const polderElementalist = {
 												type: 'text',
 												text: '\nYou open two size 1 portals in unoccupied spaces within distance, which last until you move beyond distance from any portal, end the effect as a maneuver, or are dying. Each portal must be placed at a height of no more than 1 square above the ground. When you or any ally touch a portal, that creature can choose to be instantly teleported to an unoccupied space of their choice adjacent to the other portal. If an enemy is force moved into a portal, their forced movement ends and they emerge from the other portal in an unoccupied space chosen by the creature who force moved them.\n\nAt the start of each of your turns while the portals are active, you can open a new portal connected to the others. If three or more portals are present, you and your allies choose which portal to emerge from when entering a portal, and a creature who force moves an enemy into a portal chooses that enemy’s destination portal.'
 											}
-										],
-										preEffect: '',
-										powerRoll: null,
-										test: null,
-										effect: '',
-										strained: '',
-										alternateEffects: [],
-										spend: [],
-										persistence: []
+										]
 									}
 								}
 							}
@@ -5242,15 +4778,7 @@ export const polderElementalist = {
 											type: 'text',
 											text: '\nChoose one of the following effects:\n\n* You teleport a size 1S or smaller object adjacent to you into an unoccupied space adjacent to you.\n* Until the start of your next turn, a part of your body shoots a shower of harmless noisy sparks that light up each square adjacent to you.\n* You ignite or snuff out (your choice) every mundane light source of 1L or smaller adjacent to you.\n* You transform up to 1 pound of edible food you touch to make it taste delicious or disgusting.\n* Until the start of your next turn, you make your body exude a particular odor you’ve smelled before. This smell can be sensed by each creature within 5 squares of you, but can’t impose any condition or other drawback on those creatures.\n* You place a small magical inscription on the surface of a mundane object you touch, or you can remove an inscription that was made by you or by another creature using Arcane Trick.\n* You touch a size 1T object to cover it with an illusion that makes it look like a different object. Any creature who handles the object becomes aware of the illusion. The illusion ends when you stop touching the object.'
 										}
-									],
-									preEffect: '',
-									powerRoll: null,
-									test: null,
-									effect: '',
-									strained: '',
-									alternateEffects: [],
-									spend: [],
-									persistence: []
+									]
 								}
 							},
 							list: 'Supernatural'

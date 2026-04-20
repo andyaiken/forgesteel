@@ -26,6 +26,7 @@ interface Props {
 	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
+	onCustomize: () => void;
 }
 
 export const HeroTitlesModal = (props: Props) => {
@@ -129,7 +130,14 @@ export const HeroTitlesModal = (props: Props) => {
 						}
 					</Space>
 					<Drawer open={titlesVisible} onClose={() => setTitlesVisible(false)} closeIcon={null} size={500}>
-						<TitleSelectModal hero={hero} sourcebooks={props.sourcebooks} options={props.options} onSelect={addTitle} onClose={() => setTitlesVisible(false)} />
+						<TitleSelectModal
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onSelect={addTitle}
+							onCustomize={props.onCustomize}
+							onClose={() => setTitlesVisible(false)}
+						/>
 					</Drawer>
 				</div>
 			}

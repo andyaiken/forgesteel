@@ -67,8 +67,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'ruby-ring-of-recall',
@@ -110,8 +109,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'speaking-scarab',
@@ -153,8 +151,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'werewolf-tooth-pendant',
@@ -195,8 +192,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'bandana-of-invisibility',
@@ -238,8 +234,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'battle-wings',
@@ -280,8 +275,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'cavalry-armor',
@@ -370,8 +364,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'pack-harness',
@@ -445,8 +438,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'thorn-dragonscale',
@@ -520,8 +512,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'rampant-shield',
@@ -595,8 +586,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'glancing-bow',
@@ -680,8 +670,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'horned-champion',
@@ -765,8 +754,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'longclaw',
@@ -850,8 +838,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		},
 		{
 			id: 'scorpion-tails',
@@ -952,8 +939,7 @@ export const beastheartSourcebook: Sourcebook = {
 				}
 			],
 			imbuements: [],
-			count: 1,
-			customizationsByLevel: []
+			count: 1
 		}
 	],
 	kits: [],

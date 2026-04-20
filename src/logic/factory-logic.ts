@@ -194,7 +194,6 @@ export class FactoryLogic {
 				id: id,
 				selected: language ? [ language ] : []
 			}),
-			languages: [],
 			environment: environment || null,
 			organization: organization || null,
 			upbringing: upbringing || null
@@ -209,8 +208,7 @@ export class FactoryLogic {
 			features: [],
 			incitingIncidents: {
 				options: [],
-				selected: null,
-				selectedID: null
+				selected: null
 			}
 		};
 	};
@@ -412,9 +410,7 @@ export class FactoryLogic {
 				}
 			],
 			imbuements: data.imbuements || [],
-			count: 1,
-
-			customizationsByLevel: []
+			count: 1
 		};
 	};
 

@@ -27,6 +27,7 @@ interface Props {
 	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
+	onCustomize: () => void;
 }
 
 export const HeroInventoryModal = (props: Props) => {
@@ -154,6 +155,7 @@ export const HeroInventoryModal = (props: Props) => {
 							options={props.options}
 							hero={hero}
 							onSelect={addItem}
+							onCustomize={props.onCustomize}
 							onClose={() => setShopVisible(false)}
 						/>
 					</Drawer>

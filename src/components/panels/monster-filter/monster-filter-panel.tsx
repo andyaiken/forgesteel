@@ -41,12 +41,12 @@ export const MonsterFilterPanel = (props: Props) => {
 	};
 
 	const toggleRoles = (value: boolean) => {
-		setFilterRoles([ MonsterRoleType.Ambusher ]);
+		setFilterRoles(value ? [ MonsterRoleType.Ambusher ] : []);
 		setShowRole(value);
 	};
 
 	const toggleOrg = (value: boolean) => {
-		setFilterOrganizations([ MonsterOrganizationType.Platoon ]);
+		setFilterOrganizations(value ? [ MonsterOrganizationType.Platoon ] : []);
 		setShowOrg(value);
 	};
 

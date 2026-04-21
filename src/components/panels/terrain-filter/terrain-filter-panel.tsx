@@ -31,12 +31,12 @@ export const TerrainFilterPanel = (props: Props) => {
 	};
 
 	const toggleRoles = (value: boolean) => {
-		setFilterRoles([ MonsterRoleType.Ambusher ]);
+		setFilterRoles(value ? [ MonsterRoleType.Ambusher ] : []);
 		setShowRole(value);
 	};
 
 	const toggleType = (value: boolean) => {
-		setFilterTerrainRoles([ TerrainRoleType.Fortification ]);
+		setFilterTerrainRoles(value ? [ TerrainRoleType.Fortification ] : []);
 		setShowType(value);
 	};
 

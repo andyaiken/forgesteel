@@ -8,11 +8,12 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Hero } from '@/models/hero';
-import { HeroData } from '@/data/hero-data';
-import { HeroInfo } from '@/components/panels/token/token';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { Options } from '@/models/options';
+import { PregenData } from '@/data/pregen-data';
+import { PregenInfo } from '@/components/panels/token/token';
+import { PregenLogic } from '@/logic/pregen-logic';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -87,18 +88,6 @@ export const HeroListPage = (props: Props) => {
 		);
 	};
 
-	const exampleHeroes = [
-		HeroData.dwarfFury,
-		HeroData.highElfTactician,
-		HeroData.humanCensor,
-		HeroData.humanNull,
-		HeroData.humanTalent,
-		HeroData.orcConduit,
-		HeroData.polderElementalist,
-		HeroData.polderShadow,
-		HeroData.wodeElfTroubadour
-	];
-
 	return (
 		<ErrorBoundary>
 			<div className='hero-list-page'>
@@ -141,9 +130,17 @@ export const HeroListPage = (props: Props) => {
 										<Expander title='Use a premade example'>
 											<Space orientation='vertical' style={{ width: '100%', maxHeight: '200px', overflowY: 'auto' }}>
 												{
-													exampleHeroes.map(h => (
-														<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
-															<HeroInfo hero={h} />
+													PregenData.getPregens().map(p => (
+														<Button
+															key={p.id}
+															className='container-button'
+															block={true}
+															onClick={() => {
+																const hero = PregenLogic.pregenToHero(p, props.sourcebooks);
+																props.importHero(hero, currentTab);
+															}}
+														>
+															<PregenInfo pregen={p} />
 														</Button>
 													))
 												}

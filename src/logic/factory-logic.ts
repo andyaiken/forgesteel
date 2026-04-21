@@ -51,6 +51,7 @@ import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
+import { Pregen } from '@/models/pregen';
 import { RetainerLogic } from '@/logic/retainer-logic';
 import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -123,6 +124,25 @@ export class FactoryLogic {
 		};
 	};
 
+	static createPregen = (): Pregen => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			sourcebookIDs: [],
+			ancestryID: null,
+			cultureID: null,
+			careerID: null,
+			classID: null,
+			complicationID: null,
+			incitingIncidentID: null,
+			level: 1,
+			characteristics: [],
+			selectedSubclassIDs: [],
+			featureSelections: []
+		};
+	};
+
 	static createSourcebook = (): Sourcebook => {
 		return {
 			id: Utils.guid(),
@@ -191,7 +211,7 @@ export class FactoryLogic {
 			description: description,
 			type: type,
 			language: FactoryLogic.feature.createLanguageChoice({
-				id: id,
+				id: `${id}-language`,
 				selected: language ? [ language ] : []
 			}),
 			environment: environment || null,

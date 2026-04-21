@@ -1,12 +1,11 @@
-import { Alert, Button, Flex, Segmented } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
+import { Button, Flex, Segmented } from 'antd';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Tip } from '@/models/tip';
@@ -176,7 +175,7 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
+								<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Go to your Heroes</Button>
 								<Button icon={<PlusOutlined />} onClick={props.onNewHero}>New Hero</Button>
 							</Flex>
 						</div>
@@ -218,7 +217,7 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Library</Button>
+								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Go to the Library</Button>
 								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
 							</Flex>
 						</div>
@@ -259,7 +258,7 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
+								<Button type='primary' icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Go to the Session</Button>
 							</Flex>
 						</div>
 					</div>
@@ -300,19 +299,9 @@ const Welcome = (props: WelcomeProps) => {
 								</li>
 							</ul>
 						</div>
-						<Alert
-							type='info'
-							showIcon={true}
-							title={
-								<Markdown
-									text={`
-**FORGE STEEL** now includes third-party content. If you'd like your own homebrew creations to feature in Forge Steel, you can submit them [here](https://forms.office.com/r/mmxqfnFzx4).`}
-								/>
-							}
-						/>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>
+								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Go to the Library</Button>
 							</Flex>
 						</div>
 					</div>

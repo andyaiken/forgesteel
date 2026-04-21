@@ -12,11 +12,13 @@ import { Monster } from '@/models/monster';
 import { MonsterData } from '@/data/monster-data';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Options } from '@/models/options';
+import { PregenData } from '@/data/pregen-data';
+import { PregenLogic } from '../pregen-logic';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { Summon } from '@/models/summon';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
-import { highElfTactician } from '@/data/heroes/high-elf-tactician';
 import { retainer } from '@/data/monsters/retainer';
 
 afterEach(() => {
@@ -195,7 +197,8 @@ describe('buildHeroSheet', () => {
 	vi.unmock('@/logic/hero-logic');
 
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
-		const hero = highElfTactician;
+		const pregen = PregenData.getPregens()[0];
+		const hero = PregenLogic.pregenToHero(pregen, [ SourcebookData.core, SourcebookData.orden ]);
 		const sourcebooks: Sourcebook[] = [];
 		const options = {} as Options;
 

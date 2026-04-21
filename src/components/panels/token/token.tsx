@@ -7,6 +7,7 @@ import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Pregen } from '@/models/pregen';
 import { Terrain } from '@/models/terrain';
 import { TerrainLogic } from '@/logic/terrain-logic';
 
@@ -84,6 +85,26 @@ export const HeroToken = (props: HeroTokenProps) => {
 	);
 };
 
+interface PregenTokenProps {
+	pregen: Pregen;
+	size?: number;
+	onClick?: () => void;
+}
+
+export const PregenToken = (props: PregenTokenProps) => {
+	return (
+		<ErrorBoundary>
+			<Token
+				name={props.pregen.name || 'Pregen'}
+				role={MonsterRoleType.NoRole}
+				type='hero'
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
+	);
+};
+
 interface HeroInfoProps {
 	hero: Hero;
 	style?: CSSProperties;
@@ -97,6 +118,25 @@ export const HeroInfo = (props: HeroInfoProps) => {
 				<div className='combatant-button-details'>
 					<div className='combatant-name'>{props.hero.name}</div>
 					<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+				</div>
+			</div>
+		</ErrorBoundary>
+	);
+};
+
+interface PregenInfoProps {
+	pregen: Pregen;
+	style?: CSSProperties;
+}
+
+export const PregenInfo = (props: PregenInfoProps) => {
+	return (
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<PregenToken pregen={props.pregen} size={30} />
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.pregen.name}</div>
+					<div className='combatant-info'>{props.pregen.description}</div>
 				</div>
 			</div>
 		</ErrorBoundary>

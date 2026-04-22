@@ -691,7 +691,7 @@ export class LeveledArmorData {
 							FactoryLogic.damageModifier.create({
 								damageType: DamageType.Psychic,
 								modifierType: DamageModifierType.Immunity,
-								value: 5
+								value: 10
 							})
 						]
 					}),

@@ -359,7 +359,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Acid,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -371,7 +371,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Cold,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -383,7 +383,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Corruption,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -395,7 +395,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Fire,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -407,7 +407,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Holy,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -419,7 +419,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Lightning,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -431,7 +431,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Poison,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -443,7 +443,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Psychic,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1
@@ -455,7 +455,7 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						modifiers: [ FactoryLogic.damageModifier.create({
 							damageType: DamageType.Sonic,
 							modifierType: DamageModifierType.Immunity,
-							value: 5
+							value: 10
 						}) ]
 					}),
 					value: 1

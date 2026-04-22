@@ -198,9 +198,9 @@ describe('buildHeroSheet', () => {
 
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
 		const pregen = PregenData.getPregens()[0];
-		const hero = PregenLogic.pregenToHero(pregen, [ SourcebookData.core, SourcebookData.orden ]);
+		const options = { xpPerLevel: 16 } as Options;
+		const hero = PregenLogic.pregenToHero(pregen, [ SourcebookData.core, SourcebookData.orden ], options);
 		const sourcebooks: Sourcebook[] = [];
-		const options = {} as Options;
 
 		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue([
 			{ feature: mockFeatureRetainer, source: 'test', level: 1 },

@@ -27,7 +27,7 @@ export const HeroLevelUpModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(() => {
 		const copy = Utils.copy(props.hero);
 		if (HeroLogic.canLevelUp(copy, props.options)) {
-			copy.class!.level += 1;
+			HeroLogic.setLevel(copy, props.options, copy.class!.level + 1);
 		}
 		return copy;
 	});

@@ -126,6 +126,25 @@ export class FeatureUpdateLogic {
 					feature.data.lists = [];
 				}
 				break;
+			case FeatureType.Summon:
+				feature.data.summons.forEach(s => {
+					if (s.info.level === undefined) {
+						s.info.level = 1;
+					}
+				});
+				break;
+			case FeatureType.SummonChoice:
+				feature.data.options.forEach(o => {
+					if (o.info.level === undefined) {
+						o.info.level = 1;
+					}
+				});
+				feature.data.selected.forEach(s => {
+					if (s.info.level === undefined) {
+						s.info.level = 1;
+					}
+				});
+				break;
 		}
 	};
 }

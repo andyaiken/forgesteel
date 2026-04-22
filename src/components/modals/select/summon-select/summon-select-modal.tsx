@@ -52,7 +52,7 @@ export const SummonSelectModal = (props: Props) => {
 									key={s.id}
 									onSelect={() => props.onSelect(s)}
 								>
-									<MonsterPanel monster={SummonLogic.getSummonedMonster(s.monster, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									<MonsterPanel monster={SummonLogic.getSummonedMonster(s, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

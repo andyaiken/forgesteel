@@ -304,6 +304,13 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Companion)
 			.map(f => f.data.selected)
 			.filter(a => !!a)
+			.map(m => {
+				const copy = Utils.copy(m);
+				if (copy.retainer) {
+					copy.retainer.level = Math.max(copy.level, hero?.class?.level || 1);
+				}
+				return copy;
+			})
 			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
@@ -322,6 +329,13 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Retainer)
 			.map(f => f.data.selected)
 			.filter(a => !!a)
+			.map(m => {
+				const copy = Utils.copy(m);
+				if (copy.retainer) {
+					copy.retainer.level = Math.max(copy.level, hero?.class?.level || 1);
+				}
+				return copy;
+			})
 			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
@@ -339,7 +353,8 @@ export class HeroLogic {
 			})
 			.map(s => {
 				const copy = Utils.copy(s);
-				copy.monster = SummonLogic.getSummonedMonster(copy.monster, hero);
+				copy.info.level = hero.class?.level || 1;
+				copy.monster = SummonLogic.getSummonedMonster(copy, hero);
 				return copy;
 			})
 			.sort((a, b) => {
@@ -1086,6 +1101,46 @@ export class HeroLogic {
 		}
 
 		return hero.state.xp >= HeroLogic.getMinXP(hero.class.level + 1, options);
+	};
+
+	static setLevel = (hero: Hero, options: Options, level: number) => {
+		if (hero.class) {
+			hero.class.level = level;
+			hero.state.xp = HeroLogic.getMinXP(level, options);
+		}
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Companion)
+			.forEach(f => {
+				if (f.data.selected && f.data.selected.retainer) {
+					f.data.selected.retainer.level = Math.max(f.data.selected.level, f.data.selected.retainer.level, level);
+				}
+			});
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Retainer)
+			.forEach(f => {
+				if (f.data.selected && f.data.selected.retainer) {
+					f.data.selected.retainer.level = Math.max(f.data.selected.level, f.data.selected.retainer.level, level);
+				}
+			});
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Summon)
+			.forEach(f => {
+				f.data.summons.forEach(s => s.info.level = level);
+			});
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SummonChoice)
+			.forEach(f => {
+				f.data.options.forEach(o => o.info.level = level);
+				f.data.selected.forEach(s => s.info.level = level);
+			});
 	};
 
 	static takeRespite = (hero: Hero) => {

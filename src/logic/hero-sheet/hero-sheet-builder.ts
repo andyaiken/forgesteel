@@ -399,9 +399,7 @@ export class HeroSheetBuilder {
 			.map(f => f.feature);
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 
-		const summons = retinue.filter(f => f.type === FeatureType.SummonChoice).flatMap(f => f.data.selected)
-			.concat(retinue.filter(f => f.type === FeatureType.Summon).flatMap(f => f.data.summons));
-		sheet.summons = summons.filter(f => CreatureLogic.isSummon(f))
+		sheet.summons = HeroLogic.getSummons(hero).filter(f => CreatureLogic.isSummon(f))
 			.map(f => this.buildSummonSheet(f, hero)).filter(s => !!s);
 
 		coveredFeatureIds.push(...retinue.map(f => f.id));

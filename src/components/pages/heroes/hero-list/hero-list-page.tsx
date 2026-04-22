@@ -136,7 +136,7 @@ export const HeroListPage = (props: Props) => {
 															className='container-button'
 															block={true}
 															onClick={() => {
-																const hero = PregenLogic.pregenToHero(p, props.sourcebooks);
+																const hero = PregenLogic.pregenToHero(p, props.sourcebooks, props.options);
 																props.importHero(hero, currentTab);
 															}}
 														>

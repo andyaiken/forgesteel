@@ -6,6 +6,7 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from './hero-logic';
+import { Options } from '@/models/options';
 import { Pregen } from '@/models/pregen';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -50,7 +51,7 @@ export class PregenLogic {
 		return pregen;
 	};
 
-	static pregenToHero = (pregen: Pregen, sourcebooks: Sourcebook[]): Hero => {
+	static pregenToHero = (pregen: Pregen, sourcebooks: Sourcebook[], options: Options): Hero => {
 		const hero = FactoryLogic.createHero(pregen.sourcebookIDs);
 
 		hero.name = pregen.name;
@@ -139,6 +140,8 @@ export class PregenLogic {
 
 			features = getFeaturesWithChoices();
 		}
+
+		HeroLogic.setLevel(hero, options, pregen.level);
 
 		return hero;
 	};

@@ -3,17 +3,27 @@ import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { Modifier } from '@/models/damage-modifier';
 import { ModifierLogic } from '@/logic/modifier-logic';
-import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { Summon } from '@/models/summon';
 import { Utils } from '@/utils/utils';
 
 export class SummonLogic {
-	static getSummonedMonster = (monster: Monster, controller: Hero) => {
-		const copy = Utils.copy(monster);
+	static getSummonedMonster = (summon: Summon, controller: Hero) => {
+		const copy = Utils.copy(summon.monster);
 
 		const handleModifier = (mod: Modifier) => {
 			return mod.valueFromController || (mod.valueCharacteristics.length > 0) || (mod.valuePerEchelon > 0) || (mod.valuePerLevel > 0);
 		};
+
+		if (summon.info.level >= 3) {
+			copy.features.push(...summon.info.level3);
+		}
+		if (summon.info.level >= 6) {
+			copy.features.push(...summon.info.level6);
+		}
+		if (summon.info.level >= 10) {
+			copy.features.push(...summon.info.level10);
+		}
 
 		MonsterLogic.getFeatures(copy).forEach(f => {
 			switch (f.type) {

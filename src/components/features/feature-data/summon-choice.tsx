@@ -254,7 +254,9 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 						setMonsterSelectorOpen(false);
 
 						const dataCopy = Utils.copy(props.data);
-						dataCopy.selected.push(Utils.copy(summon));
+						const summonCopy = Utils.copy(summon);
+						summonCopy.info.level = props.hero.class?.level || 1;
+						dataCopy.selected.push(summonCopy);
 						props.setData(dataCopy);
 					}}
 					onClose={() => setMonsterSelectorOpen(false)}
@@ -264,7 +266,7 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 				{
 					selectedSummon ?
 						<MonsterModal
-							monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)}
+							monster={SummonLogic.getSummonedMonster(selectedSummon, props.hero)}
 							summon={selectedSummon.info}
 							sourcebooks={props.sourcebooks}
 							options={props.options}

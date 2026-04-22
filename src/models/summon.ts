@@ -6,6 +6,7 @@ export interface SummoningInfo {
 	isSignature: boolean;
 	cost: number;
 	count: number;
+	level: number;
 	level3: Feature[];
 	level6: Feature[];
 	level10: Feature[];

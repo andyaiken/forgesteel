@@ -584,6 +584,7 @@ export class FactoryLogic {
 				isSignature: data.isSignature || false,
 				cost: data.cost,
 				count: data.count,
+				level: 1,
 				level3: data.level3 || [],
 				level6: data.level6 || [],
 				level10: data.level10 || []

@@ -128,7 +128,7 @@ export const HeroListPage = (props: Props) => {
 											Generate a Random Hero
 										</Button>
 										<Expander title='Use a premade example'>
-											<Space orientation='vertical' style={{ width: '100%', maxHeight: '200px', overflowY: 'auto' }}>
+											<Space orientation='vertical' style={{ width: '100%', maxHeight: '220px', overflowY: 'auto' }}>
 												{
 													PregenData.getPregens().map(p => (
 														<Button

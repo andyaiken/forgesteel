@@ -1831,9 +1831,11 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<WelcomePage
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								params={footerParams}
 								onNewHero={() => newHero('')}
+								onPregen={hero => importHero(hero, '')}
 								onNewEncounter={() => createLibraryElement('encounter', '', null)}
 							/>
 						}

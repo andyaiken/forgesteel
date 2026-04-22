@@ -1,13 +1,18 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
-import { Button, Flex, Segmented } from 'antd';
+import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
+import { Button, Flex, Popover, Segmented, Space } from 'antd';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
+import { PregenData } from '@/data/pregen-data';
+import { PregenInfo } from '@/components/panels/token/token';
+import { PregenLogic } from '@/logic/pregen-logic';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Tip } from '@/models/tip';
 import { TipData } from '@/data/tip-data';
 import { TipPanel } from '@/components/panels/tip/tip-panel';
@@ -22,9 +27,11 @@ import './welcome-page.scss';
 type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
+	sourcebooks: Sourcebook[];
 	options: Options;
 	params: FooterParams;
 	onNewHero: () => void;
+	onPregen: (hero: Hero) => void;
 	onNewEncounter: () => void;
 }
 
@@ -46,7 +53,10 @@ export const WelcomePage = (props: Props) => {
 						<div className='welcome-page-content compact'>
 							<div className='welcome-column'>
 								<Welcome
+									sourcebooks={props.sourcebooks}
+									options={props.options}
 									onNewHero={props.onNewHero}
+									onPregen={props.onPregen}
 									onNewEncounter={props.onNewEncounter}
 								/>
 							</div>
@@ -75,7 +85,10 @@ export const WelcomePage = (props: Props) => {
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<Welcome
+							sourcebooks={props.sourcebooks}
+							options={props.options}
 							onNewHero={props.onNewHero}
+							onPregen={props.onPregen}
 							onNewEncounter={props.onNewEncounter}
 						/>
 					</div>
@@ -129,7 +142,10 @@ export const WelcomePage = (props: Props) => {
 };
 
 interface WelcomeProps {
+	sourcebooks: Sourcebook[];
+	options: Options;
 	onNewHero: () => void;
+	onPregen: (hero: Hero) => void;
 	onNewEncounter: () => void;
 }
 
@@ -143,7 +159,11 @@ const Welcome = (props: WelcomeProps) => {
 				return (
 					<div className='welcome-section'>
 						<div>
-							<HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Go to your Heroes</Button>
+								}
+							>
 								For Players
 							</HeaderText>
 							<div className='ds-text'>
@@ -175,8 +195,31 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Go to your Heroes</Button>
-								<Button icon={<PlusOutlined />} onClick={props.onNewHero}>New Hero</Button>
+								<Button type='primary' onClick={props.onNewHero}>Create a New Hero</Button>
+								<Popover
+									trigger='click'
+									content={
+										<Space orientation='vertical' style={{ width: '300px', maxHeight: '330px', overflowY: 'auto' }}>
+											{
+												PregenData.getPregens().map(p => (
+													<Button
+														key={p.id}
+														className='container-button'
+														block={true}
+														onClick={() => {
+															const hero = PregenLogic.pregenToHero(p, props.sourcebooks, props.options);
+															props.onPregen(hero);
+														}}
+													>
+														<PregenInfo pregen={p} />
+													</Button>
+												))
+											}
+										</Space>
+									}
+								>
+									<Button>Use a Premade Hero</Button>
+								</Popover>
 							</Flex>
 						</div>
 					</div>
@@ -185,7 +228,11 @@ const Welcome = (props: WelcomeProps) => {
 				return (
 					<div className='welcome-section'>
 						<div>
-							<HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Go to the Library</Button>
+								}
+							>
 								For Directors: Prep Time
 							</HeaderText>
 							<div className='ds-text'>
@@ -217,8 +264,7 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Go to the Library</Button>
-								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
+								<Button type='primary' onClick={props.onNewEncounter}>Create a New Encounter</Button>
 							</Flex>
 						</div>
 					</div>
@@ -227,7 +273,11 @@ const Welcome = (props: WelcomeProps) => {
 				return (
 					<div className='welcome-section'>
 						<div>
-							<HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Go to the Session</Button>
+								}
+							>
 								For Directors: Game Time
 							</HeaderText>
 							<div className='ds-text'>
@@ -256,18 +306,17 @@ const Welcome = (props: WelcomeProps) => {
 								Any of these elements can be shared with your players by opening the <b>player view</b>, a separate tab that you can share (using Discord etc).
 							</div>
 						</div>
-						<div className='welcome-buttons'>
-							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Go to the Session</Button>
-							</Flex>
-						</div>
 					</div>
 				);
 			case 'creator':
 				return (
 					<div className='welcome-section'>
 						<div>
-							<HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Go to the Library</Button>
+								}
+							>
 								For Content Creators
 							</HeaderText>
 							<div className='ds-text'>
@@ -298,11 +347,6 @@ const Welcome = (props: WelcomeProps) => {
 									Want to create a monster that's a mashup of two or three existing monsters? You can do that with a click.
 								</li>
 							</ul>
-						</div>
-						<div className='welcome-buttons'>
-							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Go to the Library</Button>
-							</Flex>
 						</div>
 					</div>
 				);

@@ -115,6 +115,13 @@ export class MonsterLogic {
 	static getFreeStrikeDamage = (monster: Monster) => {
 		let damage = monster.freeStrikeDamage;
 
+		MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.Bonus)
+			.filter(f => f.data.field === FeatureField.FreeStrikeDamage)
+			.forEach(f => {
+				damage += ModifierLogic.calculateModifierValue(f.data, monster);
+			});
+
 		if (monster.retainer && monster.retainer.level) {
 			const levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].filter(lvl => (lvl > monster.level) && (lvl <= monster.retainer!.level));
 			damage += levels.filter(lvl => lvl % 3 === 0).length * 2;

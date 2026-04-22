@@ -58,8 +58,9 @@ export const MonsterPanel = (props: Props) => {
 	}
 
 	const conditions = MonsterLogic.getConditionImmunities(props.monster);
-	const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
-	const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
+	const damageModifiers = MonsterLogic.getDamageModifiers(props.monster);
+	const immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+	const weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 
 	const allFeatures = MonsterLogic.getFeatures(props.monster);
 	const features = allFeatures.filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));

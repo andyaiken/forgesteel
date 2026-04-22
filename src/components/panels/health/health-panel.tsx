@@ -167,8 +167,8 @@ export const HeroHealthPanel = (props: HeroProps) => {
 							staminaMax: HeroLogic.getStamina(hero),
 							staminaDamage: hero.state.staminaDamage,
 							state: HeroLogic.getCombatState(hero),
-							immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
-							weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
+							immunities: HeroLogic.getDamageModifiers(hero).filter(dm => dm.modifierType === DamageModifierType.Immunity),
+							weaknesses: HeroLogic.getDamageModifiers(hero).filter(dm => dm.modifierType === DamageModifierType.Weakness),
 							setValue: setStaminaDamage,
 							takeDamage: takeDamage,
 							heal: heal
@@ -347,8 +347,8 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 							staminaMax: MonsterLogic.getStamina(monster),
 							staminaDamage: monster.state.staminaDamage,
 							state: MonsterLogic.getCombatState(monster),
-							immunities: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity),
-							weaknesses: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness),
+							immunities: MonsterLogic.getDamageModifiers(monster).filter(dm => dm.modifierType === DamageModifierType.Immunity),
+							weaknesses: MonsterLogic.getDamageModifiers(monster).filter(dm => dm.modifierType === DamageModifierType.Weakness),
 							setValue: setStaminaDamage,
 							takeDamage: takeDamage,
 							heal: heal

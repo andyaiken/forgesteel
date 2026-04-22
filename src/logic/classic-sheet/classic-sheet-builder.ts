@@ -73,8 +73,9 @@ export class ClassicSheetBuilder {
 		}
 
 		const speed = MonsterLogic.getSpeed(monster);
-		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
-		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
+		const damageModifiers = MonsterLogic.getDamageModifiers(monster);
+		const immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+		const weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 
 		const sheet: MonsterSheet = {
 			id: monster.id,

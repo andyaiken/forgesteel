@@ -258,8 +258,9 @@ export class HeroSheetBuilder {
 		}
 		// #endregion
 
-		sheet.immunities = HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity);
-		sheet.weaknesses = HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness);
+		const damageModifiers = HeroLogic.getDamageModifiers(hero);
+		sheet.immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+		sheet.weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 		sheet.conditionImmunities = HeroLogic.getConditionImmunities(hero);
 
 		// Potencies
@@ -546,9 +547,10 @@ export class HeroSheetBuilder {
 		sheet.stability = follower.stability;
 		sheet.freeStrike = MonsterLogic.getFreeStrikeDamage(follower);
 
-		const immunities = MonsterLogic.getDamageModifiers(follower, DamageModifierType.Immunity);
+		const damageModifiers = MonsterLogic.getDamageModifiers(follower);
+		const immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+		const weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
-		const weaknesses = MonsterLogic.getDamageModifiers(follower, DamageModifierType.Weakness);
 		sheet.weakness = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		sheet.movement = speed.modes.map(m => Format.capitalize(m)).join(', ');
 
@@ -617,9 +619,11 @@ export class HeroSheetBuilder {
 		sheet.speed = speed.value;
 		sheet.stability = monster.stability;
 		sheet.freeStrike = MonsterLogic.getFreeStrikeDamage(monster);
-		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
+
+		const damageModifiers = MonsterLogic.getDamageModifiers(monster);
+		const immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+		const weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
-		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
 		sheet.weakness = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		sheet.movement = speed.modes.map(m => Format.capitalize(m)).join(', ');
 		sheet.skills = MonsterLogic.getSkills(monster, []).map(s => s.name);

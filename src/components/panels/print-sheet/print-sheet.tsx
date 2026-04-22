@@ -580,8 +580,9 @@ const MonsterSheet = (props: MonsterProps) => {
 	const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
 	const conditions = MonsterLogic.getConditionImmunities(props.monster);
-	const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
-	const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
+	const damageModifiers = MonsterLogic.getDamageModifiers(props.monster);
+	const immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+	const weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 
 	const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 	const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);

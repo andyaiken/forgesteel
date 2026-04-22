@@ -3,7 +3,6 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -314,31 +313,10 @@ export class MonsterLogic {
 		return Collections.sort(conditions, c => c);
 	};
 
-	static getDamageModifiers = (monster: Monster, type: DamageModifierType) => {
-		const modifiers: { damageType: string, value: number }[] = [];
-
-		// Collate from features
-		MonsterLogic.getFeatures(monster)
-			.filter(f => f.type === FeatureType.DamageModifier)
-			.forEach(f => {
-				f.data.modifiers
-					.filter(dm => dm.type === type)
-					.forEach(dm => {
-						const value = ModifierLogic.calculateModifierValue(dm, monster);
-
-						const existing = modifiers.find(x => x.damageType === dm.damageType);
-						if (existing) {
-							existing.value += dm.value;
-						} else {
-							modifiers.push({
-								damageType: dm.damageType,
-								value: value
-							});
-						}
-					});
-			});
-
-		return Collections.sort(modifiers, dm => dm.damageType);
+	static getDamageModifiers = (monster: Monster) => {
+		const features = MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.DamageModifier);
+		return ModifierLogic.getDamageModifiers(features, monster);
 	};
 
 	static getCombatState = (monster: Monster) => {

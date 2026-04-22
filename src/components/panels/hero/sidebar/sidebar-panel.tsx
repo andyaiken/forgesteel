@@ -71,8 +71,9 @@ export const SidebarPanel = (props: Props) => {
 	};
 
 	const conditionImmunities = HeroLogic.getConditionImmunities(props.hero);
-	const damageImmunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-	const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+	const damageModifiers = HeroLogic.getDamageModifiers(props.hero);
+	const damageImmunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
+	const damageWeaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 
 	const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
 	const heroicResources = HeroLogic.getHeroicResources(props.hero);

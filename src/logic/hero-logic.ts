@@ -9,7 +9,6 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
@@ -473,32 +472,11 @@ export class HeroLogic {
 		return Collections.sort(conditions, c => c);
 	};
 
-	static getDamageModifiers = (hero: Hero, type: DamageModifierType) => {
-		const modifiers: { damageType: string, value: number }[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
+	static getDamageModifiers = (hero: Hero) => {
+		const features = HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.DamageModifier)
-			.forEach(f => {
-				f.data.modifiers
-					.filter(dm => dm.type === type)
-					.forEach(dm => {
-						const value = ModifierLogic.calculateModifierValue(dm, hero);
-
-						const existing = modifiers.find(x => x.damageType === dm.damageType);
-						if (existing) {
-							existing.value = Math.max(existing.value, value);
-						} else {
-							modifiers.push({
-								damageType: dm.damageType,
-								value: value
-							});
-						}
-					});
-			});
-
-		return Collections.sort(modifiers, dm => dm.damageType);
+			.filter(f => f.type === FeatureType.DamageModifier);
+		return ModifierLogic.getDamageModifiers(features, hero);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

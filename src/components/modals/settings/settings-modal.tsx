@@ -462,6 +462,13 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
+		const setMinionMultiplier = (value: number) => {
+			const copy = Utils.copy(options);
+			copy.minionMultiplier = value;
+			setOptions(copy);
+			props.setOptions(copy);
+		};
+
 		return (
 			<Expander title='Monster Builder'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
@@ -470,6 +477,7 @@ export const SettingsModal = (props: Props) => {
 					<Toggle label='Monster role' value={options.similarRole} onChange={setSimilarRole} />
 					<Toggle label='Monster organization' value={options.similarOrganization} onChange={setSimilarOrganization} />
 					<Toggle label='Monster size' value={options.similarSize} onChange={setSimilarSize} />
+					<NumberSpin label='Minion multiplier' min={1} value={options.minionMultiplier} onChange={setMinionMultiplier} />
 				</Space>
 			</Expander>
 		);

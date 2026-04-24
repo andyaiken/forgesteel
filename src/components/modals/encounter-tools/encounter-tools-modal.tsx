@@ -29,13 +29,13 @@ export const EncounterToolsModal = (props: Props) => {
 		.forEach(slot => {
 			const existing = monsters.find(m => m.monster.id === slot.monsterID);
 			if (existing) {
-				existing.count += slot.count * MonsterLogic.getRoleMultiplier(existing.monster.role.organization);
+				existing.count += slot.count * MonsterLogic.getRoleMultiplier(props.options.minionMultiplier, existing.monster.role.organization);
 			} else {
 				const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
 				if (monster) {
 					monsters.push({
 						monster: monster,
-						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
+						count: slot.count * MonsterLogic.getRoleMultiplier(props.options.minionMultiplier, monster.role.organization)
 					});
 				}
 			}

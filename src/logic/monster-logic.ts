@@ -224,10 +224,10 @@ export class MonsterLogic {
 		return true;
 	};
 
-	static getRoleMultiplier = (organization: MonsterOrganizationType) => {
+	static getRoleMultiplier = (minionMultiplier: number, organization: MonsterOrganizationType) => {
 		switch (organization) {
 			case MonsterOrganizationType.Minion:
-				return 4;
+				return minionMultiplier;
 		}
 
 		return 1;

@@ -973,7 +973,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-lifebonded-b',
 				name: 'Lifebonded Benefit',
-				description: 'Choose another creature who doesn’t have the Lifebonded complication. When you die, your body disappears until that creature finishes a respite or earns 2 or more Victories. You then appear next to the creature, fully healed.'
+				description: 'Choose another creature who doesn’t have the Lifebonded complication. When you die, your body disappears until that creature finishes a respite or earns 1 or more Victories. You then appear next to the creature, fully healed.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lifebonded-d',

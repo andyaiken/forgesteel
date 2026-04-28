@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -636,7 +636,7 @@ export const EncounterEditPanel = (props: Props) => {
 										<Flex>
 											<Button
 												type='text'
-												icon={<MinusCircleOutlined />}
+												icon={<CloseCircleOutlined />}
 												onClick={() => {
 													const featureIds = groupMalice.features.map(f => f.id);
 													removeMaliceFeatureIds(featureIds);
@@ -644,7 +644,7 @@ export const EncounterEditPanel = (props: Props) => {
 											/>
 											<Button
 												type='text'
-												icon={<PlusCircleOutlined />}
+												icon={<CheckCircleOutlined />}
 												onClick={() => {
 													const featureIds = groupMalice.features.map(f => f.id);
 													addMaliceFeatureIds(featureIds);

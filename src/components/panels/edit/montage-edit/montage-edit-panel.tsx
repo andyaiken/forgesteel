@@ -365,7 +365,6 @@ export const MontageEditPanel = (props: Props) => {
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
-																status={c.characteristics.length < 2 ? 'warning' : ''}
 																mode='multiple'
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
@@ -375,7 +374,6 @@ export const MontageEditPanel = (props: Props) => {
 															/>
 															<HeaderText>Skills</HeaderText>
 															<TextInput
-																status={c.skills === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={c.skills}
@@ -383,8 +381,7 @@ export const MontageEditPanel = (props: Props) => {
 															/>
 															<HeaderText>Abilities</HeaderText>
 															<TextInput
-																status={c.abilities === '' ? 'warning' : ''}
-																placeholder='Skills'
+																placeholder='Abilities'
 																allowClear={true}
 																value={c.abilities}
 																onChange={value => setChallengeAbilities(sectionIndex, challengeIndex, value)}

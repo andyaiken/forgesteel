@@ -11,16 +11,15 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureType } from '@/enums/feature-type';
-import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
@@ -81,15 +80,15 @@ export const TerrainEditPanel = (props: Props) => {
 			updateTerrain(copy);
 		};
 
-		const setRoleType = (value: MonsterRoleType) => {
+		const setRoleType = (value: MonsterRoleType | null) => {
 			const copy = Utils.copy(terrain);
-			copy.role.type = value;
+			copy.role.type = value || MonsterRoleType.NoRole;
 			updateTerrain(copy);
 		};
 
-		const setTerrainRoleType = (value: TerrainRoleType) => {
+		const setTerrainRoleType = (value: TerrainRoleType | null) => {
 			const copy = Utils.copy(terrain);
-			copy.role.terrainType = value;
+			copy.role.terrainType = value || TerrainRoleType.Fortification;
 			updateTerrain(copy);
 		};
 
@@ -157,17 +156,15 @@ export const TerrainEditPanel = (props: Props) => {
 					onChange={setLevel}
 				/>
 				<HeaderText>Role</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(type => ({ label: type, value: type, desc: MonsterLogic.getRoleTypeDescription(type) }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+				<RadioGroup
+					label='Role'
+					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support, MonsterRoleType.NoRole ]}
 					value={terrain.role.type}
 					onChange={setRoleType}
 				/>
-				<Select
-					style={{ width: '100%' }}
-					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(type => ({ label: type, value: type }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+				<RadioGroup
+					label='Type'
+					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ]}
 					value={terrain.role.terrainType}
 					onChange={setTerrainRoleType}
 				/>

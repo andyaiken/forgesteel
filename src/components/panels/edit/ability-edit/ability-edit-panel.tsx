@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Alert, Button, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, AutoComplete, Button, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -16,6 +16,7 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -49,9 +50,9 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const getTypePage = () => {
-		const setTypeUsage = (value: AbilityUsage) => {
+		const setTypeUsage = (value: AbilityUsage | null) => {
 			const copy = Utils.copy(ability);
-			copy.type.usage = value;
+			copy.type.usage = value || AbilityUsage.MainAction;
 			setAbility(copy);
 			props.onChange(copy);
 		};
@@ -116,11 +117,9 @@ export const AbilityEditPanel = (props: Props) => {
 			<div>
 				<HeaderText>Ability Type</HeaderText>
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select usage type'
-						options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.ChampionAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
-						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					<RadioGroup
+						label='Usage'
+						options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.ChampionAction, AbilityUsage.NoAction, AbilityUsage.Other ]}
 						value={ability.type.usage}
 						onChange={setTypeUsage}
 					/>
@@ -210,7 +209,7 @@ export const AbilityEditPanel = (props: Props) => {
 			}
 		};
 
-		const setDistanceMainType = (index: number, value: string) => {
+		const setDistanceMainType = (index: number, value: string | null) => {
 			const copy = Utils.copy(ability);
 
 			switch (value) {
@@ -218,6 +217,7 @@ export const AbilityEditPanel = (props: Props) => {
 					copy.distance[index] = FactoryLogic.distance.createSelf();
 					break;
 				case 'Melee':
+				case null:
 					copy.distance[index] = FactoryLogic.distance.createMelee();
 					break;
 				case 'Ranged':
@@ -338,76 +338,61 @@ export const AbilityEditPanel = (props: Props) => {
 							>
 								<Space orientation='vertical' style={{ width: '100%' }}>
 									<HeaderText>Distance Type</HeaderText>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Distance'
-										options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ].map(option => ({ value: option }))}
-										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+									<RadioGroup
+										label='Distance Type'
+										options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ]}
 										value={getDistanceMainType(n)}
 										onChange={value => setDistanceMainType(n, value)}
 									/>
 									{
 										getDistanceMainType(n) === 'Area' ?
-											<HeaderText>Area Type</HeaderText>
-											: null
-									}
-									{
-										getDistanceMainType(n) === 'Area' ?
-											<Select
-												style={{ width: '100%' }}
-												disabled={getDistanceMainType(n) !== 'Area'}
-												placeholder='Area type'
-												options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
-												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-												value={distance.type}
-												onChange={value => setDistanceType(n, value)}
-											/>
+											<>
+												<HeaderText>Area Type</HeaderText>
+												<Segmented
+													block={true}
+													options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option, label: option }))}
+													value={distance.type}
+													onChange={value => setDistanceType(n, value)}
+												/>
+											</>
 											: null
 									}
 									{
 										(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
-											<HeaderText>Value</HeaderText>
-											: null
-									}
-									{
-										(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
-											<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
-											: null
-									}
-									{
-										getDistanceMainType(n) === 'Line' ?
-											<HeaderText>Value 2</HeaderText>
+											<>
+												<HeaderText>Value</HeaderText>
+												<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
+											</>
 											: null
 									}
 									{
 										getDistanceMainType(n) === 'Line' ?
-											<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
+											<>
+												<HeaderText>Value 2</HeaderText>
+												<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
+											</>
 											: null
 									}
 									{
 										(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
-											<HeaderText>Within</HeaderText>
-											: null
-									}
-									{
-										(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
-											<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
-											: null
-									}
-									{
-										getDistanceMainType(n) === 'Special' ?
-											<HeaderText>Special</HeaderText>
+											<>
+												<HeaderText>Within</HeaderText>
+												<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
+											</>
 											: null
 									}
 									{
 										getDistanceMainType(n) === 'Special' ?
-											<TextInput
-												status={distance.special === '' ? 'warning' : ''}
-												placeholder='Special'
-												allowClear={true}
-												value={distance.special}
-												onChange={value => setDistanceSpecial(n, value)}
-											/>
+											<>
+												<HeaderText>Special</HeaderText>
+												<TextInput
+													status={distance.special === '' ? 'warning' : ''}
+													placeholder='Special'
+													allowClear={true}
+													value={distance.special}
+													onChange={value => setDistanceSpecial(n, value)}
+												/>
+											</>
 											: null
 									}
 								</Space>
@@ -421,11 +406,15 @@ export const AbilityEditPanel = (props: Props) => {
 					}
 				</Space>
 				<HeaderText>Target</HeaderText>
-				<TextInput
+				<AutoComplete
+					style={{ width: '100%' }}
 					status={ability.target === '' ? 'warning' : ''}
+					options={AbilityLogic.getTargets().map(option => ({ value: option, label: option }))}
+					optionRender={o => <div className='ds-text'>{o.data.label}</div>}
 					placeholder='Target'
-					allowClear={true}
+					showSearch={{ filterOption: true }}
 					value={ability.target}
+					onSelect={setTarget}
 					onChange={setTarget}
 				/>
 			</div>
@@ -562,21 +551,21 @@ export const AbilityEditPanel = (props: Props) => {
 
 										return (
 											<Space orientation='vertical' style={{ width: '100%' }}>
-												<HeaderText>Name</HeaderText>
+												<HeaderText>Header</HeaderText>
 												<TextInput
 													status={section.name === '' ? 'warning' : ''}
-													placeholder='Name'
+													placeholder='Header'
 													allowClear={true}
 													value={section.name}
 													onChange={setFieldSectionName}
 												/>
-												<HeaderText>Effect</HeaderText>
+												<HeaderText>Text</HeaderText>
 												<MultiLine
-													placeholder='Effect'
+													placeholder='Text'
 													value={section.effect}
 													onChange={setFieldSectionEffect}
 												/>
-												<HeaderText>Cost</HeaderText>
+												<HeaderText>Value</HeaderText>
 												<NumberSpin min={0} value={section.value} suffix={ability.repeatable ? '+' : undefined} onChange={setFieldSectionValue} />
 												<Toggle label='Repeatable' value={section.repeatable} onChange={setFieldSectionRepeatable} />
 											</Space>
@@ -621,18 +610,24 @@ export const AbilityEditPanel = (props: Props) => {
 										return (
 											<Space orientation='vertical' style={{ width: '100%' }}>
 												<HeaderText>Characteristics / Bonus</HeaderText>
-												<Select
-													style={{ width: '100%' }}
-													disabled={section.roll.bonus > 0}
-													status={(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ? 'warning' : ''}
-													placeholder='Characteristics'
-													mode='multiple'
-													options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+												<RadioGroup<Characteristic>
+													label='Characteristics'
+													multiple={true}
+													options={[
+														Characteristic.Might,
+														Characteristic.Agility,
+														Characteristic.Reason,
+														Characteristic.Intuition,
+														Characteristic.Presence
+													]}
 													value={section.roll.characteristic}
 													onChange={setRollSectionCharacteristics}
 												/>
-												<NumberSpin disabled={section.roll.characteristic.length > 0} label='Bonus' min={0} value={section.roll.bonus} onChange={setRollSectionBonus} />
+												{
+													section.roll.characteristic.length === 0 ?
+														<NumberSpin label='Bonus' min={0} value={section.roll.bonus} onChange={setRollSectionBonus} />
+														: null
+												}
 												{
 													(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ?
 														<Alert

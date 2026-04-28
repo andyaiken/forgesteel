@@ -34,7 +34,7 @@ export const FeatureListEditPanel = (props: Props) => {
 	const addFeature = (type: FeatureType) => {
 		const f = {
 			id: Utils.guid(),
-			name: '',
+			name: type,
 			description: '',
 			type: type,
 			data: FeatureLogic.getFeatureData(type)

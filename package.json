@@ -1,29 +1,26 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.35.0",
+	"version": "14.36.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
-	"homepage": "https://andyaiken.github.io/forgesteel/",
+	"homepage": "https://forgesteel.net/",
 	"scripts": {
 		"start": "npm ci && vite --host",
 		"update": "npx npm-check-updates --peer --interactive --format group",
 		"lint": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto",
-		"fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",
+		"lint:fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",
 		"test": "vitest",
 		"check": "npm run lint && tsc -p tsconfig.json && vitest run && npm audit",
-		"build": "vite build",
-		"predeploy": "npm run check && npm run build",
-		"deploy": "gh-pages -d dist"
+		"build": "vite build"
 	},
 	"dependencies": {
-		"@ant-design/icons": "^6.1.1",
+		"@ant-design/icons": "^6.2.2",
 		"@dnd-kit/core": "^6.3.1",
 		"@mdxeditor/editor": "^3.55.0",
 		"@types/showdown": "^2.0.6",
-		"antd": "^6.3.6",
+		"antd": "^6.3.7",
 		"axios": "^1.15.2",
-		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^4.2.1",
 		"localforage": "^1.10.0",
@@ -48,8 +45,8 @@
 		"eslint": "^10.2.1",
 		"globals": "^17.5.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.59.0",
-		"vite": "^8.0.9",
+		"typescript-eslint": "^8.59.1",
+		"vite": "^8.0.10",
 		"vitest": "^4.1.5"
 	}
 }

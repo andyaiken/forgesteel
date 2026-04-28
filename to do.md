@@ -1,6 +1,8 @@
 # Development Plans
 
-* Ensure beastheart companions incorporate controller's stamina / might bonus to free strike damage
+* Improve editors
+  * Damage bonus editor
+
 * Update:
   * Vampire
   * Vessel

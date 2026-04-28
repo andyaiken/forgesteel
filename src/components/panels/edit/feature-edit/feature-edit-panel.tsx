@@ -41,6 +41,10 @@ export const FeatureEditPanel = (props: Props) => {
 		const copy = Utils.copy(feature);
 		copy.name = name;
 		copy.description = desc;
+		if (copy.type === FeatureType.Ability) {
+			copy.data.ability.name = name;
+			copy.data.ability.description = desc;
+		}
 		setFeature(copy);
 		props.onChange(copy);
 	};
@@ -56,6 +60,10 @@ export const FeatureEditPanel = (props: Props) => {
 	const setData = (value: FeatureData) => {
 		const copy = Utils.copy(feature);
 		copy.data = value;
+		if (copy.type === FeatureType.Ability) {
+			copy.name = copy.data.ability.name;
+			copy.description = copy.data.ability.description;
+		}
 		setFeature(copy);
 		props.onChange(copy);
 	};

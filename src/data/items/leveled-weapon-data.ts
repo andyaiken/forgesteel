@@ -771,7 +771,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-steeltongue-9',
 						name: '',
-						description: 'y, if you use a signature ability using the weapon that targets one or more bleeding creatures, you can use the same ability again immediately as a maneuver.'
+						description: 'If you use a signature ability using the weapon that targets one or more bleeding creatures, you can use the same ability again immediately as a maneuver.'
 					}),
 					FactoryLogic.feature.createAbilityDistance({
 						id: 'item-steeltongue-9a',

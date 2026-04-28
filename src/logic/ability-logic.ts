@@ -70,6 +70,26 @@ export class AbilityLogic {
 		].sort();
 	};
 
+	static getTargets = () => {
+		return Collections.sort([
+			'Self',
+			'Each creature and object in the area',
+			'Each creature in the area',
+			'Each enemy in the area',
+			'Each ally in the area',
+			'One creature or object',
+			'One creature',
+			'One enemy',
+			'One ally',
+			'Two creatures or objects',
+			'Two creatures',
+			'Two enemies',
+			'Two allies',
+			'One creature or object per minion',
+			'One creature per minion'
+		], a => a);
+	};
+
 	static getPanelWidth = (ability: Ability) => {
 		const descLength = Math.round(ability.description.split(' ').length / 10);
 		const textLength = Collections.sum(ability.sections.filter(s => s.type === 'text'), s => Math.round(s.text.split(' ').length / 10));

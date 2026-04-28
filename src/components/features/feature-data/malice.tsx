@@ -1,10 +1,11 @@
-import { Button, Empty, Flex, Select, Space } from 'antd';
+import { Button, Flex, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureMaliceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';

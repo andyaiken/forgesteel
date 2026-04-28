@@ -1,8 +1,9 @@
-import { Alert, Button, Empty, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'antd';
+import { Alert, Button, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/utils/data-service';
+import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';

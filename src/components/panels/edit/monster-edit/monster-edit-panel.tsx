@@ -31,6 +31,7 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { RetainerLogic } from '@/logic/retainer-logic';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -203,9 +204,9 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setRoleType = (value: MonsterRoleType) => {
+		const setRoleType = (value: MonsterRoleType | null) => {
 			const copy = Utils.copy(monster);
-			copy.role.type = value;
+			copy.role.type = value || MonsterRoleType.NoRole;
 			if (copy.retainer) {
 				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 			}
@@ -213,9 +214,9 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setRoleOrganization = (value: MonsterOrganizationType) => {
+		const setRoleOrganization = (value: MonsterOrganizationType | null) => {
 			const copy = Utils.copy(monster);
-			copy.role.organization = value;
+			copy.role.organization = value || MonsterOrganizationType.NoOrganization;
 			if (copy.role.organization === MonsterOrganizationType.Retainer) {
 				const lvl4 = FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -293,19 +294,15 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Level</HeaderText>
 				<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
 				<HeaderText>Role</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select organization'
-					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
-					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+				<RadioGroup
+					label='Organization'
+					options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer, MonsterOrganizationType.NoOrganization ]}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select role'
-					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
-					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+				<RadioGroup
+					label='Role'
+					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support, MonsterRoleType.NoRole ]}
 					value={monster.role.type}
 					onChange={setRoleType}
 				/>

@@ -1,8 +1,9 @@
-import { Divider, Empty, Tag } from 'antd';
+import { Divider, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';

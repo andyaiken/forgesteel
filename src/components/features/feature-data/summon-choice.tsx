@@ -1,8 +1,9 @@
-import { Button, Drawer, Empty, Flex, Space } from 'antd';
+import { Button, Drawer, Flex, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureSummonChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';

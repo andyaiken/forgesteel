@@ -1,9 +1,10 @@
-import { Button, Divider, Empty, Flex, Segmented, Space } from 'antd';
+import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureHeroicResourceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';

@@ -14,6 +14,7 @@ import { AuthPage } from '@/components/pages/auth/auth-page';
 import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
+import { ClocktowerPage } from '@/components/pages/clocktower/clocktower-page';
 import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -2058,6 +2059,17 @@ export const Main = (props: Props) => {
 							<TransferPage
 								connectionSettings={connectionSettings}
 								options={options}
+							/>
+						}
+					/>
+				</Route>
+				<Route path='clocktower'>
+					<Route
+						index={true}
+						element={
+							<ClocktowerPage
+								options={options}
+								params={footerParams}
 							/>
 						}
 					/>

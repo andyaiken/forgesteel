@@ -295,13 +295,12 @@ export const MonsterEditPanel = (props: Props) => {
 				<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
 				<HeaderText>Role</HeaderText>
 				<RadioGroup
-					label='Organization'
 					options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer, MonsterOrganizationType.NoOrganization ]}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>
+				<Divider size='small' />
 				<RadioGroup
-					label='Role'
 					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support, MonsterRoleType.NoRole ]}
 					value={monster.role.type}
 					onChange={setRoleType}

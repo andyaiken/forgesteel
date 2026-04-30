@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button, Divider, Space } from 'antd';
 import { Feature, FeatureDamageModifierData } from '@/models/feature';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -115,13 +115,12 @@ export const EditDamageModifier = (props: EditProps) => {
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>{FormatLogic.getDamageModifier(mod)}</HeaderText>
 							<RadioGroup
-								label='Damage Type'
 								options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ]}
 								value={mod.damageType}
 								onChange={value => setDamageModifierDamageType(data, n, value)}
 							/>
+							<Divider size='small' />
 							<RadioGroup
-								label='Modifier Type'
 								options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ]}
 								value={mod.type}
 								onChange={value => setDamageModifierType(data, n, value)}

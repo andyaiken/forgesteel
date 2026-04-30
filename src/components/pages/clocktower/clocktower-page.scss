@@ -1,0 +1,24 @@
+.clocktower-page {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(230, 230, 230);
+
+	.clocktower-page-content {
+		height: 100%;
+		background-color: rgb(230, 230, 230);
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		overflow-y: auto;
+	}
+}
+
+html[data-theme="dark"] {
+	.clocktower-page {
+		.clocktower-page-content {
+			background-color: rgb(55, 55, 55);
+		}
+	}
+}

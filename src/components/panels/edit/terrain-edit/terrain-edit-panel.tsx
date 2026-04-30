@@ -1,4 +1,4 @@
-import { Button, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Divider, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { FeatureAbility, FeatureText } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -157,13 +157,12 @@ export const TerrainEditPanel = (props: Props) => {
 				/>
 				<HeaderText>Role</HeaderText>
 				<RadioGroup
-					label='Role'
 					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support, MonsterRoleType.NoRole ]}
 					value={terrain.role.type}
 					onChange={setRoleType}
 				/>
+				<Divider size='small' />
 				<RadioGroup
-					label='Type'
 					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ]}
 					value={terrain.role.terrainType}
 					onChange={setTerrainRoleType}

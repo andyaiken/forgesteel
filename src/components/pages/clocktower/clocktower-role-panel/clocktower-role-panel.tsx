@@ -26,12 +26,15 @@ export const ClocktowerRolePanel = (props: RolePanelProps) => {
 				</HeaderText>
 				{
 					!!props.role.role.image && (props.role.role.image.length > 0) ?
-						<img src={props.role.role.image[0]} />
+						<div className='clocktower-token'>
+							<img className='clocktower-token-image' src={props.role.role.image[0]} />
+						</div>
 						: null
 				}
 				<div className='ds-text flavor-text'>
 					{`"${props.role.role.flavor}"`}
 				</div>
+				<Divider />
 				<Field label='Ability' value={props.role.role.ability} />
 				<Divider />
 				<Markdown text={props.role.details.description} />

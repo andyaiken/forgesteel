@@ -1,4 +1,4 @@
-import { ClocktowerRole, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
+import { ClocktowerRole, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 
 const script: ClocktowerScriptInfo = {
@@ -23,7 +23,6 @@ const script: ClocktowerScriptInfo = {
 	otherNight: [
 		'dusk',
 		'memonek',
-		'antihero',
 		'censor',
 		'angulotl',
 		'criminal',
@@ -42,8 +41,6 @@ const script: ClocktowerScriptInfo = {
 		'highelf',
 		'troubadour',
 		'warden',
-		'tactician',
-		'hivequeen',
 		'dawn'
 	]
 };
@@ -237,11 +234,11 @@ const tactician: ClocktowerRole = {
 	name: 'Tactician',
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
-	ability: 'Each night*, choose two players: if either dies tonight,  the other learns that player’s alignment, as do you.',
+	ability: 'Each night*, choose two players: if one dies tonight, visit the Storyteller tomorrow with the other player to learn the dead player’s role and alignment.',
 	firstNight: 0,
 	firstNightReminder: '',
 	otherNight: 0,
-	otherNightReminder: 'Choose 2 players to mark; if one is killed, wake and learn their role. :reminder:',
+	otherNightReminder: 'Choose 2 players to mark. :reminder:',
 	reminders: [
 		'Marked',
 		'Marked'
@@ -390,7 +387,7 @@ const memonek: ClocktowerRole = {
 	firstNight: 0,
 	firstNightReminder: '',
 	otherNight: 0,
-	otherNightReminder: '',
+	otherNightReminder: 'If executed, the Demon sees the Grimoire.',
 	reminders: [
 		'Sees Grimoire tonight'
 	],
@@ -530,7 +527,7 @@ const hivequeen: ClocktowerRole = {
 	firstNight: 0,
 	firstNightReminder: '',
 	otherNight: 0,
-	otherNightReminder: 'Choose a player; they die. :reminder: Choose a minion to swap roles with.',
+	otherNightReminder: 'Choose a player; they die. :reminder: Choose a Minion to swap roles with.',
 	reminders: [
 		'Killed'
 	],
@@ -711,4 +708,100 @@ export class ClocktowerData {
 		polder,
 		voicelessTalker
 	];
+
+	static detailsMap: { [ id: string ]: ClocktowerRoleDetails } = {
+		agent: {
+			description: 'Each time you use this ability, you must publicly claim a different role; if you claim a role you have already claimed, you gain no benefit that night. The question you ask the Storyteller can be anything, but the Storyteller’s answer is only guaranteed to be true if the claimed role is in play; otherwise, the answer may be arbitrary or misleading. If you are drunk or poisoned, the Storyteller may give false information regardless of whether the role is in play.'
+		},
+		censor: {
+			description: 'A player who is “judged” and is evil cannot use their ability that night, including passive or triggered abilities. This does not affect good players. If the chosen player becomes evil later that night, they are still prevented from acting.'
+		},
+		conduit: {
+			description: 'The chosen player is protected from all sources of drunkenness and poisoning until dusk, including ongoing effects. If they are already drunk or poisoned, those conditions are removed for the duration. This protection does not extend beyond dusk and does not affect other players.'
+		},
+		elementalist: {
+			description: 'This ability triggers automatically the first time you would be executed. The nominator dies instead of you, and the execution ends. After this, you are permanently drunk.'
+		},
+		fury: {
+			description: 'You choose two players at night. If either of them is the Demon, you die; otherwise, the Storyteller chooses one of the two players to die. If you are drunk or poisoned, nothing happens.'
+		},
+		highelf: {
+			description: 'Each night, you learn two Townsfolk roles, at least one of which is currently in play. Once all in-play Townsfolk have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		},
+		null: {
+			description: 'While you are sober and healthy, your living neighbours cannot be made drunk or poisoned by any means. If you become drunk or poisoned, this protection immediately stops. This does not remove existing drunkenness or poison already affecting your neighbours.'
+		},
+		revenant: {
+			description: 'When you die, you lose the Revenant ability and gain the ability of a random dead Townsfolk before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
+		},
+		shadow: {
+			description: 'Each day, you must publicly state how many evil players you believe are alive. That night, you learn whether your guess was correct, too low, or too high based on the current game state. If you are drunk or poisoned, this feedback may be incorrect.'
+		},
+		tactician: {
+			description: 'If one of your marked players dies that night, you and the surviving marked player learn the dead player’s role and alignment. If both die, no information is learned. If either you or the surviving marked player is drunk or poisoned, they may receive incorrect information.'
+		},
+		talent: {
+			description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately use its ability as if you were that role. This use is still affected by drunkenness or poisoning. After using this ability, you lose it permanently.'
+		},
+		troubadour: {
+			description: 'Each night, you learn two Minion roles, at least one of which is currently in play. Once all in-play Minions have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		},
+		warden: {
+			description: 'Each night, you learn two Outsider roles, at least one of which is currently in play. Once all in-play Outsiders have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		},
+		coward: {
+			description: 'If you are nominated, the nomination immediately succeeds without a vote, and you are executed and die. This happens even if the nomination would otherwise fail or be withdrawn, or you would usually be unable to die for some reason.'
+		},
+		devil: {
+			description: 'You are shown a Minion token at the start of the game, and although you do not have this Minion’s ability, the Storyteller will act as if you do. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
+		},
+		disgraced: {
+			description: 'When a player of your alignment is executed, the Storyteller may choose for you to die instead. This is not guaranteed and may be used to create uncertainty.'
+		},
+		memonek: {
+			description: 'If you are executed, that night (just after dusk) the Demon is shown the Grimoire.'
+		},
+		angulotl: {
+			description: 'The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
+		},
+		duskelf: {
+			description: 'If the Demon is executed while six or more players are alive (including the Demon but not including Travellers), they do not die but instead register as dead. The day ends and the game continues as if the Demon had died, but they remain alive and continue acting. This ability can only be used once.'
+		},
+		lightbender: {
+			description: 'If you would be executed and you have at least one immediate neighbour who is alive, the Storyteller chooses one of them to be executed instead of you.'
+		},
+		rival: {
+			description: 'You register as a Townsfolk to all abilities that learn or depend upon roles. One good player is told that a Rival is in play, but not who you are, and you are not told who they are.'
+		},
+		baleeye: {
+			description: 'You register as a Townsfolk to Townsfolk abilities, meaning information roles will treat you as good. This does not affect non-Townsfolk abilities.'
+		},
+		blightphage: {
+			description: 'Once per game, you may resurrect a dead Minion as a different Minion. The new Minion gains their new ability immediately. This happens after deaths but before information is given.'
+		},
+		hivequeen: {
+			description: 'Each night, just before dawn, you may choose to swap roles with a living Minion. The Minion does not have to agree to this swap. Both players keep their alignment but exchange abilities. This can create chains of changing identities.'
+		},
+		torlas: {
+			description: 'When a Townsfolk ability targets you, it instead targets one of your living Townsfolk neighbours, chosen by the Storyteller. This does not affect non-Townsfolk abilities.'
+		},
+		antihero: {
+			description: 'Each time you are nominated, your alignment immediately flips. This happens before the vote resolves and can occur multiple times per game.'
+		},
+		aristocrat: {
+			description: 'When you nominate a player, they are drunk until dusk regardless of whether the nomination succeeds. This happens immediately.'
+		},
+		criminal: {
+			description: 'The chosen player’s targeted abilities will affect a different player instead. The Storyteller determines the new target. This does not affect abilities that do not target.'
+		},
+		disciple: {
+			description: 'You may resurrect a dead player once per game. That player returns with no ability but retains their alignment and can still vote.'
+		},
+		polder: {
+			description: 'If you are nominated and survive, that night one player of your alignment learns the nominator’s role. You are told who received this information. If you are drunk or poisoned, this may not function correctly.'
+		},
+		voicelessTalker: {
+			description: 'Each night, you swap the roles (but not alignments) of two players, then choose one of them to be poisoned until dusk. You cannot nominate, but you may still vote and speak.'
+		}
+	};
 };

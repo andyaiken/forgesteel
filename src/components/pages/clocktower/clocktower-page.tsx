@@ -1,17 +1,19 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { Button, Tabs } from 'antd';
+import { Button, Divider, Drawer, Flex, Tabs } from 'antd';
+import { ClocktowerRole, ClocktowerRoleDetails } from '@/models/clocktower';
+import { CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ClocktowerData } from '@/data/clocktower-data';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
-import { ClocktowerRole } from '@/models/clocktower';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
-import { CopyOutlined } from '@ant-design/icons';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { useState } from 'react';
 
 import './clocktower-page.scss';
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 export const ClocktowerPage = (props: Props) => {
+	const [ selectedRole, setSelectedRole ] = useState<{ role: ClocktowerRole, details: ClocktowerRoleDetails } | null>(null);
+
 	const copyToClipboard = () => {
 		const json = JSON.stringify(ClocktowerData.script);
 		window.navigator.clipboard.writeText(json);
@@ -28,20 +32,24 @@ export const ClocktowerPage = (props: Props) => {
 
 	const getRoles = (team: ClocktowerTeam) => {
 		const roles = ClocktowerLogic.getCharacters(ClocktowerData.script)
-			.filter(r => (r as ClocktowerRole).team === team);
-
-		if (roles.length === 0) {
-			return (
-				<Empty />
-			);
-		}
+			.filter(r => (r as ClocktowerRole).team === team)
+			.map(r => ClocktowerLogic.getRoleDetails(ClocktowerData.script, ClocktowerData.detailsMap, r.id))
+			.filter(r => !!r);
 
 		return (
 			<>
 				{
 					roles.map(r => (
-						<Field key={r.id} label={r.name} value={r.ability} />
+						<Flex key={r.role.id} align='center' gap={5}>
+							<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedRole(r)} />
+							<Field label={r.role.name} value={r.role.ability} />
+						</Flex>
 					))
+				}
+				{
+					roles.length === 0 ?
+						<Empty />
+						: null
 				}
 			</>
 		);
@@ -144,10 +152,10 @@ export const ClocktowerPage = (props: Props) => {
 									<>
 										{
 											info.firstNight?.map((id, n) => {
-												const role = ClocktowerLogic.getRole(ClocktowerData.script, id);
+												const role = ClocktowerLogic.getRoleDetails(ClocktowerData.script, ClocktowerData.detailsMap, id);
 												if (role) {
 													return (
-														<Field key={n} label={role.name} value={role.firstNightReminder || '-'} />
+														<Field key={n} label={role.role.name} value={role.role.firstNightReminder || '-'} />
 													);
 												}
 
@@ -168,10 +176,10 @@ export const ClocktowerPage = (props: Props) => {
 									<>
 										{
 											info.otherNight?.map((id, n) => {
-												const role = ClocktowerLogic.getRole(ClocktowerData.script, id);
+												const role = ClocktowerLogic.getRoleDetails(ClocktowerData.script, ClocktowerData.detailsMap, id);
 												if (role) {
 													return (
-														<Field key={n} label={role.name} value={role.otherNightReminder || '-'} />
+														<Field key={n} label={role.role.name} value={role.role.otherNightReminder || '-'} />
 													);
 												}
 
@@ -194,6 +202,22 @@ export const ClocktowerPage = (props: Props) => {
 					options={props.options}
 				/>
 			</div>
+			<Drawer open={!!selectedRole} onClose={() => setSelectedRole(null)} closeIcon={null} size={500}>
+				<Modal
+					content={
+						selectedRole ?
+							<div style={{ padding: '0 20px 20px 20px' }}>
+								<HeaderText level={1}>{selectedRole.role.name}</HeaderText>
+								<div className='ds-text' style={{ fontStyle: 'italic', opacity: '0.7' }}>{selectedRole.role.flavor}</div>
+								<div className='ds-text'>{selectedRole.role.ability}</div>
+								<Divider />
+								<div className='ds-text'>{selectedRole.details.description}</div>
+							</div>
+							: null
+					}
+					onClose={() => setSelectedRole(null)}
+				/>
+			</Drawer>
 		</ErrorBoundary>
 	);
 };

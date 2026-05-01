@@ -1,4 +1,4 @@
-import { ClocktowerRole, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
+import { ClocktowerRole, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
 
 export class ClocktowerLogic {
 	static getScriptInfo = (script: ClocktowerScript) => {
@@ -16,12 +16,15 @@ export class ClocktowerLogic {
 			.map(r => r as ClocktowerRole);
 	};
 
-	static getRole = (script: ClocktowerScript, roleID: string) => {
+	static getRoleDetails = (script: ClocktowerScript, detailsMap: { [ id: string ]: ClocktowerRoleDetails }, roleID: string) => {
 		const role = script.find(i => i.id === roleID);
 		if (!role) {
 			return null;
 		}
 
-		return role as ClocktowerRole;
+		return {
+			role: role as ClocktowerRole,
+			details: detailsMap[role.id]
+		};
 	};
 };

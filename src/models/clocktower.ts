@@ -29,6 +29,10 @@ export interface ClocktowerRole {
 	jinxes?: ClocktowerJinx[];
 }
 
+export interface ClocktowerRoleDetails {
+	description: string;
+}
+
 export interface ClocktowerScriptInfo {
 	id: '_meta';
 	name: string;

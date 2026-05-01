@@ -55,8 +55,8 @@ const agent: ClocktowerRole = {
 	id: 'agent',
 	name: 'Agent',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I count the missing as carefully as the present.',
@@ -72,8 +72,8 @@ const censor: ClocktowerRole = {
 	id: 'censor',
 	name: 'Censor',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Speak not tonight. I have judged you wanting.',
@@ -88,8 +88,8 @@ const conduit: ClocktowerRole = {
 	id: 'conduit',
 	name: 'Conduit',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Through me, no corruption flows; faith is our armour.',
@@ -105,8 +105,8 @@ const elementalist: ClocktowerRole = {
 	id: 'elementalist',
 	name: 'Elementalist',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Strike at me, and you will find that there are delightful consequences.',
@@ -120,8 +120,8 @@ const fury: ClocktowerRole = {
 	id: 'fury',
 	name: 'Fury',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I’m not afraid to burn with you.',
@@ -136,8 +136,8 @@ const highElf: ClocktowerRole = {
 	id: 'highelf',
 	name: 'High Elf',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'The truth is merely a matter of careful observation.',
@@ -162,8 +162,8 @@ const nll: ClocktowerRole = {
 	id: 'null',
 	name: 'Null',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Within my null field, the world behaves as it should.',
@@ -178,8 +178,8 @@ const revenant: ClocktowerRole = {
 	id: 'revenant',
 	name: 'Revenant',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I have died before. This is merely an inconvenience.',
@@ -191,8 +191,8 @@ const shadow: ClocktowerRole = {
 	id: 'shadow',
 	name: 'Shadow',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
@@ -209,8 +209,8 @@ const tactician: ClocktowerRole = {
 	id: 'tactician',
 	name: 'Tactician',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
@@ -226,8 +226,8 @@ const talent: ClocktowerRole = {
 	id: 'talent',
 	name: 'Talent',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Give me a moment, and I will be whoever we need.',
@@ -242,8 +242,8 @@ const troubadour: ClocktowerRole = {
 	id: 'troubadour',
 	name: 'Troubadour',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Every villain has a name. I will sing them all.',
@@ -262,8 +262,8 @@ const warden: ClocktowerRole = {
 	id: 'warden',
 	name: 'Warden',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'The strange are catalogued. The dangerous, remembered.',
@@ -287,8 +287,8 @@ const coward: ClocktowerRole = {
 	id: 'coward',
 	name: 'Coward',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'Please don’t hurt me.',
@@ -299,8 +299,8 @@ const devil: ClocktowerRole = {
 	id: 'devil',
 	name: 'Devil',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'They told me I was one of them. I believed them.',
@@ -326,8 +326,8 @@ const disgraced: ClocktowerRole = {
 	id: 'disgraced',
 	name: 'Disgraced',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
@@ -338,8 +338,8 @@ const memonek: ClocktowerRole = {
 	id: 'memonek',
 	name: 'Memonek',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
@@ -358,8 +358,8 @@ const angulotl: ClocktowerRole = {
 	id: 'angulotl',
 	name: 'Angulotl',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The poison is already in you. Can you not feel it?',
@@ -375,8 +375,8 @@ const duskElf: ClocktowerRole = {
 	id: 'duskelf',
 	name: 'Dusk Elf',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The magics of Equinox can hide almost anything.',
@@ -391,8 +391,8 @@ const lightbender: ClocktowerRole = {
 	id: 'lightbender',
 	name: 'Lightbender',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The blade falls - just not where you aimed it.',
@@ -403,8 +403,8 @@ const rival: ClocktowerRole = {
 	id: 'rival',
 	name: 'Rival',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'I’m exactly like you… except I’m just a little better at it.',
@@ -422,8 +422,8 @@ const baleEye: ClocktowerRole = {
 	id: 'baleeye',
 	name: 'Bale Eye',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'The eye does not lie. It simply ensures that what you see is never the truth.',
@@ -439,8 +439,8 @@ const blightPhage: ClocktowerRole = {
 	id: 'blightphage',
 	name: 'Blight Phage',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'Death is not the end of your service. You can be repurposed.',
@@ -456,8 +456,8 @@ const hiveQueen: ClocktowerRole = {
 	id: 'hivequeen',
 	name: 'Hive Queen',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'There is no ‘I’. There is only the role that must be filled.',
@@ -472,8 +472,8 @@ const torlas: ClocktowerRole = {
 	id: 'torlas',
 	name: 'Torlas',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png'
+		'https://forgesteel.net/assets/clocktower-e.png',
+		'https://forgesteel.net/assets/clocktower-g.png'
 	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'Strike at me if you must, but know that every action has a consequence. I merely decide who suffers it.',
@@ -492,9 +492,9 @@ const antihero: ClocktowerRole = {
 	id: 'antihero',
 	name: 'Antihero',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Push me, and I will become what you feared.',
@@ -505,9 +505,9 @@ const aristocrat: ClocktowerRole = {
 	id: 'aristocrat',
 	name: 'Aristocrat',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
@@ -521,9 +521,9 @@ const criminal: ClocktowerRole = {
 	id: 'criminal',
 	name: 'Criminal',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'You meant well. That is not what will happen.',
@@ -539,9 +539,9 @@ const disciple: ClocktowerRole = {
 	id: 'disciple',
 	name: 'Disciple',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Rise. Your purpose is not yet fulfilled.',
@@ -557,9 +557,9 @@ const polder: ClocktowerRole = {
 	id: 'polder',
 	name: 'Polder',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'How dare you raise your hand against one so small?!',
@@ -574,9 +574,9 @@ const voicelessTalker: ClocktowerRole = {
 	id: 'voicelesstalker',
 	name: 'Voiceless Talker',
 	image: [
-		'https://forgesteel.net/assets/clocktower/clocktower-n.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-g.png',
-		'https://forgesteel.net/assets/clocktower/clocktower-e.png'
+		'https://forgesteel.net/assets/clocktower-n.png',
+		'https://forgesteel.net/assets/clocktower-g.png',
+		'https://forgesteel.net/assets/clocktower-e.png'
 	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Come and speak to me, and perhaps I will change your mind.',

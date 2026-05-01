@@ -14,7 +14,7 @@ export interface ClocktowerRole {
 	id: string;
 	name: string;
 	edition?: string;
-	image?: string | string[];
+	image?: string[];
 	team: ClocktowerTeam;
 	flavor?: string;
 	ability: string;

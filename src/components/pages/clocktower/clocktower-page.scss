@@ -13,6 +13,12 @@
 		gap: 10px;
 		overflow-y: auto;
 	}
+
+	.image {
+		width: 20px;
+		height: 20px;
+		opacity: 0;
+	}
 }
 
 html[data-theme="dark"] {

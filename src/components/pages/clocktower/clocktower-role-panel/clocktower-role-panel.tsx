@@ -24,6 +24,11 @@ export const ClocktowerRolePanel = (props: RolePanelProps) => {
 				>
 					{props.role.role.name}
 				</HeaderText>
+				{
+					!!props.role.role.image && (props.role.role.image.length > 0) ?
+						<img src={props.role.role.image[0]} />
+						: null
+				}
 				<div className='ds-text flavor-text'>
 					{`"${props.role.role.flavor}"`}
 				</div>

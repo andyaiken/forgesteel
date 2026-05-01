@@ -44,6 +44,12 @@ export const useNavigation = () => {
 		},
 		goToTransfer: () => {
 			return navigate('/transfer');
+		},
+		goToBackup: () => {
+			return navigate('/backup');
+		},
+		goToClocktower: () => {
+			return navigate('/clocktower');
 		}
 	};
 };

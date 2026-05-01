@@ -1,5 +1,5 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, EllipsisOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Flex, Popover, Segmented, Space } from 'antd';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
@@ -19,8 +19,6 @@ import { TipPanel } from '@/components/panels/tip/tip-panel';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
-
-import pbds from '@/assets/powered-by-draw-steel.png';
 
 import './welcome-page.scss';
 
@@ -43,12 +41,32 @@ export const WelcomePage = (props: Props) => {
 	]);
 	const [ showTips, setShowTips ] = useState<boolean>(true);
 	const [ tipIndex, setTipIndex ] = useState<number>(0);
+	const navigation = useNavigation();
+
+	const topNav = (
+		<ButtonGroup
+			buttons={[
+				{
+					type: 'dropdown',
+					icon: <EllipsisOutlined />,
+					popover: (
+						<Space orientation='vertical'>
+							<Button block={true} type='text' onClick={() => navigation.goToBackup()}>Backup</Button>
+							<Button block={true} type='text' onClick={() => navigation.goToClocktower()}>Clocktower</Button>
+						</Space>
+					)
+				}
+			]}
+		/>
+	);
 
 	if (isSmall) {
 		return (
 			<ErrorBoundary name='welcome-page'>
 				<div className='welcome-page'>
-					<AppHeader />
+					<AppHeader>
+						{topNav}
+					</AppHeader>
 					<ErrorBoundary>
 						<div className='welcome-page-content compact'>
 							<div className='welcome-column'>
@@ -75,13 +93,9 @@ export const WelcomePage = (props: Props) => {
 	return (
 		<ErrorBoundary name='welcome-page'>
 			<div className='welcome-page'>
-				<AppHeader
-					children={
-						<div className='logo-container'>
-							<img src={pbds} />
-						</div>
-					}
-				/>
+				<AppHeader>
+					{topNav}
+				</AppHeader>
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<Welcome

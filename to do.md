@@ -1,7 +1,7 @@
 # Development Plans
 
 * Improve editors
-  * Damage bonus editor
+  * Modifier editor
 
 * Update:
   * Vampire

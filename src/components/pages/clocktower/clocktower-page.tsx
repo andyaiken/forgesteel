@@ -26,10 +26,7 @@ export const ClocktowerPage = (props: Props) => {
 					<img className='image' src={shield_n} />
 				</AppHeader>
 				<div className='clocktower-page-content'>
-					<ClocktowerScriptPanel
-						script={ClocktowerData.script}
-						detailsMap={ClocktowerData.detailsMap}
-					/>
+					<ClocktowerScriptPanel script={ClocktowerData.script} />
 				</div>
 				<AppFooter
 					page='welcome'

@@ -33,12 +33,12 @@ export interface ClocktowerRoleDetails {
 	description: string;
 }
 
-export interface ClocktowerRoleCombined {
+export interface ClocktowerCharacter {
 	role: ClocktowerRole;
 	details: ClocktowerRoleDetails;
 }
 
-export interface ClocktowerScriptInfo {
+export interface ClocktowerScriptMeta {
 	id: '_meta';
 	name: string;
 	author?: string;
@@ -51,4 +51,7 @@ export interface ClocktowerScriptInfo {
 	otherNight?: string[];
 }
 
-export type ClocktowerScript = (ClocktowerScriptInfo | ClocktowerRole)[];
+export interface ClocktowerScript {
+	meta: ClocktowerScriptMeta;
+	characters: ClocktowerCharacter[];
+}

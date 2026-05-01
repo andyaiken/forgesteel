@@ -1,8 +1,8 @@
 import { Button, Drawer, Tabs, notification } from 'antd';
-import { ClocktowerRole, ClocktowerRoleCombined, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
+import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { ReactNode, useState } from 'react';
+import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
-import { ClocktowerRolePanel } from '@/components/pages/clocktower/clocktower-role-panel/clocktower-role-panel';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 import { CopyOutlined } from '@ant-design/icons';
 import { Empty } from '@/components/controls/empty/empty';
@@ -15,17 +15,17 @@ import { StatsRow } from '@/components/panels/stats-row/stats-row';
 
 import './clocktower-script-panel.scss';
 
-interface ScriptPanelProps {
+interface Props {
 	script: ClocktowerScript;
-	detailsMap: { [ id: string ]: ClocktowerRoleDetails };
 }
 
-export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
-	const [ selectedRole, setSelectedRole ] = useState<ClocktowerRoleCombined | null>(null);
+export const ClocktowerScriptPanel = (props: Props) => {
+	const [ selectedCharacter, setSelectedCharacter ] = useState<ClocktowerCharacter | null>(null);
 	const [ notify, notifyContext ] = notification.useNotification();
 
 	const copyToClipboard = () => {
-		const json = JSON.stringify(props.script);
+		const data = ClocktowerLogic.createExportScript(props.script);
+		const json = JSON.stringify(data);
 		window.navigator.clipboard.writeText(json);
 
 		notify.info({
@@ -35,7 +35,7 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 		});
 	};
 
-	const getTabs = (info: ClocktowerScriptInfo) => {
+	const getTabs = () => {
 		const tabs: { key: string, label: string, children: ReactNode }[] = [];
 
 		[
@@ -53,7 +53,7 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 					tabs.push({
 						key: team,
 						label: getTeamName(team),
-						children: getRoleSection(team)
+						children: getCharactersSection(team)
 					});
 				}
 			});
@@ -61,12 +61,12 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 		tabs.push({
 			key: 'first-night',
 			label: 'First Night',
-			children: getNightSection(info, true)
+			children: getNightSection(true)
 		});
 		tabs.push({
 			key: 'other-nights',
 			label: 'Other Nights',
-			children: getNightSection(info, false)
+			children: getNightSection(false)
 		});
 
 		return tabs;
@@ -92,27 +92,24 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 	};
 
 	const getTeamCount = (team: ClocktowerTeam) => {
-		return ClocktowerLogic.getCharacters(props.script).filter(c => c.team === team).length;
+		return props.script.characters.filter(ch => ch.role.team === team).length;
 	};
 
-	const getRoleSection = (team: ClocktowerTeam) => {
-		const roles = ClocktowerLogic.getCharacters(props.script)
-			.filter(r => (r as ClocktowerRole).team === team)
-			.map(r => ClocktowerLogic.getRoleDetails(props.script, props.detailsMap, r.id))
-			.filter(r => !!r);
+	const getCharactersSection = (team: ClocktowerTeam) => {
+		const characters = props.script.characters.filter(ch => ch.role.team === team);
 
 		return (
 			<div className='roles-section'>
 				{
-					roles.map(r => (
-						<SelectablePanel key={r.role.id} onSelect={() => setSelectedRole(r)}>
-							<HeaderText>{r.role.name}</HeaderText>
-							<div className='ds-text'>{r.role.ability}</div>
+					characters.map(ch => (
+						<SelectablePanel key={ch.role.id} onSelect={() => setSelectedCharacter(ch)}>
+							<HeaderText>{ch.role.name}</HeaderText>
+							<div className='ds-text'>{ch.role.ability}</div>
 						</SelectablePanel>
 					))
 				}
 				{
-					roles.length === 0 ?
+					characters.length === 0 ?
 						<Empty />
 						: null
 				}
@@ -120,20 +117,20 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 		);
 	};
 
-	const getNightSection = (info: ClocktowerScriptInfo, first: boolean) => {
-		const list = first ? info.firstNight : info.otherNight;
+	const getNightSection = (first: boolean) => {
+		const list = first ? props.script.meta.firstNight : props.script.meta.otherNight;
 
 		return (
 			<div className='night-section'>
 				{
 					(list || []).map((id, n) => {
-						const role = ClocktowerLogic.getRoleDetails(props.script, props.detailsMap, id);
-						if (role) {
-							const reminder = (first ? role.role.firstNightReminder : role.role.otherNightReminder) || '-';
+						const character = props.script.characters.find(ch => ch.role.id === id);
+						if (character) {
+							const reminder = (first ? character.role.firstNightReminder : character.role.otherNightReminder) || '-';
 							return (
 								<Field
 									key={n}
-									label={role.role.name}
+									label={character.role.name}
 									value={reminder}
 								/>
 							);
@@ -155,11 +152,6 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 		);
 	};
 
-	const info = ClocktowerLogic.getScriptInfo(props.script);
-	if (!info) {
-		return null;
-	}
-
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-script-panel'>
@@ -171,7 +163,7 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 						</Button>
 					}
 				>
-					{info.name}
+					{props.script.meta.name}
 				</HeaderText>
 				<StatsRow>
 					{
@@ -192,12 +184,12 @@ export const ClocktowerScriptPanel = (props: ScriptPanelProps) => {
 							})
 					}
 				</StatsRow>
-				<Tabs items={getTabs(info)} />
+				<Tabs items={getTabs()} />
 			</div>
-			<Drawer open={!!selectedRole} onClose={() => setSelectedRole(null)} closeIcon={null} size={500}>
+			<Drawer open={!!selectedCharacter} onClose={() => setSelectedCharacter(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedRole ? <ClocktowerRolePanel role={selectedRole} /> : null}
-					onClose={() => setSelectedRole(null)}
+					content={selectedCharacter ? <ClocktowerCharacterPanel character={selectedCharacter} /> : null}
+					onClose={() => setSelectedCharacter(null)}
 				/>
 			</Drawer>
 			{notifyContext}

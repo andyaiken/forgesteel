@@ -16,7 +16,6 @@ export class ClocktowerData {
 				'angulotl',
 				'criminal',
 				'conduit',
-				'aurumvas',
 				'talent',
 				'highelf',
 				'troubadour',
@@ -121,13 +120,13 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Strike at me, and you will find that there are delightful consequences.',
-					ability: 'The first time you would be executed, your nominator dies instead. You become drunk for the rest of the game.',
+					ability: 'The first time you would be executed, your nominator dies instead.',
 					reminders: [
 						'Ability used'
 					]
 				},
 				details: {
-					description: 'This ability triggers automatically the first time you would be executed. The nominator dies instead of you, and the execution ends. After this, you are permanently drunk.'
+					description: 'This ability triggers automatically the first time you would be executed. The nominator dies instead of you, and the execution ends.'
 				}
 			},
 			{
@@ -140,14 +139,14 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I’m not afraid to burn with you.',
-					ability: 'Once per game, at night*, choose two players: if you chose the Demon, you die; otherwise, one of them dies.',
+					ability: 'Once per game, at night*, choose a pair of adjacent players: if you chose the Demon, you die; otherwise, one of them dies.',
 					otherNightReminder: 'Once per game, choose 2 players.',
 					reminders: [
 						'Ability used'
 					]
 				},
 				details: {
-					description: 'You choose two players at night. If either of them is the Demon, you die; otherwise, the Storyteller chooses one of the two players to die. If you are drunk or poisoned, nothing happens.'
+					description: 'You choose two players at night; they must be sitting adjacent to each other. If either of them is the Demon, you die; otherwise, the Storyteller chooses one of the two players to die. If you are drunk or poisoned, nothing happens.'
 				}
 			},
 			{
@@ -190,7 +189,7 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Within my null field, the world behaves as it should.',
-					ability: 'If you are sober and healthy, your neighbours cannot be made drunk or poisoned.',
+					ability: 'Your neighbours cannot be made drunk or poisoned.',
 					reminders: [
 						'Null field',
 						'Null field'
@@ -210,11 +209,11 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I have died before. This is merely an inconvenience.',
-					ability: 'If you die, you come back to life at night with a random dead Townsfolk’s ability instead of this ability.',
+					ability: 'If you die, you come back to life at night with a dead Townsfolk’s ability instead of this ability.',
 					otherNightReminder: 'If dead, resurrect.'
 				},
 				details: {
-					description: 'When you die, you lose the Revenant ability and gain the ability of a random dead Townsfolk before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
+					description: 'When you die, you lose the Revenant ability and gain the ability of a dead Townsfolk of the Storyteller\'s choice before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
 				}
 			},
 			{
@@ -249,7 +248,7 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
-					ability: 'Each night*, choose two players: if one dies tonight, visit the Storyteller tomorrow with the other player to learn the dead player’s role and alignment.',
+					ability: 'Each night*, choose two players: if one dies tonight, the other may visit the Storyteller tomorrow to learn the dead player’s role and alignment.',
 					otherNightReminder: 'Choose 2 players to mark.',
 					reminders: [
 						'Marked',
@@ -257,7 +256,7 @@ export class ClocktowerData {
 					]
 				},
 				details: {
-					description: 'If one of your marked players dies that night, you and the surviving marked player learn the dead player’s role and alignment. If both die, no information is learned. If either you or the surviving marked player is drunk or poisoned, they may receive incorrect information.'
+					description: 'If one of your marked players dies that night, the surviving marked player learns the dead player’s role and alignment. If both die, no information is learned. If the surviving marked player is drunk or poisoned, they may receive incorrect information.'
 				}
 			},
 			{
@@ -331,6 +330,22 @@ export class ClocktowerData {
 			},
 			{
 				role: {
+					id: 'antihero',
+					name: 'Antihero',
+					image: [
+						'https://forgesteel.net/assets/clocktower-outsider.png',
+						'https://forgesteel.net/assets/clocktower-minion.png'
+					],
+					team: ClocktowerTeam.Outsider,
+					flavor: 'Push me, and I will become what you feared.',
+					ability: 'Each time you are nominated, you change alignment.'
+				},
+				details: {
+					description: 'Each time you are nominated, your alignment immediately flips. This happens before the vote resolves and can occur multiple times per game.'
+				}
+			},
+			{
+				role: {
 					id: 'coward',
 					name: 'Coward',
 					image: [
@@ -373,23 +388,7 @@ export class ClocktowerData {
 					]
 				},
 				details: {
-					description: 'You are shown a Minion token at the start of the game, and although you do not have this Minion’s ability, the Storyteller will act as if you do. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
-				}
-			},
-			{
-				role: {
-					id: 'disgraced',
-					name: 'Disgraced',
-					image: [
-						'https://forgesteel.net/assets/clocktower-outsider.png',
-						'https://forgesteel.net/assets/clocktower-minion.png'
-					],
-					team: ClocktowerTeam.Outsider,
-					flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
-					ability: 'If a player of your alignment is executed, you might die instead.'
-				},
-				details: {
-					description: 'When a player of your alignment is executed, the Storyteller may choose for you to die instead. This is not guaranteed and may be used to create uncertainty.'
+					description: 'You are shown a Minion token at the start of the game; although you do not have this Minion’s ability, the Storyteller will act as if you do, and any information you learn will be misleading. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
 				}
 			},
 			{
@@ -422,15 +421,16 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The poison is already in you. Can you not feel it?',
-					ability: 'Each night, choose a player: they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
-					firstNightReminder: 'Choose a player to poison.',
-					otherNightReminder: 'Choose a player to poison.',
+					ability: 'Each night, choose a player (once per game, choose 2 players): they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
+					firstNightReminder: 'Choose player(s) to poison.',
+					otherNightReminder: 'Choose player(s) to poison.',
 					reminders: [
-						'Poisoned'
+						'Poisoned',
+						'Has Chosen 2'
 					]
 				},
 				details: {
-					description: 'The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
+					description: 'You choose one player each night to be poisoned; once per game, you can choose an extra player. The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
 				}
 			},
 			{
@@ -463,10 +463,10 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The blade falls - just not where you aimed it.',
-					ability: 'If you would be executed, one of your neighbours is executed instead.'
+					ability: 'If you would be executed, one of your good neighbours is executed instead.'
 				},
 				details: {
-					description: 'If you would be executed and you have at least one immediate neighbour who is alive, the Storyteller chooses one of them to be executed instead of you.'
+					description: 'If you would be executed and you have at least one immediate neighbour who is alive and on the good team, the Storyteller chooses one of them to be executed instead of you.'
 				}
 			},
 			{
@@ -506,7 +506,7 @@ export class ClocktowerData {
 					setup: true
 				},
 				details: {
-					description: 'When you would kill at night, you can choose instead to recruit a player to the evil team. If you do, the player is immediately woken up and told that their alignment has changed, but are not told who else is on the evil team.'
+					description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you do, the player is immediately woken up and told that their alignment has changed, but are not told who else is on the evil team.'
 				}
 			},
 			{
@@ -593,23 +593,6 @@ export class ClocktowerData {
 			},
 			{
 				role: {
-					id: 'antihero',
-					name: 'Antihero',
-					image: [
-						'https://forgesteel.net/assets/clocktower-traveller.png',
-						'https://forgesteel.net/assets/clocktower-townsfolk.png',
-						'https://forgesteel.net/assets/clocktower-demon.png'
-					],
-					team: ClocktowerTeam.Traveller,
-					flavor: 'Push me, and I will become what you feared.',
-					ability: 'Each time you are nominated, you change alignment.'
-				},
-				details: {
-					description: 'Each time you are nominated, your alignment immediately flips. This happens before the vote resolves and can occur multiple times per game.'
-				}
-			},
-			{
-				role: {
 					id: 'aristocrat',
 					name: 'Aristocrat',
 					image: [
@@ -670,6 +653,23 @@ export class ClocktowerData {
 				},
 				details: {
 					description: 'You may resurrect a dead player once per game. That player returns with no ability but retains their alignment and can still vote.'
+				}
+			},
+			{
+				role: {
+					id: 'disgraced',
+					name: 'Disgraced',
+					image: [
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
+					],
+					team: ClocktowerTeam.Traveller,
+					flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
+					ability: 'If a player of your alignment is executed, you might die instead.'
+				},
+				details: {
+					description: 'When a player of your alignment is executed, the Storyteller may choose for you to die instead. This is not guaranteed and may be used to create uncertainty.'
 				}
 			},
 			{

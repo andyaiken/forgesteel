@@ -33,6 +33,11 @@ export interface ClocktowerRoleDetails {
 	description: string;
 }
 
+export interface ClocktowerRoleCombined {
+	role: ClocktowerRole;
+	details: ClocktowerRoleDetails;
+}
+
 export interface ClocktowerScriptInfo {
 	id: '_meta';
 	name: string;

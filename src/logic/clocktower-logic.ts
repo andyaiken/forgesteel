@@ -1,4 +1,4 @@
-import { ClocktowerRole, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
+import { ClocktowerRole, ClocktowerRoleCombined, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
 
 export class ClocktowerLogic {
 	static getScriptInfo = (script: ClocktowerScript) => {
@@ -22,9 +22,10 @@ export class ClocktowerLogic {
 			return null;
 		}
 
-		return {
+		const combined: ClocktowerRoleCombined = {
 			role: role as ClocktowerRole,
 			details: detailsMap[role.id]
 		};
+		return combined;
 	};
 };

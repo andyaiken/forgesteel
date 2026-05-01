@@ -77,8 +77,14 @@ export default defineConfig({
 				entryFileNames: chunkInfo => {
 					return chunkInfo.name === 'sw' ? 'sw.js' : '[name]-[hash].js';
 				},
-				assetFileNames: () => {
-					return 'assets/[name][extname]';
+				assetFileNames: chunkInfo => {
+					if (chunkInfo.names && chunkInfo.names[0].match(/\.(ttf|otf)$/)) {
+						return 'assets/[name][extname]';
+					}
+					if (chunkInfo.names && chunkInfo.names[0].includes('clocktower')) {
+						return 'assets/[name][extname]';
+					}
+					return 'assets/[name]-[hash][extname]';
 				}
 			}
 		}

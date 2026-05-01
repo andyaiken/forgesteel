@@ -54,6 +54,10 @@ const scriptInfo: ClocktowerScriptInfo = {
 const agent: ClocktowerRole = {
 	id: 'agent',
 	name: 'Agent',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I count the missing as carefully as the present.',
 	ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a question; if that role is in play, the Storyteller will answer truthfully.',
@@ -67,6 +71,10 @@ const agent: ClocktowerRole = {
 const censor: ClocktowerRole = {
 	id: 'censor',
 	name: 'Censor',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Speak not tonight. I have judged you wanting.',
 	ability: 'Each night*, choose a player; if they are evil, they cannot use their ability tonight.',
@@ -79,6 +87,10 @@ const censor: ClocktowerRole = {
 const conduit: ClocktowerRole = {
 	id: 'conduit',
 	name: 'Conduit',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Through me, no corruption flows; faith is our armour.',
 	ability: 'Each night, choose a player; until dusk, they are not drunk or poisoned, and cannot be made drunk or poisoned.',
@@ -92,6 +104,10 @@ const conduit: ClocktowerRole = {
 const elementalist: ClocktowerRole = {
 	id: 'elementalist',
 	name: 'Elementalist',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Strike at me, and you will find that there are delightful consequences.',
 	ability: 'The first time you would be executed, your nominator dies instead. You become drunk for the rest of the game.',
@@ -103,6 +119,10 @@ const elementalist: ClocktowerRole = {
 const fury: ClocktowerRole = {
 	id: 'fury',
 	name: 'Fury',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I’m not afraid to burn with you.',
 	ability: 'Once per game, at night*, choose two players: if you chose the Demon, you die; otherwise, one of them dies.',
@@ -115,6 +135,10 @@ const fury: ClocktowerRole = {
 const highElf: ClocktowerRole = {
 	id: 'highelf',
 	name: 'High Elf',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'The truth is merely a matter of careful observation.',
 	ability: 'Each night, you learn two Townsfolk roles, at least one of which is in play.',
@@ -137,6 +161,10 @@ const highElf: ClocktowerRole = {
 const nll: ClocktowerRole = {
 	id: 'null',
 	name: 'Null',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Within my null field, the world behaves as it should.',
 	ability: 'If you are sober and healthy, your neighbours cannot be made drunk or poisoned.',
@@ -149,6 +177,10 @@ const nll: ClocktowerRole = {
 const revenant: ClocktowerRole = {
 	id: 'revenant',
 	name: 'Revenant',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'I have died before. This is merely an inconvenience.',
 	ability: 'If you die, you come back to life at night with a random dead Townsfolk’s ability instead of this ability.',
@@ -158,6 +190,10 @@ const revenant: ClocktowerRole = {
 const shadow: ClocktowerRole = {
 	id: 'shadow',
 	name: 'Shadow',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
 	ability: 'Each day, publicly state how many evil players you believe are alive. That night, learn how accurate you are.',
@@ -172,6 +208,10 @@ const shadow: ClocktowerRole = {
 const tactician: ClocktowerRole = {
 	id: 'tactician',
 	name: 'Tactician',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
 	ability: 'Each night*, choose two players: if one dies tonight, visit the Storyteller tomorrow with the other player to learn the dead player’s role and alignment.',
@@ -185,6 +225,10 @@ const tactician: ClocktowerRole = {
 const talent: ClocktowerRole = {
 	id: 'talent',
 	name: 'Talent',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Give me a moment, and I will be whoever we need.',
 	ability: 'You learn two not-in-play roles; once per game, you may publicly claim one and immediately use its ability; you then lose the ability.',
@@ -197,6 +241,10 @@ const talent: ClocktowerRole = {
 const troubadour: ClocktowerRole = {
 	id: 'troubadour',
 	name: 'Troubadour',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'Every villain has a name. I will sing them all.',
 	ability: 'Each night, you learn two Minion roles, at least one of which is in play.',
@@ -213,6 +261,10 @@ const troubadour: ClocktowerRole = {
 const warden: ClocktowerRole = {
 	id: 'warden',
 	name: 'Warden',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Townsfolk,
 	flavor: 'The strange are catalogued. The dangerous, remembered.',
 	ability: 'Each night, you learn two Outsider roles, at least one of which is in play. [+1 Outsider]',
@@ -234,6 +286,10 @@ const warden: ClocktowerRole = {
 const coward: ClocktowerRole = {
 	id: 'coward',
 	name: 'Coward',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'Please don’t hurt me.',
 	ability: 'If you are nominated, you are executed immediately.'
@@ -242,6 +298,10 @@ const coward: ClocktowerRole = {
 const devil: ClocktowerRole = {
 	id: 'devil',
 	name: 'Devil',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'They told me I was one of them. I believed them.',
 	ability: 'You think you are a minion, but you are not. The demon knows who you are. [+1 Outsider, -1 Minion]',
@@ -265,6 +325,10 @@ const devil: ClocktowerRole = {
 const disgraced: ClocktowerRole = {
 	id: 'disgraced',
 	name: 'Disgraced',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
 	ability: 'If a player of your alignment is executed, you might die instead.'
@@ -273,6 +337,10 @@ const disgraced: ClocktowerRole = {
 const memonek: ClocktowerRole = {
 	id: 'memonek',
 	name: 'Memonek',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Outsider,
 	flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
 	ability: 'If you are executed, the Demon sees the Grimoire that night.',
@@ -289,6 +357,10 @@ const memonek: ClocktowerRole = {
 const angulotl: ClocktowerRole = {
 	id: 'angulotl',
 	name: 'Angulotl',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The poison is already in you. Can you not feel it?',
 	ability: 'Each night, choose a player: they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
@@ -302,6 +374,10 @@ const angulotl: ClocktowerRole = {
 const duskElf: ClocktowerRole = {
 	id: 'duskelf',
 	name: 'Dusk Elf',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The magics of Equinox can hide almost anything.',
 	ability: 'If there are six or more players alive and your Demon is executed for the first time, they survive but register as dead. [You are the only Minion]',
@@ -314,6 +390,10 @@ const duskElf: ClocktowerRole = {
 const lightbender: ClocktowerRole = {
 	id: 'lightbender',
 	name: 'Lightbender',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'The blade falls - just not where you aimed it.',
 	ability: 'If you would be executed, one of your neighbours is executed instead.'
@@ -322,6 +402,10 @@ const lightbender: ClocktowerRole = {
 const rival: ClocktowerRole = {
 	id: 'rival',
 	name: 'Rival',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Minion,
 	flavor: 'I’m exactly like you… except I’m just a little better at it.',
 	ability: 'You register as a Townsfolk. One good player knows a Rival is in play.',
@@ -337,6 +421,10 @@ const rival: ClocktowerRole = {
 const baleEye: ClocktowerRole = {
 	id: 'baleeye',
 	name: 'Bale Eye',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'The eye does not lie. It simply ensures that what you see is never the truth.',
 	ability: 'Each night*, choose a player: they die. You resister as a Townsfolk to Townsfolk abilities. [+1 Outsider or +1 Minion]',
@@ -350,6 +438,10 @@ const baleEye: ClocktowerRole = {
 const blightPhage: ClocktowerRole = {
 	id: 'blightphage',
 	name: 'Blight Phage',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'Death is not the end of your service. You can be repurposed.',
 	ability: 'Each night*, choose a player: they die. Once per game, you may bring a dead minion back as a different minion.',
@@ -363,6 +455,10 @@ const blightPhage: ClocktowerRole = {
 const hiveQueen: ClocktowerRole = {
 	id: 'hivequeen',
 	name: 'Hive Queen',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'There is no ‘I’. There is only the role that must be filled.',
 	ability: 'Each night*, choose a player: they die. Each night*, you can choose to swap roles with a living minion.',
@@ -375,6 +471,10 @@ const hiveQueen: ClocktowerRole = {
 const torlas: ClocktowerRole = {
 	id: 'torlas',
 	name: 'Torlas',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-e.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png'
+	],
 	team: ClocktowerTeam.Demon,
 	flavor: 'Strike at me if you must, but know that every action has a consequence. I merely decide who suffers it.',
 	ability: 'Each night*, choose a player: they die. Townsfolk abilities that target you instead target one of your Townsfolk neighbours.',
@@ -391,6 +491,11 @@ const torlas: ClocktowerRole = {
 const antihero: ClocktowerRole = {
 	id: 'antihero',
 	name: 'Antihero',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Push me, and I will become what you feared.',
 	ability: 'Each time you are nominated, you change alignment.'
@@ -399,6 +504,11 @@ const antihero: ClocktowerRole = {
 const aristocrat: ClocktowerRole = {
 	id: 'aristocrat',
 	name: 'Aristocrat',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
 	ability: 'When you nominate, the nominee is drunk until dusk.',
@@ -410,6 +520,11 @@ const aristocrat: ClocktowerRole = {
 const criminal: ClocktowerRole = {
 	id: 'criminal',
 	name: 'Criminal',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'You meant well. That is not what will happen.',
 	ability: 'Each night, choose a player; until dusk, if they use an ability that targets another player, it targets a different player instead.',
@@ -423,6 +538,11 @@ const criminal: ClocktowerRole = {
 const disciple: ClocktowerRole = {
 	id: 'disciple',
 	name: 'Disciple',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Rise. Your purpose is not yet fulfilled.',
 	ability: 'Once per game, at night*, choose a dead player; they are resurrected, but have no ability.',
@@ -436,6 +556,11 @@ const disciple: ClocktowerRole = {
 const polder: ClocktowerRole = {
 	id: 'polder',
 	name: 'Polder',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'How dare you raise your hand against one so small?!',
 	ability: 'If you are nominated for execution and survive, at night one player of your alignment learns your nominator’s role. You learn who learned this.',
@@ -448,6 +573,11 @@ const polder: ClocktowerRole = {
 const voicelessTalker: ClocktowerRole = {
 	id: 'voicelesstalker',
 	name: 'Voiceless Talker',
+	image: [
+		'https://forgesteel.net/assets/clocktower/shield-n.png',
+		'https://forgesteel.net/assets/clocktower/shield-g.png',
+		'https://forgesteel.net/assets/clocktower/shield-e.png'
+	],
 	team: ClocktowerTeam.Traveller,
 	flavor: 'Come and speak to me, and perhaps I will change your mind.',
 	ability: 'Each night*, choose two players; their roles (not alignments) are swapped and one becomes poisoned until dusk. You cannot nominate.'

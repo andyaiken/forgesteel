@@ -54,8 +54,8 @@ export class ClocktowerData {
 					id: 'agent',
 					name: 'Agent',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I count the missing as carefully as the present.',
@@ -75,8 +75,8 @@ export class ClocktowerData {
 					id: 'censor',
 					name: 'Censor',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Speak not tonight. I have judged you wanting.',
@@ -95,8 +95,8 @@ export class ClocktowerData {
 					id: 'conduit',
 					name: 'Conduit',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Through me, no corruption flows; faith is our armour.',
@@ -116,8 +116,8 @@ export class ClocktowerData {
 					id: 'elementalist',
 					name: 'Elementalist',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Strike at me, and you will find that there are delightful consequences.',
@@ -135,8 +135,8 @@ export class ClocktowerData {
 					id: 'fury',
 					name: 'Fury',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I’m not afraid to burn with you.',
@@ -155,8 +155,8 @@ export class ClocktowerData {
 					id: 'highelf',
 					name: 'High Elf',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'The truth is merely a matter of careful observation.',
@@ -164,6 +164,15 @@ export class ClocktowerData {
 					firstNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
 					otherNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
 					reminders: [
+						'Known',
+						'Known',
+						'Known',
+						'Known',
+						'Known',
+						'Known',
+						'Known',
+						'Known',
+						'Known',
 						'Known'
 					]
 				},
@@ -176,13 +185,14 @@ export class ClocktowerData {
 					id: 'null',
 					name: 'Null',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Within my null field, the world behaves as it should.',
 					ability: 'If you are sober and healthy, your neighbours cannot be made drunk or poisoned.',
 					reminders: [
+						'Null field',
 						'Null field'
 					]
 				},
@@ -195,8 +205,8 @@ export class ClocktowerData {
 					id: 'revenant',
 					name: 'Revenant',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I have died before. This is merely an inconvenience.',
@@ -212,8 +222,8 @@ export class ClocktowerData {
 					id: 'shadow',
 					name: 'Shadow',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
@@ -234,14 +244,15 @@ export class ClocktowerData {
 					id: 'tactician',
 					name: 'Tactician',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
 					ability: 'Each night*, choose two players: if one dies tonight, visit the Storyteller tomorrow with the other player to learn the dead player’s role and alignment.',
 					otherNightReminder: 'Choose 2 players to mark.',
 					reminders: [
+						'Marked',
 						'Marked'
 					]
 				},
@@ -254,8 +265,8 @@ export class ClocktowerData {
 					id: 'talent',
 					name: 'Talent',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Give me a moment, and I will be whoever we need.',
@@ -274,8 +285,8 @@ export class ClocktowerData {
 					id: 'troubadour',
 					name: 'Troubadour',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'Every villain has a name. I will sing them all.',
@@ -283,6 +294,9 @@ export class ClocktowerData {
 					firstNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
 					otherNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
 					reminders: [
+						'Known',
+						'Known',
+						'Known',
 						'Known'
 					]
 				},
@@ -295,8 +309,8 @@ export class ClocktowerData {
 					id: 'warden',
 					name: 'Warden',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'The strange are catalogued. The dangerous, remembered.',
@@ -304,6 +318,9 @@ export class ClocktowerData {
 					firstNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
 					otherNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
 					reminders: [
+						'Known',
+						'Known',
+						'Known',
 						'Known'
 					],
 					setup: true
@@ -317,8 +334,8 @@ export class ClocktowerData {
 					id: 'coward',
 					name: 'Coward',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-outsider.png',
+						'https://forgesteel.net/assets/clocktower-minion.png'
 					],
 					team: ClocktowerTeam.Outsider,
 					flavor: 'Please don’t hurt me.',
@@ -333,8 +350,8 @@ export class ClocktowerData {
 					id: 'devil',
 					name: 'Devil',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-outsider.png',
+						'https://forgesteel.net/assets/clocktower-minion.png'
 					],
 					team: ClocktowerTeam.Outsider,
 					flavor: 'They told me I was one of them. I believed them.',
@@ -364,8 +381,8 @@ export class ClocktowerData {
 					id: 'disgraced',
 					name: 'Disgraced',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-outsider.png',
+						'https://forgesteel.net/assets/clocktower-minion.png'
 					],
 					team: ClocktowerTeam.Outsider,
 					flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
@@ -380,8 +397,8 @@ export class ClocktowerData {
 					id: 'memonek',
 					name: 'Memonek',
 					image: [
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-outsider.png',
+						'https://forgesteel.net/assets/clocktower-minion.png'
 					],
 					team: ClocktowerTeam.Outsider,
 					flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
@@ -400,8 +417,8 @@ export class ClocktowerData {
 					id: 'angulotl',
 					name: 'Angulotl',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-minion.png',
+						'https://forgesteel.net/assets/clocktower-outsider.png'
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The poison is already in you. Can you not feel it?',
@@ -421,8 +438,8 @@ export class ClocktowerData {
 					id: 'duskelf',
 					name: 'Dusk Elf',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-minion.png',
+						'https://forgesteel.net/assets/clocktower-outsider.png'
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The magics of Equinox can hide almost anything.',
@@ -441,8 +458,8 @@ export class ClocktowerData {
 					id: 'lightbender',
 					name: 'Lightbender',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-minion.png',
+						'https://forgesteel.net/assets/clocktower-outsider.png'
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The blade falls - just not where you aimed it.',
@@ -457,8 +474,8 @@ export class ClocktowerData {
 					id: 'rival',
 					name: 'Rival',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-minion.png',
+						'https://forgesteel.net/assets/clocktower-outsider.png'
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'I’m exactly like you… except I’m just a little better at it.',
@@ -476,8 +493,8 @@ export class ClocktowerData {
 					id: 'aurumvas',
 					name: 'Aurumvas',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-demon.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png'
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'More!',
@@ -497,8 +514,8 @@ export class ClocktowerData {
 					id: 'baleeye',
 					name: 'Bale Eye',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-demon.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png'
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'The eye does not lie. It simply ensures that what you see is never the truth.',
@@ -518,8 +535,8 @@ export class ClocktowerData {
 					id: 'blightphage',
 					name: 'Blight Phage',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-demon.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png'
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'Death is not the end of your service. You can be repurposed.',
@@ -539,8 +556,8 @@ export class ClocktowerData {
 					id: 'hivequeen',
 					name: 'Hive Queen',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-demon.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png'
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'There is no ‘I’. There is only the role that must be filled.',
@@ -559,8 +576,8 @@ export class ClocktowerData {
 					id: 'torlas',
 					name: 'Torlas',
 					image: [
-						'https://forgesteel.net/assets/clocktower-e.png',
-						'https://forgesteel.net/assets/clocktower-g.png'
+						'https://forgesteel.net/assets/clocktower-demon.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png'
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'Strike at me if you must, but know that every action has a consequence. I merely decide who suffers it.',
@@ -579,9 +596,9 @@ export class ClocktowerData {
 					id: 'antihero',
 					name: 'Antihero',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'Push me, and I will become what you feared.',
@@ -596,9 +613,9 @@ export class ClocktowerData {
 					id: 'aristocrat',
 					name: 'Aristocrat',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
@@ -616,9 +633,9 @@ export class ClocktowerData {
 					id: 'criminal',
 					name: 'Criminal',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'You meant well. That is not what will happen.',
@@ -638,9 +655,9 @@ export class ClocktowerData {
 					id: 'disciple',
 					name: 'Disciple',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'Rise. Your purpose is not yet fulfilled.',
@@ -660,9 +677,9 @@ export class ClocktowerData {
 					id: 'polder',
 					name: 'Polder',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'How dare you raise your hand against one so small?!',
@@ -681,9 +698,9 @@ export class ClocktowerData {
 					id: 'voicelesstalker',
 					name: 'Voiceless Talker',
 					image: [
-						'https://forgesteel.net/assets/clocktower-n.png',
-						'https://forgesteel.net/assets/clocktower-g.png',
-						'https://forgesteel.net/assets/clocktower-e.png'
+						'https://forgesteel.net/assets/clocktower-traveller.png',
+						'https://forgesteel.net/assets/clocktower-townsfolk.png',
+						'https://forgesteel.net/assets/clocktower-demon.png'
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'Come and speak to me, and perhaps I will change your mind.',

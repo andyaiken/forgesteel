@@ -7,9 +7,11 @@ import { Options } from '@/models/options';
 
 import './clocktower-page.scss';
 
-import shield_e from '@/assets/clocktower/clocktower-e.png';
-import shield_g from '@/assets/clocktower/clocktower-g.png';
-import shield_n from '@/assets/clocktower/clocktower-n.png';
+import shield1 from '@/assets/clocktower/clocktower-townsfolk.png';
+import shield2 from '@/assets/clocktower/clocktower-outsider.png';
+import shield3 from '@/assets/clocktower/clocktower-minion.png';
+import shield4 from '@/assets/clocktower/clocktower-demon.png';
+import shield5 from '@/assets/clocktower/clocktower-traveller.png';
 
 interface Props {
 	options: Options;
@@ -21,9 +23,11 @@ export const ClocktowerPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='clocktower-page'>
 				<AppHeader>
-					<img className='image' src={shield_e} />
-					<img className='image' src={shield_g} />
-					<img className='image' src={shield_n} />
+					<img className='image' src={shield1} />
+					<img className='image' src={shield2} />
+					<img className='image' src={shield3} />
+					<img className='image' src={shield4} />
+					<img className='image' src={shield5} />
 				</AppHeader>
 				<div className='clocktower-page-content'>
 					<ClocktowerScriptPanel script={ClocktowerData.script} />

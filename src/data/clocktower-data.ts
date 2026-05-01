@@ -1,7 +1,9 @@
 import { ClocktowerRole, ClocktowerRoleDetails, ClocktowerScript, ClocktowerScriptInfo } from '@/models/clocktower';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 
-const script: ClocktowerScriptInfo = {
+// #region Script info
+
+const scriptInfo: ClocktowerScriptInfo = {
 	id: '_meta',
 	name: 'Draw Steel on the Clocktower',
 	author: 'Andy Aiken',
@@ -44,6 +46,8 @@ const script: ClocktowerScriptInfo = {
 		'dawn'
 	]
 };
+
+// #endregion
 
 // #region Townsfolk
 
@@ -232,8 +236,7 @@ const coward: ClocktowerRole = {
 	name: 'Coward',
 	team: ClocktowerTeam.Outsider,
 	flavor: 'Please don’t hurt me.',
-	ability: 'If you are nominated, you are executed immediately. [+1 Outsider]',
-	setup: true
+	ability: 'If you are nominated, you are executed immediately.'
 };
 
 const devil: ClocktowerRole = {
@@ -241,7 +244,7 @@ const devil: ClocktowerRole = {
 	name: 'Devil',
 	team: ClocktowerTeam.Outsider,
 	flavor: 'They told me I was one of them. I believed them.',
-	ability: 'You think you are a minion, but you are not. The demon knows who you are. [-1 Minion]',
+	ability: 'You think you are a minion, but you are not. The demon knows who you are. [+1 Outsider, -1 Minion]',
 	firstNightReminder: 'The demon learns who you are.',
 	remindersGlobal: [
 		'Is the Devil'
@@ -357,9 +360,9 @@ const blightPhage: ClocktowerRole = {
 	]
 };
 
-const hivequeen: ClocktowerRole = {
+const hiveQueen: ClocktowerRole = {
 	id: 'hivequeen',
-	name: 'Hivequeen',
+	name: 'Hive Queen',
 	team: ClocktowerTeam.Demon,
 	flavor: 'There is no ‘I’. There is only the role that must be filled.',
 	ability: 'Each night*, choose a player: they die. Each night*, you can choose to swap roles with a living minion.',
@@ -454,7 +457,8 @@ const voicelessTalker: ClocktowerRole = {
 
 export class ClocktowerData {
 	static script: ClocktowerScript = [
-		script,
+		scriptInfo,
+		// Townsfolk
 		agent,
 		censor,
 		conduit,
@@ -468,18 +472,22 @@ export class ClocktowerData {
 		talent,
 		troubadour,
 		warden,
+		// Outsiders
 		coward,
 		devil,
 		disgraced,
 		memonek,
+		// Minions
 		angulotl,
 		duskElf,
 		lightbender,
 		rival,
+		// Demons
 		baleEye,
 		blightPhage,
-		hivequeen,
+		hiveQueen,
 		torlas,
+		// Travellers
 		antihero,
 		aristocrat,
 		criminal,

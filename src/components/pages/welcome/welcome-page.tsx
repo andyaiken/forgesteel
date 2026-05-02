@@ -1,6 +1,6 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, EllipsisOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
-import { Button, Flex, Popover, Segmented, Space } from 'antd';
+import { Button, Divider, Flex, Popover, Segmented, Space } from 'antd';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
@@ -51,6 +51,10 @@ export const WelcomePage = (props: Props) => {
 					icon: <EllipsisOutlined />,
 					popover: (
 						<Space orientation='vertical'>
+							<Button block={true} type='text' onClick={() => navigation.goToHeroList()}>Heroes</Button>
+							<Button block={true} type='text' onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>
+							<Button block={true} type='text' onClick={() => navigation.goToSession()}>Session</Button>
+							<Divider size='small' />
 							<Button block={true} type='text' onClick={() => navigation.goToBackup()}>Backup</Button>
 							<Button block={true} type='text' onClick={() => navigation.goToClocktower()}>Clocktower</Button>
 						</Space>

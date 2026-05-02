@@ -17,6 +17,7 @@ export class ClocktowerData {
 				'criminal',
 				'conduit',
 				'talent',
+				'rival',
 				'highelf',
 				'troubadour',
 				'warden',
@@ -58,7 +59,7 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Townsfolk,
 					flavor: 'I count the missing as carefully as the present.',
-					ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a question; if that role is in play, the Storyteller will answer truthfully.',
+					ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a yes/no question; if that role is in play, the Storyteller will answer truthfully.',
 					otherNightReminder: 'Ask a question.',
 					reminders: [
 						'True info',
@@ -66,7 +67,7 @@ export class ClocktowerData {
 					]
 				},
 				details: {
-					description: 'Each time you use this ability, you must publicly claim a different role; if you claim a role you have already claimed, you gain no benefit that night. The question you ask the Storyteller can be anything, but the Storyteller’s answer is only guaranteed to be true if the claimed role is in play; otherwise, the answer may be arbitrary or misleading. If you are drunk or poisoned, the Storyteller may give false information regardless of whether the role is in play.'
+					description: 'Each time you use this ability, you must publicly claim a different role; if you claim a role you have already claimed, you gain no benefit that night. The question you ask the Storyteller can be anything with a yes/no answer, but the Storyteller’s answer is only guaranteed to be true if the claimed role is in play; otherwise, the answer may be arbitrary or misleading. If you are drunk or poisoned, the Storyteller may give false information regardless of whether the role is in play.'
 				}
 			},
 			{
@@ -213,7 +214,7 @@ export class ClocktowerData {
 					otherNightReminder: 'If dead, resurrect.'
 				},
 				details: {
-					description: 'When you die, you lose the Revenant ability and gain the ability of a dead Townsfolk of the Storyteller\'s choice before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
+					description: 'When you die, you lose the Revenant ability and gain the ability of a dead Townsfolk of the Storyteller’s choice before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
 				}
 			},
 			{
@@ -388,7 +389,7 @@ export class ClocktowerData {
 					]
 				},
 				details: {
-					description: 'You are shown a Minion token at the start of the game; although you do not have this Minion’s ability, the Storyteller will act as if you do, and any information you learn will be misleading. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
+					description: 'You are shown a Minion token at the start of the game; although you do not have this Minion’s ability, the Storyteller will act as if you do, and any information you learn may be misleading. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
 				}
 			},
 			{
@@ -421,16 +422,15 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'The poison is already in you. Can you not feel it?',
-					ability: 'Each night, choose a player (once per game, choose 2 players): they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
+					ability: 'Each night, choose a player (if 5 or more good players live, choose 2 players): they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
 					firstNightReminder: 'Choose player(s) to poison.',
 					otherNightReminder: 'Choose player(s) to poison.',
 					reminders: [
-						'Poisoned',
-						'Has Chosen 2'
+						'Poisoned'
 					]
 				},
 				details: {
-					description: 'You choose one player each night to be poisoned; once per game, you can choose an extra player. The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
+					description: 'You choose one player each night to be poisoned; if there are at least five living good players, you can choose an extra player. The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
 				}
 			},
 			{
@@ -479,13 +479,14 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'I’m exactly like you… except I’m just a little better at it.',
-					ability: 'You register as a Townsfolk. One good player knows a Rival is in play.',
+					ability: 'You have the ability of, and register as, an in-play Townsfolk. The player with this role is drunk.',
+					firstNightReminder: 'Gain an in-play Townsfolk ability.',
 					reminders: [
-						'Rival in play'
+						'Drunk'
 					]
 				},
 				details: {
-					description: 'You register as a Townsfolk to all abilities that learn or depend upon roles. One good player is told that a Rival is in play, but not who you are, and you are not told who they are.'
+					description: 'You are woken on the first night to be told an in-play Townsfolk role. You register as that Townsfolk to all abilities that learn or depend upon roles, and you have that role’s ability. The player with this role is drunk.'
 				}
 			},
 			{
@@ -498,7 +499,7 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'More!',
-					ability: 'Each night, choose a player: they either die, or become evil (your choice). [No minions]',
+					ability: 'Each night*, choose a player: they either die, or become evil (your choice). [No minions]',
 					otherNightReminder: 'Choose a player; they die or become evil.',
 					reminders: [
 						'Killed'
@@ -506,7 +507,7 @@ export class ClocktowerData {
 					setup: true
 				},
 				details: {
-					description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you do, the player is immediately woken up and told that their alignment has changed, but are not told who else is on the evil team.'
+					description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you chooose to recruit, that player is immediately woken up and told that their alignment has changed, but are not told who else is on the evil team.'
 				}
 			},
 			{

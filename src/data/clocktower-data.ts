@@ -499,7 +499,7 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'More!',
-					ability: 'Each night*, choose a player: they either die, or become evil (your choice). [No minions]',
+					ability: 'Each night*, choose a player: they either die, or become evil (your choice). You cannot choose to change alignment on consecutive nights. [No minions]',
 					otherNightReminder: 'Choose a player; they die or become evil.',
 					reminders: [
 						'Killed'
@@ -507,28 +507,7 @@ export class ClocktowerData {
 					setup: true
 				},
 				details: {
-					description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you chooose to recruit, that player is immediately woken up and told that their alignment has changed, but are not told who else is on the evil team.'
-				}
-			},
-			{
-				role: {
-					id: 'baleeye',
-					name: 'Bale Eye',
-					image: [
-						'https://forgesteel.net/assets/clocktower-demon.png',
-						'https://forgesteel.net/assets/clocktower-townsfolk.png'
-					],
-					team: ClocktowerTeam.Demon,
-					flavor: 'The eye does not lie. It simply ensures that what you see is never the truth.',
-					ability: 'Each night*, choose a player: they die. You resister as a Townsfolk to Townsfolk abilities. [+1 Outsider or +1 Minion]',
-					otherNightReminder: 'Choose a player; they die.',
-					reminders: [
-						'Killed'
-					],
-					setup: true
-				},
-				details: {
-					description: 'You register as a Townsfolk to Townsfolk abilities, meaning information roles will treat you as good. This does not affect non-Townsfolk abilities.'
+					description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you chooose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team), and you cannot then choose to recruit again the next night.'
 				}
 			},
 			{
@@ -645,15 +624,15 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'Rise. Your purpose is not yet fulfilled.',
-					ability: 'Once per game, at night*, choose a dead player; they are resurrected, but have no ability.',
+					ability: 'Once per game, at night*, choose a dead player; they are resurrected, but if you are evil they become drunk.',
 					otherNightReminder: 'Once per game, resurrect a player.',
 					reminders: [
-						'Resurrected (no ability)',
-						'Ability used'
+						'Ability used',
+						'Drunk'
 					]
 				},
 				details: {
-					description: 'You may resurrect a dead player once per game. That player returns with no ability but retains their alignment and can still vote.'
+					description: 'You may resurrect a dead player once per game. If you are evil, that player is now drunk.'
 				}
 			},
 			{

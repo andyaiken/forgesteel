@@ -1813,7 +1813,8 @@ export const Main = (props: Props) => {
 		showAbout: showAbout,
 		showSettings: showSettings,
 		showErrors: showErrors,
-		setOptions: persistOptions
+		setOptions: persistOptions,
+		connectionSettings: connectionSettings
 	};
 
 	return (

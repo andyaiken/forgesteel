@@ -1,5 +1,7 @@
 import { PatreonConnection } from '@/models/patreon-connection';
 
+export type FSDataSource = 'Local' | 'Patron' | 'Warehouse' | undefined;
+
 export interface ConnectionSettings {
 	useManualWarehouse: boolean;
 	warehouseHost: string;
@@ -7,4 +9,5 @@ export interface ConnectionSettings {
 	patreonConnected: boolean;
 	usePatreonWarehouse: boolean;
 	patreonConnections: PatreonConnection[];
+	dataSource: FSDataSource;
 }

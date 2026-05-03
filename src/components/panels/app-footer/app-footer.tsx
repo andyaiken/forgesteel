@@ -1,17 +1,17 @@
-import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined, WarningFilled } from '@ant-design/icons';
-import { Button, Divider, Drawer, Flex, Space } from 'antd';
+import { BookOutlined, DatabaseFilled, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined, WarningFilled } from '@ant-design/icons';
+import { Button, Divider, Drawer, Flex, Space, Tag } from 'antd';
 import { ButtonConfig, ButtonGroup } from '@/components/controls/button-group/button-group';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
+import shield from '@/assets/shield.png';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 
 import './app-footer.scss';
-
-import shield from '@/assets/shield.png';
 
 export interface FooterParams {
 	errorsExist: boolean;
@@ -20,6 +20,7 @@ export interface FooterParams {
 	showSettings: () => void;
 	showErrors: () => void;
 	setOptions: (options: Options) => void;
+	connectionSettings: ConnectionSettings;
 }
 
 interface Props {
@@ -50,6 +51,8 @@ export const AppFooter = (props: Props) => {
 	if (props.params.errorsExist) {
 		actions.push({ type: 'button', icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
 	}
+
+	const dataSource = props.params.connectionSettings.dataSource;
 
 	return (
 		<ErrorBoundary>
@@ -83,8 +86,21 @@ export const AppFooter = (props: Props) => {
 						/>
 						: null
 				}
-				<SyncStatus />
-				<ButtonGroup buttons={actions} />
+				<Space>
+					<SyncStatus />
+					{
+						dataSource ?
+							<Tag
+								icon={<DatabaseFilled />}
+								variant='outlined'
+								color='blue'
+							>
+								{dataSource}
+							</Tag>
+							: null
+					}
+					<ButtonGroup buttons={actions} />
+				</Space>
 			</div>
 			<Drawer open={showSidebar} onClose={() => setShowSidebar(false)} closeIcon={null} size={500}>
 				<Modal

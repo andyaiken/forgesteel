@@ -33,7 +33,6 @@ export class ClocktowerData {
 				'tactician',
 				'fury',
 				'aurumvas',
-				'baleeye',
 				'blightphage',
 				'hivequeen',
 				'torlas',
@@ -426,6 +425,7 @@ export class ClocktowerData {
 					firstNightReminder: 'Choose player(s) to poison.',
 					otherNightReminder: 'Choose player(s) to poison.',
 					reminders: [
+						'Poisoned',
 						'Poisoned'
 					]
 				},
@@ -479,14 +479,14 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Minion,
 					flavor: 'I’m exactly like you… except I’m just a little better at it.',
-					ability: 'You have the ability of, and register as, an in-play Townsfolk. The player with this role is drunk.',
+					ability: 'You have the ability of, and register as, an in-play Townsfolk. The player with this role is poisoned.',
 					firstNightReminder: 'Gain an in-play Townsfolk ability.',
 					reminders: [
-						'Drunk'
+						'Poisoned'
 					]
 				},
 				details: {
-					description: 'You are woken on the first night to be told an in-play Townsfolk role. You register as that Townsfolk to all abilities that learn or depend upon roles, and you have that role’s ability. The player with this role is drunk.'
+					description: 'You are woken on the first night to be told an in-play Townsfolk role. You register as that Townsfolk to all abilities that learn or depend upon roles, and you have that role’s ability. The player with this role is poisoned.'
 				}
 			},
 			{

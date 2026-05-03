@@ -45,66 +45,116 @@ export class HeroLogic {
 		let features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		if (hero.ancestry) {
-			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
+			try {
+				const list = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in ancestry features');
+				console.error(ex);
+			}
 		}
 
 		if (hero.culture) {
-			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
+			try {
+				const list = FeatureLogic.getFeaturesFromCulture(hero.culture, hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in culture features');
+				console.error(ex);
+			}
 		}
 
 		if (hero.career) {
-			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero));
+			try {
+				const list = FeatureLogic.getFeaturesFromCareer(hero.career, hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in career features');
+				console.error(ex);
+			}
 		}
 
 		if (hero.class) {
-			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero));
+			try {
+				const list = FeatureLogic.getFeaturesFromClass(hero.class, hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in class features');
+				console.error(ex);
+			}
 		}
 
 		if (hero.complication) {
-			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero));
+			try {
+				const list = FeatureLogic.getFeaturesFromComplication(hero.complication, hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in complication features');
+				console.error(ex);
+			}
 		}
 
-		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
+		if (hero.features.length > 0) {
+			try {
+				const list = FeatureLogic.getFeaturesFromCustomization(hero);
+				features.push(...list);
+			} catch (ex) {
+				console.error('Error in custom features');
+				console.error(ex);
+			}
+		}
 
 		hero.state.titles.forEach(title => {
 			try {
-				features.push(...FeatureLogic.getFeaturesFromTitle(title, hero));
+				const list = FeatureLogic.getFeaturesFromTitle(title, hero);
+				features.push(...list);
 			} catch (ex) {
+				console.error(`Error in title features: ${title.name}`);
 				console.error(ex);
 			}
 		});
 
 		hero.state.inventory.forEach(item => {
 			try {
-				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
+				const list = FeatureLogic.getFeaturesFromItem(item, hero);
+				features.push(...list);
 			} catch (ex) {
+				console.error(`Error in item features: ${item.name}`);
 				console.error(ex);
 			}
 		});
 
 		// Handle switches
 		while (features.some(f => f.feature.type === FeatureType.SwitchOptions)) {
+			const switchFeatures = features.filter(f => f.feature.type === FeatureType.SwitchOptions);
+			const switchFeatureIDs = switchFeatures.map(sf => sf.feature.id);
+			features = features.filter(f => switchFeatureIDs.includes(f.feature.id));
+
 			const switchValues = features.filter(f => f.feature.type === FeatureType.SwitchValue).map(f => f.feature) as FeatureSwitchValue[];
 			const valueMap = switchValues.reduce((map, sv) => {
 				map[sv.data.switch] = sv.data.value;
 				return map;
 			}, {} as { [key: string]: string });
 
-			features.filter(f => f.feature.type === FeatureType.SwitchOptions).forEach(f => {
-				const optionsFeature = f.feature as FeatureSwitchOptions;
-				const value = valueMap[optionsFeature.data.switch];
-				if (value) {
-					const option = optionsFeature.data.options.find(o => o.value === value);
-					if (option) {
-						const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
+			switchFeatures.forEach(f => {
+				try {
+					const optionsFeature = f.feature as FeatureSwitchOptions;
+					const value = valueMap[optionsFeature.data.switch];
+					if (value) {
+						const option = optionsFeature.data.options.find(o => o.value === value);
+						if (option) {
+							const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
+							features.push(...simplified);
+						}
+					} else if (optionsFeature.data.defaultOption) {
+						const simplified = FeatureLogic.simplifyFeatures([ { feature: optionsFeature.data.defaultOption, source: f.source, level: f.level } ], hero);
 						features.push(...simplified);
 					}
-				} else if (optionsFeature.data.defaultOption) {
-					const simplified = FeatureLogic.simplifyFeatures([ { feature: optionsFeature.data.defaultOption, source: f.source, level: f.level } ], hero);
-					features.push(...simplified);
+				} catch (ex) {
+					console.error(`Error in switch feature: ${f.feature.name}`);
+					console.error(ex);
 				}
 			});
-			features = features.filter(f => f.feature.type !== FeatureType.SwitchOptions);
 		}
 
 		return Collections

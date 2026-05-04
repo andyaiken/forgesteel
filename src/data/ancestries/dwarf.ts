@@ -10,17 +10,40 @@ export const dwarf: Ancestry = {
 	name: 'Dwarf',
 	description: 'Possessed of a strength that belies their size, dwarves have flesh infused with stone - a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.',
 	features: [
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createChoice({
 			id: 'dwarf-feature-1',
 			name: 'Runic Carving',
 			description: `
-You can carve a rune onto your skin with 10 uninterrupted minutes of work, which is activated by the magic within your body. The rune you carve determines the benefit you receive. chosen from among the following:
+You can carve a rune onto your skin with 10 uninterrupted minutes of work, which is activated by the magic within your body. The rune you carve determines the benefit you receive.
 
-* **Detection**: Pick a specific type of creature (such as “goblins” or “humans”) or object (such as “gems” or “potions”). Your rune glows softly when you are within 20 squares of any creature or object of that type, even if you don’t have line of effect to the creature or object. You can change the type of creature or object as a maneuver.
-* **Light**: Your skin sheds light for 10 squares. You can turn this on and off as a maneuver.
-* **Voice**: As a maneuver, you can communicate telepathically with a willing creature you have met before and who is within 1 mile of you. You must know the creature’s name, and they must speak and understand a language you know. You and the creature can respond to one another as if having a spoken conversation. You can communicate with a different creature by changing the rune.
-
-You can have one rune active at a time, and can change or remove a rune with 10 uninterrupted minutes of work.`
+You can have one rune active at a time, and can change or remove a rune with 10 uninterrupted minutes of work.`,
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'dwarf-feature-1a',
+						name: 'Detection',
+						description: 'Pick a specific type of creature (such as “goblins” or “humans”) or object (such as “gems” or “potions”). Your rune glows softly when you are within 20 squares of any creature or object of that type, even if you don’t have line of effect to the creature or object. You can change the type of creature or object as a maneuver.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'dwarf-feature-1b',
+						name: 'Light',
+						description: 'Your skin sheds light for 10 squares. You can turn this on and off as a maneuver.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'dwarf-feature-1c',
+						name: 'Voice',
+						description: 'As a maneuver, you can communicate telepathically with a willing creature you have met before and who is within 1 mile of you. You must know the creature’s name, and they must speak and understand a language you know. You and the creature can respond to one another as if having a spoken conversation. You can communicate with a different creature by changing the rune.'
+					}),
+					value: 1
+				}
+			],
+			selectAt: 'play'
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dwarf-feature-2',

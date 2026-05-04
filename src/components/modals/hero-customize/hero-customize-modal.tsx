@@ -12,6 +12,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
@@ -30,6 +31,7 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -736,7 +738,7 @@ export const HeroCustomizeModal = (props: Props) => {
 	};
 
 	const getConditionalContent = () => {
-		const features = HeroLogic.getFeatures(props.hero);
+		const features = HeroLogic.getFeatures(hero);
 		const list = [
 			...features.filter(f => f.feature.type === FeatureType.Toggle),
 			...features.filter(f => (f.feature.type === FeatureType.Choice) && (f.feature.data.selectAt === 'play'))
@@ -755,22 +757,26 @@ export const HeroCustomizeModal = (props: Props) => {
 		return (
 			<div>
 				<HeaderText>Conditional Features</HeaderText>
-				{
-					list.map(f => (
-						<ConfigFeature
-							feature={f.feature}
-							hero={props.hero}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							setData={data => setData(f.feature.id, data)}
-						/>
-					))
-				}
-				{
-					list.length === 0 ?
-						<Empty text='You have no conditional features.' />
-						: null
-				}
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					{
+						list.map(f => (
+							<SelectablePanel key={f.feature.id}>
+								<FeatureConfigPanel
+									feature={f.feature}
+									hero={hero}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									setData={setData}
+								/>
+							</SelectablePanel>
+						))
+					}
+					{
+						list.length === 0 ?
+							<Empty text='You have no conditional features.' />
+							: null
+					}
+				</Space>
 			</div>
 		);
 	};

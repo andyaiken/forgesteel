@@ -430,7 +430,7 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 							value: 1
 						}
 					],
-					respiteChange: true
+					selectAt: 'respite'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'summoner-3-3',

@@ -1313,7 +1313,7 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					value: 1
 				}
 			],
-			respiteChange: true
+			selectAt: 'respite'
 		}),
 		FactoryLogic.feature.createMultiple({
 			id: 'ironbound-2',

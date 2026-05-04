@@ -735,6 +735,46 @@ export const HeroCustomizeModal = (props: Props) => {
 		);
 	};
 
+	const getQuickContent = () => {
+		const features = HeroLogic.getFeatures(props.hero);
+		const list = [
+			...features.filter(f => f.feature.type === FeatureType.Toggle),
+			...features.filter(f => (f.feature.type === FeatureType.Choice) && (f.feature.data.selectAt === 'play'))
+		];
+
+		const setData = (featureID: string, data: FeatureData) => {
+			const copy = Utils.copy(hero);
+			const feature = HeroLogic.getFeatures(copy).find(f => f.feature.id === featureID);
+			if (feature) {
+				feature.feature.data = data;
+			}
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<div>
+				<HeaderText>Quick Changes</HeaderText>
+				{
+					list.map(f => (
+						<ConfigFeature
+							feature={f.feature}
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							setData={data => setData(f.feature.id, data)}
+						/>
+					))
+				}
+				{
+					list.length === 0 ?
+						<Empty text='You have no features that can be quickly changed.' />
+						: null
+				}
+			</div>
+		);
+	};
+
 	const getSourcebooksContent = () => {
 		const onChange = (sourcebookIDs: string[]) => {
 			const heroCopy = Utils.copy(hero);
@@ -744,14 +784,12 @@ export const HeroCustomizeModal = (props: Props) => {
 		};
 
 		return (
-			<>
-				<HeroSourcebooksPanel
-					sourcebooks={props.allSourcebooks}
-					sourcebookIDs={props.hero.settingIDs}
-					onImportSourcebook={props.onImportSourcebook}
-					onChange={onChange}
-				/>
-			</>
+			<HeroSourcebooksPanel
+				sourcebooks={props.allSourcebooks}
+				sourcebookIDs={props.hero.settingIDs}
+				onImportSourcebook={props.onImportSourcebook}
+				onChange={onChange}
+			/>
 		);
 	};
 
@@ -759,6 +797,8 @@ export const HeroCustomizeModal = (props: Props) => {
 		switch (page) {
 			case 'Customize':
 				return getCustomizeContent();
+			case 'Quick':
+				return getQuickContent();
 			case 'Sourcebooks':
 				return getSourcebooksContent();
 		}
@@ -773,7 +813,7 @@ export const HeroCustomizeModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
-							options={[ 'Customize', 'Sourcebooks' ]}
+							options={[ 'Customize', 'Quick', 'Sourcebooks' ]}
 							value={page}
 							onChange={setPage}
 						/>

@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
@@ -128,9 +128,9 @@ export const EditChoice = (props: EditProps) => {
 		props.setData(copy);
 	};
 
-	const setRespiteChange = (value: boolean) => {
+	const setSelectAt = (value: 'build' | 'respite' | 'play') => {
 		const copy = Utils.copy(data) as FeatureChoiceData;
-		copy.respiteChange = value;
+		copy.selectAt = value;
 		setData(copy);
 		props.setData(copy);
 	};
@@ -175,8 +175,17 @@ export const EditChoice = (props: EditProps) => {
 			<HeaderText>Count</HeaderText>
 			<Toggle label='Use ancestry points' value={data.count === 'ancestry'} onChange={value => setChoiceCount(value ? 'ancestry' : 3)} />
 			{data.count !== 'ancestry' ? <NumberSpin min={1} value={data.count} onChange={setChoiceCount} /> : null}
-			<HeaderText>Respite Change</HeaderText>
-			<Toggle label='Can change during a respite' value={data.respiteChange} onChange={setRespiteChange} />
+			<HeaderText>Select</HeaderText>
+			<Segmented
+				block={true}
+				options={[
+					{ value: 'build', label: 'At build time' },
+					{ value: 'respite', label: 'During a respite' },
+					{ value: 'play', label: 'In play' }
+				]}
+				value={data.selectAt}
+				onChange={setSelectAt}
+			/>
 		</Space>
 	);
 };

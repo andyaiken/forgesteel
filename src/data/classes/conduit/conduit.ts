@@ -262,7 +262,7 @@ If you have a kit, you can’t take this blessing.`,
 							value: 1
 						}
 					],
-					respiteChange: true
+					selectAt: 'respite'
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'conduit-1-9',
@@ -301,7 +301,7 @@ If you have a kit, you can’t take this blessing.`,
 							value: 1
 						}
 					],
-					respiteChange: true
+					selectAt: 'respite'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-1-10',

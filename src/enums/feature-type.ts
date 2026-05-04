@@ -43,5 +43,6 @@ export enum FeatureType {
 	SwitchValue = 'Switch Value',
 	TaggedFeature = 'Tagged Feature',
 	TaggedFeatureChoice = 'Tagged Feature Choice',
-	TitleChoice = 'Title'
+	TitleChoice = 'Title',
+	Toggle = 'Toggle'
 }

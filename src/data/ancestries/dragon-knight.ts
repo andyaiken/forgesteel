@@ -73,7 +73,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				}
 			],
-			respiteChange: true
+			selectAt: 'respite'
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-2',

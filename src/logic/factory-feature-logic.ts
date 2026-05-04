@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -169,7 +169,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], respiteChange?: boolean, count?: number | 'ancestry' }): FeatureChoice => {
+	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], selectAt?: 'build' | 'respite' | 'play', count?: number | 'ancestry' }): FeatureChoice => {
 		return {
 			id: data.id,
 			name: data.name || 'Choice',
@@ -177,8 +177,8 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Choice,
 			data: {
 				options: data.options,
-				respiteChange: data.respiteChange || false,
 				count: data.count || 1,
+				selectAt: data.selectAt || 'build',
 				selected: []
 			}
 		};
@@ -678,6 +678,21 @@ export class FactoryFeatureLogic {
 				echelon: data.echelon || 1,
 				count: count,
 				selected: []
+			}
+		};
+	};
+
+	createToggle = (data: { id: string, name?: string, description?: string, condition: string, featureChecked: Feature, featureUnchecked?: Feature, checked?: boolean }): FeatureToggle => {
+		return {
+			id: data.id,
+			name: data.name || 'Toggle',
+			description: data.description || '',
+			type: FeatureType.Toggle,
+			data: {
+				condition: data.condition,
+				featureChecked: data.featureChecked,
+				featureUnchecked: data.featureUnchecked || null,
+				checked: (data.checked ?? true) ? true : false
 			}
 		};
 	};

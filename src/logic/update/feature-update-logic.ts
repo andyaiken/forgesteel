@@ -19,13 +19,17 @@ export class FeatureUpdateLogic {
 				}
 				break;
 			case FeatureType.Choice:
-				if (feature.data.respiteChange === undefined) {
-					feature.data.respiteChange = false;
-				}
 				if (feature.data.options === undefined) {
 					feature.data.options = [];
 				}
 				feature.data.options.map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
+				if (feature.data.selectAt === undefined) {
+					feature.data.selectAt = 'build';
+				}
+				// eslint-disable-next-line @typescript-eslint/no-deprecated
+				if (feature.data.respiteChange) {
+					feature.data.selectAt = 'respite';
+				}
 				break;
 			case FeatureType.ClassAbility:
 				if (feature.data.source === undefined) {

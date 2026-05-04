@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -369,6 +369,14 @@ export class FeatureLogic {
 				case FeatureType.TitleChoice:
 					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => addFeature(f, source, level)));
 					break;
+				case FeatureType.Toggle:
+					if (feature.data.checked && feature.data.featureChecked) {
+						addFeature(feature.data.featureChecked, source, level);
+					}
+					if (!feature.data.checked && feature.data.featureUnchecked) {
+						addFeature(feature.data.featureUnchecked, source, level);
+					}
+					break;
 			}
 		};
 
@@ -515,7 +523,8 @@ export class FeatureLogic {
 			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,
 			FeatureType.TaggedFeatureChoice,
-			FeatureType.TitleChoice
+			FeatureType.TitleChoice,
+			FeatureType.Toggle
 		];
 	};
 
@@ -614,8 +623,8 @@ export class FeatureLogic {
 			case FeatureType.Choice: {
 				const data: FeatureChoiceData = {
 					options: [],
-					respiteChange: false,
 					count: 1,
+					selectAt: 'build',
 					selected: []
 				};
 				return data;
@@ -939,6 +948,19 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.Toggle: {
+				const data: FeatureToggleData = {
+					condition: '',
+					featureChecked: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					}),
+					featureUnchecked: null,
+					checked: false
+				};
+				return data;
+			}
 		}
 
 		return null;
@@ -970,6 +992,14 @@ export class FeatureLogic {
 					feature.data.selected.id = Utils.guid();
 				}
 				break;
+			case FeatureType.Toggle:
+				if (feature.data.featureChecked) {
+					feature.data.featureChecked.id = Utils.guid();
+				}
+				if (feature.data.featureUnchecked) {
+					feature.data.featureUnchecked.id = Utils.guid();
+				}
+				break;
 		}
 	};
 
@@ -993,6 +1023,7 @@ export class FeatureLogic {
 			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
 			case FeatureType.TitleChoice:
+			case FeatureType.Toggle:
 				return true;
 		};
 
@@ -1044,6 +1075,8 @@ export class FeatureLogic {
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.TitleChoice:
 				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Toggle:
+				return true;
 		};
 
 		return true;
@@ -1180,6 +1213,8 @@ export class FeatureLogic {
 				return 'This feature has no special properties, just a text description.';
 			case FeatureType.TitleChoice:
 				return 'This feature allows you to choose a title.';
+			case FeatureType.Toggle:
+				return 'This feature allows you to turn a feature on or off.';
 		}
 	};
 }

@@ -31,7 +31,7 @@ export const HeroRespiteModal = (props: Props) => {
 		.filter(f => {
 			switch (f.type) {
 				case FeatureType.Choice:
-					return f.data.respiteChange;
+					return f.data.selectAt === 'respite';
 				case FeatureType.Kit:
 					return true;
 			}

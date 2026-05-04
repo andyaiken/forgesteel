@@ -203,7 +203,7 @@ If you have a kit, you can’t take this augmentation.`,
 							value: 1
 						}
 					],
-					respiteChange: true
+					selectAt: 'respite'
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-1-6',
@@ -251,7 +251,7 @@ If you have a kit, you can’t take this augmentation.`,
 							value: 1
 						}
 					],
-					respiteChange: true
+					selectAt: 'respite'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-7',

@@ -20,6 +20,7 @@ import { ConfigSkillChoice, EditSkillChoice, InfoSkillChoice } from '@/component
 import { ConfigSummonChoice, EditSummonChoice, InfoSummonChoice } from '@/components/features/feature-data/summon-choice';
 import { ConfigTaggedFeatureChoice, EditTaggedFeatureChoice, InfoTaggedFeatureChoice } from '@/components/features/feature-data/tagged-feature-choice';
 import { ConfigTitleChoice, EditTitleChoice, InfoTitleChoice } from '@/components/features/feature-data/title-choice';
+import { ConfigToggle, EditToggle, InfoToggle } from './feature-data/toggle';
 import { EditAbilityCost, InfoAbilityCost } from '@/components/features/feature-data/ability-cost';
 import { EditAbilityDamage, InfoAbilityDamage } from '@/components/features/feature-data/ability-damage';
 import { EditAbilityDistance, InfoAbilityDistance } from '@/components/features/feature-data/ability-distance';
@@ -135,6 +136,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
 		case FeatureType.TitleChoice:
 			return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+		case FeatureType.Toggle:
+			return <InfoToggle data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
 	}
 
 	return null;
@@ -229,6 +232,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditTaggedFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
 		case FeatureType.TitleChoice:
 			return <EditTitleChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+		case FeatureType.Toggle:
+			return <EditToggle data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
 	}
 
 	return null;
@@ -276,6 +281,8 @@ export const ConfigFeature = (props: ConfigProps) => {
 			return <ConfigTaggedFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
 		case FeatureType.TitleChoice:
 			return <ConfigTitleChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+		case FeatureType.Toggle:
+			return <ConfigToggle data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
 	}
 
 	return null;

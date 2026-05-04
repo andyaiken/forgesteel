@@ -89,8 +89,10 @@ export type FeatureCharacteristicBonus = FeatureOf<FeatureType.CharacteristicBon
 
 export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
-	respiteChange: boolean;
+	/** @deprecated */
+	respiteChange?: boolean;
 	count: number | 'ancestry';
+	selectAt: 'build' | 'respite' | 'play';
 	selected: Feature[];
 }
 export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
@@ -318,6 +320,14 @@ export interface FeatureTitleChoiceData extends _FeatureData {
 };
 export type FeatureTitleChoice = FeatureOf<FeatureType.TitleChoice, FeatureTitleChoiceData>;
 
+export interface FeatureToggleData extends _FeatureData {
+	condition: string;
+	featureChecked: Feature | null;
+	featureUnchecked: Feature | null;
+	checked: boolean;
+};
+export type FeatureToggle = FeatureOf<FeatureType.Toggle, FeatureToggleData>;
+
 export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
@@ -363,6 +373,7 @@ export type Feature =
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice
-	| FeatureTitleChoice;
+	| FeatureTitleChoice
+	| FeatureToggle;
 
 export type FeatureData = Feature['data'];

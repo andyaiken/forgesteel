@@ -15,7 +15,7 @@ export const SyncStatus = () => {
 		return (
 			<ErrorBoundary>
 				<div className='sync-status offline'>
-					<WifiOutlined title={statusMessage} />;
+					<WifiOutlined title={statusMessage} />
 				</div>
 			</ErrorBoundary>
 		);
@@ -30,6 +30,10 @@ export const SyncStatus = () => {
 			</ErrorBoundary>
 		);
 	}
-
-	return null;
+	return (
+		<ErrorBoundary>
+			<div className='sync-status none'>
+			</div>
+		</ErrorBoundary>
+	);
 };

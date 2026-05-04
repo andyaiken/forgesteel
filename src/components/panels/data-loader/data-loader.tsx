@@ -1,8 +1,8 @@
 import { Alert, Button, Flex, Tag } from 'antd';
+import { ConnectionSettings, FSDataSource } from '@/models/connection-settings';
 import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
-import { ConnectionSettings } from '@/models/connection-settings';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
@@ -42,7 +42,6 @@ interface Props {
 }
 
 type LoadingStatus = 'pending' | 'success' | 'failure' | undefined;
-type DataSource = 'Local' | 'Patron' | 'Warehouse' | undefined;
 
 export const DataLoader = (props: Props) => {
 	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(undefined);
@@ -53,7 +52,7 @@ export const DataLoader = (props: Props) => {
 	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
-	const [ dataSource, setDataSource ] = useState<DataSource>(undefined);
+	const [ dataSource, setDataSource ] = useState<FSDataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
 
 	async function initializeConnectionSettings() {
@@ -63,7 +62,7 @@ export const DataLoader = (props: Props) => {
 		}
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
-		let source: DataSource = undefined;
+		let source: FSDataSource = undefined;
 
 		// check patreon status
 		if (settings.patreonConnected) {
@@ -95,6 +94,7 @@ export const DataLoader = (props: Props) => {
 		if (!url.match(/oauth-redirect/)) {
 			setDataSource(source);
 		}
+		settings.dataSource = source;
 
 		return settings;
 	};

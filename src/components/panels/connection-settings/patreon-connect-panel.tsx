@@ -26,6 +26,14 @@ export const PatreonConnectPanel = (props: Props) => {
 		service.getPatreonAuthUrl()
 			.then(authorizationUrl => {
 				window.location.href = authorizationUrl;
+			})
+			.catch(err => {
+				console.error(err);
+				notification.error({
+					title: 'Error connecting with Patreon',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
 			});
 	};
 
@@ -53,7 +61,7 @@ export const PatreonConnectPanel = (props: Props) => {
 			.then(setPatreonSession)
 			.catch(err => {
 				console.error(err);
-				notify.error({
+				notification.error({
 					title: 'Error connecting with Patreon',
 					description: Utils.getErrorMessage(err),
 					placement: 'top'

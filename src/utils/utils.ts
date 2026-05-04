@@ -1,9 +1,9 @@
 import { Converter } from 'showdown';
-import { Random } from '@/utils/random';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { domToImage } from 'modern-screenshot';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
+import { v4 as uuidv4 } from 'uuid';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -13,21 +13,7 @@ export class Utils {
 	};
 
 	static guid = () => {
-		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-		const sectionCount = 6;
-		const tokenLength = 5;
-
-		const sections = [];
-		while (sections.length < sectionCount) {
-			let id = '';
-			while (id.length < tokenLength) {
-				const n = Random.randomNumber(letters.length);
-				id += letters[n];
-			}
-			sections.push(id);
-		}
-
-		return sections.join('-');
+		return uuidv4();
 	};
 
 	// From: https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js

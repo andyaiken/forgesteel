@@ -1,7 +1,9 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { Config } from '@/utils/config';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { Hero } from '@/models/hero';
 import { StorageService } from '@/services/storage/storage-service';
+import { Utils } from '@/utils/utils';
 
 export class WarehouseService implements StorageService {
 	readonly host: string;
@@ -152,6 +154,49 @@ export class WarehouseService implements StorageService {
 		try {
 			await this.api.put(`data/${key}`, value);
 			return value;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async getHeroes(): Promise<Hero[]> {
+		try {
+			const response = await this.api.get('data/forgesteel-heroes');
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async getHero(id: string): Promise<Hero | null> {
+		try {
+			const response = await this.api.get(`data/forgesteel-heroes/${id}`);
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putHero(hero: Hero): Promise<Hero> {
+		try {
+			if (!hero.id?.length) {
+				hero.id = Utils.guid();
+			}
+			await this.api.put(`data/forgesteel-heroes/${hero.id}`, hero);
+			return hero;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async deleteHero(id: string): Promise<void> {
+		try {
+			const response = await this.api.delete(`data/forgesteel-heroes/${id}`);
+			return response.data.data;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);
 			throw new Error(this.getErrorMessage(error), { cause: error });

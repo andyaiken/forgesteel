@@ -31,12 +31,20 @@ export class DataService {
 
 	// #region Heroes
 
-	async getHeroes(): Promise<Hero[] | null> {
-		return this.storageService.get<Hero[]>('forgesteel-heroes');
+	async getHeroes(): Promise<Hero[]> {
+		return this.storageService.getHeroes();
 	};
 
-	async saveHeroes(heroes: Hero[]): Promise<Hero[]> {
-		return this.storageService.put<Hero[]>('forgesteel-heroes', heroes);
+	async getHero(id: string): Promise<Hero | null> {
+		return this.storageService.getHero(id);
+	}
+
+	async saveHero(hero: Hero): Promise<Hero> {
+		return this.storageService.putHero(hero);
+	}
+
+	async deleteHero(id: string): Promise<void> {
+		return this.storageService.deleteHero(id);
 	}
 
 	// #endregion

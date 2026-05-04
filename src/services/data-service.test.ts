@@ -64,29 +64,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
+			mockStorage.getHeroes = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
 
 			await ds.getHeroes()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-heroes');
-			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('saveHeroes', () => {
-		test('forwards to the storage service', async () => {
-			const ds = new DataService(mockStorage);
-
-			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHeroes));
-
-			await ds.saveHeroes(mockHeroes)
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-heroes', mockHeroes);
+			expect(mockStorage.getHeroes).toHaveBeenCalled();
 			expect(thenFn).toHaveBeenCalledWith(mockHeroes);
 			expect(catchFn).not.toHaveBeenCalled();
 		});

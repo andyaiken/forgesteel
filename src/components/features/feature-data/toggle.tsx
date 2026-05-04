@@ -1,5 +1,6 @@
 import { Button, Space } from 'antd';
 import { Feature, FeatureToggleData } from '@/models/feature';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -8,6 +9,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { InfoFeature } from '../feature';
 import { Options } from '@/models/options';
+import { PlusOutlined } from '@ant-design/icons';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -28,7 +30,7 @@ export const InfoToggle = (props: InfoProps) => {
 			<div className='ds-text'>{props.data.condition}</div>
 			{
 				props.data.featureChecked ?
-					<Expander title={props.data.featureChecked.name}>
+					<Expander title={props.data.featureChecked.name || 'Feature'}>
 						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 					</Expander>
 					:
@@ -38,7 +40,7 @@ export const InfoToggle = (props: InfoProps) => {
 				props.data.featureUnchecked ?
 					<>
 						<div className='ds-text'>Otherwise:</div>
-						<Expander title={props.data.featureUnchecked.name}>
+						<Expander title={props.data.featureUnchecked.name || 'Feature'}>
 							<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 						</Expander>
 					</>
@@ -89,55 +91,71 @@ export const EditToggle = (props: EditProps) => {
 				value={data.condition}
 				onChange={setCondition}
 			/>
+			<HeaderText
+				extra={
+					data.featureChecked ?
+						<DangerButton mode='clear' onConfirm={() => setFeatureChecked(null)} />
+						:
+						<Button
+							type='text'
+							icon={<PlusOutlined />}
+							onClick={() => {
+								setFeatureChecked(FactoryLogic.feature.create({
+									id: Utils.guid(),
+									name: '',
+									description: ''
+								}));
+							}}
+						/>
+				}
+			>
+				When Condition is Met
+			</HeaderText>
 			{
 				data.featureChecked ?
-					<>
+					<Expander title={data.featureChecked.name || 'Feature'}>
 						<FeatureEditPanel
 							feature={data.featureChecked}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
 							onChange={setFeatureChecked}
 						/>
-						<Button block={true} onClick={() => setFeatureChecked(null)}>Remove</Button>
-					</>
+					</Expander>
 					:
-					<Button
-						block={true}
-						onClick={() => {
-							setFeatureChecked(FactoryLogic.feature.create({
-								id: Utils.guid(),
-								name: '',
-								description: ''
-							}));
-						}}
-					>
-						Add Checked
-					</Button>
+					<Empty />
 			}
+			<HeaderText
+				extra={
+					data.featureUnchecked ?
+						<DangerButton mode='clear' onConfirm={() => setFeatureUnchecked(null)} />
+						:
+						<Button
+							type='text'
+							icon={<PlusOutlined />}
+							onClick={() => {
+								setFeatureUnchecked(FactoryLogic.feature.create({
+									id: Utils.guid(),
+									name: '',
+									description: ''
+								}));
+							}}
+						/>
+				}
+			>
+				When Condition is Not Met
+			</HeaderText>
 			{
 				data.featureUnchecked ?
-					<>
+					<Expander title={data.featureUnchecked.name || 'Feature'}>
 						<FeatureEditPanel
 							feature={data.featureUnchecked}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
 							onChange={setFeatureUnchecked}
 						/>
-						<Button block={true} onClick={() => setFeatureUnchecked(null)}>Remove</Button>
-					</>
+					</Expander>
 					:
-					<Button
-						block={true}
-						onClick={() => {
-							setFeatureUnchecked(FactoryLogic.feature.create({
-								id: Utils.guid(),
-								name: '',
-								description: ''
-							}));
-						}}
-					>
-						Add Unchecked
-					</Button>
+					<Empty />
 			}
 		</Space>
 	);
@@ -166,14 +184,14 @@ export const ConfigToggle = (props: ConfigProps) => {
 			/>
 			{
 				props.data.checked && props.data.featureChecked ?
-					<Expander title={props.data.featureChecked.name}>
+					<Expander title={props.data.featureChecked.name || 'Feature'}>
 						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 					</Expander>
 					: null
 			}
 			{
 				!props.data.checked && props.data.featureUnchecked ?
-					<Expander title={props.data.featureUnchecked.name}>
+					<Expander title={props.data.featureUnchecked.name || 'Feature'}>
 						<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 					</Expander>
 					: null

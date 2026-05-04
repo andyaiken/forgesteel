@@ -735,7 +735,7 @@ export const HeroCustomizeModal = (props: Props) => {
 		);
 	};
 
-	const getQuickContent = () => {
+	const getConditionalContent = () => {
 		const features = HeroLogic.getFeatures(props.hero);
 		const list = [
 			...features.filter(f => f.feature.type === FeatureType.Toggle),
@@ -754,7 +754,7 @@ export const HeroCustomizeModal = (props: Props) => {
 
 		return (
 			<div>
-				<HeaderText>Quick Changes</HeaderText>
+				<HeaderText>Conditional Features</HeaderText>
 				{
 					list.map(f => (
 						<ConfigFeature
@@ -768,7 +768,7 @@ export const HeroCustomizeModal = (props: Props) => {
 				}
 				{
 					list.length === 0 ?
-						<Empty text='You have no features that can be quickly changed.' />
+						<Empty text='You have no conditional features.' />
 						: null
 				}
 			</div>
@@ -797,8 +797,8 @@ export const HeroCustomizeModal = (props: Props) => {
 		switch (page) {
 			case 'Customize':
 				return getCustomizeContent();
-			case 'Quick':
-				return getQuickContent();
+			case 'Conditional':
+				return getConditionalContent();
 			case 'Sourcebooks':
 				return getSourcebooksContent();
 		}
@@ -813,7 +813,7 @@ export const HeroCustomizeModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
-							options={[ 'Customize', 'Quick', 'Sourcebooks' ]}
+							options={[ 'Customize', 'Conditional', 'Sourcebooks' ]}
 							value={page}
 							onChange={setPage}
 						/>

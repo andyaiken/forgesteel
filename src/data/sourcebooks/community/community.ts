@@ -1,5 +1,5 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { beastfolk, deva, ironbound, siabhra } from '@/data/sourcebooks/community/andy';
+import { ace, beastfolk, deva, heavyGunner, ironbound, ironsight, pistolier, siabhra } from '@/data/sourcebooks/community/andy';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
@@ -4250,7 +4250,12 @@ export const community: Sourcebook = {
 	encounters: [],
 	imbuements: [],
 	items: [],
-	kits: [],
+	kits: [
+		ace,
+		heavyGunner,
+		ironsight,
+		pistolier
+	],
 	monsterGroups: [],
 	montages: [],
 	negotiations: [],

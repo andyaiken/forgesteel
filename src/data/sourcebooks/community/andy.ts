@@ -9,6 +9,9 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { Kit } from '@/models/kit';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
 
 export const beastfolk: Ancestry = {
 	id: 'ancestry-beastfolk',
@@ -1548,4 +1551,175 @@ If your prime does not have recoveries, roll 1d10 and add your level; your prime
 	],
 	ancestryPoints: 3,
 	culture: undefined
+};
+
+export const ace: Kit = {
+	id: 'kit-ace',
+	name: 'Ace',
+	description: 'You fight with one hand on a blade and the other on a pistol, weaving steel and smoke into a single deadly style. Aces are fast, aggressive duelists who thrive in close quarters, darting in for a cut, a shot, or both before their enemy can recover. Some are privateers, raiders, and sellswords; others are officers, smugglers, or urban swashbucklers with a taste for flair.',
+	type: '',
+	armor: [ KitArmor.Light ],
+	weapon: [ KitWeapon.Light, 'Light Firearm' as KitWeapon ],
+	stamina: 3,
+	speed: 1,
+	stability: 0,
+	meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+	rangedDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+	meleeDistance: 1,
+	rangedDistance: 0,
+	disengage: 1,
+	features: [
+		FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: 'kit-ace-signature',
+				name: 'Point Blank Shot',
+				description: 'A slash, a step, and a pistol shot delivered at breath-stealing range.',
+				type: FactoryLogic.type.createMain(),
+				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+				distance: [
+					FactoryLogic.distance.createMelee(),
+					FactoryLogic.distance.createRanged(5)
+				],
+				target: 'One creature',
+				cost: 'signature',
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility ],
+							tier1: '2 + M or A damage',
+							tier2: '5 + M or A damage; you can shift 1',
+							tier3: '7 + M or A damage; you can shift 1; if the target is adjacent to you, push 2'
+						})
+					),
+					FactoryLogic.createAbilitySectionText('When using this ability, you ignore the penalty for making ranged attacks while adjacent to an enemy.')
+				]
+			})
+		})
+	]
+};
+
+export const heavyGunner: Kit = {
+	id: 'kit-heavy-gunner',
+	name: 'Heavy Gunner',
+	description: 'You haul a brutal, oversized firearm built to chew through anything unlucky enough to stand in the open. Heavy gunners trade finesse for force, laying down punishing bursts, driving enemies back, and controlling the field through sheer volume of shot. Whether braced behind rubble, marching forward under recoil, or sweeping a street clear with sustained fire, you are the answer to massed resistance.',
+	type: '',
+	armor: [ KitArmor.Medium ],
+	weapon: [ 'Heavy Firearm' as KitWeapon ],
+	stamina: 6,
+	speed: 0,
+	stability: 2,
+	meleeDamage: null,
+	rangedDamage: FactoryLogic.createKitDamageBonus(0, 0, 4),
+	meleeDistance: 0,
+	rangedDistance: 5,
+	disengage: 0,
+	features: [
+		FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: 'kit-heavy-gunner-signature',
+				name: 'Strafe',
+				description: 'You sweep a lane of fire across the battlefield, driving enemies back under a storm of shot.',
+				type: FactoryLogic.type.createMain(),
+				keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
+				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 5, within: 5 }) ],
+				target: 'Each creature in the area',
+				cost: 'signature',
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility ],
+							tier1: '2 damage',
+							tier2: '4 damage; push 1',
+							tier3: '6 damage; push 2'
+						})
+					),
+					FactoryLogic.createAbilitySectionText('The targets are force moved one at a time, starting with the target nearest to you, and can be pushed into other targets in the same line.'),
+					FactoryLogic.createAbilitySectionText('Before you use this ability, you can use your maneuver to brace; if you do so, you gain an edge on your power roll.')
+				]
+			})
+		})
+	]
+};
+
+export const ironsight: Kit = {
+	id: 'kit-ironsight',
+	name: 'Ironsight',
+	description: 'Carrying a long rifle, you rely on discipline, timing, and a well-placed shot instead of theatrics. Ironsight fighters are marksmen, hunters, and soldiers trained to make every round count, punishing exposed targets and dropping enemies before they can close the distance. You don’t need fancy tricks—just a steady hand, a clear line, and the patience to fire at exactly the right moment.',
+	type: '',
+	armor: [ KitArmor.Light ],
+	weapon: [ 'Medium Firearm' as KitWeapon ],
+	stamina: 3,
+	speed: 0,
+	stability: 1,
+	meleeDamage: null,
+	rangedDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
+	meleeDistance: 0,
+	rangedDistance: 10,
+	disengage: 0,
+	features: [
+		FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: 'kit-ironsight-signature',
+				name: 'Deadeye',
+				description: 'You aim your shot where armor parts and cover fails.',
+				type: FactoryLogic.type.createMain(),
+				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+				distance: [ FactoryLogic.distance.createRanged(5) ],
+				target: 'One creature',
+				cost: 'signature',
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
+							tier1: '3 + A or I damage',
+							tier2: '6 + A or I damage',
+							tier3: '9 + A or I damage'
+						})
+					),
+					FactoryLogic.createAbilitySectionText('This strike ignores cover and concealment. If the target has no cover or concealment, this strike deals extra damage equal to your Agility score.')
+				]
+			})
+		})
+	]
+};
+
+export const pistolier: Kit = {
+	id: 'kit-pistolier',
+	name: 'Pistolier',
+	description: 'You fight with speed, nerve, and absolute confidence in the weapon at your hip. Pistoliers excel in close-to-mid-range exchanges, snapping off shots, repositioning, and turning a sidearm into the centerpiece of a duelist’s style. Some are officers and detectives, some are gamblers and hired guns, but all of them know that one quick shot at the right moment can decide the fight.',
+	type: '',
+	armor: [],
+	weapon: [ 'Light Firearm' as KitWeapon ],
+	stamina: 3,
+	speed: 0,
+	stability: 0,
+	meleeDamage: null,
+	rangedDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+	meleeDistance: 0,
+	rangedDistance: 7,
+	disengage: 1,
+	features: [
+		FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: 'kit-pistolier-signature',
+				name: 'Fan the Hammer',
+				description: 'Your pistol fires a second shot before your foes even realize there’s been a first one.',
+				type: FactoryLogic.type.createMain(),
+				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+				distance: [ FactoryLogic.distance.createRanged(5) ],
+				target: 'Two creatures',
+				cost: 'signature',
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Agility ],
+							tier1: '2 + A damage; you can shift 1',
+							tier2: '4 + A damage; you can shift 1',
+							tier3: '6 + A damage; you can shift 1'
+						})
+					)
+				]
+			})
+		})
+	]
 };

@@ -3,10 +3,6 @@
 	display: flex;
 	flex-direction: column;
 
-	&.compact {
-		margin-top: -10px;
-	}
-
 	.hero-main-section {
 		flex: 1 1 0;
 		display: flex;

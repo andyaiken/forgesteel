@@ -1,4 +1,5 @@
 import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
+import { Hero, HeroOverview } from '@/models/hero';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
@@ -9,12 +10,12 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { CultureData } from '@/data/culture-data';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
-import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
@@ -1398,5 +1399,32 @@ export class HeroLogic {
 		hero.career.incitingIncidents.selected = Utils.copy(Collections.draw(hero.career.incitingIncidents.options));
 
 		return hero;
+	};
+
+	static createOverview = (hero: Hero) => {
+		const background: string[] = [];
+		if (hero.culture && (hero.culture.id !== CultureData.bespoke.id)) {
+			background.push(hero.culture.name);
+		}
+		if (hero.career) {
+			background.push(hero.career.name);
+
+			if (hero.career.incitingIncidents.selected) {
+				background.push(hero.career.incitingIncidents.selected.name);
+			}
+		}
+
+		const overview: HeroOverview = {
+			id: hero.id,
+			name: hero.name,
+			ancestry: hero.ancestry ? hero.ancestry.name : null,
+			background: background.length > 0 ? background.join(', ') : null,
+			class: hero.class ? `${hero.class.name} (${[ `Level ${hero.class.level}`, ...HeroLogic.getClassSpecialization(hero) ].join(' ')})` : null,
+			complication: hero.complication ? hero.complication.name : null,
+			picture: hero.picture,
+			folder: hero.folder
+		};
+
+		return overview;
 	};
 }

@@ -1848,7 +1848,7 @@ export const Main = (props: Props) => {
 							path=':folder?'
 							element={
 								<HeroListPage
-									heroes={heroes}
+									heroes={heroes.map(HeroLogic.createOverview)}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
 									params={footerParams}

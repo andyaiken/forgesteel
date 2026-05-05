@@ -25,7 +25,6 @@ import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Options } from '@/models/options';
-import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
@@ -93,7 +92,6 @@ export const HeroViewPage = (props: Props) => {
 						hero={hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						mode={PanelMode.Full}
 						onSelectAncestry={props.showAncestry}
 						onSelectCulture={props.showCulture}
 						onSelectCareer={props.showCareer}

@@ -1,7 +1,7 @@
+import { Hero, HeroOverview } from '@/models/hero';
 import { CSSProperties } from 'react';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Format } from '@/utils/format';
-import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
@@ -96,6 +96,27 @@ export const PregenToken = (props: PregenTokenProps) => {
 		<ErrorBoundary>
 			<Token
 				name={props.pregen.name || 'Pregen'}
+				role={MonsterRoleType.NoRole}
+				type='hero'
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
+	);
+};
+
+interface HeroOverviewTokenProps {
+	hero: HeroOverview;
+	size?: number;
+	onClick?: () => void;
+}
+
+export const HeroOverviewToken = (props: HeroOverviewTokenProps) => {
+	return (
+		<ErrorBoundary>
+			<Token
+				name={props.hero.name || 'Hero'}
+				picture={props.hero.picture || undefined}
 				role={MonsterRoleType.NoRole}
 				type='hero'
 				size={props.size}

@@ -9,26 +9,21 @@ import { Characteristic } from '@/enums/characteristic';
 import { ChoicesPanel } from '@/components/panels/hero/choices/choices-panel';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
-import { CultureData } from '@/data/culture-data';
 import { Domain } from '@/models/domain';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturesPanel } from '@/components/panels/hero/features/features-panel';
-import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
 import { Follower } from '@/models/follower';
-import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
-import { HeroToken } from '@/components/panels/token/token';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { NamePanel } from '@/components/panels/hero/name/name-panel';
 import { Options } from '@/models/options';
-import { PanelMode } from '@/enums/panel-mode';
 import { RetinuePanel } from '@/components/panels/hero/retinue/retinue-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -47,28 +42,27 @@ interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	options: Options;
-	mode?: PanelMode;
-	onSelectAncestry?: (ancestry: Ancestry) => void;
-	onSelectCulture?: (culture: Culture) => void;
-	onSelectCareer?: (career: Career) => void;
-	onSelectClass?: (heroClass: HeroClass) => void;
-	onSelectComplication?: (complication: Complication) => void;
-	onSelectDomain?: (domain: Domain) => void;
-	onSelectKit?: (kit: Kit) => void;
-	onSelectTitle?: (title: Title) => void;
-	onSelectMonster?: (hero: Hero, monster: Monster, summon?: SummoningInfo) => void;
-	onSelectFollower?: (hero: Hero, follower: Follower) => void;
-	onSelectFixture?: (fixture: Fixture) => void;
-	onSelectCharacteristic?: (characteristic: Characteristic) => void;
-	onSelectFeature?: (feature: Feature) => void;
-	onSelectAbility?: (ability: Ability) => void;
-	onShowState?: (type: HeroModalType) => void;
-	onShowReference?: (page: RulesPage) => void;
-	onAddSquad?: (hero: Hero, monster: Monster, count: number) => void;
-	onRemoveSquad?: (hero: Hero, slotID: string) => void;
-	onAddMonsterToSquad?: (hero: Hero, slotID: string) => void;
-	onSelectControlledMonster?: (hero: Hero, monster: Monster) => void;
-	onSelectControlledSquad?: (hero: Hero, slot: EncounterSlot) => void;
+	onSelectAncestry: (ancestry: Ancestry) => void;
+	onSelectCulture: (culture: Culture) => void;
+	onSelectCareer: (career: Career) => void;
+	onSelectClass: (heroClass: HeroClass) => void;
+	onSelectComplication: (complication: Complication) => void;
+	onSelectDomain: (domain: Domain) => void;
+	onSelectKit: (kit: Kit) => void;
+	onSelectTitle: (title: Title) => void;
+	onSelectMonster: (hero: Hero, monster: Monster, summon?: SummoningInfo) => void;
+	onSelectFollower: (hero: Hero, follower: Follower) => void;
+	onSelectFixture: (fixture: Fixture) => void;
+	onSelectCharacteristic: (characteristic: Characteristic) => void;
+	onSelectFeature: (feature: Feature) => void;
+	onSelectAbility: (ability: Ability) => void;
+	onShowState: (type: HeroModalType) => void;
+	onShowReference: (page: RulesPage) => void;
+	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
+	onRemoveSquad: (hero: Hero, slotID: string) => void;
+	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
+	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -134,7 +128,7 @@ export const HeroPanel = (props: Props) => {
 					abilities={abilities}
 					hero={props.hero}
 					options={props.options}
-					onSelectAbility={props.onSelectAbility!}
+					onSelectAbility={props.onSelectAbility}
 				/>
 			);
 		};
@@ -146,22 +140,22 @@ export const HeroPanel = (props: Props) => {
 						<StatsPanel
 							hero={props.hero}
 							options={props.options}
-							onSelectCharacteristic={props.onSelectCharacteristic!}
-							onShowState={props.onShowState!}
+							onSelectCharacteristic={props.onSelectCharacteristic}
+							onShowState={props.onShowState}
 						/>
 						<ChoicesPanel
 							hero={props.hero}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							onSelectAncestry={props.onSelectAncestry!}
-							onSelectCulture={props.onSelectCulture!}
-							onSelectCareer={props.onSelectCareer!}
-							onSelectClass={props.onSelectClass!}
-							onSelectComplication={props.onSelectComplication!}
-							onSelectDomain={props.onSelectDomain!}
-							onSelectKit={props.onSelectKit!}
-							onSelectTitle={props.onSelectTitle!}
-							onShowState={props.onShowState!}
+							onSelectAncestry={props.onSelectAncestry}
+							onSelectCulture={props.onSelectCulture}
+							onSelectCareer={props.onSelectCareer}
+							onSelectClass={props.onSelectClass}
+							onSelectComplication={props.onSelectComplication}
+							onSelectDomain={props.onSelectDomain}
+							onSelectKit={props.onSelectKit}
+							onSelectTitle={props.onSelectTitle}
+							onShowState={props.onShowState}
 						/>
 						{
 							isSmall || props.options.singlePage ?
@@ -170,13 +164,13 @@ export const HeroPanel = (props: Props) => {
 									sourcebooks={props.sourcebooks}
 									options={props.options}
 									setTab={setTab}
-									onShowState={props.onShowState!}
-									onShowReference={props.onShowReference!}
-									onAddSquad={props.onAddSquad!}
-									onRemoveSquad={props.onRemoveSquad!}
-									onAddMonsterToSquad={props.onAddMonsterToSquad!}
-									onSelectControlledMonster={props.onSelectControlledMonster!}
-									onSelectControlledSquad={props.onSelectControlledSquad!}
+									onShowState={props.onShowState}
+									onShowReference={props.onShowReference}
+									onAddSquad={props.onAddSquad}
+									onRemoveSquad={props.onRemoveSquad}
+									onAddMonsterToSquad={props.onAddMonsterToSquad}
+									onSelectControlledMonster={props.onSelectControlledMonster}
+									onSelectControlledSquad={props.onSelectControlledSquad}
 								/>
 								: null
 						}
@@ -188,7 +182,7 @@ export const HeroPanel = (props: Props) => {
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onSelectFeature={props.onSelectFeature!}
+						onSelectFeature={props.onSelectFeature}
 					/>
 				);
 			case 'Abilities':
@@ -227,9 +221,9 @@ export const HeroPanel = (props: Props) => {
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onSelectMonster={props.onSelectMonster!}
-						onSelectFollower={props.onSelectFollower!}
-						onSelectFixture={props.onSelectFixture!}
+						onSelectMonster={props.onSelectMonster}
+						onSelectFollower={props.onSelectFollower}
+						onSelectFixture={props.onSelectFixture}
 					/>
 				);
 		}
@@ -237,77 +231,13 @@ export const HeroPanel = (props: Props) => {
 		return null;
 	};
 
-	if (props.mode !== PanelMode.Full) {
-		const background: string[] = [];
-		if (props.hero.culture && (props.hero.culture.id !== CultureData.bespoke.id)) {
-			background.push(props.hero.culture.name);
-		}
-		if (props.hero.career) {
-			background.push(props.hero.career.name);
-
-			if (props.hero.career.incitingIncidents.selected) {
-				background.push(props.hero.career.incitingIncidents.selected.name);
-			}
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className='hero-panel compact'>
-					<HeaderText
-						level={1}
-						ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={34} /> : null}
-						tags={props.hero.folder ? [ props.hero.folder ] : []}
-					>
-						{props.hero.name || 'Unnamed Hero'}
-					</HeaderText>
-					{
-						props.hero.ancestry ?
-							<Field
-								compact={true}
-								label='Ancestry'
-								value={props.hero.ancestry.name}
-							/>
-							: null
-					}
-					{
-						background.length > 0 ?
-							<Field
-								compact={true}
-								label='Background'
-								value={background.join(' / ')}
-							/>
-							: null
-					}
-					{
-						props.hero.class ?
-							<Field
-								compact={true}
-								label='Class'
-								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...HeroLogic.getClassSpecialization(props.hero) ].join(' ')})`}
-							/>
-							: null
-					}
-					{
-						props.hero.complication ?
-							<Field
-								compact={true}
-								label='Complication'
-								value={props.hero.complication.name}
-							/>
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	}
-
 	return (
 		<ErrorBoundary>
 			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
 				<NamePanel
 					hero={props.hero}
 					options={props.options}
-					onShowState={props.onShowState!}
+					onShowState={props.onShowState}
 				/>
 				<div className='hero-main-section'>
 					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
@@ -366,13 +296,13 @@ export const HeroPanel = (props: Props) => {
 								sourcebooks={props.sourcebooks}
 								options={props.options}
 								setTab={setTab}
-								onShowState={props.onShowState!}
-								onShowReference={props.onShowReference!}
-								onAddSquad={props.onAddSquad!}
-								onRemoveSquad={props.onRemoveSquad!}
-								onAddMonsterToSquad={props.onAddMonsterToSquad!}
-								onSelectControlledMonster={props.onSelectControlledMonster!}
-								onSelectControlledSquad={props.onSelectControlledSquad!}
+								onShowState={props.onShowState}
+								onShowReference={props.onShowReference}
+								onAddSquad={props.onAddSquad}
+								onRemoveSquad={props.onRemoveSquad}
+								onAddMonsterToSquad={props.onAddMonsterToSquad}
+								onSelectControlledMonster={props.onSelectControlledMonster}
+								onSelectControlledSquad={props.onSelectControlledSquad}
 							/>
 							: null
 					}

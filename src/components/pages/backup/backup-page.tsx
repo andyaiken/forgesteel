@@ -1,11 +1,11 @@
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
-import { HeroPanel } from '@/components/panels/hero/hero-panel';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
 import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { Utils } from '@/utils/utils';
 
@@ -25,7 +25,7 @@ export const BackupPage = (props: Props) => {
 					{
 						props.heroes.map(hero => (
 							<SelectablePanel key={hero.id} onSelect={() => Utils.exportData(hero.name || 'Unnamed Hero', hero, 'hero')}>
-								<HeroPanel hero={hero} sourcebooks={SourcebookLogic.getSourcebooks(props.homebrewSourcebooks)} options={props.options} />
+								<HeroOverviewPanel hero={HeroLogic.createOverview(hero)} />
 							</SelectablePanel>
 						))
 					}

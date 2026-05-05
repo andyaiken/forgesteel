@@ -8,14 +8,14 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HeroMergeLogic } from '@/logic/merge/hero-merge-logic';
-import { HeroPanel } from '@/components/panels/hero/hero-panel';
+import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { LocalService } from '@/services/storage/local-service';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
@@ -113,7 +113,7 @@ export const TransferPage = (props: Props) => {
 		return props.connectionSettings.useManualWarehouse || props.connectionSettings.usePatreonWarehouse;
 	};
 
-	const getHeroSection = (heroes: Hero[], sourcebooks: Sourcebook[]) => {
+	const getHeroSection = (heroes: Hero[]) => {
 		const folders = Collections.distinct(heroes.map(h => h.folder).sort(), f => f);
 		if (folders.length === 0) {
 			folders.push('');
@@ -135,7 +135,10 @@ export const TransferPage = (props: Props) => {
 				<div className='hero-section'>
 					{
 						list.map(hero => (
-							<HeroPanel key={`local-hero-${hero.id}`} hero={hero} sourcebooks={SourcebookLogic.getSourcebooks(sourcebooks)} options={props.options} />
+							<HeroOverviewPanel
+								key={`local-hero-${hero.id}`}
+								hero={HeroLogic.createOverview(hero)}
+							/>
 						))
 					}
 				</div>
@@ -247,7 +250,7 @@ export const TransferPage = (props: Props) => {
 					<HeaderText level={3}>Local Storage</HeaderText>
 
 					<Expander title={`Heroes (${localHeroes.length})`}>
-						{getHeroSection(localHeroes, localHomebrewSourcebooks)}
+						{getHeroSection(localHeroes)}
 					</Expander>
 
 					<Expander title={`Sourcebooks (${localHomebrewSourcebooks.length})`}>
@@ -264,7 +267,7 @@ export const TransferPage = (props: Props) => {
 
 					<Spin spinning={loadingRemoteHeroes}>
 						<Expander title={`Heroes (${remoteHeroes.length})`}>
-							{getHeroSection(remoteHeroes, remoteHomebrewSourcebooks)}
+							{getHeroSection(remoteHeroes)}
 						</Expander>
 					</Spin>
 

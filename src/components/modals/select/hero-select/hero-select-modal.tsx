@@ -5,7 +5,8 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroInfo } from '@/components/panels/token/token';
-import { HeroPanel } from '@/components/panels/hero/hero-panel';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
@@ -90,7 +91,7 @@ export const HeroSelectModal = (props: Props) => {
 										props.onSelect([ h ]);
 									}}
 								>
-									<HeroPanel hero={h} sourcebooks={props.sourcebooks} options={props.options} />
+									<HeroOverviewPanel hero={HeroLogic.createOverview(h)} />
 								</SelectablePanel>
 							))
 						}

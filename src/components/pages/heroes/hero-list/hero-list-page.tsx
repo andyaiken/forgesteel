@@ -1,15 +1,15 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { Button, Divider, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, TeamOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Hero, HeroOverview } from '@/models/hero';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
-import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { HeroPanel } from '@/components/panels/hero/hero-panel';
+import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
 import { Options } from '@/models/options';
 import { PregenData } from '@/data/pregen-data';
 import { PregenInfo } from '@/components/panels/token/token';
@@ -27,7 +27,7 @@ import { useTitle } from '@/hooks/use-title';
 import './hero-list-page.scss';
 
 interface Props {
-	heroes: Hero[];
+	heroes: HeroOverview[];
 	sourcebooks: Sourcebook[];
 	options: Options;
 	params: FooterParams;
@@ -60,15 +60,14 @@ export const HeroListPage = (props: Props) => {
 			.filter(h => h.folder === folder)
 			.filter(h => Utils.textMatches([
 				h.name,
-				h.ancestry?.name || '',
-				h.culture?.name || '',
-				h.career?.name || '',
-				h.class?.name || '',
-				h.complication?.name || ''
+				h.ancestry || '',
+				h.background || '',
+				h.class || '',
+				h.complication || ''
 			], searchTerm));
 	};
 
-	const getHeroesSection = (list: Hero[]) => {
+	const getHeroesSection = (list: HeroOverview[]) => {
 		if (list.length === 0) {
 			return (
 				<Empty />
@@ -80,7 +79,7 @@ export const HeroListPage = (props: Props) => {
 				{
 					list.map(hero => (
 						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} options={props.options} />
+							<HeroOverviewPanel hero={hero} />
 						</SelectablePanel>
 					))
 				}

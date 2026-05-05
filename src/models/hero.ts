@@ -37,4 +37,15 @@ export interface Hero {
 	abilityCustomizations: AbilityCustomization[];
 }
 
+export interface HeroOverview {
+	id: string;
+	name: string;
+	ancestry: string | null;
+	background: string | null;
+	class: string | null;
+	complication: string | null;
+	picture: string | null;
+	folder: string;
+}
+
 export type HeroEditTab = 'start' | 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';

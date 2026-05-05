@@ -147,42 +147,29 @@ export const Main = (props: Props) => {
 	// #region Persistence
 
 	const persistHero = (hero: Hero) => {
+		let newHeroes: Hero[];
 		if (heroes.some(h => h.id === hero.id)) {
 			Analytics.logHeroEdited(hero);
 
 			const copy = Utils.copy(heroes);
 			const list = copy.map(h => h.id === hero.id ? hero : h);
-
-			return persistHeroes(list);
+			newHeroes = list;
 		} else {
 			Analytics.logHeroCreated(hero);
 
 			const copy = Utils.copy(heroes);
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);
-
-			return persistHeroes(copy);
+			newHeroes = copy;
 		}
-	};
 
-	const persistHeroes = (heroes: Hero[]) => {
 		return dataService
-			.saveHeroes(Collections.sort(heroes, h => h.name))
-			.then(
-				setHeroes,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving heroes',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			)
+			.saveHero(hero)
+			.then(() => setHeroes(newHeroes))
 			.catch(err => {
 				console.error(err);
 				notify.error({
-					title: 'Error saving heroes',
+					title: 'Error saving hero',
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
@@ -306,7 +293,19 @@ export const Main = (props: Props) => {
 		const stayInFolder = copy.some(h => h.folder === hero.folder);
 		navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 
-		persistHeroes(copy);
+		return dataService.deleteHero(hero.id)
+			.then(() => {
+				setHeroes(copy);
+				navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
+			})
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error deleting hero',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			});
 	};
 
 	const saveHero = (hero: Hero) => {
@@ -1194,7 +1193,10 @@ export const Main = (props: Props) => {
 			.then(() => {
 				const heroesCopy = Utils.copy(heroes);
 				heroesCopy.forEach(hero => HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(copy)));
-				persistHeroes(heroesCopy);
+
+				// TODO: save individually?? seems not great.
+				// Probably add logic to only call update on relevant heroes, and save those?
+				setHeroes(heroesCopy);
 			})
 			.then(() => navigation.goToLibrary(kind, element.id));
 	};

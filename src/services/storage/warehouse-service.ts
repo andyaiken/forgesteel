@@ -160,9 +160,14 @@ export class WarehouseService implements StorageService {
 		}
 	}
 
+	// Will ONLY retrieve a partial object for the Heroes
 	async getHeroes(): Promise<Hero[]> {
 		try {
-			const response = await this.api.get('data/forgesteel-heroes');
+			const response = await this.api.get('data/forgesteel-heroes', {
+				params: {
+					fields: 'name,folder'
+				}
+			});
 			return response.data.data;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);

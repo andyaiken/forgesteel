@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Tag } from 'antd';
+import { Alert, Button, Flex, Progress, Tag } from 'antd';
 import { ConnectionSettings, FSDataSource } from '@/models/connection-settings';
 import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
@@ -46,6 +46,7 @@ type LoadingStatus = 'pending' | 'success' | 'failure' | undefined;
 export const DataLoader = (props: Props) => {
 	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(undefined);
 	const [ heroesState, setHeroesState ] = useState<LoadingStatus>(undefined);
+	const [ heroesProgress, setHeroesProgress ] = useState<number>(0);
 	const [ homebrewState, setHomebrewState ] = useState<LoadingStatus>(undefined);
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
@@ -129,6 +130,35 @@ export const DataLoader = (props: Props) => {
 			});
 	};
 
+	async function getHero(getterPromise: Promise<Hero | null>, progressPercent: number): Promise<Hero | null> {
+		return getterPromise
+			.then(hero => {
+				setHeroesProgress(heroesProgress => heroesProgress + progressPercent);
+				return hero;
+			})
+			.catch(reason => {
+				console.error('Error getting hero', reason);
+				return null;
+			});
+	};
+
+	async function getHeroes(dataService: DataService, source: FSDataSource): Promise<Hero[]> {
+		// Only do multi-stage loading for non-local storage
+		if (source === 'Local') {
+			return dataService.getHeroes().finally(() => setHeroesProgress(100));
+		}
+
+		const heroPartials = await dataService.getHeroes();
+		const incrementPct = 100.0 / heroPartials.length;
+
+		const getHeroPromises = heroPartials.map(p => {
+			return getHero(dataService.getHero(p.id), incrementPct);
+		});
+
+		return Promise.all(getHeroPromises)
+			.then(results => results.filter(h => !!h));
+	};
+
 	const loadData = () => {
 		setError(null);
 		setOverallLoadState('pending');
@@ -153,7 +183,7 @@ export const DataLoader = (props: Props) => {
 
 				const promises = [
 					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
-					updateLoadingStatus(dataService.getHeroes(), setHeroesState),
+					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState)
@@ -168,18 +198,23 @@ export const DataLoader = (props: Props) => {
 
 					sourcebooks.forEach(sourcebook => {
 						sourcebook.type = SourcebookType.Homebrew;
-						SourcebookUpdateLogic.updateSourcebook(sourcebook);
+						try {
+							SourcebookUpdateLogic.updateSourcebook(sourcebook);
+						} catch (error) {
+							console.error(`Error while updating sourcebook [${sourcebook.name} - ${sourcebook.id}]`, error);
+						}
 					});
 					// #endregion
 
 					// #region Heroes
-					let heroes = results[1] as Hero[] | null;
-					if (!heroes) {
-						heroes = [];
-					}
+					const heroes = results[1] as Hero[];
 
 					heroes.forEach(hero => {
-						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+						try {
+							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+						} catch (error) {
+							console.error(`Error while updating hero [${hero.name} - ${hero.id}]`, error);
+						}
 					});
 					// #endregion
 
@@ -261,6 +296,7 @@ export const DataLoader = (props: Props) => {
 							}
 						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
+						<Progress percent={heroesProgress} size='small' showInfo={false} />
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>

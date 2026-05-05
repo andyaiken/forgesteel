@@ -143,7 +143,7 @@ export const EncounterTurnModal = (props: Props) => {
 		const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
 			return (
 				<SelectablePanel key={group.id} onSelect={onClick}>
-					<HeaderText style={{ marginTop: '-5px' }}>
+					<HeaderText style={{ marginTop: '0' }}>
 						{group.name ? group.name : `Group ${encounter.groups.indexOf(group) + 1}`}
 					</HeaderText>
 					<Space orientation='vertical' style={{ width: '100%' }}>
@@ -162,11 +162,18 @@ export const EncounterTurnModal = (props: Props) => {
 
 		const getHeroButton = (hero: Hero, onClick: () => void) => {
 			return (
-				<SelectablePanel key={hero.id} onSelect={onClick}>
-					<HeaderText style={{ marginTop: '-5px' }}>
-						{hero.name}
-					</HeaderText>
-					<HeroInfo hero={hero} />
+				<SelectablePanel key={hero.id} onSelect={onClick} style={{ paddingBottom: '10px' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeroInfo hero={hero} />
+						{
+							hero.state.controlledSlots
+								.flatMap(s => s.monsters)
+								.filter(m => !m.state.defeated)
+								.map(m => (
+									<MonsterInfo key={m.id} monster={m} />
+								))
+						}
+					</Space>
 				</SelectablePanel>
 			);
 		};

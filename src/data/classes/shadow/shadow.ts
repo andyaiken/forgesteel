@@ -145,7 +145,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-4-1b',
 					name: 'Characteristic Increase: Additional',
-					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 3.',
+					description: 'You can increase one of your characteristic scores by 1, to a maximum of 3.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -349,7 +349,7 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-10-1b',
 					name: 'Characteristic Increase: Additional',
-					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 5.',
+					description: 'You can increase one of your characteristic scores by 1, to a maximum of 5.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({

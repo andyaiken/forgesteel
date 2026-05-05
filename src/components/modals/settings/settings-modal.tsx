@@ -5,7 +5,7 @@ import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { DataService } from '@/utils/data-service';
+import { DataService } from '@/services/data-service';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';

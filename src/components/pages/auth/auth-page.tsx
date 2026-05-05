@@ -7,7 +7,7 @@ import { ConnectionSettings } from '@/models/connection-settings';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Options } from '@/models/options';
 import { PatreonLogic } from '@/logic/patreon-logic';
-import { PatreonService } from '@/service/patreon-service';
+import { PatreonService } from '@/services/patreon-service';
 import { PatreonSession } from '@/models/patreon-connection';
 import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { Utils } from '@/utils/utils';

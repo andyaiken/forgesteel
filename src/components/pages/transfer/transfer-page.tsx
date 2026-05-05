@@ -2,7 +2,7 @@ import { Alert, Button, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'a
 import { useEffect, useMemo, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { DataService } from '@/utils/data-service';
+import { DataService } from '@/services/data-service';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
@@ -11,14 +11,14 @@ import { Hero } from '@/models/hero';
 import { HeroMergeLogic } from '@/logic/merge/hero-merge-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { LabelControl } from '@/components/controls/label-control/label-control';
-import { LocalService } from '@/service/storage/local-service';
+import { LocalService } from '@/services/storage/local-service';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
-import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
+import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 

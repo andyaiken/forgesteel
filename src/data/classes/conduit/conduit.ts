@@ -380,7 +380,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				FactoryLogic.feature.createChoice({
 					id: 'conduit-4-1b',
 					name: 'Characteristic Increase: Additional Choice',
-					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 3.',
+					description: 'You can increase one of your characteristic scores by 1, to a maximum of 3.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -576,7 +576,7 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 				FactoryLogic.feature.createChoice({
 					id: 'conduit-10-2b',
 					name: 'Characteristic Increase: Additional Choice',
-					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 5.',
+					description: 'You can increase one of your characteristic scores by 1, to a maximum of 5.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({

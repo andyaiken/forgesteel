@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { DataService } from '@/utils/data-service';
+import { DataService } from '@/services/data-service';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
-import { StorageService } from '@/service/storage/storage-service';
+import { StorageService } from '@/services/storage/storage-service';
 import localforage from 'localforage';
 
 afterEach(() => {
@@ -168,7 +168,7 @@ describe('DataService', () => {
 
 			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
-			await ds.getHiddenSettingIds()
+			await ds.getHiddenSourcebookIDs()
 				.then(thenFn)
 				.catch(catchFn);
 
@@ -184,7 +184,7 @@ describe('DataService', () => {
 
 			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
-			await ds.saveHiddenSettingIds(mockHiddenSettingIds)
+			await ds.saveHiddenSourcebookIDs(mockHiddenSettingIds)
 				.then(thenFn)
 				.catch(catchFn);
 

@@ -2,7 +2,7 @@ import { Button, Flex, Space, Spin, notification } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { PatreonService } from '@/service/patreon-service';
+import { PatreonService } from '@/services/patreon-service';
 import { PatreonSession } from '@/models/patreon-connection';
 import { PatreonStatusPanel } from '@/components/panels/connection-settings/patreon-status-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

@@ -1,5 +1,4 @@
 import { Alert, Button, Drawer, Flex, Space, Tabs } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '@/components/panels/encounter-group/encounter-group-panel';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
@@ -21,6 +20,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSelectModal } from '@/components/modals/select/hero-select/hero-select-modal';
 import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -35,6 +35,7 @@ import { MonsterSelectModal } from '@/components/modals/select/monster-select/mo
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
@@ -58,6 +59,7 @@ interface Props {
 	heroes: Hero[];
 	options: Options;
 	onChange: (encounter: Encounter) => void;
+	showTools?: (tool: string) => void;
 }
 
 export const EncounterRunPanel = (props: Props) => {
@@ -687,7 +689,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const getNotes = () => {
 		return (
-			<>
+			<div style={{ padding: '5px' }}>
 				{
 					encounter.description ?
 						<>
@@ -696,17 +698,19 @@ export const EncounterRunPanel = (props: Props) => {
 						</>
 						: null
 				}
-				{
-					encounter.notes.map(note => (
-						<div key={note.id}>
-							<HeaderText level={1}>{note.name}</HeaderText>
-							<Markdown text={note.description} />
-						</div>
-					))
-				}
-				{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
-				{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
-			</>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					{
+						encounter.notes.map(note => (
+							<SelectablePanel key={note.id}>
+								<HeaderText level={1}>{note.name}</HeaderText>
+								<Markdown text={note.description} />
+							</SelectablePanel>
+						))
+					}
+					{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
+					{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
+				</Space>
+			</div>
 		);
 	};
 
@@ -736,12 +740,14 @@ export const EncounterRunPanel = (props: Props) => {
 					<div style={{ flex: '1 1 0', height: '100%', padding: '0 5px', overflowY: 'auto' }}>
 						<HeaderText
 							level={1}
-							extra={[
-								<Button key='sidebar' onClick={() => setShowSidebar(!showSidebar)}>
-									Sidebar
-									{showSidebar ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
-								</Button>
-							]}
+							extra={
+								<ButtonGroup
+									buttons={[
+										{ type: 'button', label: 'Minis', disabled: !props.showTools, onClick: () => props.showTools!('minis') },
+										{ type: 'button', label: showSidebar ? 'Hide Sidebar' : 'Show Sidebar', onClick: () => setShowSidebar(!showSidebar) }
+									]}
+								/>
+							}
 						>
 							{encounter.name || 'Unnamed Encounter'}
 						</HeaderText>

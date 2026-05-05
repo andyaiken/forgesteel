@@ -1,7 +1,7 @@
 import { ConnectionSettings } from '@/models/connection-settings';
-import { LocalService } from '@/service/storage/local-service';
-import { StorageService } from '@/service/storage/storage-service';
-import { WarehouseService } from '@/service/storage/warehouse-service';
+import { LocalService } from '@/services/storage/local-service';
+import { StorageService } from '@/services/storage/storage-service';
+import { WarehouseService } from '@/services/storage/warehouse-service';
 
 export class StorageServiceFactory {
 	static fromConnectionSettings = (settings: ConnectionSettings): StorageService => {

@@ -1082,7 +1082,8 @@ export class FactoryLogic {
 			warehouseToken: '',
 			patreonConnected: false,
 			usePatreonWarehouse: false,
-			patreonConnections: []
+			patreonConnections: [],
+			dataSource: undefined
 		};
 	};
 

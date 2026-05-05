@@ -5,7 +5,7 @@ import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
-import { DataService } from '@/utils/data-service';
+import { DataService } from '@/services/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
@@ -15,14 +15,14 @@ import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Options } from '@/models/options';
 import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
 import { PatreonLogic } from '@/logic/patreon-logic';
-import { PatreonService } from '@/service/patreon-service';
+import { PatreonService } from '@/services/patreon-service';
 import { Session } from '@/models/session';
 import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
-import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
+import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import localforage from 'localforage';
 
 import './data-loader.scss';
@@ -49,7 +49,7 @@ export const DataLoader = (props: Props) => {
 	const [ homebrewState, setHomebrewState ] = useState<LoadingStatus>(undefined);
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
-	const [ hiddenSettingsState, setHiddenSettingsState ] = useState<LoadingStatus>(undefined);
+	const [ hiddenSourcebookIDsState, setHiddenSourcebookIDsState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ dataSource, setDataSource ] = useState<FSDataSource>(undefined);
@@ -138,7 +138,7 @@ export const DataLoader = (props: Props) => {
 		setHeroesState(undefined);
 		setSessionState(undefined);
 		setOptionsState(undefined);
-		setHiddenSettingsState(undefined);
+		setHiddenSourcebookIDsState(undefined);
 
 		initializeConnectionSettings().then(settings => {
 			setConnectionSettings(settings);
@@ -149,12 +149,12 @@ export const DataLoader = (props: Props) => {
 				setHeroesState('pending');
 				setSessionState('pending');
 				setOptionsState('pending');
-				setHiddenSettingsState('pending');
+				setHiddenSourcebookIDsState('pending');
 
 				const promises = [
 					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
 					updateLoadingStatus(dataService.getHeroes(), setHeroesState),
-					updateLoadingStatus(dataService.getHiddenSettingIds(), setHiddenSettingsState),
+					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState)
 				];
@@ -264,7 +264,7 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
-						<CheckLabel state={hiddenSettingsState}>Identifying Manifold</CheckLabel>
+						<CheckLabel state={hiddenSourcebookIDsState}>Identifying Manifold</CheckLabel>
 					</Flex>
 					{
 						error ?

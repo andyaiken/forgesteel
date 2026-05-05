@@ -56,6 +56,7 @@ interface Props {
 	updateMap: (map: TacticalMap) => void;
 	updateCounter: (counter: Counter) => void;
 	finishSessionElement: (id: string) => string | null;
+	showEncounterTools: (encounter: Encounter, tool: string) => void;
 }
 
 export const SessionDirectorPage = (props: Props) => {
@@ -106,6 +107,7 @@ export const SessionDirectorPage = (props: Props) => {
 							heroes={props.heroes}
 							options={props.options}
 							onChange={props.updateEncounter}
+							showTools={tool => props.showEncounterTools(encounter, tool)}
 						/>
 					</div>
 				);

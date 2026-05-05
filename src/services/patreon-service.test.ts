@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import MockAdapter from 'axios-mock-adapter';
-import { PatreonService } from '@/service/patreon-service';
+import { PatreonService } from '@/services/patreon-service';
 import axios from 'axios';
 
 describe('PatreonService', () => {

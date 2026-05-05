@@ -21,7 +21,7 @@ import { ConnectionSettings } from '@/models/connection-settings';
 import { Counter } from '@/models/counter';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
-import { DataService } from '@/utils/data-service';
+import { DataService } from '@/services/data-service';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { ElementModal } from '@/components/modals/element/element-modal';
@@ -88,7 +88,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
-import { StorageServiceFactory } from '@/service/storage/storage-service-factory';
+import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import { SubClass } from '@/models/subclass';
 import { SummoningInfo } from '@/models/summon';
 import { TacticalMap } from '@/models/tactical-map';
@@ -232,7 +232,7 @@ export const Main = (props: Props) => {
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
 		return dataService
-			.saveHiddenSettingIds(ids)
+			.saveHiddenSourcebookIDs(ids)
 			.then(
 				setHiddenSourcebookIDs,
 				err => {
@@ -2013,6 +2013,7 @@ export const Main = (props: Props) => {
 									updateMap={updateMap}
 									updateCounter={updateCounter}
 									finishSessionElement={finishSessionElement}
+									showEncounterTools={showEncounterTools}
 								/>
 							}
 						/>

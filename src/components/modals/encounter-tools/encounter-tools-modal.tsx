@@ -1,5 +1,5 @@
+import { Alert, Space } from 'antd';
 import { AbilityKeyword } from '@/enums/ability-keyword';
-import { Alert } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Encounter } from '@/models/encounter';
 import { FeatureType } from '@/enums/feature-type';
@@ -10,6 +10,7 @@ import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { Options } from '@/models/options';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
@@ -46,43 +47,45 @@ export const EncounterToolsModal = (props: Props) => {
 			content={
 				<div className='encounter-tools-modal'>
 					<HeaderText level={1}>Mini Checklist</HeaderText>
-					<Alert
-						type='info'
-						showIcon={true}
-						title='This list provides useful information to help you choose the minis you will need to run this encounter.'
-					/>
-					{
-						Collections.sort(monsters, data => data.monster.name).map(data => {
-							return (
-								<div key={data.monster.id}>
-									<HeaderText tags={data.monster.keywords}>{data.monster.name}</HeaderText>
-									{
-										data.count > 1 ?
-											<Field
-												label='Count'
-												value={data.count}
-											/>
-											: null
-									}
-									<Field
-										label='Size'
-										value={FormatLogic.getSize(data.monster.size)}
-									/>
-									<Field
-										label='Weapons'
-										value={
-											data.monster.features
-												.filter(f => f.type === FeatureType.Ability)
-												.filter(f => f.data.ability.keywords.includes(AbilityKeyword.Weapon))
-												.map(f => f.name)
-												.sort()
-												.join(', ') || 'None'
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<Alert
+							type='info'
+							showIcon={true}
+							title='This list provides useful information to help you choose the minis you will need to run this encounter.'
+						/>
+						{
+							Collections.sort(monsters, data => data.monster.name).map(data => {
+								return (
+									<SelectablePanel key={data.monster.id}>
+										<HeaderText tags={data.monster.keywords}>{data.monster.name}</HeaderText>
+										{
+											data.count > 1 ?
+												<Field
+													label='Count'
+													value={data.count}
+												/>
+												: null
 										}
-									/>
-								</div>
-							);
-						})
-					}
+										<Field
+											label='Size'
+											value={FormatLogic.getSize(data.monster.size)}
+										/>
+										<Field
+											label='Weapons'
+											value={
+												data.monster.features
+													.filter(f => f.type === FeatureType.Ability)
+													.filter(f => f.data.ability.keywords.includes(AbilityKeyword.Weapon))
+													.map(f => f.name)
+													.sort()
+													.join(', ') || 'None'
+											}
+										/>
+									</SelectablePanel>
+								);
+							})
+						}
+					</Space>
 				</div>
 			}
 			onClose={props.onClose}

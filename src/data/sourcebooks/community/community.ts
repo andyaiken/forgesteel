@@ -3153,7 +3153,7 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 				FactoryLogic.feature.createChoice({
 					id: 'vessel-4-1b',
 					name: 'Characteristic Increase',
-					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 3.',
+					description: 'You can increase one of your characteristic scores by 1, to a maximum of 3.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({

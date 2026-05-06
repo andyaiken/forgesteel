@@ -32,7 +32,7 @@ root.render(
 								<HashRouter>
 									<Main
 										heroes={data.heroes}
-										homebrewSourcebooks={data.homebrew}
+										homebrewSourcebooks={data.homebrewSourcebooks}
 										hiddenSourcebookIDs={data.hiddenSourcebookIDs}
 										session={data.session}
 										options={data.options}

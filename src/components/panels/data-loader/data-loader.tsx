@@ -31,7 +31,7 @@ export interface LoadedData {
 	connectionSettings: ConnectionSettings;
 	service: DataService;
 	heroes: Hero[];
-	homebrew: Sourcebook[];
+	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	session: Session;
 	options: Options;
@@ -47,7 +47,7 @@ export const DataLoader = (props: Props) => {
 	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(undefined);
 	const [ heroesState, setHeroesState ] = useState<LoadingStatus>(undefined);
 	const [ heroesProgress, setHeroesProgress ] = useState<number>(0);
-	const [ homebrewState, setHomebrewState ] = useState<LoadingStatus>(undefined);
+	const [ sourcebookState, setSourcebookState ] = useState<LoadingStatus>(undefined);
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSourcebookIDsState, setHiddenSourcebookIDsState ] = useState<LoadingStatus>(undefined);
@@ -164,7 +164,7 @@ export const DataLoader = (props: Props) => {
 		setOverallLoadState('pending');
 		setConnectionSettingsState('pending');
 
-		setHomebrewState(undefined);
+		setSourcebookState(undefined);
 		setHeroesState(undefined);
 		setSessionState(undefined);
 		setOptionsState(undefined);
@@ -175,14 +175,14 @@ export const DataLoader = (props: Props) => {
 			getDataService(settings).then(dataService => {
 				setConnectionSettingsState('success');
 
-				setHomebrewState('pending');
+				setSourcebookState('pending');
 				setHeroesState('pending');
 				setSessionState('pending');
 				setOptionsState('pending');
 				setHiddenSourcebookIDsState('pending');
 
 				const promises = [
-					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
+					updateLoadingStatus(dataService.getHomebrew(), setSourcebookState),
 					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
@@ -249,7 +249,7 @@ export const DataLoader = (props: Props) => {
 						connectionSettings: settings,
 						service: dataService,
 						heroes: heroes,
-						homebrew: sourcebooks,
+						homebrewSourcebooks: sourcebooks,
 						hiddenSourcebookIDs: hiddenSourcebookIDs,
 						session: session,
 						options: options
@@ -297,7 +297,7 @@ export const DataLoader = (props: Props) => {
 						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<Progress percent={heroesProgress} size='small' showInfo={false} />
-						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
+						<CheckLabel state={sourcebookState}>Homebrew Content</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSourcebookIDsState}>Identifying Manifold</CheckLabel>

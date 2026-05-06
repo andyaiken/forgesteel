@@ -25,7 +25,8 @@ interface Props {
 	hiddenSourcebookIDs: string[];
 	heroes: Hero[];
 	onClose: () => void;
-	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
+	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
+	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
 	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
@@ -54,16 +55,15 @@ export const SourcebooksModal = (props: Props) => {
 		if (index !== -1) {
 			copy[index] = sourcebook;
 			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
 		}
+		props.onHomebrewSourcebookChange(sourcebook);
 	};
 
 	const deleteSourcebook = (sourcebook: Sourcebook) => {
 		setSelectedSourcebook(null);
-
 		const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
 		setHomebrewSourcebooks(copy);
-		props.onHomebrewSourcebookChange(copy);
+		props.onHomebrewSourcebookDelete(sourcebook);
 	};
 
 	const getContent = () => {
@@ -82,7 +82,7 @@ export const SourcebooksModal = (props: Props) => {
 										<SourcebookPanel
 											sourcebook={s}
 											heroes={props.heroes}
-											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
+											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
 												onSetVisibility: (value: boolean) => setVisibility(s, value)
@@ -121,7 +121,7 @@ export const SourcebooksModal = (props: Props) => {
 										<SourcebookPanel
 											sourcebook={s}
 											heroes={props.heroes}
-											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
+											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
 												onSetVisibility: (value: boolean) => setVisibility(s, value)
@@ -160,7 +160,7 @@ export const SourcebooksModal = (props: Props) => {
 										<SourcebookPanel
 											sourcebook={s}
 											heroes={props.heroes}
-											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
+											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
 												onSetVisibility: (value: boolean) => setVisibility(s, value)
@@ -184,14 +184,14 @@ export const SourcebooksModal = (props: Props) => {
 					const sourcebook = FactoryLogic.createSourcebook();
 					copy.push(sourcebook);
 					setHomebrewSourcebooks(copy);
-					props.onHomebrewSourcebookChange(copy);
+					props.onHomebrewSourcebookChange(sourcebook);
 				};
 
 				const importSourcebook = (sourcebook: Sourcebook) => {
 					const copy = Utils.copy(homebrewSourcebooks);
 					copy.push(sourcebook);
 					setHomebrewSourcebooks(copy);
-					props.onHomebrewSourcebookChange(copy);
+					props.onHomebrewSourcebookChange(sourcebook);
 				};
 
 				return (

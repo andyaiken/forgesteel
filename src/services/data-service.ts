@@ -5,6 +5,9 @@ import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/services/storage/storage-service';
 import localforage from 'localforage';
 
+/**
+ * Handles data storage, abstracting out whether that data is stored locally or in a remote warehouse
+ */
 export class DataService {
 	private readonly storageService: StorageService;
 
@@ -52,11 +55,19 @@ export class DataService {
 	// #region Homebrew sourcebooks
 
 	async getHomebrew(): Promise<Sourcebook[] | null> {
-		return this.storageService.get<Sourcebook[]>('forgesteel-homebrew-settings');
+		return this.storageService.getSourcebooks();
 	}
 
-	async saveHomebrew(sourcebooks: Sourcebook[]): Promise<Sourcebook[]> {
-		return this.storageService.put<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
+	async getSourcebook(id: string): Promise<Sourcebook | null> {
+		return this.storageService.getSourcebook(id);
+	}
+
+	async saveSourcebook(sourcebook: Sourcebook): Promise<Sourcebook> {
+		return this.storageService.putSourcebook(sourcebook);
+	}
+
+	async deleteSourcebook(id: string): Promise<void> {
+		return this.storageService.deleteSourcebook(id);
 	}
 
 	// #endregion
@@ -64,11 +75,11 @@ export class DataService {
 	// #region Session
 
 	async getSession(): Promise<Session | null> {
-		return this.storageService.get<Session>('forgesteel-session');
+		return this.storageService.getSession();
 	}
 
 	async saveSession(session: Session): Promise<Session> {
-		return this.storageService.put<Session>('forgesteel-session', session);
+		return this.storageService.putSession(session);
 	}
 
 	// #endregion
@@ -76,11 +87,11 @@ export class DataService {
 	// #region Hidden sourcebook IDs
 
 	async getHiddenSourcebookIDs(): Promise<string[] | null> {
-		return this.storageService.get<string[]>('forgesteel-hidden-setting-ids');
+		return this.storageService.getHiddenSourcebookIDs();
 	}
 
 	async saveHiddenSourcebookIDs(ids: string[]): Promise<string[]> {
-		return this.storageService.put<string[]>('forgesteel-hidden-setting-ids', ids);
+		return this.storageService.putHiddenSourcebookIDs(ids);
 	}
 
 	// #endregion

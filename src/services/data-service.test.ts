@@ -82,29 +82,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
+			mockStorage.getSourcebooks = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
 
 			await ds.getHomebrew()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-homebrew-settings');
-			expect(thenFn).toHaveBeenCalledWith(mockHomebrew);
-			expect(catchFn).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('saveHomebrew', () => {
-		test('forwards to the storage service', async () => {
-			const ds = new DataService(mockStorage);
-
-			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHomebrew));
-
-			await ds.saveHomebrew(mockHomebrew)
-				.then(thenFn)
-				.catch(catchFn);
-
-			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-homebrew-settings', mockHomebrew);
+			expect(mockStorage.getSourcebooks).toHaveBeenCalled();
 			expect(thenFn).toHaveBeenCalledWith(mockHomebrew);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -116,13 +100,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
+			mockStorage.getSession = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
 
 			await ds.getSession()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-session');
+			expect(mockStorage.getSession).toHaveBeenCalled();
 			expect(thenFn).toHaveBeenCalledWith(mockSession);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -132,13 +116,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
+			mockStorage.putSession = vi.fn().mockImplementation(() => Promise.resolve(mockSession));
 
 			await ds.saveSession(mockSession)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-session', mockSession);
+			expect(mockStorage.putSession).toHaveBeenCalledWith(mockSession);
 			expect(thenFn).toHaveBeenCalledWith(mockSession);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -150,13 +134,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.get = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
+			mockStorage.getHiddenSourcebookIDs = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
 			await ds.getHiddenSourcebookIDs()
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.get).toHaveBeenCalledWith('forgesteel-hidden-setting-ids');
+			expect(mockStorage.getHiddenSourcebookIDs).toHaveBeenCalled();
 			expect(thenFn).toHaveBeenCalledWith(mockHiddenSettingIds);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
@@ -166,13 +150,13 @@ describe('DataService', () => {
 		test('forwards to the storage service', async () => {
 			const ds = new DataService(mockStorage);
 
-			mockStorage.put = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
+			mockStorage.putHiddenSourcebookIDs = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenSettingIds));
 
 			await ds.saveHiddenSourcebookIDs(mockHiddenSettingIds)
 				.then(thenFn)
 				.catch(catchFn);
 
-			expect(mockStorage.put).toHaveBeenCalledWith('forgesteel-hidden-setting-ids', mockHiddenSettingIds);
+			expect(mockStorage.putHiddenSourcebookIDs).toHaveBeenCalledWith(mockHiddenSettingIds);
 			expect(thenFn).toHaveBeenCalledWith(mockHiddenSettingIds);
 			expect(catchFn).not.toHaveBeenCalled();
 		});

@@ -203,20 +203,51 @@ export const Main = (props: Props) => {
 			});
 	};
 
-	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
+	const persistHomebrewSourcebook = (homebrew: Sourcebook) => {
+		let newHomebrew: Sourcebook[];
+		if (homebrewSourcebooks.some(h => h.id === homebrew.id)) {
+			const copy = Utils.copy(homebrewSourcebooks);
+			const list = copy.map(h => h.id === homebrew.id ? homebrew : h);
+			newHomebrew = list;
+		} else {
+			const copy = Utils.copy(homebrewSourcebooks);
+			copy.push(homebrew);
+			Collections.sort(copy, h => h.name);
+			newHomebrew = copy;
+		}
+
 		return dataService
-			.saveHomebrew(homebrew)
-			.then(
-				setHomebrewSourcebooks,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving sourcebooks',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			);
+			.saveSourcebook(homebrew)
+			.then(() => setHomebrewSourcebooks(newHomebrew))
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error saving sourcebooks',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			})
+			.then(() => {
+				// Trigger sync when data changes
+				triggerSyncOnChange();
+			});
+	};
+
+	const deleteHomebrewSourcebook = (homebrew: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks.filter(h => h.id !== homebrew.id));
+
+		return dataService.deleteSourcebook(homebrew.id)
+			.then(() => {
+				setHomebrewSourcebooks(copy);
+			})
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error deleting Sourcebook',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			});
 	};
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
@@ -813,7 +844,6 @@ export const Main = (props: Props) => {
 		let sourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
 		}
 
 		let id = '';
@@ -880,7 +910,8 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit(kind, sourcebook.id, id));
+		persistHomebrewSourcebook(sourcebook)
+			.then(() => navigation.goToLibraryEdit(kind, sourcebook.id, id));
 	};
 
 	const moveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -958,7 +989,6 @@ export const Main = (props: Props) => {
 		let destinationSourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!destinationSourcebook) {
 			destinationSourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(destinationSourcebook);
 		}
 
 		switch (kind) {
@@ -1044,7 +1074,7 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		persistHomebrewSourcebooks(sourcebooks);
+		persistHomebrewSourcebook(destinationSourcebook);
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -1113,10 +1143,12 @@ export const Main = (props: Props) => {
 					sourcebook.titles = sourcebook.titles.filter(x => x.id !== element.id);
 					break;
 			}
+
+			persistHomebrewSourcebook(sourcebook)
+				.then(() => navigation.goToLibrary(kind, element.id));
 		}
 
 		setDrawer(null);
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind, element.id));
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -1187,18 +1219,19 @@ export const Main = (props: Props) => {
 					sourcebook.titles = sourcebook.titles.map(x => x.id === element.id ? element : x) as Title[];
 					break;
 			}
+
+			persistHomebrewSourcebook(sourcebook)
+				.then(() => {
+					const heroesCopy = Utils.copy(heroes);
+					heroesCopy
+						.filter(hero => hero.sourcebookIDs.includes(sourcebook.id))
+						.forEach(hero => {
+							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(copy));
+							persistHero(hero);
+						});
+				})
+				.then(() => navigation.goToLibrary(kind, element.id));
 		}
-
-		persistHomebrewSourcebooks(copy)
-			.then(() => {
-				const heroesCopy = Utils.copy(heroes);
-				heroesCopy.forEach(hero => HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(copy)));
-
-				// TODO: save individually?? seems not great.
-				// Probably add logic to only call update on relevant heroes, and save those?
-				setHeroes(heroesCopy);
-			})
-			.then(() => navigation.goToLibrary(kind, element.id));
 	};
 
 	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -1216,7 +1249,6 @@ export const Main = (props: Props) => {
 		let sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
-			copy.push(sourcebook);
 		}
 
 		switch (kind) {
@@ -1305,7 +1337,8 @@ export const Main = (props: Props) => {
 		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 
 		setDrawer(null);
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind));
+		persistHomebrewSourcebook(sourcebook)
+			.then(() => navigation.goToLibrary(kind));
 	};
 
 	const exportLibraryElementData = (category: string, element: Element) => {
@@ -1755,11 +1788,7 @@ export const Main = (props: Props) => {
 						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						options={options}
 						onClose={() => setDrawer(null)}
-						onImportSourcebook={sourcebook => {
-							const copy = Utils.copy(homebrewSourcebooks);
-							copy.push(sourcebook);
-							persistHomebrewSourcebooks(copy);
-						}}
+						onImportSourcebook={persistHomebrewSourcebook}
 						onChange={persistHero}
 					/>
 				);
@@ -1799,7 +1828,8 @@ export const Main = (props: Props) => {
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
-				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
+				onHomebrewSourcebookChange={persistHomebrewSourcebook}
+				onHomebrewSourcebookDelete={deleteHomebrewSourcebook}
 				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 			/>
 		);
@@ -1936,11 +1966,7 @@ export const Main = (props: Props) => {
 									options={options}
 									params={footerParams}
 									saveChanges={saveHero}
-									importSourcebook={sourcebook => {
-										const copy = Utils.copy(homebrewSourcebooks);
-										copy.push(sourcebook);
-										persistHomebrewSourcebooks(copy);
-									}}
+									importSourcebook={persistHomebrewSourcebook}
 								/>
 							}
 						/>

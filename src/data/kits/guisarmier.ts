@@ -28,16 +28,16 @@ export const guisarmier: Kit = {
 				description: 'In your hands, the haft is as good as the head.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createMelee() ],
+				distance: [ FactoryLogic.distance.createMelee(2) ],
 				target: 'Two creatures or objects',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
+							tier1: '4 damage',
+							tier2: '7 damage',
+							tier3: '9 damage'
 						})
 					)
 				]

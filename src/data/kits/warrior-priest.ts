@@ -35,9 +35,9 @@ export const warriorPriest: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '2 + M, R, I, or P holy damage',
-							tier2: '4 + M, R, I, or P holy damage',
-							tier3: '7 + M, R, I, or P holy damage'
+							tier1: '3 + M, R, I, or P holy damage',
+							tier2: '5 + M, R, I, or P holy damage',
+							tier3: '8 + M, R, I, or P holy damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('Until the end of the target\'s next turn, they have damage weakness equal to the characteristic score used for this ability\'s power roll.')

@@ -28,16 +28,16 @@ export const retiarius: Kit = {
 				description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createMelee() ],
+				distance: [ FactoryLogic.distance.createMelee(2) ],
 				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
-							tier2: '4 + M or A damage; A < [average] slowed (EoT)',
-							tier3: '6 + M or A damage; A < [strong] restrained (EoT)'
+							tier1: '4 + M or A damage; A < [weak] slowed (EoT)',
+							tier2: '6 + M or A damage; A < [average] slowed (EoT)',
+							tier3: '8 + M or A damage; A < [strong] restrained (EoT)'
 						})
 					)
 				]

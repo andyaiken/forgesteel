@@ -35,9 +35,9 @@ export const dualWielder: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '6 damage'
+							tier1: '4 damage',
+							tier2: '6 damage',
+							tier3: '8 damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('If you use this ability on your turn, you can use it against one target, then use your maneuver and your move action for that turn before using the ability against a second target. You still use the same power roll for both targets.')

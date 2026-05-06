@@ -30,7 +30,7 @@ export const raider: Kit = {
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [
 					FactoryLogic.distance.createMelee(),
-					FactoryLogic.distance.createRanged(5)
+					FactoryLogic.distance.createRanged(10)
 				],
 				target: 'One creature',
 				cost: 'signature',
@@ -38,9 +38,9 @@ export const raider: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 + M or A damage',
-							tier2: '5 + M or A damage',
-							tier3: '7 + M or A damage'
+							tier1: '3 + M or A damage',
+							tier2: '6 + M or A damage',
+							tier3: '8 + M or A damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('The target takes a bane on their next power roll made before the end of their next turn')

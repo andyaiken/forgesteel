@@ -27,7 +27,7 @@ export const sniper: Kit = {
 				description: 'Breathe … aim … wait … then strike!',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createRanged(5) ],
+				distance: [ FactoryLogic.distance.createRanged(15) ],
 				target: 'One creature',
 				cost: 'signature',
 				sections: [
@@ -36,7 +36,7 @@ export const sniper: Kit = {
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
 							tier1: '3 + M or A damage',
 							tier2: '6 + M or A damage',
-							tier3: '9 + M or A damage'
+							tier3: '13 + M or A damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('If you don\'t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).')

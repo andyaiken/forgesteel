@@ -28,16 +28,16 @@ export const ranger: Kit = {
 				description: 'A well-placed shot leaves your enemy struggling to move.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createRanged(5) ],
+				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
-							tier2: '4 + M or A damage; A < [average] slowed (save ends)',
-							tier3: '6 + M or A damage; A < [strong] slowed (save ends)'
+							tier1: '3 + M or A damage; A < [weak] slowed (save ends)',
+							tier2: '5 + M or A damage; A < [average] slowed (save ends)',
+							tier3: '7 + M or A damage; A < [strong] slowed (save ends)'
 						})
 					)
 				]

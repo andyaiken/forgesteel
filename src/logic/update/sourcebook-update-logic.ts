@@ -10,9 +10,13 @@ import { LanguageType } from '@/enums/language-type';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
 import { PlotContentReference } from '@/models/plot';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
+		if (sourcebook.type === undefined) {
+			sourcebook.type = SourcebookType.Homebrew;
+		}
 		if (sourcebook.adventures === undefined) {
 			sourcebook.adventures = [];
 		}

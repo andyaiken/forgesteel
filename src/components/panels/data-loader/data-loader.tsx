@@ -20,7 +20,6 @@ import { Session } from '@/models/session';
 import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import localforage from 'localforage';
@@ -130,7 +129,7 @@ export const DataLoader = (props: Props) => {
 			});
 	};
 
-	async function getHero(getterPromise: Promise<Hero | null>, progressPercent: number): Promise<Hero | null> {
+	async function getHeroUpdateProgress(getterPromise: Promise<Hero | null>, progressPercent: number): Promise<Hero | null> {
 		return getterPromise
 			.then(hero => {
 				setHeroesProgress(heroesProgress => heroesProgress + progressPercent);
@@ -152,7 +151,7 @@ export const DataLoader = (props: Props) => {
 		const incrementPct = 100.0 / heroPartials.length;
 
 		const getHeroPromises = heroPartials.map(p => {
-			return getHero(dataService.getHero(p.id), incrementPct);
+			return getHeroUpdateProgress(dataService.getHero(p.id), incrementPct);
 		});
 
 		return Promise.all(getHeroPromises)
@@ -190,25 +189,16 @@ export const DataLoader = (props: Props) => {
 				];
 
 				Promise.all(promises).then(results => {
-					// #region Homebrew sourcebooks
-					let sourcebooks = results[0] as Sourcebook[] | null;
-					if (!sourcebooks) {
-						sourcebooks = [];
-					}
-
+					const sourcebooks = results[0] as Sourcebook[];
 					sourcebooks.forEach(sourcebook => {
-						sourcebook.type = SourcebookType.Homebrew;
 						try {
 							SourcebookUpdateLogic.updateSourcebook(sourcebook);
 						} catch (error) {
 							console.error(`Error while updating sourcebook [${sourcebook.name} - ${sourcebook.id}]`, error);
 						}
 					});
-					// #endregion
 
-					// #region Heroes
 					const heroes = results[1] as Hero[];
-
 					heroes.forEach(hero => {
 						try {
 							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
@@ -216,32 +206,14 @@ export const DataLoader = (props: Props) => {
 							console.error(`Error while updating hero [${hero.name} - ${hero.id}]`, error);
 						}
 					});
-					// #endregion
 
-					// #region Hidden sourcebook IDs
-					let hiddenSourcebookIDs = results[2] as string[] | null;
-					if (!hiddenSourcebookIDs) {
-						hiddenSourcebookIDs = [];
-					}
-					// #endregion
+					const hiddenSourcebookIDs = results[2] as string[];
 
-					// #region Session
-					let session = results[3] as Session | null;
-					if (!session) {
-						session = FactoryLogic.createSession();
-					}
-
+					const session = results[3] as Session;
 					SessionUpdateLogic.updateSession(session);
-					// #endregion
 
-					// #region Options
-					let options = results[4] as Options | null;
-					if (!options) {
-						options = FactoryLogic.createOptions();
-					}
-
+					const options = results[4] as Options;
 					OptionsUpdateLogic.updateOptions(options);
-					// #endregion
 
 					setOverallLoadState('success');
 
@@ -295,12 +267,12 @@ export const DataLoader = (props: Props) => {
 									: null
 							}
 						</CheckLabel>
+						<CheckLabel state={sourcebookState}>Sourcebooks</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
 						<Progress percent={heroesProgress} size='small' showInfo={false} />
-						<CheckLabel state={sourcebookState}>Homebrew Content</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
-						<CheckLabel state={hiddenSourcebookIDsState}>Identifying Manifold</CheckLabel>
+						<CheckLabel state={hiddenSourcebookIDsState}>Manifold</CheckLabel>
 					</Flex>
 					{
 						error ?

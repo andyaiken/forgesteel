@@ -30,7 +30,7 @@ export const cloakAndDagger: Kit = {
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [
 					FactoryLogic.distance.createMelee(),
-					FactoryLogic.distance.createRanged(5)
+					FactoryLogic.distance.createRanged(10)
 				],
 				target: 'One creature',
 				cost: 'signature',
@@ -38,9 +38,9 @@ export const cloakAndDagger: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 + M or A damage; you shift 1 square',
-							tier2: '5 + M or A damage; you shift up to 2 squares',
-							tier3: '7 + M or A damage; you shift up to 3 squares'
+							tier1: '3 + M or A damage; you can shift 1 square',
+							tier2: '6 + M or A damage; you can shift up to 2 squares',
+							tier3: '8 + M or A damage; you can shift up to 3 squares'
 						})
 					)
 				]

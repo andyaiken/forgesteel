@@ -20,7 +20,6 @@ import { Session } from '@/models/session';
 import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import localforage from 'localforage';
@@ -31,7 +30,7 @@ export interface LoadedData {
 	connectionSettings: ConnectionSettings;
 	service: DataService;
 	heroes: Hero[];
-	homebrew: Sourcebook[];
+	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	session: Session;
 	options: Options;
@@ -46,7 +45,7 @@ type LoadingStatus = 'pending' | 'success' | 'failure' | undefined;
 export const DataLoader = (props: Props) => {
 	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(undefined);
 	const [ heroesState, setHeroesState ] = useState<LoadingStatus>(undefined);
-	const [ homebrewState, setHomebrewState ] = useState<LoadingStatus>(undefined);
+	const [ sourcebookState, setSourcebookState ] = useState<LoadingStatus>(undefined);
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSourcebookIDsState, setHiddenSourcebookIDsState ] = useState<LoadingStatus>(undefined);
@@ -134,7 +133,7 @@ export const DataLoader = (props: Props) => {
 		setOverallLoadState('pending');
 		setConnectionSettingsState('pending');
 
-		setHomebrewState(undefined);
+		setSourcebookState(undefined);
 		setHeroesState(undefined);
 		setSessionState(undefined);
 		setOptionsState(undefined);
@@ -145,68 +144,34 @@ export const DataLoader = (props: Props) => {
 			getDataService(settings).then(dataService => {
 				setConnectionSettingsState('success');
 
-				setHomebrewState('pending');
+				setSourcebookState('pending');
 				setHeroesState('pending');
 				setSessionState('pending');
 				setOptionsState('pending');
 				setHiddenSourcebookIDsState('pending');
 
 				const promises = [
-					updateLoadingStatus(dataService.getHomebrew(), setHomebrewState),
-					updateLoadingStatus(dataService.getHeroes(), setHeroesState),
+					updateLoadingStatus(dataService.getAllSourcebooks(), setSourcebookState),
+					updateLoadingStatus(dataService.getAllHeroes(), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState)
 				];
 
 				Promise.all(promises).then(results => {
-					// #region Homebrew sourcebooks
-					let sourcebooks = results[0] as Sourcebook[] | null;
-					if (!sourcebooks) {
-						sourcebooks = [];
-					}
+					const sourcebooks = results[0] as Sourcebook[];
+					sourcebooks.forEach(SourcebookUpdateLogic.updateSourcebook);
 
-					sourcebooks.forEach(sourcebook => {
-						sourcebook.type = SourcebookType.Homebrew;
-						SourcebookUpdateLogic.updateSourcebook(sourcebook);
-					});
-					// #endregion
+					const heroes = results[1] as Hero[];
+					heroes.forEach(hero => HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks)));
 
-					// #region Heroes
-					let heroes = results[1] as Hero[] | null;
-					if (!heroes) {
-						heroes = [];
-					}
+					const hiddenSourcebookIDs = results[2] as string[];
 
-					heroes.forEach(hero => {
-						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
-					});
-					// #endregion
-
-					// #region Hidden sourcebook IDs
-					let hiddenSourcebookIDs = results[2] as string[] | null;
-					if (!hiddenSourcebookIDs) {
-						hiddenSourcebookIDs = [];
-					}
-					// #endregion
-
-					// #region Session
-					let session = results[3] as Session | null;
-					if (!session) {
-						session = FactoryLogic.createSession();
-					}
-
+					const session = results[3] as Session;
 					SessionUpdateLogic.updateSession(session);
-					// #endregion
 
-					// #region Options
-					let options = results[4] as Options | null;
-					if (!options) {
-						options = FactoryLogic.createOptions();
-					}
-
+					const options = results[4] as Options;
 					OptionsUpdateLogic.updateOptions(options);
-					// #endregion
 
 					setOverallLoadState('success');
 
@@ -214,7 +179,7 @@ export const DataLoader = (props: Props) => {
 						connectionSettings: settings,
 						service: dataService,
 						heroes: heroes,
-						homebrew: sourcebooks,
+						homebrewSourcebooks: sourcebooks,
 						hiddenSourcebookIDs: hiddenSourcebookIDs,
 						session: session,
 						options: options
@@ -261,10 +226,10 @@ export const DataLoader = (props: Props) => {
 							}
 						</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
-						<CheckLabel state={homebrewState}>Homebrew Content</CheckLabel>
+						<CheckLabel state={sourcebookState}>Sourcebooks</CheckLabel>
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
-						<CheckLabel state={hiddenSourcebookIDsState}>Identifying Manifold</CheckLabel>
+						<CheckLabel state={hiddenSourcebookIDsState}>Manifold</CheckLabel>
 					</Flex>
 					{
 						error ?

@@ -42,12 +42,12 @@ export const TransferPage = (props: Props) => {
 	const [ loadingRemoteHeroes, setLoadingRemoteHeroes ] = useState<boolean>(false);
 	const [ loadingRemoteHomebrew, setLoadingRemoteHomebrew ] = useState<boolean>(false);
 
-	const localDs = useMemo(() => {
+	const localDataService = useMemo(() => {
 		const ds = new DataService(new LocalService());
 		ds.initialize();
 		return ds;
 	}, []);
-	const warehouseDs = useMemo(() => {
+	const warehouseDataService = useMemo(() => {
 		const storage = StorageServiceFactory.fromConnectionSettings(props.connectionSettings);
 		const ds = new DataService(storage);
 		ds.initialize();
@@ -56,57 +56,49 @@ export const TransferPage = (props: Props) => {
 
 	const mergeToWarehouse = () => {
 		const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
-		warehouseDs.saveHeroes(mergedHeroes).then(setRemoteHeroes);
+		warehouseDataService.saveHeroes(mergedHeroes).then(setRemoteHeroes);
 
 		const mergedSourcebooks = SourcebookMergeLogic.merge(localHomebrewSourcebooks, remoteHomebrewSourcebooks, mergeBehavior);
-		warehouseDs.saveHomebrew(mergedSourcebooks).then(setRemoteHomebrewSourcebooks);
+		warehouseDataService.saveHomebrew(mergedSourcebooks).then(setRemoteHomebrewSourcebooks);
 	};
 
 	const copyToLocal = () => {
 		const heroesCopy = Utils.copy(remoteHeroes);
-		localDs.saveHeroes(heroesCopy).then(setLocalHeroes);
+		localDataService.saveHeroes(heroesCopy).then(setLocalHeroes);
 
 		const homebrewCopy = Utils.copy(remoteHomebrewSourcebooks);
-		localDs.saveHomebrew(homebrewCopy).then(setLocalHomebrewSourcebooks);
+		localDataService.saveHomebrew(homebrewCopy).then(setLocalHomebrewSourcebooks);
 	};
 
 	const initializeData = () => {
-		localDs.getHeroes()
+		localDataService.getHeroes()
 			.then(heroes => {
-				if (heroes !== null) {
-					setLocalHeroes(heroes);
-				}
+				setLocalHeroes(heroes);
 			});
 
-		localDs.getHomebrew()
+		localDataService.getHomebrew()
 			.then(sourcebooks => {
-				if (sourcebooks !== null) {
-					setLocalHomebrewSourcebooks(sourcebooks);
-				}
+				setLocalHomebrewSourcebooks(sourcebooks);
 			});
 
 		setLoadingRemoteHeroes(true);
-		warehouseDs.getHeroes()
+		warehouseDataService.getHeroes()
 			.then(heroes => {
-				if (heroes !== null) {
-					setRemoteHeroes(heroes);
-				}
+				setRemoteHeroes(heroes);
 				setLoadingRemoteHeroes(false);
 			});
 
 		setLoadingRemoteHomebrew(true);
-		warehouseDs.getHomebrew()
+		warehouseDataService.getHomebrew()
 			.then(sourcebooks => {
-				if (sourcebooks !== null) {
-					setRemoteHomebrewSourcebooks(sourcebooks);
-				}
+				setRemoteHomebrewSourcebooks(sourcebooks);
 				setLoadingRemoteHomebrew(false);
 			});
 	};
 
 	useEffect(
 		initializeData,
-		[ localDs, props.connectionSettings, warehouseDs ]
+		[ localDataService, props.connectionSettings, warehouseDataService ]
 	);
 
 	const usingRemoteWarehouse = () => {

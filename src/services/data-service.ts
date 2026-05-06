@@ -1,4 +1,6 @@
-import { Hero } from '@/models/hero';
+import { Hero, HeroOverview } from '@/models/hero';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
@@ -12,68 +14,167 @@ export class DataService {
 		this.storageService = storage;
 	};
 
-	async initialize(): Promise<boolean> {
-		return this.storageService.initialize();
-	}
+	initialize = async (): Promise<boolean> => {
+		const result = await this.storageService.initialize();
+
+		const heroes = await this.getHeroes();
+		if (heroes.length > 0) {
+			this.saveHeroOverview(heroes.map(HeroLogic.createOverview));
+			heroes.forEach(this.saveHero);
+			this.saveHeroes([]);
+		}
+
+		const sourcebooks = await this.getHomebrew();
+		if (sourcebooks.length > 0) {
+			this.saveSourcebookIDs(sourcebooks.map(sb => sb.id));
+			sourcebooks.forEach(this.saveSourcebook);
+			this.saveHomebrew([]);
+		}
+
+		return result;
+	};
 
 	// #region Options
 	// Always local only
 
-	async getOptions(): Promise<Options | null> {
-		return localforage.getItem<Options>('forgesteel-options');
-	}
+	getOptions = async (): Promise<Options> => {
+		const result = await localforage.getItem<Options>('forgesteel-options');
+		return result ?? FactoryLogic.createOptions();
+	};
 
-	async saveOptions(options: Options): Promise<Options> {
+	saveOptions = async (options: Options): Promise<Options> => {
 		return localforage.setItem<Options>('forgesteel-options', options);
-	}
+	};
 
 	// #endregion
 
 	// #region Heroes
 
-	async getHeroes(): Promise<Hero[] | null> {
-		return this.storageService.get<Hero[]>('forgesteel-heroes');
+	getHeroes = async (): Promise<Hero[]> => {
+		const result = await this.storageService.get<Hero[]>('forgesteel-heroes');
+		return result ?? [];
 	};
 
-	async saveHeroes(heroes: Hero[]): Promise<Hero[]> {
+	saveHeroes = async (heroes: Hero[]): Promise<Hero[]> => {
 		return this.storageService.put<Hero[]>('forgesteel-heroes', heroes);
-	}
+	};
+
+	// #endregion
+
+	// #region Hero Overview
+
+	getHeroOverview = async (): Promise<HeroOverview[]> => {
+		const result = await this.storageService.get<HeroOverview[]>('forgesteel-hero-overview');
+		return result ?? [];
+	};
+
+	saveHeroOverview = async (heroes: HeroOverview[]): Promise<HeroOverview[]> => {
+		return this.storageService.put<HeroOverview[]>('forgesteel-hero-overview', heroes);
+	};
+
+	// #endregion
+
+	// #region Hero
+
+	getAllHeroes = async (): Promise<Hero[]> => {
+		const overview = await this.getHeroOverview();
+		const heroes = await Promise.all(overview.map(o => o.id).map(this.getHero));
+		return heroes.filter(h => !!h);
+	};
+
+	getHero = async (heroID: string): Promise<Hero | null> => {
+		return this.storageService
+			.get<Hero>(`forgesteel-hero-${heroID}`)
+			.then(result => {
+				return result;
+			})
+			.catch(err => {
+				console.error(err);
+				return null;
+			});
+	};
+
+	saveHero = async (hero: Hero): Promise<Hero> => {
+		return this.storageService.put<Hero>(`forgesteel-hero-${hero.id}`, hero);
+	};
 
 	// #endregion
 
 	// #region Homebrew sourcebooks
 
-	async getHomebrew(): Promise<Sourcebook[] | null> {
-		return this.storageService.get<Sourcebook[]>('forgesteel-homebrew-settings');
-	}
+	getHomebrew = async (): Promise<Sourcebook[]> => {
+		const result = await this.storageService.get<Sourcebook[]>('forgesteel-homebrew-settings');
+		return result ?? [];
+	};
 
-	async saveHomebrew(sourcebooks: Sourcebook[]): Promise<Sourcebook[]> {
+	saveHomebrew = async (sourcebooks: Sourcebook[]): Promise<Sourcebook[]> => {
 		return this.storageService.put<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
-	}
+	};
+
+	// #endregion
+
+	// #region Sourcebook IDs
+
+	getSourcebookIDs = async (): Promise<string[]> => {
+		const result = await this.storageService.get<string[]>('forgesteel-sourcebook-ids');
+		return result ?? [];
+	};
+
+	saveSourcebookIDs = async (sourcebookIDs: string[]): Promise<string[]> => {
+		return this.storageService.put<string[]>('forgesteel-sourcebook-ids', sourcebookIDs);
+	};
+
+	// #endregion
+
+	// #region Sourcebooks
+
+	getAllSourcebooks = async (): Promise<Sourcebook[]> => {
+		const sourcebookIDs = await this.getSourcebookIDs();
+		const sourcebooks = await Promise.all(sourcebookIDs.map(this.getSourcebook));
+		return sourcebooks.filter(sb => !!sb);
+	};
+
+	getSourcebook = async (sourcebookID: string): Promise<Sourcebook | null> => {
+		return this.storageService
+			.get<Sourcebook>(`forgesteel-sourcebook-${sourcebookID}`)
+			.then(result => {
+				return result;
+			})
+			.catch(err => {
+				console.error(err);
+				return null;
+			});
+	};
+
+	saveSourcebook = async (sourcebook: Sourcebook): Promise<Sourcebook> => {
+		return this.storageService.put<Sourcebook>(`forgesteel-sourcebook-${sourcebook.id}`, sourcebook);
+	};
 
 	// #endregion
 
 	// #region Session
 
-	async getSession(): Promise<Session | null> {
-		return this.storageService.get<Session>('forgesteel-session');
-	}
+	getSession = async (): Promise<Session> => {
+		const result = await this.storageService.get<Session>('forgesteel-session');
+		return result ?? FactoryLogic.createSession();
+	};
 
-	async saveSession(session: Session): Promise<Session> {
+	saveSession = async (session: Session): Promise<Session> => {
 		return this.storageService.put<Session>('forgesteel-session', session);
-	}
+	};
 
 	// #endregion
 
 	// #region Hidden sourcebook IDs
 
-	async getHiddenSourcebookIDs(): Promise<string[] | null> {
-		return this.storageService.get<string[]>('forgesteel-hidden-setting-ids');
-	}
+	getHiddenSourcebookIDs = async (): Promise<string[]> => {
+		const result = await this.storageService.get<string[]>('forgesteel-hidden-setting-ids');
+		return result ?? [];
+	};
 
-	async saveHiddenSourcebookIDs(ids: string[]): Promise<string[]> {
+	saveHiddenSourcebookIDs = async (ids: string[]): Promise<string[]> => {
 		return this.storageService.put<string[]>('forgesteel-hidden-setting-ids', ids);
-	}
+	};
 
 	// #endregion
 };

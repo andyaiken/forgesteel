@@ -164,123 +164,128 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHeroes = (heroes: Hero[]) => {
-		return dataService
-			.saveHeroes(Collections.sort(heroes, h => h.name))
+		heroes = Collections.sort(heroes, h => h.name);
+		const overview = heroes.map(HeroLogic.createOverview);
+
+		return Promise
+			.all([
+				dataService.saveHeroOverview(overview),
+				...heroes.map(dataService.saveHero)
+			])
 			.then(
-				setHeroes,
+				() => {
+					setHeroes(heroes);
+
+					// Trigger sync when data changes
+					triggerSyncOnChange();
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving heroes',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving heroes');
 				}
 			)
-			.catch(err => {
-				console.error(err);
-				notify.error({
-					title: 'Error saving heroes',
-					description: Utils.getErrorMessage(err),
-					placement: 'top'
-				});
-			})
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
-			});
+			.catch(err => handlePersistenceError(err, 'Error saving heroes'));
 	};
 
 	const persistSession = (session: Session) => {
 		return dataService
 			.saveSession(session)
 			.then(
-				setSession,
+				() => {
+					setSession(session);
+
+					if (playerView) {
+						playerView.location.reload();
+					}
+
+					// Trigger sync when data changes
+					triggerSyncOnChange();
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving session',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving session');
 				}
 			)
-			.then(() => {
-				if (playerView) {
-					playerView.location.reload();
-				}
-				// Trigger sync when data changes
-				triggerSyncOnChange();
-			});
+			.catch(err => handlePersistenceError(err, 'Error saving session'));
 	};
 
-	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
-		return dataService
-			.saveHomebrew(homebrew)
+	const persistHomebrewSourcebooks = (sourcebooks: Sourcebook[]) => {
+		return Promise
+			.all([
+				dataService.saveSourcebookIDs(sourcebooks.map(sb => sb.id)),
+				...sourcebooks.map(dataService.saveSourcebook)
+			])
 			.then(
-				setHomebrewSourcebooks,
+				() => {
+					setHomebrewSourcebooks(sourcebooks);
+
+					// Trigger sync when data changes
+					triggerSyncOnChange();
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving sourcebooks',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving sourcebooks');
 				}
-			);
+			)
+			.catch(err => handlePersistenceError(err, 'Error saving sourcebooks'));
 	};
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
 		return dataService
 			.saveHiddenSourcebookIDs(ids)
 			.then(
-				setHiddenSourcebookIDs,
+				() => {
+					setHiddenSourcebookIDs(ids);
+
+					// Trigger sync when data changes
+					triggerSyncOnChange();
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving hidden sourcebooks',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving hidden sourcebooks');
 				}
-			);
+			)
+			.catch(err => handlePersistenceError(err, 'Error saving hidden sourcebooks'));
 	};
 
 	const persistOptions = (options: Options) => {
 		return dataService
 			.saveOptions(options)
 			.then(
-				setOptions,
+				() => {
+					setOptions(options);
+
+					// Trigger sync when data changes
+					triggerSyncOnChange();
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving options',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving options');
 				}
-			);
+			)
+			.catch(err => handlePersistenceError(err, 'Error saving options'));
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
 		return localforage
 			.setItem<ConnectionSettings>('forgesteel-connection-settings', connectionSettings)
 			.then(
-				setConnectionSettings,
+				() => {
+					setConnectionSettings(connectionSettings);
+
+					const ds = new DataService(StorageServiceFactory.fromConnectionSettings(connectionSettings));
+					ds.initialize();
+					setDataService(ds);
+				},
 				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving connection settings',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
+					handlePersistenceError(err, 'Error saving connection settings');
 				}
-			).then(() => {
-				const storage = StorageServiceFactory.fromConnectionSettings(connectionSettings);
-				const ds = new DataService(storage);
-				ds.initialize();
-				setDataService(ds);
-			});
+			)
+			.catch(err => handlePersistenceError(err, 'Error saving connection settings'));
+	};
+
+	const handlePersistenceError = (err: unknown, title: string) => {
+		console.error(err);
+		notify.error({
+			title: title,
+			description: Utils.getErrorMessage(err),
+			placement: 'top'
+		});
 	};
 
 	// #endregion
@@ -1485,7 +1490,6 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
-				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
 				onClose={() => setDrawer(null)}
 			/>

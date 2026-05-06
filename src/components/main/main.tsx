@@ -1614,7 +1614,7 @@ export const Main = (props: Props) => {
 
 	const onSelectFeature = (feature: Feature, hero: Hero) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
-			.filter(sb => hero.settingIDs.includes(sb.id));
+			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
 		setDrawer(
 			<FeatureModal
@@ -1641,7 +1641,7 @@ export const Main = (props: Props) => {
 
 	const onShowHeroState = (hero: Hero, type: HeroModalType) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
-			.filter(sb => hero.settingIDs.includes(sb.id));
+			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
 		const takeRespite = () => {
 			const copy = Utils.copy(hero);

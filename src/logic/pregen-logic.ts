@@ -19,7 +19,7 @@ export class PregenLogic {
 		pregen.name = hero.name;
 		pregen.description = HeroLogic.getHeroDescription(hero);
 
-		pregen.sourcebookIDs = [ ...hero.settingIDs ];
+		pregen.sourcebookIDs = [ ...hero.sourcebookIDs ];
 		pregen.ancestryID = hero.ancestry?.id ?? null;
 		pregen.cultureID = hero.culture?.id ?? null;
 		pregen.careerID = hero.career?.id ?? null;

@@ -401,7 +401,7 @@ export const SourcebookPanel = (props: Props) => {
 					/>
 				);
 
-				const heroes = props.heroes.filter(h => h.settingIDs.includes(sourcebook.id));
+				const heroes = props.heroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
 
 				const used: { element: Element, type: string, container: Element }[] = [];
 				const elements = [

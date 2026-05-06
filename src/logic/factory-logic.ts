@@ -82,7 +82,7 @@ export class FactoryLogic {
 			name: '',
 			picture: null,
 			folder: '',
-			settingIDs: sourcebookIDs,
+			sourcebookIDs: sourcebookIDs,
 			ancestry: null,
 			culture: null,
 			class: null,

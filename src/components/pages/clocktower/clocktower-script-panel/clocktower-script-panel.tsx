@@ -1,10 +1,11 @@
-import { Button, Drawer, Tabs, notification } from 'antd';
+import { CheckCircleOutlined, CopyOutlined, WarningOutlined } from '@ant-design/icons';
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
+import { Drawer, Tabs, notification } from 'antd';
 import { ReactNode, useState } from 'react';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
-import { CopyOutlined } from '@ant-design/icons';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -48,11 +49,11 @@ export const ClocktowerScriptPanel = (props: Props) => {
 			ClocktowerTeam.Loric
 		]
 			.forEach(team => {
-				const count = getTeamCount(team);
+				const count = ClocktowerLogic.getTeamCount(props.script, team);
 				if (count > 0) {
 					tabs.push({
 						key: team,
-						label: getTeamName(team),
+						label: ClocktowerLogic.getTeamName(team),
 						children: getCharactersSection(team)
 					});
 				}
@@ -70,29 +71,6 @@ export const ClocktowerScriptPanel = (props: Props) => {
 		});
 
 		return tabs;
-	};
-
-	const getTeamName = (team: ClocktowerTeam) => {
-		switch (team) {
-			case ClocktowerTeam.Townsfolk:
-				return 'Townsfolk';
-			case ClocktowerTeam.Outsider:
-				return 'Outsiders';
-			case ClocktowerTeam.Minion:
-				return 'Minions';
-			case ClocktowerTeam.Demon:
-				return 'Demons';
-			case ClocktowerTeam.Traveller:
-				return 'Travellers';
-			case ClocktowerTeam.Fabled:
-				return 'Fabled';
-			case ClocktowerTeam.Loric:
-				return 'Lorics';
-		}
-	};
-
-	const getTeamCount = (team: ClocktowerTeam) => {
-		return props.script.characters.filter(ch => ch.role.team === team).length;
 	};
 
 	const getCharactersSection = (team: ClocktowerTeam) => {
@@ -118,7 +96,8 @@ export const ClocktowerScriptPanel = (props: Props) => {
 	};
 
 	const getNightSection = (first: boolean) => {
-		const list = first ? props.script.meta.firstNight : props.script.meta.otherNight;
+		const meta = ClocktowerLogic.createMeta(props.script);
+		const list = first ? meta.firstNight : meta.otherNight;
 
 		return (
 			<div className='night-section'>
@@ -152,15 +131,34 @@ export const ClocktowerScriptPanel = (props: Props) => {
 		);
 	};
 
+	const issues = ClocktowerLogic.validate(props.script);
+
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-script-panel'>
 				<HeaderText
 					level={1}
 					extra={
-						<Button icon={<CopyOutlined />} onClick={copyToClipboard}>
-							Copy
-						</Button>
+						<ButtonGroup
+							buttons={[
+								{
+									type: 'dropdown',
+									icon: issues.length === 0 ? <CheckCircleOutlined /> : <WarningOutlined />,
+									disabled: issues.length === 0,
+									popover: (
+										<>
+											{issues.map((issue, n) => (<div key={n} className='ds-text'>{issue}</div>))}
+										</>
+									)
+								},
+								{
+									type: 'button',
+									label: 'Copy',
+									icon: <CopyOutlined />,
+									onClick: copyToClipboard
+								}
+							]}
+						/>
 					}
 				>
 					{props.script.meta.name}
@@ -177,9 +175,9 @@ export const ClocktowerScriptPanel = (props: Props) => {
 							ClocktowerTeam.Loric
 						]
 							.map(team => {
-								const count = getTeamCount(team);
+								const count = ClocktowerLogic.getTeamCount(props.script, team);
 								return count > 0 ?
-									<Field key={team} orientation='vertical' label={getTeamName(team)} value={count} />
+									<Field key={team} orientation='vertical' label={ClocktowerLogic.getTeamName(team)} value={count} />
 									: null;
 							})
 					}

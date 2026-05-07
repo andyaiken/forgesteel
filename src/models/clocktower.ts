@@ -1,3 +1,4 @@
+import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 
 export interface ClocktowerSpecial {
@@ -52,6 +53,7 @@ export interface ClocktowerScriptMeta {
 }
 
 export interface ClocktowerScript {
+	type: ClocktowerScriptType;
 	meta: ClocktowerScriptMeta;
 	characters: ClocktowerCharacter[];
 }

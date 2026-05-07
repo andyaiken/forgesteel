@@ -9,42 +9,45 @@ export class ClocktowerData {
 			author: 'Andy Aiken',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
-				'dusk',
-				'minioninfo',
-				'demoninfo',
+				// Evil team
 				'devil',
+				// Modification
+				'conduit',
 				'angulotl',
 				'criminal',
-				'conduit',
-				'talent',
 				'rival',
+				// Info
+				'talent',
 				'highelf',
 				'troubadour',
-				'warden',
-				'dawn'
+				'warden'
 			],
 			otherNight: [
-				'dusk',
+				// Grim
 				'memonek',
-				'censor',
+				// Modification
+				'conduit',
 				'angulotl',
 				'criminal',
-				'conduit',
+				'voicelesstalker',
+				'censor',
 				'tactician',
 				'fury',
+				// Demons
 				'aurumvas',
 				'blightphage',
 				'hivequeen',
 				'torlas',
+				// Resurrection
 				'revenant',
 				'disciple',
+				// Info
 				'agent',
 				'shadow',
 				'polder',
 				'highelf',
 				'troubadour',
-				'warden',
-				'dawn'
+				'warden'
 			]
 		},
 		characters: [
@@ -541,14 +544,14 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Demon,
 					flavor: 'There is no ‘I’. There is only the role that must be filled.',
-					ability: 'Each night*, choose a player: they die. Each night*, you can choose to swap roles with a living minion.',
-					otherNightReminder: 'Choose a player; they die. Choose a Minion to swap roles with.',
+					ability: 'Each night*, choose a player: they die. You can then choose to swap roles with an evil player.',
+					otherNightReminder: 'Choose a player; they die. Optionally, choose an evil player to swap roles with.',
 					reminders: [
 						'Killed'
 					]
 				},
 				details: {
-					description: 'Each night, just before dawn, you may choose to swap roles with a living Minion. The Minion does not have to agree to this swap. Both players keep their alignment but exchange abilities. This can create chains of changing identities.'
+					description: 'Each night, just before dawn, you may choose to swap roles with another player of your choice on the evil team. The other player does not have to agree to this swap. Both players keep their alignment and any reminder tokens but exchange roles (and therefore abilities). This can create chains of changing identities.'
 				}
 			},
 			{
@@ -684,7 +687,8 @@ export class ClocktowerData {
 					],
 					team: ClocktowerTeam.Traveller,
 					flavor: 'Come and speak to me, and perhaps I will change your mind.',
-					ability: 'Each night*, choose two players; their roles (not alignments) are swapped and one becomes poisoned until dusk. You cannot nominate.'
+					ability: 'Each night*, choose two players; their roles (not alignments) are swapped and one becomes poisoned until dusk. You cannot nominate.',
+					otherNightReminder: 'Choose two players to switch.'
 				},
 				details: {
 					description: 'Each night, you swap the roles (but not alignments) of two players, then choose one of them to be poisoned until dusk. You cannot nominate, but you may still vote and speak.'

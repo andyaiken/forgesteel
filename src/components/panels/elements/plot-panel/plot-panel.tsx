@@ -15,7 +15,6 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SashPanel } from '@/components/panels/sash/sash-panel';
@@ -33,7 +32,6 @@ interface PlotPanelProps {
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	onSelect: (plot: Plot) => void;
 	onStart: (kind: SourcebookElementKind, element: Element, party: string) => void;
@@ -84,7 +82,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
 										heroes={props.heroes}
-										options={props.options}
 									/>
 									<SashPanel monogram='Encounter' />
 								</SelectablePanel>
@@ -101,7 +98,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 										montage={montage}
 										heroes={props.heroes}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 									/>
 									<SashPanel monogram='Montage' />
 								</SelectablePanel>
@@ -117,7 +113,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 									<NegotiationPanel
 										negotiation={negotiation}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 									/>
 									<SashPanel monogram='Negotiation' />
 								</SelectablePanel>
@@ -136,7 +131,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 											map={map}
 											display={TacticalMapDisplayType.Thumbnail}
 											sourcebooks={props.sourcebooks}
-											options={props.options}
 										/>
 									</div>
 									<SashPanel monogram='Map' />
@@ -285,7 +279,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							category={selectedReference.type}
 							element={SourcebookLogic.getElement(selectedReference.contentID, props.sourcebooks) as Element}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedReference(null)}
 						/>
 						: null

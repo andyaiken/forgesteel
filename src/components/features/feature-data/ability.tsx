@@ -2,7 +2,6 @@ import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureAbilityData } from '@/models/feature';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -10,7 +9,6 @@ import { useState } from 'react';
 interface EditProps {
 	data: FeatureAbilityData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAbilityData) => void;
 }
 

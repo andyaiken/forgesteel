@@ -9,10 +9,10 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontageLogic } from '@/logic/montage-logic';
-import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './montage-run-panel.scss';
@@ -20,12 +20,12 @@ import './montage-run-panel.scss';
 interface Props {
 	montage: Montage;
 	heroes: Hero[];
-	options: Options;
 	onChange: (montage: Montage) => void;
 }
 
 export const MontageRunPanel = (props: Props) => {
 	const [ montage, setMontage ] = useState<Montage>(Utils.copy(props.montage));
+	const options = useOptions();
 
 	const getChallenge = (challenge: MontageChallenge, sectionIndex: number, challengeIndex: number) => {
 		const addSuccess = () => {
@@ -162,9 +162,9 @@ export const MontageRunPanel = (props: Props) => {
 
 	const successes = Collections.sum(montage.sections, s => Collections.sum(s.challenges, c => c.successes));
 	const failures = Collections.sum(montage.sections, s => Collections.sum(s.challenges, c => c.failures));
-	const successLimit = MontageLogic.getSuccessLimit(props.montage, props.heroes, props.options);
-	const failureLimit = MontageLogic.getFailureLimit(props.montage, props.heroes, props.options);
-	const outcome = MontageLogic.getOutcome(props.montage, props.heroes, props.options);
+	const successLimit = MontageLogic.getSuccessLimit(props.montage, props.heroes, options);
+	const failureLimit = MontageLogic.getFailureLimit(props.montage, props.heroes, options);
+	const outcome = MontageLogic.getOutcome(props.montage, props.heroes, options);
 
 	return (
 		<ErrorBoundary>

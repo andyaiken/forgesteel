@@ -1,5 +1,6 @@
 import { Feature, FeatureCompanion, FeatureRetainer } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
+import { OptionsActionKind, useOptions, useOptionsDispatch } from '@/contexts/data-context';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
@@ -102,7 +103,6 @@ import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
-import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useSyncStatus } from '@/hooks/use-sync-status';
 
@@ -119,7 +119,6 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
@@ -127,13 +126,8 @@ export const Main = (props: Props) => {
 	const [ session, setSession ] = useState<Session>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
-	const [ options, setOptions ] = useState<Options>(() => {
-		const opts = Utils.copy(props.options);
-		if (isSmall) {
-			opts.compactView = true;
-		}
-		return opts;
-	});
+	const options = useOptions();
+
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
 	const [ dataService, setDataService ] = useState<DataService>(props.dataService);
 
@@ -266,20 +260,16 @@ export const Main = (props: Props) => {
 			);
 	};
 
+	const optionsDispatch = useOptionsDispatch();
 	const persistOptions = (options: Options) => {
 		return dataService
 			.saveOptions(options)
-			.then(
-				setOptions,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving options',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			);
+			.then(options => {
+				optionsDispatch({
+					type: OptionsActionKind.UPDATE,
+					payload: options
+				});
+			});
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
@@ -456,7 +446,6 @@ export const Main = (props: Props) => {
 			<MonsterModal
 				monster={monster}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
 				onClose={() => setDrawer(null)}
 				updateMonster={monster => {
 					const copy = Utils.copy(hero);
@@ -1509,7 +1498,6 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1518,7 +1506,6 @@ export const Main = (props: Props) => {
 	const showSettings = () => {
 		setDrawer(
 			<SettingsModal
-				options={options}
 				heroes={heroes}
 				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
@@ -1547,7 +1534,6 @@ export const Main = (props: Props) => {
 				category={category}
 				element={element}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1562,7 +1548,6 @@ export const Main = (props: Props) => {
 				monsterGroup={monsterGroup}
 				summon={summon}
 				sourcebooks={sourcebooks}
-				options={options}
 				onChange={
 					hero ?
 						monster => {
@@ -1605,7 +1590,6 @@ export const Main = (props: Props) => {
 			<FollowerModal
 				follower={follower}
 				sourcebooks={sourcebooks}
-				options={options}
 				onChange={follower => {
 					const heroCopy = Utils.copy(hero);
 					const feature = HeroLogic.getFeatures(heroCopy)
@@ -1629,7 +1613,6 @@ export const Main = (props: Props) => {
 			<FixtureModal
 				fixture={fixture}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1654,7 +1637,6 @@ export const Main = (props: Props) => {
 				feature={feature}
 				hero={hero}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 				updateHero={persistHero}
 			/>
@@ -1694,7 +1676,6 @@ export const Main = (props: Props) => {
 					<HeroResourcesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
@@ -1715,7 +1696,6 @@ export const Main = (props: Props) => {
 					<HeroInventoryModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1727,7 +1707,6 @@ export const Main = (props: Props) => {
 					<HeroProjectsModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1739,7 +1718,6 @@ export const Main = (props: Props) => {
 					<HeroTitlesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1751,7 +1729,6 @@ export const Main = (props: Props) => {
 					<HeroRespiteModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onTakeRespite={takeRespite}
 						onChange={hero => persistHero(hero)}
 						onClose={() => setDrawer(null)}
@@ -1763,7 +1740,6 @@ export const Main = (props: Props) => {
 					<HeroCustomizeModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
@@ -1786,7 +1762,6 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onImportSourcebook={persistHomebrewSourcebook}
 						onChange={persistHero}
@@ -1801,7 +1776,6 @@ export const Main = (props: Props) => {
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1842,7 +1816,6 @@ export const Main = (props: Props) => {
 					<EncounterToolsModal
 						encounter={encounter}
 						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						options={options}
 						onClose={() => setDrawer(null)}
 					/>
 				);
@@ -1890,7 +1863,6 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								options={options}
 								params={footerParams}
 								onNewHero={() => newHero('')}
 								onPregen={hero => importHero(hero, '')}
@@ -1920,7 +1892,6 @@ export const Main = (props: Props) => {
 								<HeroViewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									exportHeroData={exportHeroData}
 									exportHeroImage={exportHeroImage}
@@ -1963,7 +1934,6 @@ export const Main = (props: Props) => {
 								<HeroEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									saveChanges={saveHero}
 									importSourcebook={persistHomebrewSourcebook}
@@ -1976,7 +1946,6 @@ export const Main = (props: Props) => {
 								<HeroSheetPreviewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									setOptions={persistOptions}
 								/>
 							}
@@ -1993,7 +1962,6 @@ export const Main = (props: Props) => {
 								<LibraryListPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									params={footerParams}
 									showSourcebooks={showSourcebooks}
@@ -2019,7 +1987,6 @@ export const Main = (props: Props) => {
 								<LibraryEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
 									showTerrain={onSelectTerrain}
@@ -2033,7 +2000,6 @@ export const Main = (props: Props) => {
 								<LibraryPrintPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 								/>
 							}
 						/>
@@ -2050,7 +2016,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									session={session}
-									options={options}
 									params={footerParams}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
@@ -2076,7 +2041,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									session={session}
-									options={options}
 									params={footerParams}
 								/>
 							}
@@ -2087,7 +2051,6 @@ export const Main = (props: Props) => {
 						element={
 							<AuthPage
 								connectionSettings={connectionSettings}
-								options={options}
 								params={footerParams}
 								setConnectionSettings={persistConnectionSettings}
 							/>
@@ -2101,7 +2064,6 @@ export const Main = (props: Props) => {
 							<BackupPage
 								heroes={heroes}
 								homebrewSourcebooks={homebrewSourcebooks}
-								options={options}
 							/>
 						}
 					/>
@@ -2112,7 +2074,6 @@ export const Main = (props: Props) => {
 						element={
 							<TransferPage
 								connectionSettings={connectionSettings}
-								options={options}
 							/>
 						}
 					/>
@@ -2122,7 +2083,6 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<ClocktowerPage
-								options={options}
 								params={footerParams}
 							/>
 						}

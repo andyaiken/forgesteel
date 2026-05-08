@@ -4,7 +4,6 @@ import { ClocktowerData } from '@/data/clocktower-data';
 import { ClocktowerScriptPanel } from '@/components/pages/clocktower/clocktower-script-panel/clocktower-script-panel';
 import { Divider } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Options } from '@/models/options';
 
 import './clocktower-page.scss';
 
@@ -15,7 +14,6 @@ import shield4 from '@/assets/clocktower/clocktower-demon.png';
 import shield5 from '@/assets/clocktower/clocktower-traveller.png';
 
 interface Props {
-	options: Options;
 	params: FooterParams;
 }
 
@@ -38,7 +36,6 @@ export const ClocktowerPage = (props: Props) => {
 				<AppFooter
 					page='welcome'
 					params={props.params}
-					options={props.options}
 				/>
 			</div>
 		</ErrorBoundary>

@@ -13,7 +13,6 @@ import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -25,7 +24,6 @@ import './career-edit-panel.scss';
 interface Props {
 	career: Career;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (career: Career) => void;
 }
@@ -63,7 +61,6 @@ export const CareerEditPanel = (props: Props) => {
 				title='Features'
 				features={career.features}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				onChange={onChange}
 			/>
 		);
@@ -179,7 +176,6 @@ export const CareerEditPanel = (props: Props) => {
 												<CareerPanel
 													career={career}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

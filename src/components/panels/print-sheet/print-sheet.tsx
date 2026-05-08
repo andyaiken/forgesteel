@@ -30,7 +30,6 @@ import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { Pill } from '@/components/controls/pill/pill';
@@ -47,7 +46,6 @@ interface Props {
 	element: Element;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 }
 
 export const PrintSheet = (props: Props) => {
@@ -58,7 +56,6 @@ export const PrintSheet = (props: Props) => {
 				<AncestrySheet
 					ancestry={props.element as Ancestry}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -67,7 +64,6 @@ export const PrintSheet = (props: Props) => {
 				<CareerSheet
 					career={props.element as Career}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -76,7 +72,6 @@ export const PrintSheet = (props: Props) => {
 				<ClassSheet
 					heroClass={props.element as HeroClass}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -85,7 +80,6 @@ export const PrintSheet = (props: Props) => {
 				<ComplicationSheet
 					complication={props.element as Complication}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -94,7 +88,6 @@ export const PrintSheet = (props: Props) => {
 				<CultureSheet
 					culture={props.element as Culture}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -103,7 +96,6 @@ export const PrintSheet = (props: Props) => {
 				<DomainSheet
 					domain={props.element as Domain}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -112,7 +104,6 @@ export const PrintSheet = (props: Props) => {
 				<ImbuementSheet
 					imbuement={props.element as Imbuement}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -121,7 +112,6 @@ export const PrintSheet = (props: Props) => {
 				<ItemSheet
 					item={props.element as Item}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -130,7 +120,6 @@ export const PrintSheet = (props: Props) => {
 				<KitSheet
 					kit={props.element as Kit}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -139,7 +128,6 @@ export const PrintSheet = (props: Props) => {
 				<MonsterGroupSheet
 					monsterGroup={props.element as MonsterGroup}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -149,7 +137,6 @@ export const PrintSheet = (props: Props) => {
 					monster={props.element as Monster}
 					monsterGroup={SourcebookLogic.getMonsterGroup(props.sourcebooks, props.element.id) as MonsterGroup}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -158,7 +145,6 @@ export const PrintSheet = (props: Props) => {
 				<PerkSheet
 					perk={props.element as Perk}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -167,7 +153,6 @@ export const PrintSheet = (props: Props) => {
 				<ProjectSheet
 					project={props.element as Project}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -176,7 +161,6 @@ export const PrintSheet = (props: Props) => {
 				<SubclassSheet
 					subclass={props.element as SubClass}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -185,7 +169,6 @@ export const PrintSheet = (props: Props) => {
 				<TerrainSheet
 					terrain={props.element as Terrain}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -194,7 +177,6 @@ export const PrintSheet = (props: Props) => {
 				<TitleSheet
 					title={props.element as Title}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 			break;
@@ -214,7 +196,6 @@ export const PrintSheet = (props: Props) => {
 interface AncestryProps {
 	ancestry: Ancestry;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const AncestrySheet = (props: AncestryProps) => {
@@ -227,19 +208,19 @@ const AncestrySheet = (props: AncestryProps) => {
 			<HeaderText level={1}>Signature Traits</HeaderText>
 			{
 				AncestryLogic.getSignatureFeatures(props.ancestry).map(f => (
-					<FeaturePanel key={f.id} feature={f} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
 			<HeaderText level={1}>Purchased Traits</HeaderText>
 			<Field label='Ancestry Points' value={props.ancestry.ancestryPoints} />
 			{
 				AncestryLogic.getPurchasedFeatures(props.ancestry).map(f => (
-					<FeaturePanel key={f.feature.id} feature={f.feature} cost={f.value} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<FeaturePanel key={f.feature.id} feature={f.feature} cost={f.value} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
 			{
 				props.ancestry.culture ?
-					<CultureSheet culture={props.ancestry.culture} sourcebooks={props.sourcebooks} options={props.options} />
+					<CultureSheet culture={props.ancestry.culture} sourcebooks={props.sourcebooks} />
 					: null
 			}
 		</>
@@ -249,7 +230,6 @@ const AncestrySheet = (props: AncestryProps) => {
 interface CareerProps {
 	career: Career;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const CareerSheet = (props: CareerProps) => {
@@ -261,7 +241,7 @@ const CareerSheet = (props: CareerProps) => {
 			<Markdown text={props.career.description} />
 			{
 				props.career.features.map(f => (
-					<FeaturePanel key={f.id} feature={f} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
 			<HeaderText>Inciting Incidents</HeaderText>
@@ -277,7 +257,6 @@ const CareerSheet = (props: CareerProps) => {
 interface ClassProps {
 	heroClass: HeroClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const ClassSheet = (props: ClassProps) => {
@@ -296,7 +275,7 @@ const ClassSheet = (props: ClassProps) => {
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
-									<FeaturePanel key={f.id} feature={f} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								))
 							}
 						</div>
@@ -311,7 +290,7 @@ const ClassSheet = (props: ClassProps) => {
 			<HeaderText level={1}>Subclasses</HeaderText>
 			{
 				props.heroClass.subclasses.map(sc => (
-					<SubclassSheet key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} options={props.options} />
+					<SubclassSheet key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} />
 				))
 			}
 		</>
@@ -321,7 +300,6 @@ const ClassSheet = (props: ClassProps) => {
 interface ComplicationProps {
 	complication: Complication;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const ComplicationSheet = (props: ComplicationProps) => {
@@ -333,7 +311,7 @@ const ComplicationSheet = (props: ComplicationProps) => {
 			<Markdown text={props.complication.description} />
 			{
 				props.complication.features.map(f => (
-					<FeaturePanel key={f.id} feature={f} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
 		</>
@@ -343,7 +321,6 @@ const ComplicationSheet = (props: ComplicationProps) => {
 interface CultureProps {
 	culture: Culture;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const CultureSheet = (props: CultureProps) => {
@@ -353,10 +330,10 @@ const CultureSheet = (props: CultureProps) => {
 				{props.culture.name || 'Unnamed Culture'}
 			</HeaderText>
 			<Markdown text={props.culture.description} />
-			<FeaturePanel feature={props.culture.language} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-			{props.culture.environment ? <FeaturePanel feature={props.culture.environment} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
-			{props.culture.organization ? <FeaturePanel feature={props.culture.organization} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
-			{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+			<FeaturePanel feature={props.culture.language} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+			{props.culture.environment ? <FeaturePanel feature={props.culture.environment} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+			{props.culture.organization ? <FeaturePanel feature={props.culture.organization} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+			{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 		</>
 	);
 };
@@ -364,7 +341,6 @@ const CultureSheet = (props: CultureProps) => {
 interface DomainProps {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const DomainSheet = (props: DomainProps) => {
@@ -382,7 +358,7 @@ const DomainSheet = (props: DomainProps) => {
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
-									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								))
 							}
 						</Space>
@@ -395,7 +371,6 @@ const DomainSheet = (props: DomainProps) => {
 interface ImbuementProps {
 	imbuement: Imbuement;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const ImbuementSheet = (props: ImbuementProps) => {
@@ -408,7 +383,6 @@ const ImbuementSheet = (props: ImbuementProps) => {
 			<FeaturePanel
 				feature={props.imbuement.feature}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				mode={PanelMode.Full}
 			/>
 		</>
@@ -418,7 +392,6 @@ const ImbuementSheet = (props: ImbuementProps) => {
 interface ItemProps {
 	item: Item;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const ItemSheet = (props: ItemProps) => {
@@ -445,7 +418,6 @@ const ItemSheet = (props: ItemProps) => {
 									<FeaturePanel
 										key={f.id}
 										feature={f}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								))
@@ -460,7 +432,6 @@ const ItemSheet = (props: ItemProps) => {
 interface KitProps {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const KitSheet = (props: KitProps) => {
@@ -490,7 +461,7 @@ const KitSheet = (props: KitProps) => {
 			{props.kit.disengage > 0 ? <Field label='Disengage' value={`+${props.kit.disengage}`} /> : null}
 			{
 				props.kit.features.map(f => (
-					<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+					<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
 		</>
@@ -500,7 +471,6 @@ const KitSheet = (props: KitProps) => {
 interface MonsterGroupProps {
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const MonsterGroupSheet = (props: MonsterGroupProps) => {
@@ -540,7 +510,6 @@ const MonsterGroupSheet = (props: MonsterGroupProps) => {
 									<FeaturePanel
 										key={m.id}
 										feature={m}
-										options={props.options}
 										mode={PanelMode.Full}
 										cost={cost}
 										repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -553,13 +522,13 @@ const MonsterGroupSheet = (props: MonsterGroupProps) => {
 			}
 			{
 				props.monsterGroup.monsters.map(m =>
-					<MonsterSheet key={m.id} monster={m} monsterGroup={props.monsterGroup} sourcebooks={props.sourcebooks} options={props.options} />
+					<MonsterSheet key={m.id} monster={m} monsterGroup={props.monsterGroup} sourcebooks={props.sourcebooks} />
 				)
 			}
 			{props.monsterGroup.addOns.length > 0 ? <HeaderText level={1}>Customization</HeaderText> : null}
 			{
 				props.monsterGroup.addOns.map(a =>
-					<FeaturePanel key={a.id} feature={a} options={props.options} cost={a.data.cost} mode={PanelMode.Full} />
+					<FeaturePanel key={a.id} feature={a} cost={a.data.cost} mode={PanelMode.Full} />
 				)
 			}
 		</>
@@ -570,7 +539,6 @@ interface MonsterProps {
 	monster: Monster;
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const MonsterSheet = (props: MonsterProps) => {
@@ -685,7 +653,7 @@ const MonsterSheet = (props: MonsterProps) => {
 							props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
 								<>
 									<HeaderText level={1}>Level 4</HeaderText>
-									<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4}options={props.options} mode={PanelMode.Full} />
+									<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4} mode={PanelMode.Full} />
 								</>
 								: null
 						}
@@ -693,7 +661,7 @@ const MonsterSheet = (props: MonsterProps) => {
 							props.monster.retainer.level7 && (props.monster.retainer.level < 7) ?
 								<>
 									<HeaderText level={1}>Level 7</HeaderText>
-									<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7}options={props.options} mode={PanelMode.Full} />
+									<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7} mode={PanelMode.Full} />
 								</>
 								: null
 						}
@@ -701,7 +669,7 @@ const MonsterSheet = (props: MonsterProps) => {
 							props.monster.retainer.level10 && (props.monster.retainer.level < 10) ?
 								<>
 									<HeaderText level={1}>Level 10</HeaderText>
-									<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10}options={props.options} mode={PanelMode.Full} />
+									<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10} mode={PanelMode.Full} />
 								</>
 								: null
 						}
@@ -715,19 +683,17 @@ const MonsterSheet = (props: MonsterProps) => {
 interface PerkProps {
 	perk: Perk;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const PerkSheet = (props: PerkProps) => {
 	return (
-		<FeaturePanel feature={props.perk} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+		<FeaturePanel feature={props.perk} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 	);
 };
 
 interface ProjectProps {
 	project: Project;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const ProjectSheet = (props: ProjectProps) => {
@@ -748,7 +714,6 @@ const ProjectSheet = (props: ProjectProps) => {
 interface SubclassProps {
 	subclass: SubClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const SubclassSheet = (props: SubclassProps) => {
@@ -766,7 +731,7 @@ const SubclassSheet = (props: SubclassProps) => {
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
-									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								))
 							}
 						</Space>
@@ -790,7 +755,6 @@ const SubclassSheet = (props: SubclassProps) => {
 interface TerrainProps {
 	terrain: Terrain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const TerrainSheet = (props: TerrainProps) => {
@@ -874,7 +838,6 @@ const TerrainSheet = (props: TerrainProps) => {
 interface TitleProps {
 	title: Title;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 const TitleSheet = (props: TitleProps) => {
@@ -895,7 +858,6 @@ const TitleSheet = (props: TitleProps) => {
 						key={f.id}
 						feature={f}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				))

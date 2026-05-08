@@ -12,7 +12,6 @@ import { ItemType } from '@/enums/item-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -22,7 +21,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoItemChoice = (props: InfoProps) => {
@@ -30,7 +28,7 @@ export const InfoItemChoice = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(i => <ItemPanel key={i.id} item={i} sourcebooks={props.sourcebooks || []} options={props.options} />)
+					props.data.selected.map(i => <ItemPanel key={i.id} item={i} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -54,7 +52,6 @@ export const InfoItemChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureItemChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureItemChoiceData) => void;
 }
 
@@ -100,7 +97,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureItemChoiceData) => void;
 }
 
@@ -156,7 +152,6 @@ export const ConfigItemChoice = (props: ConfigProps) => {
 					types={props.data.types}
 					sourcebooks={props.sourcebooks}
 					hero={props.hero}
-					options={props.options}
 					onSelect={item => {
 						setItemSelectorOpen(false);
 
@@ -171,7 +166,7 @@ export const ConfigItemChoice = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedItem ? <ItemPanel item={selectedItem} sourcebooks={props.sourcebooks} options={props.options} /> : null}
+					content={selectedItem ? <ItemPanel item={selectedItem} sourcebooks={props.sourcebooks} /> : null}
 					onClose={() => setSelectedItem(null)}
 				/>
 			</Drawer>

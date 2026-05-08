@@ -14,7 +14,6 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -27,7 +26,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoClassAbility = (props: InfoProps) => {
@@ -78,7 +76,6 @@ export const InfoClassAbility = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureClassAbilityData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureClassAbilityData) => void;
 }
 
@@ -212,7 +209,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureClassAbilityData) => void;
 }
 

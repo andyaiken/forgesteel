@@ -6,25 +6,25 @@ import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
-import { Options } from '@/models/options';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useOptions } from '@/contexts/data-context';
 
 import './stats-panel.scss';
 
 interface Props {
 	hero: Hero;
-	options: Options;
 	onSelectCharacteristic: (characteristic: Characteristic) => void;
 	onShowState: (type: HeroModalType) => void;
 }
 
 export const StatsPanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const options = useOptions();
 
-	const useRows = props.options.compactView;
+	const useRows = options.compactView;
 
-	const xpSuffix = HeroLogic.canLevelUp(props.hero, props.options) ? <ArrowUpOutlined /> : undefined;
+	const xpSuffix = HeroLogic.canLevelUp(props.hero, options) ? <ArrowUpOutlined /> : undefined;
 
 	const size = HeroLogic.getSize(props.hero);
 	const sizeSuffix = size.mod || undefined;

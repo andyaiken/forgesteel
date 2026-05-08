@@ -8,7 +8,6 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { LanguageSelectModal } from '@/components/modals/select/language-select/language-select-modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -19,7 +18,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoLanguageChoice = (props: InfoProps) => {
@@ -37,7 +35,6 @@ export const InfoLanguageChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureLanguageChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureLanguageChoiceData) => void;
 }
 
@@ -105,7 +102,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureLanguageChoiceData) => void;
 }
 

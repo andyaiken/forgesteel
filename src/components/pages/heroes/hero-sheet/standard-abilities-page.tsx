@@ -3,40 +3,40 @@ import { AbilityData } from '@/data/ability-data';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
+import { useOptions } from '@/contexts/data-context';
 
 interface Props {
 	hero: Hero;
-	options: Options;
 };
 
 export const StandardAbilitiesPage = (props: Props) => {
+	const options = useOptions();
 	const abilities = useMemo(
-		() => AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, props.hero, undefined, props.options)),
-		[ props.hero, props.options ]
+		() => AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, props.hero, undefined, options)),
+		[ props.hero, options ]
 	);
 	abilities.sort((a, b) => SheetFormatter.sortAbilitiesByType(a, b, 'asc'));
 
 	const layout = useMemo(
-		() => SheetLayout.getAbilityLayout(props.options),
-		[ props.options ]
+		() => SheetLayout.getAbilityLayout(options),
+		[ options ]
 	);
 
 	const sheetClasses = useMemo(
 		() => {
 			const classes = [
 				'hero-sheet',
-				props.options.classicSheetPageSize.toLowerCase()
+				options.classicSheetPageSize.toLowerCase()
 			];
-			if (props.options.colorSheet) {
+			if (options.colorSheet) {
 				classes.push('color');
-				classes.push(`colors-${props.options.colorScheme}`);
+				classes.push(`colors-${options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
+		[ options.classicSheetPageSize, options.colorSheet, options.colorScheme ]
 	);
 
 	const extraCards = {

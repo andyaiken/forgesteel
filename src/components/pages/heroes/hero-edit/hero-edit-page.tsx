@@ -26,7 +26,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Options } from '@/models/options';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -35,6 +34,7 @@ import { SubClass } from '@/models/subclass';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
 
@@ -51,7 +51,6 @@ enum PageState {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	saveChanges: (hero: Hero) => void;
 	importSourcebook: (sourcebook: Sourcebook) => void;
@@ -59,6 +58,7 @@ interface Props {
 
 export const HeroEditPage = (props: Props) => {
 	const isSmall = useIsSmall();
+	const options = useOptions();
 	const navigation = useNavigation();
 	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
 	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
@@ -272,7 +272,7 @@ export const HeroEditPage = (props: Props) => {
 
 	const setLevel = (level: number) => {
 		const heroCopy = Utils.copy(hero);
-		HeroLogic.setLevel(heroCopy, props.options, level);
+		HeroLogic.setLevel(heroCopy, options, level);
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -523,7 +523,6 @@ export const HeroEditPage = (props: Props) => {
 					<AncestrySection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectAncestry={setAncestry}
 						setFeatureData={setFeatureData}
@@ -534,7 +533,6 @@ export const HeroEditPage = (props: Props) => {
 					<CultureSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectCulture={setCulture}
 						selectEnvironment={setEnvironment}
@@ -548,7 +546,6 @@ export const HeroEditPage = (props: Props) => {
 					<CareerSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectCareer={setCareer}
 						selectIncitingIncident={setIncitingIncident}
@@ -560,7 +557,6 @@ export const HeroEditPage = (props: Props) => {
 					<ClassSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectClass={setClass}
 						setLevel={setLevel}
@@ -576,7 +572,6 @@ export const HeroEditPage = (props: Props) => {
 					<ComplicationSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectComplication={setComplication}
 						setFeatureData={setFeatureData}
@@ -588,7 +583,6 @@ export const HeroEditPage = (props: Props) => {
 						hero={hero}
 						allHeroes={props.heroes}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						setName={setName}
 						setPicture={setPicture}
 						setFolder={setFolder}
@@ -618,7 +612,6 @@ export const HeroEditPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

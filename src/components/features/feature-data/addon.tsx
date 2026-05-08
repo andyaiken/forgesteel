@@ -3,7 +3,6 @@ import { FeatureAddOnData } from '@/models/feature';
 import { FeatureAddOnType } from '@/enums/feature-addon-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -11,7 +10,6 @@ import { useState } from 'react';
 interface EditProps {
 	data: FeatureAddOnData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAddOnData) => void;
 }
 

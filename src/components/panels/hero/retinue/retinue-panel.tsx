@@ -9,24 +9,24 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
+import { useOptions } from '@/contexts/data-context';
 
 import './retinue-panel.scss';
 
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelectMonster: (hero: Hero, monster: Monster, summon?: SummoningInfo) => void;
 	onSelectFollower: (hero: Hero, follower: Follower) => void;
 	onSelectFixture: (fixture: Fixture) => void;
 }
 
 export const RetinuePanel = (props: Props) => {
-	const useRows = props.options.compactView;
+	const options = useOptions();
+	const useRows = options.compactView;
 
 	const monsters: { monster: Monster, summon?: SummoningInfo }[] = [
 		...HeroLogic.getCompanions(props.hero).map(m => ({ monster: m, summon: undefined })),
@@ -43,7 +43,7 @@ export const RetinuePanel = (props: Props) => {
 				{
 					monsters.length > 0 ?
 						<>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 								{
 									Collections.sort(monsters, m => m.monster.name).map(m =>
 										useRows ?
@@ -52,7 +52,7 @@ export const RetinuePanel = (props: Props) => {
 											</div>
 											:
 											<SelectablePanel key={m.monster.id} onSelect={() => props.onSelectMonster(props.hero, m.monster, m.summon)}>
-												<MonsterPanel monster={m.monster} summon={m.summon} sourcebooks={props.sourcebooks} options={props.options} />
+												<MonsterPanel monster={m.monster} summon={m.summon} sourcebooks={props.sourcebooks} />
 											</SelectablePanel>
 									)
 								}
@@ -63,8 +63,8 @@ export const RetinuePanel = (props: Props) => {
 				{
 					followers.length > 0 ?
 						<>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+							<HeaderText level={options.compactView ? 3 : 1}>Followers</HeaderText>
+							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 								{
 									followers.map(follower =>
 										useRows ?
@@ -84,8 +84,8 @@ export const RetinuePanel = (props: Props) => {
 				{
 					fixtures.length > 0 ?
 						<>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Fixtures</HeaderText>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+							<HeaderText level={options.compactView ? 3 : 1}>Fixtures</HeaderText>
+							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 								{
 									fixtures.map(fixture =>
 										useRows ?
@@ -94,7 +94,7 @@ export const RetinuePanel = (props: Props) => {
 											</div>
 											:
 											<SelectablePanel key={fixture.id} onSelect={() => props.onSelectFixture(fixture)}>
-												<FixturePanel fixture={fixture} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+												<FixturePanel fixture={fixture} hero={props.hero} sourcebooks={props.sourcebooks} />
 											</SelectablePanel>
 									)
 								}

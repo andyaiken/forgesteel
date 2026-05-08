@@ -11,7 +11,6 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
-import { Options } from '@/models/options';
 import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -24,7 +23,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoRetainer = (props: InfoProps) => {
@@ -36,7 +34,7 @@ export const InfoRetainer = (props: InfoProps) => {
 		);
 	}
 
-	return <MonsterPanel monster={props.data.selected} sourcebooks={props.sourcebooks || []} options={props.options} />;
+	return <MonsterPanel monster={props.data.selected} sourcebooks={props.sourcebooks || []} />;
 };
 
 interface ConfigProps {
@@ -44,7 +42,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureRetainerData) => void;
 }
 
@@ -117,7 +114,6 @@ export const ConfigRetainer = (props: ConfigProps) => {
 									<FeatureConfigPanel
 										key={lvl.level}
 										feature={lvl.feature}
-										options={props.options}
 										hero={props.hero}
 										sourcebooks={props.sourcebooks}
 										setData={(fID, d) => {
@@ -140,7 +136,6 @@ export const ConfigRetainer = (props: ConfigProps) => {
 				<RetainerSelectModal
 					monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={monster => {
 						setMonsterSelectorOpen(false);
 
@@ -162,7 +157,6 @@ export const ConfigRetainer = (props: ConfigProps) => {
 						<MonsterModal
 							monster={selectedMonster}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 						/>
 						: null

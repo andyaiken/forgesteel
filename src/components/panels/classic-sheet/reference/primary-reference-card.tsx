@@ -1,14 +1,12 @@
 import { Fragment, useMemo } from 'react';
-
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
-import { Options } from '@/models/options';
 import { SheetPageSize } from '@/enums/sheet-page-size';
+import { useOptions } from '@/contexts/data-context';
 
 import './primary-reference-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const PrimaryReferenceCard = (props: Props) => {
@@ -16,9 +14,10 @@ export const PrimaryReferenceCard = (props: Props) => {
 		() => props.character,
 		[ props.character ]
 	);
+	const options = useOptions();
 
-	const showTriggerHelp = props.options.classicSheetPageSize === SheetPageSize.A4 &&
-		props.options.pageOrientation === 'portrait' &&
+	const showTriggerHelp = options.classicSheetPageSize === SheetPageSize.A4 &&
+		options.pageOrientation === 'portrait' &&
 		(props.character.heroicResourceGains || []).length < 3;
 
 	const showActionsManeuversReference = (props.character.heroicResourceGains || []).length <= 3;

@@ -24,7 +24,6 @@ import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-p
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { Options } from '@/models/options';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
@@ -41,7 +40,6 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	exportHeroData: (hero: Hero) => void;
 	exportHeroImage: (hero: Hero) => void;
@@ -91,7 +89,6 @@ export const HeroViewPage = (props: Props) => {
 					<HeroPanel
 						hero={hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelectAncestry={props.showAncestry}
 						onSelectCulture={props.showCulture}
 						onSelectCareer={props.showCareer}
@@ -120,12 +117,11 @@ export const HeroViewPage = (props: Props) => {
 					<HeroSheetPage
 						hero={hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 					/>
 				);
 			case 'abilities':
 				return (
-					<StandardAbilitiesPage options={props.options} hero={hero} />
+					<StandardAbilitiesPage hero={hero} />
 				);
 			case 'notes':
 				return (
@@ -194,7 +190,6 @@ export const HeroViewPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

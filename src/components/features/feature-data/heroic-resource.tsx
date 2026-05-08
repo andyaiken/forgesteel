@@ -10,7 +10,6 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -23,7 +22,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoHeroicResource = (props: InfoProps) => {
@@ -56,7 +54,6 @@ export const InfoHeroicResource = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureHeroicResourceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureHeroicResourceData) => void;
 }
 

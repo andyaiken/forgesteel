@@ -11,7 +11,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
-import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { Sourcebook } from '@/models/sourcebook';
@@ -23,7 +22,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoDamageModifier = (props: InfoProps) => {
@@ -37,7 +35,6 @@ export const InfoDamageModifier = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureDamageModifierData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureDamageModifierData) => void;
 }
 

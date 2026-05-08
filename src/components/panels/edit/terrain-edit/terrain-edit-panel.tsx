@@ -17,7 +17,6 @@ import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -36,7 +35,6 @@ import './terrain-edit-panel.scss';
 interface Props {
 	terrain: Terrain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (terrain: Terrain) => void;
 }
@@ -402,7 +400,6 @@ export const TerrainEditPanel = (props: Props) => {
 												feature={feature}
 												allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 												sourcebooks={props.sourcebooks}
-												options={props.options}
 												onChange={f => setSectionContentFeature(sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 											/>
 										</Expander>
@@ -601,7 +598,6 @@ export const TerrainEditPanel = (props: Props) => {
 																feature={feature}
 																allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 																sourcebooks={props.sourcebooks}
-																options={props.options}
 																onChange={f => setUpgradeSectionContentFeature(upgradeIndex, sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 															/>
 														</Expander>

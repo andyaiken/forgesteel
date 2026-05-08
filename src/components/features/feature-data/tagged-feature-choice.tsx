@@ -9,7 +9,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -21,7 +20,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoTaggedFeatureChoice = (props: InfoProps) => {
@@ -29,7 +27,7 @@ export const InfoTaggedFeatureChoice = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
+					props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} />)
 				}
 			</Space>
 		);
@@ -43,7 +41,6 @@ export const InfoTaggedFeatureChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureTaggedFeatureChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureTaggedFeatureChoiceData) => void;
 }
 
@@ -85,7 +82,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureTaggedFeatureChoiceData) => void;
 }
 
@@ -143,7 +139,7 @@ export const ConfigTaggedFeatureChoice = (props: ConfigProps) => {
 			{
 				props.data.selected.map(feature => {
 					return (
-						<FeaturePanel key={feature.id} feature={feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<FeaturePanel key={feature.id} feature={feature} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					);
 				})
 			}

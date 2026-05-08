@@ -23,6 +23,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import localforage from 'localforage';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './data-loader.scss';
 
@@ -214,6 +215,10 @@ export const DataLoader = (props: Props) => {
 
 					const options = results[4] as Options;
 					OptionsUpdateLogic.updateOptions(options);
+					const isSmall = useIsSmall();
+					if (isSmall) {
+						options.compactView = true;
+					}
 
 					setOverallLoadState('success');
 

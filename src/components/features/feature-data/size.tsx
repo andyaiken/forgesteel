@@ -5,7 +5,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -15,7 +14,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSize = (props: InfoProps) => {
@@ -27,7 +25,6 @@ export const InfoSize = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSizeData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSizeData) => void;
 }
 

@@ -20,7 +20,6 @@ import { Negotiation } from '@/models/negotiation';
 import { NegotiationData } from '@/data/negotiation-data';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
@@ -41,7 +40,6 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	session: Session;
-	options: Options;
 	params: FooterParams;
 	showPlayerView: () => void;
 	startEncounter: (encounter: Encounter) => Promise<string>;
@@ -105,7 +103,6 @@ export const SessionDirectorPage = (props: Props) => {
 							encounter={encounter}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
-							options={props.options}
 							onChange={props.updateEncounter}
 							showTools={tool => props.showEncounterTools(encounter, tool)}
 						/>
@@ -121,7 +118,6 @@ export const SessionDirectorPage = (props: Props) => {
 							key={montage.id}
 							montage={montage}
 							heroes={props.heroes}
-							options={props.options}
 							onChange={props.updateMontage}
 						/>
 					</div>
@@ -149,7 +145,6 @@ export const SessionDirectorPage = (props: Props) => {
 							key={map.id}
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
-							options={props.options}
 							heroes={props.heroes}
 							encounters={props.session.encounters}
 							sourcebooks={props.sourcebooks}
@@ -414,7 +409,6 @@ export const SessionDirectorPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='session'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

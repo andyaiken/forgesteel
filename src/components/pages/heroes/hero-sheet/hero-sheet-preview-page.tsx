@@ -20,6 +20,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 
 import './hero-sheet-page.scss';
@@ -27,11 +28,11 @@ import './hero-sheet-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setOptions: (options: Options) => void;
 }
 
 export const HeroSheetPreviewPage = (props: Props) => {
+	const options = useOptions();
 	const { heroID } = useParams<{ heroID: string }>();
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
@@ -64,10 +65,10 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		const lightest = `rgb(${value + 68}, ${value + 68}, ${value + 68})`;
 		document.documentElement.style.setProperty('--color-text-lightest', lightest);
 	};
-	setDrawColor(props.options.sheetTextColor);
+	setDrawColor(options.sheetTextColor);
 
 	const setSheetTextColor = (value: 'light' | 'default' | 'dark') => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.sheetTextColor = value;
 		props.setOptions(copy);
 	};
@@ -81,37 +82,37 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	};
 
 	const setIncludePlayState = (value: boolean) => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.includePlayState = value;
 		props.setOptions(copy);
 	};
 
 	const setColorSheet = (value: boolean) => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.colorSheet = value;
 		props.setOptions(copy);
 	};
 
 	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.featuresInclude = value;
 		props.setOptions(copy);
 	};
 
 	const setClassicSheetPageSize = (value: SheetPageSize) => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.classicSheetPageSize = value;
 		props.setOptions(copy);
 	};
 
 	const setPageOrientation = (value: 'portrait' | 'landscape') => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.pageOrientation = value;
 		props.setOptions(copy);
 	};
 
 	const includedStandardAbilitiesChanged = (value: string | string[]) => {
-		const copy = Utils.copy(props.options);
+		const copy = Utils.copy(options);
 		copy.shownStandardAbilities = [ value ].flat(1);
 		props.setOptions(copy);
 	};
@@ -156,8 +157,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const getPageClasses = () => {
 		return [
 			'hero-sheet',
-			props.options.classicSheetPageSize.toLowerCase(),
-			props.options.pageOrientation
+			options.classicSheetPageSize.toLowerCase(),
+			options.pageOrientation
 		].join(' ');
 	};
 
@@ -235,7 +236,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				<HeroSheetPage
 					hero={hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 		}
@@ -319,8 +319,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					open={drawerOpen}
 					style={{ padding: '10px' }}
 				>
-					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
+					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
 					<Divider size='small'>Text Color</Divider>
 					<Segmented
 						name='textColor'
@@ -330,7 +330,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 							{ value: 'default', label: 'Default' },
 							{ value: 'light', label: 'Lighter' }
 						]}
-						value={props.options.sheetTextColor}
+						value={options.sheetTextColor}
 						onChange={changeTextColor}
 					/>
 					<Divider size='small'>Include Class Features</Divider>
@@ -343,7 +343,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 							{ value: 'no-basic', label: 'No Simple' },
 							{ value: 'all', label: 'All' }
 						]}
-						value={props.options.featuresInclude}
+						value={options.featuresInclude}
 						onChange={setFeaturesInclude}
 					/>
 					<Divider size='small'>Included Standard Abilities</Divider>
@@ -359,7 +359,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 							name='pagesize'
 							block={true}
 							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-							value={props.options.classicSheetPageSize}
+							value={options.classicSheetPageSize}
 							onChange={setClassicSheetPageSize}
 						/>
 						<Segmented
@@ -369,7 +369,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 								{ value: 'portrait', label: 'Portrait' },
 								{ value: 'landscape', label: 'Landscape' }
 							]}
-							value={props.options.pageOrientation}
+							value={options.pageOrientation}
 							onChange={setPageOrientation}
 						/>
 					</Space>

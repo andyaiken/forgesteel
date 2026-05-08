@@ -17,7 +17,6 @@ import { HeroClass } from '@/models/class';
 import { Modal } from '@/components/modals/modal/modal';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -34,7 +33,6 @@ import './class-edit-panel.scss';
 interface Props {
 	heroClass: HeroClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (heroClass: HeroClass) => void;
 }
@@ -214,7 +212,6 @@ export const ClassEditPanel = (props: Props) => {
 							title={`Level ${lvl.level}`}
 							features={lvl.features}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={features => onChange(lvl.level, features)}
 						/>
 					))
@@ -392,7 +389,7 @@ export const ClassEditPanel = (props: Props) => {
 									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 								]}
 							>
-								<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} />
+								<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} />
 							</Expander>
 						))
 					}
@@ -417,7 +414,7 @@ export const ClassEditPanel = (props: Props) => {
 													setDrawerOpen(false);
 												}}
 											>
-												<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} />
+												<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} />
 											</SelectablePanel>
 										))
 									}
@@ -489,7 +486,6 @@ export const ClassEditPanel = (props: Props) => {
 														<ClassPanel
 															heroClass={heroClass}
 															sourcebooks={props.sourcebooks}
-															options={props.options}
 															mode={PanelMode.Full}
 														/>
 													</SelectablePanel>
@@ -506,7 +502,6 @@ export const ClassEditPanel = (props: Props) => {
 						key={subclassID}
 						subClass={heroClass.subclasses.find(sc => sc.id === subclassID) as SubClass}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={sc => {
 							const copy = Utils.copy(heroClass);

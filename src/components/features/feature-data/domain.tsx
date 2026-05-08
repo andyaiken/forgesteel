@@ -13,7 +13,6 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -25,7 +24,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoDomain = (props: InfoProps) => {
@@ -33,7 +31,7 @@ export const InfoDomain = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(d => <DomainPanel key={d.id} domain={d} sourcebooks={props.sourcebooks || []} options={props.options} />)
+					props.data.selected.map(d => <DomainPanel key={d.id} domain={d} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -47,7 +45,6 @@ export const InfoDomain = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureDomainData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureDomainData) => void;
 }
 
@@ -105,7 +102,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureDomainData) => void;
 }
 
@@ -175,7 +171,7 @@ export const ConfigDomain = (props: ConfigProps) => {
 			}
 			<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedDomain ? <DomainPanel domain={selectedDomain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedDomain ? <DomainPanel domain={selectedDomain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedDomain(null)}
 				/>
 			</Drawer>

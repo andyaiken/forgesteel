@@ -9,7 +9,6 @@ import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -23,7 +22,6 @@ import './domain-edit-panel.scss';
 interface Props {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (domain: Domain) => void;
 }
@@ -67,7 +65,6 @@ export const DomainEditPanel = (props: Props) => {
 							title={`Level ${lvl.level}`}
 							features={lvl.features}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={features => onChange(lvl.level, features)}
 						/>
 					))
@@ -198,7 +195,6 @@ export const DomainEditPanel = (props: Props) => {
 				title='Features'
 				features={domain.defaultFeatures}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				onChange={onChange}
 			/>
 		);
@@ -246,7 +242,6 @@ export const DomainEditPanel = (props: Props) => {
 												<DomainPanel
 													domain={domain}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

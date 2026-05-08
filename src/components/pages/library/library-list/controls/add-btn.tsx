@@ -13,17 +13,16 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Field } from '@/components/controls/field/field';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 interface Props {
 	category: SourcebookElementKind;
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	showMonsters: boolean;
 	sourcebookID: string;
 	setShowMonsters: (value: boolean) => void;
@@ -41,6 +40,7 @@ export const AddBtn = (props: Props) => {
 	const [ mapImportHeight, setMapImportHeight ] = useState<number>(5);
 	const [ mapGenerateType, setMapGenerateType ] = useState<'dungeon' | 'cavern'>('dungeon');
 	const [ mapGenerateSize, setMapGenerateSize ] = useState<number>(5);
+	const options = useOptions();
 
 	if ((props.category === 'monster-group') && props.showMonsters) {
 		return (
@@ -71,13 +71,13 @@ export const AddBtn = (props: Props) => {
 	const generateEncounter = () => {
 		const enc = FactoryLogic.createEncounter();
 
-		let heroLevel = props.options.heroLevel;
-		if (props.options.heroParty) {
-			const party = props.heroes.filter(h => h.folder === props.options.heroParty);
+		let heroLevel = options.heroLevel;
+		if (options.heroParty) {
+			const party = props.heroes.filter(h => h.folder === options.heroParty);
 			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
 		}
 
-		const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+		const budgets = EncounterDifficultyLogic.getBudgets(options, props.heroes);
 		switch (difficulty) {
 			case EncounterDifficulty.Easy:
 				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);

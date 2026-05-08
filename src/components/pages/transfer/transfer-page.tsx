@@ -14,7 +14,6 @@ import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overvi
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { LocalService } from '@/services/storage/local-service';
 import { MergeDuplicateBehavior } from '@/enums/merge-duplicate-behavior';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookMergeLogic } from '@/logic/merge/sourcebook-merge-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
@@ -26,7 +25,6 @@ import './transfer-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
-	options: Options;
 };
 
 export const TransferPage = (props: Props) => {

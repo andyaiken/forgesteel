@@ -13,7 +13,6 @@ import { FollowerPanel } from '@/components/panels/elements/follower-panel/follo
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { InfoFeature } from '@/components/features/feature';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -26,7 +25,6 @@ import './feature-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	source?: string;
-	options: Options;
 	cost?: number | 'signature';
 	repeatable?: boolean;
 	hero?: Hero;
@@ -107,7 +105,7 @@ export const FeaturePanel = (props: Props) => {
 	if (props.feature.type === FeatureType.AncestryFeatureChoice) {
 		if (props.feature.data.selected) {
 			return (
-				<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
+				<FeaturePanel feature={props.feature.data.selected} style={props.style} />
 			);
 		}
 	}
@@ -163,7 +161,6 @@ export const FeaturePanel = (props: Props) => {
 							feature={props.feature}
 							hero={props.hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 						/>
 						: null
 				}

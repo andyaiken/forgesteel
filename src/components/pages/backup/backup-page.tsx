@@ -3,7 +3,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
@@ -14,7 +13,6 @@ import './backup-page.scss';
 interface Props {
 	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
-	options: Options;
 }
 
 export const BackupPage = (props: Props) => {

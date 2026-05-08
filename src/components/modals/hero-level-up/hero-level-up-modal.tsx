@@ -7,10 +7,10 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './hero-level-up-modal.scss';
@@ -18,16 +18,16 @@ import './hero-level-up-modal.scss';
 interface Props {
 	hero: Hero;
 	soucebooks: Sourcebook[];
-	options: Options;
 	onAccept: (hero: Hero) => void;
 	onClose: () => void;
 }
 
 export const HeroLevelUpModal = (props: Props) => {
+	const options = useOptions();
 	const [ hero, setHero ] = useState<Hero>(() => {
 		const copy = Utils.copy(props.hero);
-		if (HeroLogic.canLevelUp(copy, props.options)) {
-			HeroLogic.setLevel(copy, props.options, copy.class!.level + 1);
+		if (HeroLogic.canLevelUp(copy, options)) {
+			HeroLogic.setLevel(copy, options, copy.class!.level + 1);
 		}
 		return copy;
 	});
@@ -51,7 +51,6 @@ export const HeroLevelUpModal = (props: Props) => {
 					feature={feature}
 					hero={hero}
 					sourcebooks={props.soucebooks}
-					options={props.options}
 					setData={setData}
 				/>
 			</SelectablePanel>

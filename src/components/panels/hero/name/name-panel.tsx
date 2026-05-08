@@ -5,25 +5,25 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroToken } from '../../token/token';
-import { Options } from '@/models/options';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 interface Props {
 	hero: Hero;
-	options: Options;
 	onShowState: (type: HeroModalType) => void;
 }
 
 export const NamePanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const options = useOptions();
 	const [ open, setOpen ] = useState(false);
 
 	return (
 		<HeaderText
 			style={{ margin: '0 5px 10px 5px' }}
-			level={props.options.compactView ? 2 : 1}
-			ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
+			level={options.compactView ? 2 : 1}
+			ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={options.compactView ? 21 : 34} /> : null}
 			tags={props.hero.folder ? [ props.hero.folder ] : []}
 			extra={
 				isSmall ?

@@ -1,20 +1,20 @@
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { Options } from '@/models/options';
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 
 import './stats-resources-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const StatsResourcesCard = (props: Props) => {
 	const character = props.character;
-	const showState = props.options.includePlayState;
+	const options = useOptions();
+	const showState = options.includePlayState;
 
 	return (
 		<div className='stats-resources card'>
@@ -62,11 +62,9 @@ export const StatsResourcesCard = (props: Props) => {
 			</div>
 			<StaminaComponent
 				stamina={character.stamina}
-				options={props.options}
 			/>
 			<RecoveriesComponent
 				recoveries={character.recoveries}
-				options={props.options}
 			/>
 			<div className='heroic-resource'>
 				<LabeledTextField

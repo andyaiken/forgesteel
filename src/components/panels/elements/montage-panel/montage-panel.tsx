@@ -7,7 +7,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontageLogic } from '@/logic/montage-logic';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -15,6 +14,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './montage-panel.scss';
@@ -23,12 +23,12 @@ interface Props {
 	montage: Montage;
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 }
 
 export const MontagePanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
+	const options = useOptions();
 
 	const getOverview = () => {
 		return (
@@ -45,7 +45,7 @@ export const MontagePanel = (props: Props) => {
 						label='Success Limit'
 						value={(
 							<Space>
-								{MontageLogic.getSuccessLimit(props.montage, props.heroes, props.options)}
+								{MontageLogic.getSuccessLimit(props.montage, props.heroes, options)}
 								<CheckIcon state='success' />
 							</Space>
 						)}
@@ -55,7 +55,7 @@ export const MontagePanel = (props: Props) => {
 						label='Failure Limit'
 						value={(
 							<Space>
-								{MontageLogic.getFailureLimit(props.montage, props.heroes, props.options)}
+								{MontageLogic.getFailureLimit(props.montage, props.heroes, options)}
 								<CheckIcon state='failure' />
 							</Space>
 						)}

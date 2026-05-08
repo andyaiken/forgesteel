@@ -7,7 +7,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
@@ -20,7 +19,6 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	session: Session;
-	options: Options;
 	params: FooterParams;
 }
 
@@ -33,7 +31,6 @@ export const SessionPlayerPage = (props: Props) => {
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
-					options={props.options}
 					onChange={() => null}
 				/>
 			);
@@ -45,7 +42,6 @@ export const SessionPlayerPage = (props: Props) => {
 				<MontageRunPanel
 					montage={montage}
 					heroes={props.heroes}
-					options={props.options}
 					onChange={() => null}
 				/>
 			);
@@ -68,7 +64,6 @@ export const SessionPlayerPage = (props: Props) => {
 					key={JSON.stringify(map)}
 					map={map}
 					display={TacticalMapDisplayType.Player}
-					options={props.options}
 					heroes={props.heroes}
 					encounters={props.session.encounters}
 					sourcebooks={props.sourcebooks}
@@ -101,7 +96,6 @@ export const SessionPlayerPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='player-view'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

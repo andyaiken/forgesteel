@@ -7,7 +7,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -17,7 +16,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoBonus = (props: InfoProps) => {
@@ -29,7 +27,6 @@ export const InfoBonus = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureBonusData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureBonusData) => void;
 }
 

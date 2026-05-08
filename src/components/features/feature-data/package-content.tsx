@@ -1,6 +1,5 @@
 import { FeaturePackageContentData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -10,7 +9,6 @@ import { useState } from 'react';
 interface EditProps {
 	data: FeaturePackageContentData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeaturePackageContentData) => void;
 }
 

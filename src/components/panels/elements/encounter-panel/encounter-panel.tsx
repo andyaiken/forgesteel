@@ -16,7 +16,6 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -25,6 +24,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './encounter-panel.scss';
@@ -33,19 +33,19 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	showTools?: (tool: string) => void;
 }
 
 export const EncounterPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
+	const options = useOptions();
 
 	const getOverview = () => {
 		return (
 			<>
 				<Markdown text={props.encounter.description} />
-				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} />
 				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</>
 		);
@@ -144,7 +144,6 @@ export const EncounterPanel = (props: Props) => {
 										monster={monster}
 										monsterGroup={monsterGroup}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -226,7 +225,6 @@ export const EncounterPanel = (props: Props) => {
 													<SelectablePanel key={m.id}>
 														<FeaturePanel
 															feature={m}
-															options={props.options}
 															mode={PanelMode.Full}
 															cost={cost}
 															repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -289,7 +287,7 @@ export const EncounterPanel = (props: Props) => {
 	}
 
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 	tags.push(difficulty);
 
 	if (props.mode !== PanelMode.Full) {

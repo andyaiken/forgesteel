@@ -1,13 +1,11 @@
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
-import { Options } from '@/models/options';
 import { useMemo } from 'react';
 
 import './success-failure-tracker.scss';
 
 interface Props {
 	montage: MontageSheet;
-	options: Options;
 }
 
 export const SuccessFailureTrackerCard = (props: Props) => {

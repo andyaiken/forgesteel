@@ -1,17 +1,17 @@
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { Options } from '@/models/options';
 import { RecoveriesSheet } from '@/models/classic-sheets/hero-sheet';
+import { useOptions } from '@/contexts/data-context';
 
 import './recoveries-component.scss';
 
 interface Props {
 	recoveries: RecoveriesSheet;
-	options: Options;
 }
 
 export const RecoveriesComponent = (props: Props) => {
 	const recoveries = props.recoveries;
-	const showState = props.options.includePlayState;
+	const options = useOptions();
+	const showState = options.includePlayState;
 
 	return (
 

@@ -1,18 +1,18 @@
 import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { Options } from '@/models/options';
+import { useOptions } from '@/contexts/data-context';
 
 import './hero-header-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const HeroHeaderCard = (props: Props) => {
 	const character = props.character;
-	const showState = props.options.includePlayState;
+	const options = useOptions();
+	const showState = options.includePlayState;
 
 	const currentVictories = (showState && character.currentVictories) || 0;
 	return (

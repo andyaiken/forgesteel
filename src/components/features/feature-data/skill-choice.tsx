@@ -8,7 +8,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { SkillList } from '@/enums/skill-list';
 import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
@@ -21,7 +20,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSkillChoice = (props: InfoProps) => {
@@ -49,7 +47,6 @@ export const InfoSkillChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSkillChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSkillChoiceData) => void;
 }
 
@@ -135,7 +132,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSkillChoiceData) => void;
 }
 

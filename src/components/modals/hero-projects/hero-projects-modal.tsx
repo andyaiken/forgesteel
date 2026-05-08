@@ -11,7 +11,6 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Item } from '@/models/item';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectLogic } from '@/logic/project-logic';
@@ -26,7 +25,6 @@ import './hero-projects-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 	onCustomize: () => void;

@@ -9,7 +9,6 @@ import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imb
 import { ItemType } from '@/enums/item-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
@@ -24,7 +23,6 @@ import './imbuement-edit-panel.scss';
 interface Props {
 	imbuement: Imbuement;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (imbuemenet: Imbuement) => void;
 }
@@ -135,7 +133,6 @@ export const ImbuementEditPanel = (props: Props) => {
 				<FeatureEditPanel
 					feature={imbuement.feature}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onChange={changeFeature}
 				/>
 			</Space>
@@ -184,7 +181,6 @@ export const ImbuementEditPanel = (props: Props) => {
 												<ImbuementPanel
 													imbuement={imbuement}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

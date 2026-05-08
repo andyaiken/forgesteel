@@ -37,7 +37,6 @@ import { Montage } from '@/models/montage';
 import { MontageEditPanel } from '@/components/panels/edit/montage-edit/montage-edit-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
@@ -63,7 +62,6 @@ import './library-edit-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
@@ -165,7 +163,6 @@ export const LibraryEditPage = (props: Props) => {
 							adventure={element as Adventure}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
-							options={props.options}
 							onChange={applyChanges}
 						/>
 					</div>
@@ -176,7 +173,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						ancestry={element as Ancestry}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -187,7 +183,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						career={element as Career}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -198,7 +193,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						heroClass={element as HeroClass}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -209,7 +203,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -220,7 +213,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						culture={element as Culture}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -231,7 +223,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						domain={element as Domain}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -243,7 +234,6 @@ export const LibraryEditPage = (props: Props) => {
 						encounter={element as Encounter}
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={applyChanges}
 						showMonster={props.showMonster}
 						showTerrain={props.showTerrain}
@@ -255,7 +245,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						imbuement={element as Imbuement}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -266,7 +255,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						item={element as Item}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -277,7 +265,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						kit={element as Kit}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -288,7 +275,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						monsterGroup={element as MonsterGroup}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 						onSelectMonster={props.showMonster}
@@ -301,7 +287,6 @@ export const LibraryEditPage = (props: Props) => {
 						montage={element as Montage}
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -312,7 +297,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						negotiation={element as Negotiation}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -323,7 +307,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -345,7 +328,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						subClass={element as SubClass}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -358,7 +340,6 @@ export const LibraryEditPage = (props: Props) => {
 							map={element as TacticalMap}
 							display={TacticalMapDisplayType.DirectorEdit}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							mode={PanelMode.Full}
 							updateMap={applyChanges}
 						/>
@@ -370,7 +351,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						terrain={element as Terrain}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -381,7 +361,6 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						title={element as Title}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={applyChanges}
 					/>
@@ -407,7 +386,6 @@ export const LibraryEditPage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='library'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

@@ -5,7 +5,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -19,7 +18,6 @@ import './kit-panel.scss';
 interface Props {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 }
@@ -65,7 +63,7 @@ export const KitPanel = (props: Props) => {
 	const getFeatures = () => {
 		return (
 			<>
-				{props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+				{props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 			</>
 		);
 	};

@@ -3,10 +3,10 @@ import { Montage } from '@/models/montage';
 import { MontageChallengesCard } from '@/components/panels/classic-sheet/montage-sheet/montage-challenges';
 import { MontageHeaderCard } from '@/components/panels/classic-sheet/montage-sheet/montage-header';
 import { MontageSheetBuilder } from '@/logic/playbook-sheets/montage-sheet-builder';
-import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SuccessFailureTrackerCard } from '@/components/panels/classic-sheet/montage-sheet/success-failure-tracker';
 import { useMemo } from 'react';
+import { useOptions } from '@/contexts/data-context';
 
 import rollT1Icon from '@/assets/icons/power-roll-t1.svg';
 import rollT2Icon from '@/assets/icons/power-roll-t2.svg';
@@ -17,35 +17,35 @@ import './montage-sheet-page.scss';
 interface Props {
 	montage: Montage;
 	heroes: Hero[];
-	options: Options;
 }
 
 export const MontageSheetPage = (props: Props) => {
+	const options = useOptions();
 	const montage = useMemo(
-		() => MontageSheetBuilder.buildMontageSheet(props.montage, props.heroes, props.options),
-		[ props.montage, props.heroes, props.options ]
+		() => MontageSheetBuilder.buildMontageSheet(props.montage, props.heroes, options),
+		[ props.montage, props.heroes, options ]
 	);
 
 	const sheetClasses = useMemo(
 		() => {
 			const classes = [
 				'montage-sheet',
-				props.options.classicSheetPageSize.toLowerCase()
+				options.classicSheetPageSize.toLowerCase()
 			];
-			if (props.options.colorSheet) {
+			if (options.colorSheet) {
 				classes.push('color');
-				classes.push(`colors-${props.options.colorScheme}`);
+				classes.push(`colors-${options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
+		[ options.classicSheetPageSize, options.colorSheet, options.colorScheme ]
 	);
 
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('montage', montage.id)}>
-					<MontageHeaderCard montage={montage} options={props.options} />
+				<div className={`page page-1 ${options.pageOrientation}`} id={SheetFormatter.getPageId('montage', montage.id)}>
+					<MontageHeaderCard montage={montage} />
 
 					<div className='tests-difficulty card'>
 						<h2>Test Difficulty</h2>
@@ -109,9 +109,9 @@ export const MontageSheetPage = (props: Props) => {
 						</div>
 					</div>
 
-					<SuccessFailureTrackerCard montage={montage} options={props.options} />
+					<SuccessFailureTrackerCard montage={montage} />
 
-					<MontageChallengesCard montage={montage} options={props.options} />
+					<MontageChallengesCard montage={montage} />
 				</div>
 			</div>
 		</main>

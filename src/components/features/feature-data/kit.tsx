@@ -13,7 +13,6 @@ import { KitSelectModal } from '@/components/modals/select/kit-select/kit-select
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -25,7 +24,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoKit = (props: InfoProps) => {
@@ -33,7 +31,7 @@ export const InfoKit = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} options={props.options} />)
+					props.data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -47,7 +45,6 @@ export const InfoKit = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureKitData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureKitData) => void;
 }
 
@@ -93,7 +90,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureKitData) => void;
 }
 
@@ -163,7 +159,6 @@ export const ConfigKit = (props: ConfigProps) => {
 					kits={sortedKits}
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={kit => {
 						setKitSelectorOpen(false);
 
@@ -178,7 +173,7 @@ export const ConfigKit = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedKit(null)}
 				/>
 			</Drawer>

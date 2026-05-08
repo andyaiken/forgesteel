@@ -16,7 +16,6 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -32,14 +31,13 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSummonChoice = (props: InfoProps) => {
 	if (props.data.selected.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{props.data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
+				{props.data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} mode={PanelMode.Full} /></SelectablePanel>)}
 			</Space>
 		);
 	}
@@ -51,7 +49,7 @@ export const InfoSummonChoice = (props: InfoProps) => {
 				{
 					props.data.options.map(s => (
 						<Expander key={s.id} title={s.monster.name}>
-							<MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} />
+							<MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} mode={PanelMode.Full} />
 						</Expander>
 					))
 				}
@@ -63,7 +61,6 @@ export const InfoSummonChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSummonChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSummonChoiceData) => void;
 }
 
@@ -173,7 +170,6 @@ export const EditSummonChoice = (props: EditProps) => {
 						<MonsterEditPanel
 							monster={summon.monster}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={m => setSummonChoiceMonster(data, n, m)}
 						/>
 					</Expander>
@@ -195,7 +191,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSummonChoiceData) => void;
 }
 
@@ -250,7 +245,6 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 					summons={props.data.options}
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={summon => {
 						setMonsterSelectorOpen(false);
 
@@ -270,7 +264,6 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 							monster={SummonLogic.getSummonedMonster(selectedSummon, props.hero)}
 							summon={selectedSummon.info}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedSummon(null)}
 						/>
 						: null

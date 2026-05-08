@@ -5,7 +5,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -15,7 +14,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoProficiency = (props: InfoProps) => {
@@ -30,7 +28,6 @@ export const InfoProficiency = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureProficiencyData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureProficiencyData) => void;
 }
 

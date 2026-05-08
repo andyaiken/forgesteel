@@ -10,7 +10,6 @@ import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -22,7 +21,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoCompanion = (props: InfoProps) => {
@@ -34,7 +32,7 @@ export const InfoCompanion = (props: InfoProps) => {
 		);
 	}
 
-	return <MonsterPanel monster={props.data.selected} sourcebooks={props.sourcebooks || []} options={props.options} />;
+	return <MonsterPanel monster={props.data.selected} sourcebooks={props.sourcebooks || []} />;
 };
 
 interface ConfigProps {
@@ -42,7 +40,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureCompanionData) => void;
 }
 
@@ -108,7 +105,6 @@ export const ConfigCompanion = (props: ConfigProps) => {
 				<MonsterSelectModal
 					monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={monster => {
 						setMonsterSelectorOpen(false);
 
@@ -126,7 +122,6 @@ export const ConfigCompanion = (props: ConfigProps) => {
 						<MonsterModal
 							monster={selectedMonster}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 						/>
 						: null

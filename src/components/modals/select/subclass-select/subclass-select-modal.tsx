@@ -3,7 +3,6 @@ import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -19,7 +18,6 @@ interface Props {
 	subClasses: SubClass[];
 	classID: string;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (subClass: SubClass) => void;
 }
@@ -66,7 +64,7 @@ export const SubClassSelectModal = (props: Props) => {
 									key={sc.id}
 									onSelect={() => props.onSelect(sc)}
 								>
-									<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
+									<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 								</SelectablePanel>
 							))
 						}
@@ -87,7 +85,7 @@ export const SubClassSelectModal = (props: Props) => {
 														key={sc.id}
 														onSelect={() => props.onSelect(sc)}
 													>
-														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
+														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 													</SelectablePanel>
 												))
 											}
@@ -113,7 +111,7 @@ export const SubClassSelectModal = (props: Props) => {
 														key={sc.id}
 														onSelect={() => props.onSelect(sc)}
 													>
-														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
+														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 													</SelectablePanel>
 												))
 											}

@@ -9,7 +9,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -24,7 +23,6 @@ import './subclass-panel.scss';
 interface Props {
 	subclass: SubClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 	style?: CSSProperties;
@@ -56,7 +54,7 @@ export const SubclassPanel = (props: Props) => {
 							>
 								{
 									...lvl.features.map(f =>
-										<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+										<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 									)
 								}
 							</Expander>

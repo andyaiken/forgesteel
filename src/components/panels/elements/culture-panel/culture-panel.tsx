@@ -4,7 +4,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
@@ -16,7 +15,6 @@ import './culture-panel.scss';
 interface Props {
 	culture: Culture;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 }
@@ -43,10 +41,10 @@ export const CulturePanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<div style={{ paddingTop: '10px' }}>
-							<FeaturePanel feature={props.culture.language} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							<FeaturePanel feature={props.culture.language} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 						</div>
 						: null
 				}

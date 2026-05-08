@@ -11,7 +11,6 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
@@ -27,7 +26,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoPerk = (props: InfoProps) => {
@@ -35,7 +33,7 @@ export const InfoPerk = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(p => <PerkPanel key={p.id} perk={p} sourcebooks={props.sourcebooks || []} options={props.options} />)
+					props.data.selected.map(p => <PerkPanel key={p.id} perk={p} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -49,7 +47,6 @@ export const InfoPerk = (props: InfoProps) => {
 interface EditProps {
 	data: FeaturePerkData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeaturePerkData) => void;
 }
 
@@ -95,7 +92,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeaturePerkData) => void;
 }
 
@@ -170,7 +166,6 @@ export const ConfigPerk = (props: ConfigProps) => {
 					perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={perk => {
 						setPerkSelectorOpen(false);
 
@@ -183,7 +178,7 @@ export const ConfigPerk = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedPerk ? <PerkPanel perk={selectedPerk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedPerk ? <PerkPanel perk={selectedPerk} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedPerk(null)}
 				/>
 			</Drawer>

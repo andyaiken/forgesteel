@@ -15,7 +15,6 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
@@ -30,7 +29,6 @@ import './item-edit-panel.scss';
 interface Props {
 	item: Item;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (item: Item) => void;
 }
@@ -146,7 +144,6 @@ export const ItemEditPanel = (props: Props) => {
 							title={`Level ${lvl.level}`}
 							features={lvl.features}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={features => onChange(lvl.level, features)}
 						/>
 					))
@@ -242,7 +239,6 @@ export const ItemEditPanel = (props: Props) => {
 													key={revision}
 													item={item}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

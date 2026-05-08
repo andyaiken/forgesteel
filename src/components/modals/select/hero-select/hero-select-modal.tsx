@@ -8,7 +8,6 @@ import { HeroInfo } from '@/components/panels/token/token';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -20,7 +19,6 @@ import './hero-select-modal.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (heroes: Hero[]) => void;
 }

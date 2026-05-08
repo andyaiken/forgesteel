@@ -1,7 +1,6 @@
 import { Feature, FeatureData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 
 import { ConfigAncestryChoice, InfoAncestryChoice } from '@/components/features/feature-data/ancestry-choice';
@@ -53,91 +52,90 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoFeature = (props: InfoProps) => {
 	switch (props.feature.type) {
 		case FeatureType.AbilityCost:
-			return <InfoAbilityCost data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoAbilityCost data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AbilityDamage:
-			return <InfoAbilityDamage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoAbilityDamage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AbilityDistance:
-			return <InfoAbilityDistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoAbilityDistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AncestryChoice:
-			return <InfoAncestryChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoAncestryChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AncestryFeatureChoice:
-			return <InfoAncestryFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoAncestryFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Bonus:
-			return <InfoBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.CharacteristicBonus:
-			return <InfoCharacteristicBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoCharacteristicBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Choice:
-			return <InfoChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ClassAbility:
-			return <InfoClassAbility data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoClassAbility data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Companion:
-			return <InfoCompanion data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoCompanion data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ConditionImmunity:
-			return <InfoConditionImmunity data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoConditionImmunity data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.DamageModifier:
-			return <InfoDamageModifier data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoDamageModifier data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Domain:
-			return <InfoDomain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoDomain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.DomainFeature:
-			return <InfoDomainFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoDomainFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Fixture:
-			return <InfoFixture data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoFixture data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResource:
-			return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResourceGain:
-			return <InfoHeroicResourceGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoHeroicResourceGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ItemChoice:
-			return <InfoItemChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoItemChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Kit:
-			return <InfoKit data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoKit data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Language:
-			return <InfoLanguage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoLanguage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.LanguageChoice:
-			return <InfoLanguageChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoLanguageChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Malice:
-			return <InfoMalice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoMalice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.MovementMode:
-			return <InfoMovementMode data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoMovementMode data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Multiple:
-			return <InfoMultiple data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoMultiple data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Package:
-			return <InfoPackage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoPackage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Perk:
-			return <InfoPerk data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoPerk data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Proficiency:
-			return <InfoProficiency data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoProficiency data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Retainer:
-			return <InfoRetainer data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoRetainer data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SaveThreshold:
-			return <InfoSaveThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSaveThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Size:
-			return <InfoSize data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSize data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SkillChoice:
-			return <InfoSkillChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSkillChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Speed:
-			return <InfoSpeed data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSpeed data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Summon:
-			return <InfoSummon data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSummon data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SummonChoice:
-			return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchOptions:
-			return <InfoSwitchOptions data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSwitchOptions data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchValue:
-			return <InfoSwitchValue data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoSwitchValue data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TaggedFeature:
-			return <InfoTaggedFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoTaggedFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TaggedFeatureChoice:
-			return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TitleChoice:
-			return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Toggle:
-			return <InfoToggle data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+			return <InfoToggle data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 	}
 
 	return null;
@@ -146,94 +144,93 @@ export const InfoFeature = (props: InfoProps) => {
 interface EditProps {
 	feature: Feature;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureData) => void;
 }
 
 export const EditFeature = (props: EditProps) => {
 	switch (props.feature.type) {
 		case FeatureType.Ability:
-			return <EditAbilityData data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAbilityData data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AbilityCost:
-			return <EditAbilityCost data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAbilityCost data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AbilityDamage:
-			return <EditAbilityDamage data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAbilityDamage data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AbilityDistance:
-			return <EditAbilityDistance data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAbilityDistance data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AddOn:
-			return <EditAddOn data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAddOn data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AncestryFeatureChoice:
-			return <EditAncestryFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditAncestryFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Bonus:
-			return <EditBonus data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditBonus data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.CharacteristicBonus:
-			return <EditCharacteristicBonus data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditCharacteristicBonus data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Choice:
-			return <EditChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ClassAbility:
-			return <EditClassAbility data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditClassAbility data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ConditionImmunity:
-			return <EditConditionImmunity data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditConditionImmunity data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.DamageModifier:
-			return <EditDamageModifier data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditDamageModifier data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Domain:
-			return <EditDomain data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditDomain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.DomainFeature:
-			return <EditDomainFeature data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditDomainFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Fixture:
-			return <EditFixture data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditFixture data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResource:
-			return <EditHeroicResource data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditHeroicResource data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResourceGain:
-			return <EditHeroicResourceGain data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditHeroicResourceGain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ItemChoice:
-			return <EditItemChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditItemChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Kit:
-			return <EditKit data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditKit data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Language:
-			return <EditLanguage data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditLanguage data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.LanguageChoice:
-			return <EditLanguageChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditLanguageChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Malice:
-			return <EditMalice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditMalice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.MaliceAbility:
-			return <EditMaliceAbility data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditMaliceAbility data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.MovementMode:
-			return <EditMovementMode data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditMovementMode data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Multiple:
-			return <EditMultiple data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditMultiple data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Package:
-			return <EditPackage data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditPackage data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.PackageContent:
-			return <EditPackageContent data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditPackageContent data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Perk:
-			return <EditPerk data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditPerk data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Proficiency:
-			return <EditProficiency data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditProficiency data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SaveThreshold:
-			return <EditSaveThreshold data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSaveThreshold data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Size:
-			return <EditSize data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSize data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
-			return <EditSkillChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSkillChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Speed:
-			return <EditSpeed data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSpeed data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Summon:
-			return <EditSummon data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSummon data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonChoice:
-			return <EditSummonChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSummonChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchOptions:
-			return <EditSwitchOptions data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSwitchOptions data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchValue:
-			return <EditSwitchValue data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditSwitchValue data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TaggedFeature:
-			return <EditTaggedFeature data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditTaggedFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TaggedFeatureChoice:
-			return <EditTaggedFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditTaggedFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TitleChoice:
-			return <EditTitleChoice data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditTitleChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Toggle:
-			return <EditToggle data={props.feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <EditToggle data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 	}
 
 	return null;
@@ -243,46 +240,45 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureData) => void;
 }
 
 export const ConfigFeature = (props: ConfigProps) => {
 	switch (props.feature.type) {
 		case FeatureType.AncestryChoice:
-			return <ConfigAncestryChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigAncestryChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AncestryFeatureChoice:
-			return <ConfigAncestryFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigAncestryFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Choice:
-			return <ConfigChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ClassAbility:
-			return <ConfigClassAbility data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigClassAbility data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Companion:
-			return <ConfigCompanion data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigCompanion data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Domain:
-			return <ConfigDomain data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigDomain data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.DomainFeature:
-			return <ConfigDomainFeature data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigDomainFeature data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ItemChoice:
-			return <ConfigItemChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigItemChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Kit:
-			return <ConfigKit data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigKit data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.LanguageChoice:
-			return <ConfigLanguageChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigLanguageChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Perk:
-			return <ConfigPerk data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigPerk data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Retainer:
-			return <ConfigRetainer data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigRetainer data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
-			return <ConfigSkillChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigSkillChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonChoice:
-			return <ConfigSummonChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigSummonChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TaggedFeatureChoice:
-			return <ConfigTaggedFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigTaggedFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TitleChoice:
-			return <ConfigTitleChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigTitleChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Toggle:
-			return <ConfigToggle data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={props.setData} />;
+			return <ConfigToggle data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 	}
 
 	return null;

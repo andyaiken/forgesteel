@@ -5,7 +5,6 @@ import { AppHeader } from '@/components/panels/app-header/app-header';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Options } from '@/models/options';
 import { PatreonLogic } from '@/logic/patreon-logic';
 import { PatreonService } from '@/services/patreon-service';
 import { PatreonSession } from '@/models/patreon-connection';
@@ -19,7 +18,6 @@ import './auth-page.scss';
 
 interface Props {
 	connectionSettings: ConnectionSettings;
-	options: Options;
 	params: FooterParams;
 	setConnectionSettings: (settings: ConnectionSettings) => void
 }
@@ -142,7 +140,6 @@ export const AuthPage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

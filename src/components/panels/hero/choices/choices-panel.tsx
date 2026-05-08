@@ -12,17 +12,16 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { Kit } from '@/models/kit';
-import { Options } from '@/models/options';
 import { ProjectLogic } from '@/logic/project-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
+import { useOptions } from '@/contexts/data-context';
 
 import './choices-panel.scss';
 
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelectAncestry: (ancestry: Ancestry) => void;
 	onSelectCulture: (culture: Culture) => void;
 	onSelectCareer: (career: Career) => void;
@@ -35,12 +34,13 @@ interface Props {
 }
 
 export const ChoicesPanel = (props: Props) => {
+	const options = useOptions();
 	let incitingIncident: Element | null = null;
 	if (props.hero.career) {
 		incitingIncident = props.hero.career.incitingIncidents.selected;
 	}
 
-	const useRows = props.options.compactView;
+	const useRows = options.compactView;
 
 	return (
 		<ErrorBoundary>

@@ -6,7 +6,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -16,7 +15,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoAbilityCost = (props: InfoProps) => {
@@ -28,7 +26,6 @@ export const InfoAbilityCost = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureAbilityCostData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAbilityCostData) => void;
 }
 

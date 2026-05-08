@@ -1,7 +1,6 @@
 import { Space, Tag } from 'antd';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 
 import pbds from '@/assets/powered-by-draw-steel.png';
@@ -10,7 +9,6 @@ import pkg from '../../../../package.json';
 import './about-modal.scss';
 
 interface Props {
-	options: Options;
 	onClose: () => void;
 }
 

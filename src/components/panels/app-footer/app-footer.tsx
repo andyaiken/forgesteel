@@ -9,6 +9,7 @@ import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import shield from '@/assets/shield.png';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './app-footer.scss';
@@ -25,7 +26,6 @@ export interface FooterParams {
 
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
-	options: Options;
 	params: FooterParams;
 }
 
@@ -33,9 +33,10 @@ export const AppFooter = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(false);
+	const options = useOptions();
 
 	const onOK = () => {
-		props.params.setOptions({ ...props.options, cookieConsent: true });
+		props.params.setOptions({ ...options, cookieConsent: true });
 		setShowSidebar(false);
 	};
 
@@ -78,7 +79,7 @@ export const AppFooter = (props: Props) => {
 						</Flex>
 				}
 				{
-					!props.options.cookieConsent ?
+					!options.cookieConsent ?
 						<ButtonGroup
 							buttons={[
 								{ type: 'button', label: 'Cookies', onClick: () => setShowSidebar(true) }

@@ -1,7 +1,6 @@
 import { Feature, FeatureMovementModeData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -13,7 +12,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoMovementMode = (props: InfoProps) => {
@@ -27,7 +25,6 @@ export const InfoMovementMode = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureMovementModeData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureMovementModeData) => void;
 }
 

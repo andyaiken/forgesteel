@@ -15,7 +15,6 @@ import { ItemType } from '@/enums/item-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
@@ -31,7 +30,6 @@ import './item-panel.scss';
 interface Props {
 	item: Item;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	wielder?: Hero;
 	mode?: PanelMode;
 	style?: CSSProperties;
@@ -92,7 +90,6 @@ export const ItemPanel = (props: Props) => {
 											<FeaturePanel
 												key={f.id}
 												feature={f}
-												options={props.options}
 												mode={PanelMode.Full}
 											/>
 										))
@@ -185,7 +182,7 @@ export const ItemPanel = (props: Props) => {
 					{
 						options.map(f => (
 							<SelectablePanel key={f.feature.id} onSelect={() => addImbuement(f)}>
-								<FeaturePanel feature={f.feature} options={props.options} hero={props.wielder} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								<FeaturePanel feature={f.feature} hero={props.wielder} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							</SelectablePanel>
 						))
 					}
@@ -217,7 +214,6 @@ export const ItemPanel = (props: Props) => {
 							<FeatureConfigPanel
 								key={f.id}
 								feature={f}
-								options={props.options}
 								hero={props.wielder!}
 								sourcebooks={props.sourcebooks}
 								setData={setFeatureData}

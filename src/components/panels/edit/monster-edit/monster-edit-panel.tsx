@@ -28,7 +28,6 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
@@ -38,6 +37,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './monster-edit-panel.scss';
@@ -46,7 +46,6 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (monster: Monster) => void;
 	onSelectMonster?: (monster: Monster, group: MonsterGroup) => void;
@@ -58,6 +57,7 @@ export const MonsterEditPanel = (props: Props) => {
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
+	const options = useOptions();
 
 	const setEncounterValue = (value: number) => {
 		const copy = Utils.copy(monster);
@@ -394,7 +394,6 @@ export const MonsterEditPanel = (props: Props) => {
 					features={monster.features}
 					allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onChange={onChange}
 				/>
 			</Space>
@@ -470,7 +469,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level4}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 4)}
 							/>
 						</Expander>
@@ -486,7 +484,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level7}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 7)}
 							/>
 						</Expander>
@@ -502,7 +499,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level10}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 10)}
 							/>
 						</Expander>
@@ -514,7 +510,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getSimilarMonsters = () => {
 		const monsters = SourcebookLogic
-			.getSimilarMonsters(props.sourcebooks, monster, props.options)
+			.getSimilarMonsters(props.sourcebooks, monster, options)
 			.filter(m => !hiddenMonsterIDs.includes(m.id));
 
 		scratchpadMonsters
@@ -919,7 +915,7 @@ export const MonsterEditPanel = (props: Props) => {
 								<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 							]}
 						>
-							<FeaturePanel feature={s.feature} options={props.options} mode={PanelMode.Full} />
+							<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
 						</Expander>
 					))
 				}
@@ -997,7 +993,6 @@ export const MonsterEditPanel = (props: Props) => {
 									monster={m}
 									monsterGroup={monsterGroup}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 								/>
 							</SelectablePanel>
 						);
@@ -1012,7 +1007,6 @@ export const MonsterEditPanel = (props: Props) => {
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelect={monster => {
 							const copy = Utils.copy(scratchpadMonsters) as Monster[];
 							copy.push(monster);
@@ -1089,7 +1083,6 @@ export const MonsterEditPanel = (props: Props) => {
 												<MonsterPanel
 													monster={monster}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

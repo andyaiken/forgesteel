@@ -24,13 +24,13 @@ import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { WarehouseActionsPanel } from '@/components/panels/connection-settings/warehouse-actions-panel';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
 import './settings-modal.scss';
 
 interface Props {
-	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
@@ -41,7 +41,8 @@ interface Props {
 
 export const SettingsModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
-	const [ options, setOptions ] = useState<Options>(Utils.copy(props.options));
+	// const options = useOptions();
+	const [ options, setOptions ] = useState<Options>(Utils.copy(useOptions()));
 	const [ page, setPage ] = useState<string>('Settings');
 	const [ standardAbilitiesMode, setStandardAbilitiesMode ] = useState<string>(() => {
 		if (options.shownStandardAbilities.length === 0) {

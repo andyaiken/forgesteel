@@ -4,7 +4,6 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -16,19 +15,17 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoTaggedFeature = (props: InfoProps) => {
 	return (
-		<FeaturePanel key={props.data.feature.id} feature={props.data.feature} options={props.options} />
+		<FeaturePanel key={props.data.feature.id} feature={props.data.feature} />
 	);
 };
 
 interface EditProps {
 	data: FeatureTaggedFeatureData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureTaggedFeatureData) => void;
 }
 
@@ -63,7 +60,6 @@ export const EditTaggedFeature = (props: EditProps) => {
 				<FeatureEditPanel
 					feature={data.feature}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onChange={setTaggedFeature}
 				/>
 			</Expander>

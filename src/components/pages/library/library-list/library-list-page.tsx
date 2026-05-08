@@ -72,6 +72,7 @@ import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -82,7 +83,6 @@ import './library-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	params: FooterParams;
 	showSourcebooks: () => void;
 	showMonster: (monster: Monster) => void;
@@ -119,6 +119,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? Collections.sort(props.sourcebooks, sb => sb.name).filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -136,7 +137,7 @@ export const LibraryListPage = (props: Props) => {
 		let list: Element[] = [];
 
 		const getSourcebooks = () => {
-			return props.sourcebooks.filter(sb => !props.hiddenSourcebookIDs.includes(sb.id));
+			return props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
 		};
 
 		switch (type) {

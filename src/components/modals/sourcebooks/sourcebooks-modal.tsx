@@ -1,5 +1,6 @@
 import { Button, Drawer, Flex, Segmented, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { useDataManager, useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -22,30 +23,30 @@ import './sourcebooks-modal.scss';
 interface Props {
 	officialSourcebooks: Sourcebook[];
 	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	heroes: Hero[];
 	onClose: () => void;
 	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
 	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
-	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
 export const SourcebooksModal = (props: Props) => {
 	const [ page, setPage ] = useState<SourcebookType>(SourcebookType.Official);
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(props.hiddenSourcebookIDs));
+	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(useHiddenSourcebookIDs()));
+
+	const dataManager = useDataManager();
 
 	const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 		if (visible) {
 			const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
 			setHiddenSourcebookIDs(copy);
-			props.onHiddenSourcebookIDsChange(copy);
+			dataManager.saveHiddenSourcebookIDs(copy);
 		} else {
 			const copy = Utils.copy(hiddenSourcebookIDs);
 			copy.push(sourcebook.id);
 			setHiddenSourcebookIDs(copy);
-			props.onHiddenSourcebookIDsChange(copy);
+			dataManager.saveHiddenSourcebookIDs(copy);
 		}
 	};
 

@@ -111,7 +111,6 @@ interface Props {
 	heroes: Hero[];
 	session: Session;
 	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }
@@ -123,7 +122,6 @@ export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ session, setSession ] = useState<Session>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const options = useOptions();
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
@@ -240,22 +238,6 @@ export const Main = (props: Props) => {
 					placement: 'top'
 				});
 			});
-	};
-
-	const persistHiddenSourcebookIDs = (ids: string[]) => {
-		return dataService
-			.saveHiddenSourcebookIDs(ids)
-			.then(
-				setHiddenSourcebookIDs,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving hidden sourcebooks',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			);
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
@@ -1785,11 +1767,9 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				officialSourcebooks={SourcebookLogic.getSourcebooks()}
 				homebrewSourcebooks={homebrewSourcebooks}
-				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
 				onHomebrewSourcebookChange={persistHomebrewSourcebook}
 				onHomebrewSourcebookDelete={deleteHomebrewSourcebook}
-				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 			/>
 		);
 	};
@@ -1944,7 +1924,6 @@ export const Main = (props: Props) => {
 								<LibraryListPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									params={footerParams}
 									showSourcebooks={showSourcebooks}
 									showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}

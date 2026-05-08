@@ -10,7 +10,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroOverviewPanel } from '@/components/panels/hero-overview/hero-overview-panel';
-import { Options } from '@/models/options';
 import { PregenData } from '@/data/pregen-data';
 import { PregenInfo } from '@/components/panels/token/token';
 import { PregenLogic } from '@/logic/pregen-logic';
@@ -20,6 +19,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
@@ -29,7 +29,6 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: HeroOverview[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
@@ -44,6 +43,7 @@ export const HeroListPage = (props: Props) => {
 	const [ currentTab, setCurrentTab ] = useState<string>(folder ?? '');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	useTitle('Heroes');
+	const options = useOptions();
 
 	if (folder !== previousTab) {
 		setCurrentTab(folder ?? '');
@@ -135,7 +135,7 @@ export const HeroListPage = (props: Props) => {
 															className='container-button'
 															block={true}
 															onClick={() => {
-																const hero = PregenLogic.pregenToHero(p, props.sourcebooks, props.options);
+																const hero = PregenLogic.pregenToHero(p, props.sourcebooks, options);
 																props.importHero(hero, currentTab);
 															}}
 														>
@@ -173,7 +173,6 @@ export const HeroListPage = (props: Props) => {
 				<AppFooter
 					page='heroes'
 					params={props.params}
-					options={props.options}
 				/>
 			</div>
 		</ErrorBoundary>

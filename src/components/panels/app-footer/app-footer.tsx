@@ -1,6 +1,7 @@
 import { BookOutlined, DatabaseFilled, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined, WarningFilled } from '@ant-design/icons';
 import { Button, Divider, Drawer, Flex, Space, Tag } from 'antd';
 import { ButtonConfig, ButtonGroup } from '@/components/controls/button-group/button-group';
+import { useDataManager, useOptions } from '@/contexts/data-context';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Modal } from '@/components/modals/modal/modal';
@@ -9,7 +10,6 @@ import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import shield from '@/assets/shield.png';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './app-footer.scss';
@@ -20,7 +20,6 @@ export interface FooterParams {
 	showAbout: () => void;
 	showSettings: () => void;
 	showErrors: () => void;
-	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
 }
 
@@ -34,9 +33,13 @@ export const AppFooter = (props: Props) => {
 	const navigation = useNavigation();
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(false);
 	const options = useOptions();
+	const dataManager = useDataManager();
+	const saveOptions = (options: Options) => {
+		dataManager.saveOptions(options);
+	};
 
 	const onOK = () => {
-		props.params.setOptions({ ...options, cookieConsent: true });
+		saveOptions({ ...options, cookieConsent: true });
 		setShowSidebar(false);
 	};
 

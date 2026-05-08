@@ -1,4 +1,5 @@
 import { DataLoader } from '@/components/panels/data-loader/data-loader';
+import { DataManagerProvider } from './contexts/data-context';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HashRouter } from 'react-router';
 import { Main } from '@/components/main/main.tsx';
@@ -30,15 +31,19 @@ root.render(
 						<ErrorBoundary>
 							<StrictMode>
 								<HashRouter>
-									<Main
-										heroes={data.heroes}
-										homebrewSourcebooks={data.homebrewSourcebooks}
-										hiddenSourcebookIDs={data.hiddenSourcebookIDs}
-										session={data.session}
-										options={data.options}
-										connectionSettings={data.connectionSettings}
+									<DataManagerProvider
 										dataService={data.service}
-									/>
+										initialOptions={data.options}
+									>
+										<Main
+											heroes={data.heroes}
+											homebrewSourcebooks={data.homebrewSourcebooks}
+											hiddenSourcebookIDs={data.hiddenSourcebookIDs}
+											session={data.session}
+											connectionSettings={data.connectionSettings}
+											dataService={data.service}
+										/>
+									</DataManagerProvider>
 								</HashRouter>
 							</StrictMode>
 						</ErrorBoundary>

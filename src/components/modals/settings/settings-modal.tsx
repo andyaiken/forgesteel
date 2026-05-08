@@ -1,5 +1,6 @@
 import { Alert, Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
+import { useDataManager, useOptions } from '@/contexts/data-context';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -24,7 +25,6 @@ import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { WarehouseActionsPanel } from '@/components/panels/connection-settings/warehouse-actions-panel';
-import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -32,7 +32,6 @@ import './settings-modal.scss';
 
 interface Props {
 	heroes: Hero[];
-	setOptions: (options: Options) => void;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 	setConnectionSettings: (settings: ConnectionSettings) => void
@@ -41,7 +40,6 @@ interface Props {
 
 export const SettingsModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
-	// const options = useOptions();
 	const [ options, setOptions ] = useState<Options>(Utils.copy(useOptions()));
 	const [ page, setPage ] = useState<string>('Settings');
 	const [ standardAbilitiesMode, setStandardAbilitiesMode ] = useState<string>(() => {
@@ -65,6 +63,11 @@ export const SettingsModal = (props: Props) => {
 		setConnectionSettings(copy);
 		props.setConnectionSettings(copy);
 		setReloadNeeded(true);
+	};
+
+	const dataManager = useDataManager();
+	const saveOptions = (options: Options) => {
+		dataManager.saveOptions(options);
 	};
 
 	const getAppearance = () => {
@@ -91,14 +94,14 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.xpPerLevel = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setShownStandardAbilitiesValue = (value: string) => {
@@ -172,35 +175,35 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.showSkillsInGroups = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setShowSources = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showSources = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setSinglePage = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.singlePage = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setCompactView = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.compactView = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setAbilityWidth = (value: PanelWidth) => {
 			const copy = Utils.copy(options);
 			copy.abilityWidth = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		return (
@@ -241,21 +244,21 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.includePlayState = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setShowPowerRollCalculation = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showPowerRollCalculation = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
 			const copy = Utils.copy(options);
 			copy.featuresInclude = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		return (
@@ -301,28 +304,28 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.classicSheetPageSize = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setPageOrientation = (value: 'portrait' | 'landscape') => {
 			const copy = Utils.copy(options);
 			copy.pageOrientation = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setColorSheet = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.colorSheet = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setColorScheme = (value: 'community' | 'classic') => {
 			const copy = Utils.copy(options);
 			copy.colorScheme = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
@@ -353,14 +356,14 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.sheetTextColor = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setDebugClassicSheet = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.debugClassicSheet = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		return (
@@ -439,28 +442,28 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.similarLevel = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setSimilarRole = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.similarRole = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setSimilarOrganization = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.similarOrganization = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setSimilarSize = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.similarSize = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		return (
@@ -481,14 +484,14 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.party = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setShowDefeatedCombatants = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.showDefeatedCombatants = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const parties = Collections
@@ -527,28 +530,28 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.heroParty = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setHeroCount = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.heroCount = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setHeroLevel = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.heroLevel = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setHeroVictories = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.heroVictories = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const parties = Collections
@@ -591,14 +594,14 @@ export const SettingsModal = (props: Props) => {
 			const copy = Utils.copy(options);
 			copy.gridSize = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		const setPlayerGridSize = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.playerGridSize = value;
 			setOptions(copy);
-			props.setOptions(copy);
+			saveOptions(copy);
 		};
 
 		return (

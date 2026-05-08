@@ -55,6 +55,7 @@ export const DataLoader = (props: Props) => {
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ dataSource, setDataSource ] = useState<FSDataSource>(undefined);
 	const [ error, setError ] = useState<string | null>(null);
+	const isSmall = useIsSmall();
 
 	async function initializeConnectionSettings() {
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
@@ -215,7 +216,6 @@ export const DataLoader = (props: Props) => {
 
 					const options = results[4] as Options;
 					OptionsUpdateLogic.updateOptions(options);
-					const isSmall = useIsSmall();
 					if (isSmall) {
 						options.compactView = true;
 					}

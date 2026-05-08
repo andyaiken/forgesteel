@@ -1,4 +1,5 @@
 import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Spin, Tag } from 'antd';
+import { useDataManager, useOptions } from '@/contexts/data-context';
 import { useEffect, useMemo, useState } from 'react';
 import { AbilityData } from '@/data/ability-data';
 import { Career } from '@/models/career';
@@ -20,7 +21,6 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 
 import './hero-sheet-page.scss';
@@ -28,7 +28,6 @@ import './hero-sheet-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	setOptions: (options: Options) => void;
 }
 
 export const HeroSheetPreviewPage = (props: Props) => {
@@ -42,6 +41,11 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
 	const [ spinning, setSpinning ] = useState(false);
 	const [ previewOptions, setPreviewOptions ] = useState<'html' | 'canvas'>('html');
+
+	const dataManager = useDataManager();
+	const saveOptions = (options: Options) => {
+		dataManager.saveOptions(options);
+	};
 
 	const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
 		setDrawColor(newColor);
@@ -70,7 +74,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const setSheetTextColor = (value: 'light' | 'default' | 'dark') => {
 		const copy = Utils.copy(options);
 		copy.sheetTextColor = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const showDrawer = () => {
@@ -84,37 +88,37 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const setIncludePlayState = (value: boolean) => {
 		const copy = Utils.copy(options);
 		copy.includePlayState = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const setColorSheet = (value: boolean) => {
 		const copy = Utils.copy(options);
 		copy.colorSheet = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
 		const copy = Utils.copy(options);
 		copy.featuresInclude = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const setClassicSheetPageSize = (value: SheetPageSize) => {
 		const copy = Utils.copy(options);
 		copy.classicSheetPageSize = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const setPageOrientation = (value: 'portrait' | 'landscape') => {
 		const copy = Utils.copy(options);
 		copy.pageOrientation = value;
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const includedStandardAbilitiesChanged = (value: string | string[]) => {
 		const copy = Utils.copy(options);
 		copy.shownStandardAbilities = [ value ].flat(1);
-		props.setOptions(copy);
+		saveOptions(copy);
 	};
 
 	const standardAbilityOptions: SelectProps['options'] = [];

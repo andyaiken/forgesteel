@@ -1,6 +1,5 @@
 import { Feature, FeatureCompanion, FeatureRetainer } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
-import { OptionsActionKind, useOptions, useOptionsDispatch } from '@/contexts/data-context';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
@@ -73,7 +72,6 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { Montage } from '@/models/montage';
 import { Negotiation } from '@/models/negotiation';
-import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
@@ -104,6 +102,7 @@ import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
@@ -113,7 +112,6 @@ interface Props {
 	session: Session;
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
-	options: Options;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }
@@ -258,18 +256,6 @@ export const Main = (props: Props) => {
 					});
 				}
 			);
-	};
-
-	const optionsDispatch = useOptionsDispatch();
-	const persistOptions = (options: Options) => {
-		return dataService
-			.saveOptions(options)
-			.then(options => {
-				optionsDispatch({
-					type: OptionsActionKind.UPDATE,
-					payload: options
-				});
-			});
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
@@ -1507,7 +1493,6 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<SettingsModal
 				heroes={heroes}
-				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
 				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
@@ -1842,7 +1827,6 @@ export const Main = (props: Props) => {
 		showAbout: showAbout,
 		showSettings: showSettings,
 		showErrors: showErrors,
-		setOptions: persistOptions,
 		connectionSettings: connectionSettings
 	};
 
@@ -1878,7 +1862,6 @@ export const Main = (props: Props) => {
 								<HeroListPage
 									heroes={heroes.map(HeroLogic.createOverview)}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={props.options}
 									params={footerParams}
 									addHero={newHero}
 									importHero={importHero}
@@ -1946,7 +1929,6 @@ export const Main = (props: Props) => {
 								<HeroSheetPreviewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									setOptions={persistOptions}
 								/>
 							}
 						/>

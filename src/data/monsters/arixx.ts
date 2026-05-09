@@ -150,7 +150,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								bonus: 3,
 								tier1: '4 acid damage',
 								tier2: '6 acid damage',
-								tier3: '7 acid damage'
+								tier3: '7 acid damage; prone'
 							})),
 							FactoryLogic.createAbilitySectionText('The ground beneath each target is covered in burning acid until the end of the encounter. Any enemy who enters an affected space for the first time in a round or starts their turn there takes 2 acid damage.')
 						]

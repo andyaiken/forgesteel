@@ -129,7 +129,7 @@ export class HeroLogic {
 		while (features.some(f => f.feature.type === FeatureType.SwitchOptions)) {
 			const switchFeatures = features.filter(f => f.feature.type === FeatureType.SwitchOptions);
 			const switchFeatureIDs = switchFeatures.map(sf => sf.feature.id);
-			features = features.filter(f => switchFeatureIDs.includes(f.feature.id));
+			features = features.filter(f => !switchFeatureIDs.includes(f.feature.id));
 
 			const switchValues = features.filter(f => f.feature.type === FeatureType.SwitchValue).map(f => f.feature) as FeatureSwitchValue[];
 			const valueMap = switchValues.reduce((map, sv) => {

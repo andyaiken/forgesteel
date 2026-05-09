@@ -1,10 +1,11 @@
+import { ButtonConfig, ButtonGroup, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { CheckCircleOutlined, CopyOutlined, WarningOutlined } from '@ant-design/icons';
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { Drawer, Tabs, notification } from 'antd';
 import { ReactNode, useState } from 'react';
-import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
+import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -132,33 +133,34 @@ export const ClocktowerScriptPanel = (props: Props) => {
 	};
 
 	const issues = ClocktowerLogic.validate(props.script);
+	const buttons: (ButtonConfig | DropdownConfig)[] = [];
+	if (issues.length > 0) {
+		buttons.push({
+			type: 'dropdown',
+			icon: issues.length === 0 ? <CheckCircleOutlined /> : <WarningOutlined />,
+			disabled: issues.length === 0,
+			popover: (
+				<>
+					{issues.map((issue, n) => (<div key={n} className='ds-text'>{issue}</div>))}
+				</>
+			)
+		});
+	}
+	buttons.push({
+		type: 'button',
+		label: 'Copy',
+		icon: <CopyOutlined />,
+		onClick: copyToClipboard
+	});
 
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-script-panel'>
 				<HeaderText
 					level={1}
+					tags={props.script.type === ClocktowerScriptType.Teensyville ? [ 'Teensyville' ] : []}
 					extra={
-						<ButtonGroup
-							buttons={[
-								{
-									type: 'dropdown',
-									icon: issues.length === 0 ? <CheckCircleOutlined /> : <WarningOutlined />,
-									disabled: issues.length === 0,
-									popover: (
-										<>
-											{issues.map((issue, n) => (<div key={n} className='ds-text'>{issue}</div>))}
-										</>
-									)
-								},
-								{
-									type: 'button',
-									label: 'Copy',
-									icon: <CopyOutlined />,
-									onClick: copyToClipboard
-								}
-							]}
-						/>
+						<ButtonGroup buttons={buttons} />
 					}
 				>
 					{props.script.meta.name}
@@ -186,7 +188,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 			</div>
 			<Drawer open={!!selectedCharacter} onClose={() => setSelectedCharacter(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedCharacter ? <ClocktowerCharacterPanel character={selectedCharacter} /> : null}
+					content={selectedCharacter ? <ClocktowerCharacterPanel character={selectedCharacter} script={props.script} /> : null}
 					onClose={() => setSelectedCharacter(null)}
 				/>
 			</Drawer>

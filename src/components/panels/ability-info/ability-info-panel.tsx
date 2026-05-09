@@ -56,14 +56,16 @@ export const AbilityInfoPanel = (props: Props) => {
 		return monogram;
 	};
 
-	const type = FormatLogic.getAbilityType(props.ability.type);
 	const distance = props.ability.distance.map(d => AbilityLogic.getDistance(d, props.ability, props.hero)).join(' or ');
 	const monogram = getMonogram();
 
 	return (
 		<ErrorBoundary>
 			<div className='ability-info-panel'>
-				<div className='ds-text compact-text bold-text'>{type}</div>
+				{monogram ? <SashPanel monogram={monogram} /> : null}
+				<div className='ds-text compact-text bold-text' style={{ position: 'relative', zIndex: '10' }}>
+					{FormatLogic.getAbilityType(props.ability.type)}
+				</div>
 				{
 					distance ?
 						<Field
@@ -91,7 +93,6 @@ export const AbilityInfoPanel = (props: Props) => {
 						/>
 						: null
 				}
-				{monogram ? <SashPanel monogram={monogram} /> : null}
 			</div>
 		</ErrorBoundary>
 	);

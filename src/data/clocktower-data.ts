@@ -11,8 +11,8 @@ const agent: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'I count the missing as carefully as the present.',
-		ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a yes/no question; if that role is in play, the Storyteller will answer truthfully.',
+		flavor: 'If you pretend to be enough people, eventually someone will tell the truth.',
+		ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a yes/no question; if that role is in play, they will answer truthfully.',
 		otherNightReminder: 'Ask a question.',
 		reminders: [
 			'True info',
@@ -33,7 +33,7 @@ const censor: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Speak not tonight. I have judged you wanting.',
+		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
 		ability: 'Each night*, choose a player; if they are evil, they cannot use their ability tonight.',
 		otherNightReminder: 'Choose a player to judge.',
 		reminders: [
@@ -54,7 +54,7 @@ const conduit: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Through me, no corruption flows; faith is our armour.',
+		flavor: 'Faith is my armour, and corruption breaks upon me like waves on stone.',
 		ability: 'Each night, choose a player; until dusk, they are not drunk or poisoned, and cannot be made drunk or poisoned.',
 		firstNightReminder: 'Choose a player to protect.',
 		otherNightReminder: 'Choose a player to protect.',
@@ -76,7 +76,7 @@ const elementalist: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Strike at me, and you will find that there are delightful consequences.',
+		flavor: 'Strike at me, and you will find that the consequences are delightful.',
 		ability: 'The first time you would be executed, your nominator dies instead.',
 		reminders: [
 			'Ability used'
@@ -97,7 +97,7 @@ const fury: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'I’m not afraid to burn with you.',
-		ability: 'Once per game, at night*, choose a pair of adjacent players: if you chose the Demon, you die; otherwise, one of them dies.',
+		ability: 'Once per game, at night*, choose a pair of adjacent players: if either is the Demon, you die; otherwise, one of them dies.',
 		otherNightReminder: 'Once per game, choose 2 players.',
 		reminders: [
 			'Ability used'
@@ -117,7 +117,7 @@ const highElf: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'The truth is merely a matter of careful observation.',
+		flavor: 'Patterns emerge for those with the patience to see them.',
 		ability: 'Each night, you learn two Townsfolk roles, at least one of which is in play.',
 		firstNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
 		otherNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
@@ -169,7 +169,7 @@ const revenant: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'I have died before. This is merely an inconvenience.',
+		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
 		ability: 'If you die, you come back to life at night with a dead Townsfolk’s ability instead of this ability.',
 		otherNightReminder: 'If dead, resurrect.'
 	},
@@ -210,7 +210,7 @@ const tactician: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'With enough focus, every death can be a message. I decide who reads that message.',
+		flavor: 'Every corpse is trying to tell us something.',
 		ability: 'Each night*, choose two players: if one dies tonight, the other may visit the Storyteller tomorrow to learn the dead player’s role and alignment.',
 		otherNightReminder: 'Choose 2 players to mark.',
 		reminders: [
@@ -232,15 +232,15 @@ const talent: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Give me a moment, and I will be whoever we need.',
-		ability: 'You learn two not-in-play roles; once per game, you may publicly claim one and immediately use its ability; you then lose the ability.',
+		flavor: 'Give me but a moment, and I will become whoever we need.',
+		ability: 'You learn two not-in-play roles; once per game, claim one and immediately use its ability.',
 		firstNightReminder: 'Learn 2 not-in-play roles.',
 		reminders: [
 			'Ability used'
 		]
 	},
 	details: {
-		description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately use its ability as if you were that role. This use is still affected by drunkenness or poisoning. After using this ability, you lose it permanently.'
+		description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately use its ability as if you were that role. This use is still affected by drunkenness or poisoning.'
 	}
 };
 
@@ -253,7 +253,7 @@ const troubadour: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Every villain has a name. I will sing them all.',
+		flavor: 'Every villain thinks they’ll be forgotten, but each one has a name, and I will sing them all.',
 		ability: 'Each night, you learn two Minion roles, at least one of which is in play.',
 		firstNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
 		otherNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
@@ -304,7 +304,7 @@ const antihero: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-minion.png'
 		],
 		team: ClocktowerTeam.Outsider,
-		flavor: 'Push me, and I will become what you feared.',
+		flavor: 'Don’t make me choose a side. If you push me, I will become what you feared.',
 		ability: 'Each time you are nominated, you change alignment.'
 	},
 	details: {
@@ -338,7 +338,7 @@ const devil: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-minion.png'
 		],
 		team: ClocktowerTeam.Outsider,
-		flavor: 'They told me I was one of them. I believed them.',
+		flavor: 'They handed me a mask and called it destiny. They told me I was one of them. I believed them.',
 		ability: 'You think you are a minion, but you are not. The demon knows who you are. [+1 Outsider, -1 Minion]',
 		firstNightReminder: 'The demon learns who you are.',
 		remindersGlobal: [
@@ -391,8 +391,8 @@ const angulotl: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-outsider.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'The poison is already in you. Can you not feel it?',
-		ability: 'Each night, choose a player (if 5 or more good players live, choose 2 players): they are poisoned tonight and tomorrow day. Information a drunk or poisoned player learns is incorrect.',
+		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
+		ability: 'Each night, choose a player (choose 2 if 5 or more good players live): they are poisoned until dusk tomorrow. Drunk or poisoned players get false info.',
 		firstNightReminder: 'Choose player(s) to poison.',
 		otherNightReminder: 'Choose player(s) to poison.',
 		reminders: [
@@ -414,7 +414,7 @@ const duskElf: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-outsider.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'The magics of Equinox can hide almost anything.',
+		flavor: 'The magics of Equinox can hide almost anything; twilight is generous with second chances.',
 		ability: 'If there are six or more players alive and your Demon is executed for the first time, they survive but register as dead. [You are the only Minion]',
 		reminders: [
 			'Is alive'
@@ -435,7 +435,7 @@ const lightbender: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-outsider.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'The blade falls - just not where you aimed it.',
+		flavor: 'Your bhe blade will fall - just not where you aimed it.',
 		ability: 'If you would be executed, one of your good neighbours is executed instead.'
 	},
 	details: {
@@ -452,7 +452,7 @@ const rival: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-outsider.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'I’m exactly like you… except I’m just a little better at it.',
+		flavor: 'I’m exactly like you… except better.',
 		ability: 'You have the ability of, and register as, an in-play Townsfolk. The player with this role is poisoned.',
 		firstNightReminder: 'Gain an in-play Townsfolk ability.',
 		reminders: [
@@ -482,7 +482,7 @@ const aurumvas: ClocktowerCharacter = {
 		setup: true
 	},
 	details: {
-		description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you chooose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team), and you cannot then choose to recruit again the next night.'
+		description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you choose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team), and you cannot then choose to recruit again the next night.'
 	}
 };
 
@@ -496,7 +496,7 @@ const blightPhage: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Death is not the end of your service. You can be repurposed.',
-		ability: 'Each night*, choose a player: they die. Once per game, you may bring a dead minion back as a different minion.',
+		ability: 'Each night*, choose a player: they die. Once per game, you may bring a dead minion back as a minion of your choice.',
 		otherNightReminder: 'Choose a player; they die. Once per game, resurrect a Minion.',
 		reminders: [
 			'Killed',
@@ -504,7 +504,7 @@ const blightPhage: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'Once per game, you may resurrect a dead Minion as a different Minion. The new Minion gains their new ability immediately. This happens after deaths but before information is given.'
+		description: 'Once per game, you may resurrect a dead Minion as any Minion of your choice. The new Minion gains their new ability immediately. This happens after deaths but before information is given.'
 	}
 };
 
@@ -538,15 +538,15 @@ const torlas: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-townsfolk.png'
 		],
 		team: ClocktowerTeam.Demon,
-		flavor: 'Strike at me if you must, but know that every action has a consequence. I merely decide who suffers it.',
-		ability: 'Each night*, choose a player: they die. Townsfolk abilities that target you instead target one of your Townsfolk neighbours. [+1 Outsider]',
+		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
+		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+1 Outsider]',
 		otherNightReminder: 'Choose a player; they die.',
 		reminders: [
 			'Killed'
 		]
 	},
 	details: {
-		description: 'When a Townsfolk ability targets you, it instead targets one of your living Townsfolk neighbours, chosen by the Storyteller. This does not affect non-Townsfolk abilities.'
+		description: 'When a Townsfolk ability targets you and only you, it instead targets your closest living Townsfolk neighbour (if there is a tie, the target is chosen by the Storyteller). This does not affect non-Townsfolk abilities or abilities that target more than one player.'
 	}
 };
 
@@ -564,6 +564,12 @@ const aristocrat: ClocktowerCharacter = {
 		ability: 'When you nominate, the nominee is drunk until dusk.',
 		reminders: [
 			'Drunk'
+		],
+		jinxes: [
+			{
+				id: 'antihero',
+				reason: 'If the Aristocrat nominates the Antihero, the Antihero is drunk immediately and does not switch alignment.'
+			}
 		]
 	},
 	details: {
@@ -581,7 +587,7 @@ const criminal: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Traveller,
-		flavor: 'You meant well. That is not what will happen.',
+		flavor: 'Intentions are fragile things… let me improve yours.',
 		ability: 'Each night, choose a player; until dusk, if they use an ability that targets another player, it targets a different player instead.',
 		firstNightReminder: 'Choose a player to redirect.',
 		otherNightReminder: 'Choose a player to redirect.',
@@ -604,7 +610,7 @@ const disciple: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Traveller,
-		flavor: 'Rise. Your purpose is not yet fulfilled.',
+		flavor: 'Rise. Your story is not yet finished.',
 		ability: 'Once per game, at night*, choose a dead player; they are resurrected, but if you are evil they become drunk.',
 		otherNightReminder: 'Once per game, resurrect a player.',
 		reminders: [
@@ -667,12 +673,12 @@ const voicelessTalker: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-demon.png'
 		],
 		team: ClocktowerTeam.Traveller,
-		flavor: 'Come and speak to me, and perhaps I will change your mind.',
+		flavor: 'Perhaps I can change your mind.',
 		ability: 'Each night*, choose two players; their roles (not alignments) are swapped and one becomes poisoned until dusk. You cannot nominate.',
 		otherNightReminder: 'Choose two players to switch.'
 	},
 	details: {
-		description: 'Each night, you swap the roles (but not alignments) of two players, then choose one of them to be poisoned until dusk. You cannot nominate, but you may still vote and speak.'
+		description: 'Each night, you swap the roles (but not alignments) of two players, then the Storyteller chooses one of them to be poisoned until dusk. You cannot nominate, but you may still vote and speak.'
 	}
 };
 
@@ -681,7 +687,7 @@ export class ClocktowerData {
 		type: ClocktowerScriptType.Standard,
 		meta: {
 			id: '_meta',
-			name: 'Draw Steel on the Clocktower',
+			name: 'Steel on the Clocktower',
 			author: 'Andy Aiken',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
@@ -765,7 +771,7 @@ export class ClocktowerData {
 		type: ClocktowerScriptType.Teensyville,
 		meta: {
 			id: '_meta',
-			name: 'Draw Steel on the Wristwatch',
+			name: 'Steel on the Wristwatch',
 			author: 'Andy Aiken',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [

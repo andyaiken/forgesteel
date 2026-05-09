@@ -23,6 +23,10 @@ export class ClocktowerLogic {
 		}
 	};
 
+	static getCharacter = (script: ClocktowerScript, id: string) => {
+		return script.characters.find(ch => ch.role.id === id) || null;
+	};
+
 	static getTeamCount = (script: ClocktowerScript, team: ClocktowerTeam) => {
 		return script.characters
 			.filter(ch => ch.role.team === team)
@@ -144,6 +148,14 @@ export class ClocktowerLogic {
 		if (!hasModification) {
 			issues.push('No outsider modification');
 		}
+
+		script.characters.forEach(ch => {
+			const index = ch.role.ability.indexOf('[');
+			const ability = index === -1 ? ch.role.ability : ch.role.ability.substring(0, index);
+			if (ability.length > 160) {
+				issues.push(`${ch.role.name}: ability is ${ability.length} characters long`);
+			}
+		});
 
 		return issues;
 	};

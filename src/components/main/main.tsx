@@ -42,6 +42,7 @@ import { FooterParams } from '@/components/panels/app-footer/app-footer';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
+import { HeroConditionalModal } from '@/components/modals/hero-conditional/hero-conditional-modal';
 import { HeroCustomizeModal } from '@/components/modals/hero-customize/hero-customize-modal';
 import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
 import { HeroInventoryModal } from '@/components/modals/hero-inventory/hero-inventory-modal';
@@ -52,6 +53,7 @@ import { HeroProjectsModal } from '@/components/modals/hero-projects/hero-projec
 import { HeroResourcesModal } from '@/components/modals/hero-resources/hero-resources-modal';
 import { HeroRespiteModal } from '@/components/modals/hero-respite/hero-respite-modal';
 import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
+import { HeroSourcebooksModal } from '@/components/modals/hero-sourcebooks/hero-sourcebooks-modal';
 import { HeroTitlesModal } from '@/components/modals/hero-titles/hero-titles-modal';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { HeroViewPage } from '@/components/pages/heroes/hero-view/hero-view-page';
@@ -1652,19 +1654,23 @@ export const Main = (props: Props) => {
 		};
 
 		switch (type) {
-			case HeroModalType.Customize:
+			case HeroModalType.Resources:
 				setDrawer(
-					<HeroCustomizeModal
+					<HeroResourcesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						options={options}
 						onClose={() => setDrawer(null)}
-						onImportSourcebook={sourcebook => {
-							const copy = Utils.copy(homebrewSourcebooks);
-							copy.push(sourcebook);
-							persistHomebrewSourcebooks(copy);
-						}}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Vitals:
+				setDrawer(
+					<HeroVitalsModal
+						hero={hero}
+						showEncounterControls={false}
+						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
 				);
@@ -1693,14 +1699,15 @@ export const Main = (props: Props) => {
 					/>
 				);
 				break;
-			case HeroModalType.Resources:
+			case HeroModalType.Titles:
 				setDrawer(
-					<HeroResourcesModal
+					<HeroTitlesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
 						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
+						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
 				break;
@@ -1716,24 +1723,41 @@ export const Main = (props: Props) => {
 					/>
 				);
 				break;
-			case HeroModalType.Titles:
+			case HeroModalType.Customize:
 				setDrawer(
-					<HeroTitlesModal
+					<HeroCustomizeModal
 						hero={hero}
 						sourcebooks={sourcebooks}
 						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
-						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
 				break;
-			case HeroModalType.Vitals:
+			case HeroModalType.Conditional:
 				setDrawer(
-					<HeroVitalsModal
+					<HeroConditionalModal
 						hero={hero}
-						showEncounterControls={false}
+						sourcebooks={sourcebooks}
+						options={options}
 						onClose={() => setDrawer(null)}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Sourcebooks:
+				setDrawer(
+					<HeroSourcebooksModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+						options={options}
+						onClose={() => setDrawer(null)}
+						onImportSourcebook={sourcebook => {
+							const copy = Utils.copy(homebrewSourcebooks);
+							copy.push(sourcebook);
+							persistHomebrewSourcebooks(copy);
+						}}
 						onChange={persistHero}
 					/>
 				);

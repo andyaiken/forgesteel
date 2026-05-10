@@ -52,6 +52,6 @@
 	&.type-perform {
 		background-color: rgba(colors.$ability-perform, 0.4);
 		border-color: rgba(colors.$ability-perform, 0.6);
-		color: rgba(0, 0, 0, 0.5);
+		color: rgb(colors.$ability-perform-text, 0.9);
 	}
 }

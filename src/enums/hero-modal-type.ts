@@ -1,9 +1,11 @@
 export enum HeroModalType {
-	Customize = 'Customize',
+	Resources = 'Resources',
+	Vitals = 'Vitals',
 	Inventory = 'Inventory',
 	Projects = 'Projects',
-	Resources = 'Resources',
-	Respite = 'Respite',
 	Titles = 'Titles',
-	Vitals = 'Vitals'
+	Respite = 'Respite',
+	Customize = 'Customize',
+	Conditional = 'Conditional',
+	Sourcebooks = 'Sourcebooks'
 }

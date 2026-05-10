@@ -12,7 +12,6 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
@@ -22,7 +21,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { HeroSourcebooksPanel } from '@/components/panels/hero-sourcebooks/hero-sourcebooks-panel';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { Modal } from '@/components/modals/modal/modal';
@@ -31,7 +29,6 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -43,770 +40,653 @@ import './hero-customize-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	allSourcebooks: Sourcebook[];
 	options: Options;
 	onChange: (hero: Hero) => void;
-	onImportSourcebook: (sourcebook: Sourcebook) => void;
 	onClose: () => void;
 }
 
 export const HeroCustomizeModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
-	const [ page, setPage ] = useState<string>('Customize');
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
 
-	const getCustomizeContent = () => {
-		const addFeature = (feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			heroCopy.features.push(feature);
-			setHero(heroCopy);
-			props.onChange(heroCopy);
-		};
+	const addFeature = (feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.features.push(feature);
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
 
-		const deleteFeature = (feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
-			setHero(heroCopy);
-			props.onChange(heroCopy);
-		};
+	const deleteFeature = (feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
 
-		const setFeature = (featureID: string, feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			const index = heroCopy.features.findIndex(f => f.id === featureID);
-			if (index !== -1) {
-				heroCopy.features[index] = feature;
-			}
-			setHero(heroCopy);
-			props.onChange(heroCopy);
-		};
+	const setFeature = (featureID: string, feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		const index = heroCopy.features.findIndex(f => f.id === featureID);
+		if (index !== -1) {
+			heroCopy.features[index] = feature;
+		}
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
 
-		const setFeatureData = (featureID: string, data: FeatureData) => {
-			const heroCopy = Utils.copy(hero);
-			const feature = HeroLogic.getFeatures(heroCopy)
-				.map(f => f.feature)
-				.find(f => f.id === featureID);
-			if (feature) {
-				feature.data = data;
-			}
-			setHero(heroCopy);
-			props.onChange(heroCopy);
-		};
+	const setFeatureData = (featureID: string, data: FeatureData) => {
+		const heroCopy = Utils.copy(hero);
+		const feature = HeroLogic.getFeatures(heroCopy)
+			.map(f => f.feature)
+			.find(f => f.id === featureID);
+		if (feature) {
+			feature.data = data;
+		}
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
 
-		const getMenu = () => {
-			return (
-				<Popover
-					trigger='click'
-					content={
-						<Space orientation='vertical'>
-							<HeaderText level={3}>Abilities</HeaderText>
-							<div className='customize-option-section'>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createClassAbilityChoice({
+	const getMenu = () => {
+		return (
+			<Popover
+				trigger='click'
+				content={
+					<Space orientation='vertical'>
+						<HeaderText level={3}>Abilities</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createClassAbilityChoice({
+										id: Utils.guid(),
+										cost: 'signature'
+									}));
+								}}
+							>
+								Class Ability
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
 											id: Utils.guid(),
-											cost: 'signature'
-										}));
-									}}
-								>
-									Class Ability
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createAbility({
-											ability: FactoryLogic.createAbility({
-												id: Utils.guid(),
-												name: 'Unnamed Ability',
-												type: FactoryLogic.type.createMain(),
-												distance: [ FactoryLogic.distance.createSelf() ],
-												target: 'Self',
-												sections: []
-											})
-										}));
-									}}
-								>
-									Custom Ability
-								</Button>
-							</div>
-							<HeaderText level={3}>Bonuses</HeaderText>
-							<div className='customize-option-section'>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createCharacteristicBonus({
-											id: Utils.guid(),
-											name: `${Characteristic.Might} + 1`,
-											characteristic: Characteristic.Might,
-											value: 1
-										}));
-									}}
-								>
-									Characteristic Bonus
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createConditionImmunity({
-											id: Utils.guid(),
-											conditions: []
-										}));
-									}}
-								>
-									Condition Immunity
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createDamageModifier({
-											id: Utils.guid(),
-											modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
-										}));
-									}}
-								>
-									Damage Immunity / Weakness
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createBonus({
-											id: Utils.guid(),
-											name: `${FeatureField.Stamina} + 6`,
-											field: FeatureField.Stamina,
-											value: 6
-										}));
-									}}
-								>
-									Stat Bonus
-								</Button>
-							</div>
-							<HeaderText level={3}>Game Content</HeaderText>
-							<div className='customize-option-section'>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createAncestryFeature({
-											id: Utils.guid(),
-											value: 1,
-											current: true,
-											former: true,
-											customID: ''
-										}));
-									}}
-								>
-									Ancestry Feature
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createKitChoice({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Kit
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createPerk({
-											id: Utils.guid(),
-											lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ]
-										}));
-									}}
-								>
-									Perk
-								</Button>
-							</div>
-							<HeaderText level={3}>NPCs</HeaderText>
-							<div className='customize-option-section'>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createFollower({
-											id: Utils.guid(),
-											follower: FactoryLogic.createFollower(FollowerType.Artisan)
-										}));
-									}}
-								>
-									Artisan
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createFollower({
-											id: Utils.guid(),
-											follower: FactoryLogic.createFollower(FollowerType.Sage)
-										}));
-									}}
-								>
-									Sage
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createRetainer({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Retainer
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createCompanion({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Companion / Mount
-								</Button>
-							</div>
-							<HeaderText level={3}>Miscellaneous</HeaderText>
-							<div className='customize-option-section'>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createLanguageChoice({
-											id: Utils.guid(),
-											count: -1
-										}));
-									}}
-								>
-									Languages
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createMovementMode({
-											id: Utils.guid(),
-											mode: 'fly'
-										}));
-									}}
-								>
-									Movement Mode
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createProficiency({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Proficiencies
-								</Button>
-								<Button
-									block={true}
-									onClick={() => {
-										setMenuOpen(false);
-										addFeature(FactoryLogic.feature.createSkillChoice({
-											id: Utils.guid(),
-											count: -1
-										}));
-									}}
-								>
-									Skills
-								</Button>
-							</div>
-						</Space>
-					}
-					open={menuOpen}
-					onOpenChange={setMenuOpen}
-				>
-					<Button type='text' icon={<PlusOutlined />} />
-				</Popover>
-			);
-		};
-
-		const getEditSection = (feature: Feature) => {
-			const setValue = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
-				copy.data.value = value;
-				copy.data.selected = null;
-				setFeature(feature.id, copy);
-			};
-
-			const setCharacteristic = (value: Characteristic) => {
-				const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
-				copy.data.characteristic = value;
-				copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setCharacteristicBonus = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
-				copy.data.value = value;
-				copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setValueField = (value: FeatureField) => {
-				const copy = Utils.copy(feature) as FeatureBonus;
-				copy.data.field = value;
-				copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setValueBonus = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureBonus;
-				copy.data.value = value;
-				copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setValuePerLevel = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureBonus;
-				copy.data.valuePerLevel = value;
-				copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setValuePerEchelon = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureBonus;
-				copy.data.valuePerEchelon = value;
-				copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setValueCharacteristics = (value: Characteristic[]) => {
-				const copy = Utils.copy(feature) as FeatureBonus;
-				copy.data.valueCharacteristics = value;
-				copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierDamageType = (value: DamageType) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].damageType = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierType = (value: DamageModifierType) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].type = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierBonus = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].value = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierValuePerLevel = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].valuePerLevel = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierValuePerEchelon = (value: number) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].valuePerEchelon = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setDamageModifierCharacteristics = (value: Characteristic[]) => {
-				const copy = Utils.copy(feature) as FeatureDamageModifier;
-				copy.data.modifiers[0].valueCharacteristics = value;
-				copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-				setFeature(feature.id, copy);
-			};
-
-			const setClassID = (value: string) => {
-				const copy = Utils.copy(feature) as FeatureClassAbility;
-				copy.data.classID = value === '' ? undefined : value;
-				copy.data.selectedIDs = [];
-				setFeature(feature.id, copy);
-			};
-
-			const setCost = (value: number | 'signature') => {
-				const copy = Utils.copy(feature) as FeatureClassAbility;
-				copy.data.cost = value;
-				copy.data.selectedIDs = [];
-				setFeature(feature.id, copy);
-			};
-
-			const setConditionTypes = (value: ConditionType[]) => {
-				const copy = Utils.copy(feature) as FeatureConditionImmunity;
-				copy.data.conditions = value;
-				setFeature(feature.id, copy);
-			};
-
-			const setFollower = (value: Follower) => {
-				const copy = Utils.copy(feature) as FeatureFollower;
-				copy.data.follower = value;
-				setFeature(feature.id, copy);
-			};
-
-			const setMovementMode = (value: string) => {
-				const copy = Utils.copy(feature) as FeatureMovementMode;
-				copy.data.mode = value;
-				setFeature(feature.id, copy);
-			};
-
-			const setPerkLists = (value: PerkList[]) => {
-				const copy = Utils.copy(feature) as FeaturePerk;
-				copy.data.lists = value;
-				copy.data.selected = [];
-				setFeature(feature.id, copy);
-			};
-
-			const setAbility = (value: Ability) => {
-				const copy = Utils.copy(feature) as FeatureAbility;
-				copy.data.ability = value;
-				copy.name = value.name || 'Unnamed Ability';
-				setFeature(feature.id, copy);
-			};
-
-			const setCustomAncestryID = (value: string) => {
-				const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
-				copy.data.source.customID = value;
-				copy.data.selected = null;
-				setFeature(feature.id, copy);
-			};
-
-			const setProficiencyWeapons = (value: KitWeapon[]) => {
-				const copy = Utils.copy(feature) as FeatureProficiency;
-				copy.data.weapons = value;
-				setFeature(feature.id, copy);
-			};
-
-			const setProficiencyArmor = (value: KitArmor[]) => {
-				const copy = Utils.copy(feature) as FeatureProficiency;
-				copy.data.armor = value;
-				setFeature(feature.id, copy);
-			};
-
-			switch (feature.type) {
-				case FeatureType.Ability:
-					return (
-						<Expander title='Ability Editor'>
-							<AbilityEditPanel ability={feature.data.ability} onChange={setAbility} />
-						</Expander>
-					);
-				case FeatureType.AncestryFeatureChoice:
-					return (
-						<div>
-							<HeaderText>Ancestry</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select ancestry'
-								options={[ null, ...SourcebookLogic.getAncestries(props.sourcebooks) ].map(o => ({ value: o ? o.id : '', label: o ? o.name : 'Your ancestry' }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={feature.data.source.customID}
-								onChange={setCustomAncestryID}
-							/>
-							<HeaderText>Point Cost</HeaderText>
-							<NumberSpin min={1} max={2} value={feature.data.value} onChange={setValue} />
+											name: 'Unnamed Ability',
+											type: FactoryLogic.type.createMain(),
+											distance: [ FactoryLogic.distance.createSelf() ],
+											target: 'Self',
+											sections: []
+										})
+									}));
+								}}
+							>
+								Custom Ability
+							</Button>
 						</div>
-					);
-				case FeatureType.Bonus:
-					return (
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							<HeaderText>Field</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select field'
-								options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ForcedMovementPush, FeatureField.ForcedMovementPull, FeatureField.ForcedMovementSlide, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.field}
-								onChange={setValueField}
-							/>
-							<HeaderText>Value</HeaderText>
-							<ModifierEditor
-								modifier={feature.data}
-								setValue={setValueBonus}
-								setValuePerLevel={setValuePerLevel}
-								setValuePerEchelon={setValuePerEchelon}
-								setValueCharacteristics={setValueCharacteristics}
-							/>
-						</Space>
-					);
-				case FeatureType.CharacteristicBonus:
-					return (
-						<div>
-							<HeaderText>Characteristic</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select characteristic'
-								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.characteristic}
-								onChange={setCharacteristic}
-							/>
-							<HeaderText>Value</HeaderText>
-							<NumberSpin label='Value' min={0} value={feature.data.value} onChange={setCharacteristicBonus} />
+						<HeaderText level={3}>Bonuses</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createCharacteristicBonus({
+										id: Utils.guid(),
+										name: `${Characteristic.Might} + 1`,
+										characteristic: Characteristic.Might,
+										value: 1
+									}));
+								}}
+							>
+								Characteristic Bonus
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createConditionImmunity({
+										id: Utils.guid(),
+										conditions: []
+									}));
+								}}
+							>
+								Condition Immunity
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createDamageModifier({
+										id: Utils.guid(),
+										modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+									}));
+								}}
+							>
+								Damage Immunity / Weakness
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createBonus({
+										id: Utils.guid(),
+										name: `${FeatureField.Stamina} + 6`,
+										field: FeatureField.Stamina,
+										value: 6
+									}));
+								}}
+							>
+								Stat Bonus
+							</Button>
 						</div>
-					);
-				case FeatureType.ClassAbility:
-					return (
-						<div>
-							<HeaderText>Class</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								allowClear={!!feature.data.classID}
-								placeholder='Select class'
-								options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={feature.data.classID || ''}
-								onChange={setClassID}
-							/>
-							<HeaderText>Ability Cost</HeaderText>
-							<Flex align='center' justify='center'>
-								<Segmented<'signature' | number>
-									options={[
-										{ value: 'signature', label: 'Signature' },
-										{ value: 3, label: '3pts' },
-										{ value: 5, label: '5pts' },
-										{ value: 7, label: '7pts' },
-										{ value: 9, label: '9pts' },
-										{ value: 11, label: '11pts' },
-										{ value: 0, label: 'Other' }
-									]}
-									value={feature.data.cost}
-									onChange={setCost}
-								/>
-							</Flex>
+						<HeaderText level={3}>Game Content</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createAncestryFeature({
+										id: Utils.guid(),
+										value: 1,
+										current: true,
+										former: true,
+										customID: ''
+									}));
+								}}
+							>
+								Ancestry Feature
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createKitChoice({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Kit
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createPerk({
+										id: Utils.guid(),
+										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ]
+									}));
+								}}
+							>
+								Perk
+							</Button>
 						</div>
-					);
-				case FeatureType.ConditionImmunity:
-					return (
+						<HeaderText level={3}>NPCs</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createFollower({
+										id: Utils.guid(),
+										follower: FactoryLogic.createFollower(FollowerType.Artisan)
+									}));
+								}}
+							>
+								Artisan
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createFollower({
+										id: Utils.guid(),
+										follower: FactoryLogic.createFollower(FollowerType.Sage)
+									}));
+								}}
+							>
+								Sage
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createRetainer({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Retainer
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createCompanion({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Companion / Mount
+							</Button>
+						</div>
+						<HeaderText level={3}>Miscellaneous</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createLanguageChoice({
+										id: Utils.guid(),
+										count: -1
+									}));
+								}}
+							>
+								Languages
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createMovementMode({
+										id: Utils.guid(),
+										mode: 'fly'
+									}));
+								}}
+							>
+								Movement Mode
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createProficiency({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Proficiencies
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createSkillChoice({
+										id: Utils.guid(),
+										count: -1
+									}));
+								}}
+							>
+								Skills
+							</Button>
+						</div>
+					</Space>
+				}
+				open={menuOpen}
+				onOpenChange={setMenuOpen}
+			>
+				<Button type='text' icon={<PlusOutlined />} />
+			</Popover>
+		);
+	};
+
+	const getEditSection = (feature: Feature) => {
+		const setValue = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
+			copy.data.value = value;
+			copy.data.selected = null;
+			setFeature(feature.id, copy);
+		};
+
+		const setCharacteristic = (value: Characteristic) => {
+			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
+			copy.data.characteristic = value;
+			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setCharacteristicBonus = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
+			copy.data.value = value;
+			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setValueField = (value: FeatureField) => {
+			const copy = Utils.copy(feature) as FeatureBonus;
+			copy.data.field = value;
+			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setValueBonus = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureBonus;
+			copy.data.value = value;
+			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setValuePerLevel = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureBonus;
+			copy.data.valuePerLevel = value;
+			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setValuePerEchelon = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureBonus;
+			copy.data.valuePerEchelon = value;
+			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setValueCharacteristics = (value: Characteristic[]) => {
+			const copy = Utils.copy(feature) as FeatureBonus;
+			copy.data.valueCharacteristics = value;
+			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierDamageType = (value: DamageType) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].damageType = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierType = (value: DamageModifierType) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].type = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierBonus = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].value = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierValuePerLevel = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].valuePerLevel = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierValuePerEchelon = (value: number) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].valuePerEchelon = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setDamageModifierCharacteristics = (value: Characteristic[]) => {
+			const copy = Utils.copy(feature) as FeatureDamageModifier;
+			copy.data.modifiers[0].valueCharacteristics = value;
+			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+			setFeature(feature.id, copy);
+		};
+
+		const setClassID = (value: string) => {
+			const copy = Utils.copy(feature) as FeatureClassAbility;
+			copy.data.classID = value === '' ? undefined : value;
+			copy.data.selectedIDs = [];
+			setFeature(feature.id, copy);
+		};
+
+		const setCost = (value: number | 'signature') => {
+			const copy = Utils.copy(feature) as FeatureClassAbility;
+			copy.data.cost = value;
+			copy.data.selectedIDs = [];
+			setFeature(feature.id, copy);
+		};
+
+		const setConditionTypes = (value: ConditionType[]) => {
+			const copy = Utils.copy(feature) as FeatureConditionImmunity;
+			copy.data.conditions = value;
+			setFeature(feature.id, copy);
+		};
+
+		const setFollower = (value: Follower) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower = value;
+			setFeature(feature.id, copy);
+		};
+
+		const setMovementMode = (value: string) => {
+			const copy = Utils.copy(feature) as FeatureMovementMode;
+			copy.data.mode = value;
+			setFeature(feature.id, copy);
+		};
+
+		const setPerkLists = (value: PerkList[]) => {
+			const copy = Utils.copy(feature) as FeaturePerk;
+			copy.data.lists = value;
+			copy.data.selected = [];
+			setFeature(feature.id, copy);
+		};
+
+		const setAbility = (value: Ability) => {
+			const copy = Utils.copy(feature) as FeatureAbility;
+			copy.data.ability = value;
+			copy.name = value.name || 'Unnamed Ability';
+			setFeature(feature.id, copy);
+		};
+
+		const setCustomAncestryID = (value: string) => {
+			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
+			copy.data.source.customID = value;
+			copy.data.selected = null;
+			setFeature(feature.id, copy);
+		};
+
+		const setProficiencyWeapons = (value: KitWeapon[]) => {
+			const copy = Utils.copy(feature) as FeatureProficiency;
+			copy.data.weapons = value;
+			setFeature(feature.id, copy);
+		};
+
+		const setProficiencyArmor = (value: KitArmor[]) => {
+			const copy = Utils.copy(feature) as FeatureProficiency;
+			copy.data.armor = value;
+			setFeature(feature.id, copy);
+		};
+
+		switch (feature.type) {
+			case FeatureType.Ability:
+				return (
+					<Expander title='Ability Editor'>
+						<AbilityEditPanel ability={feature.data.ability} onChange={setAbility} />
+					</Expander>
+				);
+			case FeatureType.AncestryFeatureChoice:
+				return (
+					<div>
+						<HeaderText>Ancestry</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							placeholder='Select condition'
-							mode='multiple'
-							options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={feature.data.conditions}
-							onChange={setConditionTypes}
+							placeholder='Select ancestry'
+							options={[ null, ...SourcebookLogic.getAncestries(props.sourcebooks) ].map(o => ({ value: o ? o.id : '', label: o ? o.name : 'Your ancestry' }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={feature.data.source.customID}
+							onChange={setCustomAncestryID}
 						/>
-					);
-				case FeatureType.DamageModifier:
-					return (
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							<HeaderText>Modifier</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select field'
-								options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(o => ({ value: o }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.modifiers[0].damageType}
-								onChange={setDamageModifierDamageType}
+						<HeaderText>Point Cost</HeaderText>
+						<NumberSpin min={1} max={2} value={feature.data.value} onChange={setValue} />
+					</div>
+				);
+			case FeatureType.Bonus:
+				return (
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText>Field</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ForcedMovementPush, FeatureField.ForcedMovementPull, FeatureField.ForcedMovementSlide, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.field}
+							onChange={setValueField}
+						/>
+						<HeaderText>Value</HeaderText>
+						<ModifierEditor
+							modifier={feature.data}
+							setValue={setValueBonus}
+							setValuePerLevel={setValuePerLevel}
+							setValuePerEchelon={setValuePerEchelon}
+							setValueCharacteristics={setValueCharacteristics}
+						/>
+					</Space>
+				);
+			case FeatureType.CharacteristicBonus:
+				return (
+					<div>
+						<HeaderText>Characteristic</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select characteristic'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.characteristic}
+							onChange={setCharacteristic}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={setCharacteristicBonus} />
+					</div>
+				);
+			case FeatureType.ClassAbility:
+				return (
+					<div>
+						<HeaderText>Class</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							allowClear={!!feature.data.classID}
+							placeholder='Select class'
+							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={feature.data.classID || ''}
+							onChange={setClassID}
+						/>
+						<HeaderText>Ability Cost</HeaderText>
+						<Flex align='center' justify='center'>
+							<Segmented<'signature' | number>
+								options={[
+									{ value: 'signature', label: 'Signature' },
+									{ value: 3, label: '3pts' },
+									{ value: 5, label: '5pts' },
+									{ value: 7, label: '7pts' },
+									{ value: 9, label: '9pts' },
+									{ value: 11, label: '11pts' },
+									{ value: 0, label: 'Other' }
+								]}
+								value={feature.data.cost}
+								onChange={setCost}
 							/>
-							<Segmented
-								block={true}
-								options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ label: o, value: o }))}
-								value={feature.data.modifiers[0].type}
-								onChange={setDamageModifierType}
-							/>
-							<HeaderText>Value</HeaderText>
-							<ModifierEditor
-								modifier={feature.data.modifiers[0]}
-								setValue={setDamageModifierBonus}
-								setValuePerLevel={setDamageModifierValuePerLevel}
-								setValuePerEchelon={setDamageModifierValuePerEchelon}
-								setValueCharacteristics={setDamageModifierCharacteristics}
-							/>
-						</Space>
-					);
-				case FeatureType.Follower:
-					return (
-						<Expander title='Customize'>
-							<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
-						</Expander>
-					);
-				case FeatureType.MovementMode:
-					return (
-						<div>
-							<HeaderText>Name</HeaderText>
-							<TextInput
-								status={feature.data.mode === '' ? 'warning' : ''}
-								placeholder='Mode'
-								allowClear={true}
-								value={feature.data.mode}
-								onChange={setMovementMode}
-							/>
-						</div>
-					);
-				case FeatureType.Perk:
-					return (
-						<div>
-							<HeaderText>Perk List</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								mode='multiple'
-								allowClear={true}
-								placeholder='List'
-								options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(pl => ({ label: pl, value: pl }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={feature.data.lists}
-								onChange={setPerkLists}
-							/>
-						</div>
-					);
-				case FeatureType.Proficiency:
-					return (
-						<div>
-							<HeaderText>Weapons</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Weapons'
-								mode='tags'
-								allowClear={true}
-								options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.weapons}
-								onChange={setProficiencyWeapons}
-							/>
-							<HeaderText>Armor</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Armor'
-								mode='tags'
-								allowClear={true}
-								options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.armor}
-								onChange={setProficiencyArmor}
-							/>
-						</div>
-					);
-			}
-
-			return null;
-		};
-
-		return (
-			<>
-				<HeaderText extra={getMenu()}>
-					Customize
-				</HeaderText>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						hero.features
-							.filter(f => f.id !== 'default-language')
-							.map(f => (
-								<Expander
-									key={f.id}
-									title={f.name}
-									extra={[
-										<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
-									]}
-								>
-									{getEditSection(f)}
-									<ConfigFeature
-										feature={f}
-										hero={props.hero}
-										sourcebooks={props.sourcebooks}
-										options={props.options}
-										setData={data => setFeatureData(f.id, data)}
-									/>
-								</Expander>
-							))
-					}
-					{
-						hero.features.filter(f => f.id !== 'default-language').length === 0 ?
-							<Empty text='You have no customizations.' />
-							: null
-					}
-				</Space>
-			</>
-		);
-	};
-
-	const getConditionalContent = () => {
-		const features = HeroLogic.getFeatures(hero);
-		const list = [
-			...features.filter(f => f.feature.type === FeatureType.Toggle),
-			...features.filter(f => (f.feature.type === FeatureType.Choice) && (f.feature.data.selectAt === 'play'))
-		];
-
-		const setData = (featureID: string, data: FeatureData) => {
-			const copy = Utils.copy(hero);
-			const feature = HeroLogic.getFeatures(copy).find(f => f.feature.id === featureID);
-			if (feature) {
-				feature.feature.data = data;
-			}
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<div>
-				<HeaderText>Conditional Features</HeaderText>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						list.map(f => (
-							<SelectablePanel key={f.feature.id}>
-								<FeatureConfigPanel
-									feature={f.feature}
-									hero={hero}
-									sourcebooks={props.sourcebooks}
-									options={props.options}
-									setData={setData}
-								/>
-							</SelectablePanel>
-						))
-					}
-					{
-						list.length === 0 ?
-							<Empty text='You have no conditional features.' />
-							: null
-					}
-				</Space>
-			</div>
-		);
-	};
-
-	const getSourcebooksContent = () => {
-		const onChange = (sourcebookIDs: string[]) => {
-			const heroCopy = Utils.copy(hero);
-			heroCopy.settingIDs = sourcebookIDs;
-			setHero(heroCopy);
-			props.onChange(heroCopy);
-		};
-
-		return (
-			<HeroSourcebooksPanel
-				sourcebooks={props.allSourcebooks}
-				sourcebookIDs={props.hero.settingIDs}
-				onImportSourcebook={props.onImportSourcebook}
-				onChange={onChange}
-			/>
-		);
-	};
-
-	const getContent = () => {
-		switch (page) {
-			case 'Customize':
-				return getCustomizeContent();
-			case 'Conditional':
-				return getConditionalContent();
-			case 'Sourcebooks':
-				return getSourcebooksContent();
+						</Flex>
+					</div>
+				);
+			case FeatureType.ConditionImmunity:
+				return (
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select condition'
+						mode='multiple'
+						options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
+						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+						value={feature.data.conditions}
+						onChange={setConditionTypes}
+					/>
+				);
+			case FeatureType.DamageModifier:
+				return (
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText>Modifier</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.modifiers[0].damageType}
+							onChange={setDamageModifierDamageType}
+						/>
+						<Segmented
+							block={true}
+							options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ label: o, value: o }))}
+							value={feature.data.modifiers[0].type}
+							onChange={setDamageModifierType}
+						/>
+						<HeaderText>Value</HeaderText>
+						<ModifierEditor
+							modifier={feature.data.modifiers[0]}
+							setValue={setDamageModifierBonus}
+							setValuePerLevel={setDamageModifierValuePerLevel}
+							setValuePerEchelon={setDamageModifierValuePerEchelon}
+							setValueCharacteristics={setDamageModifierCharacteristics}
+						/>
+					</Space>
+				);
+			case FeatureType.Follower:
+				return (
+					<Expander title='Customize'>
+						<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
+					</Expander>
+				);
+			case FeatureType.MovementMode:
+				return (
+					<div>
+						<HeaderText>Name</HeaderText>
+						<TextInput
+							status={feature.data.mode === '' ? 'warning' : ''}
+							placeholder='Mode'
+							allowClear={true}
+							value={feature.data.mode}
+							onChange={setMovementMode}
+						/>
+					</div>
+				);
+			case FeatureType.Perk:
+				return (
+					<div>
+						<HeaderText>Perk List</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							mode='multiple'
+							allowClear={true}
+							placeholder='List'
+							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural, PerkList.Special ].map(pl => ({ label: pl, value: pl }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={feature.data.lists}
+							onChange={setPerkLists}
+						/>
+					</div>
+				);
+			case FeatureType.Proficiency:
+				return (
+					<div>
+						<HeaderText>Weapons</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Weapons'
+							mode='tags'
+							allowClear={true}
+							options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.weapons}
+							onChange={setProficiencyWeapons}
+						/>
+						<HeaderText>Armor</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Armor'
+							mode='tags'
+							allowClear={true}
+							options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.armor}
+							onChange={setProficiencyArmor}
+						/>
+					</div>
+				);
 		}
 
 		return null;
@@ -815,19 +695,40 @@ export const HeroCustomizeModal = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<Modal
-				toolbar={
-					<div style={{ width: '100%', textAlign: 'center' }}>
-						<Segmented
-							name='tabs'
-							options={[ 'Customize', 'Conditional', 'Sourcebooks' ]}
-							value={page}
-							onChange={setPage}
-						/>
-					</div>
-				}
 				content={
 					<div className='hero-customize-modal'>
-						{getContent()}
+						<HeaderText extra={getMenu()}>
+							Customize
+						</HeaderText>
+						<Space orientation='vertical' style={{ width: '100%' }}>
+							{
+								hero.features
+									.filter(f => f.id !== 'default-language')
+									.map(f => (
+										<Expander
+											key={f.id}
+											title={f.name}
+											extra={[
+												<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
+											]}
+										>
+											{getEditSection(f)}
+											<ConfigFeature
+												feature={f}
+												hero={props.hero}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												setData={data => setFeatureData(f.id, data)}
+											/>
+										</Expander>
+									))
+							}
+							{
+								hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+									<Empty text='You have no customizations.' />
+									: null
+							}
+						</Space>
 					</div>
 				}
 				onClose={props.onClose}

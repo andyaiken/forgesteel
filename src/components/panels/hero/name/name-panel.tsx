@@ -1,12 +1,13 @@
 import { Button, Divider, Popover, Space } from 'antd';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroToken } from '../../token/token';
 import { Options } from '@/models/options';
-import { ToolOutlined } from '@ant-design/icons';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useState } from 'react';
 
 interface Props {
 	hero: Hero;
@@ -16,6 +17,7 @@ interface Props {
 
 export const NamePanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const [ open, setOpen ] = useState(false);
 
 	return (
 		<HeaderText
@@ -36,6 +38,8 @@ export const NamePanel = (props: Props) => {
 								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Respite)}>Respite</Button>
 								<Divider />
 								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Customize)}>Customize</Button>
+								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Conditional)}>Conditional Features</Button>
+								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Sourcebooks)}>Sourcebooks</Button>
 							</Space>
 						}
 					>
@@ -50,7 +54,25 @@ export const NamePanel = (props: Props) => {
 							{ type: 'button', label: 'Projects', onClick: () => props.onShowState(HeroModalType.Projects) },
 							{ type: 'button', label: 'Titles', onClick: () => props.onShowState(HeroModalType.Titles) },
 							{ type: 'button', label: 'Respite', onClick: () => props.onShowState(HeroModalType.Respite) },
-							{ type: 'button', icon: <ToolOutlined />, tooltip: 'Customize', onClick: () => props.onShowState(HeroModalType.Customize) }
+							{
+								type: 'control',
+								control: (
+									<Popover
+										trigger='click'
+										content={
+											<Space orientation='vertical' style={{ width: '150px' }}>
+												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Customize); setOpen(false); }}>Customize</Button>
+												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Conditional); setOpen(false); }}>Conditional Features</Button>
+												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Sourcebooks); setOpen(false); }}>Sourcebooks</Button>
+											</Space>
+										}
+										open={open}
+										onOpenChange={setOpen}
+									>
+										<Button type='text' icon={<EllipsisOutlined />} />
+									</Popover>
+								)
+							}
 						]}
 					/>
 			}

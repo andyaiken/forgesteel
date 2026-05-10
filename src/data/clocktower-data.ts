@@ -34,14 +34,14 @@ const censor: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
-		ability: 'Each night*, choose a player; if they are evil, they cannot use their ability tonight.',
+		ability: 'Each night*, choose a player; if they are not on your team, they cannot use their ability tonight.',
 		otherNightReminder: 'Choose a player to judge.',
 		reminders: [
 			'Judged'
 		]
 	},
 	details: {
-		description: 'A player who is “judged” and is evil cannot use their ability that night, including passive or triggered abilities. This does not affect good players. If the chosen player becomes evil later that night, they are still prevented from acting.'
+		description: 'A player who is “judged” and is on the other team cannot use their ability that night, including passive or triggered abilities.'
 	}
 };
 
@@ -233,14 +233,14 @@ const talent: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Give me but a moment, and I will become whoever we need.',
-		ability: 'You learn two not-in-play roles; once per game, claim one and immediately use its ability.',
+		ability: 'You learn two not-in-play roles; once per game, claim one and gain its ability.',
 		firstNightReminder: 'Learn 2 not-in-play roles.',
 		reminders: [
 			'Ability used'
 		]
 	},
 	details: {
-		description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately use its ability as if you were that role. This use is still affected by drunkenness or poisoning.'
+		description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately gain its ability as if you were that role. This use is still affected by drunkenness or poisoning, as normal.'
 	}
 };
 
@@ -611,7 +611,7 @@ const disciple: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Rise. Your story is not yet finished.',
-		ability: 'Once per game, at night*, choose a dead player; they are resurrected, but if you are evil they become drunk.',
+		ability: 'Once per game, at night*, choose a dead player; they are resurrected, but if you are evil they become poisoned.',
 		otherNightReminder: 'Once per game, resurrect a player.',
 		reminders: [
 			'Ability used',
@@ -619,7 +619,7 @@ const disciple: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You may resurrect a dead player once per game. If you are evil, that player is now drunk.'
+		description: 'You may resurrect a dead player once per game. If you are evil, that player is now poisoned.'
 	}
 };
 

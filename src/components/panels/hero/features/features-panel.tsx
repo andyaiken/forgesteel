@@ -112,7 +112,7 @@ export const FeaturesPanel = (props: Props) => {
 					tooltip: 'Feature Options',
 					icon: <EllipsisOutlined />,
 					popover: (
-						<Space orientation='vertical' style={{ width: '300px' }}>
+						<div style={{ width: '300px' }}>
 							<LabelControl
 								label='Organize'
 								control={
@@ -130,7 +130,7 @@ export const FeaturesPanel = (props: Props) => {
 								}
 							/>
 							<Toggle label='All Features' value={featureAll} onChange={setFeatureAll} />
-						</Space>
+						</div>
 					)
 				}
 			]}

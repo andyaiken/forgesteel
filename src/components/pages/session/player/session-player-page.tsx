@@ -8,23 +8,23 @@ import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { PanelMode } from '@/enums/panel-mode';
-import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { useSession } from '@/contexts/data-context';
 
 import './session-player-page.scss';
 
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Session;
 	params: FooterParams;
 }
 
 export const SessionPlayerPage = (props: Props) => {
+	const session = useSession();
 	const getContent = () => {
-		const encounter = props.session.encounters.find(e => e.id === props.session.playerViewID);
+		const encounter = session.encounters.find(e => e.id === session.playerViewID);
 		if (encounter) {
 			return (
 				<EncounterRunPanel
@@ -36,7 +36,7 @@ export const SessionPlayerPage = (props: Props) => {
 			);
 		}
 
-		const montage = props.session.montages.find(m => m.id === props.session.playerViewID);
+		const montage = session.montages.find(m => m.id === session.playerViewID);
 		if (montage) {
 			return (
 				<MontageRunPanel
@@ -47,7 +47,7 @@ export const SessionPlayerPage = (props: Props) => {
 			);
 		}
 
-		const negotiation = props.session.negotiations.find(n => n.id === props.session.playerViewID);
+		const negotiation = session.negotiations.find(n => n.id === session.playerViewID);
 		if (negotiation) {
 			return (
 				<NegotiationRunPanel
@@ -57,7 +57,7 @@ export const SessionPlayerPage = (props: Props) => {
 			);
 		}
 
-		const map = props.session.tacticalMaps.find(tm => tm.id === props.session.playerViewID);
+		const map = session.tacticalMaps.find(tm => tm.id === session.playerViewID);
 		if (map) {
 			return (
 				<TacticalMapPanel
@@ -65,14 +65,14 @@ export const SessionPlayerPage = (props: Props) => {
 					map={map}
 					display={TacticalMapDisplayType.Player}
 					heroes={props.heroes}
-					encounters={props.session.encounters}
+					encounters={session.encounters}
 					sourcebooks={props.sourcebooks}
 					mode={PanelMode.Full}
 				/>
 			);
 		}
 
-		const counter = props.session.counters.find(c => c.id === props.session.playerViewID);
+		const counter = session.counters.find(c => c.id === session.playerViewID);
 		if (counter) {
 			return (
 				<CounterRunPanel

@@ -21,7 +21,6 @@ import { NegotiationData } from '@/data/negotiation-data';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
-import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMap } from '@/models/tactical-map';
@@ -31,6 +30,7 @@ import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useSession } from '@/contexts/data-context';
 import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
 
@@ -39,7 +39,6 @@ import './session-director-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Session;
 	params: FooterParams;
 	showPlayerView: () => void;
 	startEncounter: (encounter: Encounter) => Promise<string>;
@@ -60,8 +59,9 @@ interface Props {
 export const SessionDirectorPage = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
+	const session = useSession();
 	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
-		const options = AdventureLogic.getContentOptions(props.session);
+		const options = AdventureLogic.getContentOptions(session);
 		return options.length > 0 ? options[0].id : null;
 	});
 	const [ startElement, setStartElement ] = useState<string>('encounter');
@@ -70,7 +70,7 @@ export const SessionDirectorPage = (props: Props) => {
 	useTitle('Session');
 
 	const getSelector = () => {
-		const options = AdventureLogic.getContentOptions(props.session).map(o => {
+		const options = AdventureLogic.getContentOptions(session).map(o => {
 			return {
 				value: o.id,
 				label: o.name
@@ -94,7 +94,7 @@ export const SessionDirectorPage = (props: Props) => {
 
 	const getSelectedContent = () => {
 		if (selectedElementID) {
-			const encounter = props.session.encounters.find(e => e.id === selectedElementID);
+			const encounter = session.encounters.find(e => e.id === selectedElementID);
 			if (encounter) {
 				return (
 					<div className='session-page-content-container'>
@@ -110,7 +110,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			}
 
-			const montage = props.session.montages.find(m => m.id === selectedElementID);
+			const montage = session.montages.find(m => m.id === selectedElementID);
 			if (montage) {
 				return (
 					<div className='session-page-content-container'>
@@ -124,7 +124,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			}
 
-			const negotiation = props.session.negotiations.find(n => n.id === selectedElementID);
+			const negotiation = session.negotiations.find(n => n.id === selectedElementID);
 			if (negotiation) {
 				return (
 					<div className='session-page-content-container'>
@@ -137,7 +137,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			}
 
-			const map = props.session.tacticalMaps.find(tm => tm.id === selectedElementID);
+			const map = session.tacticalMaps.find(tm => tm.id === selectedElementID);
 			if (map) {
 				return (
 					<div className='session-page-content-container'>
@@ -146,7 +146,7 @@ export const SessionDirectorPage = (props: Props) => {
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
 							heroes={props.heroes}
-							encounters={props.session.encounters}
+							encounters={session.encounters}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}
 							updateMap={props.updateMap}
@@ -157,7 +157,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			}
 
-			const counter = props.session.counters.find(c => c.id === selectedElementID);
+			const counter = session.counters.find(c => c.id === selectedElementID);
 			if (counter) {
 				return (
 					<div className='session-page-content-container'>
@@ -171,7 +171,7 @@ export const SessionDirectorPage = (props: Props) => {
 			}
 		}
 
-		const options = AdventureLogic.getContentOptions(props.session);
+		const options = AdventureLogic.getContentOptions(session);
 		if (options.length === 0) {
 			return (
 				<Empty text='Nothing is currently in progress.' />

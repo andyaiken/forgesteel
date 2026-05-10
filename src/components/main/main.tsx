@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
+import { useDataManager, useOptions, useSession } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
@@ -102,14 +103,12 @@ import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useOptions } from '@/contexts/data-context';
 import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
 
 interface Props {
 	heroes: Hero[];
-	session: Session;
 	homebrewSourcebooks: Sourcebook[];
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
@@ -120,9 +119,10 @@ export const Main = (props: Props) => {
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
-	const [ session, setSession ] = useState<Session>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const options = useOptions();
+	const session = useSession();
+	const dataManager = useDataManager();
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
 	const [ dataService, setDataService ] = useState<DataService>(props.dataService);
@@ -171,19 +171,16 @@ export const Main = (props: Props) => {
 	};
 
 	const persistSession = (session: Session) => {
-		return dataService
+		return dataManager
 			.saveSession(session)
-			.then(
-				setSession,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving session',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			)
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error saving session',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			})
 			.then(() => {
 				if (playerView) {
 					playerView.location.reload();
@@ -1791,7 +1788,6 @@ export const Main = (props: Props) => {
 	const showPlayerView = () => {
 		setDrawer(
 			<PlayerViewModal
-				session={session}
 				updateSession={persistSession}
 				openPlayerView={setPlayerView}
 				onClose={() => setDrawer(null)}
@@ -1976,7 +1972,6 @@ export const Main = (props: Props) => {
 								<SessionDirectorPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									session={session}
 									params={footerParams}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
@@ -2001,7 +1996,6 @@ export const Main = (props: Props) => {
 								<SessionPlayerPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									session={session}
 									params={footerParams}
 								/>
 							}

@@ -7,7 +7,6 @@ import { Encounter } from '@/models/encounter';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -46,7 +45,6 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<>
 				<Markdown text={props.encounter.description} />
-				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
 				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
 				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</>

@@ -2,7 +2,6 @@ import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { AttitudeType } from '@/enums/attitude-type';
 import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Format } from '@/utils/format';
@@ -11,6 +10,7 @@ import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
 import { PlotContentReference } from '@/models/plot';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
+import { Utils } from '@/utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
@@ -248,9 +248,33 @@ export class SourcebookUpdateLogic {
 				});
 			});
 
-			if (e.objective === undefined) {
-				e.objective = EncounterObjectiveData.diminishNumbers;
+			/* eslint-disable @typescript-eslint/no-deprecated */
+			if (e.objective) {
+				e.notes.push({
+					id: Utils.guid(),
+					name: e.objective.name,
+					description: `
+${e.objective.description}
+
+### Difficulty Modifier
+
+${e.objective.difficultyModifier}
+
+### Success Condition
+
+${e.objective.successCondition}
+
+### Failure Condition
+
+${e.objective.failureCondition}
+
+### Victories
+
+${e.objective.victories}`
+				});
+				e.objective = null;
 			}
+			/* eslint-enable @typescript-eslint/no-deprecated */
 
 			if (e.notes === undefined) {
 				e.notes = [];

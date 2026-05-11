@@ -29,6 +29,7 @@ export interface Encounter extends Element {
 	groups: EncounterGroup[];
 	terrain: TerrainSlot[];
 	heroes: Hero[];
+	/** @deprecated */
 	objective: EncounterObjective | null;
 	notes: Element[];
 	initiative: 'heroes' | 'monsters' | undefined;

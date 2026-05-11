@@ -1,8 +1,8 @@
 import { AttitudeType } from '@/enums/attitude-type';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
 import { Session } from '@/models/session';
+import { Utils } from '@/utils/utils';
 
 export class SessionUpdateLogic {
 	static updateSession = (session: Session) => {
@@ -92,9 +92,33 @@ export class SessionUpdateLogic {
 				});
 			});
 
-			if (e.objective === undefined) {
-				e.objective = EncounterObjectiveData.diminishNumbers;
+			/* eslint-disable @typescript-eslint/no-deprecated */
+			if (e.objective) {
+				e.notes.push({
+					id: Utils.guid(),
+					name: e.objective.name,
+					description: `
+${e.objective.description}
+
+### Difficulty Modifier
+
+${e.objective.difficultyModifier}
+
+### Success Condition
+
+${e.objective.successCondition}
+
+### Failure Condition
+
+${e.objective.failureCondition}
+
+### Victories
+
+${e.objective.victories}`
+				});
+				e.objective = null;
 			}
+			/* eslint-enable @typescript-eslint/no-deprecated */
 
 			if (e.notes === undefined) {
 				e.notes = [];

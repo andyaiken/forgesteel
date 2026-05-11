@@ -372,7 +372,7 @@ const memonek: ClocktowerCharacter = {
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
 		ability: 'If you are executed, the Demon sees the Grimoire that night.',
-		otherNightReminder: 'If executed, the Demon sees the Grimoire.',
+		otherNightReminder: 'If you were executed, the Demon sees the Grimoire.',
 		reminders: [
 			'Sees Grimoire tonight'
 		]
@@ -634,10 +634,11 @@ const disgraced: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
-		ability: 'If a player of your alignment is executed, you might die instead.'
+		ability: 'If a player of your alignment is executed, you can choose to die instead and learn the role of their nominator.',
+		otherNightReminder: 'If a player of your alignment was executed, choose to die and learn the role of their nominator.'
 	},
 	details: {
-		description: 'When a player of your alignment is executed, the Storyteller may choose for you to die instead. This is not guaranteed and may be used to create uncertainty.'
+		description: 'When a player of your alignment is executed, you choose to die in their place. If you do, you learn the role of the player who nominated them.'
 	}
 };
 
@@ -705,6 +706,7 @@ export class ClocktowerData {
 				'warden'
 			],
 			otherNight: [
+				'disgraced',
 				// Grim
 				'memonek',
 				// Modification

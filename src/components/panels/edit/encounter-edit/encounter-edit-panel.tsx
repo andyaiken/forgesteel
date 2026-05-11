@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -23,7 +23,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
@@ -411,128 +410,6 @@ export const EncounterEditPanel = (props: Props) => {
 		);
 	};
 
-	const getObjectiveSection = () => {
-		const setObjective = (value: EncounterObjective | null) => {
-			const copy = Utils.copy(encounter);
-			copy.objective = Utils.copy(value);
-			setEncounter(copy);
-			props.onChange(copy);
-		};
-
-		const setObjectiveName = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.name = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const setObjectiveDescription = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.description = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const setObjectiveDifficultyModifier = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.difficultyModifier = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const setObjectiveSuccessCondition = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.successCondition = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const setObjectiveFailureCondition = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.failureCondition = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const setObjectiveVictories = (value: string) => {
-			const copy = Utils.copy(encounter);
-			if (copy.objective) {
-				copy.objective.victories = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			}
-		};
-
-		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<Flex align='center' justify='space-between' gap={10}>
-					<Toggle label='Specify an encounter objective' value={!!encounter.objective} onChange={value => setObjective(value ? FactoryLogic.createEncounterObjective() : null)} />
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
-								{
-									[
-										EncounterObjectiveData.diminishNumbers,
-										EncounterObjectiveData.defeatFoe,
-										EncounterObjectiveData.getThing,
-										EncounterObjectiveData.destroyThing,
-										EncounterObjectiveData.saveAnother,
-										EncounterObjectiveData.escort,
-										EncounterObjectiveData.holdThemOff,
-										EncounterObjectiveData.assaultDefenses,
-										EncounterObjectiveData.stopAction,
-										EncounterObjectiveData.completeAction
-									].map(o => (
-										<Button key={o.id} block={true} onClick={() => setObjective(o)}>{o.name}</Button>
-									))
-								}
-							</div>
-						)}
-					>
-						<Button>
-							Common Objectives
-							<DownOutlined />
-						</Button>
-					</Popover>
-				</Flex>
-				{
-					encounter.objective ?
-						<>
-							<HeaderText>Name</HeaderText>
-							<TextInput
-								placeholder='Name'
-								allowClear={true}
-								value={encounter.objective.name}
-								onChange={setObjectiveName}
-							/>
-							<HeaderText>Description</HeaderText>
-							<MarkdownEditor value={encounter.objective.description} onChange={setObjectiveDescription} />
-							<HeaderText>Difficulty Modifier</HeaderText>
-							<MarkdownEditor value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
-							<HeaderText>Success Condition</HeaderText>
-							<MarkdownEditor value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
-							<HeaderText>Failure Condition</HeaderText>
-							<MarkdownEditor value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
-							<HeaderText>Victories</HeaderText>
-							<MarkdownEditor value={encounter.objective.victories} onChange={setObjectiveVictories} />
-						</>
-						: null
-				}
-			</Space>
-		);
-	};
-
 	const getNotesSection = () => {
 		const addNote = () => {
 			const copy = Utils.copy(encounter);
@@ -540,6 +417,34 @@ export const EncounterEditPanel = (props: Props) => {
 				id: Utils.guid(),
 				name: '',
 				description: ''
+			});
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const addObjective = (value: EncounterObjective) => {
+			const copy = Utils.copy(encounter);
+			copy.notes.push({
+				id: Utils.guid(),
+				name: value.name,
+				description: `
+${value.description}
+
+### Difficulty Modifier
+
+${value.difficultyModifier}
+
+### Success Condition
+
+${value.successCondition}
+
+### Failure Condition
+
+${value.failureCondition}
+
+### Victories
+
+${value.victories}`
 			});
 			setEncounter(copy);
 			props.onChange(copy);
@@ -574,7 +479,33 @@ export const EncounterEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={addNote} />
+						<Popover
+							trigger='click'
+							content={(
+								<div style={{ width: '160px' }}>
+									<Button type='text' block={true} onClick={addNote}>Add a Note</Button>
+									<Divider size='small' />
+									{
+										[
+											EncounterObjectiveData.diminishNumbers,
+											EncounterObjectiveData.defeatFoe,
+											EncounterObjectiveData.getThing,
+											EncounterObjectiveData.destroyThing,
+											EncounterObjectiveData.saveAnother,
+											EncounterObjectiveData.escort,
+											EncounterObjectiveData.holdThemOff,
+											EncounterObjectiveData.assaultDefenses,
+											EncounterObjectiveData.stopAction,
+											EncounterObjectiveData.completeAction
+										].map(o => (
+											<Button key={o.id} type='text' block={true} onClick={() => addObjective(o)}>{o.name}</Button>
+										))
+									}
+								</div>
+							)}
+						>
+							<Button type='text' icon={<PlusOutlined />} />
+						</Popover>
 					}
 				>
 					Notes
@@ -852,11 +783,6 @@ export const EncounterEditPanel = (props: Props) => {
 									key: 'terrain',
 									label: 'Terrain',
 									children: getTerrainSection()
-								},
-								{
-									key: 'objective',
-									label: 'Objective',
-									children: getObjectiveSection()
 								},
 								{
 									key: 'notes',

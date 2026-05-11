@@ -7,7 +7,6 @@ import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterTurnModal } from '@/components/modals/encounter-turn/encounter-turn-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -707,8 +706,7 @@ export const EncounterRunPanel = (props: Props) => {
 							</SelectablePanel>
 						))
 					}
-					{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
-					{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
+					{encounter.notes.length === 0 ? <Empty text='No notes' /> : null}
 				</Space>
 			</div>
 		);

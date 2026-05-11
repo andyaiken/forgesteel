@@ -31,11 +31,11 @@ export class HeroUpdateLogic {
 			hero.folder = '';
 		}
 
-		if (hero.settingIDs === undefined) {
-			hero.settingIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
+		if (hero.sourcebookIDs === undefined) {
+			hero.sourcebookIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
 		}
 
-		hero.settingIDs = hero.settingIDs.map(id => id === '' ? SourcebookData.core.id : id);
+		hero.sourcebookIDs = hero.sourcebookIDs.map(id => id === '' ? SourcebookData.core.id : id);
 
 		if (hero.ancestry) {
 			hero.ancestry.features.forEach(FeatureUpdateLogic.updateFeature);

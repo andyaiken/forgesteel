@@ -145,7 +145,7 @@ export const ReferenceModal = (props: Props) => {
 	};
 
 	const getSkillsSection = () => {
-		const sourcebooks = props.hero ? props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
+		const sourcebooks = props.hero ? props.hero.sourcebookIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
 		const allSkills = SourcebookLogic.getSkills(sourcebooks);
 		const skillNames = props.hero ? HeroLogic.getSkills(props.hero, sourcebooks).map(s => s.name) : [];
 
@@ -183,7 +183,7 @@ export const ReferenceModal = (props: Props) => {
 	};
 
 	const getLanguagesSection = () => {
-		const sourcebooks = props.hero ? props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
+		const sourcebooks = props.hero ? props.hero.sourcebookIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
 		const allLanguages = SourcebookLogic.getLanguages(sourcebooks);
 		const languageNames = props.hero ? HeroLogic.getLanguages(props.hero, sourcebooks).map(l => l.name) : [];
 

@@ -1,7 +1,11 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { Config } from '@/utils/config';
 import { ConnectionSettings } from '@/models/connection-settings';
+import { Hero } from '@/models/hero';
+import { Session } from '@/models/session';
+import { Sourcebook } from '@/models/sourcebook';
 import { StorageService } from '@/services/storage/storage-service';
+import { Utils } from '@/utils/utils';
 
 export class WarehouseService implements StorageService {
 	readonly host: string;
@@ -138,9 +142,20 @@ export class WarehouseService implements StorageService {
 		return msg;
 	};
 
-	async get<T>(key: string): Promise<T | null> {
+	// #region Heroes
+
+	/**
+	 * **IMPORTANT** Will ONLY retrieve a partial object for the Heroes.
+	 * As a result, you MUST call getHero() BEFORE you can save the returned result
+	 * TODO: should update the interface contract to return HeroOverview[]
+	 */
+	async getHeroes(): Promise<Hero[]> {
 		try {
-			const response = await this.api.get(`data/${key}`);
+			const response = await this.api.get('data/forgesteel-heroes', {
+				params: {
+					fields: 'name,folder'
+				}
+			});
 			return response.data.data;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);
@@ -148,9 +163,118 @@ export class WarehouseService implements StorageService {
 		}
 	}
 
-	async put<T>(key: string, value: T): Promise<T> {
+	async getHero(id: string): Promise<Hero | null> {
 		try {
-			await this.api.put(`data/${key}`, value);
+			const response = await this.api.get(`data/forgesteel-heroes/${id}`);
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putHero(hero: Hero): Promise<Hero> {
+		try {
+			if (!hero.id?.length) {
+				hero.id = Utils.guid();
+			}
+			await this.api.put(`data/forgesteel-heroes/${hero.id}`, hero);
+			return hero;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async deleteHero(id: string): Promise<void> {
+		try {
+			const response = await this.api.delete(`data/forgesteel-heroes/${id}`);
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+	// #endregion
+
+	// #region Sourcebooks
+	async getSourcebooks(): Promise<Sourcebook[]> {
+		try {
+			const response = await this.api.get('data/forgesteel-homebrew-settings');
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async getSourcebook(id: string): Promise<Sourcebook | null> {
+		try {
+			const response = await this.api.get(`data/forgesteel-homebrew-settings/${id}`);
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putSourcebook(sourcebook: Sourcebook): Promise<Sourcebook> {
+		try {
+			if (!sourcebook.id?.length) {
+				sourcebook.id = Utils.guid();
+			}
+			await this.api.put(`data/forgesteel-homebrew-settings/${sourcebook.id}`, sourcebook);
+			return sourcebook;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async deleteSourcebook(id: string): Promise<void> {
+		try {
+			const response = await this.api.delete(`data/forgesteel-homebrew-settings/${id}`);
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+	// #endregion
+
+	async getSession(): Promise<Session | null> {
+		try {
+			const response = await this.api.get('data/forgesteel-session');
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putSession(value: Session): Promise<Session> {
+		try {
+			await this.api.put('data/forgesteel-session', value);
+			return value;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async getHiddenSourcebookIDs(): Promise<string[] | null> {
+		try {
+			const response = await this.api.get('data/forgesteel-hidden-setting-ids');
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putHiddenSourcebookIDs(value: string[]): Promise<string[]> {
+		try {
+			await this.api.put('data/forgesteel-hidden-setting-ids', value);
 			return value;
 		} catch (error) {
 			console.error('Error communicating with FS Warehouse', error);

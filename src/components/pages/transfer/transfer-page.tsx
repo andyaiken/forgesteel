@@ -54,20 +54,32 @@ export const TransferPage = (props: Props) => {
 		return ds;
 	}, [ props.connectionSettings ]);
 
-	const mergeToWarehouse = () => {
+	const mergeToWarehouse = async () => {
 		const mergedHeroes = HeroMergeLogic.merge(localHeroes, remoteHeroes, mergeBehavior);
-		warehouseDs.saveHeroes(mergedHeroes).then(setRemoteHeroes);
+		for await (const hero of mergedHeroes) {
+			await warehouseDs.saveHero(hero);
+		}
+		setRemoteHeroes(mergedHeroes);
 
 		const mergedSourcebooks = SourcebookMergeLogic.merge(localHomebrewSourcebooks, remoteHomebrewSourcebooks, mergeBehavior);
-		warehouseDs.saveHomebrew(mergedSourcebooks).then(setRemoteHomebrewSourcebooks);
+		for await (const sourcebook of mergedSourcebooks) {
+			await warehouseDs.saveSourcebook(sourcebook);
+		}
+		setRemoteHomebrewSourcebooks(mergedSourcebooks);
 	};
 
-	const copyToLocal = () => {
+	const copyToLocal = async () => {
 		const heroesCopy = Utils.copy(remoteHeroes);
-		localDs.saveHeroes(heroesCopy).then(setLocalHeroes);
+		for await (const hero of heroesCopy) {
+			await localDs.saveHero(hero);
+		}
+		setLocalHeroes(heroesCopy);
 
 		const homebrewCopy = Utils.copy(remoteHomebrewSourcebooks);
-		localDs.saveHomebrew(homebrewCopy).then(setLocalHomebrewSourcebooks);
+		for await (const sourcebook of homebrewCopy) {
+			await localDs.saveSourcebook(sourcebook);
+		}
+		setLocalHomebrewSourcebooks(homebrewCopy);
 	};
 
 	const initializeData = () => {
@@ -87,11 +99,12 @@ export const TransferPage = (props: Props) => {
 
 		setLoadingRemoteHeroes(true);
 		warehouseDs.getHeroes()
-			.then(heroes => {
-				if (heroes !== null) {
-					setRemoteHeroes(heroes);
-				}
-				setLoadingRemoteHeroes(false);
+			.then(heroPartials => {
+				const getHeroPromises = heroPartials.map(p => warehouseDs.getHero(p.id));
+				Promise.all(getHeroPromises)
+					.then(results => results.filter(h => !!h))
+					.then(setRemoteHeroes)
+					.then(() => setLoadingRemoteHeroes(false));
 			});
 
 		setLoadingRemoteHomebrew(true);

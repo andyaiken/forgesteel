@@ -1,4 +1,4 @@
-import { Hero } from '@/models/hero';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Montage } from '@/models/montage';
 import { MontageChallengesCard } from '@/components/panels/classic-sheet/montage-sheet/montage-challenges';
 import { MontageHeaderCard } from '@/components/panels/classic-sheet/montage-sheet/montage-header';
@@ -6,7 +6,6 @@ import { MontageSheetBuilder } from '@/logic/playbook-sheets/montage-sheet-build
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SuccessFailureTrackerCard } from '@/components/panels/classic-sheet/montage-sheet/success-failure-tracker';
 import { useMemo } from 'react';
-import { useOptions } from '@/contexts/data-context';
 
 import rollT1Icon from '@/assets/icons/power-roll-t1.svg';
 import rollT2Icon from '@/assets/icons/power-roll-t2.svg';
@@ -16,14 +15,14 @@ import './montage-sheet-page.scss';
 
 interface Props {
 	montage: Montage;
-	heroes: Hero[];
 }
 
 export const MontageSheetPage = (props: Props) => {
 	const options = useOptions();
+	const heroes = useHeroes();
 	const montage = useMemo(
-		() => MontageSheetBuilder.buildMontageSheet(props.montage, props.heroes, options),
-		[ props.montage, props.heroes, options ]
+		() => MontageSheetBuilder.buildMontageSheet(props.montage, heroes, options),
+		[ props.montage, heroes, options ]
 	);
 
 	const sheetClasses = useMemo(

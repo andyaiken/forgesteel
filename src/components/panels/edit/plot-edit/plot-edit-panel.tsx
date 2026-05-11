@@ -16,7 +16,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
@@ -36,7 +35,6 @@ interface Props {
 	plot: Plot;
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	onChange: (plot: Plot) => void;
 	onAddAfter: (plotPointID: string) => void;
 	onDelete: (plotPointID: string) => void;
@@ -405,7 +403,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Encounter';
 											content = (
-												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} heroes={props.heroes} />
+												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -416,7 +414,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Montage';
 											content = (
-												<MontagePanel montage={element} heroes={props.heroes} sourcebooks={props.sourcebooks} />
+												<MontagePanel montage={element} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -580,7 +578,6 @@ export const PlotEditPanel = (props: Props) => {
 				plot={plot}
 				adventure={props.adventure}
 				sourcebooks={props.sourcebooks}
-				heroes={props.heroes}
 				mode={PanelMode.Full}
 				onSelect={() => null}
 				onStart={() => null}

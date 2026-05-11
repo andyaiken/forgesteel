@@ -5,7 +5,6 @@ import { Divider } from 'antd';
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { PanelMode } from '@/enums/panel-mode';
 import { Plot } from '@/models/plot';
@@ -21,7 +20,6 @@ import './adventure-panel.scss';
 interface Props {
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	mode?: PanelMode;
 	onStart?: (kind: SourcebookElementKind, element: Element, party: string) => void;
 }
@@ -37,7 +35,6 @@ export const AdventurePanel = (props: Props) => {
 					plot={selectedPlot}
 					adventure={props.adventure}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 					mode={PanelMode.Full}
 					onSelect={setSelectedPlot}
 					onStart={props.onStart!}
@@ -51,7 +48,6 @@ export const AdventurePanel = (props: Props) => {
 					plot={currentPlot}
 					adventure={props.adventure}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 					mode={PanelMode.Full}
 					onSelect={setSelectedPlot}
 					onStart={props.onStart!}

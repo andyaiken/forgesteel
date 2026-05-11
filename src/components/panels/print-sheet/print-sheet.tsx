@@ -20,7 +20,6 @@ import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
@@ -45,7 +44,6 @@ interface Props {
 	type: string;
 	element: Element;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 }
 
 export const PrintSheet = (props: Props) => {

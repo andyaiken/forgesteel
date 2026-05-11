@@ -30,7 +30,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
@@ -81,7 +80,6 @@ import { useTitle } from '@/hooks/use-title';
 import './library-list-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	showSourcebooks: () => void;
@@ -221,7 +219,6 @@ export const LibraryListPage = (props: Props) => {
 								<EncounterSheetPage
 									encounter={element as Encounter}
 									sourcebooks={props.sourcebooks}
-									heroes={props.heroes}
 								/>
 							</div>
 						);
@@ -230,7 +227,6 @@ export const LibraryListPage = (props: Props) => {
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<MontageSheetPage
 									montage={element as Montage}
-									heroes={props.heroes}
 								/>
 							</div>
 						);
@@ -249,7 +245,7 @@ export const LibraryListPage = (props: Props) => {
 		} else {
 			switch (category) {
 				case 'adventure':
-					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'ancestry':
 					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -270,7 +266,7 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'encounter':
-					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} sourcebooks={props.sourcebooks} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
 					break;
 				case 'imbuement':
 					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -290,7 +286,7 @@ export const LibraryListPage = (props: Props) => {
 					};
 					break;
 				case 'montage':
-					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} heroes={props.heroes} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'negotiation':
 					getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -840,7 +836,6 @@ export const LibraryListPage = (props: Props) => {
 								control: (
 									<AddBtn
 										category={category}
-										heroes={props.heroes}
 										sourcebooks={props.sourcebooks}
 										showMonsters={showMonsters}
 										sourcebookID={sourcebookID}

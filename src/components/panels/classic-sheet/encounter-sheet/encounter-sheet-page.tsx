@@ -1,31 +1,30 @@
 import { FillerCard, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { DebugCard } from '@/components/panels/classic-sheet/reference/debug-card';
 import { Encounter } from '@/models/encounter';
 import { EncounterHeaderCard } from '@/components/panels/classic-sheet/encounter-header/encounter-header';
 import { EncounterRosterCard } from '@/components/panels/classic-sheet/encounter-roster/encounter-roster';
 import { EncounterSheetBuilder } from '@/logic/playbook-sheets/encounter-sheet-builder';
-import { Hero } from '@/models/hero';
 import { MaliceCard } from '@/components/panels/classic-sheet/malice-card/malice-card';
 import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { useMemo } from 'react';
-import { useOptions } from '@/contexts/data-context';
 
 import './encounter-sheet-page.scss';
 
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 }
 
 export const EncounterSheetPage = (props: Props) => {
 	const options = useOptions();
+	const heroes = useHeroes();
 	const encounter = useMemo(
-		() => EncounterSheetBuilder.buildEncounterSheet(props.encounter, props.sourcebooks, props.heroes, options),
-		[ props.encounter, props.sourcebooks, props.heroes, options ]
+		() => EncounterSheetBuilder.buildEncounterSheet(props.encounter, props.sourcebooks, heroes, options),
+		[ props.encounter, props.sourcebooks, heroes, options ]
 	);
 
 	const getMonsterCards = () => {

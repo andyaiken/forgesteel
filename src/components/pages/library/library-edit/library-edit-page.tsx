@@ -22,7 +22,6 @@ import { EncounterEditPanel } from '@/components/panels/edit/encounter-edit/enco
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { Format } from '@/utils/format';
-import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { ImbuementEditPanel } from '@/components/panels/edit/imbuement-edit/imbuement-edit-panel';
@@ -60,7 +59,6 @@ import { useTitle } from '@/hooks/use-title';
 import './library-edit-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
@@ -162,7 +160,6 @@ export const LibraryEditPage = (props: Props) => {
 							key={element.id}
 							adventure={element as Adventure}
 							sourcebooks={props.sourcebooks}
-							heroes={props.heroes}
 							onChange={applyChanges}
 						/>
 					</div>
@@ -232,7 +229,6 @@ export const LibraryEditPage = (props: Props) => {
 					<EncounterEditPanel
 						key={element.id}
 						encounter={element as Encounter}
-						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
 						onChange={applyChanges}
 						showMonster={props.showMonster}
@@ -285,7 +281,6 @@ export const LibraryEditPage = (props: Props) => {
 					<MontageEditPanel
 						key={element.id}
 						montage={element as Montage}
-						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
 						mode={PanelMode.Full}
 						onChange={applyChanges}

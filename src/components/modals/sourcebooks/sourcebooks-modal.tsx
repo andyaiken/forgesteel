@@ -5,7 +5,6 @@ import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Info } from '@/components/controls/info/info';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
@@ -23,7 +22,6 @@ import './sourcebooks-modal.scss';
 interface Props {
 	officialSourcebooks: Sourcebook[];
 	homebrewSourcebooks: Sourcebook[];
-	heroes: Hero[];
 	onClose: () => void;
 	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
 	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
@@ -82,7 +80,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -121,7 +118,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -160,7 +156,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -231,7 +226,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -279,7 +273,6 @@ export const SourcebooksModal = (props: Props) => {
 									<div style={{ padding: '0 20px 20px 20px' }}>
 										<SourcebookPanel
 											sourcebook={selectedSourcebook}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											mode={PanelMode.Full}
 											onChange={changeSourcebook}

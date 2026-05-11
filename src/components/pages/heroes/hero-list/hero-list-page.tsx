@@ -2,6 +2,8 @@ import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-foot
 import { Button, Divider, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, TeamOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Hero, HeroOverview } from '@/models/hero';
+import { useHeroes, useOptions } from '@/contexts/data-context';
+import { useMemo, useState } from 'react';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
@@ -19,15 +21,12 @@ import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
-import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
 
 import './hero-list-page.scss';
 
 interface Props {
-	heroes: HeroOverview[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	addHero: (folder: string) => void;
@@ -44,19 +43,23 @@ export const HeroListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	useTitle('Heroes');
 	const options = useOptions();
+	const fullHeroes = useHeroes();
+	const heroes = useMemo(() => {
+		return fullHeroes.map(HeroLogic.createOverview);
+	}, [ fullHeroes ]);
 
 	if (folder !== previousTab) {
 		setCurrentTab(folder ?? '');
 		setPreviousTab(folder);
 	}
 
-	const folders = Collections.distinct(props.heroes.map(h => h.folder).sort(), f => f);
+	const folders = Collections.distinct(heroes.map(h => h.folder).sort(), f => f);
 	if (folders.length === 0) {
 		folders.push('');
 	}
 
 	const getHeroes = (folder: string) => {
-		return props.heroes
+		return heroes
 			.filter(h => h.folder === folder)
 			.filter(h => Utils.textMatches([
 				h.name,

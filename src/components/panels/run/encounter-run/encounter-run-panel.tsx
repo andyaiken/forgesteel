@@ -55,7 +55,6 @@ interface SelectedMonsterInfo {
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	onChange: (encounter: Encounter) => void;
 	showTools?: (tool: string) => void;
 }
@@ -713,7 +712,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<EncounterDifficultyPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 					showHeader={false}
 				/>
 			</div>
@@ -782,7 +780,6 @@ export const EncounterRunPanel = (props: Props) => {
 			</div>
 			<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} size={500}>
 				<HeroSelectModal
-					heroes={props.heroes}
 					sourcebooks={props.sourcebooks}
 					onClose={() => setAddingHeroes(false)}
 					onSelect={heroes => {

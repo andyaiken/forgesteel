@@ -1,5 +1,5 @@
 import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Spin, Tag } from 'antd';
-import { useDataManager, useOptions } from '@/contexts/data-context';
+import { useDataManager, useHeroes, useOptions } from '@/contexts/data-context';
 import { useEffect, useMemo, useState } from 'react';
 import { AbilityData } from '@/data/ability-data';
 import { Career } from '@/models/career';
@@ -9,7 +9,6 @@ import { ComplicationCard } from '@/components/panels/classic-sheet/complication
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
@@ -26,16 +25,16 @@ import { useParams } from 'react-router';
 import './hero-sheet-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 }
 
 export const HeroSheetPreviewPage = (props: Props) => {
 	const options = useOptions();
+	const heroes = useHeroes();
 	const { heroID } = useParams<{ heroID: string }>();
 	const hero = useMemo(
-		() => props.heroes.find(h => h.id === heroID)!,
-		[ heroID, props.heroes ]
+		() => heroes.find(h => h.id === heroID)!,
+		[ heroID, heroes ]
 	);
 
 	const [ drawerOpen, setDrawerOpen ] = useState(false);

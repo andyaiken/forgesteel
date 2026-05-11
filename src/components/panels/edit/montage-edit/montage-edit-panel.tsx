@@ -9,7 +9,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
@@ -26,7 +25,6 @@ import './montage-edit-panel.scss';
 
 interface Props {
 	montage: Montage;
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	onChange: (montage: Montage) => void;
@@ -560,7 +558,6 @@ export const MontageEditPanel = (props: Props) => {
 											<SelectablePanel>
 												<MontagePanel
 													montage={montage}
-													heroes={props.heroes}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}
 												/>

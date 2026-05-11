@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
-import { useDataManager, useOptions, useSession } from '@/contexts/data-context';
+import { useDataManager, useHeroes, useOptions, useSession } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
@@ -108,7 +108,6 @@ import { useSyncStatus } from '@/hooks/use-sync-status';
 import './main.scss';
 
 interface Props {
-	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
@@ -118,10 +117,10 @@ export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
-	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const options = useOptions();
 	const session = useSession();
+	const heroes = useHeroes();
 	const dataManager = useDataManager();
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
@@ -137,25 +136,8 @@ export const Main = (props: Props) => {
 	// #region Persistence
 
 	const persistHero = (hero: Hero) => {
-		let newHeroes: Hero[];
-		if (heroes.some(h => h.id === hero.id)) {
-			Analytics.logHeroEdited(hero);
-
-			const copy = Utils.copy(heroes);
-			const list = copy.map(h => h.id === hero.id ? hero : h);
-			newHeroes = list;
-		} else {
-			Analytics.logHeroCreated(hero);
-
-			const copy = Utils.copy(heroes);
-			copy.push(hero);
-			Collections.sort(copy, h => h.name);
-			newHeroes = copy;
-		}
-
-		return dataService
+		return dataManager
 			.saveHero(hero)
-			.then(() => setHeroes(newHeroes))
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -275,13 +257,11 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHero = (hero: Hero) => {
-		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
-		const stayInFolder = copy.some(h => h.folder === hero.folder);
+		const stayInFolder = heroes.some(h => h.id !== hero.id && h.folder === hero.folder);
 		navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 
-		return dataService.deleteHero(hero.id)
+		return dataManager.deleteHero(hero)
 			.then(() => {
-				setHeroes(copy);
 				navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 			})
 			.catch(err => {
@@ -1471,7 +1451,6 @@ export const Main = (props: Props) => {
 	const showSettings = () => {
 		setDrawer(
 			<SettingsModal
-				heroes={heroes}
 				connectionSettings={connectionSettings}
 				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
@@ -1761,7 +1740,6 @@ export const Main = (props: Props) => {
 	const showSourcebooks = () => {
 		setDrawer(
 			<SourcebooksModal
-				heroes={heroes}
 				officialSourcebooks={SourcebookLogic.getSourcebooks()}
 				homebrewSourcebooks={homebrewSourcebooks}
 				onClose={() => setDrawer(null)}
@@ -1836,7 +1814,6 @@ export const Main = (props: Props) => {
 							path=':folder?'
 							element={
 								<HeroListPage
-									heroes={heroes.map(HeroLogic.createOverview)}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									addHero={newHero}
@@ -1849,7 +1826,6 @@ export const Main = (props: Props) => {
 							path='view/:heroID'
 							element={
 								<HeroViewPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									exportHeroData={exportHeroData}
@@ -1891,7 +1867,6 @@ export const Main = (props: Props) => {
 							path='edit/:heroID/:page'
 							element={
 								<HeroEditPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									saveChanges={saveHero}
@@ -1903,7 +1878,6 @@ export const Main = (props: Props) => {
 							path='sheet/:heroID'
 							element={
 								<HeroSheetPreviewPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								/>
 							}
@@ -1918,7 +1892,6 @@ export const Main = (props: Props) => {
 							path=':kind/:elementID?'
 							element={
 								<LibraryListPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									showSourcebooks={showSourcebooks}
@@ -1942,7 +1915,6 @@ export const Main = (props: Props) => {
 							path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
 							element={
 								<LibraryEditPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
@@ -1955,7 +1927,6 @@ export const Main = (props: Props) => {
 							path='print/:kind/:sourcebookID/:elementID'
 							element={
 								<LibraryPrintPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								/>
 							}
@@ -1970,7 +1941,6 @@ export const Main = (props: Props) => {
 							path='director'
 							element={
 								<SessionDirectorPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 									showPlayerView={showPlayerView}
@@ -1994,7 +1964,6 @@ export const Main = (props: Props) => {
 							path='player'
 							element={
 								<SessionPlayerPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									params={footerParams}
 								/>
@@ -2017,7 +1986,6 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<BackupPage
-								heroes={heroes}
 								homebrewSourcebooks={homebrewSourcebooks}
 							/>
 						}

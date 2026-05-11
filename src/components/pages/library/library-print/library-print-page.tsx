@@ -1,7 +1,6 @@
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Hero } from '@/models/hero';
 import { PrintSheet } from '@/components/panels/print-sheet/print-sheet';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -10,7 +9,6 @@ import { useTitle } from '@/hooks/use-title';
 import './library-print-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 }
 
@@ -71,7 +69,6 @@ export const LibraryPrintPage = (props: Props) => {
 					type={kind!}
 					element={element}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 				/>
 			</div>
 		</ErrorBoundary>

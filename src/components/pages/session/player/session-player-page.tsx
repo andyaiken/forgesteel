@@ -4,7 +4,6 @@ import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterRunPanel } from '@/components/panels/run/encounter-run/encounter-run-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { PanelMode } from '@/enums/panel-mode';
@@ -16,7 +15,6 @@ import { useSession } from '@/contexts/data-context';
 import './session-player-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 }
@@ -30,7 +28,6 @@ export const SessionPlayerPage = (props: Props) => {
 				<EncounterRunPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 					onChange={() => null}
 				/>
 			);
@@ -41,7 +38,6 @@ export const SessionPlayerPage = (props: Props) => {
 			return (
 				<MontageRunPanel
 					montage={montage}
-					heroes={props.heroes}
 					onChange={() => null}
 				/>
 			);
@@ -64,7 +60,6 @@ export const SessionPlayerPage = (props: Props) => {
 					key={JSON.stringify(map)}
 					map={map}
 					display={TacticalMapDisplayType.Player}
-					heroes={props.heroes}
 					encounters={session.encounters}
 					sourcebooks={props.sourcebooks}
 					mode={PanelMode.Full}

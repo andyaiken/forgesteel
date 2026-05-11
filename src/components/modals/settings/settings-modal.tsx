@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
-import { useDataManager, useOptions } from '@/contexts/data-context';
+import { useDataManager, useHeroes, useOptions } from '@/contexts/data-context';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -12,7 +12,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -31,7 +30,6 @@ import { useTheme } from '@/hooks/use-theme';
 import './settings-modal.scss';
 
 interface Props {
-	heroes: Hero[];
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 	setConnectionSettings: (settings: ConnectionSettings) => void
@@ -65,6 +63,7 @@ export const SettingsModal = (props: Props) => {
 		setReloadNeeded(true);
 	};
 
+	const heroes = useHeroes();
 	const dataManager = useDataManager();
 	const saveOptions = (options: Options) => {
 		dataManager.saveOptions(options);
@@ -495,7 +494,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		const parties = Collections
-			.distinct(props.heroes.map(h => h.folder), f => f)
+			.distinct(heroes.map(h => h.folder), f => f)
 			.sort()
 			.filter(f => !!f);
 
@@ -555,7 +554,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		const parties = Collections
-			.distinct(props.heroes.map(h => h.folder), f => f)
+			.distinct(heroes.map(h => h.folder), f => f)
 			.sort()
 			.filter(f => !!f);
 

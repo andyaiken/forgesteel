@@ -30,6 +30,7 @@ import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/stan
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { useHeroes } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -38,7 +39,6 @@ import { useTitle } from '@/hooks/use-title';
 import './hero-view-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	exportHeroData: (hero: Hero) => void;
@@ -76,9 +76,10 @@ export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<string>('modern');
+	const heroes = useHeroes();
 	const hero = useMemo(
-		() => props.heroes.find(h => h.id === heroID)!,
-		[ heroID, props.heroes ]
+		() => heroes.find(h => h.id === heroID)!,
+		[ heroID, heroes ]
 	);
 	useTitle(hero.name || 'Unnamed Hero');
 

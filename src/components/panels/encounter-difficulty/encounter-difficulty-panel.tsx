@@ -1,34 +1,33 @@
 import { Alert, Slider } from 'antd';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Info } from '@/components/controls/info/info';
 import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
-import { useOptions } from '@/contexts/data-context';
 
 import './encounter-difficulty-panel.scss';
 
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	showHeader?: boolean;
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
 	const options = useOptions();
+	const heroes = useHeroes();
 	const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
-	const budgets = EncounterDifficultyLogic.getBudgets(options, props.heroes);
+	const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 	const victories = EncounterDifficultyLogic.getVictories(difficulty);
 
 	const marks: Record<string | number, ReactNode> = {};

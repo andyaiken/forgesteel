@@ -14,12 +14,12 @@ import { NameSuggestions } from '@/components/panels/name-suggestions/name-sugge
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
+import { useHeroes } from '@/contexts/data-context';
 
 import './details-section.scss';
 
 interface DetailsSectionProps {
 	hero: Hero;
-	allHeroes: Hero[];
 	sourcebooks: Sourcebook[];
 	setName: (value: string) => void;
 	setPicture: (value: string | null) => void;
@@ -28,7 +28,8 @@ interface DetailsSectionProps {
 }
 
 export const DetailsSection = (props: DetailsSectionProps) => {
-	const folders = props.allHeroes
+	const allHeroes = useHeroes();
+	const folders = allHeroes
 		.map(h => h.folder)
 		.filter(f => !!f)
 		.sort();

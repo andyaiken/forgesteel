@@ -12,12 +12,12 @@ import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { useHeroes } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './hero-select-modal.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
 	onSelect: (heroes: Hero[]) => void;
@@ -26,12 +26,13 @@ interface Props {
 export const HeroSelectModal = (props: Props) => {
 	const [ mode, setMode ] = useState<string>('folder');
 	const [ heroName, setHeroName ] = useState<string>('');
+	const heroes = useHeroes();
 
 	const getContent = () => {
 		switch (mode) {
 			case 'folder': {
 				const folders = Collections
-					.distinct(props.heroes.map(h => h.folder), f => f)
+					.distinct(heroes.map(h => h.folder), f => f)
 					.sort()
 					.filter(f => !!f);
 
@@ -52,12 +53,12 @@ export const HeroSelectModal = (props: Props) => {
 							folders.map(f => (
 								<SelectablePanel
 									key={f}
-									onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
+									onSelect={() => props.onSelect(heroes.filter(h => h.folder === f))}
 								>
 									<HeaderText level={1}>{f}</HeaderText>
 									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
-											props.heroes
+											heroes
 												.filter(h => h.folder === f)
 												.sort()
 												.map(h => <HeroInfo key={h.id} hero={h} />)
@@ -70,8 +71,6 @@ export const HeroSelectModal = (props: Props) => {
 				);
 			}
 			case 'hero': {
-				const heroes = props.heroes;
-
 				if (heroes.length === 0) {
 					return (
 						<Empty text='No heroes' />

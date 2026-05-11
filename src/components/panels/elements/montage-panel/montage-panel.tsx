@@ -1,10 +1,10 @@
 import { Flex, Segmented, Space } from 'antd';
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontageLogic } from '@/logic/montage-logic';
 import { PanelMode } from '@/enums/panel-mode';
@@ -14,14 +14,12 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
-import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './montage-panel.scss';
 
 interface Props {
 	montage: Montage;
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 }
@@ -29,6 +27,7 @@ interface Props {
 export const MontagePanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 	const options = useOptions();
+	const heroes = useHeroes();
 
 	const getOverview = () => {
 		return (
@@ -45,7 +44,7 @@ export const MontagePanel = (props: Props) => {
 						label='Success Limit'
 						value={(
 							<Space>
-								{MontageLogic.getSuccessLimit(props.montage, props.heroes, options)}
+								{MontageLogic.getSuccessLimit(props.montage, heroes, options)}
 								<CheckIcon state='success' />
 							</Space>
 						)}
@@ -55,7 +54,7 @@ export const MontagePanel = (props: Props) => {
 						label='Failure Limit'
 						value={(
 							<Space>
-								{MontageLogic.getFailureLimit(props.montage, props.heroes, options)}
+								{MontageLogic.getFailureLimit(props.montage, heroes, options)}
 								<CheckIcon state='failure' />
 							</Space>
 						)}

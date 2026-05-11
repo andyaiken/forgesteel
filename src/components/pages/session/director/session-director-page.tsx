@@ -37,7 +37,6 @@ import { useTitle } from '@/hooks/use-title';
 import './session-director-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	showPlayerView: () => void;
@@ -102,7 +101,6 @@ export const SessionDirectorPage = (props: Props) => {
 							key={encounter.id}
 							encounter={encounter}
 							sourcebooks={props.sourcebooks}
-							heroes={props.heroes}
 							onChange={props.updateEncounter}
 							showTools={tool => props.showEncounterTools(encounter, tool)}
 						/>
@@ -117,7 +115,6 @@ export const SessionDirectorPage = (props: Props) => {
 						<MontageRunPanel
 							key={montage.id}
 							montage={montage}
-							heroes={props.heroes}
 							onChange={props.updateMontage}
 						/>
 					</div>
@@ -145,7 +142,6 @@ export const SessionDirectorPage = (props: Props) => {
 							key={map.id}
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
-							heroes={props.heroes}
 							encounters={session.encounters}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}

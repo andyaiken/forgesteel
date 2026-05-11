@@ -1,5 +1,6 @@
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { Segmented, Space } from 'antd';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { Empty } from '@/components/controls/empty/empty';
@@ -12,7 +13,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
@@ -24,7 +24,6 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
-import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './encounter-panel.scss';
@@ -32,7 +31,6 @@ import './encounter-panel.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	mode?: PanelMode;
 	showTools?: (tool: string) => void;
 }
@@ -40,12 +38,13 @@ interface Props {
 export const EncounterPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 	const options = useOptions();
+	const heroes = useHeroes();
 
 	const getOverview = () => {
 		return (
 			<>
 				<Markdown text={props.encounter.description} />
-				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} />
+				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} />
 				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</>
 		);
@@ -287,7 +286,7 @@ export const EncounterPanel = (props: Props) => {
 	}
 
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 	tags.push(difficulty);
 
 	if (props.mode !== PanelMode.Full) {

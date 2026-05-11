@@ -34,11 +34,11 @@ root.render(
 									<DataManagerProvider
 										dataService={data.service}
 										initialOptions={data.options}
-										initiaSession={data.session}
+										initialSession={data.session}
+										initialHeroes={data.heroes}
 										initialHiddenSourcebookIDs={data.hiddenSourcebookIDs}
 									>
 										<Main
-											heroes={data.heroes}
 											homebrewSourcebooks={data.homebrewSourcebooks}
 											connectionSettings={data.connectionSettings}
 											dataService={data.service}

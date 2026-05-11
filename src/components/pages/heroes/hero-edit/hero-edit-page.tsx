@@ -4,6 +4,7 @@ import { CloseOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/ic
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Feature, FeatureClassAbilityData, FeatureData } from '@/models/feature';
 import { Hero, HeroEditTab } from '@/models/hero';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { useMemo, useState } from 'react';
 import { Ancestry } from '@/models/ancestry';
 import { AncestrySection } from '@/components/pages/heroes/hero-edit/ancestry-section/ancestry-section';
@@ -34,7 +35,6 @@ import { SubClass } from '@/models/subclass';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
 
@@ -49,7 +49,6 @@ enum PageState {
 }
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	saveChanges: (hero: Hero) => void;
@@ -59,9 +58,10 @@ interface Props {
 export const HeroEditPage = (props: Props) => {
 	const isSmall = useIsSmall();
 	const options = useOptions();
+	const heroes = useHeroes();
 	const navigation = useNavigation();
 	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
-	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
+	const originalHero = useMemo(() => heroes.find(h => h.id === heroID)!, [ heroID, heroes ]);
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(originalHero));
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
@@ -581,7 +581,6 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<DetailsSection
 						hero={hero}
-						allHeroes={props.heroes}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
 						setName={setName}
 						setPicture={setPicture}

@@ -5,6 +5,7 @@ import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/mo
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -22,7 +23,6 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
@@ -40,13 +40,11 @@ import { TerrainLogic } from '@/logic/terrain-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { useOptions } from '@/contexts/data-context';
 
 import './encounter-edit-panel.scss';
 
 interface Props {
 	encounter: Encounter;
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	onChange: (encounter: Encounter) => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
@@ -63,6 +61,7 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ draggedMonster, setDraggedMonster ] = useState<Monster | null>(null);
 	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
 	const options = useOptions();
+	const heroes = useHeroes();
 
 	const switchLeftTab = (key: string) => {
 		setActiveLeftTabKey(key);
@@ -696,14 +695,13 @@ ${value.victories}`
 
 	const getDifficultySection = () => {
 		const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 
 		return (
 			<Expander title='Difficulty' tags={[ difficulty ]} style={{ flex: '0 0 auto' }}>
 				<EncounterDifficultyPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
 				/>
 			</Expander>
 		);

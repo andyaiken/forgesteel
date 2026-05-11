@@ -11,7 +11,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
@@ -31,7 +30,6 @@ interface PlotPanelProps {
 	plot: Plot;
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
 	mode?: PanelMode;
 	onSelect: (plot: Plot) => void;
 	onStart: (kind: SourcebookElementKind, element: Element, party: string) => void;
@@ -81,7 +79,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 									<EncounterPanel
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
-										heroes={props.heroes}
 									/>
 									<SashPanel monogram='Encounter' />
 								</SelectablePanel>
@@ -96,7 +93,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary('montage', montage.id)}>
 									<MontagePanel
 										montage={montage}
-										heroes={props.heroes}
 										sourcebooks={props.sourcebooks}
 									/>
 									<SashPanel monogram='Montage' />

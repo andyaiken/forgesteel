@@ -44,7 +44,7 @@ export class EncounterSheetBuilder {
 		sheet.failureCondition = encounter.objective?.failureCondition;
 		/* eslint-enable @typescript-eslint/no-deprecated */
 
-		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks));
+		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks, options.minionMultiplier));
 
 		const terrain = encounter.terrain.map(slot => SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID)).filter(t => !!t);
 		sheet.terrain = terrain;
@@ -80,8 +80,8 @@ export class EncounterSheetBuilder {
 		return sheet;
 	};
 
-	static buildEncounterGroupSheet = (group: EncounterGroup, sourcebooks: Sourcebook[]): EncounterGroupSheet => {
-		const slots = group.slots.map(s => this.buildEncounterSlotSheet(s, sourcebooks)).filter(s => !!s);
+	static buildEncounterGroupSheet = (group: EncounterGroup, sourcebooks: Sourcebook[], minionMultiplier: number): EncounterGroupSheet => {
+		const slots = group.slots.map(s => this.buildEncounterSlotSheet(s, sourcebooks, minionMultiplier)).filter(s => !!s);
 		const adjustedSlots: EncounterSlotSheet[] = [];
 		slots.forEach(slot => {
 			const existingMinion = adjustedSlots.filter(s => s.isMinion).find(s => s.monster.id === slot.monster.id);
@@ -119,13 +119,13 @@ export class EncounterSheetBuilder {
 		return sheet;
 	};
 
-	static buildEncounterSlotSheet = (slot: EncounterSlot, sourcebooks: Sourcebook[]): EncounterSlotSheet | null => {
+	static buildEncounterSlotSheet = (slot: EncounterSlot, sourcebooks: Sourcebook[], minionMultiplier: number): EncounterSlotSheet | null => {
 		const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 		if (!monster) {
 			console.error('Failed to get monster for encounter slot:', slot);
 			return null;
 		}
-		const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization);
+		const roleMult = MonsterLogic.getRoleMultiplier(minionMultiplier, monster.role.organization);
 		const sheet: EncounterSlotSheet = {
 			id: slot.id,
 			monster: monster,

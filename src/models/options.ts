@@ -28,6 +28,7 @@ export interface Options {
 	similarRole: boolean;
 	similarOrganization: boolean;
 	similarSize: boolean;
+	minionMultiplier: number;
 	// Encounter
 	party: string;
 	// Encounter: Running

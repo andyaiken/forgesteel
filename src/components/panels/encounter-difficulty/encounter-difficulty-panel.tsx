@@ -25,7 +25,7 @@ interface Props {
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
-	const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
+	const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, props.options.minionMultiplier);
 	const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
 	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);

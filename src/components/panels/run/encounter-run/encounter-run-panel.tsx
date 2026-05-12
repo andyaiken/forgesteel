@@ -106,7 +106,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const addSlot = (monster: Monster) => {
 		const slot = FactoryLogic.createEncounterSlot(monster.id);
-		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization);
+		slot.count = MonsterLogic.getRoleMultiplier(props.options.minionMultiplier, monster.role.organization);
 
 		while (slot.monsters.length < slot.count) {
 			const monsterCopy = Utils.copy(monster);

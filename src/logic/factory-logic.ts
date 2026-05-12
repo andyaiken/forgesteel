@@ -1063,6 +1063,7 @@ export class FactoryLogic {
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
+			minionMultiplier: 4,
 			// Encounter
 			party: '',
 			// Encounter: Running

@@ -24,7 +24,7 @@ export const HeroSourcebooksModal = (props: Props) => {
 
 	const onChange = (sourcebookIDs: string[]) => {
 		const heroCopy = Utils.copy(hero);
-		heroCopy.settingIDs = sourcebookIDs;
+		heroCopy.sourcebookIDs = sourcebookIDs;
 		setHero(heroCopy);
 		props.onChange(heroCopy);
 	};
@@ -36,7 +36,7 @@ export const HeroSourcebooksModal = (props: Props) => {
 					<div className='hero-sourcebooks-modal'>
 						<HeroSourcebooksPanel
 							sourcebooks={props.allSourcebooks}
-							sourcebookIDs={props.hero.settingIDs}
+							sourcebookIDs={props.hero.sourcebookIDs}
 							onImportSourcebook={props.onImportSourcebook}
 							onChange={onChange}
 						/>

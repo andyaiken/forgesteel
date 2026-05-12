@@ -1,9 +1,12 @@
-import { Alert, Button, Drawer, Flex, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Space, Tabs } from 'antd';
+import { EditFilled, EditOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '@/components/panels/encounter-group/encounter-group-panel';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
+import { Element } from '@/models/element';
+import { ElementEditPanel } from '../../edit/element-edit/element-edit-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
@@ -19,7 +22,6 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSelectModal } from '@/components/modals/select/hero-select/hero-select-modal';
 import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -687,27 +689,42 @@ export const EncounterRunPanel = (props: Props) => {
 	};
 
 	const getNotes = () => {
+		const addNote = () => {
+			const copy = Utils.copy(encounter);
+			copy.notes.push({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			});
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const setNote = (note: Element) => {
+			const copy = Utils.copy(encounter);
+			const index = copy.notes.findIndex(n => n.id === note.id);
+			if (index !== -1) {
+				copy.notes[index] = note;
+			}
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<div style={{ padding: '5px' }}>
 				{
 					encounter.description ?
-						<>
+						<SelectablePanel>
 							<HeaderText level={1}>Encounter Description</HeaderText>
 							<Markdown text={encounter.description} />
-						</>
+						</SelectablePanel>
 						: null
 				}
 				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						encounter.notes.map(note => (
-							<SelectablePanel key={note.id}>
-								<HeaderText level={1}>{note.name}</HeaderText>
-								<Markdown text={note.description} />
-							</SelectablePanel>
-						))
-					}
-					{encounter.notes.length === 0 ? <Empty text='No notes' /> : null}
+					{encounter.notes.map(note => <NotePanel key={note.id} note={note} onChange={setNote} />)}
 				</Space>
+				<Divider />
+				<Button block={true} icon={<PlusOutlined />} onClick={addNote}>Add a Note</Button>
 			</div>
 		);
 	};
@@ -946,6 +963,54 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
+		</ErrorBoundary>
+	);
+};
+
+interface NotePanelProps {
+	note: Element;
+	onChange: (value: Element) => void;
+}
+
+const NotePanel = (props: NotePanelProps) => {
+	const [ note, setNote ] = useState<Element>(Utils.copy(props.note));
+	const [ editing, setEditing ] = useState<boolean>(false);
+
+	const onChange = (value: Element) => {
+		setNote(value);
+		props.onChange(value);
+	};
+
+	const editBtn = (
+		<Button
+			type='text'
+			icon={editing ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />}
+			onClick={() => setEditing(!editing)}
+		/>
+	);
+
+	if (editing) {
+		return (
+			<ErrorBoundary>
+				<SelectablePanel key={note.id}>
+					<HeaderText level={1} extra={editBtn}>
+						Note
+					</HeaderText>
+					<ElementEditPanel element={note} onChange={onChange} />
+				</SelectablePanel>
+
+			</ErrorBoundary>
+		);
+	}
+
+	return (
+		<ErrorBoundary>
+			<SelectablePanel key={note.id}>
+				<HeaderText level={1} extra={editBtn}>
+					{note.name || 'Note'}
+				</HeaderText>
+				{note.description ? <Markdown text={note.description} /> : <Empty />}
+			</SelectablePanel>
 		</ErrorBoundary>
 	);
 };

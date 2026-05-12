@@ -68,11 +68,11 @@ import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
 export class FactoryLogic {
-	static createElement = (name?: string): Element => {
+	static createElement = (name?: string, description?: string): Element => {
 		return {
 			id: Utils.guid(),
 			name: name || '',
-			description: ''
+			description: description || ''
 		};
 	};
 
@@ -657,7 +657,10 @@ export class FactoryLogic {
 			terrain: [],
 			heroes: [],
 			objective: null,
-			notes: [],
+			notes: [
+				FactoryLogic.createElement('Tactics'),
+				FactoryLogic.createElement('Ending the Encounter')
+			],
 			initiative: undefined,
 			round: 0,
 			malice: 0,

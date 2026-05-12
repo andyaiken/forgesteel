@@ -170,11 +170,11 @@ const revenant: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
-		ability: 'If you die, you come back to life at night with a dead Townsfolk’s ability instead of this ability.',
+		ability: 'If you die, you come back to life at night as a dead Townsfolk.',
 		otherNightReminder: 'If dead, resurrect.'
 	},
 	details: {
-		description: 'When you die, you lose the Revenant ability and gain the ability of a dead Townsfolk of the Storyteller’s choice before being resurrected. However, the dead Townsfolk ability you gain might be your own, in which case you can die and come back to life again.'
+		description: 'When you die, you become a dead Townsfolk of the Storyteller’s choice before being resurrected. However, the dead Townsfolk you become might be the Revenant, in which case you can die and come back to life again.'
 	}
 };
 
@@ -188,16 +188,11 @@ const shadow: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
-		ability: 'Each day, publicly state how many evil players you believe are alive. That night, learn how accurate you are.',
-		otherNightReminder: 'Learn correct / too high / too low.',
-		reminders: [
-			'Correct',
-			'Too low',
-			'Too high'
-		]
+		ability: 'Each night*, learn how many players changed character tonight.',
+		otherNightReminder: 'Learn how many players changed character.'
 	},
 	details: {
-		description: 'Each day, you must publicly state how many evil players you believe are alive. That night, you learn whether your guess was correct, too low, or too high based on the current game state. If you are drunk or poisoned, this feedback may be incorrect.'
+		description: 'Each night, you learn how many players changed character since dusk.'
 	}
 };
 
@@ -233,14 +228,20 @@ const talent: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Give me but a moment, and I will become whoever we need.',
-		ability: 'You learn two not-in-play roles; once per game, claim one and gain its ability.',
-		firstNightReminder: 'Learn 2 not-in-play roles.',
-		reminders: [
-			'Ability used'
+		ability: 'You learn two roles; once per game, when you publicly claim to be one of them, you become that role.',
+		firstNightReminder: 'Learn 2 roles.',
+		remindersGlobal: [
+			'Is the Talent'
+		],
+		special: [
+			{
+				type: 'reveal',
+				name: 'replace-character'
+			}
 		]
 	},
 	details: {
-		description: 'You learn two roles that are not in play at the start of the game. Once per game, you may publicly claim to be one of them and immediately gain its ability as if you were that role. This use is still affected by drunkenness or poisoning, as normal.'
+		description: 'You learn two roles at the start of the game. Once per game, you may publicly claim to be one of them and immediately become that role (your alignment does not change).'
 	}
 };
 
@@ -778,6 +779,7 @@ export class ClocktowerData {
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
 				// Modification
+				'conduit',
 				'angulotl',
 				'rival'
 			],
@@ -785,6 +787,7 @@ export class ClocktowerData {
 				// Grim
 				'memonek',
 				// Modification
+				'conduit',
 				'angulotl',
 				'censor',
 				'tactician',
@@ -793,16 +796,15 @@ export class ClocktowerData {
 				'blightphage',
 				'torlas',
 				// Info
-				'agent',
-				'shadow'
+				'agent'
 			]
 		},
 		characters: [
 			agent,
 			censor,
+			conduit,
 			elementalist,
 			fury,
-			shadow,
 			tactician,
 			coward,
 			memonek,

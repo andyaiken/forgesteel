@@ -475,7 +475,7 @@ const aurumvas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'More!',
-		ability: 'Each night*, choose a player: they either die, or become evil (your choice). You cannot choose to change alignment on consecutive nights. [No minions]',
+		ability: 'Each night*, choose a player: they die or become evil (your choice). You cannot choose to kill on night 1, or to change alignment on consecutive nights. [No minions]',
 		otherNightReminder: 'Choose a player; they die or become evil.',
 		reminders: [
 			'Killed'
@@ -483,7 +483,7 @@ const aurumvas: ClocktowerCharacter = {
 		setup: true
 	},
 	details: {
-		description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you choose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team), and you cannot then choose to recruit again the next night.'
+		description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you choose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team). You cannot kill on night 1, and when you choose to recruit you cannot then choose to recruit again the next night.'
 	}
 };
 

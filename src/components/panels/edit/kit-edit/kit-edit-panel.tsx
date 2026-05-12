@@ -356,7 +356,7 @@ export const KitEditPanel = (props: Props) => {
 		constraints.push({ name: 'Disengage max +1', value: kit.disengage <= 1 });
 		constraints.push({ name: 'Speed max +3', value: kit.speed <= 3 });
 		constraints.push({ name: 'Stability max +3', value: kit.stability <= 3 });
-		constraints.push({ name: 'Has disengage OR stability', value: ((kit.disengage > 0) && (kit.stability === 0)) || ((kit.disengage === 0) && (kit.stability < 0)) });
+		constraints.push({ name: 'Has disengage OR stability', value: ((kit.disengage > 0) && (kit.stability === 0)) || ((kit.disengage === 0) && (kit.stability > 0)) });
 
 		gear.push({ name: 'Light Armor', value: kit.stamina >= 3 });
 		gear.push({ name: 'Light Armor + Shield', value: kit.stamina >= 6 });

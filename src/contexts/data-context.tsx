@@ -5,6 +5,8 @@ import { DataService } from '@/services/data-service';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 interface DataManagerDispatchers {
@@ -12,6 +14,7 @@ interface DataManagerDispatchers {
 	session: ActionDispatch<[ReducerAction<Session>]>;
 	hiddenSourcebooks: ActionDispatch<[ReducerAction<string[]>]>;
 	hero: ActionDispatch<[ReducerAction<Hero>]>;
+	sourcebooks: ActionDispatch<[ReducerAction<Sourcebook>]>;
 }
 
 export class DataManager {
@@ -20,6 +23,7 @@ export class DataManager {
 	private readonly sessionDispatch: ActionDispatch<[ReducerAction<Session>]>;
 	private readonly hiddenSourcebooksDispatch:	ActionDispatch<[ReducerAction<string[]>]>;
 	private readonly heroDispatch: ActionDispatch<[ReducerAction<Hero>]>;
+	private readonly sourcebookDispatch: ActionDispatch<[ReducerAction<Sourcebook>]>;
 
 	constructor(service: DataService, dispatchers: DataManagerDispatchers) {
 		this.dataService = service;
@@ -27,6 +31,7 @@ export class DataManager {
 		this.sessionDispatch = dispatchers.session;
 		this.hiddenSourcebooksDispatch = dispatchers.hiddenSourcebooks;
 		this.heroDispatch = dispatchers.hero;
+		this.sourcebookDispatch = dispatchers.sourcebooks;
 	};
 
 	async saveOptions(options: Options) {
@@ -78,6 +83,26 @@ export class DataManager {
 				});
 			});
 	}
+
+	async saveSourcebook(sourcebook: Sourcebook) {
+		return this.dataService.saveSourcebook(sourcebook)
+			.then(sourcebook => {
+				this.sourcebookDispatch({
+					type: ReducerActionKind.UPDATE,
+					payload: sourcebook
+				});
+			});
+	}
+
+	async deleteSourcebook(sourcebook: Sourcebook) {
+		return this.dataService.deleteSourcebook(sourcebook.id)
+			.then(() => {
+				this.sourcebookDispatch({
+					type: ReducerActionKind.DELETE,
+					payload: sourcebook
+				});
+			});
+	}
 }
 
 enum ReducerActionKind {
@@ -96,12 +121,14 @@ interface DataManagerProps {
 	initialSession: Session;
 	initialHiddenSourcebookIDs: string[];
 	initialHeroes: Hero[];
+	initialHomebrewSourcebooks: Sourcebook[];
 }
 
 export const OptionsContext = createContext<Options | null>(null);
 export const HiddenSourcebookIDsContext = createContext<string[] | null>(null);
 export const SessionContext = createContext<Session | null>(null);
 export const HeroesContext = createContext<Hero[] | null>(null);
+export const HomebrewSourcebooksContext = createContext<Sourcebook[] | null>(null);
 
 export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) {
 	const dataService = props.dataService;
@@ -110,12 +137,14 @@ export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) 
 	const [ session, sessionDispatch ] = useReducer(UpdateOnlyReducer<Session>, props.initialSession);
 	const [ hiddenSourcebookIDs, hiddenSourcebookIDsDispatch ] = useReducer(UpdateOnlyReducer<string[]>, props.initialHiddenSourcebookIDs);
 	const [ heroes, heroDispatch ] = useReducer(HeroesReducer, props.initialHeroes);
+	const [ sourcebooks, sourcebookDispatch ] = useReducer(SourcebooksReducer, props.initialHomebrewSourcebooks);
 
 	const dataManager = new DataManager(dataService, {
 		options: optionsDispatch,
 		session: sessionDispatch,
 		hiddenSourcebooks: hiddenSourcebookIDsDispatch,
-		hero: heroDispatch
+		hero: heroDispatch,
+		sourcebooks: sourcebookDispatch
 	});
 
 	function UpdateOnlyReducer<T>(_oldState: T, action: ReducerAction<T>) {
@@ -160,14 +189,43 @@ export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) 
 		}
 	}
 
+	function SourcebooksReducer(currentSourcebooks: Sourcebook[], action: ReducerAction<Sourcebook>) {
+		let newHomebrew: Sourcebook[];
+		switch (action.type) {
+			case ReducerActionKind.UPDATE: {
+				const sourcebook = action.payload;
+				const copy = Utils.copy(currentSourcebooks);
+				if (currentSourcebooks.some(sb => sb.id === sourcebook.id)) {
+					const list = copy.map(sb => sb.id === sourcebook.id ? sourcebook : sb);
+					newHomebrew = list;
+				} else {
+					copy.push(sourcebook);
+					Collections.sort(copy, h => h.name);
+					newHomebrew = copy;
+				}
+				return newHomebrew;
+			}
+			case ReducerActionKind.DELETE: {
+				const sourcebook = action.payload;
+				const newHeroes = Utils.copy(currentSourcebooks.filter(sb => sb.id !== sourcebook.id));
+				return newHeroes;
+			}
+			default: {
+				throw Error(`Unknown or unsupported action: ${action.type}`);
+			}
+		}
+	}
+
 	return (
 		<DataManagerContext value={dataManager}>
 			<OptionsContext value={options}>
 				<SessionContext value={session}>
 					<HiddenSourcebookIDsContext value={hiddenSourcebookIDs}>
-						<HeroesContext value={heroes}>
-							{props.children}
-						</HeroesContext>
+						<HomebrewSourcebooksContext value={sourcebooks}>
+							<HeroesContext value={heroes}>
+								{props.children}
+							</HeroesContext>
+						</HomebrewSourcebooksContext>
 					</HiddenSourcebookIDsContext>
 				</SessionContext>
 			</OptionsContext>
@@ -178,50 +236,56 @@ export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) 
 export const DataManagerContext = createContext<DataManager | null>(null);
 export function useDataManager() {
 	const context = useContext(DataManagerContext);
-
 	if (!context) {
 		throw new Error('useDataManager may only be used within <DataManagerContext>');
 	}
-
 	return context;
 }
 
 export function useOptions() {
 	const context = useContext(OptionsContext);
-
 	if (!context) {
 		throw new Error('useOptions may only be used within <OptionsContext>');
 	}
-
 	return context;
 }
 
 export function useSession() {
 	const context = useContext(SessionContext);
-
 	if (!context) {
 		throw new Error('useSession may only be used within <SessionContext>');
 	}
-
 	return context;
 }
 
 export function useHiddenSourcebookIDs() {
 	const context = useContext(HiddenSourcebookIDsContext);
-
 	if (!context) {
 		throw new Error('useHiddenSourcebookIDs may only be used within <HiddenSourcebookIDsContext>');
 	}
-
 	return context;
 }
 
 export function useHeroes() {
 	const context = useContext(HeroesContext);
-
 	if (!context) {
 		throw new Error('useHeroes may only be used within <HeroesContext>');
 	}
-
 	return context;
+}
+
+export function useHomebrewSourcebooks() {
+	const context = useContext(HomebrewSourcebooksContext);
+	if (!context) {
+		throw new Error('useHomebrewSourcebooks may only be used within <HomebrewSourcebooksContext>');
+	}
+	return context;
+}
+
+export function useAllSourcebooks() {
+	const homebrewSourcebooks = useContext(HomebrewSourcebooksContext);
+	if (!homebrewSourcebooks) {
+		throw new Error('useAllSourcebooks may only be used within <HomebrewSourcebooksContext>');
+	}
+	return SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 }

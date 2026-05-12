@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
-import { useDataManager, useHeroes, useOptions, useSession } from '@/contexts/data-context';
+import { useDataManager, useHeroes, useHomebrewSourcebooks, useOptions, useSession } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
@@ -108,7 +108,6 @@ import { useSyncStatus } from '@/hooks/use-sync-status';
 import './main.scss';
 
 interface Props {
-	homebrewSourcebooks: Sourcebook[];
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }
@@ -117,10 +116,10 @@ export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const options = useOptions();
 	const session = useSession();
 	const heroes = useHeroes();
+	const homebrewSourcebooks = useHomebrewSourcebooks();
 	const dataManager = useDataManager();
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
@@ -173,21 +172,9 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHomebrewSourcebook = (homebrew: Sourcebook) => {
-		let newHomebrew: Sourcebook[];
-		if (homebrewSourcebooks.some(h => h.id === homebrew.id)) {
-			const copy = Utils.copy(homebrewSourcebooks);
-			const list = copy.map(h => h.id === homebrew.id ? homebrew : h);
-			newHomebrew = list;
-		} else {
-			const copy = Utils.copy(homebrewSourcebooks);
-			copy.push(homebrew);
-			Collections.sort(copy, h => h.name);
-			newHomebrew = copy;
-		}
-
-		return dataService
+		return dataManager
 			.saveSourcebook(homebrew)
-			.then(() => setHomebrewSourcebooks(newHomebrew))
+			// .then(() => setHomebrewSourcebooks(newHomebrew))
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -203,12 +190,7 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHomebrewSourcebook = (homebrew: Sourcebook) => {
-		const copy = Utils.copy(homebrewSourcebooks.filter(h => h.id !== homebrew.id));
-
-		return dataService.deleteSourcebook(homebrew.id)
-			.then(() => {
-				setHomebrewSourcebooks(copy);
-			})
+		return dataManager.deleteSourcebook(homebrew)
 			.catch(err => {
 				console.error(err);
 				notify.error({

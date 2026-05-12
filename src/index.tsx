@@ -36,10 +36,10 @@ root.render(
 										initialOptions={data.options}
 										initialSession={data.session}
 										initialHeroes={data.heroes}
+										initialHomebrewSourcebooks={data.homebrewSourcebooks}
 										initialHiddenSourcebookIDs={data.hiddenSourcebookIDs}
 									>
 										<Main
-											homebrewSourcebooks={data.homebrewSourcebooks}
 											connectionSettings={data.connectionSettings}
 											dataService={data.service}
 										/>

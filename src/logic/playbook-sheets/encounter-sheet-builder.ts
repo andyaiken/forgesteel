@@ -38,9 +38,11 @@ export class EncounterSheetBuilder {
 			return `### ${note.name}\n${description}`;
 		}).join('\n\n');
 
+		/* eslint-disable @typescript-eslint/no-deprecated */
 		sheet.objective = encounter.objective?.name;
 		sheet.successCondition = encounter.objective?.successCondition;
 		sheet.failureCondition = encounter.objective?.failureCondition;
+		/* eslint-enable @typescript-eslint/no-deprecated */
 
 		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks));
 

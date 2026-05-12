@@ -9,7 +9,6 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Utils } from '@/utils/utils';
@@ -20,7 +19,6 @@ import './fixture-edit-panel.scss';
 interface Props {
 	fixture: Fixture;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (fixture: Fixture) => void;
 }
 
@@ -135,7 +133,6 @@ export const FixtureEditPanel = (props: Props) => {
 							title={`Level ${lvl.level}`}
 							features={lvl.features}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={features => onChange(lvl.level, features)}
 						/>
 					))

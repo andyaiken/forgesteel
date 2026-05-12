@@ -4,7 +4,6 @@ import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -21,7 +20,6 @@ interface Props {
 	summons: Summon[];
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (summon: Summon) => void;
 }
@@ -52,7 +50,7 @@ export const SummonSelectModal = (props: Props) => {
 									key={s.id}
 									onSelect={() => props.onSelect(s)}
 								>
-									<MonsterPanel monster={SummonLogic.getSummonedMonster(s, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									<MonsterPanel monster={SummonLogic.getSummonedMonster(s, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

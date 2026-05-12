@@ -4,6 +4,7 @@ import { CloseOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/ic
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Feature, FeatureClassAbilityData, FeatureData } from '@/models/feature';
 import { Hero, HeroEditTab } from '@/models/hero';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { useMemo, useState } from 'react';
 import { Ancestry } from '@/models/ancestry';
 import { AncestrySection } from '@/components/pages/heroes/hero-edit/ancestry-section/ancestry-section';
@@ -26,7 +27,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Options } from '@/models/options';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -49,9 +49,7 @@ enum PageState {
 }
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	saveChanges: (hero: Hero) => void;
 	importSourcebook: (sourcebook: Sourcebook) => void;
@@ -59,9 +57,11 @@ interface Props {
 
 export const HeroEditPage = (props: Props) => {
 	const isSmall = useIsSmall();
+	const options = useOptions();
+	const heroes = useHeroes();
 	const navigation = useNavigation();
 	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
-	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
+	const originalHero = useMemo(() => heroes.find(h => h.id === heroID)!, [ heroID, heroes ]);
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(originalHero));
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
@@ -272,7 +272,7 @@ export const HeroEditPage = (props: Props) => {
 
 	const setLevel = (level: number) => {
 		const heroCopy = Utils.copy(hero);
-		HeroLogic.setLevel(heroCopy, props.options, level);
+		HeroLogic.setLevel(heroCopy, options, level);
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -523,7 +523,6 @@ export const HeroEditPage = (props: Props) => {
 					<AncestrySection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectAncestry={setAncestry}
 						setFeatureData={setFeatureData}
@@ -534,7 +533,6 @@ export const HeroEditPage = (props: Props) => {
 					<CultureSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectCulture={setCulture}
 						selectEnvironment={setEnvironment}
@@ -548,7 +546,6 @@ export const HeroEditPage = (props: Props) => {
 					<CareerSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectCareer={setCareer}
 						selectIncitingIncident={setIncitingIncident}
@@ -560,7 +557,6 @@ export const HeroEditPage = (props: Props) => {
 					<ClassSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectClass={setClass}
 						setLevel={setLevel}
@@ -576,7 +572,6 @@ export const HeroEditPage = (props: Props) => {
 					<ComplicationSection
 						hero={hero}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						searchTerm={searchTerm}
 						selectComplication={setComplication}
 						setFeatureData={setFeatureData}
@@ -586,9 +581,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<DetailsSection
 						hero={hero}
-						allHeroes={props.heroes}
 						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
-						options={props.options}
 						setName={setName}
 						setPicture={setPicture}
 						setFolder={setFolder}
@@ -618,7 +611,6 @@ export const HeroEditPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

@@ -10,10 +10,8 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Plot } from '@/models/plot';
 import { PlotEditPanel } from '@/components/panels/edit/plot-edit/plot-edit-panel';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
@@ -27,8 +25,6 @@ import './adventure-edit-panel.scss';
 interface Props {
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
-	options: Options;
 	onChange: (adventure: Adventure) => void;
 }
 
@@ -311,8 +307,6 @@ export const AdventureEditPanel = (props: Props) => {
 				plot={plot}
 				adventure={adventure}
 				sourcebooks={props.sourcebooks}
-				heroes={props.heroes}
-				options={props.options}
 				onChange={changePlotPoint}
 				onAddAfter={addPlotPoint}
 				onDelete={deletePlotPoint}

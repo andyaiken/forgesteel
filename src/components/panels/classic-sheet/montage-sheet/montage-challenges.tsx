@@ -1,14 +1,12 @@
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
-import { Options } from '@/models/options';
 import { useMemo } from 'react';
 
 import './montage-challenges.scss';
 
 interface Props {
 	montage: MontageSheet;
-	options: Options;
 }
 
 export const MontageChallengesCard = (props: Props) => {

@@ -3,7 +3,6 @@ import { Hero } from '@/models/hero';
 import { Kit } from '@/models/kit';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -18,7 +17,6 @@ interface Props {
 	kits: Kit[];
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (kits: Kit) => void;
 }
@@ -46,7 +44,7 @@ export const KitSelectModal = (props: Props) => {
 									key={k.id}
 									onSelect={() => props.onSelect(k)}
 								>
-									<KitPanel kit={k} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+									<KitPanel kit={k} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>
 							))
 						}

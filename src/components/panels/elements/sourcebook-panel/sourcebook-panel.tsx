@@ -11,7 +11,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { LanguageType } from '@/enums/language-type';
 import { NameDescEditPanel } from '../../edit/name-desc-edit/name-desc-edit-panel';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
@@ -22,12 +21,12 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
+import { useHeroes } from '@/contexts/data-context';
 
 import './sourcebook-panel.scss';
 
 interface Props {
 	sourcebook: Sourcebook;
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	visibility?: {
 		visible: boolean;
@@ -41,6 +40,7 @@ interface Props {
 export const SourcebookPanel = (props: Props) => {
 	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(Utils.copy(props.sourcebook));
 	const [ isEditing, setIsEditing ] = useState<boolean>(false);
+	const allHeroes = useHeroes();
 
 	const getContent = () => {
 		if (props.mode !== PanelMode.Full) {
@@ -401,7 +401,7 @@ export const SourcebookPanel = (props: Props) => {
 					/>
 				);
 
-				const heroes = props.heroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
+				const heroes = allHeroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
 
 				const used: { element: Element, type: string, container: Element }[] = [];
 				const elements = [

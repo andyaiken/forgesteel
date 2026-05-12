@@ -23,7 +23,6 @@ import { MonsterLabel } from '@/components/panels/monster-label/monster-label';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterToken } from '@/components/panels/token/token';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -40,7 +39,6 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	summon?: SummoningInfo;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	style?: CSSProperties;
 	extra?: ReactNode;
@@ -272,7 +270,6 @@ export const MonsterPanel = (props: Props) => {
 																	<FeaturePanel
 																		key={f.feature.id}
 																		feature={f.feature}
-																		options={props.options}
 																		mode={PanelMode.Full}
 																	/>
 																))

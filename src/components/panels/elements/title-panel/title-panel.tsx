@@ -7,7 +7,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
@@ -23,7 +22,6 @@ import './title-panel.scss';
 interface Props {
 	title: Title;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 	onChange?: (title: Title) => void;
@@ -107,7 +105,6 @@ export const TitlePanel = (props: Props) => {
 											<FeaturePanel
 												key={f.id}
 												feature={f}
-												options={props.options}
 												hero={props.hero}
 												sourcebooks={props.sourcebooks}
 												mode={PanelMode.Full}

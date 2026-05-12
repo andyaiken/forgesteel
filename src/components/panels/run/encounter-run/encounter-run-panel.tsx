@@ -34,7 +34,6 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -44,6 +43,7 @@ import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './encounter-run-panel.scss';
@@ -57,14 +57,13 @@ interface SelectedMonsterInfo {
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 	showTools?: (tool: string) => void;
 }
 
 export const EncounterRunPanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const options = useOptions();
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('combatants');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
@@ -337,7 +336,6 @@ export const EncounterRunPanel = (props: Props) => {
 					hero={hero}
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={setSelectedHero}
 					onSelectMonster={(monster, monsterGroupID) => {
 						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
@@ -354,7 +352,7 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const sections = [ 'current', 'ready', 'finished' ];
-		if (props.options.showDefeatedCombatants) {
+		if (options.showDefeatedCombatants) {
 			sections.push('defeated');
 		}
 
@@ -492,7 +490,6 @@ export const EncounterRunPanel = (props: Props) => {
 										key={m.monster.id}
 										monster={m.monster}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										mode={PanelMode.Full}
 										style={{ padding: '0 5px' }}
 										extra={[
@@ -522,7 +519,6 @@ export const EncounterRunPanel = (props: Props) => {
 											.map(malice => (
 												<MalicePanel
 													malice={malice}
-													options={props.options}
 													currentMalice={encounter.malice}
 													updateCurrentMalice={value => {
 														const copy = Utils.copy(encounter);
@@ -633,7 +629,6 @@ export const EncounterRunPanel = (props: Props) => {
 									<FeaturePanel
 										key={`${t.id} ${copy.id}`}
 										feature={copy}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -671,7 +666,6 @@ export const EncounterRunPanel = (props: Props) => {
 										key={`${s.id} ${copy.id}`}
 										item={copy}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										mode={PanelMode.Full}
 										style={{ paddingLeft: '0', paddingRight: '0' }}
 									/>
@@ -735,8 +729,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<EncounterDifficultyPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
-					options={props.options}
 					showHeader={false}
 				/>
 			</div>
@@ -805,9 +797,7 @@ export const EncounterRunPanel = (props: Props) => {
 			</div>
 			<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} size={500}>
 				<HeroSelectModal
-					heroes={props.heroes}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onClose={() => setAddingHeroes(false)}
 					onSelect={heroes => {
 						setAddingHeroes(false);
@@ -819,7 +809,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<MonsterSelectModal
 					monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onClose={() => setAddingMonsters(false)}
 					onSelect={m => {
 						setAddingMonsters(false);
@@ -849,7 +838,6 @@ export const EncounterRunPanel = (props: Props) => {
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.isTeamHero ? undefined : encounter}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
 								const copy = Utils.copy(encounter);

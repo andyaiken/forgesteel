@@ -8,7 +8,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
@@ -18,7 +17,6 @@ import './fixture-panel.scss';
 
 interface Props {
 	fixture: Fixture;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -38,7 +36,7 @@ export const FixturePanel = (props: Props) => {
 						props.fixture.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 							<Space key={lvl.level} orientation='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 							</Space>
 						))
 						: null

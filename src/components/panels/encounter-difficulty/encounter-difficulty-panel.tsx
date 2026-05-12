@@ -1,13 +1,12 @@
 import { Alert, Slider } from 'antd';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Info } from '@/components/controls/info/info';
-import { Options } from '@/models/options';
 import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '@/models/sourcebook';
@@ -19,16 +18,16 @@ import './encounter-difficulty-panel.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
-	options: Options;
 	showHeader?: boolean;
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
+	const options = useOptions();
+	const heroes = useHeroes();
 	const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
-	const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+	const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 	const victories = EncounterDifficultyLogic.getVictories(difficulty);
 
 	const marks: Record<string | number, ReactNode> = {};
@@ -44,13 +43,13 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		.map(s => SourcebookLogic.getMonster(props.sourcebooks, s.monsterID))
 		.filter(m => !!m)
 		.map(m => m.level);
-	if (Math.max(...levels) > props.options.heroLevel + 2) {
+	if (Math.max(...levels) > options.heroLevel + 2) {
 		warnings.push(
 			<Alert
 				key='too-high-level'
 				type='warning'
 				showIcon={true}
-				title={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${props.options.heroLevel + 2} may cause problems.`}
+				title={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${options.heroLevel + 2} may cause problems.`}
 			/>
 		);
 	}
@@ -60,7 +59,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			<div className='encounter-difficulty-panel'>
 				{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
 				<div className='ds-text'>
-					Difficulty for {OptionsLogic.getPartyDescription(props.options)}.
+					Difficulty for {OptionsLogic.getPartyDescription(options)}.
 					<Info>
 						<p>You can change the party size and level in Settings.</p>
 					</Info>

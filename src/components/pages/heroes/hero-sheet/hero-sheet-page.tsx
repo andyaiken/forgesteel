@@ -21,7 +21,6 @@ import { ItemType } from '@/enums/item-type';
 import { ModifiersCard } from '@/components/panels/classic-sheet/modifiers-card/modifiers-card';
 import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
-import { Options } from '@/models/options';
 import { PerksCard } from '@/components/panels/classic-sheet/perks-card/perks-card';
 import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/potencies-card';
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';
@@ -34,41 +33,42 @@ import { Sourcebook } from '@/models/sourcebook';
 import { StatsResourcesCard } from '@/components/panels/classic-sheet/stats-resources-card/stats-resources-card';
 import { TitlesCard } from '@/components/panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
+import { useOptions } from '@/contexts/data-context';
 
 import './hero-sheet-page.scss';
 
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
+	const options = useOptions();
 
 	const character = useMemo(
-		() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
-		[ hero, props.sourcebooks, props.options ]
+		() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, options),
+		[ hero, props.sourcebooks, options ]
 	);
 
 	const sheetClasses = useMemo(
 		() => {
 			const classes = [
 				'hero-sheet',
-				props.options.classicSheetPageSize.toLowerCase()
+				options.classicSheetPageSize.toLowerCase()
 			];
-			if (props.options.colorSheet) {
+			if (options.colorSheet) {
 				classes.push('color');
-				classes.push(`colors-${props.options.colorScheme}`);
+				classes.push(`colors-${options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
+		[ options.classicSheetPageSize, options.colorSheet, options.colorScheme ]
 	);
 
 	const layout = useMemo(
-		() => SheetLayout.getAbilityLayout(props.options),
-		[ props.options ]
+		() => SheetLayout.getAbilityLayout(options),
+		[ options ]
 	);
 
 	const populateExtraCards = (character: HeroSheet): ExtraCards => {
@@ -81,9 +81,9 @@ export const HeroSheetPage = (props: Props) => {
 			}
 		];
 
-		if (props.options.debugClassicSheet) {
+		if (options.debugClassicSheet) {
 			required.push({
-				element: <DebugCard options={props.options} key='debug' />,
+				element: <DebugCard key='debug' />,
 				width: 1,
 				height: 15,
 				shown: false
@@ -230,12 +230,12 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const addAbilityPages = (character: HeroSheet, extraCards: ExtraCards) => {
-		return SheetLayout.getAbilityPagesForCharacter(character, extraCards, layout, props.options);
+		return SheetLayout.getAbilityPagesForCharacter(character, extraCards, layout, options);
 	};
 
 	const getRemainingCards = (extraCards: ExtraCards) => {
 		const hasRetainers = character.followers.some(f => [ 'Retainer', 'Companion' ].includes(f.classification));
-		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options, hasRetainers);
+		const layoutEnd = SheetLayout.getFollowerCardsLayout(options, hasRetainers);
 		const heightRatio = 0.83;
 
 		// Recalculate card heights
@@ -283,7 +283,7 @@ export const HeroSheetPage = (props: Props) => {
 		if (character.followers.length) {
 			character.followers.filter(f => f.classification !== 'Follower').forEach(fs => {
 				extraCards.required.unshift({
-					element: <CompanionCard companion={fs} options={props.options} key={fs.id} />,
+					element: <CompanionCard companion={fs} key={fs.id} />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
 					shown: false
@@ -292,7 +292,7 @@ export const HeroSheetPage = (props: Props) => {
 			const followers = character.followers.filter(f => f.classification === 'Follower');
 			if (followers.length) {
 				extraCards.required.unshift({
-					element: <FollowersCard followers={followers} options={props.options} key='followers' />,
+					element: <FollowersCard followers={followers} key='followers' />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen)),
 					shown: false
@@ -301,7 +301,7 @@ export const HeroSheetPage = (props: Props) => {
 		}
 		character.summons.forEach(fs => {
 			extraCards.required.unshift({
-				element: <MonsterCard monster={fs} options={props.options} key={fs.id} />,
+				element: <MonsterCard monster={fs} key={fs.id} />,
 				width: 1,
 				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateMonsterSize(fs, layoutEnd.cardLineLen)),
 				shown: false
@@ -326,7 +326,7 @@ export const HeroSheetPage = (props: Props) => {
 		// Artifacts, and maybe consumables on 'overflow' inventory card
 		const artifacts = character.inventory?.filter(i => i.item.type === ItemType.Artifact) ?? [];
 		const consumables = character.inventory?.filter(i => [ ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th ].includes(i.item.type)) ?? [];
-		const maxConsumables = props.options.pageOrientation === 'portrait' ? 2 : 4; // approximation
+		const maxConsumables = options.pageOrientation === 'portrait' ? 2 : 4; // approximation
 		if (artifacts.length || consumables.length > maxConsumables) {
 			const inv = artifacts.concat(consumables);
 			const invH = SheetFormatter.calculateInventorySize(inv, layoutEnd.cardLineLen);
@@ -346,14 +346,12 @@ export const HeroSheetPage = (props: Props) => {
 		<ErrorBoundary>
 			<main id='classic-sheet'>
 				<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('hero', hero.id)}>
-					<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id)}>
+					<div className={`page page-1 ${options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id)}>
 						<HeroHeaderCard
 							character={character}
-							options={props.options}
 						/>
 						<StatsResourcesCard
 							character={character}
-							options={props.options}
 						/>
 						<ModifiersCard
 							character={character}
@@ -363,22 +361,19 @@ export const HeroSheetPage = (props: Props) => {
 						/>
 						<ConditionsCard
 							character={character}
-							options={props.options}
 						/>
 						<PrimaryReferenceCard
 							character={character}
-							options={props.options}
 						/>
 						<ImmunitiesWeaknessesCard
 							character={character}
 						/>
 						<ClassFeaturesCard
 							character={character}
-							options={props.options}
 						/>
 					</div>
 					<hr className='dashed' />
-					<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
+					<div className={`page page-2 ${options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
 						<CultureCard
 							character={character}
 						/>
@@ -402,15 +397,15 @@ export const HeroSheetPage = (props: Props) => {
 					</div>
 					{addAbilityPages(character, extraCards)}
 					<hr className='dashed' />
-					<div className={`page page-titles-inventory-projects ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'titles-inv-proj')}>
+					<div className={`page page-titles-inventory-projects ${options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'titles-inv-proj')}>
 						<TitlesCard
 							character={character}
 							showLong='all'
-							wide={props.options.pageOrientation === 'portrait'}
+							wide={options.pageOrientation === 'portrait'}
 						/>
 						<TrinketsCard
 							character={character}
-							wide={props.options.pageOrientation === 'portrait'}
+							wide={options.pageOrientation === 'portrait'}
 						/>
 						<LeveledTreasureCard
 							character={character}
@@ -418,7 +413,7 @@ export const HeroSheetPage = (props: Props) => {
 						/>
 						<ConsumablesCard
 							character={character}
-							wide={props.options.pageOrientation !== 'portrait'}
+							wide={options.pageOrientation !== 'portrait'}
 						/>
 						<ProjectsCard
 							projects={character.projects}

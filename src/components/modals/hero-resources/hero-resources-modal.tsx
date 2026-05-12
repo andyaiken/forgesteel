@@ -12,12 +12,12 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
 import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './hero-resources-modal.scss';
@@ -34,7 +34,6 @@ interface Expression {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 }
@@ -44,6 +43,7 @@ export const HeroResourcesModal = (props: Props) => {
 	const [ expression, setExpression ] = useState<Expression | null>(null);
 	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
 	const [ showRetainers, setShowRetainers ] = useState<boolean>(false);
+	const options = useOptions();
 
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
@@ -367,7 +367,6 @@ export const HeroResourcesModal = (props: Props) => {
 					<RetainerSelectModal
 						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelect={monster => {
 							setShowRetainers(false);
 
@@ -394,22 +393,22 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const minXP = HeroLogic.getMinXP(hero.class!.level, props.options);
+		const minXP = HeroLogic.getMinXP(hero.class!.level, options);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>XP</HeaderText>
 				<NumberSpin
 					min={minXP}
-					suffix={`/ ${props.options.xpPerLevel * hero.class!.level}`}
+					suffix={`/ ${options.xpPerLevel * hero.class!.level}`}
 					value={hero.state.xp}
 					onChange={setXP}
 				/>
 				<Flex justify='center'>
-					<Progress percent={100 * (hero.state.xp - minXP) / props.options.xpPerLevel} steps={props.options.xpPerLevel} showInfo={false} />
+					<Progress percent={100 * (hero.state.xp - minXP) / options.xpPerLevel} steps={options.xpPerLevel} showInfo={false} />
 				</Flex>
 				{
-					HeroLogic.canLevelUp(hero, props.options) ?
+					HeroLogic.canLevelUp(hero, options) ?
 						<Alert
 							type='info'
 							showIcon={true}
@@ -522,7 +521,6 @@ export const HeroResourcesModal = (props: Props) => {
 								<HeroLevelUpModal
 									hero={hero}
 									soucebooks={props.sourcebooks}
-									options={props.options}
 									onAccept={h => {
 										setShowLevelUp(false);
 										setHero(h);

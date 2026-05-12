@@ -3,7 +3,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
@@ -14,7 +13,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSpeed = (props: InfoProps) => {
@@ -26,7 +24,6 @@ export const InfoSpeed = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSpeedData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSpeedData) => void;
 }
 

@@ -8,7 +8,6 @@ import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -30,7 +29,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectComplication: (complication: Complication) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -59,7 +57,7 @@ export const ComplicationSection = (props: Props) => {
 				props.selectComplication(c);
 			}}
 		>
-			<ComplicationPanel complication={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<ComplicationPanel complication={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 
@@ -72,7 +70,6 @@ export const ComplicationSection = (props: Props) => {
 				<SelectablePanel key={f.id}>
 					<FeatureConfigPanel
 						feature={f}
-						options={props.options}
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
 						setData={props.setFeatureData}
@@ -92,7 +89,7 @@ export const ComplicationSection = (props: Props) => {
 				props.hero.complication && (!isSmall || (choices.length === 0)) ?
 					<div className={columnClassName} id='complication-selected'>
 						<SelectablePanel>
-							<ComplicationPanel complication={props.hero.complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+							<ComplicationPanel complication={props.hero.complication} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null

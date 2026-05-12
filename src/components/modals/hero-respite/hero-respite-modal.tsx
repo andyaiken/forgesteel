@@ -7,7 +7,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -17,7 +16,6 @@ import './hero-respite-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onTakeRespite: () => void;
 	onChange: (hero: Hero) => void;
 	onClose: () => void;
@@ -88,7 +86,6 @@ export const HeroRespiteModal = (props: Props) => {
 													feature={f}
 													hero={hero}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													setData={(featureID, data) => {
 														const copy = Utils.copy(hero);
 														const feature = HeroLogic.getFeatures(copy)

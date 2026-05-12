@@ -3,7 +3,6 @@ import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { CharacteristicsComponent } from '@/components/panels/classic-sheet/components/characteristics-component';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
-import { Options } from '@/models/options';
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
@@ -16,7 +15,6 @@ import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	companion: FollowerSheet;
-	options: Options;
 }
 
 export const CompanionCard = (props: Props) => {
@@ -75,7 +73,6 @@ export const CompanionCard = (props: Props) => {
 						companion.stamina ?
 							<StaminaComponent
 								stamina={companion.stamina}
-								options={props.options}
 							/>
 							: null
 					}
@@ -83,7 +80,6 @@ export const CompanionCard = (props: Props) => {
 						companion.recoveries ?
 							<RecoveriesComponent
 								recoveries={companion.recoveries}
-								options={props.options}
 							/>
 							: null
 					}

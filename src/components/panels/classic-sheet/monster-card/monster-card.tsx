@@ -3,7 +3,6 @@ import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { CharacteristicsComponent } from '@/components/panels/classic-sheet/components/characteristics-component';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
-import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Utils } from '@/utils/utils';
 import { useMemo } from 'react';
@@ -14,7 +13,6 @@ import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	monster: MonsterSheet;
-	options: Options;
 	columns?: number;
 }
 

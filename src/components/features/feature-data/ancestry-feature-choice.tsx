@@ -10,7 +10,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -22,7 +21,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoAncestryFeatureChoice = (props: InfoProps) => {
@@ -38,7 +36,6 @@ export const InfoAncestryFeatureChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureAncestryFeatureChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAncestryFeatureChoiceData) => void;
 }
 
@@ -82,7 +79,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAncestryFeatureChoiceData) => void;
 }
 
@@ -140,7 +136,7 @@ export const ConfigAncestryFeatureChoice = (props: ConfigProps) => {
 			/>
 			{
 				props.data.selected ?
-					<FeaturePanel feature={props.data.selected} options={props.options} />
+					<FeaturePanel feature={props.data.selected} />
 					: null
 			}
 		</Space>

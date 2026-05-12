@@ -17,7 +17,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -40,7 +39,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface CultureSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectCulture: (culture: Culture) => void;
 	selectEnvironment: (id: string | null) => void;
@@ -68,22 +66,22 @@ export const CultureSection = (props: CultureSectionProps) => {
 		.filter(c => matchElement(c, props.searchTerm));
 	const optionsYourAncestry = cultures.filter(c => c.id === (props.hero.ancestry?.culture?.id || '')).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 	const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 	const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 	const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 
@@ -94,7 +92,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+					<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 
@@ -203,7 +201,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					props.hero.culture && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='culture-selected'>
 							<SelectablePanel>
-								<CulturePanel culture={props.hero.culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+								<CulturePanel culture={props.hero.culture} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -268,7 +266,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<FeatureSelectModal
 					features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={f => {
 						setShowEnvironment(false);
 						props.selectEnvironment(f.id);
@@ -280,7 +277,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<FeatureSelectModal
 					features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={f => {
 						setShowOrganization(false);
 						props.selectOrganization(f.id);
@@ -292,7 +288,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<FeatureSelectModal
 					features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={f => {
 						setShowUpbringing(false);
 						props.selectUpbringing(f.id);

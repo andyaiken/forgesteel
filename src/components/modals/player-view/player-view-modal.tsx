@@ -5,19 +5,19 @@ import { Modal } from '@/components/modals/modal/modal';
 import { Session } from '@/models/session';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useSession } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './player-view-modal.scss';
 
 interface Props {
-	session: Session;
 	updateSession: (session: Session) => void;
 	openPlayerView: (playerView: Window | null) => void;
 	onClose: () => void;
 }
 
 export const PlayerViewModal = (props: Props) => {
-	const [ session, setSession ] = useState<Session>(Utils.copy(props.session));
+	const [ session, setSession ] = useState<Session>(useSession());
 
 	const setPlayerViewID = (value: string | null) => {
 		const copy = Utils.copy(session);

@@ -8,7 +8,6 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { InfoFeature } from '../feature';
-import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -21,7 +20,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoToggle = (props: InfoProps) => {
@@ -31,7 +29,7 @@ export const InfoToggle = (props: InfoProps) => {
 			{
 				props.data.featureChecked ?
 					<Expander title={props.data.featureChecked.name || 'Feature'}>
-						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} />
 					</Expander>
 					:
 					<Empty />
@@ -41,7 +39,7 @@ export const InfoToggle = (props: InfoProps) => {
 					<>
 						<div className='ds-text'>Otherwise:</div>
 						<Expander title={props.data.featureUnchecked.name || 'Feature'}>
-							<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+							<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} />
 						</Expander>
 					</>
 					: null
@@ -53,7 +51,6 @@ export const InfoToggle = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureToggleData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureToggleData) => void;
 }
 
@@ -117,7 +114,6 @@ export const EditToggle = (props: EditProps) => {
 						<FeatureEditPanel
 							feature={data.featureChecked}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={setFeatureChecked}
 						/>
 					</Expander>
@@ -150,7 +146,6 @@ export const EditToggle = (props: EditProps) => {
 						<FeatureEditPanel
 							feature={data.featureUnchecked}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={setFeatureUnchecked}
 						/>
 					</Expander>
@@ -166,7 +161,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureToggleData) => void;
 }
 
@@ -185,14 +179,14 @@ export const ConfigToggle = (props: ConfigProps) => {
 			{
 				props.data.checked && props.data.featureChecked ?
 					<Expander title={props.data.featureChecked.name || 'Feature'}>
-						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+						<InfoFeature feature={props.data.featureChecked} hero={props.hero} sourcebooks={props.sourcebooks} />
 					</Expander>
 					: null
 			}
 			{
 				!props.data.checked && props.data.featureUnchecked ?
 					<Expander title={props.data.featureUnchecked.name || 'Feature'}>
-						<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+						<InfoFeature feature={props.data.featureUnchecked} hero={props.hero} sourcebooks={props.sourcebooks} />
 					</Expander>
 					: null
 			}

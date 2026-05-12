@@ -6,7 +6,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -20,7 +19,6 @@ import './career-panel.scss';
 interface Props {
 	career: Career;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 }
@@ -40,7 +38,7 @@ export const CareerPanel = (props: Props) => {
 				{
 					props.career.features.map(f => (
 						<SelectablePanel key={f.id}>
-							<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							<FeaturePanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					))
 				}

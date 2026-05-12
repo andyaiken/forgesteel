@@ -3,7 +3,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { ResourcePill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -12,7 +11,6 @@ import './malice-panel.scss';
 
 interface Props {
 	malice: Feature;
-	options: Options;
 	currentMalice?: number
 	updateCurrentMalice?: (value: number) => void;
 }
@@ -34,7 +32,6 @@ export const MalicePanel = (props: Props) => {
 				<div className='malice-panel'>
 					<FeaturePanel
 						feature={props.malice}
-						options={props.options}
 						cost={cost}
 						repeatable={props.malice.type === FeatureType.Malice ? props.malice.data.repeatable : undefined}
 						mode={PanelMode.Full}

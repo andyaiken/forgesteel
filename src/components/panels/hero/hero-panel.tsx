@@ -23,7 +23,6 @@ import { HeroModalType } from '@/enums/hero-modal-type';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { NamePanel } from '@/components/panels/hero/name/name-panel';
-import { Options } from '@/models/options';
 import { RetinuePanel } from '@/components/panels/hero/retinue/retinue-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -34,6 +33,7 @@ import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './hero-panel.scss';
@@ -41,7 +41,6 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelectAncestry: (ancestry: Ancestry) => void;
 	onSelectCulture: (culture: Culture) => void;
 	onSelectCareer: (career: Career) => void;
@@ -68,6 +67,7 @@ interface Props {
 export const HeroPanel = (props: Props) => {
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
+	const options = useOptions();
 
 	const getTabs = () => {
 		const tabs: string[] = [];
@@ -75,8 +75,8 @@ export const HeroPanel = (props: Props) => {
 		tabs.push('Hero');
 		tabs.push('Features');
 
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
-		if (props.options.compactView) {
+		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.shownStandardAbilities);
+		if (options.compactView) {
 			if (abilities.length > 0) {
 				tabs.push('Abilities');
 			}
@@ -114,7 +114,7 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getContent = (tab: string) => {
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.shownStandardAbilities);
 		const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
 		const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
@@ -127,7 +127,6 @@ export const HeroPanel = (props: Props) => {
 					title={title}
 					abilities={abilities}
 					hero={props.hero}
-					options={props.options}
 					onSelectAbility={props.onSelectAbility}
 				/>
 			);
@@ -139,14 +138,12 @@ export const HeroPanel = (props: Props) => {
 					<>
 						<StatsPanel
 							hero={props.hero}
-							options={props.options}
 							onSelectCharacteristic={props.onSelectCharacteristic}
 							onShowState={props.onShowState}
 						/>
 						<ChoicesPanel
 							hero={props.hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onSelectAncestry={props.onSelectAncestry}
 							onSelectCulture={props.onSelectCulture}
 							onSelectCareer={props.onSelectCareer}
@@ -158,11 +155,10 @@ export const HeroPanel = (props: Props) => {
 							onShowState={props.onShowState}
 						/>
 						{
-							isSmall || props.options.singlePage ?
+							isSmall || options.singlePage ?
 								<SidebarPanel
 									hero={props.hero}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									setTab={setTab}
 									onShowState={props.onShowState}
 									onShowReference={props.onShowReference}
@@ -181,7 +177,6 @@ export const HeroPanel = (props: Props) => {
 					<FeaturesPanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelectFeature={props.onSelectFeature}
 					/>
 				);
@@ -220,7 +215,6 @@ export const HeroPanel = (props: Props) => {
 					<RetinuePanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelectMonster={props.onSelectMonster}
 						onSelectFollower={props.onSelectFollower}
 						onSelectFixture={props.onSelectFixture}
@@ -236,14 +230,13 @@ export const HeroPanel = (props: Props) => {
 			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
 				<NamePanel
 					hero={props.hero}
-					options={props.options}
 					onShowState={props.onShowState}
 				/>
 				<div className='hero-main-section'>
-					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
+					{!isSmall && !options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>
 						{
-							props.options.singlePage ?
+							options.singlePage ?
 								null
 								:
 								<div className='center-top'>
@@ -282,7 +275,7 @@ export const HeroPanel = (props: Props) => {
 						}
 						<div className='center-content'>
 							{
-								props.options.singlePage ?
+								options.singlePage ?
 									getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
 									:
 									getContent(tab)
@@ -290,11 +283,10 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					</div>
 					{
-						!isSmall && !props.options.singlePage ?
+						!isSmall && !options.singlePage ?
 							<SidebarPanel
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								setTab={setTab}
 								onShowState={props.onShowState}
 								onShowReference={props.onShowReference}

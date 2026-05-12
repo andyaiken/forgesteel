@@ -4,16 +4,15 @@ import { NegotiationHeaderCard } from '@/components/panels/classic-sheet/negotia
 import { NegotiationNpcCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-npc-card';
 import { NegotiationResponsesCard } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-responses-card';
 import { NegotiationSheetBuilder } from '@/logic/playbook-sheets/negotiation-sheet-builder';
-import { Options } from '@/models/options';
 import { PatienceInterestCard } from '@/components/panels/classic-sheet/negotiation-sheet/patience-interest-card';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
+import { useOptions } from '@/contexts/data-context';
 
 import './negotiation-sheet-page.scss';
 
 interface Props {
 	negotiation: Negotiation;
-	options: Options;
 }
 
 export const NegotiationSheetPage = (props: Props) => {
@@ -22,25 +21,27 @@ export const NegotiationSheetPage = (props: Props) => {
 		[ props.negotiation ]
 	);
 
+	const options = useOptions();
+
 	const sheetClasses = useMemo(
 		() => {
 			const classes = [
 				'negotiation-sheet',
-				props.options.classicSheetPageSize.toLowerCase()
+				options.classicSheetPageSize.toLowerCase()
 			];
-			if (props.options.colorSheet) {
+			if (options.colorSheet) {
 				classes.push('color');
-				classes.push(`colors-${props.options.colorScheme}`);
+				classes.push(`colors-${options.colorScheme}`);
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet, props.options.colorScheme ]
+		[ options.classicSheetPageSize, options.colorSheet, options.colorScheme ]
 	);
 
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id)}>
+				<div className={`page page-1 ${options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id)}>
 					<NegotiationHeaderCard negotiation={negotiation} />
 					<PatienceInterestCard negotiation={negotiation} />
 					<NegotiationNpcCard negotiation={negotiation} />

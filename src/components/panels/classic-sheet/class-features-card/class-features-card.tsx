@@ -1,16 +1,16 @@
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
-import { Options } from '@/models/options';
+import { useOptions } from '@/contexts/data-context';
 
 import './class-features-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const ClassFeaturesCard = (props: Props) => {
 	const character = props.character;
+	const options = useOptions();
 
 	let moreInRef;
 	if (character.featuresReferenceOther?.find(r => [ character.className, character.subclassName ].includes(r.source))) {
@@ -20,7 +20,7 @@ export const ClassFeaturesCard = (props: Props) => {
 	return (
 		<div className='class-features card'>
 			<h2>Class Features</h2>
-			<div className={`features-container ${props.options.pageOrientation === 'portrait' ? 'two-column' : null}`}>
+			<div className={`features-container ${options.pageOrientation === 'portrait' ? 'two-column' : null}`}>
 				{character.classFeatures?.map(f =>
 					<FeatureComponent
 						key={f.id}

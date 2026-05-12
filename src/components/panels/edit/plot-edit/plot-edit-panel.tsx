@@ -16,12 +16,10 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -37,8 +35,6 @@ interface Props {
 	plot: Plot;
 	adventure: Adventure;
 	sourcebooks: Sourcebook[];
-	heroes: Hero[];
-	options: Options;
 	onChange: (plot: Plot) => void;
 	onAddAfter: (plotPointID: string) => void;
 	onDelete: (plotPointID: string) => void;
@@ -407,7 +403,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Encounter';
 											content = (
-												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -418,7 +414,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Montage';
 											content = (
-												<MontagePanel montage={element} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} />
+												<MontagePanel montage={element} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -429,7 +425,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Negotiation';
 											content = (
-												<NegotiationPanel negotiation={element} sourcebooks={props.sourcebooks} options={props.options} />
+												<NegotiationPanel negotiation={element} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -440,7 +436,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Tactical Map';
 											content = (
-												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} options={props.options} />
+												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} />
 											);
 										}
 										break;
@@ -582,8 +578,6 @@ export const PlotEditPanel = (props: Props) => {
 				plot={plot}
 				adventure={props.adventure}
 				sourcebooks={props.sourcebooks}
-				heroes={props.heroes}
-				options={props.options}
 				mode={PanelMode.Full}
 				onSelect={() => null}
 				onStart={() => null}

@@ -4,7 +4,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -19,7 +18,6 @@ import './negotiation-panel.scss';
 interface Props {
 	negotiation: Negotiation;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 }
 

@@ -13,7 +13,6 @@ import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -27,7 +26,6 @@ import './kit-edit-panel.scss';
 interface Props {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (kit: Kit) => void;
 }
@@ -302,7 +300,6 @@ export const KitEditPanel = (props: Props) => {
 				title='Features'
 				features={kit.features}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				onChange={onChange}
 			/>
 		);
@@ -469,7 +466,6 @@ export const KitEditPanel = (props: Props) => {
 												<KitPanel
 													kit={kit}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

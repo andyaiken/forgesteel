@@ -4,7 +4,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FeatureMaliceAbilityData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
@@ -13,7 +12,6 @@ import { useState } from 'react';
 interface EditProps {
 	data: FeatureMaliceAbilityData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureMaliceAbilityData) => void;
 }
 

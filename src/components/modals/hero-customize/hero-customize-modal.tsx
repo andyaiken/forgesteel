@@ -26,7 +26,6 @@ import { KitWeapon } from '@/enums/kit-weapon';
 import { Modal } from '@/components/modals/modal/modal';
 import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
 import { Sourcebook } from '@/models/sourcebook';
@@ -40,7 +39,6 @@ import './hero-customize-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 	onClose: () => void;
 }
@@ -628,7 +626,7 @@ export const HeroCustomizeModal = (props: Props) => {
 			case FeatureType.Follower:
 				return (
 					<Expander title='Customize'>
-						<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
+						<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} onChange={setFollower} />
 					</Expander>
 				);
 			case FeatureType.MovementMode:
@@ -717,7 +715,6 @@ export const HeroCustomizeModal = (props: Props) => {
 												feature={f}
 												hero={props.hero}
 												sourcebooks={props.sourcebooks}
-												options={props.options}
 												setData={data => setFeatureData(f.id, data)}
 											/>
 										</Expander>

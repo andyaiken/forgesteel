@@ -26,7 +26,6 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Radial } from '@/components/controls/radial/radial';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -38,6 +37,7 @@ import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 
 import './tactical-map-panel.scss';
 
@@ -59,7 +59,6 @@ interface SelectedMonsterInfo {
 interface Props {
 	map: TacticalMap;
 	display: TacticalMapDisplayType;
-	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
 	sourcebooks: Sourcebook[];
@@ -70,6 +69,7 @@ interface Props {
 }
 
 export const TacticalMapPanel = (props: Props) => {
+	const options = useOptions();
 	const [ map, setMap ] = useState<TacticalMap>(Utils.copy(props.map));
 	const [ editMode, setEditMode ] = useState<TacticalMapEditMode>(TacticalMapEditMode.Map);
 	const [ editAdding, setEditAdding ] = useState<boolean>(false);
@@ -94,7 +94,7 @@ export const TacticalMapPanel = (props: Props) => {
 	const [ selectedMonster, setSelectedMonster ] = useState<SelectedMonsterInfo | null>(null);
 
 	const zLevel = 0;
-	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
+	const size = props.display === 'thumbnail' ? 5 : options.gridSize;
 
 	const updateMapItem = (item: MapItem) => {
 		const copy = Utils.copy(map);
@@ -1543,7 +1543,6 @@ export const TacticalMapPanel = (props: Props) => {
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.encounter}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
 								const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);

@@ -17,7 +17,6 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -29,14 +28,13 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoChoice = (props: InfoProps) => {
 	if (props.data.selected.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-				{props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
+				{props.data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
 			</Space>
 		);
 	}
@@ -60,7 +58,7 @@ export const InfoChoice = (props: InfoProps) => {
 				{
 					props.data.options.map(o => (
 						<Expander key={o.feature.id} title={o.feature.name}>
-							<FeaturePanel feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
+							<FeaturePanel feature={o.feature} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
 						</Expander>
 					))
 				}
@@ -72,7 +70,6 @@ export const InfoChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureChoiceData) => void;
 }
 
@@ -159,7 +156,6 @@ export const EditChoice = (props: EditProps) => {
 							<FeatureEditPanel
 								feature={option.feature}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={f => setChoiceFeature(data, n, f)}
 							/>
 							<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
@@ -195,7 +191,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureChoiceData) => void;
 }
 
@@ -319,7 +314,6 @@ export const ConfigChoice = (props: ConfigProps) => {
 					features={sortedOptions}
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={feature => {
 						setChoiceSelectorOpen(false);
 
@@ -332,7 +326,7 @@ export const ConfigChoice = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedFeature} onClose={() => setSelectedFeature(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedFeature} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedFeature} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedFeature(null)}
 				/>
 			</Drawer>

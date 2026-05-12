@@ -14,7 +14,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -36,7 +35,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectCareer: (career: Career) => void;
 	selectIncitingIncident: (value: Element | null) => void;
@@ -50,7 +48,7 @@ export const CareerSection = (props: Props) => {
 	const careers = SourcebookLogic.getCareers(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const options = careers.map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
-			<CareerPanel career={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<CareerPanel career={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 
@@ -61,7 +59,7 @@ export const CareerSection = (props: Props) => {
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+					<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 
@@ -107,7 +105,7 @@ export const CareerSection = (props: Props) => {
 					props.hero.career && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='career-selected'>
 							<SelectablePanel>
-								<CareerPanel career={props.hero.career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+								<CareerPanel career={props.hero.career} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null

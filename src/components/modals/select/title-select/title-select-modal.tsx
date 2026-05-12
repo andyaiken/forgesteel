@@ -9,7 +9,6 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -25,7 +24,6 @@ import './title-select-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (title: Title) => void;
 	onCustomize?: () => void;
@@ -88,7 +86,7 @@ export const TitleSelectModal = (props: Props) => {
 											key={t.id}
 											onSelect={() => selectTitle(t)}
 										>
-											<TitlePanel title={t} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} options={props.options} />
+											<TitlePanel title={t} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 										</SelectablePanel>
 									))
 								}
@@ -100,7 +98,7 @@ export const TitleSelectModal = (props: Props) => {
 										<Button onClick={e => { e.stopPropagation(); setSelectedTitle(null); }}>Unselect</Button>
 									}
 								>
-									<TitlePanel title={selectedTitle} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
+									<TitlePanel title={selectedTitle} hero={props.hero} sourcebooks={props.sourcebooks} />
 								</SelectablePanel>
 								<Alert
 									type='info'
@@ -113,7 +111,7 @@ export const TitleSelectModal = (props: Props) => {
 											key={f.id}
 											onSelect={() => selectFeature(f)}
 										>
-											<FeaturePanel feature={f} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+											<FeaturePanel feature={f} hero={props.hero} mode={PanelMode.Full} />
 										</SelectablePanel>
 									))
 								}

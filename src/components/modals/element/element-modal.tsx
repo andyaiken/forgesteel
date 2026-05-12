@@ -20,7 +20,6 @@ import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -38,7 +37,6 @@ interface Props {
 	category: string;
 	element: Element;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 }
 
@@ -50,7 +48,6 @@ export const ElementModal = (props: Props) => {
 					<AncestryPanel
 						ancestry={props.element as Ancestry}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -59,7 +56,6 @@ export const ElementModal = (props: Props) => {
 					<CareerPanel
 						career={props.element as Career}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -68,7 +64,6 @@ export const ElementModal = (props: Props) => {
 					<ClassPanel
 						heroClass={props.element as HeroClass}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -77,7 +72,6 @@ export const ElementModal = (props: Props) => {
 					<ComplicationPanel
 						complication={props.element as Complication}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -86,7 +80,6 @@ export const ElementModal = (props: Props) => {
 					<CulturePanel
 						culture={props.element as Culture}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -95,7 +88,6 @@ export const ElementModal = (props: Props) => {
 					<DomainPanel
 						domain={props.element as Domain}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -104,7 +96,6 @@ export const ElementModal = (props: Props) => {
 					<ImbuementPanel
 						imbuement={props.element as Imbuement}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -113,7 +104,6 @@ export const ElementModal = (props: Props) => {
 					<ItemPanel
 						item={props.element as Item}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -122,7 +112,6 @@ export const ElementModal = (props: Props) => {
 					<KitPanel
 						kit={props.element as Kit}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -131,7 +120,6 @@ export const ElementModal = (props: Props) => {
 					<MonsterGroupPanel
 						monsterGroup={props.element as MonsterGroup}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -140,7 +128,6 @@ export const ElementModal = (props: Props) => {
 					<PerkPanel
 						perk={props.element as Perk}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -149,7 +136,6 @@ export const ElementModal = (props: Props) => {
 					<SubclassPanel
 						subclass={props.element as SubClass}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -167,7 +153,6 @@ export const ElementModal = (props: Props) => {
 					<TitlePanel
 						title={props.element as Title}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);

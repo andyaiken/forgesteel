@@ -10,13 +10,13 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { LabelControl } from '@/components/controls/label-control/label-control';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './features-panel.scss';
@@ -24,7 +24,6 @@ import './features-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelectFeature: (feature: Feature) => void;
 }
 
@@ -32,6 +31,7 @@ export const FeaturesPanel = (props: Props) => {
 	const [ featureSearch, setFeatureSearch ] = useState<string>('');
 	const [ featureSort, setFeatureSort ] = useState<string>('az');
 	const [ featureAll, setFeatureAll ] = useState<boolean>(false);
+	const options = useOptions();
 
 	const features = HeroLogic.getFeatures(props.hero)
 		.filter(f => {
@@ -91,12 +91,12 @@ export const FeaturesPanel = (props: Props) => {
 		return (
 			<div key={data.feature.id} className='selectable-row clickable' onClick={() => props.onSelectFeature(data.feature)}>
 				<div><b>{data.feature.name}</b></div>
-				{props.options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
+				{options.showSources ? <Tag variant='outlined'>{data.source}</Tag> : null}
 			</div>
 		);
 	};
 
-	const useRows = props.options.compactView;
+	const useRows = options.compactView;
 
 	const controls = (
 		<ButtonGroup
@@ -155,8 +155,7 @@ export const FeaturesPanel = (props: Props) => {
 											<SelectablePanel key={f.feature.id} onSelect={() => props.onSelectFeature(f.feature)}>
 												<FeaturePanel
 													feature={f.feature}
-													source={props.options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
-													options={props.options}
+													source={options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
 													hero={props.hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}

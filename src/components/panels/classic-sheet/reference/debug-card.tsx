@@ -1,15 +1,13 @@
-import { Options } from '@/models/options';
+import { useOptions } from '@/contexts/data-context';
+
 import './debug-card.scss';
 
-interface Props {
-	options: Options;
-}
-
-export const DebugCard = (props: Props) => {
+export const DebugCard = () => {
 	const userAgent = navigator.userAgent || 'unknown';
 	const dpr = window.devicePixelRatio || 'unknown';
 	const width = window.screen.width || 'unknown';
 	const height = window.screen.height || 'unknown';
+	const options = useOptions();
 
 	return (
 		<div className='debug card'>
@@ -29,7 +27,7 @@ export const DebugCard = (props: Props) => {
 				</div>
 				<div className='data'>
 					<label>Page Options</label>
-					<div>{props.options.classicSheetPageSize} / {props.options.pageOrientation}</div>
+					<div>{options.classicSheetPageSize} / {options.pageOrientation}</div>
 				</div>
 			</div>
 		</div>

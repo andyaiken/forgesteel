@@ -30,7 +30,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
@@ -52,7 +51,6 @@ import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-shee
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -73,6 +71,7 @@ import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -81,10 +80,7 @@ import { useTitle } from '@/hooks/use-title';
 import './library-list-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
-	hiddenSourcebookIDs: string[];
 	params: FooterParams;
 	showSourcebooks: () => void;
 	showMonster: (monster: Monster) => void;
@@ -121,6 +117,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? Collections.sort(props.sourcebooks, sb => sb.name).filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -138,7 +135,7 @@ export const LibraryListPage = (props: Props) => {
 		let list: Element[] = [];
 
 		const getSourcebooks = () => {
-			return props.sourcebooks.filter(sb => !props.hiddenSourcebookIDs.includes(sb.id));
+			return props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
 		};
 
 		switch (type) {
@@ -222,8 +219,6 @@ export const LibraryListPage = (props: Props) => {
 								<EncounterSheetPage
 									encounter={element as Encounter}
 									sourcebooks={props.sourcebooks}
-									heroes={props.heroes}
-									options={props.options}
 								/>
 							</div>
 						);
@@ -232,8 +227,6 @@ export const LibraryListPage = (props: Props) => {
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<MontageSheetPage
 									montage={element as Montage}
-									heroes={props.heroes}
-									options={props.options}
 								/>
 							</div>
 						);
@@ -242,7 +235,6 @@ export const LibraryListPage = (props: Props) => {
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<NegotiationSheetPage
 									negotiation={element as Negotiation}
-									options={props.options}
 								/>
 							</div>
 						);
@@ -253,69 +245,69 @@ export const LibraryListPage = (props: Props) => {
 		} else {
 			switch (category) {
 				case 'adventure':
-					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'ancestry':
-					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'career':
-					getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'class':
-					getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'complication':
-					getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'culture':
-					getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'domain':
-					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'encounter':
-					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} sourcebooks={props.sourcebooks} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
 					break;
 				case 'imbuement':
-					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'item':
-					getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'kit':
-					getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'monster-group':
 					getPanel = (element: Element) => {
 						return showMonsters ?
-							<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+							<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							:
-							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />;
+							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} mode={PanelMode.Full} onSelectMonster={props.showMonster} />;
 					};
 					break;
 				case 'montage':
-					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'negotiation':
-					getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'perk':
-					getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'project':
 					getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'subclass':
-					getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'tactical-map':
-					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 					break;
 				case 'terrain':
 					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'title':
-					getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 			}
 		}
@@ -844,9 +836,7 @@ export const LibraryListPage = (props: Props) => {
 								control: (
 									<AddBtn
 										category={category}
-										heroes={props.heroes}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										showMonsters={showMonsters}
 										sourcebookID={sourcebookID}
 										setShowMonsters={setShowMonsters}
@@ -877,7 +867,6 @@ export const LibraryListPage = (props: Props) => {
 				<AppFooter
 					page='library'
 					params={props.params}
-					options={props.options}
 				/>
 			</div>
 		</ErrorBoundary>

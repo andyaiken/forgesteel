@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
+import { useDataManager, useHeroes, useHomebrewSourcebooks, useOptions, useSession } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
@@ -72,7 +73,6 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { Montage } from '@/models/montage';
 import { Negotiation } from '@/models/negotiation';
-import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
@@ -102,38 +102,26 @@ import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
-import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
 
 interface Props {
-	heroes: Hero[];
-	session: Session;
-	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
-	options: Options;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }
 
 export const Main = (props: Props) => {
-	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
-	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
-	const [ session, setSession ] = useState<Session>(props.session);
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
-	const [ options, setOptions ] = useState<Options>(() => {
-		const opts = Utils.copy(props.options);
-		if (isSmall) {
-			opts.compactView = true;
-		}
-		return opts;
-	});
+	const options = useOptions();
+	const session = useSession();
+	const heroes = useHeroes();
+	const homebrewSourcebooks = useHomebrewSourcebooks();
+	const dataManager = useDataManager();
+
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
 	const [ dataService, setDataService ] = useState<DataService>(props.dataService);
 
@@ -147,25 +135,8 @@ export const Main = (props: Props) => {
 	// #region Persistence
 
 	const persistHero = (hero: Hero) => {
-		let newHeroes: Hero[];
-		if (heroes.some(h => h.id === hero.id)) {
-			Analytics.logHeroEdited(hero);
-
-			const copy = Utils.copy(heroes);
-			const list = copy.map(h => h.id === hero.id ? hero : h);
-			newHeroes = list;
-		} else {
-			Analytics.logHeroCreated(hero);
-
-			const copy = Utils.copy(heroes);
-			copy.push(hero);
-			Collections.sort(copy, h => h.name);
-			newHeroes = copy;
-		}
-
-		return dataService
+		return dataManager
 			.saveHero(hero)
-			.then(() => setHeroes(newHeroes))
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -181,19 +152,16 @@ export const Main = (props: Props) => {
 	};
 
 	const persistSession = (session: Session) => {
-		return dataService
+		return dataManager
 			.saveSession(session)
-			.then(
-				setSession,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving session',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			)
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					title: 'Error saving session',
+					description: Utils.getErrorMessage(err),
+					placement: 'top'
+				});
+			})
 			.then(() => {
 				if (playerView) {
 					playerView.location.reload();
@@ -204,21 +172,9 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHomebrewSourcebook = (homebrew: Sourcebook) => {
-		let newHomebrew: Sourcebook[];
-		if (homebrewSourcebooks.some(h => h.id === homebrew.id)) {
-			const copy = Utils.copy(homebrewSourcebooks);
-			const list = copy.map(h => h.id === homebrew.id ? homebrew : h);
-			newHomebrew = list;
-		} else {
-			const copy = Utils.copy(homebrewSourcebooks);
-			copy.push(homebrew);
-			Collections.sort(copy, h => h.name);
-			newHomebrew = copy;
-		}
-
-		return dataService
+		return dataManager
 			.saveSourcebook(homebrew)
-			.then(() => setHomebrewSourcebooks(newHomebrew))
+			// .then(() => setHomebrewSourcebooks(newHomebrew))
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -234,12 +190,7 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHomebrewSourcebook = (homebrew: Sourcebook) => {
-		const copy = Utils.copy(homebrewSourcebooks.filter(h => h.id !== homebrew.id));
-
-		return dataService.deleteSourcebook(homebrew.id)
-			.then(() => {
-				setHomebrewSourcebooks(copy);
-			})
+		return dataManager.deleteSourcebook(homebrew)
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -248,38 +199,6 @@ export const Main = (props: Props) => {
 					placement: 'top'
 				});
 			});
-	};
-
-	const persistHiddenSourcebookIDs = (ids: string[]) => {
-		return dataService
-			.saveHiddenSourcebookIDs(ids)
-			.then(
-				setHiddenSourcebookIDs,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving hidden sourcebooks',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			);
-	};
-
-	const persistOptions = (options: Options) => {
-		return dataService
-			.saveOptions(options)
-			.then(
-				setOptions,
-				err => {
-					console.error(err);
-					notify.error({
-						title: 'Error saving options',
-						description: Utils.getErrorMessage(err),
-						placement: 'top'
-					});
-				}
-			);
 	};
 
 	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
@@ -320,13 +239,11 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHero = (hero: Hero) => {
-		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
-		const stayInFolder = copy.some(h => h.folder === hero.folder);
+		const stayInFolder = heroes.some(h => h.id !== hero.id && h.folder === hero.folder);
 		navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 
-		return dataService.deleteHero(hero.id)
+		return dataManager.deleteHero(hero)
 			.then(() => {
-				setHeroes(copy);
 				navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 			})
 			.catch(err => {
@@ -456,7 +373,6 @@ export const Main = (props: Props) => {
 			<MonsterModal
 				monster={monster}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
 				onClose={() => setDrawer(null)}
 				updateMonster={monster => {
 					const copy = Utils.copy(hero);
@@ -1509,7 +1425,6 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1518,9 +1433,6 @@ export const Main = (props: Props) => {
 	const showSettings = () => {
 		setDrawer(
 			<SettingsModal
-				options={options}
-				heroes={heroes}
-				setOptions={persistOptions}
 				connectionSettings={connectionSettings}
 				dataService={dataService}
 				setConnectionSettings={persistConnectionSettings}
@@ -1547,7 +1459,6 @@ export const Main = (props: Props) => {
 				category={category}
 				element={element}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1562,7 +1473,6 @@ export const Main = (props: Props) => {
 				monsterGroup={monsterGroup}
 				summon={summon}
 				sourcebooks={sourcebooks}
-				options={options}
 				onChange={
 					hero ?
 						monster => {
@@ -1605,7 +1515,6 @@ export const Main = (props: Props) => {
 			<FollowerModal
 				follower={follower}
 				sourcebooks={sourcebooks}
-				options={options}
 				onChange={follower => {
 					const heroCopy = Utils.copy(hero);
 					const feature = HeroLogic.getFeatures(heroCopy)
@@ -1629,7 +1538,6 @@ export const Main = (props: Props) => {
 			<FixtureModal
 				fixture={fixture}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1654,7 +1562,6 @@ export const Main = (props: Props) => {
 				feature={feature}
 				hero={hero}
 				sourcebooks={sourcebooks}
-				options={options}
 				onClose={() => setDrawer(null)}
 				updateHero={persistHero}
 			/>
@@ -1694,7 +1601,6 @@ export const Main = (props: Props) => {
 					<HeroResourcesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
@@ -1715,7 +1621,6 @@ export const Main = (props: Props) => {
 					<HeroInventoryModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1727,7 +1632,6 @@ export const Main = (props: Props) => {
 					<HeroProjectsModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1739,7 +1643,6 @@ export const Main = (props: Props) => {
 					<HeroTitlesModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
@@ -1751,7 +1654,6 @@ export const Main = (props: Props) => {
 					<HeroRespiteModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onTakeRespite={takeRespite}
 						onChange={hero => persistHero(hero)}
 						onClose={() => setDrawer(null)}
@@ -1763,7 +1665,6 @@ export const Main = (props: Props) => {
 					<HeroCustomizeModal
 						hero={hero}
 						sourcebooks={sourcebooks}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
@@ -1786,7 +1687,6 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						options={options}
 						onClose={() => setDrawer(null)}
 						onImportSourcebook={persistHomebrewSourcebook}
 						onChange={persistHero}
@@ -1801,7 +1701,6 @@ export const Main = (props: Props) => {
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1823,14 +1722,11 @@ export const Main = (props: Props) => {
 	const showSourcebooks = () => {
 		setDrawer(
 			<SourcebooksModal
-				heroes={heroes}
 				officialSourcebooks={SourcebookLogic.getSourcebooks()}
 				homebrewSourcebooks={homebrewSourcebooks}
-				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
 				onHomebrewSourcebookChange={persistHomebrewSourcebook}
 				onHomebrewSourcebookDelete={deleteHomebrewSourcebook}
-				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 			/>
 		);
 	};
@@ -1842,7 +1738,6 @@ export const Main = (props: Props) => {
 					<EncounterToolsModal
 						encounter={encounter}
 						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						options={options}
 						onClose={() => setDrawer(null)}
 					/>
 				);
@@ -1853,7 +1748,6 @@ export const Main = (props: Props) => {
 	const showPlayerView = () => {
 		setDrawer(
 			<PlayerViewModal
-				session={session}
 				updateSession={persistSession}
 				openPlayerView={setPlayerView}
 				onClose={() => setDrawer(null)}
@@ -1869,7 +1763,6 @@ export const Main = (props: Props) => {
 		showAbout: showAbout,
 		showSettings: showSettings,
 		showErrors: showErrors,
-		setOptions: persistOptions,
 		connectionSettings: connectionSettings
 	};
 
@@ -1890,7 +1783,6 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								options={options}
 								params={footerParams}
 								onNewHero={() => newHero('')}
 								onPregen={hero => importHero(hero, '')}
@@ -1904,9 +1796,7 @@ export const Main = (props: Props) => {
 							path=':folder?'
 							element={
 								<HeroListPage
-									heroes={heroes.map(HeroLogic.createOverview)}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={props.options}
 									params={footerParams}
 									addHero={newHero}
 									importHero={importHero}
@@ -1918,9 +1808,7 @@ export const Main = (props: Props) => {
 							path='view/:heroID'
 							element={
 								<HeroViewPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									exportHeroData={exportHeroData}
 									exportHeroImage={exportHeroImage}
@@ -1961,9 +1849,7 @@ export const Main = (props: Props) => {
 							path='edit/:heroID/:page'
 							element={
 								<HeroEditPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									saveChanges={saveHero}
 									importSourcebook={persistHomebrewSourcebook}
@@ -1974,10 +1860,7 @@ export const Main = (props: Props) => {
 							path='sheet/:heroID'
 							element={
 								<HeroSheetPreviewPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1991,10 +1874,7 @@ export const Main = (props: Props) => {
 							path=':kind/:elementID?'
 							element={
 								<LibraryListPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
-									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									params={footerParams}
 									showSourcebooks={showSourcebooks}
 									showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
@@ -2017,9 +1897,7 @@ export const Main = (props: Props) => {
 							path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
 							element={
 								<LibraryEditPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									params={footerParams}
 									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
 									showTerrain={onSelectTerrain}
@@ -2031,9 +1909,7 @@ export const Main = (props: Props) => {
 							path='print/:kind/:sourcebookID/:elementID'
 							element={
 								<LibraryPrintPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 								/>
 							}
 						/>
@@ -2047,10 +1923,7 @@ export const Main = (props: Props) => {
 							path='director'
 							element={
 								<SessionDirectorPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									session={session}
-									options={options}
 									params={footerParams}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
@@ -2073,10 +1946,7 @@ export const Main = (props: Props) => {
 							path='player'
 							element={
 								<SessionPlayerPage
-									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									session={session}
-									options={options}
 									params={footerParams}
 								/>
 							}
@@ -2087,7 +1957,6 @@ export const Main = (props: Props) => {
 						element={
 							<AuthPage
 								connectionSettings={connectionSettings}
-								options={options}
 								params={footerParams}
 								setConnectionSettings={persistConnectionSettings}
 							/>
@@ -2099,9 +1968,7 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<BackupPage
-								heroes={heroes}
 								homebrewSourcebooks={homebrewSourcebooks}
-								options={options}
 							/>
 						}
 					/>
@@ -2112,7 +1979,6 @@ export const Main = (props: Props) => {
 						element={
 							<TransferPage
 								connectionSettings={connectionSettings}
-								options={options}
 							/>
 						}
 					/>
@@ -2122,7 +1988,6 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<ClocktowerPage
-								options={options}
 								params={footerParams}
 							/>
 						}

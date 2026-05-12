@@ -3,7 +3,6 @@ import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -18,7 +17,6 @@ interface Props {
 	features: { feature: Feature, value: number }[];
 	hero?: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (feature: Feature) => void;
 }
@@ -53,7 +51,6 @@ export const FeatureSelectModal = (props: Props) => {
 										cost={showCosts ? f.value : undefined}
 										hero={props.hero}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								</SelectablePanel>

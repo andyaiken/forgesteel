@@ -14,7 +14,6 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -27,14 +26,13 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSummon = (props: InfoProps) => {
 	if (props.data.summons.length > 0) {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{props.data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} mode={PanelMode.Full} /></SelectablePanel>)}
+				{props.data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} mode={PanelMode.Full} /></SelectablePanel>)}
 			</Space>
 		);
 	}
@@ -45,7 +43,6 @@ export const InfoSummon = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSummonData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSummonData) => void;
 }
 
@@ -150,7 +147,6 @@ export const EditSummon = (props: EditProps) => {
 						<MonsterEditPanel
 							monster={summon.monster}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onChange={m => setSummonMonster(data, n, m)}
 						/>
 					</Expander>

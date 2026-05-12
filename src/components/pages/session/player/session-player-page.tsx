@@ -4,54 +4,46 @@ import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterRunPanel } from '@/components/panels/run/encounter-run/encounter-run-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { useSession } from '@/contexts/data-context';
 
 import './session-player-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Session;
-	options: Options;
 	params: FooterParams;
 }
 
 export const SessionPlayerPage = (props: Props) => {
+	const session = useSession();
 	const getContent = () => {
-		const encounter = props.session.encounters.find(e => e.id === props.session.playerViewID);
+		const encounter = session.encounters.find(e => e.id === session.playerViewID);
 		if (encounter) {
 			return (
 				<EncounterRunPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
-					options={props.options}
 					onChange={() => null}
 				/>
 			);
 		}
 
-		const montage = props.session.montages.find(m => m.id === props.session.playerViewID);
+		const montage = session.montages.find(m => m.id === session.playerViewID);
 		if (montage) {
 			return (
 				<MontageRunPanel
 					montage={montage}
-					heroes={props.heroes}
-					options={props.options}
 					onChange={() => null}
 				/>
 			);
 		}
 
-		const negotiation = props.session.negotiations.find(n => n.id === props.session.playerViewID);
+		const negotiation = session.negotiations.find(n => n.id === session.playerViewID);
 		if (negotiation) {
 			return (
 				<NegotiationRunPanel
@@ -61,23 +53,21 @@ export const SessionPlayerPage = (props: Props) => {
 			);
 		}
 
-		const map = props.session.tacticalMaps.find(tm => tm.id === props.session.playerViewID);
+		const map = session.tacticalMaps.find(tm => tm.id === session.playerViewID);
 		if (map) {
 			return (
 				<TacticalMapPanel
 					key={JSON.stringify(map)}
 					map={map}
 					display={TacticalMapDisplayType.Player}
-					options={props.options}
-					heroes={props.heroes}
-					encounters={props.session.encounters}
+					encounters={session.encounters}
 					sourcebooks={props.sourcebooks}
 					mode={PanelMode.Full}
 				/>
 			);
 		}
 
-		const counter = props.session.counters.find(c => c.id === props.session.playerViewID);
+		const counter = session.counters.find(c => c.id === session.playerViewID);
 		if (counter) {
 			return (
 				<CounterRunPanel
@@ -101,7 +91,6 @@ export const SessionPlayerPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='player-view'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>

@@ -15,7 +15,6 @@ import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationTrait } from '@/enums/negotiation-trait';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -28,7 +27,6 @@ import './negotiation-edit-panel.scss';
 interface Props {
 	negotiation: Negotiation;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (negotiation: Negotiation) => void;
 }
@@ -345,7 +343,6 @@ export const NegotiationEditPanel = (props: Props) => {
 												<NegotiationPanel
 													negotiation={negotiation}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

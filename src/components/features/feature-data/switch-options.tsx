@@ -16,7 +16,6 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { InfoFeature } from '../feature';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -28,7 +27,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoSwitchOptions = (props: InfoProps) => {
@@ -37,7 +35,7 @@ export const InfoSwitchOptions = (props: InfoProps) => {
 			case FeatureType.Text:
 				return <Markdown text={feature.description} />;
 			default:
-				return <InfoFeature feature={feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
+				return <InfoFeature feature={feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		}
 	};
 
@@ -80,7 +78,6 @@ export const InfoSwitchOptions = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureSwitchOptionsData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureSwitchOptionsData) => void;
 }
 
@@ -195,7 +192,6 @@ export const EditSwitchOptions = (props: EditProps) => {
 								feature={f.feature}
 								allowedTypes={FeatureLogic.getSelectableFeatureTypes()}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={feature => changeFeature(n, feature)}
 							/>
 						</Expander>
@@ -219,7 +215,6 @@ export const EditSwitchOptions = (props: EditProps) => {
 						feature={data.defaultOption}
 						allowedTypes={FeatureLogic.getSelectableFeatureTypes()}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={changeDefaultOption}
 					/>
 					: null

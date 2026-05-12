@@ -5,6 +5,7 @@ import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/mo
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -22,7 +23,6 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
@@ -30,7 +30,6 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { Sourcebook } from '@/models/sourcebook';
@@ -46,9 +45,7 @@ import './encounter-edit-panel.scss';
 
 interface Props {
 	encounter: Encounter;
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
@@ -63,6 +60,8 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 	const [ draggedMonster, setDraggedMonster ] = useState<Monster | null>(null);
 	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
+	const options = useOptions();
+	const heroes = useHeroes();
 
 	const switchLeftTab = (key: string) => {
 		setActiveLeftTabKey(key);
@@ -300,7 +299,6 @@ export const EncounterEditPanel = (props: Props) => {
 					group={group}
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					showMonster={props.showMonster}
 					setSlotCount={setSlotCount}
 					moveSlot={moveSlot}
@@ -343,7 +341,6 @@ export const EncounterEditPanel = (props: Props) => {
 							group={group}
 							index={n}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							draggedMonster={draggedMonster}
 							setName={setName}
 							copyGroup={copyGroup}
@@ -698,15 +695,13 @@ ${value.victories}`
 
 	const getDifficultySection = () => {
 		const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 
 		return (
 			<Expander title='Difficulty' tags={[ difficulty ]} style={{ flex: '0 0 auto' }}>
 				<EncounterDifficultyPanel
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
-					options={props.options}
 				/>
 			</Expander>
 		);
@@ -844,7 +839,6 @@ interface GroupPanelProps {
 	group: EncounterGroup;
 	index: number;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	draggedMonster: Monster | null;
 	setName: (group: EncounterGroup, value: string) => void;
 	copyGroup: (group: EncounterGroup) => void;
@@ -854,6 +848,7 @@ interface GroupPanelProps {
 
 const GroupPanel = (props: GroupPanelProps) => {
 	const [ editing, setEditing ] = useState<boolean>(false);
+	const options = useOptions();
 
 	return (
 		<ErrorBoundary>
@@ -886,7 +881,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					getSlot={props.getSlot}
 				/>
 				{
-					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel)) ?
+					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(options.heroLevel)) ?
 						<Alert
 							type='warning'
 							showIcon={true}
@@ -895,7 +890,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 						: null
 				}
 				{
-					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2)) ?
+					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(options.heroLevel) * 2)) ?
 						<Alert
 							type='warning'
 							showIcon={true}
@@ -991,7 +986,6 @@ interface MonsterSlotPanelProps {
 	group: EncounterGroup;
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	showMonster: (monster: Monster, group: MonsterGroup) => void;
 	setSlotCount: (groupID: string, slotID: string, value: number) => void;
 	moveSlot: (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => void;
@@ -1037,7 +1031,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 									placeholder='Select'
 									mode='multiple'
 									options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-									optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+									optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
 									value={props.slot.customization.addOnIDs}
 									onChange={ids => props.setSlotAddOnIDs(props.group.id, props.slot.id, ids)}
 								/>

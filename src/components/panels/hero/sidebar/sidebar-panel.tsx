@@ -16,19 +16,18 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
-import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { RulesPage } from '@/enums/rules-page';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { useOptions } from '@/contexts/data-context';
 
 import './sidebar-panel.scss';
 
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setTab: (tab: string) => void;
 	onShowState: (type: HeroModalType) => void;
 	onShowReference: (page: RulesPage) => void;
@@ -40,6 +39,7 @@ interface Props {
 }
 
 export const SidebarPanel = (props: Props) => {
+	const options = useOptions();
 	const onShowStats = () => {
 		if (props.onShowState) {
 			props.onShowState(HeroModalType.Resources);
@@ -75,12 +75,12 @@ export const SidebarPanel = (props: Props) => {
 	const damageImmunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
 	const damageWeaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 
-	const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
+	const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.shownStandardAbilities);
 	const heroicResources = HeroLogic.getHeroicResources(props.hero);
 	const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 	const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
-	const useRows = props.options.singlePage && props.options.compactView;
+	const useRows = options.singlePage && options.compactView;
 
 	const getTrigger = (ability: Ability) => {
 		const showTarget = ability.type.trigger.toLowerCase().includes('the target');
@@ -131,7 +131,7 @@ export const SidebarPanel = (props: Props) => {
 					{
 						skills.map(s => (
 							<div key={s.name} className='ds-text'>
-								{s.name} {props.options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
+								{s.name} {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
 							</div>
 						))
 					}
@@ -140,7 +140,7 @@ export const SidebarPanel = (props: Props) => {
 	};
 
 	let display = 'column';
-	if (props.options.singlePage) {
+	if (options.singlePage) {
 		display = 'grid';
 	}
 	if (useRows) {
@@ -203,7 +203,7 @@ export const SidebarPanel = (props: Props) => {
 						</div>
 				}
 				{
-					(heroicResources.length > 0) && !props.options.singlePage ?
+					(heroicResources.length > 0) && !options.singlePage ?
 						<>
 							{
 								heroicResources.map(hr =>
@@ -242,7 +242,7 @@ export const SidebarPanel = (props: Props) => {
 					onSelectControlledSquad={props.onSelectControlledSquad!}
 				/>
 				{
-					(triggers.length > 0) && !props.options.singlePage ?
+					(triggers.length > 0) && !options.singlePage ?
 						useRows ?
 							<div className='selectable-row clickable' onClick={() => props.setTab('Triggers')}>
 								<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
@@ -312,7 +312,7 @@ export const SidebarPanel = (props: Props) => {
 						</div>
 				}
 				{
-					(props.options.showSkillsInGroups || false) ?
+					(options.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ]
 							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
 						:

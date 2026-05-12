@@ -7,7 +7,6 @@ import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { ReactNode } from 'react';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -30,7 +29,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectAncestry: (ancestry: Ancestry) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -42,7 +40,7 @@ export const AncestrySection = (props: Props) => {
 	const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).map(Utils.copy).filter(a => matchElement(a, props.searchTerm));
 	const options = ancestries.map(a => (
 		<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
-			<AncestryPanel ancestry={a} sourcebooks={props.sourcebooks} options={props.options} />
+			<AncestryPanel ancestry={a} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 
@@ -53,7 +51,7 @@ export const AncestrySection = (props: Props) => {
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+					<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -69,7 +67,7 @@ export const AncestrySection = (props: Props) => {
 				props.hero.ancestry && (!isSmall || (choices.length === 0)) ?
 					<div className={columnClassName} id='ancestry-selected'>
 						<SelectablePanel>
-							<AncestryPanel ancestry={props.hero.ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+							<AncestryPanel ancestry={props.hero.ancestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null

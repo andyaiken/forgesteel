@@ -11,7 +11,6 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PowerRoll } from '@/models/power-roll';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -25,7 +24,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoMalice = (props: InfoProps) => {
@@ -45,7 +43,6 @@ export const InfoMalice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureMaliceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureMaliceData) => void;
 }
 

@@ -11,7 +11,6 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -23,7 +22,6 @@ interface Props {
 	features: Feature[];
 	allowedTypes?: FeatureType[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (features: Feature[]) => void;
 }
 
@@ -98,7 +96,6 @@ export const FeatureListEditPanel = (props: Props) => {
 									feature={f}
 									allowedTypes={props.allowedTypes}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={feature => changeFeature(feature)}
 								/>
 							</Expander>

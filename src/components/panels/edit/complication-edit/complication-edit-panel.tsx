@@ -4,7 +4,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -17,7 +16,6 @@ import './complication-edit-panel.scss';
 interface Props {
 	complication: Complication;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (complication: Complication) => void;
 }
@@ -55,7 +53,6 @@ export const ComplicationEditPanel = (props: Props) => {
 				title='Features'
 				features={complication.features}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				onChange={onChange}
 			/>
 		);
@@ -93,7 +90,6 @@ export const ComplicationEditPanel = (props: Props) => {
 												<ComplicationPanel
 													complication={complication}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

@@ -19,7 +19,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -34,7 +33,6 @@ import './ancestry-edit-panel.scss';
 interface Props {
 	ancestry: Ancestry;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (ancestry: Ancestry) => void;
 }
@@ -125,7 +123,6 @@ export const AncestryEditPanel = (props: Props) => {
 							<FeatureEditPanel
 								feature={f}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -234,7 +231,6 @@ export const AncestryEditPanel = (props: Props) => {
 							<FeatureEditPanel
 								feature={f.feature}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={x => changeFeature({ feature: x, value: f.value })}
 							/>
 						</Expander>
@@ -270,7 +266,7 @@ export const AncestryEditPanel = (props: Props) => {
 				<Toggle label='Include a culture' value={!!ancestry.culture} onChange={setHasCulture} />
 				{
 					ancestry.culture ?
-						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} options={props.options} onChange={setCulture} />
+						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} onChange={setCulture} />
 						: null
 				}
 			</Space>
@@ -350,7 +346,6 @@ export const AncestryEditPanel = (props: Props) => {
 									feature={f.feature}
 									cost={f.value || 'signature'}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 							</SelectablePanel>
@@ -402,7 +397,6 @@ export const AncestryEditPanel = (props: Props) => {
 												<AncestryPanel
 													ancestry={ancestry}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													mode={PanelMode.Full}
 												/>
 											</SelectablePanel>

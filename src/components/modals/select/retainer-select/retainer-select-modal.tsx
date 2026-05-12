@@ -10,7 +10,6 @@ import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-f
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -23,7 +22,6 @@ import './retainer-select-modal.scss';
 interface Props {
 	monsters: Monster[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
 }
@@ -68,7 +66,7 @@ export const RetainerSelectModal = (props: Props) => {
 									key={m.id}
 									onSelect={() => props.onSelect(Utils.copy(m))}
 								>
-									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
+									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} />
 								</SelectablePanel>
 							))
 						}

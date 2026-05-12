@@ -24,7 +24,6 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -36,7 +35,6 @@ import './monster-group-edit-panel.scss';
 interface Props {
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onChange: (monsterGroup: MonsterGroup) => void;
 	onSelectMonster: (monster: Monster, group: MonsterGroup) => void;
@@ -192,7 +190,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 				features={monsterGroup.malice}
 				allowedTypes={[ FeatureType.Malice, FeatureType.MaliceAbility ]}
 				sourcebooks={props.sourcebooks}
-				options={props.options}
 				onChange={onChange}
 			/>
 		);
@@ -303,7 +300,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 								monster={m}
 								monsterGroup={monsterGroup}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 							/>
 						</Expander>
 					))
@@ -317,7 +313,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onSelect={monster => {
 							copyMonster(monster);
 							setDrawerOpen(false);
@@ -392,7 +387,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 								feature={i}
 								allowedTypes={[ FeatureType.AddOn ]}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={f => changeAddOn(f as FeatureAddOn)}
 							/>
 						</Expander>
@@ -465,7 +459,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 														<MonsterGroupPanel
 															monsterGroup={monsterGroup}
 															sourcebooks={props.sourcebooks}
-															options={props.options}
 															mode={PanelMode.Full}
 														/>
 													</SelectablePanel>
@@ -482,7 +475,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 						key={monsterID}
 						monster={monsterGroup.monsters.find(m => m.id === monsterID) as Monster}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						mode={PanelMode.Full}
 						onChange={monster => {
 							const copy = Utils.copy(monsterGroup);

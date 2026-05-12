@@ -8,7 +8,6 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -22,7 +21,6 @@ import './domain-panel.scss';
 interface Props {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 }
@@ -53,7 +51,7 @@ export const DomainPanel = (props: Props) => {
 							>
 								{
 									...lvl.features.map(f =>
-										<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+										<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 									)
 								}
 							</Expander>
@@ -94,7 +92,7 @@ export const DomainPanel = (props: Props) => {
 				{
 					props.domain.defaultFeatures.map(f => {
 						return (
-							<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						);
 					})
 				}

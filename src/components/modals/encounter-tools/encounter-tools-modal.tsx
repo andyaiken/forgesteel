@@ -9,7 +9,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -19,7 +18,6 @@ import './encounter-tools-modal.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 }
 

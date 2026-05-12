@@ -2,14 +2,12 @@ import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
 import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { useMemo } from 'react';
 
 import './encounter-header.scss';
 
 interface Props {
 	encounter: EncounterSheet;
-	options: Options;
 }
 
 export const EncounterHeaderCard = (props: Props) => {

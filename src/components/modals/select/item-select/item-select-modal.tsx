@@ -8,7 +8,6 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemType } from '@/enums/item-type';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlusOutlined } from '@ant-design/icons';
 import { SearchBox } from '@/components/controls/text-input/text-input';
@@ -23,7 +22,6 @@ import './item-select-modal.scss';
 interface Props {
 	types: ItemType[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero: Hero;
 	onClose: () => void;
 	onSelect: (item: Item) => void;
@@ -113,7 +111,7 @@ export const ItemSelectModal = (props: Props) => {
 										/>
 									]}
 								>
-									<ItemPanel item={item} sourcebooks={props.sourcebooks} options={props.options} wielder={props.hero} mode={PanelMode.Full} />
+									<ItemPanel item={item} sourcebooks={props.sourcebooks} wielder={props.hero} mode={PanelMode.Full} />
 								</Expander>
 							))
 						}

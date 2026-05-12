@@ -5,7 +5,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
@@ -18,7 +17,6 @@ import './feature-modal.scss';
 interface Props {
 	feature: Feature;
 	hero: Hero;
-	options: Options;
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
 	updateHero?: (hero: Hero) => void;
@@ -101,7 +99,6 @@ export const FeatureModal = (props: Props) => {
 					<div className='feature-section'>
 						<FeaturePanel
 							feature={props.feature}
-							options={props.options}
 							hero={props.hero}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}

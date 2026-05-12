@@ -9,7 +9,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -25,7 +24,6 @@ import './class-panel.scss';
 interface Props {
 	heroClass: HeroClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero?: Hero;
 	mode?: PanelMode;
 }
@@ -63,7 +61,7 @@ export const ClassPanel = (props: Props) => {
 								}
 							>
 								{
-									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
 								}
 							</Expander>
 						);
@@ -116,7 +114,7 @@ export const ClassPanel = (props: Props) => {
 				{
 					props.heroClass.subclasses.map(sc => (
 						<Expander key={sc.id} title={sc.name}>
-							<SubclassPanel key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} options={props.options} hero={props.hero} mode={PanelMode.Full} style={{ padding: '5px' }} />
+							<SubclassPanel key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} hero={props.hero} mode={PanelMode.Full} style={{ padding: '5px' }} />
 						</Expander>
 					))
 				}

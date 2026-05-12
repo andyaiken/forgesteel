@@ -13,7 +13,6 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
@@ -29,7 +28,6 @@ interface Props {
 	encounter?: Encounter;
 	summon?: SummoningInfo;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange?: (monster: Monster) => void;
 	onClose: () => void;
 	updateMonster?: (monster: Monster) => void;
@@ -156,7 +154,6 @@ export const MonsterModal = (props: Props) => {
 							monsterGroup={props.monsterGroup}
 							summon={props.summon}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					</>
@@ -169,7 +166,6 @@ export const MonsterModal = (props: Props) => {
 								.map(malice => (
 									<MalicePanel
 										malice={malice}
-										options={props.options}
 										currentMalice={encounter ? encounter.malice : undefined}
 										updateCurrentMalice={
 											encounter ?

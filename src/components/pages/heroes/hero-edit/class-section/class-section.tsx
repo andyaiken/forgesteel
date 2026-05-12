@@ -20,7 +20,6 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -31,6 +30,7 @@ import { SubClassSelectModal } from '@/components/modals/select/subclass-select/
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
+import { useOptions } from '@/contexts/data-context';
 
 import './class-section.scss';
 
@@ -46,7 +46,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectClass: (heroClass: HeroClass) => void;
 	setLevel: (level: number) => void;
@@ -59,6 +58,7 @@ interface Props {
 
 export const ClassSection = (props: Props) => {
 	const isSmall = useIsSmall();
+	const appOptions = useOptions();
 	const [ selectedSubClass, setSelectedSubClass ] = useState<SubClass | null>(null);
 	const [ subclassSelectorOpen, setSubclassSelectorOpen ] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ export const ClassSection = (props: Props) => {
 		const options = {
 			level: 0,
 			choices: [] as ReactNode[],
-			completed: !HeroLogic.canLevelUp(props.hero, props.options)
+			completed: !HeroLogic.canLevelUp(props.hero, appOptions)
 				&& (heroClass.primaryCharacteristics.length > 0)
 				&& heroClass.characteristics.some(ch => ch.value !== 0)
 				&& (heroClass.subclasses.filter(sc => sc.selected).length >= heroClass.subclassCount)
@@ -83,7 +83,7 @@ export const ClassSection = (props: Props) => {
 				/>
 				<Field label='XP' value={props.hero.state.xp} />
 				{
-					HeroLogic.canLevelUp(props.hero, props.options) ?
+					HeroLogic.canLevelUp(props.hero, appOptions) ?
 						<Button
 							className='status-warning'
 							onClick={() => props.setLevel(heroClass.level + 1)}
@@ -151,7 +151,6 @@ export const ClassSection = (props: Props) => {
 							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
 							classID={heroClass.id}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onSelect={sc => {
 								setSubclassSelectorOpen(false);
 								props.addSubclass(sc);
@@ -169,7 +168,7 @@ export const ClassSection = (props: Props) => {
 	const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const options = classes.map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
-			<ClassPanel heroClass={c} sourcebooks={props.sourcebooks} options={props.options} />
+			<ClassPanel heroClass={c} sourcebooks={props.sourcebooks} />
 		</SelectablePanel>
 	));
 
@@ -189,7 +188,7 @@ export const ClassSection = (props: Props) => {
 						.filter(f => FeatureLogic.isChoice(f))
 						.map(f => (
 							<SelectablePanel key={f.id}>
-								<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+								<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 							</SelectablePanel>
 						)),
 					completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero, props.sourcebooks))
@@ -209,7 +208,7 @@ export const ClassSection = (props: Props) => {
 				props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
 					<div className={columnClassName} id='class-selected'>
 						<SelectablePanel>
-							<ClassPanel heroClass={props.hero.class} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+							<ClassPanel heroClass={props.hero.class} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null
@@ -260,7 +259,7 @@ export const ClassSection = (props: Props) => {
 			}
 			<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedSubClass(null)}
 				/>
 			</Drawer>

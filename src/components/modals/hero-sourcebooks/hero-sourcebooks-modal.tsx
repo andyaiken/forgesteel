@@ -2,7 +2,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Hero } from '@/models/hero';
 import { HeroSourcebooksPanel } from '@/components/panels/hero-sourcebooks/hero-sourcebooks-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -13,7 +12,6 @@ interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	allSourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 	onImportSourcebook: (sourcebook: Sourcebook) => void;
 	onClose: () => void;

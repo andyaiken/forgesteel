@@ -8,7 +8,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -23,7 +22,6 @@ import './hero-titles-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 	onCustomize: () => void;
@@ -116,7 +114,6 @@ export const HeroTitlesModal = (props: Props) => {
 										title={title}
 										hero={hero}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										mode={PanelMode.Full}
 										onChange={changeTitle}
 									/>
@@ -133,7 +130,6 @@ export const HeroTitlesModal = (props: Props) => {
 						<TitleSelectModal
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onSelect={addTitle}
 							onCustomize={props.onCustomize}
 							onClose={() => setTitlesVisible(false)}

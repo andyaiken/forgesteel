@@ -7,7 +7,6 @@ import { FollowerLogic } from '@/logic/follower-logic';
 import { FollowerType } from '@/enums/follower-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -17,7 +16,6 @@ import './follower-edit-panel.scss';
 interface Props {
 	follower: Follower;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (follower: Follower) => void;
 }
 

@@ -3,7 +3,6 @@ import { Follower } from '@/models/follower';
 import { FollowerEditPanel } from '@/components/panels/edit/follower-edit/follower-edit-panel';
 import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -14,7 +13,6 @@ import './follower-modal.scss';
 interface Props {
 	follower: Follower;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (follower: Follower) => void;
 	onClose: () => void;
 }
@@ -36,7 +34,6 @@ export const FollowerModal = (props: Props) => {
 							<FollowerEditPanel
 								follower={follower}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={onChange}
 							/>
 						</Expander>

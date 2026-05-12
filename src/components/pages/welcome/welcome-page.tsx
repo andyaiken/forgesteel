@@ -7,7 +7,6 @@ import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { PregenData } from '@/data/pregen-data';
 import { PregenInfo } from '@/components/panels/token/token';
 import { PregenLogic } from '@/logic/pregen-logic';
@@ -18,6 +17,7 @@ import { TipData } from '@/data/tip-data';
 import { TipPanel } from '@/components/panels/tip/tip-panel';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './welcome-page.scss';
@@ -26,7 +26,6 @@ type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	options: Options;
 	params: FooterParams;
 	onNewHero: () => void;
 	onPregen: (hero: Hero) => void;
@@ -76,7 +75,6 @@ export const WelcomePage = (props: Props) => {
 							<div className='welcome-column'>
 								<Welcome
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onNewHero={props.onNewHero}
 									onPregen={props.onPregen}
 									onNewEncounter={props.onNewEncounter}
@@ -86,7 +84,6 @@ export const WelcomePage = (props: Props) => {
 					</ErrorBoundary>
 					<AppFooter
 						page='welcome'
-						options={props.options}
 						params={props.params}
 					/>
 				</div>
@@ -104,7 +101,6 @@ export const WelcomePage = (props: Props) => {
 					<div className='welcome-column'>
 						<Welcome
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onNewHero={props.onNewHero}
 							onPregen={props.onPregen}
 							onNewEncounter={props.onNewEncounter}
@@ -151,7 +147,6 @@ export const WelcomePage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
-					options={props.options}
 					params={props.params}
 				/>
 			</div>
@@ -161,7 +156,6 @@ export const WelcomePage = (props: Props) => {
 
 interface WelcomeProps {
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onNewHero: () => void;
 	onPregen: (hero: Hero) => void;
 	onNewEncounter: () => void;
@@ -170,6 +164,7 @@ interface WelcomeProps {
 const Welcome = (props: WelcomeProps) => {
 	const navigation = useNavigation();
 	const [ page, setPage ] = useState<WelcomeType>('player');
+	const options = useOptions();
 
 	const getContent = () => {
 		switch (page) {
@@ -225,7 +220,7 @@ const Welcome = (props: WelcomeProps) => {
 														className='container-button'
 														block={true}
 														onClick={() => {
-															const hero = PregenLogic.pregenToHero(p, props.sourcebooks, props.options);
+															const hero = PregenLogic.pregenToHero(p, props.sourcebooks, options);
 															props.onPregen(hero);
 														}}
 													>

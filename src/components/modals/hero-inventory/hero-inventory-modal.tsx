@@ -13,7 +13,6 @@ import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -24,7 +23,6 @@ import './hero-inventory-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 	onCustomize: () => void;
@@ -115,7 +113,6 @@ export const HeroInventoryModal = (props: Props) => {
 											>
 												<ItemPanel
 													item={i.item}
-													options={props.options}
 													wielder={hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}
@@ -132,7 +129,6 @@ export const HeroInventoryModal = (props: Props) => {
 											>
 												<ItemPanel
 													item={i.item}
-													options={props.options}
 													wielder={hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}
@@ -152,7 +148,6 @@ export const HeroInventoryModal = (props: Props) => {
 						<ItemSelectModal
 							types={[ ItemType.Artifact, ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							hero={hero}
 							onSelect={addItem}
 							onCustomize={props.onCustomize}

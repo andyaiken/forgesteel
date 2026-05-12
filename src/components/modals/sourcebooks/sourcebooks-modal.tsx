@@ -1,10 +1,10 @@
 import { Button, Drawer, Flex, Segmented, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { useDataManager, useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
 import { Info } from '@/components/controls/info/info';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
@@ -22,30 +22,29 @@ import './sourcebooks-modal.scss';
 interface Props {
 	officialSourcebooks: Sourcebook[];
 	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
-	heroes: Hero[];
 	onClose: () => void;
 	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
 	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
-	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
 export const SourcebooksModal = (props: Props) => {
 	const [ page, setPage ] = useState<SourcebookType>(SourcebookType.Official);
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(props.hiddenSourcebookIDs));
+	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(useHiddenSourcebookIDs()));
+
+	const dataManager = useDataManager();
 
 	const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 		if (visible) {
 			const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
 			setHiddenSourcebookIDs(copy);
-			props.onHiddenSourcebookIDsChange(copy);
+			dataManager.saveHiddenSourcebookIDs(copy);
 		} else {
 			const copy = Utils.copy(hiddenSourcebookIDs);
 			copy.push(sourcebook.id);
 			setHiddenSourcebookIDs(copy);
-			props.onHiddenSourcebookIDsChange(copy);
+			dataManager.saveHiddenSourcebookIDs(copy);
 		}
 	};
 
@@ -81,7 +80,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -120,7 +118,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -159,7 +156,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -230,7 +226,6 @@ export const SourcebooksModal = (props: Props) => {
 									<SelectablePanel key={s.id} onSelect={() => setSelectedSourcebook(s)}>
 										<SourcebookPanel
 											sourcebook={s}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											visibility={{
 												visible: !hiddenSourcebookIDs.includes(s.id),
@@ -278,7 +273,6 @@ export const SourcebooksModal = (props: Props) => {
 									<div style={{ padding: '0 20px 20px 20px' }}>
 										<SourcebookPanel
 											sourcebook={selectedSourcebook}
-											heroes={props.heroes}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											mode={PanelMode.Full}
 											onChange={changeSourcebook}

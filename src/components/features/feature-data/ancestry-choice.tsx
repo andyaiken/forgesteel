@@ -9,7 +9,6 @@ import { Hero } from '@/models/hero';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -21,7 +20,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoAncestryChoice = (props: InfoProps) => {
@@ -33,7 +31,6 @@ export const InfoAncestryChoice = (props: InfoProps) => {
 		<AncestryPanel
 			ancestry={props.data.selected}
 			sourcebooks={props.sourcebooks || []}
-			options={props.options}
 		/>
 	);
 };
@@ -43,7 +40,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureAncestryChoiceData) => void;
 }
 
@@ -95,7 +91,7 @@ export const ConfigAncestryChoice = (props: ConfigProps) => {
 			}
 			<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedAncestry(null)}
 				/>
 			</Drawer>

@@ -7,7 +7,6 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -21,7 +20,6 @@ import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	options: Options;
 	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	onSelectMonster?: (monster: Monster) => void;
@@ -74,7 +72,6 @@ export const MonsterGroupPanel = (props: Props) => {
 								<SelectablePanel key={m.id}>
 									<FeaturePanel
 										feature={m}
-										options={props.options}
 										mode={PanelMode.Full}
 										cost={cost}
 										repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -98,7 +95,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					props.monsterGroup.monsters.map(m =>
 						<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-							<MonsterPanel monster={m} monsterGroup={props.monsterGroup} sourcebooks={props.sourcebooks} options={props.options} />
+							<MonsterPanel monster={m} monsterGroup={props.monsterGroup} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					)
 				}
@@ -116,7 +113,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					props.monsterGroup.addOns.map(a =>
 						<SelectablePanel key={a.id}>
-							<FeaturePanel feature={a} options={props.options} cost={a.data.cost} mode={PanelMode.Full} />
+							<FeaturePanel feature={a} cost={a.data.cost} mode={PanelMode.Full} />
 						</SelectablePanel>
 					)
 				}

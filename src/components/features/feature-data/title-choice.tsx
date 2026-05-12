@@ -7,7 +7,6 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
@@ -21,7 +20,6 @@ interface InfoProps {
 	feature: Feature;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	options: Options;
 }
 
 export const InfoTitleChoice = (props: InfoProps) => {
@@ -29,7 +27,7 @@ export const InfoTitleChoice = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(t => <TitlePanel key={t.id} title={t} sourcebooks={props.sourcebooks || []} options={props.options} />)
+					props.data.selected.map(t => <TitlePanel key={t.id} title={t} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -43,7 +41,6 @@ export const InfoTitleChoice = (props: InfoProps) => {
 interface EditProps {
 	data: FeatureTitleChoiceData;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureTitleChoiceData) => void;
 }
 
@@ -70,7 +67,6 @@ interface ConfigProps {
 	feature: Feature;
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setData: (data: FeatureTitleChoiceData) => void;
 }
 
@@ -136,7 +132,6 @@ export const ConfigTitleChoice = (props: ConfigProps) => {
 				<TitleSelectModal
 					hero={props.hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={title => {
 						setTitleSelectorOpen(false);
 
@@ -153,7 +148,6 @@ export const ConfigTitleChoice = (props: ConfigProps) => {
 						selectedTitle ?
 							<TitlePanel
 								title={selectedTitle}
-								options={props.options}
 								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 								onChange={title => {

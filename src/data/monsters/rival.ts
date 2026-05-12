@@ -171,7 +171,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 60,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

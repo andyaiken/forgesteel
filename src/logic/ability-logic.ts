@@ -108,7 +108,7 @@ export class AbilityLogic {
 			HeroLogic.getFeatures(hero)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.AbilityKeyword)
-				.filter(f => f.data.keywords.every(keywords.includes))
+				.filter(f => f.data.keywords.every(kw => keywords.includes(kw)))
 				.forEach(f => {
 					f.data.toRemove.forEach(ak => keywords = keywords.filter(k => k !== ak));
 					f.data.toAdd.forEach(ak => keywords.push(ak));

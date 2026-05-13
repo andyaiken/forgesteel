@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -91,6 +91,20 @@ export class FactoryFeatureLogic {
 				valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
 				valuePerLevel: data.valuePerLevel || 0,
 				valuePerEchelon: data.valuePerEchelon || 0
+			}
+		};
+	};
+
+	createAbilityKeyword = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], toAdd: AbilityKeyword[], toRemove: AbilityKeyword[] }): FeatureAbilityKeyword => {
+		return {
+			id: data.id,
+			name: data.name || 'Ability keyword modifier',
+			description: data.description || '',
+			type: FeatureType.AbilityKeyword,
+			data: {
+				keywords: data.keywords,
+				toAdd: data.toAdd,
+				toRemove: data.toRemove
 			}
 		};
 	};

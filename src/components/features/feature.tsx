@@ -23,6 +23,7 @@ import { ConfigToggle, EditToggle, InfoToggle } from './feature-data/toggle';
 import { EditAbilityCost, InfoAbilityCost } from '@/components/features/feature-data/ability-cost';
 import { EditAbilityDamage, InfoAbilityDamage } from '@/components/features/feature-data/ability-damage';
 import { EditAbilityDistance, InfoAbilityDistance } from '@/components/features/feature-data/ability-distance';
+import { EditAbilityKeyword, InfoAbilityKeyword } from '@/components/features/feature-data/ability-keyword';
 import { EditBonus, InfoBonus } from '@/components/features/feature-data/bonus';
 import { EditCharacteristicBonus, InfoCharacteristicBonus } from '@/components/features/feature-data/characteristic-bonus';
 import { EditConditionImmunity, InfoConditionImmunity } from '@/components/features/feature-data/condition-immunity';
@@ -62,6 +63,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoAbilityDamage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AbilityDistance:
 			return <InfoAbilityDistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.AbilityKeyword:
+			return <InfoAbilityKeyword data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AncestryChoice:
 			return <InfoAncestryChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.AncestryFeatureChoice:
@@ -157,6 +160,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditAbilityDamage data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AbilityDistance:
 			return <EditAbilityDistance data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.AbilityKeyword:
+			return <EditAbilityKeyword data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AddOn:
 			return <EditAddOn data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.AncestryFeatureChoice:

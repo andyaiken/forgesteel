@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -488,6 +488,7 @@ export class FeatureLogic {
 			FeatureType.AbilityCost,
 			FeatureType.AbilityDamage,
 			FeatureType.AbilityDistance,
+			FeatureType.AbilityKeyword,
 			FeatureType.AncestryChoice,
 			FeatureType.AncestryFeatureChoice,
 			FeatureType.Bonus,
@@ -573,6 +574,14 @@ export class FeatureLogic {
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
+				};
+				return data;
+			}
+			case FeatureType.AbilityKeyword: {
+				const data: FeatureAbilityKeywordData = {
+					keywords: [],
+					toAdd: [],
+					toRemove: []
 				};
 				return data;
 			}
@@ -1131,6 +1140,8 @@ export class FeatureLogic {
 				return 'This feature modifies the damage of an ability.';
 			case FeatureType.AbilityDistance:
 				return 'This feature modifies the distance of an ability.';
+			case FeatureType.AbilityKeyword:
+				return 'This feature modifies the keywords of an ability.';
 			case FeatureType.AddOn:
 				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:

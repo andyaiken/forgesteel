@@ -103,7 +103,7 @@ export const ItemEditPanel = (props: Props) => {
 					placeholder='Keywords'
 					mode='tags'
 					allowClear={true}
-					options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
+					options={AbilityLogic.getAllKeywords().map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 					value={item.keywords}
 					onChange={setKeywords}

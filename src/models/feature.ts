@@ -54,6 +54,13 @@ export interface FeatureAbilityDistanceData extends _FeatureData, Modifier {
 };
 export type FeatureAbilityDistance = FeatureOf<FeatureType.AbilityDistance, FeatureAbilityDistanceData>;
 
+export interface FeatureAbilityKeywordData extends _FeatureData {
+	keywords: AbilityKeyword[];
+	toAdd: AbilityKeyword[];
+	toRemove: AbilityKeyword[];
+};
+export type FeatureAbilityKeyword = FeatureOf<FeatureType.AbilityKeyword, FeatureAbilityKeywordData>;
+
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
@@ -333,6 +340,7 @@ export type Feature =
 	| FeatureAbilityCost
 	| FeatureAbilityDamage
 	| FeatureAbilityDistance
+	| FeatureAbilityKeyword
 	| FeatureAddOn
 	| FeatureAncestryChoice
 	| FeatureAncestryFeatureChoice

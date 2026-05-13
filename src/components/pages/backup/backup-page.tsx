@@ -30,7 +30,7 @@ export const BackupPage = (props: Props) => {
 					{
 						props.homebrewSourcebooks.map(sb => (
 							<SelectablePanel key={sb.id} onSelect={() => Utils.exportData(sb.name || 'Unnamed Sourcebook', sb, 'sourcebook')}>
-								<SourcebookPanel sourcebook={sb} heroes={heroes} sourcebooks={[]} />
+								<SourcebookPanel sourcebook={sb} sourcebooks={[]} />
 							</SelectablePanel>
 						))
 					}

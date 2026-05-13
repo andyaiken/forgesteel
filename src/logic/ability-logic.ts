@@ -4,6 +4,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { FeatureType } from '@/enums/feature-type';
 import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -15,7 +16,7 @@ import { PowerRoll } from '@/models/power-roll';
 import { Utils } from '@/utils/utils';
 
 export class AbilityLogic {
-	static getKeywords = () => {
+	static getAllKeywords = () => {
 		return [
 			AbilityKeyword.Animal,
 			AbilityKeyword.Animapathy,
@@ -98,6 +99,23 @@ export class AbilityLogic {
 
 		const length = descLength + textLength + fieldLength + rollLength;
 		return Math.max(1, Math.round(length / 12));
+	};
+
+	static getKeywords = (ability: Ability, hero?: Hero) => {
+		let keywords = [ ...ability.keywords ];
+
+		if (hero) {
+			HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.AbilityKeyword)
+				.filter(f => f.data.keywords.every(keywords.includes))
+				.forEach(f => {
+					f.data.toRemove.forEach(ak => keywords = keywords.filter(k => k !== ak));
+					f.data.toAdd.forEach(ak => keywords.push(ak));
+				});
+		}
+
+		return keywords;
 	};
 
 	static getDistance = (distance: AbilityDistance, ability?: Ability, hero?: Hero) => {

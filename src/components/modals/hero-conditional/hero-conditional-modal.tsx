@@ -57,7 +57,6 @@ export const HeroConditionalModal = (props: Props) => {
 											feature={f.feature}
 											hero={hero}
 											sourcebooks={props.sourcebooks}
-											options={props.options}
 											setData={setData}
 										/>
 									</SelectablePanel>

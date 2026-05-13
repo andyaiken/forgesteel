@@ -42,13 +42,11 @@ interface Props {
 export const AbilityPanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(!!props.hero);
 
-	const getIsSignature = () => {
-		const cost = props.cost ?? props.ability.cost;
-		return cost === 'signature';
-	};
+	const keywords = AbilityLogic.getKeywords(props.ability, props.hero);
+	const isSignature = (props.cost ?? props.ability.cost) === 'signature';
 
 	const getCost = () => {
-		if (getIsSignature()) {
+		if (isSignature) {
 			return 0;
 		}
 
@@ -60,7 +58,7 @@ export const AbilityPanel = (props: Props) => {
 		const modifierSum = HeroLogic.getFeatures(props.hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityCost)
-			.filter(f => f.data.keywords.every(k => props.ability.keywords.includes(k)))
+			.filter(f => f.data.keywords.every(k => keywords.includes(k)))
 			.map(f => f.data.modifier)
 			.reduce((sum, m) => sum + m, 0);
 
@@ -147,7 +145,7 @@ export const AbilityPanel = (props: Props) => {
 				text: 'You can’t use this ability.'
 			});
 		}
-		if (conditions.includes(ConditionType.Prone) && props.ability.keywords.includes(AbilityKeyword.Strike)) {
+		if (conditions.includes(ConditionType.Prone) && keywords.includes(AbilityKeyword.Strike)) {
 			warnings.push({
 				label: ConditionType.Prone,
 				text: 'This ability takes a bane.'
@@ -188,7 +186,7 @@ export const AbilityPanel = (props: Props) => {
 	};
 
 	const getRibbon = () => {
-		if (getIsSignature()) {
+		if (isSignature) {
 			return (
 				<Pill>Signature</Pill>
 			);
@@ -326,14 +324,14 @@ export const AbilityPanel = (props: Props) => {
 				</HeaderText>
 				<Markdown text={props.ability.description} className='ability-description-text' />
 				{
-					props.ability.keywords.length > 0 ?
-						<Flex gap={3}>{props.ability.keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}</Flex>
+					keywords.length > 0 ?
+						<Flex gap={3}>{keywords.map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}</Flex>
 						: null
 				}
 				<AbilityInfoPanel ability={props.ability} hero={props.hero} />
 				{(props.ability.sections || []).map(getSection)}
 				{
-					props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
+					keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
 						<Alert
 							type='info'
 							showIcon={true}

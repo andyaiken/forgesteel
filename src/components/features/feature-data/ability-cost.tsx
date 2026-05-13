@@ -54,7 +54,7 @@ export const EditAbilityCost = (props: EditProps) => {
 				placeholder='Select keywords'
 				mode='tags'
 				allowClear={true}
-				options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
+				options={AbilityLogic.getAllKeywords().map(o => ({ value: o }))}
 				optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 				value={data.keywords}
 				onChange={setKeywords}

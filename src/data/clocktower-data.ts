@@ -192,7 +192,7 @@ const shadow: ClocktowerCharacter = {
 		otherNightReminder: 'Learn how many players changed character.'
 	},
 	details: {
-		description: 'Each night, you learn how many players changed character since dusk.'
+		description: 'Each night, you learn how many players have a different token now than they started the night with. A player whose alignment has changed (but not their role) does not count. A player whose role has been changed multiple times only counts once.'
 	}
 };
 

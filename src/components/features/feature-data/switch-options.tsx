@@ -57,7 +57,7 @@ export const InfoSwitchOptions = (props: InfoProps) => {
 				{
 					props.data.options.map(f => (
 						<Expander key={f.feature.id} title={f.value}>
-							{getDescription(f.feature)}
+							{getDescription(f.feature) || f.feature.name}
 						</Expander>
 					))
 				}

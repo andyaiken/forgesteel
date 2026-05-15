@@ -678,11 +678,11 @@ export class FactoryLogic {
 		};
 	};
 
-	static createEncounterSlot = (monsterID: string): EncounterSlot => {
+	static createEncounterSlot = (monsterID: string, count: number): EncounterSlot => {
 		return {
 			id: Utils.guid(),
 			monsterID: monsterID,
-			count: 1,
+			count: count,
 			customization: {
 				addOnIDs: [],
 				itemIDs: [],

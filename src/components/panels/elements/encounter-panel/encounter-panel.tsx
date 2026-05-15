@@ -14,7 +14,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
@@ -76,7 +75,7 @@ export const EncounterPanel = (props: Props) => {
 											return null;
 										}
 
-										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
+										const count = slot.count;
 
 										return (
 											<div key={slot.id} className='encounter-slot'>

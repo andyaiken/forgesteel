@@ -8,7 +8,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
-import { MonsterLogic } from '@/logic/monster-logic';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -28,13 +27,13 @@ export const EncounterToolsModal = (props: Props) => {
 		.forEach(slot => {
 			const existing = monsters.find(m => m.monster.id === slot.monsterID);
 			if (existing) {
-				existing.count += slot.count * MonsterLogic.getRoleMultiplier(existing.monster.role.organization);
+				existing.count += slot.count;
 			} else {
 				const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
 				if (monster) {
 					monsters.push({
 						monster: monster,
-						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
+						count: slot.count
 					});
 				}
 			}

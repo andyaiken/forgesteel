@@ -34,7 +34,8 @@
 				}
 
 				.actions {
-					flex: 0 0 120px;
+					min-width: 120px;
+					flex: 0 0 auto;
 				}
 
 				&:hover {

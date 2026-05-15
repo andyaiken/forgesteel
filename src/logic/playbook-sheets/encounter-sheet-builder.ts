@@ -7,7 +7,6 @@ import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
-import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -125,7 +124,7 @@ export class EncounterSheetBuilder {
 			console.error('Failed to get monster for encounter slot:', slot);
 			return null;
 		}
-		const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization);
+		const roleMult = 1;
 		const sheet: EncounterSlotSheet = {
 			id: slot.id,
 			monster: monster,

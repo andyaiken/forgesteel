@@ -28,16 +28,16 @@ export const stickAndRobe: Kit = {
 				description: 'When your stick speaks, your enemy moves.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createMelee() ],
+				distance: [ FactoryLogic.distance.createMelee(2) ],
 				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '3 + M or A damage',
-							tier2: '6 + M or A damage; slide 1',
-							tier3: '9 + M or A damage; slide 3'
+							tier1: '4 + M or A damage',
+							tier2: '7 + M or A damage; slide 1',
+							tier3: '10 + M or A damage; slide 3'
 						})
 					)
 				]

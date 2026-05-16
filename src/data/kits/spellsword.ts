@@ -35,9 +35,9 @@ export const spellsword: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 + M, R, I or P lightning damage',
-							tier2: '6 + M, R, I or P lightning damage',
-							tier3: '9 + M, R, I or P lightning damage'
+							tier1: '5 + M, R, I or P lightning damage',
+							tier2: '8 + M, R, I or P lightning damage',
+							tier3: '11 + M, R, I or P lightning damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('A creature or object of your choice within 2 squares of the target takes lightning damage equal to the characteristic score used for this ability\'s power roll.')

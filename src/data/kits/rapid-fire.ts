@@ -28,16 +28,16 @@ export const rapidFire: Kit = {
 				description: 'When you fire two arrows back to back, both hit their mark.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createRanged(5) ],
+				distance: [ FactoryLogic.distance.createRanged(12) ],
 				target: 'Two creatures or objects',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '6 damage'
+							tier1: '4 damage',
+							tier2: '6 damage',
+							tier3: '8 damage'
 						})
 					)
 				]

@@ -35,9 +35,9 @@ export const battlemind: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 + M, R, I, or P damage',
-							tier2: '6 + M, R, I, or P damage',
-							tier3: '9 + M, R, I, or P damage'
+							tier1: '5 + M, R, I, or P damage',
+							tier2: '8 + M, R, I, or P damage',
+							tier3: '11 + M, R, I, or P damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('Until the end of the target\'s next turn, any forced movement that affects the target has its distance increased by 2.')

@@ -37,7 +37,7 @@ export const mountain: Kit = {
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
 							tier1: '3 damage + M or A damage',
 							tier2: '5 damage + M or A damage',
-							tier3: '9 damage + M or A damage'
+							tier3: '13 damage + M or A damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('If the target dealt damage to you since the end of your last turn, this strike deals additional damage equal to your Might or Agility score (your choice).')

@@ -34,9 +34,9 @@ export const martialArtist: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '3 + M or A damage',
-							tier2: '6 + M or A damage; you swap places with the target',
-							tier3: '9 + M or A damage; you swap places with the target'
+							tier1: '5 + M or A damage',
+							tier2: '8 + M or A damage; you can swap places with the target',
+							tier3: '11 + M or A damage; you can swap places with the target'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('If you obtain a tier 2 or tier 3 outcome and can\'t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 1 extra damage.')

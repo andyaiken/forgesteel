@@ -35,9 +35,9 @@ export const shiningArmor: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '3 + M or A damage',
-							tier2: '6 + M or A damage',
-							tier3: '9 + M or A damage'
+							tier1: '5 + M or A damage',
+							tier2: '8 + M or A damage',
+							tier3: '11 + M or A damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('The target is taunted until the end of their next turn.')

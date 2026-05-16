@@ -34,9 +34,9 @@ export const pugilist: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility ],
-							tier1: '2 + M or A damage',
-							tier2: '5 + M or A damage; slide 1',
-							tier3: '7 + M or A damage; slide 2'
+							tier1: '3 + M or A damage',
+							tier2: '6 + M or A damage; slide 1',
+							tier3: '8 + M or A damage; slide 2'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('You can shift into any square the target leaves after you slide them.')

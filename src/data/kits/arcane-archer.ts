@@ -27,16 +27,16 @@ export const arcaneArcher: Kit = {
 				description: 'Your ammunition explodes with magical energy.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ FactoryLogic.distance.createRanged(5) ],
+				distance: [ FactoryLogic.distance.createRanged(15) ],
 				target: 'One creature or object',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 + A, R, I, or P fire damage',
-							tier2: '5 + A, R, I, or P fire damage',
-							tier3: '8 + A, R, I, or P fire damage'
+							tier1: '5 + A, R, I, or P fire damage',
+							tier2: '7 + A, R, I, or P fire damage',
+							tier3: '10 + A, R, I, or P fire damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('One creature or object of your choice within 2 squares of the target takes fire damage equal to the characteristic score used for this ability\'s power roll.')

@@ -1,6 +1,7 @@
 import { Button, Drawer, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureSwitchOptionsData } from '@/models/feature';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -32,6 +33,8 @@ interface InfoProps {
 export const InfoSwitchOptions = (props: InfoProps) => {
 	const getDescription = (feature: Feature) => {
 		switch (feature.type) {
+			case FeatureType.Ability:
+				return <AbilityPanel ability={feature.data.ability} hero={props.hero} />;
 			case FeatureType.Text:
 				return <Markdown text={feature.description} />;
 			default:

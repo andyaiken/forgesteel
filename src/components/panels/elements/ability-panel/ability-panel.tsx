@@ -18,7 +18,6 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -32,7 +31,6 @@ interface Props {
 	monster?: Monster;
 	cost?: number | 'signature';
 	repeatable?: boolean;
-	options?: Options;
 	tags?: string[];
 	highlightTier?: number;
 	odds?: number[];

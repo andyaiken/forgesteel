@@ -30,10 +30,6 @@ export const SyncStatus = () => {
 			</ErrorBoundary>
 		);
 	}
-	return (
-		<ErrorBoundary>
-			<div className='sync-status none'>
-			</div>
-		</ErrorBoundary>
-	);
+
+	return null;
 };

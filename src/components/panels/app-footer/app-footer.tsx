@@ -14,6 +14,8 @@ import { useState } from 'react';
 
 import './app-footer.scss';
 
+import patreon from '@/assets/icons/patreon.svg';
+
 export interface FooterParams {
 	errorsExist: boolean;
 	showReference: () => void;
@@ -47,10 +49,15 @@ export const AppFooter = (props: Props) => {
 		window.location.assign('https://www.google.com');
 	};
 
+	const onPatreon = () => {
+		window.open('https://www.patreon.com/cw/andyaiken', '_blank');
+	};
+
 	const actions: ButtonConfig[] = [
 		{ type: 'button', label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: props.params.showReference },
 		{ type: 'button', label: isSmall ? undefined : 'Settings', icon: <SettingOutlined />, tooltip: 'Settings', onClick: props.params.showSettings },
-		{ type: 'button', label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout }
+		{ type: 'button', label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout },
+		{ type: 'button', label: isSmall ? undefined : 'Patreon', icon: <img className='patreon-logo' src={patreon} style={{ width: '14px', height: '14px' }} />, tooltip: 'Patreon', onClick: onPatreon }
 	];
 	if (props.params.errorsExist) {
 		actions.push({ type: 'button', icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
@@ -93,7 +100,7 @@ export const AppFooter = (props: Props) => {
 				<Space>
 					<SyncStatus />
 					{
-						dataSource ?
+						dataSource && !isSmall ?
 							<Tag
 								icon={<DatabaseFilled />}
 								variant='outlined'

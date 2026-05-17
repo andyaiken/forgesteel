@@ -28,7 +28,7 @@ export class SessionLogic {
 				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 				if (monster && monsterGroup) {
-					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
+					const count = slot.count;
 					const current = monsterInfo.find(info => info.monsterID === slot.monsterID);
 					if (current) {
 						current.count += count;
@@ -49,7 +49,7 @@ export class SessionLogic {
 			.forEach(slot => {
 				const info = monsterInfo.find(info => info.monsterID === slot.monsterID);
 				if (info) {
-					const count = slot.count * MonsterLogic.getRoleMultiplier(info.monster.role.organization);
+					const count = slot.count;
 					for (let n = 1; n <= count; ++n) {
 						const monsterCopy = Utils.copy(info.monster);
 						monsterCopy.id = Utils.guid();

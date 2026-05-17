@@ -4,6 +4,7 @@ import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { MonsterLogic } from './monster-logic';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -19,12 +20,16 @@ export class EncounterDifficultyLogic {
 		return Collections.sum(group.slots, slot => {
 			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 
-			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
-			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
-			const addOnPoints = Collections.sum(addOns, a => a.data.cost);
-			const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
+			if (monster) {
+				const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
+				const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
+				const addOnPoints = Collections.sum(addOns, a => a.data.cost);
+				const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
+				const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization);
 
-			return monster ? (monster.encounterValue + addOnCost) * slot.count : 0;
+				return (monster.encounterValue + addOnCost) * Math.floor(slot.count / roleMult);
+			}
+			return 0;
 		});
 	};
 

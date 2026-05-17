@@ -13,20 +13,11 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 export class EncounterLogic {
-	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+	static getMonsterCount = (encounter: Encounter) => {
 		let total = 0;
 
 		encounter.groups.forEach(g => {
-			g.slots.forEach(s => {
-				let count = s.count;
-
-				const monster = SourcebookLogic.getMonster(sourcebooks, s.monsterID);
-				if (monster) {
-					count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
-				}
-
-				total += count;
-			});
+			g.slots.forEach(s => total += s.count);
 		});
 
 		return total;

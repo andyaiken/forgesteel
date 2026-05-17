@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs, Tooltip } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, WarningFilled } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -92,19 +92,16 @@ export const EncounterEditPanel = (props: Props) => {
 	const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 		const copy = Utils.copy(encounter);
 
+		const count = MonsterLogic.getRoleMultiplier(monster.role.organization);
+
 		if (encounterGroupID) {
 			const group = copy.groups.find(g => g.id === encounterGroupID);
 			if (group) {
-				const slot = group.slots.find(s => s.monsterID === monster.id);
-				if (slot) {
-					slot.count += 1;
-				} else {
-					group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-				}
+				group.slots.push(FactoryLogic.createEncounterSlot(monster.id, count));
 			};
 		} else {
 			const group = FactoryLogic.createEncounterGroup();
-			group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+			group.slots.push(FactoryLogic.createEncounterSlot(monster.id, count));
 			copy.groups.push(group);
 		}
 
@@ -1109,12 +1106,25 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			);
 		};
 
+		const getCountCheck = () => {
+			const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization);
+
+			if (props.slot.count % roleMult !== 0) {
+				return (
+					<Tooltip title='This monster expects to be in groups of multiples of 4. Make sure this count is correct.'>
+						<WarningFilled style={{ color: 'yellow' }} />
+					</Tooltip>
+				);
+			}
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className='slot-row'>
 					<div className='content'>
 						<Flex align='center' justify='space-between'>
 							<MonsterInfo monster={monster} />
+							{getCountCheck()}
 							<ButtonGroup
 								buttons={[
 									{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Show stat block', onClick: () => props.showMonster(monster, monsterGroup) },
@@ -1132,7 +1142,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<div className='actions'>
 						<NumberSpin
 							value={props.slot.count}
-							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
+							steps={[ ...new Set([ 1, MonsterLogic.getRoleMultiplier(monster.role.organization) ]) ]}
 							onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
 						/>
 					</div>

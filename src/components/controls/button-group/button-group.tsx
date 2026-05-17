@@ -40,7 +40,7 @@ export interface ControlConfig {
 }
 
 interface ButtonGroupProps {
-	buttons: (ButtonConfig | DangerConfig | DropdownConfig | ControlConfig)[];
+	buttons: (ButtonConfig | DangerConfig | DropdownConfig | ControlConfig | null)[];
 }
 
 export const ButtonGroup = (props: ButtonGroupProps) => {
@@ -49,7 +49,7 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
 			<div className='button-group'>
 				<Space size={2} separator={<Divider orientation='vertical' />}>
 					{
-						props.buttons.map((item, n) => {
+						props.buttons.filter(item => !!item).map((item, n) => {
 							switch (item.type) {
 								case 'button':
 									return (

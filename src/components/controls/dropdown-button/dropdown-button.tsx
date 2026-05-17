@@ -24,7 +24,7 @@ export const DropdownButton = (props: Props) => {
 					}}
 					trigger={[ 'click' ]}
 				>
-					<Button className={props.className} block={true}>
+					<Button className={props.className} block={true} type='text'>
 						{props.label}
 						<DownOutlined />
 					</Button>

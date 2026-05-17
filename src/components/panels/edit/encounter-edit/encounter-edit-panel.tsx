@@ -6,6 +6,7 @@ import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { useHeroes, useOptions } from '@/contexts/data-context';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -32,6 +33,7 @@ import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
@@ -325,7 +327,7 @@ export const EncounterEditPanel = (props: Props) => {
 		}
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%', padding: '0 5px' }}>
 				{warnings}
 				<HeaderText
 					extra={
@@ -336,17 +338,18 @@ export const EncounterEditPanel = (props: Props) => {
 				</HeaderText>
 				{
 					encounter.groups.map((group, n) => (
-						<GroupPanel
-							key={group.id}
-							group={group}
-							index={n}
-							sourcebooks={props.sourcebooks}
-							draggedMonster={draggedMonster}
-							setName={setName}
-							copyGroup={copyGroup}
-							deleteGroup={deleteGroup}
-							getSlot={getSlot}
-						/>
+						<SelectablePanel key={group.id}>
+							<GroupPanel
+								group={group}
+								index={n}
+								sourcebooks={props.sourcebooks}
+								draggedMonster={draggedMonster}
+								setName={setName}
+								copyGroup={copyGroup}
+								deleteGroup={deleteGroup}
+								getSlot={getSlot}
+							/>
+						</SelectablePanel>
 					))
 				}
 				{
@@ -397,13 +400,18 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<div className='encounter-terrain-panel'>
-				<TerrainDropTarget
-					encounter={encounter}
-					draggedTerrain={draggedTerrain}
-					getSlot={getTerrain}
-				/>
-			</div>
+			<Space orientation='vertical' style={{ width: '100%', padding: '0 5px' }}>
+				<HeaderText>Terrain</HeaderText>
+				<SelectablePanel style={{ paddingTop: '20px' }}>
+					<div className='encounter-terrain-panel'>
+						<TerrainDropTarget
+							encounter={encounter}
+							draggedTerrain={draggedTerrain}
+							getSlot={getTerrain}
+						/>
+					</div>
+				</SelectablePanel>
+			</Space>
 		);
 	};
 
@@ -856,11 +864,13 @@ const GroupPanel = (props: GroupPanelProps) => {
 				<HeaderText
 					level={3}
 					extra={
-						<Flex>
-							<Button key='edit' type='text' title='Edit Group Name' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
-							<Button key='copy' type='text' title='Duplicate Group' icon={<CopyOutlined />} onClick={() => props.copyGroup(props.group)} />
-							<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
-						</Flex>
+						<ButtonGroup
+							buttons={[
+								{ type: 'button', icon: editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />, tooltip: 'Edit Group Name', onClick: () => setEditing(!editing) },
+								{ type: 'button', icon: <CopyOutlined />, tooltip: 'Duplicate Group', onClick: () => props.copyGroup(props.group) },
+								{ type: 'control', control: <DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} /> }
+							]}
+						/>
 					}
 				>
 					{
@@ -902,6 +912,8 @@ const GroupPanel = (props: GroupPanelProps) => {
 		</ErrorBoundary>
 	);
 };
+
+// #region Drop targets
 
 interface MonsterDropTargetProps {
 	group: EncounterGroup;
@@ -980,6 +992,10 @@ const TerrainDropTarget = (props: TerrainDropTargetProps) => {
 		</div>
 	);
 };
+
+// #endregion
+
+// #region Slots
 
 interface MonsterSlotPanelProps {
 	slot: EncounterSlot;
@@ -1099,13 +1115,17 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<div className='content'>
 						<Flex align='center' justify='space-between'>
 							<MonsterInfo monster={monster} />
-							<Flex align='center'>
-								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
-								<Button type='text' title='Customize' icon={showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
-								<Popover trigger='click' content={getMenu()}>
-									<Button type='text' icon={<EllipsisOutlined />} />
-								</Popover>
-							</Flex>
+							<ButtonGroup
+								buttons={[
+									{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Show stat block', onClick: () => props.showMonster(monster, monsterGroup) },
+									{ type: 'button', icon: showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) },
+									{
+										type: 'dropdown',
+										icon: <EllipsisOutlined />,
+										popover: getMenu()
+									}
+								]}
+							/>
 						</Flex>
 						{showCustomize ? getCustomizePanel() : null}
 					</div>
@@ -1165,10 +1185,12 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 					<div className='content'>
 						<Flex align='center' justify='space-between'>
 							<TerrainInfo terrain={terrain} />
-							<Flex align='center'>
-								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />
-								{terrain.upgrades.length > 0 ? <Button type='text' title='Customize' icon={showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} /> : null}
-							</Flex>
+							<ButtonGroup
+								buttons={[
+									{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Show stat block', onClick: () => props.showTerrain(terrain, props.slot.upgradeIDs) },
+									terrain.upgrades.length > 0 ? { type: 'button', icon: showCustomize ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) } : null
+								]}
+							/>
 						</Flex>
 						{showCustomize ? getCustomizePanel() : null}
 					</div>
@@ -1190,6 +1212,10 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 	);
 };
 
+// #endregion
+
+// #region List items
+
 interface MonsterListItemProps {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
@@ -1201,48 +1227,38 @@ interface MonsterListItemProps {
 const MonsterListItem = (props: MonsterListItemProps) => {
 	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.monster.id, data: { type: 'monster', element: props.monster } });
 
-	let showBtn: ReactNode | null = null;
-	if (props.monsterGroup && props.showMonster) {
-		showBtn = (
-			<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster!(props.monster, props.monsterGroup!)} />
-		);
-	}
-
-	let addBtn: ReactNode | null = null;
-	if (props.encounter && props.addMonster) {
-		if (props.encounter.groups.length === 0) {
-			addBtn = (
-				<Button type='text' icon={<PlusOutlined />} onClick={() => props.addMonster!(props.monster, null)} />
-			);
-		} else {
-			addBtn = (
-				<Popover
-					content={
-						<Space orientation='vertical'>
-							{
-								props.encounter.groups.map((group, n) => (
-									<Button key={group.id} type='text' block={true} onClick={() => props.addMonster!(props.monster, group.id)}>Group {n + 1}</Button>
-								))
-							}
-							<Button key='' type='text' block={true} onClick={() => props.addMonster!(props.monster, null)}>New Group</Button>
-						</Space>
-					}
-				>
-					<Button type='text' icon={<PlusOutlined />} />
-				</Popover>
-			);
-		}
-	}
-
 	return (
 		<div className='monster-list-item'>
 			<div className='info-container' ref={setNodeRef} {...listeners} {...attributes}>
 				<MonsterInfo monster={props.monster} />
 			</div>
-			<Flex>
-				{showBtn}
-				{addBtn}
-			</Flex>
+			<ButtonGroup
+				buttons={[
+					props.monsterGroup && props.showMonster ?
+						{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Stat Block', onClick: () => props.showMonster!(props.monster, props.monsterGroup!) }
+						: null,
+					props.encounter && props.addMonster && (props.encounter.groups.length === 0) ?
+						{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: () => props.addMonster!(props.monster, null) }
+						: null,
+					props.encounter && props.addMonster && (props.encounter.groups.length !== 0) ?
+						{
+							type: 'dropdown',
+							icon: <PlusOutlined />,
+							tooltip: 'Add',
+							popover: (
+								<Space orientation='vertical'>
+									{
+										props.encounter!.groups.map((group, n) => (
+											<Button key={group.id} type='text' block={true} onClick={() => props.addMonster!(props.monster, group.id)}>Group {n + 1}</Button>
+										))
+									}
+									<Button key='' type='text' block={true} onClick={() => props.addMonster!(props.monster, null)}>New Group</Button>
+								</Space>
+							)
+						}
+						: null
+				]}
+			/>
 		</div>
 	);
 };
@@ -1256,29 +1272,23 @@ interface TerrainListItemProps {
 const TerrainListItem = (props: TerrainListItemProps) => {
 	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.terrain.id, data: { type: 'terrain', element: props.terrain } });
 
-	let showBtn: ReactNode | null = null;
-	if (props.showTerrain) {
-		showBtn = (
-			<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain!(props.terrain, [])} />
-		);
-	}
-
-	let addBtn: ReactNode | null = null;
-	if (props.addTerrain) {
-		addBtn = (
-			<Button type='text' icon={<PlusOutlined />} onClick={() => props.addTerrain!(props.terrain)} />
-		);
-	}
-
 	return (
 		<div className='terrain-list-item'>
 			<div className='info-container' ref={setNodeRef} {...listeners} {...attributes}>
 				<TerrainInfo terrain={props.terrain} />
 			</div>
-			<Flex>
-				{showBtn}
-				{addBtn}
-			</Flex>
+			<ButtonGroup
+				buttons={[
+					props.showTerrain ?
+						{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Stat Block', onClick: () => props.showTerrain!(props.terrain, []) }
+						: null,
+					props.addTerrain ?
+						{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: () => props.addTerrain!(props.terrain) }
+						: null
+				]}
+			/>
 		</div>
 	);
 };
+
+// #endregion

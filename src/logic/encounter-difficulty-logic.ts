@@ -3,14 +3,19 @@ import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
+import { OptionsLogic } from './options-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
 export class EncounterDifficultyLogic {
-	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		const monsters = Collections.sum(encounter.groups, g => EncounterDifficultyLogic.getGroupStrength(g, sourcebooks));
+	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[], heroCount: number) => {
+		const groups = encounter.groups.filter(g => {
+			const minHeroes = g.minHeroCount || heroCount;
+			return heroCount >= minHeroes;
+		});
+
+		const monsters = Collections.sum(groups, g => EncounterDifficultyLogic.getGroupStrength(g, sourcebooks));
 		const terrain = Collections.sum(encounter.terrain, t => EncounterDifficultyLogic.getTerrainStrength(t, sourcebooks));
 		return monsters + terrain;
 	};
@@ -40,22 +45,9 @@ export class EncounterDifficultyLogic {
 	};
 
 	static getBudgets = (options: Options, heroes: Hero[]) => {
-		let heroCount = options.heroCount;
-		let heroLevel = options.heroLevel;
-		let heroVictories = options.heroVictories;
-
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
-			party.forEach(h => {
-				const retainers = HeroLogic.getRetainers(h);
-				if (retainers.length > 0) {
-					heroCount += 1;
-				}
-			});
-			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
-			heroVictories = Math.round(Collections.mean(party, h => h.state.victories));
-		}
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
+		const heroLevel = OptionsLogic.getHeroLevel(options, heroes);
+		const heroVictories = OptionsLogic.getHeroVictories(options, heroes);
 
 		return EncounterDifficultyLogic.getBudgetsForParty(heroCount, heroLevel, heroVictories);
 	};

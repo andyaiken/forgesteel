@@ -10,6 +10,7 @@ import { Hero } from '@/models/hero';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
+import { OptionsLogic } from '@/logic/options-logic';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -17,7 +18,8 @@ import { Utils } from '@/utils/utils';
 
 export class EncounterSheetBuilder {
 	static buildEncounterSheet = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options): EncounterSheet => {
-		const strength = EncounterDifficultyLogic.getStrength(encounter, sourcebooks);
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
+		const strength = EncounterDifficultyLogic.getStrength(encounter, sourcebooks, heroCount);
 		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 		const victories = EncounterDifficultyLogic.getVictories(difficulty);
 

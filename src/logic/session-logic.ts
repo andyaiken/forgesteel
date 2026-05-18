@@ -23,6 +23,10 @@ export class SessionLogic {
 
 		const monsterInfo: { monsterID: string, monster: Monster, name: string, count: number, added: number }[] = [];
 		copy.groups
+			.filter(g => {
+				const minHeroes = g.minHeroCount || heroes.length;
+				return heroes.length >= minHeroes;
+			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
 				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
@@ -45,6 +49,10 @@ export class SessionLogic {
 			});
 
 		copy.groups
+			.filter(g => {
+				const minHeroes = g.minHeroCount || heroes.length;
+				return heroes.length >= minHeroes;
+			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
 				const info = monsterInfo.find(info => info.monsterID === slot.monsterID);
@@ -60,19 +68,24 @@ export class SessionLogic {
 				}
 			});
 
-		copy.groups.forEach(g => {
-			const minions = g.slots.filter(s => {
-				const info = monsterInfo.find(info => info.monsterID === s.monsterID);
-				return info && (info.monster.role.organization === MonsterOrganizationType.Minion);
+		copy.groups
+			.filter(g => {
+				const minHeroes = g.minHeroCount || heroes.length;
+				return heroes.length >= minHeroes;
+			})
+			.forEach(g => {
+				const minions = g.slots.filter(s => {
+					const info = monsterInfo.find(info => info.monsterID === s.monsterID);
+					return info && (info.monster.role.organization === MonsterOrganizationType.Minion);
+				});
+				const nonMinions = g.slots.filter(s => {
+					const info = monsterInfo.find(info => info.monsterID === s.monsterID);
+					return info && (info.monster.role.organization !== MonsterOrganizationType.Minion);
+				});
+				if ((minions.length > 0) && (nonMinions.length > 0)) {
+					minions.forEach(s => s.state.captainID = nonMinions[0].monsters[0].id);
+				}
 			});
-			const nonMinions = g.slots.filter(s => {
-				const info = monsterInfo.find(info => info.monsterID === s.monsterID);
-				return info && (info.monster.role.organization !== MonsterOrganizationType.Minion);
-			});
-			if ((minions.length > 0) && (nonMinions.length > 0)) {
-				minions.forEach(s => s.state.captainID = nonMinions[0].monsters[0].id);
-			}
-		});
 
 		if (options.party !== '') {
 			heroes

@@ -32,6 +32,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { OptionsLogic } from '@/logic/options-logic';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -156,6 +157,13 @@ export const EncounterEditPanel = (props: Props) => {
 		const setName = (group: EncounterGroup, value: string) => {
 			const copy = Utils.copy(encounter);
 			copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const setMinHeroCount = (group: EncounterGroup, value: number | undefined) => {
+			const copy = Utils.copy(encounter);
+			copy.groups.filter(g => g.id === group.id).forEach(g => g.minHeroCount = value);
 			setEncounter(copy);
 			props.onChange(copy);
 		};
@@ -297,6 +305,7 @@ export const EncounterEditPanel = (props: Props) => {
 								sourcebooks={props.sourcebooks}
 								draggedMonster={draggedMonster}
 								setName={setName}
+								setMinHeroCount={setMinHeroCount}
 								copyGroup={copyGroup}
 								moveGroup={moveGroup}
 								deleteGroup={deleteGroup}
@@ -655,7 +664,8 @@ ${value.victories}`
 	};
 
 	const getDifficultySection = () => {
-		const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
+		const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks, heroCount);
 		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 
 		return (
@@ -811,6 +821,7 @@ interface GroupPanelProps {
 	sourcebooks: Sourcebook[];
 	draggedMonster: Monster | null;
 	setName: (group: EncounterGroup, value: string) => void;
+	setMinHeroCount: (group: EncounterGroup, value: number | undefined) => void;
 	copyGroup: (group: EncounterGroup) => void;
 	moveGroup: (index: number, direction: 'up' | 'down') => void;
 	deleteGroup: (group: EncounterGroup) => void;
@@ -829,7 +840,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					extra={
 						<ButtonGroup
 							buttons={[
-								{ type: 'button', icon: editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />, tooltip: 'Edit Group Name', onClick: () => setEditing(!editing) },
+								{ type: 'button', icon: editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />, tooltip: 'Edit Group', onClick: () => setEditing(!editing) },
 								{ type: 'button', icon: <CopyOutlined />, tooltip: 'Duplicate Group', onClick: () => props.copyGroup(props.group) },
 								{ type: 'button', icon: <CaretUpOutlined />, tooltip: 'Move Up', disabled: props.index === 0, onClick: () => props.moveGroup(props.index, 'up') },
 								{ type: 'button', icon: <CaretDownOutlined />, tooltip: 'Move Down', disabled: false, onClick: () => props.moveGroup(props.index, 'down') },
@@ -855,6 +866,36 @@ const GroupPanel = (props: GroupPanelProps) => {
 					draggedMonster={props.draggedMonster}
 					getSlot={props.getSlot}
 				/>
+				{
+					editing ?
+						<div className='group-edit-row'>
+							<Toggle
+								label={`Only include this group when there are ${props.group.minHeroCount || 5} or more heroes`}
+								value={props.group.minHeroCount !== undefined}
+								onChange={checked => props.setMinHeroCount(props.group, checked ? 5 : undefined)}
+							/>
+							{
+								props.group.minHeroCount ?
+									<NumberSpin
+										label='Heroes'
+										value={props.group.minHeroCount}
+										min={1}
+										onChange={value => props.setMinHeroCount(props.group, value)}
+									/>
+									: null
+							}
+						</div>
+						: null
+				}
+				{
+					props.group.minHeroCount ?
+						<Alert
+							type='info'
+							showIcon={true}
+							title={`Only used with groups of at least ${props.group.minHeroCount} heroes`}
+						/>
+						: null
+				}
 				{
 					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(options.heroLevel)) ?
 						<Alert
@@ -1159,7 +1200,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='slot-row'>
+			<div className={showCustomize ? 'slot-row customizing' : 'slot-row'}>
 				<div className='content'>
 					<Flex align='center' justify='space-between'>
 						<MonsterInfo monster={monster} />
@@ -1226,7 +1267,7 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='terrain-row'>
+			<div className={showCustomize ? 'terrain-row customizing' : 'terrain-row'}>
 				<div className='content'>
 					<Flex align='center' justify='space-between'>
 						<TerrainInfo terrain={terrain} />

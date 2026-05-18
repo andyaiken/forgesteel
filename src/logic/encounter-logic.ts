@@ -299,7 +299,7 @@ export class EncounterLogic {
 		return null;
 	};
 
-	static generateEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], keywords: string[], minStrength: number, minLevel: number, maxLevel: number) => {
+	static generateEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], heroCount: number, keywords: string[], minStrength: number, minLevel: number, maxLevel: number) => {
 		const monsters = SourcebookLogic.getMonsters(sourcebooks)
 			.filter(m => (keywords.length === 0) || keywords.some(k => m.keywords.includes(k)))
 			.filter(m => (m.level >= minLevel) && (m.level <= maxLevel));
@@ -308,7 +308,7 @@ export class EncounterLogic {
 			return;
 		}
 
-		while (EncounterDifficultyLogic.getStrength(encounter, sourcebooks) < minStrength) {
+		while (EncounterDifficultyLogic.getStrength(encounter, sourcebooks, heroCount) < minStrength) {
 			const monster = Collections.draw(monsters);
 
 			const slot = FactoryLogic.createEncounterSlotFromMonster(monster);

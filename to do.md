@@ -1,6 +1,10 @@
 # Development Plans
 
-* Improve editors
+* Encounter customization:
+  * Include this encounter group if there are at least N heroes
+  * Modify monster stamina
+
+* Improve editors:
   * Modifier editor
 
 * Update:

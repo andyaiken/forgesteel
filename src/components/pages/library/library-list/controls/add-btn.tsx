@@ -13,6 +13,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Field } from '@/components/controls/field/field';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { OptionsLogic } from '@/logic/options-logic';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { useState } from 'react';
@@ -69,22 +70,19 @@ export const AddBtn = (props: Props) => {
 	const generateEncounter = () => {
 		const enc = FactoryLogic.createEncounter();
 
-		let heroLevel = options.heroLevel;
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
-		}
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
+		const heroLevel = OptionsLogic.getHeroLevel(options, heroes);
 
 		const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
 		switch (difficulty) {
 			case EncounterDifficulty.Easy:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
 				break;
 			case EncounterDifficulty.Standard:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
 				break;
 			case EncounterDifficulty.Hard:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
 				break;
 		}
 

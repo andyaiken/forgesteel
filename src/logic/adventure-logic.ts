@@ -27,7 +27,7 @@ export class AdventureLogic {
 					case 'encounter': {
 						const encounter = SourcebookLogic.getEncounters(sourcebooks).find(e => e.id === pc.contentID);
 						if (encounter) {
-							const strength = EncounterDifficultyLogic.getStrength(encounter, sourcebooks);
+							const strength = EncounterDifficultyLogic.getStrength(encounter, sourcebooks, heroCount);
 							const difficulty = EncounterDifficultyLogic.getDifficultyForParty(strength, heroCount, heroLevel, 0);
 							victories += EncounterDifficultyLogic.getVictories(difficulty);
 						}

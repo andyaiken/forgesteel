@@ -37,6 +37,7 @@ export class EncounterData {
 						}
 					}
 				],
+				minHeroCount: undefined,
 				encounterState: 'ready'
 			},
 			{
@@ -67,6 +68,7 @@ export class EncounterData {
 						}
 					}
 				],
+				minHeroCount: undefined,
 				encounterState: 'ready'
 			},
 			{
@@ -97,6 +99,7 @@ export class EncounterData {
 						}
 					}
 				],
+				minHeroCount: undefined,
 				encounterState: 'ready'
 			},
 			{
@@ -127,6 +130,7 @@ export class EncounterData {
 						}
 					}
 				],
+				minHeroCount: undefined,
 				encounterState: 'ready'
 			}
 		],
@@ -189,6 +193,7 @@ export class EncounterData {
 						}
 					}
 				],
+				minHeroCount: undefined,
 				encounterState: 'ready'
 			}
 		],

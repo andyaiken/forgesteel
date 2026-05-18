@@ -7,6 +7,7 @@ export interface EncounterGroup {
 	id: string;
 	name: string;
 	slots: EncounterSlot[];
+	minHeroCount: number | undefined;
 	encounterState: 'ready' | 'current' | 'finished';
 }
 

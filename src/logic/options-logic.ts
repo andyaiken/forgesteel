@@ -1,3 +1,6 @@
+import { Collections } from '@/utils/collections';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
 
 export class OptionsLogic {
@@ -14,5 +17,38 @@ export class OptionsLogic {
 		}
 
 		return `a party of ${options.heroCount} ${heroes} at level ${options.heroLevel}`;
+	};
+
+	static getHeroCount = (options: Options, heroes: Hero[]) => {
+		let heroCount = options.heroCount;
+		if (options.heroParty) {
+			const party = heroes.filter(h => h.folder === options.heroParty);
+			heroCount = party.length;
+			party.forEach(h => {
+				const retainers = HeroLogic.getRetainers(h);
+				if (retainers.length > 0) {
+					heroCount += 1;
+				}
+			});
+		}
+		return heroCount;
+	};
+
+	static getHeroLevel = (options: Options, heroes: Hero[]) => {
+		let heroLevel = options.heroLevel;
+		if (options.heroParty) {
+			const party = heroes.filter(h => h.folder === options.heroParty);
+			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
+		}
+		return heroLevel;
+	};
+
+	static getHeroVictories = (options: Options, heroes: Hero[]) => {
+		let heroVictories = options.heroVictories;
+		if (options.heroParty) {
+			const party = heroes.filter(h => h.folder === options.heroParty);
+			heroVictories = Math.round(Collections.mean(party, h => h.state.victories));
+		}
+		return heroVictories;
 	};
 }

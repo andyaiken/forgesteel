@@ -24,9 +24,11 @@ interface Props {
 export const EncounterDifficultyPanel = (props: Props) => {
 	const options = useOptions();
 	const heroes = useHeroes();
-	const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
+
+	const monsterCount = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
+	const heroCount = OptionsLogic.getHeroCount(options, heroes);
 	const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
-	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
+	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks, heroCount);
 	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
 	const victories = EncounterDifficultyLogic.getVictories(difficulty);
 
@@ -80,7 +82,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 					/>
 				</div>
 				<StatsRow>
-					<Field orientation='vertical' label='Monsters' value={count} />
+					<Field orientation='vertical' label='Monsters' value={monsterCount} />
 					<Field orientation='vertical' label='Strength' value={strength} />
 					<Field orientation='vertical' label='Difficulty' value={difficulty} />
 					<Field orientation='vertical' label='Victories' value={victories} />

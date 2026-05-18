@@ -16,6 +16,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { OptionsLogic } from '@/logic/options-logic';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -40,6 +41,19 @@ export const EncounterPanel = (props: Props) => {
 	const options = useOptions();
 	const heroes = useHeroes();
 
+	const heroCount = OptionsLogic.getHeroCount(options, heroes);
+	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks, heroCount);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
+
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Official;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+	tags.push(difficulty);
+
 	const getOverview = () => {
 		return (
 			<>
@@ -51,7 +65,14 @@ export const EncounterPanel = (props: Props) => {
 	};
 
 	const getEncounterGroups = () => {
-		if ((props.encounter.groups.length === 0) && (props.encounter.terrain.length === 0)) {
+		const groups = props.encounter.groups
+			.filter(g => {
+				const minHeroes = g.minHeroCount || heroCount;
+				return heroCount >= minHeroes;
+			})
+			.filter(g => g.slots.length > 0);
+
+		if ((groups.length === 0) && (props.encounter.terrain.length === 0)) {
 			return (
 				<Empty text='No monsters or terrain' />
 			);
@@ -60,10 +81,10 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<div className='encounter-groups'>
 				{
-					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
+					groups.map((group, n) => (
 						<SelectablePanel key={group.id} style={{ paddingTop: '0' }}>
 							{
-								props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
+								groups.length > 1 ?
 									<HeaderText>{group.name || `Group ${n + 1}`}</HeaderText>
 									:
 									<HeaderText>Monsters</HeaderText>
@@ -276,18 +297,6 @@ export const EncounterPanel = (props: Props) => {
 			</>
 		);
 	};
-
-	const tags = [];
-	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Official;
-		if (sourcebookType !== SourcebookType.Official) {
-			tags.push(sourcebookType);
-		}
-	}
-
-	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, heroes);
-	tags.push(difficulty);
 
 	if (props.mode !== PanelMode.Full) {
 		return (

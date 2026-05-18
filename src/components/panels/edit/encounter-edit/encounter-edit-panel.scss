@@ -37,20 +37,38 @@
 					flex: 0 0 120px;
 				}
 
+				&.customizing {
+					border-radius: 10px 10px 0 0;
+				}
+
 				&:hover {
 					background-color: rgba(0, 0, 0, 0.05);
 				}
 			}
 
 			.customize-panel {
-				margin-top: 2px;
+				margin-top: -1px;
 				display: flex;
 				flex-direction: column;
 				gap: 5px;
 				padding: 10px;
 				border: 1px solid rgb(220, 220, 220);
+				border-radius: 0 0 10px 10px;
+				background-color: rgba(255, 255, 255);
+			}
+
+			.group-edit-row {
+				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
+				padding: 10px;
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.05);
+				}
 			}
 
 			.drag-target {

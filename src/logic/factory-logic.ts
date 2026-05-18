@@ -674,6 +674,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			slots: [],
+			minHeroCount: undefined,
 			encounterState: 'ready'
 		};
 	};

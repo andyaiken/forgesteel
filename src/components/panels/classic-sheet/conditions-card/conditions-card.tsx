@@ -2,7 +2,6 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useOptions } from '@/contexts/data-context';
 
 import './conditions-card.scss';
@@ -38,8 +37,10 @@ export const ConditionsCard = (props: Props) => {
 		});
 	}
 
-	const getSaveBonus = () => {
-		return character.saveBonus ?? 0 > 0 ? SheetFormatter.addSign(character.saveBonus) : null;
+	const getSaveTarget = () => {
+		if (character.saveTarget) {
+			return character.saveTarget - (character.saveBonus ?? 0);
+		}
 	};
 
 	return (
@@ -103,7 +104,7 @@ export const ConditionsCard = (props: Props) => {
 					/>
 				</div>
 			</div>
-			<div className='save-ends-description'>* Save Ends = <span className='save-target'>{character.saveTarget}</span> or higher on 1d10{getSaveBonus()} at the end of your turn removes the effect.</div>
+			<div className='save-ends-description'>* Save Ends = <span className='save-target'>{getSaveTarget()}</span> or higher on 1d10 at the end of your turn removes the effect.</div>
 		</div>
 	);
 };

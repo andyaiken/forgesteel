@@ -3,6 +3,8 @@ import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Hero } from '@/models/hero';
+import { MonsterLogic } from './monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
 import { OptionsLogic } from './options-logic';
 import { Sourcebook } from '@/models/sourcebook';
@@ -17,19 +19,27 @@ export class EncounterDifficultyLogic {
 
 		const monsters = Collections.sum(groups, g => EncounterDifficultyLogic.getGroupStrength(g, sourcebooks));
 		const terrain = Collections.sum(encounter.terrain, t => EncounterDifficultyLogic.getTerrainStrength(t, sourcebooks));
-		return monsters + terrain;
+		return Math.floor(monsters + terrain);
 	};
 
 	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
 		return Collections.sum(group.slots, slot => {
 			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 
-			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
-			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
-			const addOnPoints = Collections.sum(addOns, a => a.data.cost);
-			const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
+			if (monster) {
+				const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
+				const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
+				const addOnPoints = Collections.sum(addOns, a => a.data.cost);
+				const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
 
-			return monster ? (monster.encounterValue + addOnCost) * slot.count : 0;
+				let count = slot.count;
+				if (monster.role.organization === MonsterOrganizationType.Minion) {
+					count += slot.customization.minionCountAdjustment / MonsterLogic.getRoleMultiplier(monster.role.organization);
+				}
+
+				return (monster.encounterValue + addOnCost) * count;
+			}
+			return 0;
 		});
 	};
 

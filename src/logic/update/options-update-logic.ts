@@ -8,6 +8,10 @@ export class OptionsUpdateLogic {
 			options.cookieConsent = false;
 		}
 
+		if (options.showDataSource === undefined) {
+			options.showDataSource = false;
+		}
+
 		if (options.xpPerLevel === undefined) {
 			options.xpPerLevel = 16;
 		}

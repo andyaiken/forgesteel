@@ -4,6 +4,7 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 export interface Options {
 	// App
 	cookieConsent: boolean;
+	showDataSource: boolean;
 	// Hero
 	shownStandardAbilities: string[];
 	xpPerLevel: number;

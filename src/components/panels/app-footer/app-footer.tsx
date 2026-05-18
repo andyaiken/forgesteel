@@ -63,8 +63,6 @@ export const AppFooter = (props: Props) => {
 		actions.push({ type: 'button', icon: <WarningFilled className='danger' />, tooltip: 'Errors', onClick: props.params.showErrors });
 	}
 
-	const dataSource = props.params.connectionSettings.dataSource;
-
 	return (
 		<ErrorBoundary>
 			<div className='app-footer'>
@@ -100,13 +98,13 @@ export const AppFooter = (props: Props) => {
 				<Space>
 					<SyncStatus />
 					{
-						dataSource && !isSmall ?
+						options.showDataSource && props.params.connectionSettings.dataSource && !isSmall ?
 							<Tag
 								icon={<DatabaseFilled />}
 								variant='outlined'
 								color='blue'
 							>
-								{dataSource}
+								{props.params.connectionSettings.dataSource}
 							</Tag>
 							: null
 					}

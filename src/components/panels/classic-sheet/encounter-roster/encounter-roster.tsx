@@ -34,13 +34,6 @@ export const EncounterRosterCard = (props: Props) => {
 				</thead>
 				<tbody>
 					{encounter.groups?.map((group, i) => {
-						const slotEv = group.slots.reduce((ev, slot) => {
-							const monster = slot.monster;
-							if (!monster) {
-								return ev;
-							}
-							return ev + (monster.encounterValue * slot.count);
-						}, 0);
 						const groupMonsters = group.slots.map(slot => slot.monster).filter(m => !!m);
 						const minionSlots = groupMonsters.filter(m => m.role.organization === MonsterOrganizationType.Minion).length;
 						const nonMinionSlots = groupMonsters.filter(m => m.role.organization !== MonsterOrganizationType.Minion).length;
@@ -78,7 +71,7 @@ export const EncounterRosterCard = (props: Props) => {
 												);
 											})
 										}
-										<div className='ev'>EV:<span className='ev-value'>{slotEv}</span></div>
+										<div className='ev'>EV:<span className='ev-value'>{group.groupEv}</span></div>
 									</div>
 								</td>
 								<td className='stamina-tracker'>

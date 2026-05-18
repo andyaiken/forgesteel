@@ -34,6 +34,7 @@ export interface EncounterGroupSheet {
 	id: string;
 	name: string;
 	slots: EncounterSlotSheet[];
+	groupEv: number;
 }
 
 export interface EncounterSlotSheet {

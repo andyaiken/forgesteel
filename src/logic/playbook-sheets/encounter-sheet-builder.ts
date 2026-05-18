@@ -112,10 +112,13 @@ export class EncounterSheetBuilder {
 			}
 		});
 
+		const groupEv = EncounterDifficultyLogic.getGroupStrength(group, sourcebooks);
+
 		const sheet: EncounterGroupSheet = {
 			id: group.id,
 			name: group.name,
-			slots: adjustedSlots
+			slots: adjustedSlots,
+			groupEv: groupEv
 		};
 
 		return sheet;
@@ -134,6 +137,10 @@ export class EncounterSheetBuilder {
 			isMinion: monster.role.organization === MonsterOrganizationType.Minion,
 			count: roleMult * slot.count
 		};
+
+		if (sheet.isMinion) {
+			sheet.count += slot.customization.minionCountAdjustment;
+		}
 
 		return sheet;
 	};

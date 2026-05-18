@@ -174,7 +174,6 @@ export const Main = (props: Props) => {
 	const persistHomebrewSourcebook = (homebrew: Sourcebook) => {
 		return dataManager
 			.saveSourcebook(homebrew)
-			// .then(() => setHomebrewSourcebooks(newHomebrew))
 			.catch(err => {
 				console.error(err);
 				notify.error({

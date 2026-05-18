@@ -34,7 +34,8 @@
 				}
 
 				.actions {
-					flex: 0 0 120px;
+					min-width: 120px;
+					flex: 0 0 auto;
 				}
 
 				&.customizing {
@@ -157,7 +158,8 @@ html[data-theme="dark"] {
 			.encounter-group-panel,
 			.encounter-terrain-panel {
 				.slot-row,
-				.terrain-row {
+				.terrain-row,
+				.customize-panel {
 					background-color: rgba(0, 0, 0);
 					color: rgba(255, 255, 255, 0.88);
 				}

@@ -97,12 +97,7 @@ export const EncounterEditPanel = (props: Props) => {
 		if (encounterGroupID) {
 			const group = copy.groups.find(g => g.id === encounterGroupID);
 			if (group) {
-				const slot = group.slots.find(s => s.monsterID === monster.id);
-				if (slot) {
-					slot.count += 1;
-				} else {
-					group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-				}
+				group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
 			};
 		} else {
 			const group = FactoryLogic.createEncounterGroup();

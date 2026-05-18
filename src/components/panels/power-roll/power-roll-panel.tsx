@@ -84,8 +84,9 @@ export const PowerRollPanel = (props: Props) => {
 			// #region Kits
 
 			if (CreatureLogic.isHero(props.creature)) {
-				let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
-				let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+				const keywords = AbilityLogic.getKeywords(props.ability, props.creature);
+				let isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
+				let isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 				if (props.autoCalc && distance) {
 					isMelee = distance === AbilityDistanceType.Melee;
 					isRanged = distance === AbilityDistanceType.Ranged;

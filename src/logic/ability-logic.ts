@@ -252,6 +252,8 @@ export class AbilityLogic {
 	};
 
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
+		const keywords = AbilityLogic.getKeywords(ability, hero);
+
 		return value
 			.split(';')
 			.map(section => section.trim())
@@ -263,11 +265,11 @@ export class AbilityLogic {
 					const characteristics: Characteristic[] = [];
 					const types: string[] = [];
 
-					let isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-					let isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+					let isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
+					let isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 					if (distance) {
-						isMelee = (distance === AbilityDistanceType.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-						isRanged = (distance === AbilityDistanceType.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+						isMelee = (distance === AbilityDistanceType.Melee) && keywords.includes(AbilityKeyword.Weapon);
+						isRanged = (distance === AbilityDistanceType.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 					}
 
 					const dmgKits = HeroLogic

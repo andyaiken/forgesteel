@@ -42,6 +42,17 @@
 				}
 			}
 
+			.customize-panel {
+				margin-top: 2px;
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				padding: 10px;
+				border: 1px solid rgb(220, 220, 220);
+				border-radius: 10px;
+				background-color: rgba(255, 255, 255);
+			}
+
 			.drag-target {
 				position: relative;
 				padding: 5px;

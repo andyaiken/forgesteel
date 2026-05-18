@@ -23,6 +23,7 @@ export class EncounterLogic {
 				const monster = SourcebookLogic.getMonster(sourcebooks, s.monsterID);
 				if (monster) {
 					count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
+					count += s.customization.minionCountAdjustment;
 				}
 
 				total += count;
@@ -73,6 +74,7 @@ export class EncounterLogic {
 						addOnIDs: [ ...s.customization.addOnIDs ],
 						itemIDs: [ ...s.customization.itemIDs ],
 						levelAdjustment: s.customization.levelAdjustment,
+						minionCountAdjustment: s.customization.minionCountAdjustment,
 						convertToSolo: s.customization.convertToSolo
 					}
 				});

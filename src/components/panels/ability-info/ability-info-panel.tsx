@@ -49,7 +49,8 @@ export const AbilityInfoPanel = (props: Props) => {
 			monogram = 'free';
 		}
 
-		if (props.ability.keywords.includes(AbilityKeyword.Performance)) {
+		const keywords = AbilityLogic.getKeywords(props.ability, props.hero);
+		if (keywords.includes(AbilityKeyword.Performance)) {
 			monogram = 'perform';
 		}
 

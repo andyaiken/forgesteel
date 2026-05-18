@@ -687,6 +687,7 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				minionCountAdjustment: 0,
 				convertToSolo: false
 			},
 			monsters: [],
@@ -715,6 +716,7 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				minionCountAdjustment: 0,
 				convertToSolo: false
 			},
 			monsters: [ m ],

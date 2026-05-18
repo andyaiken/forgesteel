@@ -4,6 +4,7 @@ import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityLogic } from '@/logic/ability-logic';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -867,6 +868,8 @@ export class HeroLogic {
 	static getFeatureDamageBonuses = (hero: Hero, ability: Ability, distance: AbilityDistanceType | undefined) => {
 		const array: { feature: string, value: number, type: DamageType }[] = [];
 
+		const keywords = AbilityLogic.getKeywords(ability, hero);
+
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDamage)
@@ -881,7 +884,7 @@ export class HeroLogic {
 
 				return true;
 			})
-			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
+			.filter(f => f.data.keywords.every(kw => keywords.includes(kw)))
 			.forEach(f => {
 				const mod = ModifierLogic.calculateModifierValue(f.data, hero);
 				array.push({
@@ -908,12 +911,14 @@ export class HeroLogic {
 	static getDistanceBonus = (hero: Hero, ability: Ability) => {
 		let value = 0;
 
+		const keywords = AbilityLogic.getKeywords(ability, hero);
+
 		const kitBonuses: number[] = [];
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+		if (keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon)) {
 			// Add melee distance bonus from kits
 			kitBonuses.push(...HeroLogic.getKits(hero).map(kit => kit.meleeDistance));
 		}
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+		if (keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon)) {
 			// Add ranged distance bonus from kits
 			kitBonuses.push(...HeroLogic.getKits(hero).map(kit => kit.rangedDistance));
 		}
@@ -922,7 +927,7 @@ export class HeroLogic {
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDistance)
-			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
+			.filter(f => f.data.keywords.every(kw => keywords.includes(kw)))
 			.forEach(f => {
 				const mod = ModifierLogic.calculateModifierValue(f.data, hero);
 				value += mod;

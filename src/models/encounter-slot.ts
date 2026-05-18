@@ -5,6 +5,7 @@ export interface EncounterSlotCustomization {
 	addOnIDs: string[];
 	itemIDs: string[];
 	levelAdjustment: number;
+	minionCountAdjustment: number;
 	convertToSolo: boolean;
 }
 

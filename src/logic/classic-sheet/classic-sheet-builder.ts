@@ -114,6 +114,7 @@ export class ClassicSheetBuilder {
 		const isMonster = CreatureLogic.isMonster(creature);
 		const isHero = CreatureLogic.isHero(creature);
 		const isSummon = CreatureLogic.isSummon(creature);
+		const keywords = AbilityLogic.getKeywords(ability, isHero ? creature : undefined);
 		const sheet: AbilitySheet = {
 			id: ability.id,
 			abilityType: ability.type.usage.toString(),
@@ -123,7 +124,7 @@ export class ClassicSheetBuilder {
 			isNotTrueAbility: false,
 			cost: Number(ability.cost) || 0,
 			actionType: ability.type.usage.toString(),
-			keywords: ability.keywords.join(', '),
+			keywords: keywords.join(', '),
 			target: ability.target,
 			trigger: ability.type.trigger,
 			hasPowerRoll: false
@@ -150,12 +151,12 @@ export class ClassicSheetBuilder {
 				sheet.abilityType = 'Maneuver';
 			} else if (ability.type.usage === AbilityUsage.Move) {
 				sheet.abilityType = 'Move Action';
-			} else if (ability.keywords.includes('Performance')) {
+			} else if (keywords.includes('Performance')) {
 				sheet.abilityType = 'Performance';
 			}
 
 			// non-ability 'abilities' won't have distance, keywords, or targets
-			if (!ability.distance.length && !ability.keywords.length && !ability.target.length) {
+			if (!ability.distance.length && !keywords.length && !ability.target.length) {
 				sheet.isNotTrueAbility = true;
 			}
 		}
@@ -239,8 +240,8 @@ export class ClassicSheetBuilder {
 			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, refCreature);
 
 			if (CreatureLogic.isHero(creature)) {
-				const isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-				const isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+				const isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
+				const isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 
 				const meleeKits = HeroLogic
 					.getKitDamageBonuses(creature)

@@ -182,6 +182,7 @@ export class SourcebookUpdateLogic {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							minionCountAdjustment: 0,
 							convertToSolo: false
 						};
 					}
@@ -192,6 +193,10 @@ export class SourcebookUpdateLogic {
 
 					if (s.customization.levelAdjustment === undefined) {
 						s.customization.levelAdjustment = 0;
+					}
+
+					if (s.customization.minionCountAdjustment === undefined) {
+						s.customization.minionCountAdjustment = 0;
 					}
 
 					if (s.customization.convertToSolo === undefined) {

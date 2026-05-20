@@ -8,7 +8,9 @@ import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { ClassicSheetLogic } from '@/logic/classic-sheet/classic-sheet-logic';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { FactoryLogic } from '../factory-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
+import { FeatureText } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
 import { Format } from '@/utils/format';
@@ -25,6 +27,9 @@ import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Summon } from '@/models/summon';
+import { Terrain } from '@/models/terrain';
+import { TerrainLogic } from '../terrain-logic';
+import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 
 export class ClassicSheetBuilder {
 	static buildCharacteristicsSheet = (creature: Hero | Monster | Follower | undefined): CharacteristicsSheet => {
@@ -104,6 +109,106 @@ export class ClassicSheetBuilder {
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Terrain Sheet
+	static buildTerrainSheet = (terrain: Terrain, upgradeIds: string[] = []): TerrainSheet => {
+		const size = typeof terrain.size === 'string' ? terrain.size : FormatLogic.getSize(terrain.size);
+		let encounterValue = terrain.encounterValue;
+
+		const immunities = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Immunity).map(mod => `${mod.damageType} ${mod.value}`);
+		const weaknesses = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Weakness).map(mod => `${mod.damageType} ${mod.value}`);
+
+		const sections: (FeatureText | AbilitySheet)[] = [];
+
+		terrain.sections.forEach(s => {
+			s.content.forEach(content => {
+				let sectionContent;
+				switch (content.type) {
+					case FeatureType.Text:
+						sectionContent = content;
+
+						// combine Activate and Effect
+						if (content.id === 'effect') {
+							const activateSection = sections.find(s => s.id === 'activate');
+							if (activateSection) {
+								activateSection.id = 'activate-effect';
+								activateSection.description += `\n**Effect**: ${content.description}`;
+								return;
+							}
+							if (sections.some(s => s.id === 'activate-effect')) {
+								return;
+							}
+						}
+
+						// All existing Terrain objects have damage immunity defined
+						// via a section instead of a DamageModifier, so pull that out
+						if (content.id === 'damage-immunity') {
+							immunities.push(content.description);
+							return;
+						}
+						break;
+					case FeatureType.Ability:
+						sectionContent = this.buildAbilitySheet(content.data.ability, undefined);
+						break;
+				}
+
+				sections.push(sectionContent);
+			});
+		});
+
+		if (upgradeIds.length) {
+			upgradeIds.forEach(id => {
+				const upgrade = terrain.upgrades.find(u => u.id === id);
+				if (upgrade) {
+					sections.push(FactoryLogic.feature.create({
+						id: upgrade.id,
+						name: upgrade.label,
+						description: upgrade.text
+					}));
+					encounterValue += upgrade.cost;
+				}
+			});
+		} else {
+			const upgrades: string[] = [];
+			terrain.upgrades.forEach(upgrade => {
+				upgrades.push(`**${upgrade.label} (${SheetFormatter.addSign(upgrade.cost)} EV)** ${upgrade.text}`);
+			});
+
+			if (upgrades.length) {
+				const name = upgrades.length > 1 ? 'Upgrades' : 'Upgrade';
+				sections.push(FactoryLogic.feature.create({
+					id: 'upgrades',
+					name: name,
+					description: upgrades.join('\n\n')
+				}));
+			}
+		}
+
+		// convert EV to display string as applicable
+		const evDisplay = terrain.area ? `${encounterValue} per ${terrain.area}` : ((encounterValue === 0) ? '-' : encounterValue);
+
+		const sheet: TerrainSheet = {
+			id: terrain.id,
+			name: terrain.name,
+			type: terrain.role.terrainType,
+			role: terrain.role.type,
+			size: size,
+			stamina: TerrainLogic.getStaminaDescription(terrain),
+			description: TerrainLogic.getTerrainDescription(terrain),
+			details: terrain.description,
+			encounterValue: evDisplay.toString(),
+			typicalSpace: terrain.typicalSpace,
+			direction: terrain.direction ?? '',
+			link: terrain.link ?? '',
+			immunity: immunities.join(', '),
+			weakness: weaknesses.join(', '),
+
+			sections: sections
+		};
 
 		return sheet;
 	};

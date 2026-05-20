@@ -37,6 +37,7 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { Kit } from '@/models/kit';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { LibraryItemSheetPage } from '@/components/panels/classic-sheet/library-item-sheet/library-item-sheet-page';
 import { LibraryLogic } from '@/logic/library-logic';
 import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
@@ -235,6 +236,15 @@ export const LibraryListPage = (props: Props) => {
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<NegotiationSheetPage
 									negotiation={element as Negotiation}
+								/>
+							</div>
+						);
+					case 'terrain':
+						return (
+							<div style={{ padding: '20px', overflow: 'auto' }}>
+								<LibraryItemSheetPage
+									category={category}
+									terrain={element as Terrain}
 								/>
 							</div>
 						);
@@ -634,6 +644,7 @@ export const LibraryListPage = (props: Props) => {
 				case 'encounter':
 				case 'montage':
 				case 'negotiation':
+				case 'terrain':
 					canExportAsImage = false;
 					canExportAsPDF = true;
 					break;
@@ -797,6 +808,7 @@ export const LibraryListPage = (props: Props) => {
 			case 'encounter':
 			case 'montage':
 			case 'negotiation':
+			case 'terrain':
 				return (
 					<ViewSelector
 						mode='classic'

@@ -47,7 +47,9 @@
 
 
 main#classic-sheet .encounter-sheet .monster,
-main#classic-sheet .hero-sheet .monster {
+main#classic-sheet .hero-sheet .monster,
+main#classic-sheet .encounter-sheet .terrain.card,
+main#classic-sheet .library-item-sheet .terrain.card {
     padding: 10px;
     display: grid;
     justify-self: stretch;
@@ -124,6 +126,7 @@ main#classic-sheet .hero-sheet .monster {
         }
 
         .cost {
+            grid-column-start: 2;
             text-transform: none;
             text-wrap: nowrap;
             font-size: 14px;
@@ -304,7 +307,39 @@ main#classic-sheet .hero-sheet .monster {
     }
 }
 
-main#classic-sheet .color .monster.card {
+main#classic-sheet .library-item-sheet .terrain.card,
+main#classic-sheet .encounter-sheet .terrain.card {
+    
+    .details {
+        @include common.divider-plain(common.$color-medium, 1px);
+
+        .description {
+            text-align: center;
+            font-size: round(1.1rem, 1px);
+        }
+        
+        .stats {
+            grid-template-rows: 1fr;
+            grid-template-columns: 1fr;
+            padding-bottom: 4px;
+
+            .line {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-between;
+            }
+
+            .size,
+            .immunity {
+                text-align: right;
+                text-wrap: nowrap;
+            }
+        }
+    }
+}
+
+main#classic-sheet .color .monster.card,
+main#classic-sheet .color .terrain.card {
     &.ambusher {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-ambusher);

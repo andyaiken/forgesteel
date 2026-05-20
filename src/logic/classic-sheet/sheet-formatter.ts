@@ -1,11 +1,11 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
+import { Feature, FeatureText } from '@/models/feature';
 import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
@@ -14,6 +14,7 @@ import { Monster } from '@/models/monster';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { RulesItem } from '@/models/rules-item';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
+import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
@@ -117,9 +118,9 @@ export class SheetFormatter {
 			.replace(/I<([svw\d])\]/g, 'i<$1]')
 			.replace(/P<([svw\d])\]/g, 'p<$1]')
 			.replace(/([marip])<([svw\d]\])/g, '<span class="potency">$1&lt;$2</span>')
-			.replace(/((≤|\\?<\\?=)\s*11|11 or (less|lower)):?/g, `![11 or less](${rollT1Icon})`)
-			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
-			.replace(/((≥|>=)\s*17|17(\+| or (more|greater))):?/g, `![17 or greater](${rollT3Icon})`)
+			.replace(/(\*\*)?((≤|\\?<\\?=)\s*11|11 or (less|lower))(\*\*)?:?/g, `![11 or less](${rollT1Icon})`)
+			.replace(/(\*\*)?12\s*[-–]\s*16(\*\*)?:?/g, `![12 to 16](${rollT2Icon})`)
+			.replace(/(\*\*)?((≥|>=)\s*17|17(\+| or (more|greater)))(\*\*)?:?/g, `![17 or greater](${rollT3Icon})`)
 			.replace(/[`]/g, '')
 			.replace(/[^\S\r\n]*\|[^\S\r\n]*/g, '|')
 			.replace(/<\/?code>/g, '');
@@ -686,6 +687,32 @@ export class SheetFormatter {
 		});
 		// ability/feature dividers
 		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		size = Math.ceil(size / columns);
+		return size;
+	};
+
+	static calculateTerrainSize = (terrain: TerrainSheet, lineWidth: number, columns: number = 1): number => {
+		let size = 0;
+		size += 4.5; // name, type, ev
+		size += this.countLines(terrain.details, lineWidth);
+		size += 1.5; // stamina, size
+		size += this.countLines(terrain.immunity, lineWidth, 0, 1.5);
+		size += this.countLines(terrain.weakness, lineWidth, 0, 1.5);
+		size += this.countLines(terrain.typicalSpace, lineWidth, 0, 1.5);
+		size += this.countLines(terrain.direction, lineWidth, 0, 1.5);
+		size += this.countLines(terrain.link, lineWidth, 0, 1.5);
+
+		terrain.sections.forEach(s => {
+			if (Object.hasOwn(s, 'type')) {
+				const featureSize = this.calculateFeatureSize(s as FeatureText, null, lineWidth, false);
+				size += featureSize;
+			} else {
+				const abilitySize = this.calculateAbilityComponentSize(s as AbilitySheet, lineWidth - 5);
+				size += abilitySize;
+			}
+		});
+		size += 1.4 * Math.max(0, (terrain.sections?.length || 0));
+
 		size = Math.ceil(size / columns);
 		return size;
 	};

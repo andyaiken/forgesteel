@@ -71,15 +71,19 @@ describe.concurrent('Test markdown enhancement', () => {
 		[ '|<=11|', '|![11 or less](<img>)|' ],
 		[ '|11 or less		|', '|![11 or less](<img>)|' ],
 		[ '* 11 or lower:', '* ![11 or less](<img>)' ],
+		[ '* **11 or lower**:', '* ![11 or less](<img>)' ],
+		[ '* **≤11**:', '* ![11 or less](<img>)' ],
 		[ '* ≤11:', '* ![11 or less](<img>)' ],
 		[ '<=11', '![11 or less](<img>)' ],
 		[ '\\<\\=11', '![11 or less](<img>)' ],
 		[ '* <= 11:', '* ![11 or less](<img>)' ],
 		[ '| 12-16 |', '|![12 to 16](<img>)|' ],
 		[ '* 12 - 16:', '* ![12 to 16](<img>)' ],
+		[ '* **12-16**:', '* ![12 to 16](<img>)' ],
 		[ '| 17+ |', '|![17 or greater](<img>)|' ],
 		[ '* ≥ 17:', '* ![17 or greater](<img>)' ],
 		[ '* >=17:', '* ![17 or greater](<img>)' ],
+		[ '* **17+**:', '* ![17 or greater](<img>)' ],
 		[ '* 17+:', '* ![17 or greater](<img>)' ]
 	])('Converts power roll text to glyphs', (inStr, expected) => {
 		const markdown = SheetFormatter.enhanceMarkdown(inStr);

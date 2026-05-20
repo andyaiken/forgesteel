@@ -15,6 +15,7 @@ export const arrowLauncher: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 	encounterValue: 8,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -169,6 +170,7 @@ export const boilingOilCauldron: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 	encounterValue: 10,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -251,6 +253,7 @@ export const catapult: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 	encounterValue: 10,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -378,6 +381,7 @@ export const explodingMillWheel: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 	encounterValue: 10,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -469,6 +473,7 @@ export const fieldBallista: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 	encounterValue: 8,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -648,6 +653,7 @@ export const ironDragon: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 	encounterValue: 12,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -760,6 +766,7 @@ export const watchtower: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 	encounterValue: 8,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {

@@ -22,6 +22,7 @@ export interface Terrain extends Element {
 	role: TerrainRole;
 	encounterValue: number;
 	area: string;
+	typicalSpace: string;
 	stamina: {
 		base: number;
 		perSquare: number;

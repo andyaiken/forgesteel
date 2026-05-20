@@ -1,5 +1,5 @@
-import { Encounter, EncounterGroup } from '@/models/encounter';
-import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet } from '@/models/classic-sheets/encounter-sheet';
+import { Encounter, EncounterGroup, TerrainSlot } from '@/models/encounter';
+import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, TerrainSlotSheet } from '@/models/classic-sheets/encounter-sheet';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
@@ -48,8 +48,13 @@ export class EncounterSheetBuilder {
 
 		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks));
 
-		const terrain = encounter.terrain.map(slot => SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID)).filter(t => !!t);
-		sheet.terrain = terrain;
+		const terrainSlots = encounter.terrain
+			.map(slot => this.buildTerrainSlotSheet(slot, sourcebooks))
+			.filter(t => !!t);
+		sheet.terrainSlots = terrainSlots;
+		sheet.terrain = terrainSlots
+			.flatMap(slot => slot.terrain)
+			.filter((t, i, arr) => arr.indexOf(t) === i);
 
 		const encounterMonsters = EncounterLogic.getMonsterData(encounter)
 			.map(data => EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, sourcebooks))
@@ -80,6 +85,25 @@ export class EncounterSheetBuilder {
 			.filter(mg => mg.malice.length);
 
 		return sheet;
+	};
+
+	static buildTerrainSlotSheet = (slot: TerrainSlot, sourcebooks: Sourcebook[]): TerrainSlotSheet | null => {
+		const terrain = SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID);
+		if (terrain) {
+			const sheet = ClassicSheetBuilder.buildTerrainSheet(terrain, slot.upgradeIDs);
+
+			const ev = Number.parseInt(sheet.encounterValue.replace(/(^\d+)(.*$)/i, '$1'));
+
+			const slotSheet: TerrainSlotSheet = {
+				id: slot.id,
+				terrain: sheet,
+				count: slot.count,
+				slotEv: slot.count * ev
+			};
+
+			return slotSheet;
+		}
+		return null;
 	};
 
 	static buildEncounterGroupSheet = (group: EncounterGroup, sourcebooks: Sourcebook[]): EncounterGroupSheet => {

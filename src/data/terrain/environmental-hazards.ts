@@ -12,9 +12,10 @@ export const angryBeehive: Terrain = {
 	description: 'This beehive is full of angry bees who swarm and attack with little provocation.',
 	category: TerrainCategory.Environmental,
 	level: 2,
-	role: FactoryLogic.createTerrainRole(MonsterRoleType.Harrier, TerrainRoleType.Hazard),
+	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 2,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -48,7 +49,7 @@ export const angryBeehive: Terrain = {
 	upgrades: [
 		{
 			id: 'concealed-beehive',
-			label: 'Concealed Beehive',
+			label: 'Concealed Hive',
 			cost: 1,
 			text: 'The hive is hidden until the swarm is unleashed.',
 			sections: []
@@ -76,6 +77,7 @@ export const brambles: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 	encounterValue: 1,
 	area: '10 x 10 thicket',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -130,6 +132,7 @@ export const corrosivePool: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 3,
 	area: '10 x 10 pool',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -160,7 +163,7 @@ export const corrosivePool: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'activate',
 					name: 'Activate',
-					description: 'A creature or object enters the corrosive pool or starts their turn there. The liquid in the pool is also highly volatile (see Explosive Reaction below).'
+					description: 'A creature or object enters the corrosive pool or starts their turn there. The liquid in the pool is also highly volatile (see **Explosive Reaction** below).'
 				}),
 				FactoryLogic.feature.create({
 					id: 'effect',
@@ -212,6 +215,7 @@ export const frozenPond: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 1,
 	area: '10 x 10 pond',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -300,7 +304,7 @@ export const frozenPond: Terrain = {
 			label: 'Thin Ice',
 			cost: 1,
 			text: `
-The ice covering the pond is thin and the water is deeper. Whenever a creature or object enters or falls prone in a square of the frozen pond, that square is destroyed and replaced with icy water. The Icy Water ability replaces Slippery Surface.
+The ice covering the pond is thin and the water is deeper. Whenever a creature or object enters or falls prone in a square of the frozen pond, that square is destroyed and replaced with icy water. The **Icy Water** ability replaces **Slippery Surface**.
 
 Any creature who starts their turn in the icy water takes 1 cold damage. If the water is deep enough, a creature can swim beneath the surface of the frozen pond, but takes this cold damage while doing so.`,
 			sections: []
@@ -321,6 +325,7 @@ export const lava: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 4,
 	area: '10 x 10 patch',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -406,6 +411,7 @@ export const quicksand: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 3,
 	area: '10 x 10 patch',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -478,6 +484,7 @@ export const toxicPlants: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 	encounterValue: 2,
 	area: '10 x 10 field',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {

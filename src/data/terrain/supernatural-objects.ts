@@ -16,6 +16,7 @@ export const theBlackObelisk: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 	encounterValue: 20,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -95,6 +96,7 @@ export const theChronalHypercube: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 	encounterValue: 20,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -153,6 +155,7 @@ export const theThroneOfAAn: Terrain = {
 	role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 	encounterValue: 24,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {

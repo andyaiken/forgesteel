@@ -273,6 +273,9 @@ export class ClassicSheetBuilder {
 				sheet.abilityType = `${ability.cost} Malice`;
 			} else if (isMonster && creature.retainer?.level) {
 				sheet.abilityType = 'Encounter';
+			} else if (ability.type.usage === AbilityUsage.VillainAction) {
+				sheet.abilityType = `Villain Action ${ability.type.order}`;
+				sheet.actionType = '';
 			} else {
 				sheet.abilityType = '';
 			}

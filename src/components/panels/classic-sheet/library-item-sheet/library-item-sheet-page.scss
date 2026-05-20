@@ -2,7 +2,15 @@
 
 main#classic-sheet .library-item-sheet {
     .page {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        --gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap);
+        padding: 5px;
+
+        .card {
+            margin: 0;
+            align-self: flex-start;
+        }
     }
 }

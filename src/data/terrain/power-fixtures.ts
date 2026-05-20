@@ -17,6 +17,7 @@ export const holyIdol: Terrain = {
 	),
 	encounterValue: 7,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -66,6 +67,7 @@ export const psionicShard: Terrain = {
 	),
 	encounterValue: 7,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -120,6 +122,7 @@ export const treeOfMight: Terrain = {
 	),
 	encounterValue: 14,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {

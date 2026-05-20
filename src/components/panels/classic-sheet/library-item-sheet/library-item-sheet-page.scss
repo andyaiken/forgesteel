@@ -1,0 +1,8 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .library-item-sheet {
+    .page {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}

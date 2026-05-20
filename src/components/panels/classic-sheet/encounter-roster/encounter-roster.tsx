@@ -3,7 +3,6 @@ import { FormatLogic } from '@/logic/format-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Sourcebook } from '@/models/sourcebook';
-import { TerrainLogic } from '@/logic/terrain-logic';
 import { useMemo } from 'react';
 
 import './encounter-roster.scss';
@@ -139,18 +138,21 @@ export const EncounterRosterCard = (props: Props) => {
 							: null
 
 					}
-					{encounter.terrain?.map(terrain => {
+					{encounter.terrainSlots?.map((slot, i) => {
+						const terrain = slot.terrain;
+						const name = slot.count > 1 ? `${terrain.name} (${slot.count})` : terrain.name;
+						const stamina = Array(slot.count).fill(terrain.stamina).join(', ');
 						return (
-							<tr className='terrain-object' key={`roster-terrain-${terrain.id}`}>
+							<tr className='terrain-object' key={`roster-terrain-${slot.id}-${i}`}>
 								<td colSpan={2}>
 									<div className='wrapper'>
-										<div className='encounter-slot'>{terrain.name}</div>
-										<div className='ev'>EV:<span className='ev-value'>{terrain.encounterValue}</span></div>
+										<div className='encounter-slot'>{name}</div>
+										<div className='ev'>EV:<span className='ev-value'>{slot.slotEv}</span></div>
 									</div>
 								</td>
 								<td className='stamina-tracker' colSpan={2}>
 									<div className='wrapper'>
-										<div className='encounter-slot'>{TerrainLogic.getStaminaValue(terrain)}</div>
+										<div className='encounter-slot'>{stamina}</div>
 									</div>
 								</td>
 								<td></td>

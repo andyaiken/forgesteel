@@ -10,6 +10,7 @@ import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/mons
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
+import { TerrainCard } from '../monster-card/terrain-card.tsx';
 import { useMemo } from 'react';
 
 import './encounter-sheet-page.scss';
@@ -68,6 +69,27 @@ export const EncounterSheetPage = (props: Props) => {
 					element: <MonsterCard monster={ms} columns={mW} key={ms.id} />,
 					width: mW,
 					height: mH,
+					shown: false
+				});
+			});
+		}
+
+		if (encounter.terrain?.length) {
+			encounter.terrain?.forEach(t => {
+				let tH = SheetFormatter.calculateTerrainSize(t, layout.cardLineLen);
+				let tW = 1;
+				if (tH > layout.linesY) {
+					tW = 2;
+					tH = SheetFormatter.calculateTerrainSize(t, layout.cardLineLen, 2);
+					if (tH > layout.linesY) {
+						console.warn('Card still larger than a full page!', t.name, tH);
+						tH = layout.linesY;
+					}
+				}
+				requiredCards.push({
+					element: <TerrainCard terrain={t} columns={tW} key={t.id} />,
+					width: tW,
+					height: tH,
 					shown: false
 				});
 			});

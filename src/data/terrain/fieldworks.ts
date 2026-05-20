@@ -16,8 +16,9 @@ export const archersStakes: Terrain = {
 		MonsterRoleType.Defender,
 		TerrainRoleType.Fortification
 	),
-	encounterValue: 1,
-	area: '4 x 1-square area',
+	encounterValue: 2,
+	area: '',
+	typicalSpace: '4 x 1-square area',
 	direction: 'One side of the stakes is defined as the front.',
 	link: '',
 	stamina: {
@@ -77,7 +78,7 @@ export const archersStakes: Terrain = {
 			id: 'sticky',
 			label: 'Sticky',
 			cost: 3,
-			text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. Any creature who enters an area or stakes triggers the *Sticky Stakes* ability in addtion to suffering the stake\'s other effects.',
+			text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. Any creature who enters an area or stakes triggers the **Sticky Stakes** ability in addtion to suffering the stake\'s other effects.',
 			sections: [
 				{
 					id: 'sticky',
@@ -133,6 +134,7 @@ export const bearTrap: Terrain = {
 	),
 	encounterValue: 2,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -148,7 +150,7 @@ export const bearTrap: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a bear trap can make an *Agility test.*
+					description: `As a maneuver, a creature adjacent to a bear trap can make an **Agility test.**
 
 * **11 or lower**: The creature triggers the trap and is affected as if in its space.
 * **12-16**: The trap is deactivated but the creature is slowed (EoT).
@@ -169,7 +171,7 @@ export const bearTrap: Terrain = {
 					id: 'effect',
 					name: 'Effect',
 					description:
-            'A triggering creature or object ends their movement and is targeted by the *Bear Trap* ability.'
+            'A triggering creature or object ends their movement and is targeted by the **Bear Trap** ability.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -241,7 +243,8 @@ export const flammableOil: Terrain = {
 		TerrainRoleType.Trap
 	),
 	encounterValue: 2,
-	area: '10x10',
+	area: '10 x 10 patch',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -261,7 +264,7 @@ export const flammableOil: Terrain = {
 
 * **11 or lower**: The creature ignites the oil and is affected as if in its area.
 * **12-16**: The oil temporarily ignites before safely burning out, and the creature takes 3 fire damage and is burning (save ends).
-* * **17+**: The oil is rendered safe and can’t be ignited.`
+* **17+**: The oil is rendered safe and can’t be ignited.`
 				})
 			]
 		},
@@ -322,6 +325,7 @@ export const hideyHole: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -341,7 +345,7 @@ export const hideyHole: Terrain = {
 
 * **11 or lower**: The creature is restrained (save ends).
 * **12-16**: The hidey-hole collapses but the creature is slowed (save ends).
-* * **17+**: The hidey-hole collapses and can no longer be used until repaired.`
+* **17+**: The hidey-hole collapses and can no longer be used until repaired.`
 				})
 			]
 		},
@@ -368,7 +372,7 @@ export const hideyHole: Terrain = {
 			id: 'network',
 			label: 'Network',
 			cost: 1,
-			text: 'The hidey-hole is connected to a tunnel network. A creature familiar with the network can move from one hidey-hole to any space adjacent to a connected hidey-hole if they have movement available equal to the straight-line distance to that space. A creature unfamiliar with the network can use a maneuver to make a hard *Intuition test* to discover a connected hidey-hole.',
+			text: 'The hidey-hole is connected to a tunnel network. A creature familiar with the network can move from one hidey-hole to any space adjacent to a connected hidey-hole if they have movement available equal to the straight-line distance to that space. A creature unfamiliar with the network can use a maneuver to make a **hard Intuition test** to discover a connected hidey-hole.',
 			sections: []
 		}
 	],
@@ -391,6 +395,7 @@ export const paviseShield: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -408,9 +413,9 @@ export const paviseShield: Terrain = {
 					name: 'Deactivate',
 					description: `As a maneuver, a creature adjacent to a pavise shield controlled by another creature can make a **Might test**.
 			
-* **11 or lower:** The creature controlling the shield retains control of it and can make an opportunity attack against the creature making the test.
+* **11 or lower**: The creature controlling the shield retains control of it and can make an opportunity attack against the creature making the test.
 * **12-16**: The creature controlling the shield retains control of it.
-* *17+*: The creature making the test grabs the shield and takes control of it.`
+* **17+*: The creature making the test grabs the shield and takes control of it.`
 				})
 			]
 		},
@@ -452,6 +457,7 @@ export const snareTrap: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -565,7 +571,8 @@ export const spikeTrap: Terrain = {
 		TerrainRoleType.Trap
 	),
 	encounterValue: 3,
-	area: '2 x 2-square area',
+	area: '',
+	typicalSpace: '2 x 2-square area',
 	direction: '',
 	link: '',
 	stamina: {

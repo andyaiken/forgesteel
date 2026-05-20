@@ -91,20 +91,26 @@
     p.trigger,
     .effect p {
         font-size: 15px;
-
         margin-left: 0;
         margin-right: 0;
-        margin-top: 7px;
-
-        &:last-of-type {
-            margin-bottom: 0;
-        }
 
         .potency {
             @include common.font-glyphs();
             display: inline-block;
             font-size: round(1.2rem, 1px);
         }
+    }
+
+    .effect p {
+        margin-top: 7px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    p.trigger {
+        margin-bottom: 7px;
     }
 
     .effect {

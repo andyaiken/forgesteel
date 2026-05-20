@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { angryBeehive, corrosivePool, frozenPond } from '@/data/terrain/environmental-hazards';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -176,5 +177,95 @@ describe('buildMonsterSheet', () => {
 	])('sets type correctly', (monster, expectedType) => {
 		const result = ClassicSheetBuilder.buildMonsterSheet(monster);
 		expect(result.type).toBe(expectedType);
+	});
+});
+
+describe('buildTerrainSheet', () => {
+	test.each([
+		[ frozenPond, '5 to all damage except fire damage' ],
+		[ corrosivePool, '20 to all damage except cold or fire damage' ],
+		[ angryBeehive, '' ]
+	])('pulls Immunity from sections correctly', (terrain, expectedImmunity) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain);
+		expect(result.immunity).toBe(expectedImmunity);
+	});
+
+	test.each([
+		[ frozenPond, 'The **Slippery Surface** ability.' ],
+		[ corrosivePool, 'A creature or object takes' ],
+		[ angryBeehive, 'The hive is removed' ]
+	])('combines Activate and Effect into one section', (terrain, effectStart) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain);
+
+		const sectionIds = result.sections.map(s => s.id);
+		expect(sectionIds).toContain('activate-effect');
+		expect(sectionIds).not.toContain('activate');
+		expect(sectionIds).not.toContain('effect');
+
+		const aeSection = result.sections.find(s => s.id === 'activate-effect');
+		expect(aeSection?.description).toContain(`\n**Effect**: ${effectStart}`);
+	});
+
+	test('Does not create an Upgrades section if none are present', () => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(corrosivePool);
+		const sectionIds = result.sections.map(s => s.id);
+		expect(sectionIds).not.toContain('upgrades');
+	});
+
+	test.each([
+		[ frozenPond, 'Upgrade' ],
+		[ angryBeehive, 'Upgrades' ]
+	])('label the Upgrade section according to the number of Upgrades', (terrain, expectedSectionName) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain);
+
+		const upgradeSection = result.sections.find(s => s.id === 'upgrades');
+		expect(upgradeSection?.name).toBe(expectedSectionName);
+	});
+
+	test.each([
+		[ frozenPond, [ 'Thin Ice (+1 EV)' ] ],
+		[ angryBeehive, [ 'Concealed Hive (+1 EV)', 'Killer Bees (+2 EV)' ] ]
+	])('properly combines Upgrades into a single section', (terrain, expectedUpgrades) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain);
+
+		const upgradeSection = result.sections.find(s => s.id === 'upgrades');
+		expectedUpgrades.forEach(expectedUpgrade => {
+			expect(upgradeSection?.description).toContain(expectedUpgrade);
+		});
+	});
+
+	test.each([
+		[ frozenPond ],
+		[ angryBeehive ]
+	])('includes Upgrades as a section when no upgradeIds are passed', terrain => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain);
+
+		const sectionIds = result.sections.map(s => s.id);
+		expect(sectionIds).toContain('upgrades');
+	});
+
+	test.each([
+		[ frozenPond, [ 'thin-ice' ] ],
+		[ angryBeehive, [ 'killer-bees' ] ],
+		[ angryBeehive, [ 'killer-bees', 'concealed-beehive' ] ]
+	])('includes selected Upgrades as individual sections when passed to the builder', (terrain, upgradeIds) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain, upgradeIds);
+
+		const sectionIds = result.sections.map(s => s.id);
+		expect(sectionIds).not.toContain('upgrades');
+
+		upgradeIds.forEach(upgradeId => {
+			expect(sectionIds).toContain(upgradeId);
+		});
+	});
+
+	test.each([
+		[ frozenPond, [ 'thin-ice' ], '2 per 10 x 10 pond' ],
+		[ angryBeehive, [ 'killer-bees' ], 4 ],
+		[ angryBeehive, [ 'killer-bees', 'concealed-beehive' ], 5 ]
+	])('selected upgrades increase the EV of the terrain by the correct amount', (terrain, upgradeIds, expectedEv) => {
+		const result = ClassicSheetBuilder.buildTerrainSheet(terrain, upgradeIds);
+
+		expect(result.encounterValue).toBe(expectedEv.toString());
 	});
 });

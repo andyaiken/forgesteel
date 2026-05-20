@@ -19,6 +19,7 @@ export const columnOfBlades: Terrain = {
 	),
 	encounterValue: 3,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -177,6 +178,7 @@ export const dartTrap: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	link: '',
 	stamina: {
 		base: 3,
@@ -296,6 +298,7 @@ export const pillar: Terrain = {
 	),
 	encounterValue: 3,
 	area: '',
+	typicalSpace: '',
 	direction: 'The pillar topples in a preset direction.',
 	link: '',
 	stamina: {
@@ -399,7 +402,8 @@ export const hiddenPortcullis: Terrain = {
 		TerrainRoleType.Trap
 	),
 	encounterValue: 4,
-	area: '2 × 1-square area, up to a 4 × 2-square area',
+	area: '',
+	typicalSpace: '2 × 1-square area, up to a 4 × 2-square area',
 	direction: '',
 	link: '',
 	stamina: {
@@ -499,7 +503,8 @@ export const pressurePlate: Terrain = {
 		TerrainRoleType.Trigger
 	),
 	encounterValue: 2,
-	area: 'One square, up to a 4 × 4-square area',
+	area: '',
+	typicalSpace: 'One square, up to a 4 × 4-square area',
 	direction: '',
 	stamina: {
 		base: 0,
@@ -585,6 +590,7 @@ export const pulley: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	link: '',
 	stamina: {
@@ -664,7 +670,8 @@ export const ram: Terrain = {
 		TerrainRoleType.Trap
 	),
 	encounterValue: 3,
-	area: '1 × 3-square area or a 2 × 2-square area',
+	area: '',
+	typicalSpace: '1 × 3-square area or a 2 × 2-square area',
 	link: '',
 	stamina: {
 		base: 0,
@@ -801,6 +808,7 @@ export const switchTerrain: Terrain = {
 	),
 	encounterValue: 1,
 	area: '',
+	typicalSpace: '',
 	direction: '',
 	stamina: {
 		base: 3,

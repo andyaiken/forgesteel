@@ -117,8 +117,8 @@ export const AbilityComponent = (props: Props) => {
 					</div>
 				</div>
 			</div>
-			{getPowerRollSection()}
 			{getTriggerSection()}
+			{getPowerRollSection()}
 			{getEffectSection()}
 		</div>
 	);

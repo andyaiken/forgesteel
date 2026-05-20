@@ -1,7 +1,7 @@
 import { Feature } from '@/models/feature';
 import { Monster } from '@/models/monster';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
-import { Terrain } from '@/models/terrain';
+import { TerrainSheet } from './terrain-sheet';
 
 export interface EncounterSheet {
 	id: string;
@@ -24,8 +24,9 @@ export interface EncounterSheet {
 
 	malice?: { monster: string, malice: Feature[] }[];
 	groups?: EncounterGroupSheet[];
+	terrainSlots?: TerrainSlotSheet[];
 
-	terrain?: Terrain[];
+	terrain?: TerrainSheet[];
 	monsters?: MonsterSheet[];
 }
 
@@ -44,3 +45,10 @@ export interface EncounterSlotSheet {
 	isMinion: boolean;
 }
 // #endregion
+
+export interface TerrainSlotSheet {
+	id: string;
+	terrain: TerrainSheet;
+	count: number;
+	slotEv: number;
+}

@@ -14,6 +14,8 @@ import { prowler } from '@/data/classes/beastheart/prowler';
 import { punisher } from '@/data/classes/beastheart/punisher';
 import { spark } from '@/data/classes/beastheart/spark';
 
+// #region Companions
+
 const basilisk = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
 		id: 'beastheart-1-2a-1',
@@ -469,7 +471,7 @@ const drake = FactoryLogic.createSummon({
 			FactoryLogic.feature.create({
 				id: 'beastheart-1-2a-6-5',
 				name: 'Shared Immunity',
-				description: 'You have immunity 3 to the drake’s attuned damage type.'
+				description: 'You and the drake both have immunity 3 to the drake’s attuned damage type.'
 			})
 		]
 	}),
@@ -1170,6 +1172,8 @@ const wolf = FactoryLogic.createSummon({
 		})
 	]
 });
+
+// #endregion
 
 export const beastheart: HeroClass = {
 	id: 'class-beastheart',

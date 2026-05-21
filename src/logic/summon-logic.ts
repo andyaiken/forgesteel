@@ -1,11 +1,14 @@
 import { AbilityLogic } from '@/logic/ability-logic';
+import { Characteristic } from '@/enums/characteristic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { Modifier } from '@/models/damage-modifier';
 import { ModifierLogic } from '@/logic/modifier-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Summon } from '@/models/summon';
 import { Utils } from '@/utils/utils';
+import { beastheart } from '@/data/classes/beastheart/beastheart';
 
 export class SummonLogic {
 	static getSummonedMonster = (summon: Summon, controller: Hero) => {
@@ -73,6 +76,25 @@ export class SummonLogic {
 					break;
 			}
 		});
+
+		if ((copy.role.organization === MonsterOrganizationType.Companion) && controller.class && (controller.class.id === beastheart.id)) {
+			// This is a beastheart companion
+			// It gains characteristic increases along with the hero
+			if (controller.class.level >= 4) {
+				copy.characteristics
+					.filter(ch => [ Characteristic.Might, Characteristic.Intuition ].includes(ch.characteristic))
+					.forEach(ch => ch.value += 1);
+			}
+			if (controller.class.level >= 7) {
+				copy.characteristics
+					.forEach(ch => ch.value += 1);
+			}
+			if (controller.class.level >= 10) {
+				copy.characteristics
+					.filter(ch => [ Characteristic.Might, Characteristic.Intuition ].includes(ch.characteristic))
+					.forEach(ch => ch.value += 1);
+			}
+		}
 
 		return copy;
 	};

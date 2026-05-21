@@ -1,6 +1,6 @@
+import { BookOutlined, ControlOutlined, EllipsisOutlined, ToolOutlined } from '@ant-design/icons';
 import { Button, Divider, Popover, Space } from 'antd';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
-import { EllipsisOutlined } from '@ant-design/icons';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroModalType } from '@/enums/hero-modal-type';
@@ -37,9 +37,9 @@ export const NamePanel = (props: Props) => {
 								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Titles)}>Titles</Button>
 								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Respite)}>Respite</Button>
 								<Divider />
-								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Customize)}>Customize</Button>
-								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Conditional)}>Conditional Features</Button>
-								<Button block={true} type='text' onClick={() => props.onShowState(HeroModalType.Sourcebooks)}>Sourcebooks</Button>
+								<Button block={true} type='text' icon={<ToolOutlined />} onClick={() => props.onShowState(HeroModalType.Customize)}>Customize</Button>
+								<Button block={true} type='text' icon={<ControlOutlined />} onClick={() => props.onShowState(HeroModalType.Conditional)}>Conditional Features</Button>
+								<Button block={true} type='text' icon={<BookOutlined />} onClick={() => props.onShowState(HeroModalType.Sourcebooks)}>Sourcebooks</Button>
 							</Space>
 						}
 					>
@@ -61,9 +61,9 @@ export const NamePanel = (props: Props) => {
 										trigger='click'
 										content={
 											<Space orientation='vertical' style={{ width: '150px' }}>
-												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Customize); setOpen(false); }}>Customize</Button>
-												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Conditional); setOpen(false); }}>Conditional Features</Button>
-												<Button type='text' block={true} onClick={() => { props.onShowState(HeroModalType.Sourcebooks); setOpen(false); }}>Sourcebooks</Button>
+												<Button type='text' block={true} icon={<ToolOutlined />} onClick={() => { props.onShowState(HeroModalType.Customize); setOpen(false); }}>Customize</Button>
+												<Button type='text' block={true} icon={<ControlOutlined />} onClick={() => { props.onShowState(HeroModalType.Conditional); setOpen(false); }}>Conditional Features</Button>
+												<Button type='text' block={true} icon={<BookOutlined />} onClick={() => { props.onShowState(HeroModalType.Sourcebooks); setOpen(false); }}>Sourcebooks</Button>
 											</Space>
 										}
 										open={open}

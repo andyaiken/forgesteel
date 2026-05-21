@@ -205,7 +205,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
-						target: '',
+						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have <code>A < 5</code>, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')
 						]

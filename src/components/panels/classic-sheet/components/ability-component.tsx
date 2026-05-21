@@ -1,4 +1,5 @@
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { Collections } from '@/utils/collections';
 import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -87,8 +88,19 @@ export const AbilityComponent = (props: Props) => {
 		icon = <img src={iconSrc} className='icon' />;
 	}
 
+	const getClasses = (ability: AbilitySheet) => {
+		const classes = [ 'ability' ];
+		if (ability.actionType) {
+			classes.push(ability.actionType.toLocaleLowerCase().split(' ').join('-'));
+		}
+		if (ability.abilityType) {
+			classes.push(ability.abilityType.toLocaleLowerCase().split(' ').join('-'));
+		}
+		return Collections.distinct(classes, c => c).join(' ');
+	};
+
 	return (
-		<div className='ability'>
+		<div className={getClasses(ability)}>
 			<div className='header'>
 				<div className='name'>{ability.name}</div>
 				{ability.hasPowerRoll ?

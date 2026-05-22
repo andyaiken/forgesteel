@@ -677,7 +677,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						name: 'The Depths Hunger',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'Each enemy in the area',
 						cost: 4,
 						sections: [
@@ -1156,7 +1156,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						name: 'The Chasm Engulfs',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'Each enemy in the area',
 						cost: 4,
 						sections: [
@@ -1644,7 +1644,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						name: 'The World Consumes',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the area',
 						cost: 5,
 						sections: [
@@ -1908,7 +1908,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						name: 'Guardian From Afar',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'One creature in the area',
 						cost: 3,
 						sections: [

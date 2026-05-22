@@ -242,6 +242,7 @@ export const LibraryListPage = (props: Props) => {
 						);
 					case 'terrain':
 					case 'monster':
+					case 'monster-group':
 						return (
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<LibraryItemSheetPage
@@ -648,6 +649,7 @@ export const LibraryListPage = (props: Props) => {
 				case 'negotiation':
 				case 'terrain':
 				case 'monster':
+				case 'monster-group':
 					canExportAsImage = false;
 					canExportAsPDF = true;
 					break;

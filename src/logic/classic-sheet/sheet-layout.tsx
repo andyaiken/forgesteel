@@ -1,7 +1,6 @@
 import { Fragment, JSX } from 'react';
 import { AbilityCard } from '@/components/panels/classic-sheet/ability-card/ability-card';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
-import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -55,12 +54,20 @@ export class SheetLayout {
 	};
 
 	static getFollowerCardsLayout = (options: Options, hasRetainers: boolean): CardPageLayout => {
+		// FORCE portrait if there are any retainers
+		const orientation = hasRetainers ? 'portrait' : options.pageOrientation;
+		return this.getCardsLayoutForOrientation(options, orientation);
+	};
+
+	static getMonsterCardsLayout = (options: Options): CardPageLayout => {
+		// FORCE portrait
+		return this.getCardsLayoutForOrientation(options, 'portrait');
+	};
+
+	static getCardsLayoutForOrientation = (options: Options, orientation: 'portrait' | 'landscape'): CardPageLayout => {
 		// Get root font size (1rem)
 		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		const charWidth = rootFontSize * 0.553;
-
-		// FORCE portrait if there are any retainers
-		const orientation = hasRetainers ? 'portrait' : options.pageOrientation;
 
 		// gap between cards
 		const gapPx = 10; // px
@@ -435,7 +442,7 @@ export class SheetLayout {
 		return pages;
 	};
 
-	static getMonsterCardPages = (monsterCards: FillerCard[], encounter: EncounterSheet, layout: CardPageLayout, idPrefix = 'extra') => {
+	static getMonsterCardPages = (monsterCards: FillerCard[], layout: CardPageLayout, idPrefix = 'extra') => {
 		const pages: JSX.Element[] = [];
 		let i = 0;
 		const extraCards: ExtraCards = {
@@ -453,7 +460,7 @@ export class SheetLayout {
 			pages.push(
 				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, `${idPrefix}-${i}`)}>
+					<div className={pageClasses.join(' ')} id={`${idPrefix}-${i}`}>
 						{cards}
 					</div>
 				</Fragment>

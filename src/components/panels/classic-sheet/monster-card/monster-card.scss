@@ -76,11 +76,10 @@ main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.
             section.bordered {
                 column-count: 2;
                 column-gap: 25px;
-                padding-top: 10px;
 
                 .name-wrapper {
                     @include monster-header-gradient-half(common.$color-general-monster);
-                    margin-top: -8px;
+                    column-span: all;
                 }
             }
         }

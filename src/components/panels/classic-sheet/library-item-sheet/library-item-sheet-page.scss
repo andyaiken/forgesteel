@@ -8,6 +8,14 @@ main#classic-sheet .library-item-sheet {
         gap: var(--gap);
         padding: 5px;
 
+        h1 {
+            font-weight: 900;
+            font-size: round(3.85rem, 1px);
+            padding-bottom: 0;
+            text-align: left;
+            border-bottom: 2px solid common.$color-medium;
+        }
+
         .card {
             margin: 0;
             align-self: flex-start;

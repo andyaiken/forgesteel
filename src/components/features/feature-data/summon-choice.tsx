@@ -1,7 +1,8 @@
-import { Button, Drawer, Flex, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureSummonChoiceData } from '@/models/feature';
+import { Button, Drawer, Space } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { Feature, FeatureData, FeatureSummonChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
+import { ControlledMonsterCustomizePanel } from '@/components/panels/controlled-monster-customize/controlled-monster-customize-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -11,6 +12,7 @@ import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterInfo } from '@/components/panels/token/token';
+import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
@@ -18,6 +20,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { SummonLogic } from '@/logic/summon-logic';
@@ -198,39 +201,59 @@ export const ConfigSummonChoice = (props: ConfigProps) => {
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
 	const [ selectedSummon, setSelectedSummon ] = useState<Summon | null>(null);
 
+	const getCustomizeContent = (monster: Monster) => {
+		const setName = (value: string) => {
+			const dataCopy = Utils.copy(props.data);
+			const summon = dataCopy.selected.find(s => s.monster.id === monster.id);
+			if (summon) {
+				summon.name = value;
+				summon.monster.name = value;
+			}
+			props.setData(dataCopy);
+		};
+
+		const setFeatureData = (featureID: string, data: FeatureData) => {
+			const dataCopy = Utils.copy(props.data);
+			const summon = dataCopy.selected.find(s => s.monster.id === monster.id);
+			if (summon) {
+				MonsterLogic.getFeatures(summon.monster)
+					.filter(f => f.id === featureID)
+					.forEach(f => f.data = data);
+			}
+			props.setData(dataCopy);
+		};
+
+		return (
+			<ControlledMonsterCustomizePanel
+				monster={monster}
+				hero={props.hero}
+				sourcebooks={props.sourcebooks}
+				onChangeName={setName}
+				onChangeFeature={setFeatureData}
+			/>
+		);
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{
-				!props.data.selected ?
-					<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
-					: null
-			}
-			{
 				props.data.selected.map(summon => (
-					<Flex className='selection-box' align='center' gap={10}>
-						<MonsterInfo
-							style={{ flex: '1 1 0' }}
-							monster={summon.monster}
-						/>
-						<div style={{ flex: '0 0 auto' }}>
-							<Button
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedSummon(summon)}
+					<SelectionBox
+						key={summon.id}
+						content={
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={summon.monster}
 							/>
-							<Button
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = dataCopy.selected.filter(m => m.id !== summon.id);
-									props.setData(dataCopy);
-								}}
-							/>
-						</div>
-					</Flex>
+						}
+						customizeContent={getCustomizeContent(summon.monster)}
+						onSelect={() => setSelectedSummon(summon)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = dataCopy.selected.filter(m => m.id !== summon.id);
+							props.setData(dataCopy);
+						}}
+					/>
 				))
 			}
 			{

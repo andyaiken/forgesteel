@@ -1,13 +1,12 @@
-import { Button, Drawer, Flex } from 'antd';
+import { Button, Drawer } from 'antd';
+import { FeatureConfigPanel, SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { ReactNode, useState } from 'react';
 import { Career } from '@/models/career';
 import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
-import { CloseOutlined } from '@ant-design/icons';
 import { Element } from '@/models/element';
 import { ElementSelectModal } from '@/components/modals/select/element-select/element-select-modal';
 import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { Field } from '@/components/controls/field/field';
@@ -68,22 +67,16 @@ export const CareerSection = (props: Props) => {
 				<HeaderText>Inciting Incident</HeaderText>
 				{
 					props.hero.career.incitingIncidents.selected ?
-						<Flex className='selection-box' align='center' gap={10}>
-							<Field
-								style={{ flex: '1 1 0' }}
-								label={props.hero.career.incitingIncidents.selected.name}
-								value={<Markdown text={props.hero.career.incitingIncidents.selected.description} useSpan={true} />}
-							/>
-							<Flex vertical={true}>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={() => props.selectIncitingIncident(null)}
+						<SelectionBox
+							content={
+								<Field
+									style={{ flex: '1 1 0' }}
+									label={props.hero.career.incitingIncidents.selected.name}
+									value={<Markdown text={props.hero.career.incitingIncidents.selected.description} useSpan={true} />}
 								/>
-							</Flex>
-						</Flex>
+							}
+							onSelect={() => props.selectIncitingIncident(null)}
+						/>
 						:
 						<Button block={true} className='status-warning' onClick={() => setShowIncitingIncidents(true)}>
 							Choose an inciting incident

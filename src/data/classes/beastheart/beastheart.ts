@@ -18,7 +18,7 @@ import { spark } from '@/data/classes/beastheart/spark';
 
 const basilisk = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-1',
+		id: 'beastheart-companion-1',
 		name: 'Basilisk',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -32,17 +32,17 @@ const basilisk = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-1-1',
+				id: 'beastheart-companion-1-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-1-2',
+				id: 'beastheart-companion-1-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
-				id: 'beastheart-1-2a-1-3',
+				id: 'beastheart-companion-1-3',
 				modifiers: [
 					FactoryLogic.damageModifier.create({
 						damageType: DamageType.Poison,
@@ -53,7 +53,7 @@ const basilisk = FactoryLogic.createSummon({
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-1-4',
+					id: 'beastheart-companion-1-4',
 					name: 'Petrify',
 					description: 'Transfixed by the basilisk’s magical gaze or poisoned claws, the foe’s body begins to calcify.',
 					type: FactoryLogic.type.createManeuver(),
@@ -72,7 +72,7 @@ const basilisk = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-1-5',
+				id: 'beastheart-companion-1-5',
 				name: 'Stoned',
 				description: 'A stoned creature is magically turning to stone. Each time a creature fails the saving throw to end this effect, they take corruption damage equal to the basilisk’s Might score. A stoned creature or a creature adjacent to them can use a maneuver to cut the encroaching stone from the stoned target’s body, ending the effect and dealing damage to the target equal to twice the basilisk’s Might score that can’t be reduced in any way. A creature reduced to 0 Stamina while they are stoned, or by an ability that causes a creature to become stoned, is turned to stone until they are restored to life by magical means.'
 			})
@@ -83,21 +83,21 @@ const basilisk = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-1-3-1',
+			id: 'beastheart-companion-1-3-1',
 			name: 'Foes Forever Frozen',
 			description: 'Whenever the basilisk makes a strike against a creature while rampaging, the target is stoned (save ends).'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-1-6-1',
+			id: 'beastheart-companion-1-6-1',
 			name: 'Rock Smasher',
 			description: 'Whenever you deal rolled damage to a stoned creature while the basilisk is rampaging, you deal extra damage equal to twice your Might score.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-1-10-1',
+			id: 'beastheart-companion-1-10-1',
 			name: 'Heart of Stone',
 			description: 'While the basilisk is rampaging, you and the basilisk have damage immunity 10 as you become nearly impervious living statues.'
 		})
@@ -106,7 +106,7 @@ const basilisk = FactoryLogic.createSummon({
 
 const bear = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-2',
+		id: 'beastheart-companion-2',
 		name: 'Bear',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -120,22 +120,22 @@ const bear = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-2-1',
+				id: 'beastheart-companion-2-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-2-2',
+				id: 'beastheart-companion-2-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-2-3',
+				id: 'beastheart-companion-2-3',
 				selected: [ 'Intimidate' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-2-4',
+					id: 'beastheart-companion-2-4',
 					name: 'Backhand',
 					description: 'The bear casually swats the pesky foe into next week.',
 					type: FactoryLogic.type.createManeuver(),
@@ -151,7 +151,7 @@ const bear = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-2-5',
+				id: 'beastheart-companion-2-5',
 				name: 'Strong Like Bear',
 				description: 'You gain a +1 bonus to your stability.'
 			})
@@ -162,21 +162,21 @@ const bear = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-2-3-1',
+			id: 'beastheart-companion-2-3-1',
 			name: 'Foe Thresher',
 			description: 'Whenever the bear targets a creature with a strike that doesn’t impose forced movement while rampaging, the bear can push the target up to a number of squares equal to the bear’s Might score.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-2-6-1',
+			id: 'beastheart-companion-2-6-1',
 			name: 'Ursine Form',
 			description: 'While the bear is rampaging, you have damage immunity 5 and your size increases to the bear’s size (to a maximum of 2). If you don’t have enough unoccupied space to grow, you grow as soon as there is sufficient space.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-2-10-1',
+			id: 'beastheart-companion-2-10-1',
 			name: 'Twin Colossi',
 			description: 'While the bear is rampaging, you gain a +1 bonus to distance with melee weapon abilities, your size increases to match the bear’s size (to a maximum of 3), and your strikes deal an extra 5 damage.'
 		})
@@ -185,7 +185,7 @@ const bear = FactoryLogic.createSummon({
 
 const boar = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-3',
+		id: 'beastheart-companion-3',
 		name: 'Boar',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -199,22 +199,22 @@ const boar = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-3-1',
+				id: 'beastheart-companion-3-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-3-2',
+				id: 'beastheart-companion-3-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-3-3',
+				id: 'beastheart-companion-3-3',
 				selected: [ 'Search' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-3-4',
+					id: 'beastheart-companion-3-4',
 					name: 'Gore',
 					description: 'With an enraged snort, the boar lunges forward to rip open foes with their tusks.',
 					type: FactoryLogic.type.createManeuver(),
@@ -230,7 +230,7 @@ const boar = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-3-5',
+				id: 'beastheart-companion-3-5',
 				name: 'Spiteful Endurance',
 				description: 'While the boar is winded, they have damage immunity equal to their Might score and ignore the effects of bleeding.'
 			})
@@ -241,21 +241,21 @@ const boar = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-3-3-1',
+			id: 'beastheart-companion-3-3-1',
 			name: 'Greased Pig',
 			description: 'While the boar is rampaging, they have a +2 bonus to speed and a double edge on the Escape Grab maneuver.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-3-6-1',
+			id: 'beastheart-companion-3-6-1',
 			name: 'Wild Rush',
 			description: 'While the boar is rampaging, you can use their Gore maneuver, and you and the boar can shift instead of move when using the Charge action or the Gore maneuver.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-3-10-1',
+			id: 'beastheart-companion-3-10-1',
 			name: 'Immortal Rage',
 			description: 'Whenever you or the boar use an ability that deals damage while the boar is rampaging, you gain 10 temporary Stamina.'
 		})
@@ -264,7 +264,7 @@ const boar = FactoryLogic.createSummon({
 
 const condor = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-4',
+		id: 'beastheart-companion-4',
 		name: 'Condor',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -278,22 +278,22 @@ const condor = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-4-1',
+				id: 'beastheart-companion-4-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-4-2',
+				id: 'beastheart-companion-4-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-4-3',
+				id: 'beastheart-companion-4-3',
 				selected: [ 'Alertness' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-4-4',
+					id: 'beastheart-companion-4-4',
 					name: 'Flurry of Wings',
 					description: 'I can’t draw a bead on them with that infernal bird flapping in my face!',
 					type: FactoryLogic.type.createManeuver(),
@@ -309,7 +309,7 @@ const condor = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-4-5',
+				id: 'beastheart-companion-4-5',
 				name: 'Moving Target',
 				description: 'While the condor is flying and has a speed greater than 0, ranged strikes against them take a bane.'
 			})
@@ -320,21 +320,21 @@ const condor = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-4-3-1',
+			id: 'beastheart-companion-4-3-1',
 			name: 'Dive Bomb',
 			description: 'Whenever the condor makes a strike while rampaging, they deal extra damage equal to the number of squares they’ve moved on their turn (to a maximum of 5).'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-4-6-1',
+			id: 'beastheart-companion-4-6-1',
 			name: 'Borne Aloft',
 			description: 'While the condor is rampaging, you gain wings and can fly. While flying, you gain a +2 bonus to speed. If you are midair when the condor’s rampage ends, you take no damage from the fall.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-4-10-1',
+			id: 'beastheart-companion-4-10-1',
 			name: 'Flight of the Condor',
 			description: 'While the condor is rampaging, you and the condor gain a +5 bonus to speed.'
 		})
@@ -343,7 +343,7 @@ const condor = FactoryLogic.createSummon({
 
 const deinonychus = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-5',
+		id: 'beastheart-companion-5',
 		name: 'Deinonychus',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -357,22 +357,22 @@ const deinonychus = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-5-1',
+				id: 'beastheart-companion-5-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-5-2',
+				id: 'beastheart-companion-5-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-5-3',
+				id: 'beastheart-companion-5-3',
 				selected: [ 'Track' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-5-4',
+					id: 'beastheart-companion-5-4',
 					name: 'Terrible Claws',
 					description: 'The deinonychus kicks their prey, slashing them with their wicked claws.',
 					type: FactoryLogic.type.createManeuver(),
@@ -388,7 +388,7 @@ const deinonychus = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-5-5',
+				id: 'beastheart-companion-5-5',
 				name: 'Blood Frenzy',
 				description: 'Whenever the deinonychus deals damage to a bleeding creature, they gain 1 surge.'
 			})
@@ -399,21 +399,21 @@ const deinonychus = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-5-3-1',
+			id: 'beastheart-companion-5-3-1',
 			name: 'Tear You to Ribbons',
 			description: 'Whenever the deinonychus makes a strike against a creature while rampaging, the target is bleeding until the end of their next turn.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-5-6-1',
+			id: 'beastheart-companion-5-6-1',
 			name: 'Slake my Thirst in Blood',
 			description: 'Whenever you use an ability that deals rolled damage to a bleeding creature while the deinonychus is rampaging, you gain 2 surges.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-5-10-1',
+			id: 'beastheart-companion-5-10-1',
 			name: 'Reaping Scythe',
 			description: 'The deinonychus’s claws slash at creatures underfoot. When the deinonychus moves adjacent to an enemy or enters an enemy’s space for the first time on a turn while rampaging, the deinonychus deals damage to that enemy equal to the deinonychus’s Might score.'
 		})
@@ -422,7 +422,7 @@ const deinonychus = FactoryLogic.createSummon({
 
 const drake = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-6',
+		id: 'beastheart-companion-6',
 		name: 'Drake',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -436,18 +436,18 @@ const drake = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-6-1',
+				id: 'beastheart-companion-6-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-6-2',
+				id: 'beastheart-companion-6-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-6-3',
+					id: 'beastheart-companion-6-3',
 					name: 'Drake Breath',
 					description: 'The drake exhales a blast of flesh-melting energy.',
 					type: FactoryLogic.type.createManeuver(),
@@ -463,15 +463,229 @@ const drake = FactoryLogic.createSummon({
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-6-4',
+			FactoryLogic.feature.createChoice({
+				id: 'beastheart-companion-6-4',
 				name: 'Elementally Attuned',
-				description: 'When you gain this companion, you choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. The drake’s attuned damage type affects their other features.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-6-5',
-				name: 'Shared Immunity',
-				description: 'You and the drake both have immunity 3 to the drake’s attuned damage type.'
+				description: 'When you gain this companion, you choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. The drake’s attuned damage type affects their other features.',
+				options: [
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-1',
+							name: 'Shared Immunity (acid)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-1a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Acid,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-1b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Acid,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-2',
+							name: 'Shared Immunity (cold)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-2a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Cold,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-2b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Cold,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-3',
+							name: 'Shared Immunity (corruption)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-3a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Corruption,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-3b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-4',
+							name: 'Shared Immunity (fire)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-4a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Fire,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-4b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Fire,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-5',
+							name: 'Shared Immunity (lightning)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-5a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Lightning,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-5b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Lightning,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-6',
+							name: 'Shared Immunity (poison)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-6a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Poison,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-6b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createMultiple({
+							id: 'beastheart-companion-6-4-7',
+							name: 'Shared Immunity (sonic)',
+							features: [
+								FactoryLogic.feature.createDamageModifier({
+									id: 'beastheart-companion-6-4-7a',
+									modifiers: [
+										FactoryLogic.damageModifier.create({
+											damageType: DamageType.Sonic,
+											modifierType: DamageModifierType.Immunity,
+											value: 3
+										})
+									]
+								}),
+								FactoryLogic.feature.createForController({
+									feature: FactoryLogic.feature.createDamageModifier({
+										id: 'beastheart-companion-6-4-7b',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Sonic,
+												modifierType: DamageModifierType.Immunity,
+												value: 3
+											})
+										]
+									})
+								})
+							]
+						}),
+						value: 1
+					}
+				]
 			})
 		]
 	}),
@@ -480,21 +694,21 @@ const drake = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6-3-1',
+			id: 'beastheart-companion-6-3-1',
 			name: 'Endless Breath',
 			description: 'The drake’s Drake Breath maneuver deals an extra 2 damage.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6-6-1',
+			id: 'beastheart-companion-6-6-1',
 			name: 'A Burning Inside Me',
 			description: 'While the drake is rampaging, you gain draconic wings and can fly. If you are midair when the drake’s rampage ends, you take no damage from the fall. Additionally, you can use the drake’s Drake Breath maneuver until their rampage ends'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6-10-1',
+			id: 'beastheart-companion-6-10-1',
 			name: 'Elemental Avatar',
 			description: 'While the drake is rampaging, you and the drake have immunity all to the drake’s attuned damage type, and whenever you or the drake make a strike against a creature you can cause the target to be dragonsealed (save ends). A dragonsealed creature has weakness 10 to the drake’s attuned damage type.'
 		})
@@ -503,7 +717,7 @@ const drake = FactoryLogic.createSummon({
 
 const elementalSpark = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-6b',
+		id: 'beastheart-companion-6b',
 		name: 'Elemental Spark',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -517,17 +731,17 @@ const elementalSpark = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-6b-1',
+				id: 'beastheart-companion-6b-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-6b-2',
+				id: 'beastheart-companion-6b-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
-				id: 'beastheart-1-2a-6b-3',
+				id: 'beastheart-companion-6b-3',
 				modifiers: [
 					FactoryLogic.damageModifier.create({
 						damageType: DamageType.Lightning,
@@ -537,12 +751,12 @@ const elementalSpark = FactoryLogic.createSummon({
 				]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-6b-4',
+				id: 'beastheart-companion-6b-4',
 				selected: [ 'Magic' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-6b-5',
+					id: 'beastheart-companion-6b-5',
 					name: 'Static Shock',
 					description: 'An arc of lightning crackles from the spark.',
 					type: FactoryLogic.type.createManeuver(),
@@ -558,7 +772,7 @@ const elementalSpark = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-6b-6',
+				id: 'beastheart-companion-6b-6',
 				name: 'Electric Surge',
 				description: 'The first time on a turn that you or the spark deal lightning damage, you gain 1 surge.'
 			})
@@ -569,21 +783,21 @@ const elementalSpark = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6b-3-1',
+			id: 'beastheart-companion-6b-3-1',
 			name: 'Electroshock',
 			description: 'Whenever the spark makes a strike against a creature while rampaging, they can cause a target who has M < [average] to be dazed until the end of the target’s next turn.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6b-6-1',
+			id: 'beastheart-companion-6b-6-1',
 			name: 'Conductive',
 			description: 'While the spark is rampaging, lightning sings through your blood, and whenever you make a strike against a creature, you deal extra lightning damage equal to your Might score.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-6b-10-1',
+			id: 'beastheart-companion-6b-10-1',
 			name: 'Lightning Speed',
 			description: 'While the spark is rampaging, you and the spark can shift up to your speed as a free maneuver once on each of your turns.'
 		})
@@ -592,7 +806,7 @@ const elementalSpark = FactoryLogic.createSummon({
 
 const gummyBall = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-7',
+		id: 'beastheart-companion-7',
 		name: 'Gummy Ball',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -606,21 +820,21 @@ const gummyBall = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-7-1',
+				id: 'beastheart-companion-7-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-7-2',
+				id: 'beastheart-companion-7-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-7-2a',
+				id: 'beastheart-companion-7-2a',
 				selected: [ 'Sneak' ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
-				id: 'beastheart-1-2a-7-3',
+				id: 'beastheart-companion-7-3',
 				modifiers: [
 					FactoryLogic.damageModifier.create({
 						damageType: DamageType.Acid,
@@ -631,7 +845,7 @@ const gummyBall = FactoryLogic.createSummon({
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-7-4',
+					id: 'beastheart-companion-7-4',
 					name: 'Absorb',
 					description: 'With a sickening squelch, the sphere oozes around their hapless prey.',
 					type: FactoryLogic.type.createManeuver(),
@@ -647,7 +861,7 @@ const gummyBall = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-7-5',
+				id: 'beastheart-companion-7-5',
 				name: 'Gelatinous',
 				description: 'The ball can occupy another creature’s space. While occupying a creature’s space, the ball has line of effect to that creature. If the creature completely fits within the ball’s space, the creature has line of effect only to the ball and creatures outside the ball don’t have line of effect to the creature. The ball’s space is difficult terrain.'
 			})
@@ -658,21 +872,21 @@ const gummyBall = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-7-3-1',
+			id: 'beastheart-companion-7-3-1',
 			name: 'Suck it Up',
 			description: 'Whenever the ball makes a strike while rampaging, one target is pulled up to 3 squares into the ball’s space. If the target ends this movement and completely fits within the ball’s space, the target is grabbed by the ball.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-7-6-1',
+			id: 'beastheart-companion-7-6-1',
 			name: 'A Burning Inside Me',
 			description: 'While the ball is rampaging, your arms and legs become viscous and stretchy, and you gain a +2 bonus to speed and melee distance.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-7-10-1',
+			id: 'beastheart-companion-7-10-1',
 			name: 'Runaway Expansion',
 			description: 'While the ball is rampaging, you and the ball have acid immunity 10, and whenever a creature is reduced to 0 Stamina while inside the ball, the ball’s size increases by 1 (to a maximum of 5). The ball’s size can’t increase this way more than once a turn, and the ball shrinks back to their original size when their rampage ends.'
 		})
@@ -681,7 +895,7 @@ const gummyBall = FactoryLogic.createSummon({
 
 const hellhound = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-8',
+		id: 'beastheart-companion-8',
 		name: 'Hellhound',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -695,17 +909,17 @@ const hellhound = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-8-1',
+				id: 'beastheart-companion-8-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-8-2',
+				id: 'beastheart-companion-8-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
-				id: 'beastheart-1-2a-8-3',
+				id: 'beastheart-companion-8-3',
 				modifiers: [
 					FactoryLogic.damageModifier.create({
 						damageType: DamageType.Fire,
@@ -715,12 +929,12 @@ const hellhound = FactoryLogic.createSummon({
 				]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-8-4',
+				id: 'beastheart-companion-8-4',
 				selected: [ 'Intimidate' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-8-5',
+					id: 'beastheart-companion-8-5',
 					name: 'Fire Breath',
 					description: 'The hellhound exhales infernal flames.',
 					type: FactoryLogic.type.createManeuver(),
@@ -736,7 +950,7 @@ const hellhound = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-8-6',
+				id: 'beastheart-companion-8-6',
 				name: 'Hellish Pact',
 				description: 'You have fire immunity equal to the hellhound’s fire immunity.'
 			})
@@ -747,21 +961,21 @@ const hellhound = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-8-3-1',
+			id: 'beastheart-companion-8-3-1',
 			name: 'Infernal Apparition',
 			description: 'Whenever the hellhound makes a strike against a creature while rampaging, they can cause a target who has P < [average] to be frightened until the end of the target’s next turn.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-8-6-1',
+			id: 'beastheart-companion-8-6-1',
 			name: 'Mad Dog',
 			description: 'While the hellhound is rampaging, your mouth foams with acidic ichor, and whenever you make a strike against a creature, you deal extra acid damage equal to your Might score.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-8-10-1',
+			id: 'beastheart-companion-8-10-1',
 			name: 'Wreathed in Flames',
 			description: 'While the hellhound is rampaging, you and the hellhound are surrounded by an aura of flames, and each enemy who starts their turn adjacent to you or the hellhound takes fire damage equal to the hellhound’s Might score.'
 		})
@@ -770,7 +984,7 @@ const hellhound = FactoryLogic.createSummon({
 
 const lightbender = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-9',
+		id: 'beastheart-companion-9',
 		name: 'Lightbender',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -784,22 +998,22 @@ const lightbender = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 2, 2),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-9-1',
+				id: 'beastheart-companion-9-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-9-2',
+				id: 'beastheart-companion-9-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-9-3',
+				id: 'beastheart-companion-9-3',
 				selected: [ 'Hide' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-9-4',
+					id: 'beastheart-companion-9-4',
 					name: 'Sparkling Tail Whip',
 					description: 'The lightbender swings their tail, sending gouts of sparks in their foe’s face.',
 					type: FactoryLogic.type.createManeuver(),
@@ -815,7 +1029,7 @@ const lightbender = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-9-5',
+				id: 'beastheart-companion-9-5',
 				name: 'Avoidance',
 				description: 'Any effect on the lightbender that would be ended by a saving throw instead ends automatically at the end of their next turn.'
 			})
@@ -826,21 +1040,21 @@ const lightbender = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-9-3-1',
+			id: 'beastheart-companion-9-3-1',
 			name: 'Hit and Run',
 			description: 'Whenever the lightbender makes a strike against a creature while rampaging, the lightbender can teleport up to 5 squares and use the Hide maneuver.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-9-6-1',
+			id: 'beastheart-companion-9-6-1',
 			name: 'Lightbearer',
 			description: 'While the lightbender is rampaging, you can use a free maneuver to glow with blinding light that lasts until the rampage ends or you use this ability again. While glowing, your skin sheds light for 10 squares and strikes against you take a bane.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-9-10-1',
+			id: 'beastheart-companion-9-10-1',
 			name: 'Everywhere and Nowhere',
 			description: 'While the lightbender is rampaging, your grip on spatial reality is weakened, and once on each of your turns, you or the lightbender can teleport up to 3 spaces as a free maneuver. Additionally, strikes made against you and the lightbender have a double bane until the lightbender’s rampage ends.'
 		})
@@ -849,7 +1063,7 @@ const lightbender = FactoryLogic.createSummon({
 
 const panther = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-10',
+		id: 'beastheart-companion-10',
 		name: 'Panther',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -863,22 +1077,22 @@ const panther = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-10-1',
+				id: 'beastheart-companion-10-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-10-2',
+				id: 'beastheart-companion-10-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-10-3',
+				id: 'beastheart-companion-10-3',
 				selected: [ 'Sneak' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-10-4',
+					id: 'beastheart-companion-10-4',
 					name: 'Pounce',
 					description: 'The panther bunches up, then uncoils into a deadly leap.',
 					type: FactoryLogic.type.createManeuver(),
@@ -894,7 +1108,7 @@ const panther = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-10-5',
+				id: 'beastheart-companion-10-5',
 				name: 'Mighty Spring',
 				description: 'Whenever the panther takes the Advance move action or the Charge action, they can jump up to a number of squares equal to their speed in any direction, including vertically, as part of this movement.'
 			})
@@ -905,21 +1119,21 @@ const panther = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-10-3-1',
+			id: 'beastheart-companion-10-3-1',
 			name: 'Cat and Mouse',
 			description: 'Whenever the panther makes a strike against a creature while rampaging, the panther can knock the target prone.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-10-6-1',
+			id: 'beastheart-companion-10-6-1',
 			name: 'Single Bound',
 			description: 'While the panther is rampaging, you can jump up to a number of squares equal to your speed as a free maneuver once on each of your turns.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-10-10-1',
+			id: 'beastheart-companion-10-10-1',
 			name: 'Panther Spirit',
 			description: 'While the panther is rampaging, you and the panther are invisible and can move through objects and terrain, which are difficult terrain for you both. A creature who ends their turn inside a solid object from moving this way is teleported to the last unoccupied space they previously occupied.'
 		})
@@ -928,7 +1142,7 @@ const panther = FactoryLogic.createSummon({
 
 const spider = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-11',
+		id: 'beastheart-companion-11',
 		name: 'Spider',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -942,22 +1156,22 @@ const spider = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-11-1',
+				id: 'beastheart-companion-11-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-11-2',
+				id: 'beastheart-companion-11-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-11-3',
+				id: 'beastheart-companion-11-3',
 				selected: [ 'Sneak' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-11-4',
+					id: 'beastheart-companion-11-4',
 					name: 'Web Shot',
 					description: 'The spider fires a ball of sticky silk.',
 					type: FactoryLogic.type.createManeuver(),
@@ -973,7 +1187,7 @@ const spider = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-11-5',
+				id: 'beastheart-companion-11-5',
 				name: 'Come Into My Parlor',
 				description: 'Whenever the spider makes a strike against a restrained creature, the spider deals extra poison damage equal to twice their Intuition score.'
 			})
@@ -984,21 +1198,21 @@ const spider = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-11-3-1',
+			id: 'beastheart-companion-11-3-1',
 			name: 'Dripping Fangs',
 			description: 'Whenever the spider makes a strike against a creature while rampaging, the spider can deal extra poison damage equal to their Might score.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-11-6-1',
+			id: 'beastheart-companion-11-6-1',
 			name: 'Web Slinger',
 			description: 'Once on each of your turns while the spider is rampaging, you can shoot a web to a ceiling, wall, or sturdy object above you within 5 squares as a free maneuver. You can then fly in a straight line to any space within 5 squares of that object.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-11-10-1',
+			id: 'beastheart-companion-11-10-1',
 			name: 'Life Drinker',
 			description: 'Whenever you or the spider deals damage with a maneuver while the spider is rampaging, the attacker regains Stamina equal to the damage dealt.'
 		})
@@ -1007,7 +1221,7 @@ const spider = FactoryLogic.createSummon({
 
 const sporeling = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-12',
+		id: 'beastheart-companion-12',
 		name: 'Sporeling',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -1021,17 +1235,17 @@ const sporeling = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-12-1',
+				id: 'beastheart-companion-12-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-12-2',
+				id: 'beastheart-companion-12-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
-				id: 'beastheart-1-2a-12-3',
+				id: 'beastheart-companion-12-3',
 				modifiers: [
 					FactoryLogic.damageModifier.create({
 						damageType: DamageType.Poison,
@@ -1041,12 +1255,12 @@ const sporeling = FactoryLogic.createSummon({
 				]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-12-4',
+				id: 'beastheart-companion-12-4',
 				selected: [ 'Track' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-12-5',
+					id: 'beastheart-companion-12-5',
 					name: 'Spore Puff',
 					description: 'The sporeling breathes a cloud of disorienting fumes.',
 					type: FactoryLogic.type.createManeuver(),
@@ -1062,7 +1276,7 @@ const sporeling = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-12-6',
+				id: 'beastheart-companion-12-6',
 				name: 'Skulker',
 				description: 'The sporeling can end their movement in an ally’s space. While occupying an ally’s space, the sporeling has cover.'
 			})
@@ -1073,21 +1287,21 @@ const sporeling = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-12-3-1',
+			id: 'beastheart-companion-12-3-1',
 			name: 'Slowing Spores',
 			description: 'Whenever the sporeling makes a strike against a creature while rampaging, the sporeling can cause the target to be slowed until the end of the target’s next turn.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-12-6-1',
+			id: 'beastheart-companion-12-6-1',
 			name: 'Plant Walk',
 			description: 'Once on each of your turns while the sporeling is rampaging, you can teleport to a space within 15 squares as a free maneuver, provided the space or an adjacent space contains the sporeling or plants or fungus of size 1S or larger. You then gain an edge on the next strike you make before the end of your turn.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-12-10-1',
+			id: 'beastheart-companion-12-10-1',
 			name: 'Trailing Mycelia',
 			description: 'While the sporeling is rampaging, you and the sporeling sprout rootlike, gripping mycelia along your limbs, and whenever you or the sporeling makes a strike against a creature who has M < [strong], the creature is grabbed by the attacker. Additionally, you and the sporeling can’t be force moved or knocked prone until the sporeling’s rampage ends.'
 		})
@@ -1096,7 +1310,7 @@ const sporeling = FactoryLogic.createSummon({
 
 const wolf = FactoryLogic.createSummon({
 	monster: FactoryLogic.createMonster({
-		id: 'beastheart-1-2a-13',
+		id: 'beastheart-companion-13',
 		name: 'Wolf',
 		level: 0,
 		role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Companion),
@@ -1110,22 +1324,22 @@ const wolf = FactoryLogic.createSummon({
 		characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 		features: [
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-13-1',
+				id: 'beastheart-companion-13-1',
 				field: FeatureField.Stamina,
 				valueFromController: FeatureField.Stamina
 			}),
 			FactoryLogic.feature.createBonus({
-				id: 'beastheart-1-2a-13-2',
+				id: 'beastheart-companion-13-2',
 				field: FeatureField.FreeStrikeDamage,
 				valueCharacteristics: [ Characteristic.Might ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
-				id: 'beastheart-1-2a-13-3',
+				id: 'beastheart-companion-13-3',
 				selected: [ 'Track' ]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'beastheart-1-2a-13-4',
+					id: 'beastheart-companion-13-4',
 					name: 'Clamping Jaws',
 					description: 'With an unnerving growl, the wolf sinks powerful teeth onto their quarry.',
 					type: FactoryLogic.type.createManeuver(),
@@ -1141,7 +1355,7 @@ const wolf = FactoryLogic.createSummon({
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'beastheart-1-2a-13-5',
+				id: 'beastheart-companion-13-5',
 				name: 'Retriever',
 				description: 'The wolf can move at full speed while they have a creature grabbed, no matter the grabbed creature’s size.'
 			})
@@ -1152,21 +1366,21 @@ const wolf = FactoryLogic.createSummon({
 	count: 1,
 	level3: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-13-3-1',
+			id: 'beastheart-companion-13-3-1',
 			name: 'My, What Big Teeth You Have',
 			description: 'Whenever the wolf makes a strike against a creature while rampaging, they can grab the target.'
 		})
 	],
 	level6: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-13-6-1',
+			id: 'beastheart-companion-13-6-1',
 			name: 'Call of the Wild',
 			description: 'While the wolf is rampaging, you and the wolf gain a +2 bonus to speed, and creatures within 5 squares can’t be hidden or have concealment from you or the wolf.'
 		})
 	],
 	level10: [
 		FactoryLogic.feature.create({
-			id: 'beastheart-1-2a-13-10-1',
+			id: 'beastheart-companion-13-10-1',
 			name: 'Dire Wolf',
 			description: 'While the wolf is rampaging, you and the wolf are surrounded by an aura of dread, and enemies who start their turn adjacent to you or the wolf who have P < [strong] are frightened until the end of their next turn.'
 		})

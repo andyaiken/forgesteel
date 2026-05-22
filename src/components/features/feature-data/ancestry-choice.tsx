@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
+import { Drawer, Select, Space } from 'antd';
 import { Feature, FeatureAncestryChoiceData } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
@@ -6,10 +6,10 @@ import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Field } from '@/components/controls/field/field';
 import { Hero } from '@/models/hero';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -73,20 +73,16 @@ export const ConfigAncestryChoice = (props: ConfigProps) => {
 			/>
 			{
 				props.data.selected ?
-					<Flex className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={props.data.selected.name}
-							value={<Markdown text={props.data.selected.description} useSpan={true} />}
-						/>
-						<Button
-							style={{ flex: '0 0 auto' }}
-							type='text'
-							title='Show details'
-							icon={<InfoCircleOutlined />}
-							onClick={() => setSelectedAncestry(props.data.selected)}
-						/>
-					</Flex>
+					<SelectionBox
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={props.data.selected.name}
+								value={<Markdown text={props.data.selected.description} useSpan={true} />}
+							/>
+						}
+						onSelect={() => setSelectedAncestry(props.data.selected)}
+					/>
 					: null
 			}
 			<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} size={500}>

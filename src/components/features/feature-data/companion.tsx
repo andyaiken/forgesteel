@@ -1,15 +1,17 @@
-import { Button, Drawer, Flex, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Feature, FeatureCompanionData } from '@/models/feature';
+import { Button, Drawer, Space } from 'antd';
+import { Feature, FeatureCompanionData, FeatureData } from '@/models/feature';
+import { ControlledMonsterCustomizePanel } from '@/components/panels/controlled-monster-customize/controlled-monster-customize-panel';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
 import { MonsterInfo } from '@/components/panels/token/token';
+import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -53,34 +55,51 @@ export const ConfigCompanion = (props: ConfigProps) => {
 		props.setData(dataCopy);
 	};
 
+	const getCustomizeContent = (monster: Monster) => {
+		const setName = (value: string) => {
+			const dataCopy = Utils.copy(props.data);
+			dataCopy.selected!.name = value;
+			props.setData(dataCopy);
+		};
+
+		const setFeatureData = (featureID: string, data: FeatureData) => {
+			const dataCopy = Utils.copy(props.data);
+			MonsterLogic.getFeatures(dataCopy.selected!)
+				.filter(f => f.id === featureID)
+				.forEach(f => f.data = data);
+			props.setData(dataCopy);
+		};
+
+		return (
+			<ControlledMonsterCustomizePanel
+				monster={monster}
+				hero={props.hero}
+				sourcebooks={props.sourcebooks}
+				onChangeName={setName}
+				onChangeFeature={setFeatureData}
+			/>
+		);
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{
 				props.data.selected ?
-					<Flex className='selection-box' align='center' gap={10}>
-						<MonsterInfo
-							style={{ flex: '1 1 0' }}
-							monster={props.data.selected}
-						/>
-						<div style={{ flex: '0 0 auto' }}>
-							<Button
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedMonster(props.data.selected)}
+					<SelectionBox
+						content={
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={props.data.selected}
 							/>
-							<Button
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = null;
-									props.setData(dataCopy);
-								}}
-							/>
-						</div>
-					</Flex>
+						}
+						customizeContent={getCustomizeContent(props.data.selected)}
+						onSelect={() => setSelectedMonster(props.data.selected)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = null;
+							props.setData(dataCopy);
+						}}
+					/>
 					:
 					<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 			}

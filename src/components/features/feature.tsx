@@ -29,6 +29,7 @@ import { EditCharacteristicBonus, InfoCharacteristicBonus } from '@/components/f
 import { EditConditionImmunity, InfoConditionImmunity } from '@/components/features/feature-data/condition-immunity';
 import { EditDamageModifier, InfoDamageModifier } from '@/components/features/feature-data/damage-modifier';
 import { EditFixture, InfoFixture } from '@/components/features/feature-data/fixture';
+import { EditForController, InfoForController } from '@/components/features/feature-data/for-controller';
 import { EditHeroicResource, InfoHeroicResource } from '@/components/features/feature-data/heroic-resource';
 import { EditHeroicResourceGain, InfoHeroicResourceGain } from '@/components/features/feature-data/heroic-resource-gain';
 import { EditLanguage, InfoLanguage } from '@/components/features/feature-data/language';
@@ -89,6 +90,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoDomainFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Fixture:
 			return <InfoFixture data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.ForController:
+			return <InfoForController data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResource:
 			return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResourceGain:
@@ -184,6 +187,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditDomainFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Fixture:
 			return <EditFixture data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.ForController:
+			return <EditForController data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResource:
 			return <EditHeroicResource data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResourceGain:

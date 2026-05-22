@@ -19,7 +19,9 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
+import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
+import { MonsterLogic } from './monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
@@ -322,6 +324,16 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
+	static getFeaturesFromControlledMonster = (monster: Monster, hero: Hero) => {
+		const features = MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.ForController)
+			.map(f => {
+				return { feature: f, source: monster.name, level: undefined };
+			});
+
+		return FeatureLogic.simplifyFeatures(features, hero);
+	};
+
 	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], hero: Hero) => {
 		const list: { feature: Feature, source: string, level: number | undefined }[] = [];
 
@@ -502,6 +514,7 @@ export class FeatureLogic {
 			FeatureType.DomainFeature,
 			FeatureType.Fixture,
 			FeatureType.Follower,
+			FeatureType.ForController,
 			FeatureType.HeroicResource,
 			FeatureType.HeroicResourceGain,
 			FeatureType.ItemChoice,
@@ -1170,6 +1183,8 @@ export class FeatureLogic {
 				return 'This feature allows you to summon a fixture.';
 			case FeatureType.Follower:
 				return 'This feature grants you a follower.';
+			case FeatureType.ForController:
+				return 'This feature applies a feature to a controlled creature\'s controller.';
 			case FeatureType.HeroicResource:
 				return 'This feature grants you a heroic (or epic) resource.';
 			case FeatureType.HeroicResourceGain:

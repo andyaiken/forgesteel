@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Drawer, Segmented, Space } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -18,6 +18,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -253,33 +254,22 @@ export const ConfigChoice = (props: ConfigProps) => {
 			</div>
 			{
 				props.data.selected.map(f => (
-					<Flex key={f.id} className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={f.name}
-							value={<Markdown text={f.description} useSpan={true} />}
-						/>
-						<Flex vertical={true}>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedFeature(f)}
+					<SelectionBox
+						key={f.id}
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={f.name}
+								value={<Markdown text={f.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = dataCopy.selected.filter(x => x.id !== f.id);
-									props.setData(dataCopy);
-								}}
-							/>
-						</Flex>
-					</Flex>
+						}
+						onSelect={() => setSelectedFeature(f)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = dataCopy.selected.filter(x => x.id !== f.id);
+							props.setData(dataCopy);
+						}}
+					/>
 				))
 			}
 			{

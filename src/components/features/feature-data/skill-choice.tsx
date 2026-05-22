@@ -1,6 +1,5 @@
 import { Button, Drawer, Flex, Select, Space } from 'antd';
 import { Feature, FeatureSkillChoiceData } from '@/models/feature';
-import { CloseOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -8,6 +7,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { SkillList } from '@/enums/skill-list';
 import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
@@ -159,34 +159,29 @@ export const ConfigSkillChoice = (props: ConfigProps) => {
 
 					const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 					return (
-						<Flex key={n} className='selection-box' align='center' justify='space-between' gap={10}>
-							<Flex vertical={true}>
-								{
-									sk ?
-										<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
-										:
-										<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
-								}
-								{
-									duplicated ?
-										<Field danger={true} label='Duplicated' value='You already have this skill.' />
-										: null
-								}
-							</Flex>
-							<Flex vertical={true}>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={() => {
-										const dataCopy = Utils.copy(props.data);
-										dataCopy.selected = dataCopy.selected.filter(s => s !== skill);
-										props.setData(dataCopy);
-									}}
-								/>
-							</Flex>
-						</Flex>
+						<SelectionBox
+							key={n}
+							content={
+								<Flex vertical={true}>
+									{
+										sk ?
+											<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
+											:
+											<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
+									}
+									{
+										duplicated ?
+											<Field danger={true} label='Duplicated' value='You already have this skill.' />
+											: null
+									}
+								</Flex>
+							}
+							onRemove={() => {
+								const dataCopy = Utils.copy(props.data);
+								dataCopy.selected = dataCopy.selected.filter(s => s !== skill);
+								props.setData(dataCopy);
+							}}
+						/>
 					);
 				})
 			}

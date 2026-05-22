@@ -23,6 +23,7 @@ import { Kit } from '@/models/kit';
 import { Language } from '@/models/language';
 import { LanguageType } from '@/enums/language-type';
 import { ModifierLogic } from '@/logic/modifier-logic';
+import { Monster } from '@/models/monster';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
@@ -158,6 +159,39 @@ export class HeroLogic {
 				}
 			});
 		}
+
+		// Get any 'for controller' features from monsters we control
+		const featuresFromControlledMonsters: { feature: Feature, source: string, level: number | undefined }[] = [];
+		features.forEach(f => {
+			const addMonster = (monster: Monster) => {
+				monster.features
+					.filter(ft => ft.type === FeatureType.ForController)
+					.forEach(ft => {
+						featuresFromControlledMonsters.push({
+							feature: ft.data.feature,
+							source: monster.name,
+							level: undefined
+						});
+					});
+			};
+
+			switch (f.feature.type) {
+				case FeatureType.Companion:
+				case FeatureType.Retainer: {
+					if (f.feature.data.selected) {
+						addMonster(f.feature.data.selected);
+					}
+					break;
+				}
+				case FeatureType.Summon:
+					f.feature.data.summons.forEach(s => addMonster(s.monster));
+					break;
+				case FeatureType.SummonChoice:
+					f.feature.data.selected.forEach(s => addMonster(s.monster));
+					break;
+			}
+		});
+		features.push(...FeatureLogic.simplifyFeatures(featuresFromControlledMonsters, hero));
 
 		return Collections
 			.sort(features, f => f.feature.name)
@@ -355,13 +389,6 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Companion)
 			.map(f => f.data.selected)
 			.filter(a => !!a)
-			.map(m => {
-				const copy = Utils.copy(m);
-				if (copy.retainer) {
-					copy.retainer.level = Math.max(copy.level, hero?.class?.level || 1);
-				}
-				return copy;
-			})
 			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
@@ -380,28 +407,21 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Retainer)
 			.map(f => f.data.selected)
 			.filter(a => !!a)
-			.map(m => {
-				const copy = Utils.copy(m);
-				if (copy.retainer) {
-					copy.retainer.level = Math.max(copy.level, hero?.class?.level || 1);
-				}
-				return copy;
-			})
 			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
 	static getSummons = (hero: Hero) => {
 		return HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
 			.flatMap(f => {
-				switch (f.type) {
+				switch (f.feature.type) {
 					case FeatureType.Summon:
-						return f.data.summons;
+						return f.feature.data.summons;
 					case FeatureType.SummonChoice:
-						return f.data.selected;
+						return f.feature.data.selected;
 				}
 				return [];
 			})
+			.filter(s => !!s)
 			.map(s => {
 				const copy = Utils.copy(s);
 				copy.info.level = hero.class?.level || 1;

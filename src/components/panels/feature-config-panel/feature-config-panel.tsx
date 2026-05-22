@@ -1,7 +1,8 @@
+import { Button, Flex } from 'antd';
+import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Feature, FeatureData } from '@/models/feature';
-import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
+import { ReactNode, useState } from 'react';
 import { AbilityLogic } from '@/logic/ability-logic';
-import { Button } from 'antd';
 import { ConfigFeature } from '@/components/features/feature';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -12,7 +13,6 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Perk } from '@/models/perk';
 import { Sourcebook } from '@/models/sourcebook';
-import { useState } from 'react';
 
 import './feature-config-panel.scss';
 
@@ -89,6 +89,48 @@ export const FeatureConfigPanel = (props: Props) => {
 					sourcebooks={props.sourcebooks}
 					setData={data => props.setData(props.feature.id, data)}
 				/>
+			</div>
+		</ErrorBoundary>
+	);
+};
+
+interface SelectionBoxProps {
+	content: ReactNode;
+	customizeContent?: ReactNode;
+	onSelect?: () => void;
+	onRemove?: () => void;
+}
+
+export const SelectionBox = (props: SelectionBoxProps) => {
+	return (
+		<ErrorBoundary>
+			<div className='selection-box'>
+				<Flex align='center' gap={10}>
+					{props.content}
+					<Flex vertical={true}>
+						{
+							props.onSelect ?
+								<Button
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={props.onSelect}
+								/>
+								: null
+						}
+						{
+							props.onRemove ?
+								<Button
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={props.onRemove}
+								/>
+								: null
+						}
+					</Flex>
+				</Flex>
+				{props.customizeContent}
 			</div>
 		</ErrorBoundary>
 	);

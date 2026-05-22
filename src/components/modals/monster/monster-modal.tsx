@@ -1,9 +1,12 @@
 import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { ControlledMonsterCustomizePanel } from '@/components/panels/controlled-monster-customize/controlled-monster-customize-panel';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { Expander } from '@/components/controls/expander/expander';
+import { FeatureData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
@@ -12,7 +15,6 @@ import { MonsterHealthPanel } from '@/components/panels/health/health-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
-import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
@@ -28,6 +30,7 @@ interface Props {
 	encounter?: Encounter;
 	summon?: SummoningInfo;
 	sourcebooks: Sourcebook[];
+	controller?: Hero;
 	onChange?: (monster: Monster) => void;
 	onClose: () => void;
 	updateMonster?: (monster: Monster) => void;
@@ -80,11 +83,21 @@ export const MonsterModal = (props: Props) => {
 	};
 
 	const getContent = () => {
-		const onChange = (name: string, desc: string) => {
+		const onChangeName = (name: string) => {
 			if (props.onChange) {
 				const copy = Utils.copy(monster);
 				copy.name = name;
-				copy.description = desc;
+				setMonster(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const onChangeFeature = (featureID: string, data: FeatureData) => {
+			if (props.onChange) {
+				const copy = Utils.copy(monster);
+				MonsterLogic.getFeatures(copy)
+					.filter(f => f.id === featureID)
+					.forEach(f => f.data = data);
 				setMonster(copy);
 				props.onChange(copy);
 			}
@@ -136,19 +149,6 @@ export const MonsterModal = (props: Props) => {
 			case 'Stat Block':
 				return (
 					<>
-						{
-							props.onChange ?
-								<div style={{ padding: '20px' }}>
-									<Expander title='Customize'>
-										<NameDescEditPanel
-											element={monster}
-											showNameGenerator={true}
-											onChange={onChange}
-										/>
-									</Expander>
-								</div>
-								: null
-						}
 						<MonsterPanel
 							monster={monster}
 							monsterGroup={props.monsterGroup}
@@ -156,6 +156,21 @@ export const MonsterModal = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}
 						/>
+						{
+							props.controller && props.onChange ?
+								<div style={{ padding: '20px' }}>
+									<Expander title='Customize'>
+										<ControlledMonsterCustomizePanel
+											monster={monster}
+											hero={props.controller}
+											sourcebooks={props.sourcebooks}
+											onChangeName={onChangeName}
+											onChangeFeature={onChangeFeature}
+										/>
+									</Expander>
+								</div>
+								: null
+						}
 					</>
 				);
 			case 'Malice':

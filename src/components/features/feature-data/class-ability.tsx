@@ -1,5 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureClassAbilityData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -15,6 +14,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -259,33 +259,22 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 						return null;
 					}
 					return (
-						<Flex key={ability.id} className='selection-box' align='center' gap={10}>
-							<Field
-								style={{ flex: '1 1 0' }}
-								label={ability.name}
-								value={<Markdown text={ability.description} useSpan={true} />}
-							/>
-							<Flex vertical={true}>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Show details'
-									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedAbility(ability)}
+						<SelectionBox
+							key={ability.id}
+							content={
+								<Field
+									style={{ flex: '1 1 0' }}
+									label={ability.name}
+									value={<Markdown text={ability.description} useSpan={true} />}
 								/>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={() => {
-										const dataCopy = Utils.copy(props.data);
-										dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
-										props.setData(dataCopy);
-									}}
-								/>
-							</Flex>
-						</Flex>
+							}
+							onSelect={() => setSelectedAbility(ability)}
+							onRemove={() => {
+								const dataCopy = Utils.copy(props.data);
+								dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
+								props.setData(dataCopy);
+							}}
+						/>
 					);
 				})
 			}

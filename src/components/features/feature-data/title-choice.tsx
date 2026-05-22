@@ -1,5 +1,4 @@
 import { Button, Drawer, Flex, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Feature, FeatureTitleChoiceData } from '@/models/feature';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -8,6 +7,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
@@ -92,38 +92,27 @@ export const ConfigTitleChoice = (props: ConfigProps) => {
 						return null;
 					}
 					return (
-						<Flex key={t.id} className='selection-box' align='center' gap={10}>
-							<Flex vertical={true} style={{ flex: '1 1 0' }}>
-								<Field
-									label={t.name}
-									value={<Markdown text={t.description} useSpan={true} />}
-								/>
-								<Field
-									label={feature.name}
-									value={<Markdown text={feature.description} useSpan={true} />}
-								/>
-							</Flex>
-							<Flex vertical={true}>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Show details'
-									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedTitle(t)}
-								/>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={() => {
-										const dataCopy = Utils.copy(props.data);
-										dataCopy.selected = dataCopy.selected.filter(x => x.id !== t.id);
-										props.setData(dataCopy);
-									}}
-								/>
-							</Flex>
-						</Flex>
+						<SelectionBox
+							key={t.id}
+							content={
+								<Flex vertical={true} style={{ flex: '1 1 0' }}>
+									<Field
+										label={t.name}
+										value={<Markdown text={t.description} useSpan={true} />}
+									/>
+									<Field
+										label={feature.name}
+										value={<Markdown text={feature.description} useSpan={true} />}
+									/>
+								</Flex>
+							}
+							onSelect={() => setSelectedTitle(t)}
+							onRemove={() => {
+								const dataCopy = Utils.copy(props.data);
+								dataCopy.selected = dataCopy.selected.filter(x => x.id !== t.id);
+								props.setData(dataCopy);
+							}}
+						/>
 					);
 				})
 			}

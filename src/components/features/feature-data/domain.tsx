@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
+import { Drawer, Select, Space } from 'antd';
 import { Feature, FeatureDomainData } from '@/models/feature';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -9,11 +9,11 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -153,20 +153,17 @@ export const ConfigDomain = (props: ConfigProps) => {
 			/>
 			{
 				props.data.selected.map(domain => (
-					<Flex key={domain.id} className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={domain.name}
-							value={<Markdown text={domain.description} useSpan={true} />}
-						/>
-						<Button
-							style={{ flex: '0 0 auto' }}
-							type='text'
-							title='Show details'
-							icon={<InfoCircleOutlined />}
-							onClick={() => setSelectedDomain(domain)}
-						/>
-					</Flex>
+					<SelectionBox
+						key={domain.id}
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={domain.name}
+								value={<Markdown text={domain.description} useSpan={true} />}
+							/>
+						}
+						onSelect={() => setSelectedDomain(domain)}
+					/>
 				))
 			}
 			<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} size={500}>

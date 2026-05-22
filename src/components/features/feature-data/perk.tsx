@@ -1,5 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeaturePerkData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
@@ -16,6 +15,7 @@ import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PerkSelectModal } from '@/components/modals/select/perk-select/perk-select-modal';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -127,33 +127,22 @@ export const ConfigPerk = (props: ConfigProps) => {
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
 				props.data.selected.map(perk => (
-					<Flex key={perk.id} className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={perk.name}
-							value={<Markdown text={perk.description} useSpan={true} />}
-						/>
-						<Flex vertical={true}>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedPerk(perk)}
+					<SelectionBox
+						key={perk.id}
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={perk.name}
+								value={<Markdown text={perk.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);
-									props.setData(dataCopy);
-								}}
-							/>
-						</Flex>
-					</Flex>
+						}
+						onSelect={() => setSelectedPerk(perk)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);
+							props.setData(dataCopy);
+						}}
+					/>
 				))
 			}
 			{

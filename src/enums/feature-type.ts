@@ -19,6 +19,7 @@ export enum FeatureType {
 	DomainFeature = 'Domain Feature',
 	Fixture = 'Fixture',
 	Follower = 'Follower',
+	ForController = 'For Controller',
 	HeroicResource = 'Heroic Resource',
 	HeroicResourceGain = 'Heroic Resource Gain',
 	ItemChoice = 'Item Choice',

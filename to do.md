@@ -1,9 +1,5 @@
 # Development Plans
 
-* Encounter customization:
-  * Include this encounter group if there are at least N heroes
-  * Modify monster stamina
-
 * Improve editors:
   * Modifier editor
 
@@ -29,6 +25,8 @@
 * Monster Builder:
   * Auto-create monsters
 * Encounter Builder:
+  * Encounter customization:
+    * Modify monster stamina
   * When an encounter has monsters with items, this should be noted in the encounter info (monster info and running encounter notes)
   * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain

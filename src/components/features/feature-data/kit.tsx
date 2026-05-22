@@ -1,5 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureKitData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
@@ -14,6 +13,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -124,33 +124,22 @@ export const ConfigKit = (props: ConfigProps) => {
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
 				props.data.selected.map(kit => (
-					<Flex key={kit.id} className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={kit.name}
-							value={<Markdown text={kit.description} useSpan={true} />}
-						/>
-						<Flex vertical={true}>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedKit(kit)}
+					<SelectionBox
+						key={kit.id}
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={kit.name}
+								value={<Markdown text={kit.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
-									props.setData(dataCopy);
-								}}
-							/>
-						</Flex>
-					</Flex>
+						}
+						onSelect={() => setSelectedKit(kit)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
+							props.setData(dataCopy);
+						}}
+					/>
 				))
 			}
 			{props.data.selected.length < props.data.count ? getAddButton() : null}

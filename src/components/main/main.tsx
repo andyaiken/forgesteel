@@ -372,6 +372,7 @@ export const Main = (props: Props) => {
 			<MonsterModal
 				monster={monster}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				controller={hero}
 				onClose={() => setDrawer(null)}
 				updateMonster={monster => {
 					const copy = Utils.copy(hero);
@@ -1472,6 +1473,7 @@ export const Main = (props: Props) => {
 				monsterGroup={monsterGroup}
 				summon={summon}
 				sourcebooks={sourcebooks}
+				controller={hero}
 				onChange={
 					hero ?
 						monster => {

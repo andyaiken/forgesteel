@@ -1,6 +1,5 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
+import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureLanguageChoiceData } from '@/models/feature';
-import { CloseOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -8,6 +7,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { LanguageSelectModal } from '@/components/modals/select/language-select/language-select-modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -130,27 +130,20 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 				props.data.selected.map((language, n) => {
 					const lang = SourcebookLogic.getLanguage(language, props.sourcebooks!);
 					return (
-						<Flex key={n} className='selection-box' align='center' gap={10}>
-							{
+						<SelectionBox
+							key={n}
+							content={
 								lang ?
 									<Field label={lang.name} value={lang.description} style={{ flex: '1 1 0' }} />
 									:
 									<div className='ds-text' style={{ flex: '1 1 0' }}>{language}</div>
 							}
-							<Flex vertical={true}>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={() => {
-										const dataCopy = Utils.copy(props.data);
-										dataCopy.selected = dataCopy.selected.filter(l => l !== language);
-										props.setData(dataCopy);
-									}}
-								/>
-							</Flex>
-						</Flex>
+							onRemove={() => {
+								const dataCopy = Utils.copy(props.data);
+								dataCopy.selected = dataCopy.selected.filter(l => l !== language);
+								props.setData(dataCopy);
+							}}
+						/>
 					);
 				})
 			}

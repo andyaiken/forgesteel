@@ -161,6 +161,11 @@ export interface FeatureFollowerData extends _FeatureData {
 };
 export type FeatureFollower = FeatureOf<FeatureType.Follower, FeatureFollowerData>;
 
+export interface FeatureForControllerData extends _FeatureData {
+	feature: Feature;
+};
+export type FeatureForController = FeatureOf<FeatureType.ForController, FeatureForControllerData>;
+
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
 	gains: { tag: string, trigger: string, value: string }[];
@@ -355,6 +360,7 @@ export type Feature =
 	| FeatureDomainFeature
 	| FeatureFixture
 	| FeatureFollower
+	| FeatureForController
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain
 	| FeatureItemChoice

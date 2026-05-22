@@ -1,5 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureItemChoiceData } from '@/models/feature';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
@@ -12,6 +11,7 @@ import { ItemType } from '@/enums/item-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -104,49 +104,36 @@ export const ConfigItemChoice = (props: ConfigProps) => {
 	const [ itemSelectorOpen, setItemSelectorOpen ] = useState<boolean>(false);
 	const [ selectedItem, setSelectedItem ] = useState<Item | null>(null);
 
-	const getAddButton = () => {
-		return (
-			<Button className='status-warning' block={true} onClick={() => setItemSelectorOpen(true)}>
-				Choose an item
-			</Button>
-		);
-	};
-
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
 				props.data.selected.map(item => (
-					<Flex key={item.id} className='selection-box' align='center' gap={10}>
-						<Field
-							style={{ flex: '1 1 0' }}
-							label={item.name}
-							value={<Markdown text={item.description} useSpan={true} />}
-						/>
-						<Flex vertical={true}>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedItem(item)}
+					<SelectionBox
+						key={item.id}
+						content={
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={item.name}
+								value={<Markdown text={item.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Remove'
-								icon={<CloseOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(props.data);
-									dataCopy.selected = dataCopy.selected.filter(i => i.id !== item.id);
-									props.setData(dataCopy);
-								}}
-							/>
-						</Flex>
-					</Flex>
+						}
+						onSelect={() => setSelectedItem(item)}
+						onRemove={() => {
+							const dataCopy = Utils.copy(props.data);
+							dataCopy.selected = dataCopy.selected.filter(i => i.id !== item.id);
+							props.setData(dataCopy);
+						}}
+					/>
 				))
 			}
-			{props.data.selected.length < props.data.count ? getAddButton() : null}
+			{
+				props.data.selected.length < props.data.count ?
+					<Button className='status-warning' block={true} onClick={() => setItemSelectorOpen(true)}>
+						Choose an item
+					</Button>
+					: null
+			}
 			<Drawer open={itemSelectorOpen} onClose={() => setItemSelectorOpen(false)} closeIcon={null} size={500}>
 				<ItemSelectModal
 					types={props.data.types}

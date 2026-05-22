@@ -1,14 +1,13 @@
-import { Button, Divider, Drawer, Flex, Space } from 'antd';
+import { Button, Divider, Drawer, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
+import { FeatureConfigPanel, SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { ReactNode, useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 import { Culture } from '@/models/culture';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
 import { CultureType } from '@/enums/culture-type';
 import { Element } from '@/models/element';
 import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureSelectModal } from '@/components/modals/select/feature-select/feature-select-modal';
@@ -116,22 +115,16 @@ export const CultureSection = (props: CultureSectionProps) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.hero.culture.environment ?
-								<Flex className='selection-box' align='center' gap={10}>
-									<Field
-										style={{ flex: '1 1 0' }}
-										label={props.hero.culture.environment.name}
-										value={<Markdown text={props.hero.culture.environment.description} useSpan={true} />}
-									/>
-									<Flex vertical={true}>
-										<Button
-											style={{ flex: '0 0 auto' }}
-											type='text'
-											title='Remove'
-											icon={<CloseOutlined />}
-											onClick={() => props.selectEnvironment(null)}
+								<SelectionBox
+									content={
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.environment.name}
+											value={<Markdown text={props.hero.culture.environment.description} useSpan={true} />}
 										/>
-									</Flex>
-								</Flex>
+									}
+									onRemove={() => props.selectEnvironment(null)}
+								/>
 								:
 								<Button block={true} className='status-warning' onClick={() => setShowEnvironment(true)}>
 									Choose environment
@@ -139,22 +132,16 @@ export const CultureSection = (props: CultureSectionProps) => {
 						}
 						{
 							props.hero.culture.organization ?
-								<Flex className='selection-box' align='center' gap={10}>
-									<Field
-										style={{ flex: '1 1 0' }}
-										label={props.hero.culture.organization.name}
-										value={<Markdown text={props.hero.culture.organization.description} useSpan={true} />}
-									/>
-									<Flex vertical={true}>
-										<Button
-											style={{ flex: '0 0 auto' }}
-											type='text'
-											title='Remove'
-											icon={<CloseOutlined />}
-											onClick={() => props.selectOrganization(null)}
+								<SelectionBox
+									content={
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.organization.name}
+											value={<Markdown text={props.hero.culture.organization.description} useSpan={true} />}
 										/>
-									</Flex>
-								</Flex>
+									}
+									onRemove={() => props.selectOrganization(null)}
+								/>
 								:
 								<Button block={true} className='status-warning' onClick={() => setShowOrganization(true)}>
 									Choose organization
@@ -162,22 +149,16 @@ export const CultureSection = (props: CultureSectionProps) => {
 						}
 						{
 							props.hero.culture.upbringing ?
-								<Flex className='selection-box' align='center' gap={10}>
-									<Field
-										style={{ flex: '1 1 0' }}
-										label={props.hero.culture.upbringing.name}
-										value={<Markdown text={props.hero.culture.upbringing.description} useSpan={true} />}
-									/>
-									<Flex vertical={true}>
-										<Button
-											style={{ flex: '0 0 auto' }}
-											type='text'
-											title='Remove'
-											icon={<CloseOutlined />}
-											onClick={() => props.selectUpbringing(null)}
+								<SelectionBox
+									content={
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.upbringing.name}
+											value={<Markdown text={props.hero.culture.upbringing.description} useSpan={true} />}
 										/>
-									</Flex>
-								</Flex>
+									}
+									onRemove={() => props.selectUpbringing(null)}
+								/>
 								:
 								<Button block={true} className='status-warning' onClick={() => setShowUpbringing(true)}>
 									Choose upbringing

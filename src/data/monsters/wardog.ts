@@ -2269,7 +2269,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Siegeworks',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 5, within: 10 }) ],
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The geomancer raises a wall of stone set with viewing gaps. Creatures have line of effect through the wall while adjacent to it.')

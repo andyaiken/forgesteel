@@ -29,7 +29,7 @@ export const EncounterSheetPage = (props: Props) => {
 	);
 
 	const getMonsterCards = () => {
-		const layout = SheetLayout.getFollowerCardsLayout(options, true);
+		const layout = SheetLayout.getMonsterCardsLayout(options);
 
 		const requiredCards: FillerCard[] = [];
 
@@ -97,7 +97,7 @@ export const EncounterSheetPage = (props: Props) => {
 
 		requiredCards.sort((a, b) => a.height - b.height);
 
-		return SheetLayout.getMonsterCardPages(requiredCards, encounter, layout, 'monsters');
+		return SheetLayout.getMonsterCardPages(requiredCards, layout, `encounter-${encounter.id}-page-monsters`);
 	};
 
 	const sheetClasses = useMemo(

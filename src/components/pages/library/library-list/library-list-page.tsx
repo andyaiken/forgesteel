@@ -210,10 +210,11 @@ export const LibraryListPage = (props: Props) => {
 
 	const getElementPanel = () => {
 		let getPanel: (element: Element) => ReactNode = () => null;
+		const cat = ((category === 'monster-group') && showMonsters) ? 'monster' : category;
 
 		if (view === 'classic') {
 			getPanel = (element: Element) => {
-				switch (category) {
+				switch (cat) {
 					case 'encounter':
 						return (
 							<div style={{ padding: '20px', overflow: 'auto' }}>
@@ -240,11 +241,13 @@ export const LibraryListPage = (props: Props) => {
 							</div>
 						);
 					case 'terrain':
+					case 'monster':
+					case 'monster-group':
 						return (
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<LibraryItemSheetPage
-									category={category}
-									terrain={element as Terrain}
+									category={cat}
+									item={element}
 								/>
 							</div>
 						);
@@ -645,6 +648,8 @@ export const LibraryListPage = (props: Props) => {
 				case 'montage':
 				case 'negotiation':
 				case 'terrain':
+				case 'monster':
+				case 'monster-group':
 					canExportAsImage = false;
 					canExportAsPDF = true;
 					break;
@@ -797,10 +802,6 @@ export const LibraryListPage = (props: Props) => {
 			return null;
 		}
 
-		if ((category === 'monster-group') && showMonsters) {
-			return null;
-		}
-
 		switch (category) {
 			case 'adventure':
 			case 'tactical-map':
@@ -809,6 +810,7 @@ export const LibraryListPage = (props: Props) => {
 			case 'montage':
 			case 'negotiation':
 			case 'terrain':
+			case 'monster-group':
 				return (
 					<ViewSelector
 						mode='classic'

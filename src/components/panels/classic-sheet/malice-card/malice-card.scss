@@ -25,6 +25,10 @@
             border-radius: 6px 6px 0 0;
         }
 
+        .wrapper {
+            break-inside: avoid;
+        }
+
         .feature {
             .power-roll {
                 .header {
@@ -32,6 +36,16 @@
                     margin-left: 0;
                 }
             }
+        }
+    }
+}
+
+main#classic-sheet .library-item-sheet .malice.card {
+    .malice-features .wrapper:not(:last-of-type) {
+        @include common.divider-plain(common.$color-medium, 1px);
+
+        .feature-description {
+            margin-bottom: 5px;
         }
     }
 }

@@ -36,11 +36,7 @@ main#classic-sheet {
         display: none;
     }
 
-    .hero-sheet,
-    .encounter-sheet,
-    .montage-sheet,
-    .negotiation-sheet,
-    .library-item-sheet {
+    :is(.hero-sheet, .encounter-sheet, .montage-sheet, .negotiation-sheet, .library-item-sheet) {
         height: 100%;
         font-size: 14px;
         padding: 5px;
@@ -439,14 +435,18 @@ main#classic-sheet {
     @mixin color-ability-card($color) {
         .bordered {
             @include borders.beveled(10px, 2px, $color);
+            @include color-ability($color);
 
-            h3,
-            .action-type {
-                color: $color;
-            }
             h3 {
                 font-weight: 450;
             }
+        }
+    }
+
+    @mixin color-ability($color) {
+        h3,
+        .action-type {
+            color: $color;
         }
     }
 
@@ -503,6 +503,26 @@ main#classic-sheet {
                     h2 {
                         @include dividers.fancy-3($move);
                     }
+                }
+            }
+
+            &:is(.encounter-sheet, .library-item-sheet) .ability {
+                &.main-action {
+                    @include color-ability($main-action);
+                }
+                &.maneuver,
+                &.free-maneuver {
+                    @include color-ability($maneuver);
+                }
+                &.triggered-action,
+                &.free-triggered-action {
+                    @include color-ability($triggered-action);
+                }
+                &.performance {
+                    @include color-ability($performance);
+                }
+                &.move-action {
+                    @include color-ability($move);
                 }
             }
 

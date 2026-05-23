@@ -45,11 +45,7 @@
         center center;
 }
 
-
-main#classic-sheet .encounter-sheet .monster,
-main#classic-sheet .hero-sheet .monster,
-main#classic-sheet .encounter-sheet .terrain.card,
-main#classic-sheet .library-item-sheet .terrain.card {
+main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.monster.card, .terrain.card) {
     padding: 10px;
     display: grid;
     justify-self: stretch;
@@ -83,6 +79,7 @@ main#classic-sheet .library-item-sheet .terrain.card {
 
                 .name-wrapper {
                     @include monster-header-gradient-half(common.$color-general-monster);
+                    column-span: all;
                 }
             }
         }
@@ -296,6 +293,7 @@ main#classic-sheet .library-item-sheet .terrain.card {
         grid-template-columns: min-content 1fr;
         grid-template-rows: min-content 1fr;
         margin-top: 5px;
+        break-inside: avoid;
 
         .ability {
             margin-bottom: 10px;
@@ -338,8 +336,7 @@ main#classic-sheet .encounter-sheet .terrain.card {
     }
 }
 
-main#classic-sheet .color .monster.card,
-main#classic-sheet .color .terrain.card {
+main#classic-sheet .color :is(.monster.card, .terrain.card) {
     &.ambusher {
         section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-ambusher);

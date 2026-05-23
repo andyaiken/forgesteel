@@ -494,7 +494,7 @@ export const snareTrap: Terrain = {
 					id: 'effect',
 					name: 'Effect',
 					description:
-            'A triggering creature or object ends their movement and is targeted by the *Snare* ability.'
+            'A triggering creature or object ends their movement and is targeted by the **Snare** ability.'
 				})
 			]
 		},

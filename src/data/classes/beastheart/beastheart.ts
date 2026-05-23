@@ -1571,7 +1571,12 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 | 24 (lvl 10) | When your companion increases their size, they can increase it up to size 3, or increase their size by 1 if their original size is already 3 or larger. Whenever they make a power roll while their size is increased this way, they can roll 3d10 and discard the lowest roll.    |`
 				}),
 				FactoryLogic.feature.createKitChoice({
-					id: 'beastheart-1-5'
+					id: 'beastheart-1-5',
+					description: `
+You and your companion both gain the benefits of the kit, with the following exceptions:
+
+* Only you can use the kit’s signature ability, not your companion.
+* Your companion is always armed to the teeth. When choosing or changing a kit, your companion can choose between the melee damage bonus provided by the kit (if any) or a melee damage bonus of +0/+0/+4.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'beastheart-1-6',

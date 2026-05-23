@@ -147,9 +147,11 @@ export class MonsterLogic {
 	static getFeatures = (monster: Monster) => {
 		const features = [ ...monster.features ];
 
+		const monsterLevel = MonsterLogic.getMonsterLevel(monster);
+
 		if (monster.retainer) {
 			monster.retainer.featuresByLevel
-				.filter(lvl => lvl.level <= MonsterLogic.getMonsterLevel(monster))
+				.filter(lvl => lvl.level <= monsterLevel)
 				.forEach(lvl => {
 					if (lvl.feature) {
 						switch (lvl.feature.type) {
@@ -165,6 +167,72 @@ export class MonsterLogic {
 						}
 					}
 				});
+		}
+
+		if (monster.role.organization === MonsterOrganizationType.Companion) {
+			features.push(FactoryLogic.feature.create({
+				id: 'companion-kit',
+				name: 'Kit',
+				description: `
+Your companion gains all the benefits of your kit, with the following exceptions:
+
+* Your companion cannot use the kit’s signature ability.
+* Your companion can choose between the melee damage bonus provided by the kit (if any) or a melee damage bonus of +0/+0/+4.`
+			}));
+
+			if (monsterLevel >= 4) {
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-might-4',
+					characteristic: Characteristic.Might,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-intuition-4',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}));
+			}
+
+			if (monsterLevel >= 7) {
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-might-7',
+					characteristic: Characteristic.Might,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-agility-7',
+					characteristic: Characteristic.Agility,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-reason-7',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-intuition-7',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-presence-7',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}));
+			}
+
+			if (monsterLevel >= 10) {
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-might-10',
+					characteristic: Characteristic.Might,
+					value: 1
+				}));
+				features.push(FactoryLogic.feature.createCharacteristicBonus({
+					id: 'companion-intuition-10',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}));
+			}
 		}
 
 		return features;

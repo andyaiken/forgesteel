@@ -25,7 +25,7 @@ describe('isCompanion', () => {
 	test('returns true for Beastheart Companions', () => {
 		const companions = beastheart.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
-		const bear = companions.data.options.find(o => o.id === 'beastheart-1-2a-2') as Summon;
+		const bear = companions.data.options.find(o => o.id === 'beastheart-companion-2') as Summon;
 		expect(CreatureLogic.isCompanion(bear)).toBe(true);
 	});
 

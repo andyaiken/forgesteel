@@ -214,7 +214,7 @@ describe('buildHeroSheet', () => {
 
 		expect(result).toBeDefined();
 		expect(result).not.toBeNullable();
-		expect(result.followers.length).toBe(4);
+		expect(result.followers.length).toBe(3);
 		expect(result.summons.length).toBe(2);
 	});
 });

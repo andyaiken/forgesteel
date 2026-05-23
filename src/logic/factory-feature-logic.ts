@@ -313,8 +313,8 @@ export class FactoryFeatureLogic {
 
 	createForController = (data: { feature: Feature }): FeatureForController => {
 		return {
-			id: data.feature.id,
-			name: data.feature.name || 'For Controller',
+			id: `${data.feature.id}-controller`,
+			name: `${data.feature.name} (for controller)`,
 			description: data.feature.description || '',
 			type: FeatureType.ForController,
 			data: {

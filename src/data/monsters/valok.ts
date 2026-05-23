@@ -311,7 +311,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 5 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each enemy and the object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target must make either an **Agility test** or an **Intuition test**.'),
@@ -373,7 +373,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						name: 'Build Wall',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 6, value2: 3 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 6, within: 3 }) ],
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The builder creates a concrete wall. They can also remove any unoccupied squares of wet concrete within 3 squares of them, creating two additional squares of wall for each square of concrete removed.')
@@ -461,7 +461,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 1 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 1 }) ],
 						target: 'Each enemy and the object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**.'),

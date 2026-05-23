@@ -1179,9 +1179,9 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '2 damage',
-								tier2: '4 damage; push 1',
-								tier3: '6 damage; push 3'
+								tier1: '7 damage',
+								tier2: '9 damage',
+								tier3: '11 damage; A<3 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('This ability ignores cover and concealment. The arachnite chooses one of the following damage types when making the strike: acid, cold, fire, lightning, poison, psychic, or sonic.'),
 							FactoryLogic.createAbilitySectionSpend({
@@ -1197,7 +1197,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Web Vial',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The area is difficult terrain until the end of the encounter.')
@@ -1956,7 +1956,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each creature or object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -2022,7 +2022,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 12 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 12 }) ],
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the ballistite’s next turn, the area is difficult terrain, and any ranged ability targeting an enemy in the area deals an extra 8 damage.')
@@ -2182,7 +2182,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 1 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 1, within: 1 }) ],
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -2269,7 +2269,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Siegeworks',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 5, within: 10 }) ],
 						target: 'Special',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The geomancer raises a wall of stone set with viewing gaps. Creatures have line of effect through the wall while adjacent to it.')
@@ -2384,7 +2384,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Hard Light Field',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'Each ally in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Until the start of the prismite’s next turn, each target has cover and gains a +2 bonus to stability.')
@@ -2457,7 +2457,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'Each war dog in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed and can make a free strike that deals an extra 5 lightning damage.')
@@ -2905,7 +2905,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 15 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 15 }) ],
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -2924,7 +2924,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Portal to the Void',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, value2: 15 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 15 }) ],
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -3006,7 +3006,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

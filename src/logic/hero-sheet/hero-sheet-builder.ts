@@ -73,7 +73,7 @@ export class HeroSheetBuilder {
 
 		const inventory = hero.state.inventory.concat(featureItems);
 		sheet.inventory = inventory.map(item => ClassicSheetBuilder.buildItemSheet(item, hero, options));
-		coveredFeatureIds.push(...inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero).map(f => f.feature).map(f => f.id) || []));
+		coveredFeatureIds.push(...inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero.class?.level || 1).map(f => f.feature).map(f => f.id) || []));
 
 		// #region Class
 		if (hero.class) {
@@ -207,7 +207,7 @@ export class HeroSheetBuilder {
 		// #region Class Features
 		if (hero.class) {
 			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
-			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
+			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero.class.level || 1)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.map(f => {
 					f.feature = SheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
@@ -318,7 +318,7 @@ export class HeroSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
+			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero.class?.level || 1).map(f => f.feature);
 			sheet.culture = hero.culture;
 			coveredFeatureIds.push(...cultureFeatures.map(f => f.id));
 		}
@@ -331,7 +331,7 @@ export class HeroSheetBuilder {
 		// #region Ancestry + Perks (combined)
 		const combinedAncestryPerks: { feature: Feature, source: string }[] = [];
 		if (hero.ancestry) {
-			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
+			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero.class?.level || 1);
 			combinedAncestryPerks.push(...ancestryFeatures
 				.filter(f => ClassicSheetLogic.includeFeature(f.feature, options))
 				.filter(f => f.feature.type !== FeatureType.Choice)

@@ -152,21 +152,7 @@ export class MonsterLogic {
 		if (monster.retainer) {
 			monster.retainer.featuresByLevel
 				.filter(lvl => lvl.level <= monsterLevel)
-				.forEach(lvl => {
-					if (lvl.feature) {
-						switch (lvl.feature.type) {
-							case FeatureType.Choice:
-								features.push(...lvl.feature.data.selected);
-								break;
-							case FeatureType.Multiple:
-								features.push(...lvl.feature.data.features);
-								break;
-							default:
-								features.push(lvl.feature);
-								break;
-						}
-					}
-				});
+				.forEach(lvl => features.push(lvl.feature));
 		}
 
 		if (monster.role.organization === MonsterOrganizationType.Companion) {
@@ -235,7 +221,10 @@ Your companion gains all the benefits of your kit, with the following exceptions
 			}
 		}
 
-		return features;
+		const simplified = FeatureLogic.simplifyFeatures(features.map(f => ({ feature: f, source: '', level: undefined })), monsterLevel).map(f => f.feature);
+
+		const toAdd = features.filter(f => !simplified.map(sf => sf.id).includes(f.id));
+		return [ ...simplified, ...toAdd ];
 	};
 
 	static matches = (monster: Monster, filter: MonsterFilter) => {

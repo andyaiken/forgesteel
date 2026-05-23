@@ -1,5 +1,6 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
 import { Alert, Button, Flex, Space, Tag } from 'antd';
+import { CSSProperties, useState } from 'react';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
@@ -21,7 +22,6 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
-import { useState } from 'react';
 
 import './ability-panel.scss';
 
@@ -35,6 +35,7 @@ interface Props {
 	highlightTier?: number;
 	odds?: number[];
 	mode?: PanelMode;
+	style?: CSSProperties;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -276,7 +277,7 @@ export const AbilityPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<ErrorBoundary>
-				<div className='ability-panel compact'>
+				<div className='ability-panel compact' style={props.style}>
 					<HeaderText
 						ribbon={getRibbon()}
 						tags={props.tags}
@@ -291,7 +292,7 @@ export const AbilityPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='ability-panel' id={SheetFormatter.getPageId('ability', props.ability.id)}>
+			<div className='ability-panel' id={SheetFormatter.getPageId('ability', props.ability.id)} style={props.style}>
 				<Space orientation='vertical' style={{ marginTop: '15px', width: '100%' }}>
 					{
 						getWarnings().map((warn, n) => (

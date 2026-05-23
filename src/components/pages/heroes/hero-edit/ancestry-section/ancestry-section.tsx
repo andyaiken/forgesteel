@@ -46,7 +46,7 @@ export const AncestrySection = (props: Props) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.ancestry) {
-		choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry, props.hero)
+		choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry, props.hero.class?.level || 1)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (

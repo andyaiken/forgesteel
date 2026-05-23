@@ -158,7 +158,7 @@ export const MonsterModal = (props: Props) => {
 						/>
 						{
 							props.controller && props.onChange ?
-								<div style={{ padding: '20px' }}>
+								<div style={{ padding: '0 20px 20px 20px' }}>
 									<Expander title='Customize'>
 										<ControlledMonsterCustomizePanel
 											monster={monster}

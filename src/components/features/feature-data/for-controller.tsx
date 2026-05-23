@@ -1,7 +1,7 @@
 import { Feature, FeatureForControllerData } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
+import { InfoFeature } from '../feature';
 import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
@@ -16,7 +16,7 @@ interface InfoProps {
 
 export const InfoForController = (props: InfoProps) => {
 	return (
-		<FeaturePanel feature={props.data.feature} hero={props.hero} sourcebooks={props.sourcebooks} />
+		<InfoFeature feature={props.data.feature} />
 	);
 };
 

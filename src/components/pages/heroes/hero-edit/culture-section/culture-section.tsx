@@ -86,7 +86,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.culture) {
-		choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture, props.hero)
+		choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture, props.hero.class?.level || 1)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (

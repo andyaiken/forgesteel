@@ -98,6 +98,7 @@ export const FeaturePanel = (props: Props) => {
 				repeatable={props.repeatable}
 				mode={PanelMode.Full}
 				tags={getTags()}
+				style={props.style}
 			/>
 		);
 	}

@@ -177,7 +177,7 @@ export const ClassSection = (props: Props) => {
 	if (props.hero.class) {
 		choicesByLevel.push(getClassOptions(props.hero.class));
 
-		const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero);
+		const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero.class?.level || 1);
 
 		for (let level = 1; level <= 10; ++level) {
 			const featuresForLevel = features.filter(f => f.level === level).map(f => f.feature);

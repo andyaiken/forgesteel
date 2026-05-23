@@ -29,15 +29,15 @@ import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
 export class FeatureLogic {
-	static getFeaturesFromAncestry = (ancestry: Ancestry, hero: Hero) => {
+	static getFeaturesFromAncestry = (ancestry: Ancestry, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...ancestry.features.map(f => ({ feature: f, source: ancestry.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
+	static getFeaturesFromCulture = (culture: Culture, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push({
@@ -66,18 +66,18 @@ export class FeatureLogic {
 			level: undefined
 		});
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromCareer = (career: Career, hero: Hero) => {
+	static getFeaturesFromCareer = (career: Career, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...career.features.map(f => ({ feature: f, source: career.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromClass = (heroClass: HeroClass, hero: Hero) => {
+	static getFeaturesFromClass = (heroClass: HeroClass, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const classLevel = heroClass.level;
@@ -98,23 +98,23 @@ export class FeatureLogic {
 				});
 			});
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromComplication = (complication: Complication, hero: Hero) => {
+	static getFeaturesFromComplication = (complication: Complication, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...complication.features.map(f => ({ feature: f, source: complication.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromTitle = (title: Title, hero: Hero) => {
+	static getFeaturesFromTitle = (title: Title, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...title.features.filter(f => f.id === title.selectedFeatureID).map(f => ({ feature: f, source: title.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
 	static getFeaturesFromCustomization = (hero: Hero) => {
@@ -134,10 +134,11 @@ export class FeatureLogic {
 			return ({ feature: f, source: source, level: undefined });
 		}));
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		const heroLevel = hero.class?.level || 1;
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromItem = (item: Item, hero: Hero) => {
+	static getFeaturesFromItem = (item: Item, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const ft = FactoryLogic.feature.create({
@@ -147,7 +148,6 @@ export class FeatureLogic {
 		});
 		features.push({ feature: ft, source: item.name, level: undefined });
 
-		const heroLevel = hero.class?.level || 1;
 		item.featuresByLevel
 			.filter(lvl => lvl.level <= heroLevel)
 			.forEach(lvl => {
@@ -321,20 +321,20 @@ export class FeatureLogic {
 			}
 		}
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static getFeaturesFromControlledMonster = (monster: Monster, hero: Hero) => {
+	static getFeaturesFromControlledMonster = (monster: Monster, heroLevel: number) => {
 		const features = MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.ForController)
 			.map(f => {
 				return { feature: f, source: monster.name, level: undefined };
 			});
 
-		return FeatureLogic.simplifyFeatures(features, hero);
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};
 
-	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], hero: Hero) => {
+	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], heroLevel: number) => {
 		const list: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const addFeature = (feature: Feature, source: string, level: number | undefined) => {
@@ -364,7 +364,7 @@ export class FeatureLogic {
 					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.ItemChoice:
-					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, hero).forEach(f => addFeature(f.feature, f.source, level)));
+					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, heroLevel).forEach(f => addFeature(f.feature, f.source, level)));
 					break;
 				case FeatureType.Kit:
 					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name, undefined)));

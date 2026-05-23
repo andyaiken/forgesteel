@@ -63,7 +63,7 @@ export const ComplicationSection = (props: Props) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.complication) {
-		choices = FeatureLogic.getFeaturesFromComplication(props.hero.complication, props.hero)
+		choices = FeatureLogic.getFeaturesFromComplication(props.hero.complication, props.hero.class?.level || 1)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (

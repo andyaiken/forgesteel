@@ -405,7 +405,7 @@ export class ClassicSheetBuilder {
 
 	// #region Item Sheet
 	static buildItemSheet = (item: Item, hero: Hero, options: Options): ItemSheet => {
-		const features = FeatureLogic.getFeaturesFromItem(item, hero)
+		const features = FeatureLogic.getFeaturesFromItem(item, hero.class?.level || 1)
 			.map(f => f.feature)
 			.filter(f => ClassicSheetLogic.includeFeature(f, options));
 		// console.log(features);

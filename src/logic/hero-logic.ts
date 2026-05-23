@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureClassAbility, FeatureForController, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
 import { Hero, HeroOverview } from '@/models/hero';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
@@ -46,10 +46,11 @@ export class HeroLogic {
 
 	static getFeatures = (hero: Hero, includeCustomizations = true) => {
 		let features: { feature: Feature, source: string, level: number | undefined }[] = [];
+		const heroLevel = hero.class?.level || 1;
 
 		if (hero.ancestry) {
 			try {
-				const list = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
+				const list = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error('Error in ancestry features');
@@ -59,7 +60,7 @@ export class HeroLogic {
 
 		if (hero.culture) {
 			try {
-				const list = FeatureLogic.getFeaturesFromCulture(hero.culture, hero);
+				const list = FeatureLogic.getFeaturesFromCulture(hero.culture, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error('Error in culture features');
@@ -69,7 +70,7 @@ export class HeroLogic {
 
 		if (hero.career) {
 			try {
-				const list = FeatureLogic.getFeaturesFromCareer(hero.career, hero);
+				const list = FeatureLogic.getFeaturesFromCareer(hero.career, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error('Error in career features');
@@ -79,7 +80,7 @@ export class HeroLogic {
 
 		if (hero.class) {
 			try {
-				const list = FeatureLogic.getFeaturesFromClass(hero.class, hero);
+				const list = FeatureLogic.getFeaturesFromClass(hero.class, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error('Error in class features');
@@ -89,7 +90,7 @@ export class HeroLogic {
 
 		if (hero.complication) {
 			try {
-				const list = FeatureLogic.getFeaturesFromComplication(hero.complication, hero);
+				const list = FeatureLogic.getFeaturesFromComplication(hero.complication, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error('Error in complication features');
@@ -109,7 +110,7 @@ export class HeroLogic {
 
 		hero.state.titles.forEach(title => {
 			try {
-				const list = FeatureLogic.getFeaturesFromTitle(title, hero);
+				const list = FeatureLogic.getFeaturesFromTitle(title, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error(`Error in title features: ${title.name}`);
@@ -119,7 +120,7 @@ export class HeroLogic {
 
 		hero.state.inventory.forEach(item => {
 			try {
-				const list = FeatureLogic.getFeaturesFromItem(item, hero);
+				const list = FeatureLogic.getFeaturesFromItem(item, heroLevel);
 				features.push(...list);
 			} catch (ex) {
 				console.error(`Error in item features: ${item.name}`);
@@ -146,11 +147,11 @@ export class HeroLogic {
 					if (value) {
 						const option = optionsFeature.data.options.find(o => o.value === value);
 						if (option) {
-							const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], hero);
+							const simplified = FeatureLogic.simplifyFeatures([ { feature: option.feature, source: f.source, level: f.level } ], heroLevel);
 							features.push(...simplified);
 						}
 					} else if (optionsFeature.data.defaultOption) {
-						const simplified = FeatureLogic.simplifyFeatures([ { feature: optionsFeature.data.defaultOption, source: f.source, level: f.level } ], hero);
+						const simplified = FeatureLogic.simplifyFeatures([ { feature: optionsFeature.data.defaultOption, source: f.source, level: f.level } ], heroLevel);
 						features.push(...simplified);
 					}
 				} catch (ex) {
@@ -164,11 +165,13 @@ export class HeroLogic {
 		const featuresFromControlledMonsters: { feature: Feature, source: string, level: number | undefined }[] = [];
 		features.forEach(f => {
 			const addMonster = (monster: Monster) => {
-				monster.features
-					.filter(ft => ft.type === FeatureType.ForController)
+				const monsterFeatures = monster.features.map(f => ({ feature: f, source: monster.name, level: undefined }));
+				const simplified = FeatureLogic.simplifyFeatures(monsterFeatures, heroLevel);
+				simplified
+					.filter(ft => ft.feature.type === FeatureType.ForController)
 					.forEach(ft => {
 						featuresFromControlledMonsters.push({
-							feature: ft.data.feature,
+							feature: (ft.feature as FeatureForController).data.feature,
 							source: monster.name,
 							level: undefined
 						});
@@ -191,7 +194,7 @@ export class HeroLogic {
 					break;
 			}
 		});
-		features.push(...FeatureLogic.simplifyFeatures(featuresFromControlledMonsters, hero));
+		features.push(...featuresFromControlledMonsters);
 
 		return Collections
 			.sort(features, f => f.feature.name)

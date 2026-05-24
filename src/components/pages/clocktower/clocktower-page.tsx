@@ -2,8 +2,8 @@ import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-foot
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ClocktowerData } from '@/data/clocktower-data';
 import { ClocktowerScriptPanel } from '@/components/pages/clocktower/clocktower-script-panel/clocktower-script-panel';
-import { Divider } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Tabs } from 'antd';
 
 import './clocktower-page.scss';
 
@@ -29,9 +29,24 @@ export const ClocktowerPage = (props: Props) => {
 					<img className='image' src={shield5} />
 				</AppHeader>
 				<div className='clocktower-page-content'>
-					<ClocktowerScriptPanel script={ClocktowerData.standard} />
-					<Divider />
-					<ClocktowerScriptPanel script={ClocktowerData.teensy} />
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Full Script',
+								children: (
+									<ClocktowerScriptPanel script={ClocktowerData.standard} />
+								)
+							},
+							{
+								key: '2',
+								label: 'Teensyville',
+								children: (
+									<ClocktowerScriptPanel script={ClocktowerData.teensy} />
+								)
+							}
+						]}
+					/>
 				</div>
 				<AppFooter
 					page='welcome'

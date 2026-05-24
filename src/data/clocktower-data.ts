@@ -12,7 +12,7 @@ const agent: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'If you pretend to be enough people, eventually someone will tell the truth.',
-		ability: 'Each day, publicly claim a new role. That night, ask the Storyteller a yes/no question; if that role is in play, they will answer truthfully.',
+		ability: 'Each day, publicly claim a new role (not Agent). That night, ask the Storyteller a yes/no question; if that role is in play, they will answer truthfully.',
 		otherNightReminder: 'Ask a question.',
 		reminders: [
 			'True info',
@@ -34,14 +34,14 @@ const censor: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
-		ability: 'Each night*, choose a player; if they are not on your team, they cannot use their ability tonight.',
+		ability: 'Each night*, choose a player; if they are not on your team, they are drunk tonight.',
 		otherNightReminder: 'Choose a player to judge.',
 		reminders: [
 			'Judged'
 		]
 	},
 	details: {
-		description: 'A player who is “judged” and is on the other team cannot use their ability that night, including passive or triggered abilities.'
+		description: 'A player who is “judged” and is on the other team becomes drunk until dawn.'
 	}
 };
 
@@ -241,7 +241,7 @@ const talent: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You learn two roles at the start of the game. Once per game, you may publicly claim to be one of them and immediately become that role (your alignment does not change).'
+		description: 'You learn two roles at the start of the game; these roles may be of any type, and may be in play or not. Once per game, you may publicly claim to be one of them and immediately become that role (your alignment does not change).'
 	}
 };
 
@@ -280,7 +280,7 @@ const warden: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'The strange are catalogued. The dangerous, remembered.',
-		ability: 'Each night, you learn two Outsider roles, at least one of which is in play. [+1 Outsider]',
+		ability: 'Each night, you learn two Outsider roles, at least one of which is in play. [+0 or +1 Outsider]',
 		firstNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
 		otherNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
 		reminders: [
@@ -393,16 +393,13 @@ const angulotl: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
-		ability: 'Each night, choose a player (choose 2 if 5 or more good players live): they are poisoned until dusk tomorrow. Drunk or poisoned players get false info.',
-		firstNightReminder: 'Choose player(s) to poison.',
-		otherNightReminder: 'Choose player(s) to poison.',
+		ability: 'When the Demon kills a player at night, they do not die but are instead poisoned; they die the next night.',
 		reminders: [
-			'Poisoned',
 			'Poisoned'
 		]
 	},
 	details: {
-		description: 'You choose one player each night to be poisoned; if there are at least five living good players, you can choose an extra player. The chosen player is poisoned that night and the following day. While you are alive, if any player who is drunk or poisoned (for any reason, not just due to your ability) receives information, the information they receive must be incorrect. This does not affect non-information abilities.'
+		description: 'When your Demon chooses a player to kill, that player does not die immediately; instead, they are poisoned. The next night, they die.'
 	}
 };
 
@@ -423,7 +420,7 @@ const duskElf: ClocktowerCharacter = {
 		setup: true
 	},
 	details: {
-		description: 'If the Demon is executed while six or more players are alive (including the Demon but not including Travellers), they do not die but instead register as dead. The day ends and the game continues as if the Demon had died, but they remain alive and continue acting. This ability can only be used once.'
+		description: 'If the Demon is executed while six or more players are alive (including the Demon but not including Travellers), they do not die but instead register as dead. The day ends and the game continues as if the Demon had died, but they remain alive; they can still nominate, vote, and act in the night. This ability can only be used once.'
 	}
 };
 
@@ -436,7 +433,7 @@ const lightbender: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower-outsider.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'Your bhe blade will fall - just not where you aimed it.',
+		flavor: 'Your blade will fall - just not where you aimed it.',
 		ability: 'If you would be executed, one of your good neighbours is executed instead.'
 	},
 	details: {
@@ -454,14 +451,14 @@ const rival: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'I’m exactly like you… except better.',
-		ability: 'You have the ability of, and register as, an in-play Townsfolk. The player with this role is poisoned.',
+		ability: 'You have the ability of an in-play Townsfolk. The player with this role is poisoned.',
 		firstNightReminder: 'Gain an in-play Townsfolk ability.',
 		reminders: [
 			'Poisoned'
 		]
 	},
 	details: {
-		description: 'You are woken on the first night to be told an in-play Townsfolk role. You register as that Townsfolk to all abilities that learn or depend upon roles, and you have that role’s ability. The player with this role is poisoned.'
+		description: 'You are woken on the first night to be told an in-play Townsfolk role. You have that role’s ability. The player with this role is poisoned.'
 	}
 };
 
@@ -540,7 +537,7 @@ const torlas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
-		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+1 Outsider]',
+		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+0 or +1 Outsider]',
 		otherNightReminder: 'Choose a player; they die.',
 		reminders: [
 			'Killed'
@@ -639,7 +636,7 @@ const disgraced: ClocktowerCharacter = {
 		otherNightReminder: 'If a player of your alignment was executed, choose to die and learn the role of their nominator.'
 	},
 	details: {
-		description: 'When a player of your alignment is executed, you choose to die in their place. If you do, you learn the role of the player who nominated them.'
+		description: 'When a player of your alignment is executed, you choose to die in their place; you must speak up before the Storyteller ends the day. If you do, you learn the role of the player who nominated them. If the person you chose was not of your alignment, nothing happens.'
 	}
 };
 
@@ -697,7 +694,6 @@ export class ClocktowerData {
 				'devil',
 				// Modification
 				'conduit',
-				'angulotl',
 				'criminal',
 				'rival',
 				// Info
@@ -712,7 +708,6 @@ export class ClocktowerData {
 				'memonek',
 				// Modification
 				'conduit',
-				'angulotl',
 				'criminal',
 				'voicelesstalker',
 				'censor',
@@ -780,7 +775,6 @@ export class ClocktowerData {
 			firstNight: [
 				// Modification
 				'conduit',
-				'angulotl',
 				'rival'
 			],
 			otherNight: [
@@ -788,7 +782,6 @@ export class ClocktowerData {
 				'memonek',
 				// Modification
 				'conduit',
-				'angulotl',
 				'censor',
 				'tactician',
 				'fury',

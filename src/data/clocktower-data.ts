@@ -34,14 +34,14 @@ const censor: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
-		ability: 'Each night*, choose a player; if they are not on your team, they are drunk tonight.',
+		ability: 'Each night*, choose a player; if they are not on your team, they are drunk until you choose again.',
 		otherNightReminder: 'Choose a player to judge.',
 		reminders: [
 			'Judged'
 		]
 	},
 	details: {
-		description: 'A player who is “judged” and is on the other team becomes drunk until dawn.'
+		description: 'A player who is “judged” and is on the other team becomes drunk until you choose to judge a different player.'
 	}
 };
 
@@ -171,7 +171,17 @@ const revenant: ClocktowerCharacter = {
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
 		ability: 'If you die, you come back to life at night as a dead Townsfolk.',
-		otherNightReminder: 'If dead, resurrect.'
+		otherNightReminder: 'If dead, resurrect.',
+		remindersGlobal: [
+			'Is the Revenant'
+		],
+		special: [
+			{
+				type: 'reveal',
+				name: 'replace-character'
+			}
+		]
+
 	},
 	details: {
 		description: 'When you die, you become a dead Townsfolk of the Storyteller’s choice before being resurrected. However, the dead Townsfolk you become might be the Revenant, in which case you can die and come back to life again.'
@@ -472,7 +482,8 @@ const aurumvas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'More!',
-		ability: 'Each night*, choose a player: they die or become evil (your choice). You cannot choose to kill on night 1, or to change alignment on consecutive nights. [No minions]',
+		ability: 'Each night, choose a player: they die or become evil (your choice). You cannot choose to kill on night 1, or to change alignment on consecutive nights. [No minions]',
+		firstNightReminder: 'Choose a player; they become evil.',
 		otherNightReminder: 'Choose a player; they die or become evil.',
 		reminders: [
 			'Killed'
@@ -696,6 +707,8 @@ export class ClocktowerData {
 				'conduit',
 				'criminal',
 				'rival',
+				// Demons
+				'aurumvas',
 				// Info
 				'talent',
 				'highelf',

@@ -1,5 +1,6 @@
 import { Alert, Button, Drawer, Flex, Progress, Space } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
+import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -299,6 +300,14 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const maxCharacteristic = Math.max(...[
+			HeroLogic.getCharacteristic(hero, Characteristic.Might),
+			HeroLogic.getCharacteristic(hero, Characteristic.Agility),
+			HeroLogic.getCharacteristic(hero, Characteristic.Reason),
+			HeroLogic.getCharacteristic(hero, Characteristic.Intuition),
+			HeroLogic.getCharacteristic(hero, Characteristic.Presence)
+		]);
+
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Surges</HeaderText>
@@ -314,7 +323,7 @@ export const HeroResourcesModal = (props: Props) => {
 							title={
 								<>
 									<div>
-										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
+										Spend <b>1 - 3 surges</b> to add {maxCharacteristic} damage per surge to one target.
 									</div>
 									{
 										hero.state.surges >= 2 ?

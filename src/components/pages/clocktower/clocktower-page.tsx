@@ -51,6 +51,7 @@ import hiveQueenEvil from '@/assets/clocktower/clocktower-hivequeen-evil.png';
 import hiveQueenGood from '@/assets/clocktower/clocktower-hivequeen-good.png';
 import lightbenderEvil from '@/assets/clocktower/clocktower-lightbender-evil.png';
 import lightbenderGood from '@/assets/clocktower/clocktower-lightbender-good.png';
+import logo from '@/assets/clocktower/clocktower-logo.png';
 import memonekEvil from '@/assets/clocktower/clocktower-memonek-evil.png';
 import memonekGood from '@/assets/clocktower/clocktower-memonek-good.png';
 import nullEvil from '@/assets/clocktower/clocktower-null-evil.png';
@@ -85,6 +86,7 @@ export const ClocktowerPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='clocktower-page'>
 				<AppHeader>
+					<img className='image' src={logo} />
 					<img className='image' src={agentGood} />
 					<img className='image' src={agentEvil} />
 					<img className='image' src={beastHeartGood} />

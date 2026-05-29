@@ -81,9 +81,6 @@ export default defineConfig({
 					if (chunkInfo.names && chunkInfo.names[0].match(/\.(ttf|otf)$/)) {
 						return 'assets/[name][extname]';
 					}
-					if (chunkInfo.names && chunkInfo.names[0].includes('clocktower')) {
-						return 'assets/[name][extname]';
-					}
 					return 'assets/[name]-[hash][extname]';
 				}
 			}

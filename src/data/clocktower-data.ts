@@ -9,8 +9,8 @@ const agent: ClocktowerCharacter = {
 		id: 'agent',
 		name: 'Agent',
 		image: [
-			'https://forgesteel.net/assets/clocktower-agent-good.png',
-			'https://forgesteel.net/assets/clocktower-agent-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-agent-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-agent-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'If you pretend to be enough people, eventually someone will tell the truth.',
@@ -31,8 +31,8 @@ const beastheart: ClocktowerCharacter = {
 		id: 'beastheart',
 		name: 'Beastheart',
 		image: [
-			'https://forgesteel.net/assets/clocktower-beastheart-good.png',
-			'https://forgesteel.net/assets/clocktower-beastheart-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-beastheart-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-beastheart-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'I know your kind by scent alone. Even death does not wash it away.',
@@ -49,8 +49,8 @@ const censor: ClocktowerCharacter = {
 		id: 'censor',
 		name: 'Censor',
 		image: [
-			'https://forgesteel.net/assets/clocktower-censor-good.png',
-			'https://forgesteel.net/assets/clocktower-censor-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-censor-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-censor-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
@@ -70,8 +70,8 @@ const conduit: ClocktowerCharacter = {
 		id: 'conduit',
 		name: 'Conduit',
 		image: [
-			'https://forgesteel.net/assets/clocktower-conduit-good.png',
-			'https://forgesteel.net/assets/clocktower-conduit-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-conduit-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-conduit-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Faith is my armour, and corruption breaks upon me like waves on stone.',
@@ -92,8 +92,8 @@ const director: ClocktowerCharacter = {
 		id: 'director',
 		name: 'Director',
 		image: [
-			'https://forgesteel.net/assets/clocktower-director-good.png',
-			'https://forgesteel.net/assets/clocktower-director-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-director-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-director-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'You can trust me. I’m on your side.',
@@ -109,8 +109,8 @@ const elementalist: ClocktowerCharacter = {
 		id: 'elementalist',
 		name: 'Elementalist',
 		image: [
-			'https://forgesteel.net/assets/clocktower-elementalist-good.png',
-			'https://forgesteel.net/assets/clocktower-elementalist-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-elementalist-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-elementalist-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Strike at me, and you will find that the consequences are delightful.',
@@ -129,8 +129,8 @@ const fury: ClocktowerCharacter = {
 		id: 'fury',
 		name: 'Fury',
 		image: [
-			'https://forgesteel.net/assets/clocktower-fury-good.png',
-			'https://forgesteel.net/assets/clocktower-fury-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-fury-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-fury-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'I’m not afraid to burn with you.',
@@ -149,8 +149,8 @@ const nll: ClocktowerCharacter = {
 		id: 'null',
 		name: 'Null',
 		image: [
-			'https://forgesteel.net/assets/clocktower-null-good.png',
-			'https://forgesteel.net/assets/clocktower-null-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-null-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-null-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Within my null field, the world behaves as it should.',
@@ -170,8 +170,8 @@ const revenant: ClocktowerCharacter = {
 		id: 'revenant',
 		name: 'Revenant',
 		image: [
-			'https://forgesteel.net/assets/clocktower-revenant-good.png',
-			'https://forgesteel.net/assets/clocktower-revenant-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-revenant-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-revenant-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
@@ -198,8 +198,8 @@ const shadow: ClocktowerCharacter = {
 		id: 'shadow',
 		name: 'Shadow',
 		image: [
-			'https://forgesteel.net/assets/clocktower-shadow-good.png',
-			'https://forgesteel.net/assets/clocktower-shadow-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-shadow-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-shadow-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
@@ -216,8 +216,8 @@ const tactician: ClocktowerCharacter = {
 		id: 'tactician',
 		name: 'Tactician',
 		image: [
-			'https://forgesteel.net/assets/clocktower-tactician-good.png',
-			'https://forgesteel.net/assets/clocktower-tactician-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-tactician-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-tactician-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Every corpse is trying to tell us something.',
@@ -238,8 +238,8 @@ const talent: ClocktowerCharacter = {
 		id: 'talent',
 		name: 'Talent',
 		image: [
-			'https://forgesteel.net/assets/clocktower-talent-good.png',
-			'https://forgesteel.net/assets/clocktower-talent-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-talent-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-talent-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Give me but a moment, and I will become whoever we need.',
@@ -265,8 +265,8 @@ const troubadour: ClocktowerCharacter = {
 		id: 'troubadour',
 		name: 'Troubadour',
 		image: [
-			'https://forgesteel.net/assets/clocktower-troubadour-good.png',
-			'https://forgesteel.net/assets/clocktower-troubadour-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-troubadour-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-troubadour-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Every hero worries they’ll be forgotten, but each one has a name, and I will sing them all.',
@@ -288,8 +288,8 @@ const antihero: ClocktowerCharacter = {
 		id: 'antihero',
 		name: 'Antihero',
 		image: [
-			'https://forgesteel.net/assets/clocktower-antihero-good.png',
-			'https://forgesteel.net/assets/clocktower-antihero-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-antihero-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-antihero-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Don’t make me choose a side. If you push me, I will become what you feared.',
@@ -305,8 +305,8 @@ const coward: ClocktowerCharacter = {
 		id: 'coward',
 		name: 'Coward',
 		image: [
-			'https://forgesteel.net/assets/clocktower-coward-good.png',
-			'https://forgesteel.net/assets/clocktower-coward-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-coward-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-coward-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Please don’t hurt me.',
@@ -322,8 +322,8 @@ const devil: ClocktowerCharacter = {
 		id: 'devil',
 		name: 'Devil',
 		image: [
-			'https://forgesteel.net/assets/clocktower-devil-good.png',
-			'https://forgesteel.net/assets/clocktower-devil-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-devil-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-devil-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'They handed me a mask and called it destiny. They told me I was one of them. I believed them.',
@@ -354,8 +354,8 @@ const memonek: ClocktowerCharacter = {
 		id: 'memonek',
 		name: 'Memonek',
 		image: [
-			'https://forgesteel.net/assets/clocktower-memonek-good.png',
-			'https://forgesteel.net/assets/clocktower-memonek-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-memonek-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-memonek-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
@@ -379,8 +379,8 @@ const angulotl: ClocktowerCharacter = {
 		id: 'angulotl',
 		name: 'Angulotl',
 		image: [
-			'https://forgesteel.net/assets/clocktower-angulotl-evil.png',
-			'https://forgesteel.net/assets/clocktower-angulotl-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-angulotl-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-angulotl-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
@@ -399,8 +399,8 @@ const duskElf: ClocktowerCharacter = {
 		id: 'duskelf',
 		name: 'Dusk Elf',
 		image: [
-			'https://forgesteel.net/assets/clocktower-duskelf-evil.png',
-			'https://forgesteel.net/assets/clocktower-duskelf-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-duskelf-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-duskelf-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'The magics of Equinox can hide almost anything; twilight is generous with second chances.',
@@ -420,8 +420,8 @@ const lightbender: ClocktowerCharacter = {
 		id: 'lightbender',
 		name: 'Lightbender',
 		image: [
-			'https://forgesteel.net/assets/clocktower-lightbender-evil.png',
-			'https://forgesteel.net/assets/clocktower-lightbender-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-lightbender-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-lightbender-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Your blade will fall - just not where you aimed it.',
@@ -437,8 +437,8 @@ const rival: ClocktowerCharacter = {
 		id: 'rival',
 		name: 'Rival',
 		image: [
-			'https://forgesteel.net/assets/clocktower-rival-evil.png',
-			'https://forgesteel.net/assets/clocktower-rival-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-rival-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-rival-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'I’m exactly like you… except better.',
@@ -462,8 +462,8 @@ const aurumvas: ClocktowerCharacter = {
 		id: 'aurumvas',
 		name: 'Aurumvas',
 		image: [
-			'https://forgesteel.net/assets/clocktower-aurumvas-evil.png',
-			'https://forgesteel.net/assets/clocktower-aurumvas-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-aurumvas-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-aurumvas-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'More!',
@@ -485,8 +485,8 @@ const blightPhage: ClocktowerCharacter = {
 		id: 'blightphage',
 		name: 'Blight Phage',
 		image: [
-			'https://forgesteel.net/assets/clocktower-blightphage-evil.png',
-			'https://forgesteel.net/assets/clocktower-blightphage-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-blightphage-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-blightphage-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Death is not the end of your service. You can be repurposed.',
@@ -507,8 +507,8 @@ const hiveQueen: ClocktowerCharacter = {
 		id: 'hivequeen',
 		name: 'Hive Queen',
 		image: [
-			'https://forgesteel.net/assets/clocktower-hivequeen-evil.png',
-			'https://forgesteel.net/assets/clocktower-hivequeen-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-hivequeen-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-hivequeen-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'There is no ‘I’. There is only the role that must be filled.',
@@ -528,8 +528,8 @@ const torlas: ClocktowerCharacter = {
 		id: 'torlas',
 		name: 'Torlas',
 		image: [
-			'https://forgesteel.net/assets/clocktower-torlas-evil.png',
-			'https://forgesteel.net/assets/clocktower-torlas-good.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-torlas-evil.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-torlas-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
@@ -554,9 +554,9 @@ const aristocrat: ClocktowerCharacter = {
 		id: 'aristocrat',
 		name: 'Aristocrat',
 		image: [
-			'https://forgesteel.net/assets/clocktower-aristocrat-traveller.png',
-			'https://forgesteel.net/assets/clocktower-aristocrat-good.png',
-			'https://forgesteel.net/assets/clocktower-aristocrat-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-aristocrat-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-aristocrat-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-aristocrat-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
@@ -581,9 +581,9 @@ const criminal: ClocktowerCharacter = {
 		id: 'criminal',
 		name: 'Criminal',
 		image: [
-			'https://forgesteel.net/assets/clocktower-criminal-traveller.png',
-			'https://forgesteel.net/assets/clocktower-criminal-good.png',
-			'https://forgesteel.net/assets/clocktower-criminal-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-criminal-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-criminal-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-criminal-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Intentions are fragile things… let me improve yours.',
@@ -604,9 +604,9 @@ const disciple: ClocktowerCharacter = {
 		id: 'disciple',
 		name: 'Disciple',
 		image: [
-			'https://forgesteel.net/assets/clocktower-disciple-traveller.png',
-			'https://forgesteel.net/assets/clocktower-disciple-good.png',
-			'https://forgesteel.net/assets/clocktower-disciple-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-disciple-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-disciple-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-disciple-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Rise. Your story is not yet finished.',
@@ -627,9 +627,9 @@ const disgraced: ClocktowerCharacter = {
 		id: 'disgraced',
 		name: 'Disgraced',
 		image: [
-			'https://forgesteel.net/assets/clocktower-disgraced-traveller.png',
-			'https://forgesteel.net/assets/clocktower-disgraced-good.png',
-			'https://forgesteel.net/assets/clocktower-disgraced-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-disgraced-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-disgraced-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-disgraced-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
@@ -646,9 +646,9 @@ const polder: ClocktowerCharacter = {
 		id: 'polder',
 		name: 'Polder',
 		image: [
-			'https://forgesteel.net/assets/clocktower-polder-traveller.png',
-			'https://forgesteel.net/assets/clocktower-polder-good.png',
-			'https://forgesteel.net/assets/clocktower-polder-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-polder-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-polder-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-polder-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'How dare you raise your hand against one so small?!',
@@ -668,9 +668,9 @@ const voicelessTalker: ClocktowerCharacter = {
 		id: 'voicelesstalker',
 		name: 'Voiceless Talker',
 		image: [
-			'https://forgesteel.net/assets/clocktower-voicelesstalker-traveller.png',
-			'https://forgesteel.net/assets/clocktower-voicelesstalker-good.png',
-			'https://forgesteel.net/assets/clocktower-voicelesstalker-evil.png'
+			'https://forgesteel.net/assets/clocktower/clocktower-voicelesstalker-traveller.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-voicelesstalker-good.png',
+			'https://forgesteel.net/assets/clocktower/clocktower-voicelesstalker-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Perhaps I can change your mind.',
@@ -691,7 +691,7 @@ export class ClocktowerData {
 			id: '_meta',
 			name: 'Steel on the Clocktower',
 			author: 'Andy Aiken',
-			logo: 'https://forgesteel.net/assets/clocktower-logo.png',
+			logo: 'https://forgesteel.net/assets/clocktower/clocktower-logo.png',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
 				// Evil team
@@ -773,7 +773,7 @@ export class ClocktowerData {
 			id: '_meta',
 			name: 'Steel on the Wristwatch',
 			author: 'Andy Aiken',
-			logo: 'https://forgesteel.net/assets/clocktower-logo.png',
+			logo: 'https://forgesteel.net/assets/clocktower/clocktower-logo.png',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
 				// Modification

@@ -85,77 +85,7 @@ export const ClocktowerPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-page'>
-				<AppHeader>
-					<img className='image' src={logo} />
-					<img className='image' src={agentGood} />
-					<img className='image' src={agentEvil} />
-					<img className='image' src={beastHeartGood} />
-					<img className='image' src={beastHeartEvil} />
-					<img className='image' src={censorGood} />
-					<img className='image' src={censorEvil} />
-					<img className='image' src={conduitGood} />
-					<img className='image' src={conduitEvil} />
-					<img className='image' src={directorGood} />
-					<img className='image' src={directorEvil} />
-					<img className='image' src={elementalistGood} />
-					<img className='image' src={elementalistEvil} />
-					<img className='image' src={furyGood} />
-					<img className='image' src={furyEvil} />
-					<img className='image' src={nullGood} />
-					<img className='image' src={nullEvil} />
-					<img className='image' src={revenantGood} />
-					<img className='image' src={revenantEvil} />
-					<img className='image' src={shadowGood} />
-					<img className='image' src={shadowEvil} />
-					<img className='image' src={tacticianGood} />
-					<img className='image' src={tacticianEvil} />
-					<img className='image' src={talentGood} />
-					<img className='image' src={talentEvil} />
-					<img className='image' src={troubadourGood} />
-					<img className='image' src={troubadourEvil} />
-					<img className='image' src={antiHeroGood} />
-					<img className='image' src={antiHeroEvil} />
-					<img className='image' src={cowardGood} />
-					<img className='image' src={cowardEvil} />
-					<img className='image' src={devilGood} />
-					<img className='image' src={devilEvil} />
-					<img className='image' src={memonekGood} />
-					<img className='image' src={memonekEvil} />
-					<img className='image' src={angulotlEvil} />
-					<img className='image' src={angulotlGood} />
-					<img className='image' src={duskElfEvil} />
-					<img className='image' src={duskElfGood} />
-					<img className='image' src={lightbenderEvil} />
-					<img className='image' src={lightbenderGood} />
-					<img className='image' src={rivalEvil} />
-					<img className='image' src={rivalGood} />
-					<img className='image' src={aurumvasEvil} />
-					<img className='image' src={aurumvasGood} />
-					<img className='image' src={blightPhageEvil} />
-					<img className='image' src={blightPhageGood} />
-					<img className='image' src={hiveQueenEvil} />
-					<img className='image' src={hiveQueenGood} />
-					<img className='image' src={torlasEvil} />
-					<img className='image' src={torlasGood} />
-					<img className='image' src={aristocratTraveller} />
-					<img className='image' src={aristocratGood} />
-					<img className='image' src={aristocratEvil} />
-					<img className='image' src={criminalTraveller} />
-					<img className='image' src={criminalGood} />
-					<img className='image' src={criminalEvil} />
-					<img className='image' src={discipleTraveller} />
-					<img className='image' src={discipleGood} />
-					<img className='image' src={discipleEvil} />
-					<img className='image' src={disgracedTraveller} />
-					<img className='image' src={disgracedGood} />
-					<img className='image' src={disgracedEvil} />
-					<img className='image' src={polderTraveller} />
-					<img className='image' src={polderGood} />
-					<img className='image' src={polderEvil} />
-					<img className='image' src={voicelessTalkerTraveller} />
-					<img className='image' src={voicelessTalkerGood} />
-					<img className='image' src={voicelessTalkerEvil} />
-				</AppHeader>
+				<AppHeader />
 				<div className='clocktower-page-content'>
 					<Tabs
 						items={[
@@ -171,6 +101,83 @@ export const ClocktowerPage = (props: Props) => {
 								label: 'Teensyville',
 								children: (
 									<ClocktowerScriptPanel script={ClocktowerData.teensy} />
+								)
+							},
+							{
+								key: '3',
+								label: 'Token Images',
+								children: (
+									<div>
+										<img className='image' src={logo} />
+										<img className='image' src={agentGood} />
+										<img className='image' src={agentEvil} />
+										<img className='image' src={beastHeartGood} />
+										<img className='image' src={beastHeartEvil} />
+										<img className='image' src={censorGood} />
+										<img className='image' src={censorEvil} />
+										<img className='image' src={conduitGood} />
+										<img className='image' src={conduitEvil} />
+										<img className='image' src={directorGood} />
+										<img className='image' src={directorEvil} />
+										<img className='image' src={elementalistGood} />
+										<img className='image' src={elementalistEvil} />
+										<img className='image' src={furyGood} />
+										<img className='image' src={furyEvil} />
+										<img className='image' src={nullGood} />
+										<img className='image' src={nullEvil} />
+										<img className='image' src={revenantGood} />
+										<img className='image' src={revenantEvil} />
+										<img className='image' src={shadowGood} />
+										<img className='image' src={shadowEvil} />
+										<img className='image' src={tacticianGood} />
+										<img className='image' src={tacticianEvil} />
+										<img className='image' src={talentGood} />
+										<img className='image' src={talentEvil} />
+										<img className='image' src={troubadourGood} />
+										<img className='image' src={troubadourEvil} />
+										<img className='image' src={antiHeroGood} />
+										<img className='image' src={antiHeroEvil} />
+										<img className='image' src={cowardGood} />
+										<img className='image' src={cowardEvil} />
+										<img className='image' src={devilGood} />
+										<img className='image' src={devilEvil} />
+										<img className='image' src={memonekGood} />
+										<img className='image' src={memonekEvil} />
+										<img className='image' src={angulotlEvil} />
+										<img className='image' src={angulotlGood} />
+										<img className='image' src={duskElfEvil} />
+										<img className='image' src={duskElfGood} />
+										<img className='image' src={lightbenderEvil} />
+										<img className='image' src={lightbenderGood} />
+										<img className='image' src={rivalEvil} />
+										<img className='image' src={rivalGood} />
+										<img className='image' src={aurumvasEvil} />
+										<img className='image' src={aurumvasGood} />
+										<img className='image' src={blightPhageEvil} />
+										<img className='image' src={blightPhageGood} />
+										<img className='image' src={hiveQueenEvil} />
+										<img className='image' src={hiveQueenGood} />
+										<img className='image' src={torlasEvil} />
+										<img className='image' src={torlasGood} />
+										<img className='image' src={aristocratTraveller} />
+										<img className='image' src={aristocratGood} />
+										<img className='image' src={aristocratEvil} />
+										<img className='image' src={criminalTraveller} />
+										<img className='image' src={criminalGood} />
+										<img className='image' src={criminalEvil} />
+										<img className='image' src={discipleTraveller} />
+										<img className='image' src={discipleGood} />
+										<img className='image' src={discipleEvil} />
+										<img className='image' src={disgracedTraveller} />
+										<img className='image' src={disgracedGood} />
+										<img className='image' src={disgracedEvil} />
+										<img className='image' src={polderTraveller} />
+										<img className='image' src={polderGood} />
+										<img className='image' src={polderEvil} />
+										<img className='image' src={voicelessTalkerTraveller} />
+										<img className='image' src={voicelessTalkerGood} />
+										<img className='image' src={voicelessTalkerEvil} />
+									</div>
 								)
 							}
 						]}

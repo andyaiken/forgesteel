@@ -384,13 +384,14 @@ const angulotl: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
-		ability: 'When the Demon kills a player at night, they do not die but are instead poisoned; they die the next night.',
+		ability: 'Each night*, choose a player: they are poisoned tonight and tomorrow day. Before the Demon acts, they learn which players are currently poisoned.',
+		otherNightReminder: 'Choose a player; they are poisoned.',
 		reminders: [
 			'Poisoned'
 		]
 	},
 	details: {
-		description: 'When your Demon chooses a player to kill, that player does not die immediately; instead, they are poisoned. The next night, they die.'
+		description: 'Each night, you can make a player poisoned until dusk the next day. Before the Demon kills, they are told which players are currently poisoned; they can use this information when they choose their target.'
 	}
 };
 
@@ -467,7 +468,7 @@ const aurumvas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'More!',
-		ability: 'Each night, choose a player: they die or become evil (your choice). You cannot choose to kill on night 1, or to change alignment on consecutive nights. [No minions]',
+		ability: 'Each night, choose a player: they die or become evil (your choice). You cannot choose to kill on night 1, or to recruit on consecutive nights. [No minions]',
 		firstNightReminder: 'Choose a player; they become evil.',
 		otherNightReminder: 'Choose a player; they die or become evil.',
 		reminders: [
@@ -533,7 +534,7 @@ const torlas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
-		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+0 or +1 Outsider]',
+		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+1 Outsider]',
 		otherNightReminder: 'Choose a player; they die.',
 		reminders: [
 			'Killed'
@@ -689,10 +690,13 @@ export class ClocktowerData {
 		type: ClocktowerScriptType.Standard,
 		meta: {
 			id: '_meta',
-			name: 'Steel on the Clocktower',
+			name: 'Draw Steel on the Clocktower',
 			author: 'Andy Aiken',
 			logo: 'https://forgesteel.net/assets/clocktower/logo.png',
+			background: undefined,
+			hideTitle: true,
 			almanac: 'https://forgesteel.net/#/clocktower',
+			bootlegger: undefined,
 			firstNight: [
 				// Evil team
 				'devil',
@@ -711,6 +715,7 @@ export class ClocktowerData {
 				// Grim
 				'memonek',
 				// Modification
+				'angulotl',
 				'conduit',
 				'criminal',
 				'voicelesstalker',
@@ -771,10 +776,13 @@ export class ClocktowerData {
 		type: ClocktowerScriptType.Teensyville,
 		meta: {
 			id: '_meta',
-			name: 'Steel on the Wristwatch',
+			name: 'Draw Steel on the Wristwatch',
 			author: 'Andy Aiken',
 			logo: 'https://forgesteel.net/assets/clocktower/logo.png',
+			background: undefined,
+			hideTitle: true,
 			almanac: 'https://forgesteel.net/#/clocktower',
+			bootlegger: undefined,
 			firstNight: [
 				// Modification
 				'conduit',
@@ -784,6 +792,7 @@ export class ClocktowerData {
 				// Grim
 				'memonek',
 				// Modification
+				'angulotl',
 				'conduit',
 				'censor',
 				'tactician',

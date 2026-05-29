@@ -29,6 +29,8 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 		})
 		.filter(j => !!j);
 
+	const img = ClocktowerLogic.getImageLocation(props.character);
+
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-character-panel'>
@@ -43,7 +45,7 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 				{
 					!!props.character.role.image && (props.character.role.image.length > 0) ?
 						<div className='clocktower-token'>
-							<img className='clocktower-token-image' src={props.character.role.image[0]} />
+							{img ? <img className='clocktower-token-image' src={img} /> : undefined}
 							<svg className='clocktower-token-text' viewBox='0 0 100 100'>
 								<defs>
 									<path id='arc' d='M 5,50 A 45,45 0 0 0 95,50' fill='none' />

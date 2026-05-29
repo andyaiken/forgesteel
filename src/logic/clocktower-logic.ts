@@ -1,9 +1,22 @@
-import { ClocktowerScript } from '@/models/clocktower';
+import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 import { Utils } from '@/utils/utils';
 
 export class ClocktowerLogic {
+	static getImageLocation = (ch: ClocktowerCharacter) => {
+		if (ch.role.image.length === 0) {
+			return null;
+		}
+
+		let img = ch.role.image[0];
+		if (Utils.isDev()) {
+			img = img.replaceAll('https://forgesteel.net', '.');
+		}
+
+		return img;
+	};
+
 	static getTeamName = (team: ClocktowerTeam) => {
 		switch (team) {
 			case ClocktowerTeam.Townsfolk:
@@ -149,13 +162,9 @@ export class ClocktowerLogic {
 			issues.push('No outsider modification');
 		}
 
-		script.characters.forEach(ch => {
-			const index = ch.role.ability.indexOf('[');
-			const ability = index === -1 ? ch.role.ability : ch.role.ability.substring(0, index);
-			if (ability.length > 160) {
-				issues.push(`${ch.role.name}: ability is ${ability.length} characters long`);
-			}
-		});
+		script.characters
+			.filter(ch => ch.role.ability.length > 160)
+			.forEach(ch => issues.push(`${ch.role.name}: ability is ${ch.role.ability.length} characters long`));
 
 		return issues;
 	};

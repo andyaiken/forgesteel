@@ -18,22 +18,14 @@ export const ClocktowerPage = (props: Props) => {
 				<AppHeader />
 				<div className='clocktower-page-content'>
 					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Full Script',
-								children: (
-									<ClocktowerScriptPanel script={ClocktowerData.standard} />
-								)
-							},
-							{
-								key: '2',
-								label: 'Teensyville',
-								children: (
-									<ClocktowerScriptPanel script={ClocktowerData.teensy} />
-								)
-							}
-						]}
+						items={
+							[ ClocktowerData.standard, ClocktowerData.teensy ]
+								.map(script => ({
+									key: script.meta.name,
+									label: script.meta.name,
+									children: <ClocktowerScriptPanel script={script} />
+								}))
+						}
 					/>
 				</div>
 				<AppFooter

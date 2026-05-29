@@ -2,7 +2,6 @@ import { ButtonConfig, ButtonGroup, DropdownConfig } from '@/components/controls
 import { CheckCircleOutlined, CopyOutlined, WarningOutlined } from '@ant-design/icons';
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { Drawer, Tabs, notification } from 'antd';
-import { ReactNode, useState } from 'react';
 import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
 import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
@@ -14,6 +13,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { useState } from 'react';
 
 import './clocktower-script-panel.scss';
 
@@ -37,52 +37,24 @@ export const ClocktowerScriptPanel = (props: Props) => {
 		});
 	};
 
-	const getTabs = () => {
-		const tabs: { key: string, label: string, children: ReactNode }[] = [];
-
-		[
-			ClocktowerTeam.Townsfolk,
-			ClocktowerTeam.Outsider,
-			ClocktowerTeam.Minion,
-			ClocktowerTeam.Demon,
-			ClocktowerTeam.Traveller,
-			ClocktowerTeam.Fabled,
-			ClocktowerTeam.Loric
-		]
-			.forEach(team => {
-				const count = ClocktowerLogic.getTeamCount(props.script, team);
-				if (count > 0) {
-					tabs.push({
-						key: team,
-						label: ClocktowerLogic.getTeamName(team),
-						children: getCharactersSection(team)
-					});
-				}
-			});
-
-		tabs.push({
-			key: 'first-night',
-			label: 'First Night',
-			children: getNightSection(true)
-		});
-		tabs.push({
-			key: 'other-nights',
-			label: 'Other Nights',
-			children: getNightSection(false)
-		});
-
-		return tabs;
-	};
-
 	const getCharactersSection = (team: ClocktowerTeam) => {
 		const characters = props.script.characters.filter(ch => ch.role.team === team);
+
+		const getImage = (ch: ClocktowerCharacter) => {
+			const img = ClocktowerLogic.getImageLocation(ch);
+			return img ?
+				<img className='role-image' src={img} />
+				: undefined;
+		};
 
 		return (
 			<div className='roles-section'>
 				{
 					characters.map(ch => (
 						<SelectablePanel key={ch.role.id} onSelect={() => setSelectedCharacter(ch)}>
-							<HeaderText>{ch.role.name}</HeaderText>
+							<HeaderText extra={getImage(ch)}>
+								{ch.role.name}
+							</HeaderText>
 							<div className='ds-text'>{ch.role.ability}</div>
 						</SelectablePanel>
 					))
@@ -184,7 +156,54 @@ export const ClocktowerScriptPanel = (props: Props) => {
 							})
 					}
 				</StatsRow>
-				<Tabs items={getTabs()} />
+				<Tabs
+					items={[
+						{
+							key: 'characters',
+							label: 'Characters',
+							children: (
+								<>
+									{
+										[
+											ClocktowerTeam.Townsfolk,
+											ClocktowerTeam.Outsider,
+											ClocktowerTeam.Minion,
+											ClocktowerTeam.Demon,
+											ClocktowerTeam.Traveller,
+											ClocktowerTeam.Fabled,
+											ClocktowerTeam.Loric
+										]
+											.map(team => {
+												const count = ClocktowerLogic.getTeamCount(props.script, team);
+												if (count === 0) {
+													return null;
+												}
+
+												return (
+													<div key={team}>
+														<HeaderText>{ClocktowerLogic.getTeamName(team)}</HeaderText>
+														{getCharactersSection(team)}
+													</div>
+												);
+											})
+									}
+								</>
+							)
+						},
+						{
+							key: 'night-order',
+							label: 'Night Order',
+							children: (
+								<div>
+									<HeaderText>First Night</HeaderText>
+									{getNightSection(true)}
+									<HeaderText>Other Nights</HeaderText>
+									{getNightSection(false)}
+								</div>
+							)
+						}
+					]}
+				/>
 			</div>
 			<Drawer open={!!selectedCharacter} onClose={() => setSelectedCharacter(null)} closeIcon={null} size={500}>
 				<Modal

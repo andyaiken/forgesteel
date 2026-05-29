@@ -2,13 +2,15 @@ import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
 
+// #region Townsfolk
+
 const agent: ClocktowerCharacter = {
 	role: {
 		id: 'agent',
 		name: 'Agent',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-agent-good.png',
+			'https://forgesteel.net/assets/clocktower-agent-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'If you pretend to be enough people, eventually someone will tell the truth.',
@@ -24,13 +26,31 @@ const agent: ClocktowerCharacter = {
 	}
 };
 
+const beastheart: ClocktowerCharacter = {
+	role: {
+		id: 'beastheart',
+		name: 'Beastheart',
+		image: [
+			'https://forgesteel.net/assets/clocktower-beastheart-good.png',
+			'https://forgesteel.net/assets/clocktower-beastheart-evil.png'
+		],
+		team: ClocktowerTeam.Townsfolk,
+		flavor: 'I know your kind by scent alone. Even death does not wash it away.',
+		ability: 'Each night*, choose a dead player: learn one character they were during the game.',
+		otherNightReminder: 'Choose a dead player to learn their role.'
+	},
+	details: {
+		description: 'Each night after the first, you can select a dead player and learn their role. If their role changed over the course of the game, you learn one role they played.'
+	}
+};
+
 const censor: ClocktowerCharacter = {
 	role: {
 		id: 'censor',
 		name: 'Censor',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-censor-good.png',
+			'https://forgesteel.net/assets/clocktower-censor-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Speak not tonight. No spells. No whispers. No excuses.',
@@ -50,8 +70,8 @@ const conduit: ClocktowerCharacter = {
 		id: 'conduit',
 		name: 'Conduit',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-conduit-good.png',
+			'https://forgesteel.net/assets/clocktower-conduit-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Faith is my armour, and corruption breaks upon me like waves on stone.',
@@ -67,13 +87,30 @@ const conduit: ClocktowerCharacter = {
 	}
 };
 
+const director: ClocktowerCharacter = {
+	role: {
+		id: 'director',
+		name: 'Director',
+		image: [
+			'https://forgesteel.net/assets/clocktower-director-good.png',
+			'https://forgesteel.net/assets/clocktower-director-evil.png'
+		],
+		team: ClocktowerTeam.Townsfolk,
+		flavor: 'You can trust me. I’m on your side.',
+		ability: 'The first time you nominate, if your nominee is a Townsfolk, all players immediately learn your role.'
+	},
+	details: {
+		description: 'You can prove your identity; the first time you nominate, you can prove that you are the Director, which is enormously powerful.'
+	}
+};
+
 const elementalist: ClocktowerCharacter = {
 	role: {
 		id: 'elementalist',
 		name: 'Elementalist',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-elementalist-good.png',
+			'https://forgesteel.net/assets/clocktower-elementalist-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Strike at me, and you will find that the consequences are delightful.',
@@ -92,50 +129,18 @@ const fury: ClocktowerCharacter = {
 		id: 'fury',
 		name: 'Fury',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-fury-good.png',
+			'https://forgesteel.net/assets/clocktower-fury-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'I’m not afraid to burn with you.',
-		ability: 'Once per game, at night*, choose a pair of adjacent players: if either is the Demon, you die; otherwise, one of them dies.',
-		otherNightReminder: 'Once per game, choose 2 players.',
+		ability: 'Once per game, choose a pair of adjacent players: if either is the Demon, you die; otherwise, one of them dies.',
 		reminders: [
 			'Ability used'
 		]
 	},
 	details: {
-		description: 'You choose two players at night; they must be sitting adjacent to each other. If either of them is the Demon, you die; otherwise, the Storyteller chooses one of the two players to die. If you are drunk or poisoned, nothing happens.'
-	}
-};
-
-const highElf: ClocktowerCharacter = {
-	role: {
-		id: 'highelf',
-		name: 'High Elf',
-		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
-		],
-		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Patterns emerge for those with the patience to see them.',
-		ability: 'Each night, you learn two Townsfolk roles, at least one of which is in play.',
-		firstNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
-		otherNightReminder: 'Learn 2 Townsfolk roles, at least one of which is in play.',
-		reminders: [
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known',
-			'Known'
-		]
-	},
-	details: {
-		description: 'Each night, you learn two Townsfolk roles, at least one of which is currently in play. Once all in-play Townsfolk have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		description: 'You choose two players; they must be sitting adjacent to each other. If either of them is the Demon, you immediately die; otherwise, the Storyteller chooses one of the two players to immediately die. If you are drunk or poisoned, nothing happens.'
 	}
 };
 
@@ -144,8 +149,8 @@ const nll: ClocktowerCharacter = {
 		id: 'null',
 		name: 'Null',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-null-good.png',
+			'https://forgesteel.net/assets/clocktower-null-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Within my null field, the world behaves as it should.',
@@ -165,8 +170,8 @@ const revenant: ClocktowerCharacter = {
 		id: 'revenant',
 		name: 'Revenant',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-revenant-good.png',
+			'https://forgesteel.net/assets/clocktower-revenant-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
@@ -184,7 +189,7 @@ const revenant: ClocktowerCharacter = {
 
 	},
 	details: {
-		description: 'When you die, you become a dead Townsfolk of the Storyteller’s choice before being resurrected. However, the dead Townsfolk you become might be the Revenant, in which case you can die and come back to life again.'
+		description: 'When you die, you become a dead Townsfolk of the Storyteller’s choice before being resurrected. However, if there are no other dead Townsfolk, then the dead Townsfolk you become might be the Revenant, in which case you can die and come back to life again.'
 	}
 };
 
@@ -193,16 +198,16 @@ const shadow: ClocktowerCharacter = {
 		id: 'shadow',
 		name: 'Shadow',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-shadow-good.png',
+			'https://forgesteel.net/assets/clocktower-shadow-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
-		ability: 'Each night*, learn how many players changed character tonight.',
-		otherNightReminder: 'Learn how many players changed character.'
+		ability: 'Each night*, learn how many players changed character, and how many changed alignment, tonight.',
+		otherNightReminder: 'Learn how many players changed character / alignment.'
 	},
 	details: {
-		description: 'Each night, you learn how many players have a different token now than they started the night with. A player whose alignment has changed (but not their role) does not count. A player whose role has been changed multiple times only counts once.'
+		description: 'Each night, you learn how many players have a different character token now than they started the night with (a player whose role has been changed multiple times only counts once), and how many have a different alignment than they started the night with.'
 	}
 };
 
@@ -211,8 +216,8 @@ const tactician: ClocktowerCharacter = {
 		id: 'tactician',
 		name: 'Tactician',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-tactician-good.png',
+			'https://forgesteel.net/assets/clocktower-tactician-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Every corpse is trying to tell us something.',
@@ -233,8 +238,8 @@ const talent: ClocktowerCharacter = {
 		id: 'talent',
 		name: 'Talent',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-talent-good.png',
+			'https://forgesteel.net/assets/clocktower-talent-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Give me but a moment, and I will become whoever we need.',
@@ -260,59 +265,31 @@ const troubadour: ClocktowerCharacter = {
 		id: 'troubadour',
 		name: 'Troubadour',
 		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-troubadour-good.png',
+			'https://forgesteel.net/assets/clocktower-troubadour-evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Every villain thinks they’ll be forgotten, but each one has a name, and I will sing them all.',
-		ability: 'Each night, you learn two Minion roles, at least one of which is in play.',
-		firstNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
-		otherNightReminder: 'Learn 2 Minion roles, at least one of which is in play.',
-		reminders: [
-			'Known',
-			'Known',
-			'Known',
-			'Known'
-		]
+		flavor: 'Every hero worries they’ll be forgotten, but each one has a name, and I will sing them all.',
+		ability: 'Each night, you learn two roles, at least one of which is in play.',
+		firstNightReminder: 'Learn 2 roles, at least one of which is in play.',
+		otherNightReminder: 'Learn 2 roles, at least one of which is in play.'
 	},
 	details: {
-		description: 'Each night, you learn two Minion roles, at least one of which is currently in play. Once all in-play Minions have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		description: 'Each night, you learn two roles, at least one of which is currently in play. If you are drunk or poisoned, this information may be incorrect or misleading.'
 	}
 };
 
-const warden: ClocktowerCharacter = {
-	role: {
-		id: 'warden',
-		name: 'Warden',
-		image: [
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
-		],
-		team: ClocktowerTeam.Townsfolk,
-		flavor: 'The strange are catalogued. The dangerous, remembered.',
-		ability: 'Each night, you learn two Outsider roles, at least one of which is in play. [+0 or +1 Outsider]',
-		firstNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
-		otherNightReminder: 'Learn 2 Outsider roles, at least one of which is in play.',
-		reminders: [
-			'Known',
-			'Known',
-			'Known',
-			'Known'
-		],
-		setup: true
-	},
-	details: {
-		description: 'Each night, you learn two Outsider roles, at least one of which is currently in play. Once all in-play Outsiders have been shown, the Storyteller may repeat roles. If you are drunk or poisoned, this information may be incorrect or misleading.'
-	}
-};
+// #endregion
+
+// #region Outsiders
 
 const antihero: ClocktowerCharacter = {
 	role: {
 		id: 'antihero',
 		name: 'Antihero',
 		image: [
-			'https://forgesteel.net/assets/clocktower-outsider.png',
-			'https://forgesteel.net/assets/clocktower-minion.png'
+			'https://forgesteel.net/assets/clocktower-antihero-good.png',
+			'https://forgesteel.net/assets/clocktower-antihero-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Don’t make me choose a side. If you push me, I will become what you feared.',
@@ -328,8 +305,8 @@ const coward: ClocktowerCharacter = {
 		id: 'coward',
 		name: 'Coward',
 		image: [
-			'https://forgesteel.net/assets/clocktower-outsider.png',
-			'https://forgesteel.net/assets/clocktower-minion.png'
+			'https://forgesteel.net/assets/clocktower-coward-good.png',
+			'https://forgesteel.net/assets/clocktower-coward-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Please don’t hurt me.',
@@ -345,8 +322,8 @@ const devil: ClocktowerCharacter = {
 		id: 'devil',
 		name: 'Devil',
 		image: [
-			'https://forgesteel.net/assets/clocktower-outsider.png',
-			'https://forgesteel.net/assets/clocktower-minion.png'
+			'https://forgesteel.net/assets/clocktower-devil-good.png',
+			'https://forgesteel.net/assets/clocktower-devil-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'They handed me a mask and called it destiny. They told me I was one of them. I believed them.',
@@ -377,8 +354,8 @@ const memonek: ClocktowerCharacter = {
 		id: 'memonek',
 		name: 'Memonek',
 		image: [
-			'https://forgesteel.net/assets/clocktower-outsider.png',
-			'https://forgesteel.net/assets/clocktower-minion.png'
+			'https://forgesteel.net/assets/clocktower-memonek-good.png',
+			'https://forgesteel.net/assets/clocktower-memonek-evil.png'
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Those of us from higher planes can sometimes glimpse the workings of fate.',
@@ -393,13 +370,17 @@ const memonek: ClocktowerCharacter = {
 	}
 };
 
+// #endregion
+
+// #region Minions
+
 const angulotl: ClocktowerCharacter = {
 	role: {
 		id: 'angulotl',
 		name: 'Angulotl',
 		image: [
-			'https://forgesteel.net/assets/clocktower-minion.png',
-			'https://forgesteel.net/assets/clocktower-outsider.png'
+			'https://forgesteel.net/assets/clocktower-angulotl-evil.png',
+			'https://forgesteel.net/assets/clocktower-angulotl-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
@@ -418,8 +399,8 @@ const duskElf: ClocktowerCharacter = {
 		id: 'duskelf',
 		name: 'Dusk Elf',
 		image: [
-			'https://forgesteel.net/assets/clocktower-minion.png',
-			'https://forgesteel.net/assets/clocktower-outsider.png'
+			'https://forgesteel.net/assets/clocktower-duskelf-evil.png',
+			'https://forgesteel.net/assets/clocktower-duskelf-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'The magics of Equinox can hide almost anything; twilight is generous with second chances.',
@@ -439,8 +420,8 @@ const lightbender: ClocktowerCharacter = {
 		id: 'lightbender',
 		name: 'Lightbender',
 		image: [
-			'https://forgesteel.net/assets/clocktower-minion.png',
-			'https://forgesteel.net/assets/clocktower-outsider.png'
+			'https://forgesteel.net/assets/clocktower-lightbender-evil.png',
+			'https://forgesteel.net/assets/clocktower-lightbender-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Your blade will fall - just not where you aimed it.',
@@ -456,8 +437,8 @@ const rival: ClocktowerCharacter = {
 		id: 'rival',
 		name: 'Rival',
 		image: [
-			'https://forgesteel.net/assets/clocktower-minion.png',
-			'https://forgesteel.net/assets/clocktower-outsider.png'
+			'https://forgesteel.net/assets/clocktower-rival-evil.png',
+			'https://forgesteel.net/assets/clocktower-rival-good.png'
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'I’m exactly like you… except better.',
@@ -472,13 +453,17 @@ const rival: ClocktowerCharacter = {
 	}
 };
 
+// #endregion
+
+// #region Demons
+
 const aurumvas: ClocktowerCharacter = {
 	role: {
 		id: 'aurumvas',
 		name: 'Aurumvas',
 		image: [
-			'https://forgesteel.net/assets/clocktower-demon.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png'
+			'https://forgesteel.net/assets/clocktower-aurumvas-evil.png',
+			'https://forgesteel.net/assets/clocktower-aurumvas-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'More!',
@@ -500,8 +485,8 @@ const blightPhage: ClocktowerCharacter = {
 		id: 'blightphage',
 		name: 'Blight Phage',
 		image: [
-			'https://forgesteel.net/assets/clocktower-demon.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png'
+			'https://forgesteel.net/assets/clocktower-blightphage-evil.png',
+			'https://forgesteel.net/assets/clocktower-blightphage-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Death is not the end of your service. You can be repurposed.',
@@ -522,8 +507,8 @@ const hiveQueen: ClocktowerCharacter = {
 		id: 'hivequeen',
 		name: 'Hive Queen',
 		image: [
-			'https://forgesteel.net/assets/clocktower-demon.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png'
+			'https://forgesteel.net/assets/clocktower-hivequeen-evil.png',
+			'https://forgesteel.net/assets/clocktower-hivequeen-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'There is no ‘I’. There is only the role that must be filled.',
@@ -543,8 +528,8 @@ const torlas: ClocktowerCharacter = {
 		id: 'torlas',
 		name: 'Torlas',
 		image: [
-			'https://forgesteel.net/assets/clocktower-demon.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png'
+			'https://forgesteel.net/assets/clocktower-torlas-evil.png',
+			'https://forgesteel.net/assets/clocktower-torlas-good.png'
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
@@ -552,21 +537,26 @@ const torlas: ClocktowerCharacter = {
 		otherNightReminder: 'Choose a player; they die.',
 		reminders: [
 			'Killed'
-		]
+		],
+		setup: true
 	},
 	details: {
 		description: 'When a Townsfolk ability targets you and only you, it instead targets your closest living Townsfolk neighbour (if there is a tie, the target is chosen by the Storyteller). This does not affect non-Townsfolk abilities or abilities that target more than one player.'
 	}
 };
 
+// #endregion
+
+// #region Travellers
+
 const aristocrat: ClocktowerCharacter = {
 	role: {
 		id: 'aristocrat',
 		name: 'Aristocrat',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-aristocrat-traveller.png',
+			'https://forgesteel.net/assets/clocktower-aristocrat-good.png',
+			'https://forgesteel.net/assets/clocktower-aristocrat-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
@@ -591,9 +581,9 @@ const criminal: ClocktowerCharacter = {
 		id: 'criminal',
 		name: 'Criminal',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-criminal-traveller.png',
+			'https://forgesteel.net/assets/clocktower-criminal-good.png',
+			'https://forgesteel.net/assets/clocktower-criminal-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Intentions are fragile things… let me improve yours.',
@@ -614,9 +604,9 @@ const disciple: ClocktowerCharacter = {
 		id: 'disciple',
 		name: 'Disciple',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-disciple-traveller.png',
+			'https://forgesteel.net/assets/clocktower-disciple-good.png',
+			'https://forgesteel.net/assets/clocktower-disciple-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Rise. Your story is not yet finished.',
@@ -637,9 +627,9 @@ const disgraced: ClocktowerCharacter = {
 		id: 'disgraced',
 		name: 'Disgraced',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-disgraced-traveller.png',
+			'https://forgesteel.net/assets/clocktower-disgraced-good.png',
+			'https://forgesteel.net/assets/clocktower-disgraced-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
@@ -656,9 +646,9 @@ const polder: ClocktowerCharacter = {
 		id: 'polder',
 		name: 'Polder',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-polder-traveller.png',
+			'https://forgesteel.net/assets/clocktower-polder-good.png',
+			'https://forgesteel.net/assets/clocktower-polder-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'How dare you raise your hand against one so small?!',
@@ -678,19 +668,21 @@ const voicelessTalker: ClocktowerCharacter = {
 		id: 'voicelesstalker',
 		name: 'Voiceless Talker',
 		image: [
-			'https://forgesteel.net/assets/clocktower-traveller.png',
-			'https://forgesteel.net/assets/clocktower-townsfolk.png',
-			'https://forgesteel.net/assets/clocktower-demon.png'
+			'https://forgesteel.net/assets/clocktower-voicelesstalker-traveller.png',
+			'https://forgesteel.net/assets/clocktower-voicelesstalker-good.png',
+			'https://forgesteel.net/assets/clocktower-voicelesstalker-evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Perhaps I can change your mind.',
-		ability: 'Each night*, choose two players; their roles (not alignments) are swapped and one becomes poisoned until dusk. You cannot nominate.',
+		ability: 'Each night*, choose two players; their roles (not alignments) are swapped. You cannot nominate.',
 		otherNightReminder: 'Choose two players to switch.'
 	},
 	details: {
-		description: 'Each night, you swap the roles (but not alignments) of two players, then the Storyteller chooses one of them to be poisoned until dusk. You cannot nominate, but you may still vote and speak.'
+		description: 'Each night, you swap the roles (but not alignments) of two players. You cannot nominate, but you may still vote and speak.'
 	}
 };
+
+// #endregion
 
 export class ClocktowerData {
 	static standard: ClocktowerScript = {
@@ -699,6 +691,7 @@ export class ClocktowerData {
 			id: '_meta',
 			name: 'Steel on the Clocktower',
 			author: 'Andy Aiken',
+			logo: 'https://forgesteel.net/assets/clocktower-logo.png',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
 				// Evil team
@@ -711,9 +704,7 @@ export class ClocktowerData {
 				'aurumvas',
 				// Info
 				'talent',
-				'highelf',
-				'troubadour',
-				'warden'
+				'troubadour'
 			],
 			otherNight: [
 				'disgraced',
@@ -725,7 +716,6 @@ export class ClocktowerData {
 				'voicelesstalker',
 				'censor',
 				'tactician',
-				'fury',
 				// Demons
 				'aurumvas',
 				'blightphage',
@@ -736,27 +726,26 @@ export class ClocktowerData {
 				'disciple',
 				// Info
 				'agent',
+				'beastheart',
 				'shadow',
 				'polder',
-				'highelf',
-				'troubadour',
-				'warden'
+				'troubadour'
 			]
 		},
 		characters: [
 			agent,
+			beastheart,
 			censor,
 			conduit,
+			director,
 			elementalist,
 			fury,
-			highElf,
 			nll,
 			revenant,
 			shadow,
 			tactician,
 			talent,
 			troubadour,
-			warden,
 			antihero,
 			coward,
 			devil,
@@ -784,6 +773,7 @@ export class ClocktowerData {
 			id: '_meta',
 			name: 'Steel on the Wristwatch',
 			author: 'Andy Aiken',
+			logo: 'https://forgesteel.net/assets/clocktower-logo.png',
 			almanac: 'https://forgesteel.net/#/clocktower',
 			firstNight: [
 				// Modification
@@ -797,7 +787,6 @@ export class ClocktowerData {
 				'conduit',
 				'censor',
 				'tactician',
-				'fury',
 				// Demons
 				'blightphage',
 				'torlas',

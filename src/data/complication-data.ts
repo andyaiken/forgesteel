@@ -1620,11 +1620,15 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-shatteredLegacy-lang'
 			}),
-			FactoryLogic.feature.createItemChoice({
+			FactoryLogic.feature.createToggle({
 				id: 'comp-shatteredLegacy-b',
-				name: 'Shattered Legacy Benefit',
-				description: 'You gain one leveled treasure of your choice.',
-				types: [ ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled ]
+				condition: 'Your legacy item has been repaired.',
+				featureChecked: FactoryLogic.feature.createItemChoice({
+					id: 'comp-shatteredLegacy-b1',
+					name: 'Shattered Legacy Benefit',
+					description: 'You gain one leveled treasure of your choice.',
+					types: [ ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled ]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-d',

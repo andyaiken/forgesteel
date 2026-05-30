@@ -1012,7 +1012,7 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Loner',
 		description: 'You’ve always been a lone wolf. With no one else to lean on, you’ve picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group and found the family you’d never known you needed.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-loner-b',
 				name: 'Loner Benefit',
 				description: 'When you finish a respite, choose a skill you don’t have. You have that skill until the end of your next respite.'

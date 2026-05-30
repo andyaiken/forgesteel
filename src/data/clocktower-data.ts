@@ -97,7 +97,10 @@ const director: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'You can trust me. I’m on your side.',
-		ability: 'The first time you nominate, if your nominee is a Townsfolk, all players immediately learn your role.'
+		ability: 'The first time you nominate, if your nominee is a Townsfolk, all players immediately learn your role.',
+		reminders: [
+			'Ability used'
+		]
 	},
 	details: {
 		description: 'You can prove your identity; the first time you nominate, you can prove that you are the Director, which is enormously powerful.'

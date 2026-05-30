@@ -112,7 +112,11 @@ export class FeatureLogic {
 	static getFeaturesFromTitle = (title: Title, heroLevel: number) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
-		features.push(...title.features.filter(f => f.id === title.selectedFeatureID).map(f => ({ feature: f, source: title.name, level: undefined })));
+		features.push(
+			...title.features
+				.filter(f => title.selectedFeatureID ? (f.id === title.selectedFeatureID) : true)
+				.map(f => ({ feature: f, source: title.name, level: undefined }))
+		);
 
 		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};

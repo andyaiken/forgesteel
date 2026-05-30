@@ -1027,8 +1027,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				description: 'Choose a god or saint',
 				features: [
 					FactoryLogic.feature.createDomainChoice({
-						id: 'title-godsworn-3a',
-						count: 1
+						id: 'title-godsworn-3a'
 					}),
 					FactoryLogic.feature.createDomainFeature({
 						id: 'title-godsworn-3b',

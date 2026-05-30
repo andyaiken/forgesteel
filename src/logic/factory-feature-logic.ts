@@ -277,7 +277,7 @@ export class FactoryFeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Domain Feature Choice',
-			description: data.description || '',
+			description: data.description || `Choose a level ${data.level} domain feature.`,
 			type: FeatureType.DomainFeature,
 			data: {
 				level: data.level,

@@ -1,18 +1,22 @@
+import { Button, Divider } from 'antd';
 import { CheckCircleOutlined, EditOutlined } from '@ant-design/icons';
-import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { Button } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureConfigPanel } from '../../feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { NameDescEditPanel } from '../../edit/name-desc-edit/name-desc-edit-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { TextInput } from '@/components/controls/text-input/text-input';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -34,23 +38,27 @@ export const TitlePanel = (props: Props) => {
 	const selectedFeature = title.features.find(f => f.id === title.selectedFeatureID);
 	const editable = selectedFeature && (selectedFeature.type === FeatureType.Text);
 
-	const setFeatureName = (value: string) => {
+	const setFeatureNameDesc = (name: string, desc: string) => {
 		const copy = Utils.copy(title);
-		copy.name = value;
+		copy.name = name;
 		copy.features
 			.filter(f => f.id === title.selectedFeatureID)
-			.forEach(f => f.name = value);
+			.forEach(f => {
+				f.name = name;
+				f.description = desc;
+			});
 		setTitle(copy);
 		if (props.onChange) {
 			props.onChange(copy);
 		}
 	};
 
-	const setFeatureDescription = (value: string) => {
+	const setFeatureData = (featureID: string, value: FeatureData) => {
 		const copy = Utils.copy(title);
-		copy.features
-			.filter(f => f.id === title.selectedFeatureID)
-			.forEach(f => f.description = value);
+		const features = FeatureLogic.getFeaturesFromTitle(copy, props.hero?.class?.level || 1);
+		features
+			.filter(f => f.feature.id === featureID)
+			.forEach(f => f.feature.data = Utils.copy(value));
 		setTitle(copy);
 		if (props.onChange) {
 			props.onChange(copy);
@@ -64,6 +72,9 @@ export const TitlePanel = (props: Props) => {
 			tags.push(sourcebookType);
 		}
 	}
+
+	const features = FeatureLogic.getFeaturesFromTitle(title, props.hero?.class?.level || 1);
+	const choices = features.filter(f => FeatureLogic.isChoice(f.feature));
 
 	return (
 		<ErrorBoundary>
@@ -85,16 +96,7 @@ export const TitlePanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						selectedFeature && editing ?
 							<div className='features'>
-								<HeaderText>Name</HeaderText>
-								<TextInput
-									status={selectedFeature.name === '' ? 'warning' : ''}
-									placeholder='Name'
-									allowClear={true}
-									value={selectedFeature.name}
-									onChange={setFeatureName}
-								/>
-								<HeaderText>Description</HeaderText>
-								<MarkdownEditor value={selectedFeature.description} onChange={setFeatureDescription} />
+								<NameDescEditPanel element={selectedFeature} onChange={setFeatureNameDesc} />
 							</div>
 							:
 							<div className='features'>
@@ -102,14 +104,35 @@ export const TitlePanel = (props: Props) => {
 									title.features
 										.filter(f => title.selectedFeatureID ? (f.id === title.selectedFeatureID) : true)
 										.map(f => (
-											<FeaturePanel
-												key={f.id}
-												feature={f}
-												hero={props.hero}
-												sourcebooks={props.sourcebooks}
-												mode={PanelMode.Full}
-											/>
+											<div key={f.id}>
+												<FeaturePanel
+													feature={f}
+													hero={props.hero}
+													sourcebooks={props.sourcebooks}
+													mode={PanelMode.Full}
+												/>
+											</div>
 										))
+								}
+								{
+									props.hero && (choices.length > 0) ?
+										<>
+											<Divider />
+											<Expander title='Configure'>
+												{
+													choices.map(f => (
+														<FeatureConfigPanel
+															key={f.feature.id}
+															feature={f.feature}
+															hero={props.hero!}
+															sourcebooks={props.sourcebooks}
+															setData={setFeatureData}
+														/>
+													))
+												}
+											</Expander>
+										</>
+										: null
 								}
 							</div>
 						: null

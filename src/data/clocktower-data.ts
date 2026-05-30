@@ -22,7 +22,14 @@ const agent: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'Each time you use this ability, you must publicly claim a different role; if you claim a role you have already claimed, you gain no benefit that night. The question you ask the Storyteller can be anything with a yes/no answer, but the Storyteller’s answer is only guaranteed to be true if the claimed role is in play; otherwise, the answer may be arbitrary or misleading. If you are drunk or poisoned, the Storyteller may give false information regardless of whether the role is in play.'
+		description: `
+The Agent uncovers truth by pretending to be someone else.
+
+- Each day, the Agent must publicly announce to all players that they are a specific character. The claimed character cannot be the Agent, and must be a character they have not claimed on any previous day.
+- That night, the Agent wakes and may ask the Storyteller any yes/no question. If the character the Agent claimed that day is actually in play, the Storyteller answers truthfully. If it is not in play, the Storyteller may answer however they wish.
+- The Agent's daily claim does not need to be accurate — they may claim any character on the script, including evil characters. What matters is whether the claimed character is genuinely in play.
+- The Agent's daily claims are public. Other players may try to "steal" a character the Agent intends to claim, robbing them of a guaranteed truthful answer the following night.
+- If the Agent is drunk or poisoned, the Storyteller may answer their nightly question falsely regardless of whether the claimed character is in play.`
 	}
 };
 
@@ -40,7 +47,13 @@ const beastheart: ClocktowerCharacter = {
 		otherNightReminder: 'Choose a dead player to learn their role.'
 	},
 	details: {
-		description: 'Each night after the first, you can select a dead player and learn their role. If their role changed over the course of the game, you learn one role they played.'
+		description: `
+The Beastheart reads the stories left behind by the dead.
+
+- Each night, beginning on the second night, the Beastheart chooses one dead player and learns one character that player held at some point during the game.
+- If the chosen player held only one character during the game, the Storyteller reveals that character. If the player held multiple characters — due to role-swapping effects such as the Hive Queen or Voiceless Talker — the Storyteller chooses which one to reveal.
+- The Beastheart may choose the same dead player on multiple nights, potentially learning a different character they held each time.
+- If the Beastheart is drunk or poisoned, the character they learn may be false.`
 	}
 };
 
@@ -61,7 +74,13 @@ const censor: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'A player who is “judged” and is on the other team becomes drunk until you choose to judge a different player.'
+		description: `
+The Censor quietly incapacitates their enemies.
+
+- Each night, beginning on the second night, the Censor chooses a player to judge. If that player is not on the Censor's team — that is, they are of a different alignment — that player becomes drunk.
+- The chosen player remains drunk until the Censor selects a different player on a subsequent night. Each night the Censor wakes and chooses, the drunk effect moves to the new choice and the previous player is no longer drunk.
+- If the Censor chooses a player who shares their alignment, nothing happens that night. The Censor's choice still updates, so the previously drunk player (if any) is freed.
+- If the Censor is drunk or poisoned, their chosen player is not actually drunk, but the Storyteller acts as though they are.`
 	}
 };
 
@@ -75,7 +94,7 @@ const conduit: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Faith is my armour, and corruption breaks upon me like waves on stone.',
-		ability: 'Each night, choose a player; until dusk, they are not drunk or poisoned, and cannot be made drunk or poisoned.',
+		ability: 'Each night, choose a player; they are no longer drunk or poisoned, and until dusk they cannot be made drunk or poisoned.',
 		firstNightReminder: 'Choose a player to protect.',
 		otherNightReminder: 'Choose a player to protect.',
 		reminders: [
@@ -83,7 +102,13 @@ const conduit: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'The chosen player is protected from all sources of drunkenness and poisoning until dusk, including ongoing effects. If they are already drunk or poisoned, those conditions are removed for the duration. This protection does not extend beyond dusk and does not affect other players.'
+		description: `
+The Conduit purifies those touched by corruption.
+
+- Each night, including the first night, the Conduit chooses a player to bless. That player is immediately cleansed of any drunk or poisoned status and cannot be made drunk or poisoned again until the following dusk.
+- Protection expires at dusk — that is, the start of the next night phase. After that, the player may be affected by drunk or poison effects normally.
+- The Conduit may choose themselves.
+- If the Conduit is drunk or poisoned, the player they choose is not actually protected, though the Storyteller acts as if the protection has been applied.`
 	}
 };
 
@@ -103,7 +128,14 @@ const director: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You can prove your identity; the first time you nominate, you can prove that you are the Director, which is enormously powerful.'
+		description: `
+The Director can prove they are trustworthy.
+
+- The first time the Director nominates a player, if that player is a Townsfolk, every player in the game immediately and publicly learns the Director's character.
+- This revelation occurs during the nomination itself, before any vote is held.
+- The ability only triggers if the nominee is a Townsfolk. Nominating an Outsider, Minion, Demon, or Traveller has no special effect and does not expend the ability.
+- If the Director is drunk or poisoned when making their first nomination, the ability does not trigger, even if the nominee is a Townsfolk. The ability is still expended — the Director does not get a second chance when sober.
+- After the first nomination (whether or not it triggered), the Director has no further special effect.`
 	}
 };
 
@@ -123,7 +155,14 @@ const elementalist: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'This ability triggers automatically the first time you would be executed. The nominator dies instead of you, and the execution ends.'
+		description: `
+The Elementalist turns execution into a weapon against its instigator.
+
+- The first time the Elementalist would be executed by vote, their nominator dies instead, and the Elementalist survives.
+- This ability triggers automatically — the Elementalist need not announce or declare it.
+- The nominator is the player who nominated the Elementalist during that vote. If the Elementalist was nominated by a dead player, that player "dies" but is already dead; the effect is spent for no practical gain.
+- If the Elementalist is drunk or poisoned when they would be executed, the ability does not trigger and the Elementalist is executed normally. The ability is still expended.
+- This ability only protects against execution by vote. It does not prevent death by night kill or any other source.`
 	}
 };
 
@@ -143,7 +182,15 @@ const fury: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You choose two players; they must be sitting adjacent to each other. If either of them is the Demon, you immediately die; otherwise, the Storyteller chooses one of the two players to immediately die. If you are drunk or poisoned, nothing happens.'
+		description: `
+The Fury gambles their life to expose the Demon.
+
+- Once per game, during the day, the Fury may publicly announce the use of their ability and nominate two players who are sitting adjacent to one another in the seating order.
+- If either of the two chosen players is the Demon, the Fury dies. If neither is the Demon, one of them dies — the Storyteller decides which.
+- The two players must be adjacent to each other; they do not need to be adjacent to the Fury.
+- If the Fury uses this ability and survives, the town has confirmation that neither of the two chosen players is the Demon.
+- If the Fury is drunk or poisoned when they use this ability, nothing happens. The ability is still expended.
+- Once used, this ability is gone.`
 	}
 };
 
@@ -164,7 +211,13 @@ const nll: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'While you are sober and healthy, your living neighbours cannot be made drunk or poisoned by any means. If you become drunk or poisoned, this protection immediately stops. This does not remove existing drunkenness or poison already affecting your neighbours.'
+		description: `
+The Null creates a zone of stability around themselves.
+
+- The Null's two living neighbours — the nearest living player to their left and the nearest living player to their right — cannot be made drunk or poisoned by any source.
+- This ability is passive and always active. The Null takes no action.
+- If the Null is drunk or poisoned, this protection is suspended and their neighbours may be affected normally.
+- The Null's protection prevents new applications of drunk or poison. It does not cleanse existing conditions — if a player is already drunk or poisoned when they become the Null's neighbour, those effects remain.`
 	}
 };
 
@@ -178,7 +231,7 @@ const revenant: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Bury me if it comforts you; death and I have an arrangement.',
-		ability: 'If you die, you come back to life at night as a dead Townsfolk.',
+		ability: 'If you die, you come back to life at night as a dead Townsfolk; you retain your alignment.',
 		otherNightReminder: 'If dead, resurrect.',
 		remindersGlobal: [
 			'Is the Revenant'
@@ -192,7 +245,13 @@ const revenant: ClocktowerCharacter = {
 
 	},
 	details: {
-		description: 'When you die, you become a dead Townsfolk of the Storyteller’s choice before being resurrected. However, if there are no other dead Townsfolk, then the dead Townsfolk you become might be the Revenant, in which case you can die and come back to life again.'
+		description: `
+The Revenant refuses to stay dead.
+
+- If the Revenant dies, their character token is first replaced with a dead Townsfolk character of the Storyteller's choosing, and then they are resurrected that night as that character — with its ability fully active.
+- The Revenant retains the alignment they were when they died.
+- The Townsfolk the Revenant becomes is drawn from the dead Townsfolk in the game. If there are no other dead Townsfolk to draw from, the Storyteller may have no choice but to make them the Revenant again — in which case they can die and come back to life repeatedly.
+- The Storyteller tracks the Revenant's true origin with the "Is the Revenant" reminder in the Grimoire. Other players do not automatically learn that the Revenant has returned or that their character has changed.`
 	}
 };
 
@@ -210,7 +269,14 @@ const shadow: ClocktowerCharacter = {
 		otherNightReminder: 'Learn how many players changed character / alignment.'
 	},
 	details: {
-		description: 'Each night, you learn how many players have a different character token now than they started the night with (a player whose role has been changed multiple times only counts once), and how many have a different alignment than they started the night with.'
+		description: `
+The Shadow watches the invisible currents of change.
+
+- Each night, beginning on the second night, the Shadow learns two numbers: how many players changed their character that night, and how many players changed their alignment that night.
+- "Changed character" covers any effect that altered a player's character token during the night, such as the Hive Queen's role swap, the Voiceless Talker's swap, or the Talent's transformation. A player whose character changed several times in the same night counts only once.
+- "Changed alignment" covers any effect that changed which team a player is on during the night, such as the Aurumvas converting a player to evil, or the Antihero's alignment flip.
+- If no changes occurred, the Shadow learns zero for both counts.
+- If the Shadow is drunk or poisoned, the numbers they receive may be false.`
 	}
 };
 
@@ -232,7 +298,14 @@ const tactician: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'If one of your marked players dies that night, the surviving marked player learns the dead player’s role and alignment. If both die, no information is learned. If the surviving marked player is drunk or poisoned, they may receive incorrect information.'
+		description: `
+The Tactician prepares for death to yield information.
+
+- Each night, beginning on the second night, the Tactician secretly chooses two players and marks them. If exactly one of those two players dies that same night, the surviving marked player may privately visit the Storyteller the following day to learn the dead player's character and alignment.
+- The ability only triggers if exactly one of the two marked players dies — not both, and not neither.
+- Visiting the Storyteller is voluntary; the surviving marked player is not required to do so.
+- The Tactician does not receive this information themselves — only the surviving marked player does.
+- If the Tactician — or the surviving marked player — is drunk or poisoned, the information may be false or may not be given at all.`
 	}
 };
 
@@ -246,7 +319,7 @@ const talent: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Give me but a moment, and I will become whoever we need.',
-		ability: 'You learn two roles; once per game, when you publicly claim to be one of them, you become that role.',
+		ability: 'You learn two non-Demon roles; once per game, when you publicly claim one of them, you become that role; you retain your alignment.',
 		firstNightReminder: 'Learn 2 roles.',
 		remindersGlobal: [
 			'Is the Talent'
@@ -259,7 +332,15 @@ const talent: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You learn two roles at the start of the game; these roles may be of any type, and may be in play or not. Once per game, you may publicly claim to be one of them and immediately become that role (your alignment does not change).'
+		description: `
+The Talent can become exactly who the team needs.
+
+- At the start of the game, the Talent privately learns two character names. Once per game, if the Talent publicly claims to be one of those two characters during the day, they immediately transform into that character and gain its ability.
+- "Publicly claims" means announcing to all players "I am the [character]." The transformation occurs at the moment of the claim.
+- Once transformed, the Talent is treated as their new character for all purposes, but their alignment does not change. Their Talent token is replaced in the Grimoire; the "Is the Talent" reminder tracks their original identity.
+- The two characters the Talent learns may be of any type except Demon, and may or may not be in play.
+- The Talent may choose never to use this ability.
+- If the Talent is drunk or poisoned when they make their public claim, the transformation does not occur and the ability is not expended.`
 	}
 };
 
@@ -278,7 +359,13 @@ const troubadour: ClocktowerCharacter = {
 		otherNightReminder: 'Learn 2 roles, at least one of which is in play.'
 	},
 	details: {
-		description: 'Each night, you learn two roles, at least one of which is currently in play. If you are drunk or poisoned, this information may be incorrect or misleading.'
+		description: `
+The Troubadour sings of those who walk among us.
+
+- Each night, including the first night, the Troubadour wakes and learns two character names. At least one of those characters is genuinely in play.
+- The Storyteller chooses which two characters to show. At least one must be a character currently held by a living or dead player in the game. The second may or may not be in play.
+- The Troubadour cannot determine from a single night which of the two is the confirmed in-play character. Over many nights, however, a picture of the script's composition begins to emerge.
+- If the Troubadour is drunk or poisoned, the Storyteller is not required to include a character that is genuinely in play.`
 	}
 };
 
@@ -299,7 +386,14 @@ const antihero: ClocktowerCharacter = {
 		ability: 'Each time you are nominated, you change alignment.'
 	},
 	details: {
-		description: 'Each time you are nominated, your alignment immediately flips. This happens before the vote resolves and can occur multiple times per game.'
+		description: `
+The Antihero is shaped entirely by the pressure placed upon them.
+
+- The Antihero begins the game good. Each time they are nominated by any player — whether or not the nomination results in an execution — their alignment flips: good becomes evil, evil becomes good.
+- Every individual nomination triggers a flip. If the Antihero is nominated twice in one day, they return to the alignment they started that day with.
+- The Antihero always knows their own current alignment.
+- An evil Antihero counts as evil for all game purposes: they contribute to evil's win condition and are treated as an opponent by abilities like the Censor.
+- **Jinx — Aristocrat:** If the Aristocrat nominates the Antihero, the Antihero becomes drunk immediately and does not change alignment from that nomination.`
 	}
 };
 
@@ -316,7 +410,14 @@ const coward: ClocktowerCharacter = {
 		ability: 'If you are nominated, you are executed immediately.'
 	},
 	details: {
-		description: 'If you are nominated, the nomination immediately succeeds without a vote, and you are executed and die. This happens even if the nomination would otherwise fail or be withdrawn, or you would usually be unable to die for some reason.'
+		description: `
+The Coward cannot withstand the act of accusation.
+
+- If any player nominates the Coward, the Coward is immediately executed — no vote is held. This counts as that day's execution. No further executions may occur that day.
+- Being "executed immediately" skips the vote but does not end the day. Effects that respond to an execution still apply — for example, a Disgraced of the Coward's alignment may choose to die in the Coward's place before the Storyteller ends the day.
+- This happens even if the nomination would otherwise fail or be withdrawn, or if the Coward would normally be unable to die for some reason. The Coward cannot prevent or cancel the effect.
+- If the Coward is drunk or poisoned when nominated, the ability does not trigger and a normal nomination and vote proceed.
+- Nominating the Coward wastes the day's execution on a guaranteed Outsider kill, unless there is good reason to do so.`
 	}
 };
 
@@ -345,10 +446,24 @@ const devil: ClocktowerCharacter = {
 				type: 'reveal',
 				name: 'replace-character'
 			}
+		],
+		jinxes: [
+			{
+				id: 'duskelf',
+				reason: 'The Devil and the Dusk Elf cannot both be in play; the Devil fills the only Minion slot the Dusk Elf needs.'
+			}
 		]
 	},
 	details: {
-		description: 'You are shown a Minion token at the start of the game; although you do not have this Minion’s ability, the Storyteller will act as if you do, and any information you learn may be misleading. You are shown who the Demon is alongside the real Minions, and the Demon knows that you are the Devil. Although you believe yourself to be part of the evil team, you are still good and win with the good team unless your alignment changes.'
+		description: `
+The Devil believes they are something they are not.
+
+- The Devil is told at the start of the game that they are a specific Minion character. On the first night, the Demon is privately told who the Devil is.
+- The Devil receives any first-night information that their fake Minion character would normally receive. This information may be false. They are also shown who the Demon is, alongside the real Minions.
+- The Devil genuinely does not know they are an Outsider. They believe they are evil and on the Demon's team, and will typically act accordingly. However, the Devil is still good and wins with the good team — unless their alignment is later changed.
+- The Devil has no real ability — their fake Minion character's ability does not function.
+- Other Minions in the game (if any) are not told about the Devil.
+- The Devil adds one Outsider and removes one Minion from the game's expected character composition.`
 	}
 };
 
@@ -369,7 +484,13 @@ const memonek: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'If you are executed, that night (just after dusk) the Demon is shown the Grimoire.'
+		description: `
+The Memonek's execution is a gift to the Demon.
+
+- If the Memonek is executed by vote, the Demon is privately shown the full Grimoire that night, just after dusk.
+- The Grimoire reveals every player's current character, alignment, and status — a complete picture of the game at that moment.
+- This ability only triggers on execution. It does not activate on night kills or any other form of death.
+- If the Memonek is drunk or poisoned when executed, the Demon does not see the Grimoire.`
 	}
 };
 
@@ -394,7 +515,13 @@ const angulotl: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'Each night, you can make a player poisoned until dusk the next day. Before the Demon kills, they are told which players are currently poisoned; they can use this information when they choose their target.'
+		description: `
+The Angulotl poisons the well of information for the good team.
+
+- Each night, beginning on the second night, the Angulotl chooses a player. That player is poisoned for the rest of that night and the entire following day, expiring at dusk.
+- Before the Demon acts each night, the Angulotl learns which players are currently poisoned — including those poisoned by any other source, such as the Rival.
+- A poisoned player has no ability, but the Storyteller pretends they do. If their ability gives them information, the Storyteller may give them false information instead.
+- If the Angulotl is drunk or poisoned, their chosen player is not actually poisoned, but the Storyteller acts as though they are.`
 	}
 };
 
@@ -415,7 +542,15 @@ const duskElf: ClocktowerCharacter = {
 		setup: true
 	},
 	details: {
-		description: 'If the Demon is executed while six or more players are alive (including the Demon but not including Travellers), they do not die but instead register as dead. The day ends and the game continues as if the Demon had died, but they remain alive; they can still nominate, vote, and act in the night. This ability can only be used once.'
+		description: `
+The Dusk Elf gives the Demon a reprieve from the town's justice.
+
+- If there are six or more players alive and the Demon is executed by vote for the first time, the Demon survives but registers as dead to all players. For this count, the Demon is included but Travellers are not.
+- The day ends and the game continues as though the Demon had died — players are told the Demon has been executed, and their seat may receive a shroud. In secret, the Demon remains alive: they can still nominate, vote, and use their night-kill ability as normal.
+- This ability only applies to the Demon's first execution, and can only be used once. Subsequent executions kill the Demon normally.
+- If fewer than six non-Traveller players are alive when the Demon is first executed, the ability does not trigger and the Demon dies normally.
+- If the Dusk Elf is drunk or poisoned at the moment of the Demon's execution, the ability does not trigger.
+- The Dusk Elf is always the only Minion in games where it is used.`
 	}
 };
 
@@ -432,7 +567,14 @@ const lightbender: ClocktowerCharacter = {
 		ability: 'If you would be executed, one of your good neighbours is executed instead.'
 	},
 	details: {
-		description: 'If you would be executed and you have at least one immediate neighbour who is alive and on the good team, the Storyteller chooses one of them to be executed instead of you.'
+		description: `
+The Lightbender makes their neighbours pay for the town's justice.
+
+- If the Lightbender would be executed by vote and at least one of their immediate neighbours is alive and on the good team, that neighbour is executed in their place and the Lightbender survives.
+- The relevant neighbours are the two players seated immediately beside the Lightbender. If both qualify, the Storyteller chooses which one is executed.
+- If neither immediate neighbour is both alive and good, the Lightbender is executed normally.
+- This ability triggers every time the Lightbender would be executed — not just the first time.
+- If the Lightbender is drunk or poisoned when they would be executed, they are executed normally.`
 	}
 };
 
@@ -453,7 +595,15 @@ const rival: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You are woken on the first night to be told an in-play Townsfolk role. You have that role’s ability. The player with this role is poisoned.'
+		description: `
+The Rival steals a Townsfolk's identity — and ruins the original in the process.
+
+- The Rival has the ability of one in-play Townsfolk character. The Townsfolk whose ability the Rival has copied is permanently poisoned while the Rival is alive.
+- The Rival learns which Townsfolk they are copying on the first night. They fully gain that character's ability, including its nightly actions and information.
+- Because the Rival is evil, the Storyteller may give them false information through their copied ability.
+- The copied Townsfolk is permanently poisoned for as long as the Rival is in play. Their ability does not function, and any information they receive may be false. The Townsfolk is not told they are poisoned.
+- If the Rival dies, the copied Townsfolk is no longer poisoned.
+- If the Rival is drunk or poisoned, their copied ability does not function.`
 	}
 };
 
@@ -477,10 +627,27 @@ const aurumvas: ClocktowerCharacter = {
 		reminders: [
 			'Killed'
 		],
-		setup: true
+		setup: true,
+		jinxes: [
+			{
+				id: 'devil',
+				reason: 'The Aurumvas and the Devil cannot both be in play; with no Minions there is no Minion slot for the Devil to replace.'
+			},
+			{
+				id: 'duskelf',
+				reason: 'The Aurumvas and the Dusk Elf cannot both be in play; the Aurumvas has no Minions.'
+			}
+		]
 	},
 	details: {
-		description: 'You start with no minions, but when you would kill at night, you can choose instead to recruit a player to the evil team. If you choose to recruit, that player is immediately woken up and told that their alignment has changed (but are not told who else is on the evil team). You cannot kill on night 1, and when you choose to recruit you cannot then choose to recruit again the next night.'
+		description: `
+The Aurumvas does not merely kill — it converts.
+
+- Each night, the Aurumvas chooses a player. That player either dies or becomes evil — the Aurumvas decides which outcome applies. The Aurumvas plays in a game with no Minions.
+- The Aurumvas cannot choose to kill on the first night. On night 1, they must recruit (convert a player to evil) or take no action.
+- The Aurumvas cannot recruit on two consecutive nights. If they recruited on the previous night, they must kill (or abstain) before recruiting again.
+- A player converted to evil retains their original character and ability but becomes evil-aligned. They are immediately woken and told that their alignment has changed, but they are not told who else is on the evil team. They win alongside the Aurumvas. Converted players are not Minions — they are simply evil with their original role.
+- If the Aurumvas is drunk or poisoned, their chosen action has no effect.`
 	}
 };
 
@@ -502,7 +669,13 @@ const blightPhage: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'Once per game, you may resurrect a dead Minion as any Minion of your choice. The new Minion gains their new ability immediately. This happens after deaths but before information is given.'
+		description: `
+The Blight Phage never wastes a fallen servant.
+
+- Each night, beginning on the second night, the Blight Phage chooses a player, who dies.
+- Once per game, instead of making a kill, the Blight Phage may choose a dead Minion and resurrect them as a Minion of the Blight Phage's choice. The resurrected player is alive, evil, and has the full ability of their new role immediately. This resolves after deaths but before information is given to other players.
+- The resurrection replaces the kill for that night — the Blight Phage cannot both kill and resurrect on the same night.
+- If the Blight Phage is drunk or poisoned, the chosen player does not die, and any resurrection attempt fails. The once-per-game use is not expended if the ability fails due to being drunk or poisoned.`
 	}
 };
 
@@ -523,7 +696,15 @@ const hiveQueen: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'Each night, just before dawn, you may choose to swap roles with another player of your choice on the evil team. The other player does not have to agree to this swap. Both players keep their alignment and any reminder tokens but exchange roles (and therefore abilities). This can create chains of changing identities.'
+		description: `
+The Hive Queen can slip into any role that serves the swarm.
+
+- Each night, beginning on the second night, the Hive Queen chooses a player, who dies. After the kill, the Hive Queen may optionally swap their own character with that of any other evil player.
+- The swap is optional and targets only evil players. The chosen evil player does not have to agree to the swap. Both players keep their alignment and any reminder tokens, but exchange characters — and therefore abilities.
+- After a swap, the evil player who receives the Hive Queen token is now the Demon and kills each night. The former Hive Queen has a new character and its ability.
+- The kill occurs before the optional swap; the Hive Queen may not swap before acting.
+- If the Hive Queen is drunk or poisoned, no kill occurs and no swap can take place.
+- The Shadow detects when character swaps occur.`
 	}
 };
 
@@ -545,7 +726,14 @@ const torlas: ClocktowerCharacter = {
 		setup: true
 	},
 	details: {
-		description: 'When a Townsfolk ability targets you and only you, it instead targets your closest living Townsfolk neighbour (if there is a tie, the target is chosen by the Storyteller). This does not affect non-Townsfolk abilities or abilities that target more than one player.'
+		description: `
+The Torlas deflects every attack aimed at itself.
+
+- Each night, beginning on the second night, the Torlas chooses a player, who dies.
+- If a Townsfolk ability would target only the Torlas, it instead targets the Torlas's closest living Townsfolk neighbour in either direction. If both directions are equidistant, the Storyteller chooses.
+- The deflection only triggers if the Torlas is the sole target of the ability. If an ability targets multiple players simultaneously, it is not deflected.
+- If there is no living Townsfolk neighbour in any direction, the ability targets the Torlas normally.
+- The Torlas adds one Outsider to the game's character setup.`
 	}
 };
 
@@ -571,12 +759,23 @@ const aristocrat: ClocktowerCharacter = {
 		jinxes: [
 			{
 				id: 'antihero',
-				reason: 'If the Aristocrat nominates the Antihero, the Antihero is drunk immediately and does not switch alignment.'
+				reason: 'If the Aristocrat nominates the Antihero, the Antihero is drunk immediately and so does not switch alignment.'
+			},
+			{
+				id: 'coward',
+				reason: 'If the Aristocrat nominates the Coward, the Coward is drunk immediately and so is not executed by their own ability.'
 			}
 		]
 	},
 	details: {
-		description: 'When you nominate a player, they are drunk until dusk regardless of whether the nomination succeeds. This happens immediately.'
+		description: `
+The Aristocrat's nominations carry an immediate and personal cost for the accused.
+
+- When the Aristocrat nominates a player, the nominated player becomes drunk until dusk.
+- This ability applies to every nomination the Aristocrat makes — not only the first.
+- The drunk status expires at the start of the next night phase. A drunk player has no ability, but the Storyteller pretends they do and may give them false information.
+- **Jinx — Antihero:** If the Aristocrat nominates the Antihero, the Antihero becomes drunk immediately and does not change alignment from that nomination.
+- **Jinx — Coward:** If the Aristocrat nominates the Coward, the Coward becomes drunk immediately and so is not executed by their own ability.`
 	}
 };
 
@@ -599,7 +798,13 @@ const criminal: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'The chosen player’s targeted abilities will affect a different player instead. The Storyteller determines the new target. This does not affect abilities that do not target.'
+		description: `
+The Criminal ensures that good intentions reach unintended destinations.
+
+- Each night, including the first night, the Criminal chooses a player. Until dusk the following day, if that player uses an ability that targets another player, the ability targets a different player instead — chosen by the Storyteller.
+- The redirection applies to abilities that require the player to actively select a specific target. Passive abilities or abilities that affect only the player themselves are not redirected.
+- The affected player is not aware that their ability has been redirected. They believe they targeted their intended player.
+- If the Criminal is drunk or poisoned, the chosen player's ability is not redirected and functions normally.`
 	}
 };
 
@@ -622,7 +827,14 @@ const disciple: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'You may resurrect a dead player once per game. If you are evil, that player is now poisoned.'
+		description: `
+The Disciple can restore one life — at a possible hidden cost.
+
+- Once per game, beginning on the second night, the Disciple may choose a dead player and resurrect them. The resurrected player is alive again and has their character and ability fully restored.
+- If the Disciple is evil, the resurrected player is also poisoned. Their ability does not function and any information they receive may be false — neither the Disciple nor the resurrected player are told about the poison.
+- The Disciple may choose not to use their ability on any given night, preserving it for a later night.
+- Once used, the ability cannot be used again, even if the resurrected player dies a second time.
+- If the Disciple is drunk or poisoned when attempting a resurrection, the chosen player is not resurrected and the once-per-game use is not expended.`
 	}
 };
 
@@ -641,7 +853,14 @@ const disgraced: ClocktowerCharacter = {
 		otherNightReminder: 'If a player of your alignment was executed, choose to die and learn the role of their nominator.'
 	},
 	details: {
-		description: 'When a player of your alignment is executed, you choose to die in their place; you must speak up before the Storyteller ends the day. If you do, you learn the role of the player who nominated them. If the person you chose was not of your alignment, nothing happens.'
+		description: `
+The Disgraced can trade their life to save an ally and learn a secret.
+
+- If a player of the Disgraced's alignment is executed, the Disgraced may choose to die in that player's place. The executed player survives, the Disgraced dies, and the Disgraced learns the character of the player who originally nominated the executed player.
+- To use this ability, the Disgraced must speak up before the Storyteller ends the day. The nominator's character is then revealed to them that night.
+- If the player they chose to die for was not actually of the Disgraced's alignment, nothing happens.
+- This ability may be used multiple times — once for each aligned player who is executed. The Disgraced may choose not to use it for any given execution.
+- If the Disgraced is drunk or poisoned when the choice is made, the information they receive about the nominator may be false.`
 	}
 };
 
@@ -663,7 +882,12 @@ const polder: ClocktowerCharacter = {
 		]
 	},
 	details: {
-		description: 'If you are nominated and survive, that night one player of your alignment learns the nominator’s role. You are told who received this information. If you are drunk or poisoned, this may not function correctly.'
+		description: `
+A failed execution against the Polder becomes intelligence for the good team.
+
+- If the Polder is nominated and the vote does not result in their execution, that night one player of the Polder's alignment learns the nominator's character. The Polder is then told which player received this information.
+- This ability may trigger multiple times, once per failed nomination against the Polder in the same game.
+- If the Polder is drunk or poisoned when the failed nomination occurs, the information delivered may be false.`
 	}
 };
 
@@ -682,7 +906,15 @@ const voicelessTalker: ClocktowerCharacter = {
 		otherNightReminder: 'Choose two players to switch.'
 	},
 	details: {
-		description: 'Each night, you swap the roles (but not alignments) of two players. You cannot nominate, but you may still vote and speak.'
+		description: `
+The Voiceless Talker silently rearranges the pieces on the board.
+
+- Each night, beginning on the second night, the Voiceless Talker chooses two players and swaps their characters. Alignments are not changed — only character tokens are exchanged.
+- Both players now have each other's character and ability. Neither player is told that a swap has occurred.
+- The Voiceless Talker cannot nominate at any point during the game, but they may still vote and speak.
+- If the Voiceless Talker is drunk or poisoned, the swap does not occur.
+- If the swap would result in the creation of a good Demon, the swap does not occur.
+- The Shadow detects when character swaps occur.`
 	}
 };
 
@@ -704,9 +936,9 @@ export class ClocktowerData {
 				// Evil team
 				'devil',
 				// Modification
+				'rival',
 				'conduit',
 				'criminal',
-				'rival',
 				// Demons
 				'aurumvas',
 				// Info
@@ -788,8 +1020,8 @@ export class ClocktowerData {
 			bootlegger: undefined,
 			firstNight: [
 				// Modification
-				'conduit',
-				'rival'
+				'rival',
+				'conduit'
 			],
 			otherNight: [
 				// Grim

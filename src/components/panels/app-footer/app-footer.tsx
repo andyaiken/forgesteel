@@ -26,7 +26,7 @@ export interface FooterParams {
 }
 
 interface Props {
-	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
+	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view' | 'clocktower';
 	params: FooterParams;
 }
 

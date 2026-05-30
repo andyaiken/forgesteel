@@ -1,18 +1,7 @@
 .clocktower-script-panel {
-	display: block;
-
 	.roles-section {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 10px;
-
-		.role-image {
-			width: 30px;
-			height: 30px;
-		}
-	}
-
-	.night-section {
-		display: block;
 	}
 }

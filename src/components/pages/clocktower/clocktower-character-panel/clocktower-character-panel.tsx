@@ -1,5 +1,6 @@
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
+import { ClocktowerToken } from '@/components/pages/clocktower/clocktower-token/clocktower-token';
 import { Divider } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -29,8 +30,6 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 		})
 		.filter(j => !!j);
 
-	const img = ClocktowerLogic.getImageLocation(props.character);
-
 	return (
 		<ErrorBoundary>
 			<div className='clocktower-character-panel'>
@@ -42,28 +41,15 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 				>
 					{props.character.role.name}
 				</HeaderText>
-				{
-					!!props.character.role.image && (props.character.role.image.length > 0) ?
-						<div className='clocktower-token'>
-							{img ? <img className='clocktower-token-image' src={img} /> : undefined}
-							<svg className='clocktower-token-text' viewBox='0 0 100 100'>
-								<defs>
-									<path id='arc' d='M 5,50 A 45,45 0 0 0 95,50' fill='none' />
-								</defs>
-								<text>
-									<textPath href='#arc' startOffset='50%' textAnchor='middle' fill='rgba(0, 0, 0, 0.7)'>
-										{props.character.role.name}
-									</textPath>
-								</text>
-							</svg>
-						</div>
-						: null
-				}
-				<div className='ds-text flavor-text'>
-					{`"${props.character.role.flavor}"`}
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+					<ClocktowerToken character={props.character} size={150} flippable={true} />
+					<div className='ds-text flavor-text'>
+						{`"${props.character.role.flavor}"`}
+					</div>
 				</div>
 				<Divider />
 				<Field label='Ability' value={props.character.role.ability} />
+				<Divider />
 				<Markdown text={props.character.details.description} />
 				{jinxes.length > 0 ? <HeaderText>Jinxes</HeaderText> : null}
 				{jinxes.map(j => <Field key={j.id} label={j.name} value={j.reason} />)}

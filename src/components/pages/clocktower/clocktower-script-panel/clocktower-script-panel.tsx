@@ -1,11 +1,12 @@
 import { ButtonConfig, ButtonGroup, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { CheckCircleOutlined, CopyOutlined, WarningOutlined } from '@ant-design/icons';
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
-import { Drawer, Tabs, notification } from 'antd';
+import { Drawer, Flex, Tabs, notification } from 'antd';
 import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
 import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
 import { ClocktowerTeam } from '@/enums/clocktower-team';
+import { ClocktowerToken } from '@/components/pages/clocktower/clocktower-token/clocktower-token';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -40,22 +41,19 @@ export const ClocktowerScriptPanel = (props: Props) => {
 	const getCharactersSection = (team: ClocktowerTeam) => {
 		const characters = props.script.characters.filter(ch => ch.role.team === team);
 
-		const getImage = (ch: ClocktowerCharacter) => {
-			const img = ClocktowerLogic.getImageLocation(ch);
-			return img ?
-				<img className='role-image' src={img} />
-				: undefined;
-		};
-
 		return (
 			<div className='roles-section'>
 				{
 					characters.map(ch => (
-						<SelectablePanel key={ch.role.id} onSelect={() => setSelectedCharacter(ch)}>
-							<HeaderText extra={getImage(ch)}>
-								{ch.role.name}
-							</HeaderText>
-							<div className='ds-text'>{ch.role.ability}</div>
+						<SelectablePanel
+							key={ch.role.id}
+							style={{ padding: '0 10px', display: 'flex', justifyContent: 'center', minHeight: '80px' }}
+							onSelect={() => setSelectedCharacter(ch)}
+						>
+							<Flex align='center' gap={10}>
+								<ClocktowerToken character={ch} size={40} />
+								<Field label={ch.role.name} value={ch.role.ability} />
+							</Flex>
 						</SelectablePanel>
 					))
 				}
@@ -73,23 +71,22 @@ export const ClocktowerScriptPanel = (props: Props) => {
 		const list = first ? meta.firstNight : meta.otherNight;
 
 		return (
-			<div className='night-section'>
+			<Flex vertical={true} align='flex-start'>
 				{
 					(list || []).map((id, n) => {
 						const character = props.script.characters.find(ch => ch.role.id === id);
 						if (character) {
 							const reminder = (first ? character.role.firstNightReminder : character.role.otherNightReminder) || '-';
 							return (
-								<Field
-									key={n}
-									label={character.role.name}
-									value={reminder}
-								/>
+								<Flex key={n} align='center' gap={10}>
+									<ClocktowerToken character={character} size={20} />
+									<Field label={character.role.name} value={reminder} />
+								</Flex>
 							);
 						}
 
 						return (
-							<div key={n}>
+							<div key={n} className='ds-text'>
 								[{id}]
 							</div>
 						);
@@ -100,7 +97,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 						<Empty />
 						: null
 				}
-			</div>
+			</Flex>
 		);
 	};
 
@@ -194,12 +191,16 @@ export const ClocktowerScriptPanel = (props: Props) => {
 							key: 'night-order',
 							label: 'Night Order',
 							children: (
-								<div>
-									<HeaderText>First Night</HeaderText>
-									{getNightSection(true)}
-									<HeaderText>Other Nights</HeaderText>
-									{getNightSection(false)}
-								</div>
+								<Flex gap={10}>
+									<SelectablePanel>
+										<HeaderText>First Night</HeaderText>
+										{getNightSection(true)}
+									</SelectablePanel>
+									<SelectablePanel>
+										<HeaderText>Other Nights</HeaderText>
+										{getNightSection(false)}
+									</SelectablePanel>
+								</Flex>
 							)
 						}
 					]}

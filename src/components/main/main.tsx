@@ -1772,12 +1772,7 @@ export const Main = (props: Props) => {
 			<Routes>
 				<Route
 					path='/'
-					element={
-						<MainLayout
-							drawer={drawer}
-							setDrawer={setDrawer}
-						/>
-					}
+					element={<MainLayout drawer={drawer} setDrawer={setDrawer} />}
 				>
 					<Route
 						index={true}
@@ -1859,11 +1854,7 @@ export const Main = (props: Props) => {
 						/>
 						<Route
 							path='sheet/:heroID'
-							element={
-								<HeroSheetPreviewPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								/>
-							}
+							element={<HeroSheetPreviewPage sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)} />}
 						/>
 					</Route>
 					<Route path='library'>
@@ -1963,38 +1954,23 @@ export const Main = (props: Props) => {
 							/>
 						}
 					/>
-				</Route>
-				<Route path='backup'>
 					<Route
-						index={true}
-						element={
-							<BackupPage
-								homebrewSourcebooks={homebrewSourcebooks}
-							/>
-						}
+						path='backup'
+						element={<BackupPage homebrewSourcebooks={homebrewSourcebooks} />}
+					/>
+					<Route
+						path='transfer'
+						element={<TransferPage connectionSettings={connectionSettings} />}
+					/>
+					<Route
+						path='clocktower'
+						element={<ClocktowerPage params={footerParams} />}
 					/>
 				</Route>
-				<Route path='transfer'>
-					<Route
-						index={true}
-						element={
-							<TransferPage
-								connectionSettings={connectionSettings}
-							/>
-						}
-					/>
-				</Route>
-				<Route path='clocktower'>
-					<Route
-						index={true}
-						element={
-							<ClocktowerPage
-								params={footerParams}
-							/>
-						}
-					/>
-				</Route>
-				<Route path='*' element={<Navigate to='/' replace={true} />} />
+				<Route
+					path='*'
+					element={<Navigate to='/' replace={true} />}
+				/>
 			</Routes>
 			{notifyContext}
 			<Spin spinning={spinning} size='large' fullscreen={true} />

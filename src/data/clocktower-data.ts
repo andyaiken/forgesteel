@@ -204,20 +204,22 @@ const nll: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Within my null field, the world behaves as it should.',
-		ability: 'Your neighbours cannot be made drunk or poisoned.',
+		ability: 'Your neighbours cannot be made drunk or poisoned. The first time one of them would be killed in the night, they live.',
 		reminders: [
 			'Null field',
-			'Null field'
+			'Null field',
+			'Ability used'
 		]
 	},
 	details: {
 		description: `
 The Null creates a zone of stability around themselves.
 
-- The Null's two living neighbours — the nearest living player to their left and the nearest living player to their right — cannot be made drunk or poisoned by any source.
-- This ability is passive and always active. The Null takes no action.
+- The Null's two neighbours (regardless of their team or alignment) cannot be made drunk or poisoned by any source.
+- This ability is passive; the Null takes no action.
 - If the Null is drunk or poisoned, this protection is suspended and their neighbours may be affected normally.
-- The Null's protection prevents new applications of drunk or poison. It does not cleanse existing conditions — if a player is already drunk or poisoned when they become the Null's neighbour, those effects remain.`
+- The Null's protection prevents new applications of drunk or poison. It does not cleanse existing conditions.
+- The first time one of your protected neighbours would be killed during the night phase, they live.`
 	}
 };
 
@@ -265,17 +267,16 @@ const shadow: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Evil has a certain smell, a certain feel. Some nights I sense it more than others.',
-		ability: 'Each night*, learn how many players changed character, and how many changed alignment, tonight.',
-		otherNightReminder: 'Learn how many players changed character / alignment.'
+		ability: 'Each night*, learn how many players are currently drunk or poisoned, how many players changed character tonight, and how many changed alignment tonight.',
+		otherNightReminder: 'Learn how many players are drunk, how many changed character, and how many changed alignment.'
 	},
 	details: {
 		description: `
 The Shadow watches the invisible currents of change.
 
-- Each night, beginning on the second night, the Shadow learns two numbers: how many players changed their character that night, and how many players changed their alignment that night.
+- Each night, beginning on the second night, the Shadow learns three numbers: how many players are drunk or poisoned, how many players changed their character that night, and how many players changed their alignment that night.
 - "Changed character" covers any effect that altered a player's character token during the night, such as the Hive Queen's role swap, the Voiceless Talker's swap, or the Talent's transformation. A player whose character changed several times in the same night counts only once.
 - "Changed alignment" covers any effect that changed which team a player is on during the night, such as the Aurumvas converting a player to evil, or the Antihero's alignment flip.
-- If no changes occurred, the Shadow learns zero for both counts.
 - If the Shadow is drunk or poisoned, the numbers they receive may be false.`
 	}
 };
@@ -318,7 +319,7 @@ const talent: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower/talent/evil.png'
 		],
 		team: ClocktowerTeam.Townsfolk,
-		flavor: 'Give me but a moment, and I will become whoever we need.',
+		flavor: 'Deep down, I always knew I could do this. I just needed the right moment.',
 		ability: 'You learn two non-Demon roles; once per game, when you publicly claim one of them, you become that role; you retain your alignment.',
 		firstNightReminder: 'Learn 2 roles.',
 		remindersGlobal: [
@@ -354,18 +355,19 @@ const troubadour: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Every hero worries they’ll be forgotten, but each one has a name, and I will sing them all.',
-		ability: 'Each night, you learn two roles, at least one of which is in play.',
-		firstNightReminder: 'Learn 2 roles, at least one of which is in play.',
-		otherNightReminder: 'Learn 2 roles, at least one of which is in play.'
+		ability: 'Each night, you learn two roles and are told how many of them are in play.',
+		firstNightReminder: 'Learn 2 roles, and how many of them are in play.',
+		otherNightReminder: 'Learn 2 roles, and how many of them are in play.'
 	},
 	details: {
 		description: `
 The Troubadour sings of those who walk among us.
 
-- Each night, including the first night, the Troubadour wakes and learns two character names. At least one of those characters is genuinely in play.
-- The Storyteller chooses which two characters to show. At least one must be a character currently held by a living or dead player in the game. The second may or may not be in play.
-- The Troubadour cannot determine from a single night which of the two is the confirmed in-play character. Over many nights, however, a picture of the script's composition begins to emerge.
-- If the Troubadour is drunk or poisoned, the Storyteller is not required to include a character that is genuinely in play.`
+- Each night, including the first night, the Troubadour wakes and learns two character names and how many of those two characters are in play — zero, one, or two.
+- "In play" means currently held by a living or dead player in the game.
+- The Storyteller chooses which two characters to show. The number given is the truthful count of how many are genuinely in play, and may be zero, one, or two.
+- A count of two is a strong confirmation; a count of zero is a useful negative; a count of one leaves the Troubadour to reason over many nights about which of the two is genuine.
+- If the Troubadour is drunk or poisoned, the count they receive may be false.`
 	}
 };
 
@@ -383,7 +385,8 @@ const antihero: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Outsider,
 		flavor: 'Don’t make me choose a side. If you push me, I will become what you feared.',
-		ability: 'Each time you are nominated, you change alignment.'
+		ability: 'Each time you are nominated, you change alignment.',
+		otherNightReminder: 'Wake up if alignment flipped.'
 	},
 	details: {
 		description: `
@@ -391,7 +394,7 @@ The Antihero is shaped entirely by the pressure placed upon them.
 
 - The Antihero begins the game good. Each time they are nominated by any player — whether or not the nomination results in an execution — their alignment flips: good becomes evil, evil becomes good.
 - Every individual nomination triggers a flip. If the Antihero is nominated twice in one day, they return to the alignment they started that day with.
-- The Antihero always knows their own current alignment.
+- If alignment changes, the Storyteller will wake the Antihero at night to verify this.
 - An evil Antihero counts as evil for all game purposes: they contribute to evil's win condition and are treated as an opponent by abilities like the Censor.
 - **Jinx — Aristocrat:** If the Aristocrat nominates the Antihero, the Antihero becomes drunk immediately and does not change alignment from that nomination.`
 	}
@@ -508,18 +511,19 @@ const angulotl: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Minion,
 		flavor: 'Ghrul-tha brakka-thul rrukkul vaa ghol-uGlurrak kroth ghol vaa-thul rrakka va ulmokh Glurrak thaa!',
-		ability: 'Each night*, choose a player: they are poisoned tonight and tomorrow day. Before the Demon acts, they learn which players are currently poisoned.',
+		ability: 'Each night*, choose a player: they are poisoned tonight and tomorrow day. Before the Demon acts, they learn which players are currently poisoned. [+1 Outsider]',
 		otherNightReminder: 'Choose a player; they are poisoned.',
 		reminders: [
 			'Poisoned'
-		]
+		],
+		setup: true
 	},
 	details: {
 		description: `
 The Angulotl poisons the well of information for the good team.
 
 - Each night, beginning on the second night, the Angulotl chooses a player. That player is poisoned for the rest of that night and the entire following day, expiring at dusk.
-- Before the Demon acts each night, the Angulotl learns which players are currently poisoned — including those poisoned by any other source, such as the Rival.
+- When the Demon is woken each night, they learns which players are currently poisoned — including those poisoned by any other source, such as the Rival.
 - A poisoned player has no ability, but the Storyteller pretends they do. If their ability gives them information, the Storyteller may give them false information instead.
 - If the Angulotl is drunk or poisoned, their chosen player is not actually poisoned, but the Storyteller acts as though they are.`
 	}
@@ -563,18 +567,19 @@ const lightbender: ClocktowerCharacter = {
 			'https://forgesteel.net/assets/clocktower/lightbender/good.png'
 		],
 		team: ClocktowerTeam.Minion,
-		flavor: 'Your blade will fall - just not where you aimed it.',
-		ability: 'If you would be executed, one of your good neighbours is executed instead.'
+		flavor: 'Grrrrrrrr.',
+		ability: 'Once per game, if you would be executed, your nearest living good neighbour is executed instead.',
+		reminders: [
+			'Ability used'
+		]
 	},
 	details: {
 		description: `
 The Lightbender makes their neighbours pay for the town's justice.
 
-- If the Lightbender would be executed by vote and at least one of their immediate neighbours is alive and on the good team, that neighbour is executed in their place and the Lightbender survives.
-- The relevant neighbours are the two players seated immediately beside the Lightbender. If both qualify, the Storyteller chooses which one is executed.
-- If neither immediate neighbour is both alive and good, the Lightbender is executed normally.
-- This ability triggers every time the Lightbender would be executed — not just the first time.
-- If the Lightbender is drunk or poisoned when they would be executed, they are executed normally.`
+- Once per game, if the Lightbender would be executed by vote, the Lightbender's closest living good neighbour is executed in their place and the Lightbender survives.
+- If there are two equally close good neighbours, the Storyteller chooses which one is executed.
+- If the Lightbender is drunk or poisoned when they would be executed, they are executed normally and the once-per-game use is not expended.`
 	}
 };
 
@@ -590,8 +595,17 @@ const rival: ClocktowerCharacter = {
 		flavor: 'I’m exactly like you… except better.',
 		ability: 'You have the ability of an in-play Townsfolk. The player with this role is poisoned.',
 		firstNightReminder: 'Gain an in-play Townsfolk ability.',
+		remindersGlobal: [
+			'Is the Rival'
+		],
 		reminders: [
 			'Poisoned'
+		],
+		special: [
+			{
+				type: 'reveal',
+				name: 'replace-character'
+			}
 		]
 	},
 	details: {
@@ -718,12 +732,11 @@ const torlas: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Demon,
 		flavor: 'Strike at me if you must, but know that every arrow can always find a softer target.',
-		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour [+1 Outsider]',
+		ability: 'Each night*, choose a player: they die. When a Townsfolk ability targets only you, it instead targets your closest living Townsfolk neighbour.',
 		otherNightReminder: 'Choose a player; they die.',
 		reminders: [
 			'Killed'
-		],
-		setup: true
+		]
 	},
 	details: {
 		description: `
@@ -947,6 +960,7 @@ export class ClocktowerData {
 			],
 			otherNight: [
 				'disgraced',
+				'antihero',
 				// Grim
 				'memonek',
 				// Modification
@@ -973,6 +987,7 @@ export class ClocktowerData {
 			]
 		},
 		characters: [
+			// Townsfolk
 			agent,
 			beastheart,
 			censor,
@@ -986,18 +1001,22 @@ export class ClocktowerData {
 			tactician,
 			talent,
 			troubadour,
+			// Outsiders
 			antihero,
 			coward,
 			devil,
 			memonek,
+			// Minions
 			angulotl,
 			duskElf,
 			lightbender,
 			rival,
+			// Demons
 			aurumvas,
 			blightPhage,
 			hiveQueen,
 			torlas,
+			// Travellers
 			aristocrat,
 			criminal,
 			disciple,
@@ -1020,35 +1039,39 @@ export class ClocktowerData {
 			bootlegger: undefined,
 			firstNight: [
 				// Modification
-				'rival',
-				'conduit'
+				'conduit',
+				// Info
+				'troubadour'
 			],
 			otherNight: [
-				// Grim
-				'memonek',
+				'antihero',
 				// Modification
 				'angulotl',
 				'conduit',
-				'censor',
 				'tactician',
 				// Demons
 				'blightphage',
 				'torlas',
 				// Info
-				'agent'
+				'shadow',
+				'troubadour'
 			]
 		},
 		characters: [
-			agent,
-			censor,
+			// Townsfolk
 			conduit,
 			elementalist,
 			fury,
+			shadow,
 			tactician,
+			troubadour,
+			// Outsiders
+			antihero,
 			coward,
-			memonek,
+			// Minions
 			angulotl,
-			rival,
+			lightbender,
+			// Demons
 			blightPhage,
 			torlas
 		]

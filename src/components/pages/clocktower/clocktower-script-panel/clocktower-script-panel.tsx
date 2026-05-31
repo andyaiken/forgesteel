@@ -47,7 +47,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 					characters.map(ch => (
 						<SelectablePanel
 							key={ch.role.id}
-							style={{ padding: '0 10px', display: 'flex', justifyContent: 'center', minHeight: '80px' }}
+							style={{ padding: '5px 10px', display: 'flex', justifyContent: 'center', minHeight: '80px' }}
 							onSelect={() => setSelectedCharacter(ch)}
 						>
 							<Flex align='center' gap={10}>

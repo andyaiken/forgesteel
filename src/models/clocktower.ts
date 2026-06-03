@@ -4,6 +4,7 @@ import { ClocktowerTeam } from '@/enums/clocktower-team';
 export interface ClocktowerSpecial {
 	name: string;
 	type: string;
+	value?: string | number;
 }
 
 export interface ClocktowerJinx {

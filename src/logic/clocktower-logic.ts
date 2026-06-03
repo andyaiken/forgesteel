@@ -77,8 +77,30 @@ export class ClocktowerLogic {
 		];
 	};
 
+	static getJinxes = (script: ClocktowerScript) => {
+		const jinxes: { ch1: ClocktowerCharacter, ch2: ClocktowerCharacter, reason: string }[] = [];
+
+		script.characters.forEach(ch1 => {
+			if (ch1.role.jinxes) {
+				ch1.role.jinxes.forEach(j => {
+					const ch2 = ClocktowerLogic.getCharacter(script, j.id);
+					if (ch2) {
+						jinxes.push({
+							ch1: ch1,
+							ch2: ch2,
+							reason: j.reason
+						});
+					}
+				});
+			}
+		});
+
+		return jinxes;
+	};
+
 	static validate = (script: ClocktowerScript) => {
-		const issues: string[] = [];
+		const warnings: string[] = [];
+		const errors: string[] = [];
 
 		const townsfolk = ClocktowerLogic.getTeamCount(script, ClocktowerTeam.Townsfolk);
 		const outsiders = ClocktowerLogic.getTeamCount(script, ClocktowerTeam.Outsider);
@@ -89,37 +111,37 @@ export class ClocktowerLogic {
 		switch (script.type) {
 			case ClocktowerScriptType.Standard: {
 				if (townsfolk !== 13) {
-					issues.push('There should be 13 Townsfolk.');
+					warnings.push('There should be 13 Townsfolk.');
 				}
 				if ((outsiders < 4) || (outsiders > 5)) {
-					issues.push('There should be 4 to 5 Outsiders.');
+					warnings.push('There should be 4 to 5 Outsiders.');
 				}
 				if ((minions < 4) || (minions > 5)) {
-					issues.push('There should be 4 to 5 Minions.');
+					warnings.push('There should be 4 to 5 Minions.');
 				}
 				if ((demons < 1) || (demons > 4)) {
-					issues.push('There should be 1 to 4 Demons.');
+					warnings.push('There should be 1 to 4 Demons.');
 				}
 				if (total > 25) {
-					issues.push('There should be no more than 25 total characters.');
+					warnings.push('There should be no more than 25 total characters.');
 				}
 				break;
 			}
 			case ClocktowerScriptType.Teensyville: {
 				if (townsfolk !== 6) {
-					issues.push('There should be 6 Townsfolk.');
+					warnings.push('There should be 6 Townsfolk.');
 				}
 				if (outsiders !== 2) {
-					issues.push('There should be 2 Outsiders.');
+					warnings.push('There should be 2 Outsiders.');
 				}
 				if (minions !== 2) {
-					issues.push('There should be 2 Minions.');
+					warnings.push('There should be 2 Minions.');
 				}
 				if ((demons < 1) || (demons > 2)) {
-					issues.push('There should be 1 to 2 Demons.');
+					warnings.push('There should be 1 to 2 Demons.');
 				}
 				if (total > 12) {
-					issues.push('There should be no more than 12 total characters.');
+					warnings.push('There should be no more than 12 total characters.');
 				}
 				break;
 			}
@@ -131,13 +153,13 @@ export class ClocktowerLogic {
 		firstNight.forEach(id => {
 			const role = script.characters.find(ch => ch.role.id === id);
 			if (!role) {
-				issues.push(`${id}: acts on the first night but is unknown`);
+				errors.push(`${id}: acts on the first night but is unknown`);
 			}
 		});
 		otherNight.forEach(id => {
 			const role = script.characters.find(ch => ch.role.id === id);
 			if (!role) {
-				issues.push(`${id}: acts on other nights but is unknown`);
+				errors.push(`${id}: acts on other nights but is unknown`);
 			}
 		});
 
@@ -145,13 +167,13 @@ export class ClocktowerLogic {
 			const inFirstOrder = firstNight.includes(ch.role.id);
 			const hasFirstReminder = !!ch.role.firstNightReminder;
 			if (inFirstOrder !== hasFirstReminder) {
-				issues.push(`${ch.role.name}: has ${hasFirstReminder ? 'a' : 'no'} first night reminder`);
+				errors.push(`${ch.role.name}: has ${hasFirstReminder ? 'a' : 'no'} first night reminder`);
 			}
 
 			const inOtherOrder = otherNight.includes(ch.role.id);
 			const hasOtherReminder = !!ch.role.otherNightReminder;
 			if (inOtherOrder !== hasOtherReminder) {
-				issues.push(`${ch.role.name}: has ${hasOtherReminder ? 'an' : 'no'} other night reminder`);
+				errors.push(`${ch.role.name}: has ${hasOtherReminder ? 'an' : 'no'} other night reminder`);
 			}
 		});
 
@@ -159,13 +181,16 @@ export class ClocktowerLogic {
 			return /\[.*Outsider.*\]/.test(ch.role.ability);
 		});
 		if (!hasModification) {
-			issues.push('No outsider modification');
+			warnings.push('No outsider modification');
 		}
 
 		script.characters
 			.filter(ch => ch.role.ability.length > 160)
-			.forEach(ch => issues.push(`${ch.role.name}: ability is ${ch.role.ability.length} characters long`));
+			.forEach(ch => warnings.push(`${ch.role.name}: ability is ${ch.role.ability.length} characters long`));
 
-		return issues;
+		return {
+			warnings: warnings,
+			errors: errors
+		};
 	};
 };

@@ -1,7 +1,5 @@
-import { ButtonConfig, ButtonGroup, DropdownConfig } from '@/components/controls/button-group/button-group';
-import { CheckCircleOutlined, CopyOutlined, WarningOutlined } from '@ant-design/icons';
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
-import { Drawer, Flex, Tabs, notification } from 'antd';
+import { Drawer, Flex, Space, Tabs } from 'antd';
 import { ClocktowerCharacterPanel } from '@/components/pages/clocktower/clocktower-character-panel/clocktower-character-panel';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
 import { ClocktowerScriptType } from '@/enums/clocktower-script-type';
@@ -24,19 +22,6 @@ interface Props {
 
 export const ClocktowerScriptPanel = (props: Props) => {
 	const [ selectedCharacter, setSelectedCharacter ] = useState<ClocktowerCharacter | null>(null);
-	const [ notify, notifyContext ] = notification.useNotification();
-
-	const copyToClipboard = () => {
-		const data = ClocktowerLogic.createExportScript(props.script);
-		const json = JSON.stringify(data);
-		window.navigator.clipboard.writeText(json);
-
-		notify.info({
-			title: 'Script Copied',
-			description: 'This script has been copied into your clipboard. You can now import it into the BotC app.',
-			placement: 'top'
-		});
-	};
 
 	const getCharactersSection = (team: ClocktowerTeam) => {
 		const characters = props.script.characters.filter(ch => ch.role.team === team);
@@ -86,7 +71,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 						}
 
 						return (
-							<div key={n} className='ds-text'>
+							<div key={n}>
 								[{id}]
 							</div>
 						);
@@ -101,26 +86,24 @@ export const ClocktowerScriptPanel = (props: Props) => {
 		);
 	};
 
-	const issues = ClocktowerLogic.validate(props.script);
-	const buttons: (ButtonConfig | DropdownConfig)[] = [];
-	if (issues.length > 0) {
-		buttons.push({
-			type: 'dropdown',
-			icon: issues.length === 0 ? <CheckCircleOutlined /> : <WarningOutlined />,
-			disabled: issues.length === 0,
-			popover: (
-				<>
-					{issues.map((issue, n) => (<div key={n} className='ds-text'>{issue}</div>))}
-				</>
-			)
-		});
-	}
-	buttons.push({
-		type: 'button',
-		label: 'Copy',
-		icon: <CopyOutlined />,
-		onClick: copyToClipboard
-	});
+	const getJinxSection = () => {
+		const jinxes = ClocktowerLogic.getJinxes(props.script);
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{
+					jinxes.map((j, n) => (
+						<Flex key={n} align='center' gap={10}>
+							<ClocktowerToken character={j.ch1} size={30} />
+							<ClocktowerToken character={j.ch2} size={30} />
+							{j.reason}
+						</Flex>
+					))
+				}
+				{jinxes.length === 0 ? <Empty /> : null}
+			</Space>
+		);
+	};
 
 	return (
 		<ErrorBoundary>
@@ -128,9 +111,6 @@ export const ClocktowerScriptPanel = (props: Props) => {
 				<HeaderText
 					level={1}
 					tags={props.script.type === ClocktowerScriptType.Teensyville ? [ 'Teensyville' ] : []}
-					extra={
-						<ButtonGroup buttons={buttons} />
-					}
 				>
 					{props.script.meta.name}
 				</HeaderText>
@@ -202,6 +182,11 @@ export const ClocktowerScriptPanel = (props: Props) => {
 									</SelectablePanel>
 								</Flex>
 							)
+						},
+						{
+							key: 'jinxes',
+							label: 'Jinxes',
+							children: getJinxSection()
 						}
 					]}
 				/>
@@ -212,7 +197,6 @@ export const ClocktowerScriptPanel = (props: Props) => {
 					onClose={() => setSelectedCharacter(null)}
 				/>
 			</Drawer>
-			{notifyContext}
 		</ErrorBoundary>
 	);
 };

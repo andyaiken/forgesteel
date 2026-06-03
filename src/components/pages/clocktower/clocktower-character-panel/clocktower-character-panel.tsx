@@ -1,7 +1,7 @@
 import { ClocktowerCharacter, ClocktowerScript } from '@/models/clocktower';
+import { Divider, Flex } from 'antd';
 import { ClocktowerLogic } from '@/logic/clocktower-logic';
 import { ClocktowerToken } from '@/components/pages/clocktower/clocktower-token/clocktower-token';
-import { Divider } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
@@ -23,8 +23,7 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 				return null;
 			}
 			return {
-				id: ch.role.id,
-				name: ch.role.name,
+				character: ch,
 				reason: j.reason
 			};
 		})
@@ -52,7 +51,14 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 				<Divider />
 				<Markdown text={props.character.details.description} />
 				{jinxes.length > 0 ? <HeaderText>Jinxes</HeaderText> : null}
-				{jinxes.map(j => <Field key={j.id} label={j.name} value={j.reason} />)}
+				{
+					jinxes.map(j => (
+						<Flex key={j.character.role.id} align='center' gap={10}>
+							<ClocktowerToken character={j.character} size={30} />
+							<Field label={j.character.role.name} value={j.reason} />
+						</Flex>
+					))
+				}
 			</div>
 		</ErrorBoundary>
 	);

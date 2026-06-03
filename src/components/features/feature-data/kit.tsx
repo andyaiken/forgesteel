@@ -2,6 +2,9 @@ import { Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureKitData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -31,7 +34,7 @@ export const InfoKit = (props: InfoProps) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					props.data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} />)
+					props.data.selected.map(k => <KitPanel key={k.id} kit={k} hero={props.hero} sourcebooks={props.sourcebooks || []} />)
 				}
 			</Space>
 		);
@@ -133,6 +136,29 @@ export const ConfigKit = (props: ConfigProps) => {
 								value={<Markdown text={kit.description} useSpan={true} />}
 							/>
 						}
+						customizeContent={
+							<Expander title='Configure'>
+								{
+									kit.features.filter(f => FeatureLogic.isChoice(f)).map(f => (
+										<FeatureConfigPanel
+											key={f.id}
+											feature={f}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={(featureID, data) => {
+												const dataCopy = Utils.copy(props.data);
+												const kitCopy = dataCopy.selected.find(k => k.id === kit.id);
+												if (!kitCopy) { return; }
+												const featureToUpdate = kitCopy.features.find(kf => kf.id === featureID);
+												if (!featureToUpdate) { return; }
+												featureToUpdate.data = Utils.copy(data);
+												props.setData(dataCopy);
+											}}
+										/>
+									))
+								}
+							</Expander>
+						}
 						onSelect={() => setSelectedKit(kit)}
 						onRemove={() => {
 							const dataCopy = Utils.copy(props.data);
@@ -162,7 +188,22 @@ export const ConfigKit = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+					content={selectedKit ?
+						<KitPanel
+							kit={selectedKit}
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							mode={PanelMode.Full}
+							onChange={(kitCopy: Kit) => {
+								const dataCopy = Utils.copy(props.data);
+								const idx = dataCopy.selected.findIndex(k => k.id === kitCopy.id);
+								if (idx >= 0) {
+									dataCopy.selected[idx] = kitCopy;
+									props.setData(dataCopy);
+								}
+							}}
+						/>
+						: null}
 					onClose={() => setSelectedKit(null)}
 				/>
 			</Drawer>

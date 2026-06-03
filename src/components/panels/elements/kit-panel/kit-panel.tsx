@@ -1,4 +1,8 @@
+import { Divider, Segmented } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -6,12 +10,13 @@ import { Hero } from '@/models/hero';
 import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { PanelMode } from '@/enums/panel-mode';
-import { Segmented } from 'antd';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { useState } from 'react';
+
+import { Utils } from '@/utils/utils';
 
 import './kit-panel.scss';
 
@@ -20,6 +25,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	hero?: Hero;
 	mode?: PanelMode;
+	onChange?: (kit: Kit) => void;
 }
 
 export const KitPanel = (props: Props) => {
@@ -128,6 +134,38 @@ export const KitPanel = (props: Props) => {
 			<div className='kit-panel' id={SheetFormatter.getPageId('kit', props.kit.id)}>
 				<HeaderText level={1} tags={tags}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				{getContent()}
+				{
+					props.mode === PanelMode.Full && props.hero ?
+						(() => {
+							const choiceFeatures = props.kit.features.filter(f => FeatureLogic.isChoice(f));
+							if (choiceFeatures.length === 0) { return null; }
+
+							return (
+								<>
+									<Divider />
+									<Expander title='Configure'>
+										{
+											choiceFeatures.map(f => (
+												<FeatureConfigPanel
+													key={f.id}
+													feature={Utils.copy(f)}
+													hero={props.hero!}
+													sourcebooks={props.sourcebooks}
+													setData={(featureID, data) => {
+														const kitFeature = props.kit.features.find(kf => kf.id === featureID);
+														if (kitFeature) {
+															kitFeature.data = Utils.copy(data);
+														}
+													}}
+												/>
+											))
+										}
+									</Expander>
+								</>
+							);
+						})()
+						: null
+				}
 			</div>
 		</ErrorBoundary>
 	);

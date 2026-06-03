@@ -1,4 +1,5 @@
-import { Empty } from '@/components/controls/empty/empty';
+import { Divider, Space } from 'antd';
+import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
@@ -9,7 +10,7 @@ import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { Space } from 'antd';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -30,6 +31,12 @@ export const PerkSelectModal = (props: Props) => {
 		.filter(p => Utils.textMatches([
 			p.name,
 			p.description
+		], searchTerm));
+	const otherPerks = SourcebookLogic.getPerks(props.sourcebooks)
+		.filter(os => !props.perks.map(p => p.name).includes(os.name))
+		.filter(os => Utils.textMatches([
+			os.name,
+			os.description
 		], searchTerm));
 
 	return (
@@ -61,8 +68,21 @@ export const PerkSelectModal = (props: Props) => {
 						})
 					}
 					{
-						perks.length === 0 ?
-							<Empty />
+						otherPerks.length > 0 ?
+							<>
+								<Divider />
+								<Expander title='Other Perks'>
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										{
+											otherPerks.map((p, n) => (
+												<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
+													<PerkPanel perk={p} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+												</SelectablePanel>
+											))
+										}
+									</Space>
+								</Expander>
+							</>
 							: null
 					}
 				</div>

@@ -1,4 +1,4 @@
-import { Divider, Space } from 'antd';
+import { Alert, Divider, Space } from 'antd';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -73,6 +73,11 @@ export const PerkSelectModal = (props: Props) => {
 								<Divider />
 								<Expander title='Other Perks'>
 									<Space orientation='vertical' style={{ width: '100%' }}>
+										<Alert
+											type='warning'
+											showIcon={true}
+											title='Selecting a perk from outside the listed groups is typically against the rules.'
+										/>
 										{
 											otherPerks.map((p, n) => (
 												<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>

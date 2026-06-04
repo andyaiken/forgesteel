@@ -443,6 +443,28 @@ The Memonek's execution is a gift to the Demon.
 	}
 };
 
+const npc: ClocktowerCharacter = {
+	role: {
+		id: 'npc',
+		name: 'NPC',
+		image: [
+			'https://forgesteel.net/assets/clocktower/npc/good.png',
+			'https://forgesteel.net/assets/clocktower/npc/evil.png'
+		],
+		team: ClocktowerTeam.Outsider,
+		flavor: 'Everyone else gets to shape the story. I just live in it.',
+		ability: 'You cannot vote.'
+	},
+	details: {
+		description: `
+The NPC exists on the margins of the story, never quite a full participant.
+
+* The NPC cannot vote at any point during the game.
+* The NPC may still nominate, speak, and be nominated and executed as normal.
+* If the NPC is drunk or poisoned, they may vote, but the Storyteller acts as though they cannot.`
+	}
+};
+
 const retainer: ClocktowerCharacter = {
 	role: {
 		id: 'retainer',
@@ -744,47 +766,14 @@ The Torlas deflects every attack aimed at itself.
 
 // #region Travellers
 
-const aristocrat: ClocktowerCharacter = {
+const celestial: ClocktowerCharacter = {
 	role: {
-		id: 'aristocrat',
-		name: 'Aristocrat',
+		id: 'celestial',
+		name: 'Celestial',
 		image: [
-			'https://forgesteel.net/assets/clocktower/aristocrat/traveller.png',
-			'https://forgesteel.net/assets/clocktower/aristocrat/good.png',
-			'https://forgesteel.net/assets/clocktower/aristocrat/evil.png'
-		],
-		team: ClocktowerTeam.Traveller,
-		flavor: 'I ruin lives with a gesture. It is expected of me. Pass the sherry.',
-		ability: 'When you nominate, the nominee is drunk until dusk.',
-		reminders: [
-			'Drunk'
-		],
-		jinxes: [
-			{
-				id: 'wodeelf',
-				reason: 'If the Aristocrat nominates the Wode Elf, the Wode Elf is drunk immediately and so does not switch alignment.'
-			}
-		]
-	},
-	details: {
-		description: `
-The Aristocrat's nominations carry an immediate and personal cost for the accused.
-
-* When the Aristocrat nominates a player, the nominated player becomes drunk until dusk.
-* This ability applies to every nomination the Aristocrat makes — not only the first.
-* The drunk status expires at the start of the next night phase. A drunk player has no ability, but the Storyteller pretends they do and may give them false information.
-* If the Aristocrat nominates a character with an ability that activates when nominated, the Aristocrat makes them drunk before this happens, and so their ability will not activate.`
-	}
-};
-
-const disciple: ClocktowerCharacter = {
-	role: {
-		id: 'disciple',
-		name: 'Disciple',
-		image: [
-			'https://forgesteel.net/assets/clocktower/disciple/traveller.png',
-			'https://forgesteel.net/assets/clocktower/disciple/good.png',
-			'https://forgesteel.net/assets/clocktower/disciple/evil.png'
+			'https://forgesteel.net/assets/clocktower/celestial/traveller.png',
+			'https://forgesteel.net/assets/clocktower/celestial/good.png',
+			'https://forgesteel.net/assets/clocktower/celestial/evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
 		flavor: 'Rise. Your story is not yet finished.',
@@ -797,13 +786,46 @@ const disciple: ClocktowerCharacter = {
 	},
 	details: {
 		description: `
-The Disciple can restore one life — at a possible hidden cost.
+The Celestial can restore one life — at a possible hidden cost.
 
-* Once per game, beginning on the second night, the Disciple may choose a dead player and resurrect them. The resurrected player is alive again and has their character and ability fully restored.
-* If the Disciple is evil, the resurrected player is also poisoned. Their ability does not function and any information they receive may be false — neither the Disciple nor the resurrected player are told about the poison.
-* The Disciple may choose not to use their ability on any given night, preserving it for a later night.
+* Once per game, beginning on the second night, the Celestial may choose a dead player and resurrect them. The resurrected player is alive again and has their character and ability fully restored.
+* If the Celestial is evil, the resurrected player is also poisoned. Their ability does not function and any information they receive may be false — neither the Celestial nor the resurrected player are told about the poison.
+* The Celestial may choose not to use their ability on any given night, preserving it for a later night.
 * Once used, the ability cannot be used again, even if the resurrected player dies a second time.
-* If the Disciple is drunk or poisoned when attempting a resurrection, the chosen player is not resurrected and the once-per-game use is not expended.`
+* If the Celestial is drunk or poisoned when attempting a resurrection, the chosen player is not resurrected and the once-per-game use is not expended.`
+	}
+};
+
+const dwarf: ClocktowerCharacter = {
+	role: {
+		id: 'dwarf',
+		name: 'Dwarf',
+		image: [
+			'https://forgesteel.net/assets/clocktower/dwarf/traveller.png',
+			'https://forgesteel.net/assets/clocktower/dwarf/good.png',
+			'https://forgesteel.net/assets/clocktower/dwarf/evil.png'
+		],
+		team: ClocktowerTeam.Traveller,
+		flavor: 'A grudge, properly applied, is a precision instrument.',
+		ability: 'When you nominate, if the nominee does not share your alignment, they are drunk until dusk.',
+		reminders: [
+			'Drunk'
+		],
+		jinxes: [
+			{
+				id: 'wodeelf',
+				reason: 'If the Dwarf nominates the Wode Elf, the Wode Elf is drunk immediately and so does not switch alignment.'
+			}
+		]
+	},
+	details: {
+		description: `
+The Dwarf's nominations carry an immediate and personal cost for the accused.
+
+* When the Dwarf nominates a player who is on the opposing team, the nominated player becomes drunk until dusk.
+* This ability applies to every nomination the Dwarf makes — not only the first.
+* The drunk status expires at the start of the next night phase. A drunk player has no ability, but the Storyteller pretends they do and may give them false information.
+* If the Dwarf nominates a character with an ability that activates when nominated, the Dwarf makes them drunk before this happens, and so their ability will not activate.`
 	}
 };
 
@@ -828,7 +850,7 @@ The Hakaan can trade their life to save an ally and learn a secret.
 * If a player of the Hakaan's alignment is executed, the Hakaan may choose to die in that player's place. The executed player survives, the Hakaan dies, and the Hakaan learns the character of the player who originally nominated the executed player.
 * To use this ability, the Hakaan must speak up before the Storyteller ends the day. The nominator's character is then revealed to them that night.
 * If the player they chose to die for was not actually of the Hakaan's alignment, nothing happens.
-* This ability may be used multiple times — once for each aligned player who is executed. The Hakaan may choose not to use it for any given execution.
+* This ability may be used multiple times - once for each aligned player who is executed. The Hakaan may choose not to use it for any given execution.
 * If the Hakaan is drunk or poisoned when the choice is made, the information they receive about the nominator may be false.`
 	}
 };
@@ -924,6 +946,55 @@ The Voiceless Talker silently rearranges the pieces on the board.
 
 // #endregion
 
+// #region Fabled
+
+const dragonKnight: ClocktowerCharacter = {
+	role: {
+		id: 'dragonknight',
+		name: 'Dragon Knight',
+		image: [
+			'https://forgesteel.net/assets/clocktower/dragonknight/fabled.png'
+		],
+		team: ClocktowerTeam.Fabled,
+		flavor: 'Even should the sun stop in the sky...',
+		ability: 'At least one Townsfolk must receive true information each night.'
+	},
+	details: {
+		description: `
+The Dragon Knight ensures that truth cannot be entirely extinguished.
+
+* Each night, the Storyteller must give at least one Townsfolk player true information, regardless of that player's drunk or poisoned status. The chosen player is considered to be sober and healthy.
+* The Storyteller chooses which Townsfolk receives this protected information. They are not told their information is protected.`
+	}
+};
+
+// #endregion
+
+// #region Lorics
+
+const xorannox: ClocktowerCharacter = {
+	role: {
+		id: 'xorannox',
+		name: 'Xorannox',
+		image: [
+			'https://forgesteel.net/assets/clocktower/xorannox/loric.png'
+		],
+		team: ClocktowerTeam.Loric,
+		flavor: 'I find certainty so much more interesting when it is wrong.',
+		ability: 'Players who are drunk or poisoned always receive false information.'
+	},
+	details: {
+		description: `
+Xorannox warps the fabric of reality, turning corruption into certainty.
+
+* While Xorannox is in play, any player who is drunk or poisoned always receives false information. The Storyteller has no discretion — false information is mandatory, not optional.
+* This applies to all sources of information: nightly visits, ability results, and any other information a drunk or poisoned player would normally receive.
+* A player who knows they are drunk or poisoned may invert any information they receive to deduce the truth.`
+	}
+};
+
+// #endregion
+
 export class ClocktowerData {
 	static standard: ClocktowerScript = {
 		type: ClocktowerScriptType.Standard,
@@ -969,7 +1040,7 @@ export class ClocktowerData {
 				'torlas',
 				// Resurrection
 				'revenant',
-				'disciple',
+				'celestial',
 				// Info
 				'radenwight',
 				'beastheart',
@@ -1009,12 +1080,16 @@ export class ClocktowerData {
 			hiveQueen,
 			torlas,
 			// Travellers
-			aristocrat,
-			disciple,
+			celestial,
+			dwarf,
 			hakaan,
 			polder,
 			timeRaider,
-			voicelessTalker
+			voicelessTalker,
+			// Fabled
+			dragonKnight,
+			// Lorics
+			xorannox
 		]
 	};
 
@@ -1037,8 +1112,6 @@ export class ClocktowerData {
 			],
 			otherNight: [
 				'wodeelf',
-				// Grim
-				'memonek',
 				// Modification
 				'angulotl',
 				'conduit',
@@ -1060,14 +1133,18 @@ export class ClocktowerData {
 			tactician,
 			troubadour,
 			// Outsiders
-			memonek,
+			npc,
 			wodeElf,
 			// Minions
 			angulotl,
 			lightbender,
 			// Demons
 			blightPhage,
-			torlas
+			torlas,
+			// Fabled
+			dragonKnight,
+			// Lorics
+			xorannox
 		]
 	};
 };

@@ -277,7 +277,7 @@ The Shadow watches the invisible currents of change.
 
 * Each night, beginning on the second night, the Shadow learns three numbers: how many players are drunk or poisoned, how many players changed their character that night, and how many players changed their alignment that night.
 * "Changed character" covers any effect that altered a player's character token during the night, such as the Hive Queen's role swap, the Voiceless Talker's swap, or the Talent's transformation. A player whose character changed several times in the same night counts only once.
-* "Changed alignment" covers any effect that changed which team a player is on during the night, such as the Aurumvas converting a player to evil, or the Antihero's alignment flip.
+* "Changed alignment" covers any effect that changed which team a player is on during the night, such as the Aurumvas converting a player to evil, or the Wode Elf's alignment flip.
 * If the Shadow is drunk or poisoned, the numbers they receive may be false.`
 	}
 };
@@ -376,30 +376,6 @@ The Troubadour sings of those who walk among us.
 
 // #region Outsiders
 
-const antihero: ClocktowerCharacter = {
-	role: {
-		id: 'antihero',
-		name: 'Antihero',
-		image: [
-			'https://forgesteel.net/assets/clocktower/antihero/good.png',
-			'https://forgesteel.net/assets/clocktower/antihero/evil.png'
-		],
-		team: ClocktowerTeam.Outsider,
-		flavor: 'Don’t make me choose a side. If you push me, I will become what you feared.',
-		ability: 'Each time you are nominated, you change alignment.',
-		otherNightReminder: 'Wake up if alignment flipped.'
-	},
-	details: {
-		description: `
-The Antihero is shaped entirely by the pressure placed upon them.
-
-* The Antihero begins the game good. Each time they are nominated by any player — whether or not the nomination results in an execution — their alignment flips: good becomes evil, evil becomes good.
-* Every individual nomination triggers a flip. If the Antihero is nominated twice in one day, they return to the alignment they started that day with.
-* If alignment changes, the Storyteller will wake the Antihero at night to verify this.
-* An evil Antihero counts as evil for all game purposes: they contribute to evil's win condition and are treated as an opponent by abilities like the Censor.`
-	}
-};
-
 const devil: ClocktowerCharacter = {
 	role: {
 		id: 'devil',
@@ -496,6 +472,30 @@ The Retainer's life is bound to the hero they serve.
 * During their final day on Borrowed Time, the Retainer is fully active: they may speak, nominate, and vote as normal until dusk takes them.
 * If the Retainer dies by some other means before dusk claims them, they simply die then and the Borrowed Time clock no longer matters.
 * If the Retainer is bound to the Rival, executing that Rival also kills the Retainer — so good can be punished for correctly executing a Minion.`
+	}
+};
+
+const wodeElf: ClocktowerCharacter = {
+	role: {
+		id: 'wodeelf',
+		name: 'Wode Elf',
+		image: [
+			'https://forgesteel.net/assets/clocktower/wodeelf/good.png',
+			'https://forgesteel.net/assets/clocktower/wodeelf/evil.png'
+		],
+		team: ClocktowerTeam.Outsider,
+		flavor: 'Do not make me choose a side, for I owe allegiance to no court.',
+		ability: 'Each time you are nominated, you change alignment.',
+		otherNightReminder: 'Wake up if alignment flipped.'
+	},
+	details: {
+		description: `
+The Wode Elf is shaped entirely by the pressure placed upon them.
+
+* The Wode Elf begins the game good. Each time they are nominated by any player — whether or not the nomination results in an execution — their alignment flips: good becomes evil, evil becomes good.
+* Every individual nomination triggers a flip. If the Wode Elf is nominated twice in one day, they return to the alignment they started that day with.
+* If alignment changes, the Storyteller will wake the Wode Elf at night to verify this.
+* An evil Wode Elf counts as evil for all game purposes: they contribute to evil's win condition and are treated as an opponent by abilities like the Censor.`
 	}
 };
 
@@ -761,8 +761,8 @@ const aristocrat: ClocktowerCharacter = {
 		],
 		jinxes: [
 			{
-				id: 'antihero',
-				reason: 'If the Aristocrat nominates the Antihero, the Antihero is drunk immediately and so does not switch alignment.'
+				id: 'wodeelf',
+				reason: 'If the Aristocrat nominates the Wode Elf, the Wode Elf is drunk immediately and so does not switch alignment.'
 			}
 		]
 	},
@@ -774,41 +774,6 @@ The Aristocrat's nominations carry an immediate and personal cost for the accuse
 * This ability applies to every nomination the Aristocrat makes — not only the first.
 * The drunk status expires at the start of the next night phase. A drunk player has no ability, but the Storyteller pretends they do and may give them false information.
 * If the Aristocrat nominates a character with an ability that activates when nominated, the Aristocrat makes them drunk before this happens, and so their ability will not activate.`
-	}
-};
-
-const criminal: ClocktowerCharacter = {
-	role: {
-		id: 'criminal',
-		name: 'Criminal',
-		image: [
-			'https://forgesteel.net/assets/clocktower/criminal/traveller.png',
-			'https://forgesteel.net/assets/clocktower/criminal/good.png',
-			'https://forgesteel.net/assets/clocktower/criminal/evil.png'
-		],
-		team: ClocktowerTeam.Traveller,
-		flavor: 'Intentions are fragile things… let me improve yours.',
-		ability: 'Each night, choose a player; until dusk, if they use an ability that targets another player, it targets a different player instead.',
-		firstNightReminder: 'Choose a player to redirect.',
-		otherNightReminder: 'Choose a player to redirect.',
-		reminders: [
-			'Redirected ability'
-		],
-		jinxes: [
-			{
-				id: 'fury',
-				reason: 'If the Criminal targets the Fury, one of the Fury’s two chosen players is replaced with a player of the Storyteller’s choosing before the Fury’s ability resolves.'
-			}
-		]
-	},
-	details: {
-		description: `
-The Criminal ensures that good intentions reach unintended destinations.
-
-* Each night, including the first night, the Criminal chooses a player. Until dusk the following day, if that player uses an ability that targets another player, the ability targets a different player instead — chosen by the Storyteller.
-* The redirection applies to abilities that require the player to actively select a specific target. Passive abilities or abilities that affect only the player themselves are not redirected.
-* The affected player is not aware that their ability has been redirected. They believe they targeted their intended player.
-* If the Criminal is drunk or poisoned, the chosen player's ability is not redirected and functions normally.`
 	}
 };
 
@@ -842,29 +807,29 @@ The Disciple can restore one life — at a possible hidden cost.
 	}
 };
 
-const disgraced: ClocktowerCharacter = {
+const hakaan: ClocktowerCharacter = {
 	role: {
-		id: 'disgraced',
-		name: 'Disgraced',
+		id: 'hakaan',
+		name: 'Hakaan',
 		image: [
-			'https://forgesteel.net/assets/clocktower/disgraced/traveller.png',
-			'https://forgesteel.net/assets/clocktower/disgraced/good.png',
-			'https://forgesteel.net/assets/clocktower/disgraced/evil.png'
+			'https://forgesteel.net/assets/clocktower/hakaan/traveller.png',
+			'https://forgesteel.net/assets/clocktower/hakaan/good.png',
+			'https://forgesteel.net/assets/clocktower/hakaan/evil.png'
 		],
 		team: ClocktowerTeam.Traveller,
-		flavor: 'I’ve made mistakes, sure, but it’s time to forgive and forget, right?',
+		flavor: 'I have seen all the ways this ends. This one, I choose - on my own terms.',
 		ability: 'If a player of your alignment is executed, you can choose to die instead and learn the role of their nominator.',
 		otherNightReminder: 'If a player of your alignment was executed, choose to die and learn the role of their nominator.'
 	},
 	details: {
 		description: `
-The Disgraced can trade their life to save an ally and learn a secret.
+The Hakaan can trade their life to save an ally and learn a secret.
 
-* If a player of the Disgraced's alignment is executed, the Disgraced may choose to die in that player's place. The executed player survives, the Disgraced dies, and the Disgraced learns the character of the player who originally nominated the executed player.
-* To use this ability, the Disgraced must speak up before the Storyteller ends the day. The nominator's character is then revealed to them that night.
-* If the player they chose to die for was not actually of the Disgraced's alignment, nothing happens.
-* This ability may be used multiple times — once for each aligned player who is executed. The Disgraced may choose not to use it for any given execution.
-* If the Disgraced is drunk or poisoned when the choice is made, the information they receive about the nominator may be false.`
+* If a player of the Hakaan's alignment is executed, the Hakaan may choose to die in that player's place. The executed player survives, the Hakaan dies, and the Hakaan learns the character of the player who originally nominated the executed player.
+* To use this ability, the Hakaan must speak up before the Storyteller ends the day. The nominator's character is then revealed to them that night.
+* If the player they chose to die for was not actually of the Hakaan's alignment, nothing happens.
+* This ability may be used multiple times — once for each aligned player who is executed. The Hakaan may choose not to use it for any given execution.
+* If the Hakaan is drunk or poisoned when the choice is made, the information they receive about the nominator may be false.`
 	}
 };
 
@@ -892,6 +857,41 @@ A failed execution against the Polder becomes intelligence for the good team.
 * If the Polder is nominated and the vote does not result in their execution, that night one player of the Polder's alignment learns the nominator's character. The Polder is then told which player received this information.
 * This ability may trigger multiple times, once per failed nomination against the Polder in the same game.
 * If the Polder is drunk or poisoned when the failed nomination occurs, the information delivered may be false.`
+	}
+};
+
+const timeRaider: ClocktowerCharacter = {
+	role: {
+		id: 'timeraider',
+		name: 'Time Raider',
+		image: [
+			'https://forgesteel.net/assets/clocktower/timeraider/traveller.png',
+			'https://forgesteel.net/assets/clocktower/timeraider/good.png',
+			'https://forgesteel.net/assets/clocktower/timeraider/evil.png'
+		],
+		team: ClocktowerTeam.Traveller,
+		flavor: 'Causality is a river. I just moved the banks a little.',
+		ability: 'Each night, choose a player; until dusk, if they use an ability that targets one other player, it targets a different player instead.',
+		firstNightReminder: 'Choose a player to redirect.',
+		otherNightReminder: 'Choose a player to redirect.',
+		reminders: [
+			'Redirected ability'
+		],
+		jinxes: [
+			{
+				id: 'fury',
+				reason: 'If the Time Raider targets the Fury, one of the Fury’s two chosen players is replaced with a player of the Storyteller’s choosing before the Fury’s ability resolves.'
+			}
+		]
+	},
+	details: {
+		description: `
+The Time Raider uses their understanding of the higher planes to ensure that intentions reach unintended destinations.
+
+* Each night, including the first night, the Time Raider chooses a player. Until dusk the following day, if that player uses an ability that targets another player, the ability targets a different player instead — chosen by the Storyteller.
+* The redirection applies to abilities that require the player to actively select a specific target. Passive abilities or abilities that affect only the player themselves are not redirected.
+* The affected player is not aware that their ability has been redirected. They believe they targeted their intended player.
+* If the Time Raider is drunk or poisoned, the chosen player's ability is not redirected and functions normally.`
 	}
 };
 
@@ -943,7 +943,7 @@ export class ClocktowerData {
 				// Modification
 				'rival',
 				'conduit',
-				'criminal',
+				'timeraider',
 				// Demons
 				'aurumvas',
 				// Info
@@ -951,14 +951,14 @@ export class ClocktowerData {
 				'troubadour'
 			],
 			otherNight: [
-				'disgraced',
-				'antihero',
+				'hakaan',
+				'wodeelf',
 				// Grim
 				'memonek',
 				// Modification
 				'angulotl',
 				'conduit',
-				'criminal',
+				'timeraider',
 				'voicelesstalker',
 				'censor',
 				'tactician',
@@ -994,10 +994,10 @@ export class ClocktowerData {
 			talent,
 			troubadour,
 			// Outsiders
-			antihero,
 			devil,
 			memonek,
 			retainer,
+			wodeElf,
 			// Minions
 			angulotl,
 			duskElf,
@@ -1010,10 +1010,10 @@ export class ClocktowerData {
 			torlas,
 			// Travellers
 			aristocrat,
-			criminal,
 			disciple,
-			disgraced,
+			hakaan,
 			polder,
+			timeRaider,
 			voicelessTalker
 		]
 	};
@@ -1036,7 +1036,7 @@ export class ClocktowerData {
 				'troubadour'
 			],
 			otherNight: [
-				'antihero',
+				'wodeelf',
 				// Grim
 				'memonek',
 				// Modification
@@ -1060,8 +1060,8 @@ export class ClocktowerData {
 			tactician,
 			troubadour,
 			// Outsiders
-			antihero,
 			memonek,
+			wodeElf,
 			// Minions
 			angulotl,
 			lightbender,

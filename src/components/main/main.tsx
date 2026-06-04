@@ -1584,8 +1584,8 @@ export const Main = (props: Props) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
 			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
-		const takeRespite = () => {
-			const copy = Utils.copy(hero);
+		const takeRespite = (updatedHero?: Hero) => {
+			const copy = Utils.copy(updatedHero || hero);
 			HeroLogic.takeRespite(copy);
 			persistHero(copy);
 
@@ -1603,7 +1603,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={persistHero}
+						onChange={h => persistHero(h)}
 					/>
 				);
 				break;
@@ -1613,7 +1613,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						showEncounterControls={false}
 						onClose={() => setDrawer(null)}
-						onChange={persistHero}
+						onChange={h => persistHero(h)}
 					/>
 				);
 				break;
@@ -1623,7 +1623,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={persistHero}
+						onChange={h => persistHero(h)}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
@@ -1634,7 +1634,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={persistHero}
+						onChange={h => persistHero(h)}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);

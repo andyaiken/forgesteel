@@ -205,7 +205,7 @@ const radenwight: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Names are like scraps - pick up enough of them and you’ll find something worth keeping.',
-		ability: 'Each day, publicly claim a new role (not Radenwight). That night, ask the Storyteller a yes/no question; if that role is in play, they will answer truthfully.',
+		ability: 'Each day, publicly claim to be a new role (not your own). That night, ask the Storyteller a yes/no question; if it’s in play, they will answer truthfully.',
 		otherNightReminder: 'Ask a question.',
 		reminders: [
 			'True info',

@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Flex, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ToolFilled, ToolOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
@@ -22,9 +22,10 @@ import { EncounterPanel } from '@/components/panels/elements/encounter-panel/enc
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
@@ -1011,6 +1012,7 @@ interface MonsterSlotPanelProps {
 
 const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 	const [ showCustomize, setShowCustomize ] = useState<boolean>(false);
+	const [ showAddOns, setShowAddOns ] = useState<boolean>(false);
 
 	const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, props.slot.monsterID);
 	const monster = EncounterLogic.getCustomizedMonster(props.slot.monsterID, props.slot.customization, props.sourcebooks);
@@ -1088,27 +1090,71 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 		};
 
 		const getAddOns = () => {
-			const setSlotAddOnIDs = (value: string[]) => {
-				const copy = Utils.copy(props.slot.customization);
-				copy.itemIDs = value;
-				props.setCustomization(props.groupID, props.slot.id, copy);
-			};
-
 			if (monsterGroup.addOns.length === 0) {
 				return null;
 			}
 
+			const addAddOn = (addOnID: string) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.addOnIDs.push(addOnID);
+				setShowAddOns(false);
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			const removeAddOn = (addOnID: string) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.addOnIDs = copy.addOnIDs.filter(id => id !== addOnID);
+				setShowAddOns(false);
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
 			return (
 				<Expander title='Customize'>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select'
-						mode='multiple'
-						options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-						optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
-						value={props.slot.customization.addOnIDs}
-						onChange={setSlotAddOnIDs}
-					/>
+					<HeaderText
+						extra={<Button type='text' icon={<PlusOutlined />} onClick={() => setShowAddOns(true)} />}
+					>
+						Customizations
+					</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							props.slot.customization.addOnIDs
+								.map(id => monsterGroup.addOns.find(a => a.id === id))
+								.filter(addOn => !!addOn)
+								.map(addOn => (
+									<Expander
+										key={addOn.id}
+										title={addOn.name}
+										extra={[
+											<DangerButton key='delete' mode='clear' onConfirm={() => removeAddOn(addOn.id)} />
+										]}
+									>
+										<Markdown text={addOn.description} />
+									</Expander>
+								))
+						}
+						{props.slot.customization.addOnIDs.length === 0 ? <Empty /> : null}
+					</Space>
+					<Drawer open={showAddOns} onClose={() => setShowAddOns(false)} closeIcon={null} size={500}>
+						<Modal
+							content={
+								showAddOns ?
+									<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
+										{
+											monsterGroup.addOns
+												.filter(a => !props.slot.customization.addOnIDs.includes(a.id))
+												.map(a => (
+													<SelectablePanel key={a.id} onSelect={() => addAddOn(a.id)}>
+														<HeaderText>{a.name}</HeaderText>
+														<Markdown text={a.description} />
+													</SelectablePanel>
+												))
+										}
+									</Space>
+									: null
+							}
+							onClose={() => setShowAddOns(false)}
+						/>
+					</Drawer>
 				</Expander>
 			);
 		};

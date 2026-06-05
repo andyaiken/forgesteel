@@ -442,9 +442,10 @@ The Example Animals table breaks out a number of animals using this notation. Se
 	],
 	addOns: [
 		FactoryLogic.feature.createAddOn({
-			id: 'burrowing-1',
+			id: 'animal-burrowing-1',
 			name: 'Burrowing',
-			description: `The animal can burrow.
+			description: `
+The animal can burrow.
 			
 <span class='pill'>+1pt</span> The animal can burrow through stone, creating a tunnel of their size in each square of stone they move through.
 
@@ -453,18 +454,20 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'climbing-1',
+			id: 'animal-climbing-1',
 			name: 'Climbing',
-			description: `The animal can automatically climb at full speed while moving.
+			description: `
+The animal can automatically climb at full speed while moving.
 
 **Typically Used By:** Jaguars, monkeys.`,
 			category: FeatureAddOnType.Mobility,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'flight-1',
+			id: 'animal-flight-1',
 			name: 'Flight',
-			description: `The animal can fly, and their stability decreases by 2 (to a minimum of 0).
+			description: `
+The animal can fly, and their stability decreases by 2 (to a minimum of 0).
 
 <span class='pill'>+1pt</span> The animal can also hover.
 
@@ -473,27 +476,31 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'leaping-1',
+			id: 'animal-leaping-1',
 			name: 'Leaping',
-			description: `On their turn, the animal can high jump or long jump up to half their speed. This jump can allow the animal to move more squares than their speed.
+			description: `
+On their turn, the animal can high jump or long jump up to half their speed. This jump can allow the animal to move more squares than their speed.
 
 **Typically Used By:** Frogs, rabbits.`,
 			category: FeatureAddOnType.Mobility,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'slinking-1',
+			id: 'animal-slinking-1',
 			name: 'Slinking',
-			description: `The animal can use a move action to shift up to 3 squares, even while prone.
+			description: `
+The animal can use a move action to shift up to 3 squares, even while prone.
 
 **Typically Used By:** Snakes, vermin.`,
 			category: FeatureAddOnType.Mobility,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'swiftness-1',
+			id: 'animal-swiftness-1',
 			name: 'Swiftness',
-			description: `The animal has a +2 bonus to speed, and they ignore difficult terrain.
+			description: `
+The animal has a +2 bonus to speed, and they ignore difficult terrain.
+
 (This trait can be selected twice.)
 
 **Typically Used By:** Tigers, wolves.`,
@@ -501,72 +508,81 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'swimming-1',
+			id: 'animal-swimming-1',
 			name: 'Swimming',
-			description: `The animal can automatically swim at full speed while moving.
+			description: `
+The animal can automatically swim at full speed while moving.
 
 **Typically Used By:** Fish, penguins.`,
 			category: FeatureAddOnType.Mobility,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'camouflage-1',
+			id: 'animal-camouflage-1',
 			name: 'Camouflage',
-			description: `The animal can attempt to hide even while observed. While no enemy has line of effect to the animal, they can automatically hide at the end of their turn.
+			description: `
+The animal can attempt to hide even while observed. While no enemy has line of effect to the animal, they can automatically hide at the end of their turn.
 
 **Typically Used By:** Chameleons, foxes, tigers.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'fearsome-1',
+			id: 'animal-fearsome-1',
 			name: 'Fearsome',
-			description: `As a maneuver, the animal makes an imposing display. Each enemy within 2 squares of the animal who has <code>I < 1</code> must shift 3 squares in a straight line away from the animal.
+			description: `
+As a maneuver, the animal makes an imposing display. Each enemy within 2 squares of the animal who has <code>I < 1</code> must shift 3 squares in a straight line away from the animal.
 
 **Typically Used By:** Aardvarks, lions, peacocks.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'pack-1',
+			id: 'animal-pack-1',
 			name: 'Pack',
-			description: `While adjacent to an ally, the animal can’t be flanked or be made frightened.
+			description: `
+While adjacent to an ally, the animal can’t be flanked or be made frightened.
 
 **Typically Used By:** Hyenas, sheep, wolves.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'plated-1',
+			id: 'animal-plated-1',
 			name: 'Plated',
-			description: `The animal has a +2 bonus to stability, and melee strikes against them take a bane.
+			description: `
+The animal has a +2 bonus to stability, and melee strikes against them take a bane.
 
 **Typically Used By:** Beetles, crabs, turtles.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'spiny-1',
+			id: 'animal-spiny-1',
 			name: 'Spiny',
-			description: `Whenever an adjacent enemy grabs the animal or uses a melee ability against them, that enemy takes 3 damage.
+			description: `
+Whenever an adjacent enemy grabs the animal or uses a melee ability against them, that enemy takes 3 damage.
 
 **Typically Used By:** Porcupines, urchins.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'stench-1',
+			id: 'animal-stench-1',
 			name: 'Stench',
-			description: `At the start of the animal’s turn, each enemy adjacent to the animal who has <code>M < 1</code> must shift 1 square away from the animal.
+			description: `
+At the start of the animal’s turn, each enemy adjacent to the animal who has <code>M < 1</code> must shift 1 square away from the animal.
 
 **Typically Used By:** Oxen, skunks, wolverines.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'thick-hide-1',
+			id: 'animal-thick-hide-1',
 			name: 'Thick Hide',
-			description: `The animal starts any combat encounter with 10 temporary Stamina.
+			description: `
+The animal starts any combat encounter with 10 temporary Stamina.
+
 (This trait can be selected twice.)
 
 **Typically Used By:** Bears, elephants, rhinoceroses.`,
@@ -574,54 +590,60 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'unrelenting-1',
+			id: 'animal-unrelenting-1',
 			name: 'Unrelenting',
-			description: `Once per combat, when the animal is reduced to 0 Stamina, they can choose to either remain alive with 1 Stamina or immediately move up to their speed and make a free strike before dying.
+			description: `
+Once per combat, when the animal is reduced to 0 Stamina, they can choose to either remain alive with 1 Stamina or immediately move up to their speed and make a free strike before dying.
 
 **Typically Used By:** Bears, boars.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'wiggly-1',
+			id: 'animal-wiggly-1',
 			name: 'Wiggly',
-			description: `The animal ignores opportunity attacks and gains an edge on the Escape Grab maneuver.
+			description: `
+The animal ignores opportunity attacks and gains an edge on the Escape Grab maneuver.
 
 **Typically Used By:** Eels, lizards, rats.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'withdraw-1',
+			id: 'animal-withdraw-1',
 			name: 'Withdraw',
-			description: `Whenever the animal takes damage, they can use a triggered action to halve that damage and all other damage they take until the start of their next turn.
+			description: `
+Whenever the animal takes damage, they can use a triggered action to halve that damage and all other damage they take until the start of their next turn.
 
 **Typically Used By:** Armadillos, turtles.`,
 			category: FeatureAddOnType.Defensive,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'charger-1',
+			id: 'animal-charger-1',
 			name: 'Charger',
-			description: `The animal’s signature ability has the Charge keyword, and they gain an edge on that ability if it is used as part of the Charge main action.
+			description: `
+The animal’s signature ability has the Charge keyword, and they gain an edge on that ability if it is used as part of the Charge main action.
 
 **Typically Used By:** Boars, rhinoceroses, swordfish`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'frenzy-1',
+			id: 'animal-frenzy-1',
 			name: 'Frenzy',
-			description: `The animal gains an edge on strikes against creatures who are bleeding or winded.
+			description: `
+The animal gains an edge on strikes against creatures who are bleeding or winded.
 
 **Typically Used By:** Blood bats, piranhas, sharks`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'grappler-1',
+			id: 'animal-grappler-1',
 			name: 'Grappler',
-			description: `If the target of the animal’s signature ability has <code>A < 1</code>, they are grabbed by the animal.
+			description: `
+If the target of the animal’s signature ability has <code>A < 1</code>, they are grabbed by the animal.
 
 <span class='pill'>+1pt</span> An enemy grabbed by the animal takes a bane on the Escape Grab maneuver.
 
@@ -630,18 +652,21 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'hunter-1',
+			id: 'animal-hunter-1',
 			name: 'Hunter',
-			description: `The animal ignores concealment.
+			description: `
+The animal ignores concealment.
 
 **Typically Used By:** Eagles, rats, wolves.`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'multilimb-1',
+			id: 'animal-multilimb-1',
 			name: 'Multilimb',
-			description: `The animal can target one additional creature or object whenever they make a free strike, use the Grab maneuver, or use the Knockback maneuver. 
+			description: `
+The animal can target one additional creature or object whenever they make a free strike, use the Grab maneuver, or use the Knockback maneuver. 
+
 (This trait can be selected twice.)
 
 **Typically Used By:** Monkeys, octopuses, quadrakangas`,
@@ -649,27 +674,30 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'pouncer-1',
+			id: 'animal-pouncer-1',
 			name: 'Pouncer',
-			description: `As a maneuver, the animal jumps up to 3 squares. If they land on an enemy their size or smaller, that enemy is knocked prone and the animal can make a free strike against them.
+			description: `
+As a maneuver, the animal jumps up to 3 squares. If they land on an enemy their size or smaller, that enemy is knocked prone and the animal can make a free strike against them.
 
 **Typically Used By:** Foxes, wild cats.`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'power-1',
+			id: 'animal-power-1',
 			name: 'Power',
-			description: `Whenever the animal force moves a target, they have a +2 bonus to the forced movement distance.
+			description: `
+Whenever the animal force moves a target, they have a +2 bonus to the forced movement distance.
 
 **Typically Used By:** Bears, bulls, lions.`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'projectile-1',
+			id: 'animal-projectile-1',
 			name: 'Projectile',
-			description: `The animal’s signature ability gains the Ranged keyword and adds Ranged 10 to its distance.
+			description: `
+The animal’s signature ability gains the Ranged keyword and adds Ranged 10 to its distance.
 
 **Optional:** The animal’s signature ability can deal acid or cold damage.
 
@@ -678,9 +706,11 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'reach-1',
+			id: 'animal-reach-1',
 			name: 'Reach',
-			description: `The animal’s signature ability gains a +2 bonus to distance. 
+			description: `
+The animal’s signature ability gains a +2 bonus to distance. 
+
 (This trait can be selected twice.)
 
 **Optional:** The animal’s signature ability can deal fire or sonic damage.
@@ -690,16 +720,17 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'venom-1',
+			id: 'animal-venom-1',
 			name: 'Venom',
-			description: `The animal’s signature ability deals an extra 2 poison damage, and if the target has <code>M < 1</code>, they are weakened (save ends).
+			description: `
+The animal’s signature ability deals an extra 2 poison damage, and if the target has <code>M < 1</code>, they are weakened (save ends).
 
 **Typically Used By:** Platypuses, snakes, wasps.`,
 			category: FeatureAddOnType.Offensive,
 			cost: 1
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'web-1',
+			id: 'animal-web-1',
 			name: 'Web',
 			description: `
 The animal gains the following ability.
@@ -719,63 +750,70 @@ The animal gains the following ability.
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'death-fumes-1',
+			id: 'animal-death-fumes-1',
 			name: 'Death Fumes',
-			description: `Whenever the animal takes damage, each creature adjacent to the animal who has <code>M < 1</code> takes damage equal to half the creature’s current Stamina.
+			description: `
+Whenever the animal takes damage, each creature adjacent to the animal who has <code>M < 1</code> takes damage equal to half the creature’s current Stamina.
 
 **Typically Used By:** Death snails.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 10
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'elemental-1',
+			id: 'animal-elemental-1',
 			name: 'Elemental',
-			description: `The animal has an affinity for one of the following damage types: acid, cold, corruption, fire, lightning, poison. The animal has damage immunity 3 to the chosen damage type, and their strikes deal the chosen damage type instead of their original damage type.
+			description: `
+The animal has an affinity for one of the following damage types: acid, cold, corruption, fire, lightning, poison. The animal has damage immunity 3 to the chosen damage type, and their strikes deal the chosen damage type instead of their original damage type.
 
 **Typically Used By:** Fire salamanders, ice bats.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'gelatinous-1',
+			id: 'animal-gelatinous-1',
 			name: 'Gelatinous',
-			description: `The animal can move through spaces as if they were size 1T. Whenever the animal takes damage, they can use a triggered action to separate into two animals. Each new animal has the same statistics as the original but has half the original’s current Stamina.
+			description: `
+The animal can move through spaces as if they were size 1T. Whenever the animal takes damage, they can use a triggered action to separate into two animals. Each new animal has the same statistics as the original but has half the original’s current Stamina.
 
 **Typically Used By:** Earthworms, thunderjellies.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'hypnosis-1',
+			id: 'animal-hypnosis-1',
 			name: 'Hypnosis',
-			description: `As a maneuver, the animal targets one enemy within 5 squares with their gaze, movements, or vocalizations. If the enemy has <code>R < 1</code>, they are dazed (save ends).
+			description: `
+As a maneuver, the animal targets one enemy within 5 squares with their gaze, movements, or vocalizations. If the enemy has <code>R < 1</code>, they are dazed (save ends).
 
 **Typically Used By:** Angler fish, snakes, tigers.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'imposer-1',
+			id: 'animal-imposer-1',
 			name: 'Imposer',
-			description: `The animal’s size increases by 1 (to a minimum of size 2), and they gain a +2 bonus to stability. Additionally, the animal gains a +3 damage bonus to strikes.
+			description: `
+The animal’s size increases by 1 (to a minimum of size 2), and they gain a +2 bonus to stability. Additionally, the animal gains a +3 damage bonus to strikes.
 
 **Typically Used By:** Dire animals, terror lizards.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'pass-through-1',
+			id: 'animal-pass-through-1',
 			name: 'Pass Through',
-			description: `The animal can move through solid matter, and strikes made against them take a bane. If the animal ends their turn inside solid matter, they are shunted out into the space from which they entered it.
+			description: `
+The animal can move through solid matter, and strikes made against them take a bane. If the animal ends their turn inside solid matter, they are shunted out into the space from which they entered it.
 
 **Typically Used By:** Barn owls, tiger wraiths.`,
 			category: FeatureAddOnType.Supernatural,
 			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
-			id: 'translation-1',
+			id: 'animal-translation-1',
 			name: 'Translation',
-			description: `The animal can teleport.
+			description: `
+The animal can teleport.
 
 <span class='pill'>+1pt</span> The animal can also hover.
 

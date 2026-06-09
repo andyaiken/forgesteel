@@ -21,6 +21,7 @@ import heroBuilderSourcebooks from '@/assets/screenshots/hero-edit-sourcebooks.p
 import libraryBeastheart from '@/assets/screenshots/library-beastheart.png';
 import libraryMain from '@/assets/screenshots/library.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
+import librarySummoner from '@/assets/screenshots/library-summoner.png';
 import libraryThirdParty from '@/assets/screenshots/third-party.png';
 
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
@@ -139,6 +140,11 @@ export class TipData {
 			FactoryLogic.createTip({
 				image: libraryBeastheart,
 				content: 'Forge Steel now includes the Beastheart class.',
+				isNew: true
+			}),
+			FactoryLogic.createTip({
+				image: librarySummoner,
+				content: 'Forge Steel now includes the Summoner class.',
 				isNew: true
 			}),
 			// #endregion

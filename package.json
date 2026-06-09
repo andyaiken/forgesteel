@@ -6,7 +6,7 @@
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://forgesteel.net/",
 	"scripts": {
-		"start": "npm ci && vite --host",
+		"start": "vite --host",
 		"update": "npx npm-check-updates --peer --interactive --format group",
 		"lint": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto",
 		"lint:fix": "eslint \"src/**/*.{ts,tsx}\" --concurrency auto --fix",

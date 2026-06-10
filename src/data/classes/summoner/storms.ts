@@ -173,7 +173,8 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5c-3',
 										name: 'Pile Up',
-										description: 'When one or more boulders is reduced to 0 Stamina, they each leave behind a stone wall equal to their size in their space until the end of the encounter.'
+										description: `
+<span class='pill'>1pt</span> When one or more boulders is reduced to 0 Stamina, they each leave behind a stone wall equal to their size in their space until the end of the encounter.`
 									})
 								]
 							}),

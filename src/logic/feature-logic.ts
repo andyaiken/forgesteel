@@ -537,6 +537,7 @@ export class FeatureLogic {
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
 			FeatureType.Summon,
+			FeatureType.SummonChoice,
 			FeatureType.SwitchOptions,
 			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,

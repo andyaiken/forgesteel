@@ -1584,7 +1584,7 @@ export const Main = (props: Props) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
 			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
-		const takeRespite = (updatedHero?: Hero) => {
+		const takeRespite = (updatedHero: Hero) => {
 			const copy = Utils.copy(updatedHero || hero);
 			HeroLogic.takeRespite(copy);
 			persistHero(copy);

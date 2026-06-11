@@ -188,22 +188,7 @@ export const ConfigKit = (props: ConfigProps) => {
 			</Drawer>
 			<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} size={500}>
 				<Modal
-					content={selectedKit ?
-						<KitPanel
-							kit={selectedKit}
-							hero={props.hero}
-							sourcebooks={props.sourcebooks}
-							mode={PanelMode.Full}
-							onChange={(kitCopy: Kit) => {
-								const dataCopy = Utils.copy(props.data);
-								const idx = dataCopy.selected.findIndex(k => k.id === kitCopy.id);
-								if (idx >= 0) {
-									dataCopy.selected[idx] = kitCopy;
-									props.setData(dataCopy);
-								}
-							}}
-						/>
-						: null}
+					content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedKit(null)}
 				/>
 			</Drawer>

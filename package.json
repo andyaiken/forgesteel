@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.99.0",
+	"version": "14.100.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://forgesteel.net/",
@@ -17,10 +17,10 @@
 	"dependencies": {
 		"@ant-design/icons": "^6.2.5",
 		"@dnd-kit/core": "^6.3.1",
-		"@mdxeditor/editor": "^4.0.1",
+		"@mdxeditor/editor": "^4.0.2",
 		"@types/showdown": "^2.0.6",
 		"antd": "^6.4.3",
-		"axios": "^1.16.1",
+		"axios": "^1.17.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^4.2.1",
 		"localforage": "^1.10.0",

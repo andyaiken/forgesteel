@@ -140,9 +140,9 @@ You gain a bane on the test for each subsequent rumor you collect either on the 
 								encounterValue: 0,
 								size: FactoryLogic.createSize(1, 'T'),
 								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								stamina: 1,
 								stability: 0,
-								freeStrikeDamage: 0,
+								freeStrikeDamage: 1,
 								characteristics: FactoryLogic.createCharacteristics(2, 0, -1, -1, -1),
 								features: [
 									FactoryLogic.feature.create({

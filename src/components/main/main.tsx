@@ -1603,7 +1603,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={h => persistHero(h)}
+						onChange={persistHero}
 					/>
 				);
 				break;
@@ -1613,7 +1613,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						showEncounterControls={false}
 						onClose={() => setDrawer(null)}
-						onChange={h => persistHero(h)}
+						onChange={persistHero}
 					/>
 				);
 				break;
@@ -1623,7 +1623,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={h => persistHero(h)}
+						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);
@@ -1634,7 +1634,7 @@ export const Main = (props: Props) => {
 						hero={hero}
 						sourcebooks={sourcebooks}
 						onClose={() => setDrawer(null)}
-						onChange={h => persistHero(h)}
+						onChange={persistHero}
 						onCustomize={() => onShowHeroState(hero, HeroModalType.Customize)}
 					/>
 				);

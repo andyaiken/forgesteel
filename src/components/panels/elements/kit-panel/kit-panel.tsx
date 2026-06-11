@@ -25,7 +25,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	hero?: Hero;
 	mode?: PanelMode;
-	onChange?: (kit: Kit) => void;
 }
 
 export const KitPanel = (props: Props) => {

@@ -32,11 +32,13 @@ export const ClocktowerScriptPanel = (props: Props) => {
 					characters.map(ch => (
 						<SelectablePanel
 							key={ch.role.id}
-							style={{ padding: '5px 10px', display: 'flex', justifyContent: 'center', minHeight: '80px' }}
+							style={{ padding: '5px 10px' }}
 							onSelect={() => setSelectedCharacter(ch)}
 						>
-							<Flex align='center' gap={10}>
-								<ClocktowerToken character={ch} size={40} />
+							<Flex gap={10}>
+								<div style={{ paddingTop: '10px' }}>
+									<ClocktowerToken character={ch} size={40} />
+								</div>
 								<Field label={ch.role.name} value={ch.role.ability} />
 							</Flex>
 						</SelectablePanel>
@@ -93,7 +95,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					jinxes.map((j, n) => (
-						<Flex key={n} align='center' gap={10}>
+						<Flex key={n} align='center' gap={5}>
 							<ClocktowerToken character={j.ch1} size={30} />
 							<ClocktowerToken character={j.ch2} size={30} />
 							{j.reason}

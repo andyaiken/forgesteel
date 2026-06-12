@@ -43,6 +43,7 @@ export class SourcebookLogic {
 			SourcebookData.core,
 			SourcebookData.orden,
 			SourcebookData.beastheart,
+			SourcebookData.summoner,
 
 			// Third Party
 			SourcebookData.community,
@@ -55,7 +56,6 @@ export class SourcebookLogic {
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.patreon);
-			list.push(SourcebookData.summoner);
 		}
 
 		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {

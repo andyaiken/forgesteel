@@ -99,7 +99,7 @@ export const ProjectEditPanel = (props: Props) => {
 					onChange={setCharacteristic}
 				/>
 				<HeaderText>Goal</HeaderText>
-				<NumberSpin min={0} max={1000} steps={[ 5, 50 ]} value={project.goal} onChange={setGoal} />
+				<NumberSpin min={0} steps={[ 5, 50, 500 ]} value={project.goal} onChange={setGoal} />
 			</Space>
 		);
 	};

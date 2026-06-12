@@ -205,7 +205,7 @@ const radenwight: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Names are like scraps - pick up enough of them and you’ll find something worth keeping.',
-		ability: 'Each day, publicly claim a new role (not Radenwight). That night, ask the Storyteller a yes/no question; if that role is in play, they will answer truthfully.',
+		ability: 'Each day, publicly claim to be a new role (not your own). That night, ask the Storyteller a yes/no question; if it’s in play, they will answer truthfully.',
 		otherNightReminder: 'Ask a question.',
 		reminders: [
 			'True info',
@@ -946,55 +946,6 @@ The Voiceless Talker silently rearranges the pieces on the board.
 
 // #endregion
 
-// #region Fabled
-
-const dragonKnight: ClocktowerCharacter = {
-	role: {
-		id: 'dragonknight',
-		name: 'Dragon Knight',
-		image: [
-			'https://forgesteel.net/assets/clocktower/dragonknight/fabled.png'
-		],
-		team: ClocktowerTeam.Fabled,
-		flavor: 'Even should the sun stop in the sky...',
-		ability: 'At least one Townsfolk must receive true information each night.'
-	},
-	details: {
-		description: `
-The Dragon Knight ensures that truth cannot be entirely extinguished.
-
-* Each night, the Storyteller must give at least one Townsfolk player true information, regardless of that player's drunk or poisoned status. The chosen player is considered to be sober and healthy.
-* The Storyteller chooses which Townsfolk receives this protected information. They are not told their information is protected.`
-	}
-};
-
-// #endregion
-
-// #region Lorics
-
-const xorannox: ClocktowerCharacter = {
-	role: {
-		id: 'xorannox',
-		name: 'Xorannox',
-		image: [
-			'https://forgesteel.net/assets/clocktower/xorannox/loric.png'
-		],
-		team: ClocktowerTeam.Loric,
-		flavor: 'I find certainty so much more interesting when it is wrong.',
-		ability: 'Players who are drunk or poisoned always receive false information.'
-	},
-	details: {
-		description: `
-Xorannox warps the fabric of reality, turning corruption into certainty.
-
-* While Xorannox is in play, any player who is drunk or poisoned always receives false information. The Storyteller has no discretion — false information is mandatory, not optional.
-* This applies to all sources of information: nightly visits, ability results, and any other information a drunk or poisoned player would normally receive.
-* A player who knows they are drunk or poisoned may invert any information they receive to deduce the truth.`
-	}
-};
-
-// #endregion
-
 export class ClocktowerData {
 	static standard: ClocktowerScript = {
 		type: ClocktowerScriptType.Standard,
@@ -1085,11 +1036,7 @@ export class ClocktowerData {
 			hakaan,
 			polder,
 			timeRaider,
-			voicelessTalker,
-			// Fabled
-			dragonKnight,
-			// Lorics
-			xorannox
+			voicelessTalker
 		]
 	};
 
@@ -1140,11 +1087,7 @@ export class ClocktowerData {
 			lightbender,
 			// Demons
 			blightPhage,
-			torlas,
-			// Fabled
-			dragonKnight,
-			// Lorics
-			xorannox
+			torlas
 		]
 	};
 };

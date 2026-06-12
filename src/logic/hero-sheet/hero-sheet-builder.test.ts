@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummon, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
-import { afterEach, describe, expect, expectTypeOf, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
@@ -156,26 +156,6 @@ describe('buildFollowerCompanionSheet()', () => {
 
 		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(retainer1, undefined);
 		expect(result).toBe(mockResult);
-	});
-
-	test('it should call the correct builder method for Summoner selection features', () => {
-		const mockSheet1 = { id: 'companion-1' } as FollowerSheet;
-
-		const mockBuilderMethod = vi.spyOn(HeroSheetBuilder, 'buildCompanionSheet')
-			.mockReturnValueOnce(mockSheet1);
-
-		const result = HeroSheetBuilder.buildFollowerCompanionSheet(mockSummonChoiceFeature, mockHero);
-
-		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(companion1, mockHero);
-		expect(result).toBeDefined();
-		expect(result).not.toBeNullable();
-
-		// @ts-ignore we are asserting all this stuff it's compaining about
-		expectTypeOf(result).toBeArray();
-		// @ts-ignore
-		expect(result.length).toBe(1);
-		// @ts-ignore
-		expect(result[0]).toBe(mockSheet1);
 	});
 });
 

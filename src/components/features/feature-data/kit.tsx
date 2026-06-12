@@ -126,47 +126,56 @@ export const ConfigKit = (props: ConfigProps) => {
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
-				props.data.selected.map(kit => (
-					<SelectionBox
-						key={kit.id}
-						content={
-							<Field
-								style={{ flex: '1 1 0' }}
-								label={kit.name}
-								value={<Markdown text={kit.description} useSpan={true} />}
-							/>
-						}
-						customizeContent={
-							<Expander title='Configure'>
-								{
-									kit.features.filter(f => FeatureLogic.isChoice(f)).map(f => (
-										<FeatureConfigPanel
-											key={f.id}
-											feature={f}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											setData={(featureID, data) => {
-												const dataCopy = Utils.copy(props.data);
-												const kitCopy = dataCopy.selected.find(k => k.id === kit.id);
-												if (!kitCopy) { return; }
-												const featureToUpdate = kitCopy.features.find(kf => kf.id === featureID);
-												if (!featureToUpdate) { return; }
-												featureToUpdate.data = Utils.copy(data);
-												props.setData(dataCopy);
-											}}
-										/>
-									))
-								}
-							</Expander>
-						}
-						onSelect={() => setSelectedKit(kit)}
-						onRemove={() => {
-							const dataCopy = Utils.copy(props.data);
-							dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
-							props.setData(dataCopy);
-						}}
-					/>
-				))
+				props.data.selected.map(kit => {
+					const features = FeatureLogic.getFeaturesFromKit(kit, props.hero.class?.level || 1);
+					const choiceFeatures = features.map(f => f.feature).filter(f => FeatureLogic.isChoice(f));
+					return (
+						<SelectionBox
+							key={kit.id}
+							content={
+								<Field
+									style={{ flex: '1 1 0' }}
+									label={kit.name}
+									value={<Markdown text={kit.description} useSpan={true} />}
+								/>
+							}
+							customizeContent={
+								choiceFeatures.length > 0 ?
+									(
+										<Expander title='Configure'>
+											{
+												choiceFeatures.map(f => (
+													<FeatureConfigPanel
+														key={f.id}
+														feature={f}
+														hero={props.hero}
+														sourcebooks={props.sourcebooks}
+														setData={(featureID, data) => {
+															const dataCopy = Utils.copy(props.data);
+															const kitCopy = dataCopy.selected.find(k => k.id === kit.id);
+															if (!kitCopy) { return; }
+															const featureToUpdate = kitCopy.features.find(kf => kf.id === featureID);
+															if (!featureToUpdate) { return; }
+															featureToUpdate.data = Utils.copy(data);
+															props.setData(dataCopy);
+														}}
+													/>
+												))
+											}
+										</Expander>
+									)
+									: null
+							}
+							onSelect={() => setSelectedKit(kit)}
+							onRemove={() => {
+								const dataCopy = Utils.copy(props.data);
+								dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
+								props.setData(dataCopy);
+							}}
+						/>
+					);
+				}
+				)
 			}
 			{props.data.selected.length < props.data.count ? getAddButton() : null}
 			<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} size={500}>

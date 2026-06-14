@@ -82,7 +82,7 @@
 				&.grid {
 					padding: 10px;
 					display: grid;
-					grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+					grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 					gap: 10px;
 				}
 
@@ -94,7 +94,7 @@
 
 					.grid {
 						display: grid;
-						grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+						grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 						gap: 10px;
 					}
 				}
@@ -105,16 +105,6 @@
 					flex-direction: column;
 					gap: 10px;
 				}
-
-				&.choices {
-					margin-top: 5px;
-					padding: 5px 20px 20px 20px;
-					display: flex;
-					flex-direction: column;
-					gap: 10px;
-					background-color: rgb(245, 245, 245);
-					border-radius: 10px;
-				}
 			}
 		}
 	}
@@ -124,14 +114,6 @@ html[data-theme="dark"] {
 	.hero-edit-page {
 		.hero-edit-page-content {
 			background-color: rgb(55, 55, 55);
-
-			.hero-edit-content {
-				.hero-edit-content-column {
-					&.choices {
-						background-color: rgb(10, 10, 10);
-					}
-				}
-			}
 		}
 	}
 }

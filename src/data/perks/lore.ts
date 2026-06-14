@@ -2,6 +2,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
 
 export class LorePerkData {
 	static butIKnowWhoDoes: Perk = {
@@ -17,8 +18,13 @@ export class LorePerkData {
 		id: 'perk-eidetic-memory',
 		name: 'Eidetic Memory',
 		description: 'Your mind is an encyclopedia, though not always an easy one to organize. When you finish a respite, choose one skill from the lore skill group that you don’t have. You have that skill until you finish your next respite. Additionally, if you spend 1 uninterrupted minute or more reading any page of text, you can memorize its contents, allowing you to memorize entire books with sufficient time.',
-		type: FeatureType.Text,
-		data: null,
+		type: FeatureType.SkillChoice,
+		data: {
+			options: [],
+			listOptions: [ SkillList.Lore ],
+			count: 1,
+			selected: []
+		},
 		list: PerkList.Lore
 	};
 

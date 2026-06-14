@@ -110,7 +110,7 @@ export const ComplicationSection = (props: Props) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column choices' id='complication-choices'>
+					<div className='hero-edit-content-column selected' id='complication-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>

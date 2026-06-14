@@ -1,4 +1,4 @@
-import { Alert, AutoComplete, Button, Divider, Flex, Space, Upload } from 'antd';
+import { Alert, AutoComplete, Button, Flex, Space, Upload } from 'antd';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -36,66 +37,75 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 
 	return (
 		<div className='hero-edit-content details-section'>
-			<div className='hero-edit-content-column single-column choices' id='details-main'>
-				<HeaderText>Name</HeaderText>
-				<Space.Compact style={{ width: '100%' }}>
-					<TextInput
-						status={props.hero.name === '' ? 'warning' : ''}
-						placeholder='Name'
+			<div className='hero-edit-content-column selected' id='details-main'>
+				<SelectablePanel>
+					<HeaderText>Name</HeaderText>
+					<Space.Compact style={{ width: '100%' }}>
+						<TextInput
+							status={props.hero.name === '' ? 'warning' : ''}
+							placeholder='Name'
+							allowClear={true}
+							value={props.hero.name}
+							onChange={props.setName}
+						/>
+						<NameSuggestions onSelect={props.setName} />
+					</Space.Compact>
+				</SelectablePanel>
+				<SelectablePanel>
+					<HeaderText>Portrait</HeaderText>
+					{
+						props.hero.picture ?
+							<Flex align='center' justify='center' gap={10}>
+								<img className='portrait-edit' src={props.hero.picture} title='Portrait' />
+								<DangerButton mode='clear' onConfirm={() => props.setPicture(null)} />
+							</Flex>
+							:
+							<Upload
+								style={{ width: '100%' }}
+								accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
+								showUploadList={false}
+								beforeUpload={async file => {
+									const reader = new FileReader();
+									reader.onload = async progress => {
+										if (progress.target) {
+											const content = progress.target.result as string;
+											const resized = await Utils.getResizedImage(content);
+											props.setPicture(resized);
+										}
+									};
+									reader.readAsDataURL(file);
+									return false;
+								}}
+							>
+								<Button>
+									<DownloadOutlined />
+									Choose a picture
+								</Button>
+							</Upload>
+					}
+				</SelectablePanel>
+				<SelectablePanel>
+					<HeaderText>Folder</HeaderText>
+					<AutoComplete
+						options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: option }))}
+						optionRender={o => <div className='ds-text'>{o.data.label}</div>}
+						placeholder='Folder'
 						allowClear={true}
-						value={props.hero.name}
-						onChange={props.setName}
+						showSearch={{ filterOption: true }}
+						value={props.hero.folder}
+						onSelect={props.setFolder}
+						onChange={props.setFolder}
 					/>
-					<NameSuggestions onSelect={props.setName} />
-				</Space.Compact>
-				<HeaderText>Portrait</HeaderText>
-				{
-					props.hero.picture ?
-						<Flex align='center' justify='center' gap={10}>
-							<img className='portrait-edit' src={props.hero.picture} title='Portrait' />
-							<DangerButton mode='clear' onConfirm={() => props.setPicture(null)} />
-						</Flex>
-						:
-						<Upload
-							style={{ width: '100%' }}
-							accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
-							showUploadList={false}
-							beforeUpload={async file => {
-								const reader = new FileReader();
-								reader.onload = async progress => {
-									if (progress.target) {
-										const content = progress.target.result as string;
-										const resized = await Utils.getResizedImage(content);
-										props.setPicture(resized);
-									}
-								};
-								reader.readAsDataURL(file);
-								return false;
-							}}
-						>
-							<Button>
-								<DownloadOutlined />
-								Choose a picture
-							</Button>
-						</Upload>
-				}
-				<HeaderText>Folder</HeaderText>
-				<AutoComplete
-					options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: option }))}
-					optionRender={o => <div className='ds-text'>{o.data.label}</div>}
-					placeholder='Folder'
-					allowClear={true}
-					showSearch={{ filterOption: true }}
-					value={props.hero.folder}
-					onSelect={props.setFolder}
-					onChange={props.setFolder}
-				/>
-				<Alert
-					type='info'
-					showIcon={true}
-					title='You can add your hero to a folder to group it with other heroes.'
-				/>
-				<Divider />
+					<div className='ds-text'>
+						<Alert
+							type='info'
+							showIcon={true}
+							title='You can add your hero to a folder to group it with other heroes.'
+						/>
+					</div>
+				</SelectablePanel>
+			</div>
+			<div className='hero-edit-content-column selected'>
 				<Expander title='Language Choices'>
 					{
 						HeroLogic.getFeatures(props.hero)

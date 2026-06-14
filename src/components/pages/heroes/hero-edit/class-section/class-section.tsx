@@ -229,7 +229,7 @@ export const ClassSection = (props: Props) => {
 			}
 			{
 				choicesByLevel.length > 0 ?
-					<div className='hero-edit-content-column choices' id='class-choices'>
+					<div className='hero-edit-content-column selected' id='class-choices'>
 						<HeaderText>Choices</HeaderText>
 						{
 							choicesByLevel.map(lvl => (

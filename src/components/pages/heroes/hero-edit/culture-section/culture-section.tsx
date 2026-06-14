@@ -236,7 +236,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column choices' id='culture-choices'>
+						<div className='hero-edit-content-column selected' id='culture-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>

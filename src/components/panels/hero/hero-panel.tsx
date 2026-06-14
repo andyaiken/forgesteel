@@ -233,7 +233,15 @@ export const HeroPanel = (props: Props) => {
 					onShowState={props.onShowState}
 				/>
 				<div className='hero-main-section'>
-					{!isSmall && !options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
+					{
+						!isSmall && !options.singlePage ?
+							<StatsSidebarPanel
+								hero={props.hero}
+								showStats={tab !== 'Hero'}
+								onSelectCharacteristic={props.onSelectCharacteristic}
+							/>
+							: null
+					}
 					<div className='hero-center-column'>
 						{
 							options.singlePage ?

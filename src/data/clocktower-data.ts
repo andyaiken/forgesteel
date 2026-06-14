@@ -94,7 +94,7 @@ const director: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'You can trust me. I’m on your side.',
-		ability: 'The first time you nominate, if your nominee is a Townsfolk, all players immediately learn your role.',
+		ability: 'The first time you nominate, if your nominee is a Townsfolk, that player is executed and all players learn your role. Your role and alignment cannot be changed.',
 		reminders: [
 			'Ability used'
 		]
@@ -103,11 +103,12 @@ const director: ClocktowerCharacter = {
 		description: `
 The Director can prove they are trustworthy.
 
-* The first time the Director nominates a player, if that player is a Townsfolk, every player in the game immediately and publicly learns the Director's character.
+* The first time the Director nominates a player, if that player is a Townsfolk, that player is executed; every player in the game immediately and publicly learns the Director's character, and the day ends.
 * This revelation occurs during the nomination itself, before any vote is held.
 * The ability only triggers if the nominee is a Townsfolk. Nominating an Outsider, Minion, Demon, or Traveller has no special effect and does not expend the ability.
 * If the Director is drunk or poisoned when making their first nomination, the ability does not trigger, even if the nominee is a Townsfolk. The ability is still expended — the Director does not get a second chance when sober.
-* After the first nomination (whether or not it triggered), the Director has no further special effect.`
+* After the first nomination (whether or not it triggered), the Director has no further special effect.
+* The Director cannot be made evil or changed into a different role - the good Director is always the good Director.`
 	}
 };
 

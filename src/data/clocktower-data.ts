@@ -97,7 +97,14 @@ const director: ClocktowerCharacter = {
 		ability: 'The first time you nominate, if your nominee is a Townsfolk, that player is executed and all players learn your role. Your role and alignment cannot be changed.',
 		reminders: [
 			'Ability used'
+		],
+		jinxes: [
+			{
+				id: 'elementalist',
+				reason: 'If the Director nominates the Elementalist, all players learn the Director’s role, then the Director dies in place of the Elementalist; both abilities are spent.'
+			}
 		]
+
 	},
 	details: {
 		description: `

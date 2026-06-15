@@ -51,7 +51,8 @@ export class SourcebookLogic {
 			SourcebookData.magazineBlacksmith,
 			SourcebookData.magazineRatcatcher,
 			SourcebookData.steelEchoes,
-			SourcebookData.triglav
+			SourcebookData.triglav,
+			SourcebookData.weaponsOfLegend
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {

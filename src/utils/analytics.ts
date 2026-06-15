@@ -1,3 +1,4 @@
+import { Element } from '@/models/element';
 import { Hero } from '@/models/hero';
 import { SourcebookElementKind } from '@/models/sourcebook';
 
@@ -21,6 +22,13 @@ export class Analytics {
 			career: hero.career?.id || '',
 			class: hero.class?.id || '',
 			complication: hero.complication?.id || ''
+		});
+	};
+
+	static logElementSelected = (element: Element, type: string) => {
+		gtag('event', 'element_selected', {
+			element: element.id,
+			type: type
 		});
 	};
 

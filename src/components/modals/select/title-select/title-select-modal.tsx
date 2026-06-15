@@ -1,4 +1,5 @@
 import { Alert, Button, Space } from 'antd';
+import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { Empty } from '@/components/controls/empty/empty';
@@ -35,6 +36,7 @@ export const TitleSelectModal = (props: Props) => {
 	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
 	const selectTitle = (title: Title) => {
+		Analytics.logElementSelected(title, 'Title');
 		const copy = Utils.copy(title);
 		if (copy.features.length === 1) {
 			copy.selectedFeatureID = copy.features[0].id;

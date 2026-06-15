@@ -1,4 +1,5 @@
 import { Button, Divider, Space } from 'antd';
+import { Analytics } from '@/utils/analytics';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { Hero } from '@/models/hero';
@@ -45,6 +46,11 @@ export const ItemSelectModal = (props: Props) => {
 			types[type] = value;
 		});
 		setShowTypes(types);
+	};
+
+	const onSelect = (item: Item) => {
+		Analytics.logElementSelected(item, 'Item');
+		props.onSelect(item);
 	};
 
 	const items = [ ...SourcebookLogic.getItems(props.sourcebooks), ImbuedItemData.imbuedArmor, ImbuedItemData.imbuedImplement, ImbuedItemData.imbuedWeapon ]
@@ -107,7 +113,7 @@ export const ItemSelectModal = (props: Props) => {
 											type='text'
 											title='Select'
 											icon={<PlusOutlined />}
-											onClick={() => props.onSelect(item)}
+											onClick={() => onSelect(item)}
 										/>
 									]}
 								>

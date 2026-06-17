@@ -1,8 +1,8 @@
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, EllipsisOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Divider, Flex, Popover, Segmented, Space } from 'antd';
+import { ButtonGroup, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { AppHeader } from '@/components/panels/app-header/app-header';
-import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -42,33 +42,27 @@ export const WelcomePage = (props: Props) => {
 	const [ tipIndex, setTipIndex ] = useState<number>(0);
 	const navigation = useNavigation();
 
-	const topNav = (
-		<ButtonGroup
-			buttons={[
-				{
-					type: 'dropdown',
-					icon: <EllipsisOutlined />,
-					popover: (
-						<Space orientation='vertical'>
-							<Button block={true} type='text' onClick={() => navigation.goToHeroList()}>Heroes</Button>
-							<Button block={true} type='text' onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>
-							<Button block={true} type='text' onClick={() => navigation.goToSession()}>Session</Button>
-							<Divider size='small' />
-							<Button block={true} type='text' onClick={() => navigation.goToBackup()}>Backup</Button>
-							<Button block={true} type='text' onClick={() => navigation.goToClocktower()}>Clocktower</Button>
-						</Space>
-					)
-				}
-			]}
-		/>
-	);
+	const menu: DropdownConfig = {
+		type: 'dropdown',
+		icon: <EllipsisOutlined />,
+		popover: (
+			<Space orientation='vertical'>
+				<Button block={true} type='text' onClick={() => navigation.goToHeroList()}>Heroes</Button>
+				<Button block={true} type='text' onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>
+				<Button block={true} type='text' onClick={() => navigation.goToSession()}>Session</Button>
+				<Divider size='small' />
+				<Button block={true} type='text' onClick={() => navigation.goToBackup()}>Backup</Button>
+				<Button block={true} type='text' onClick={() => navigation.goToClocktower()}>Clocktower</Button>
+			</Space>
+		)
+	};
 
 	if (isSmall) {
 		return (
 			<ErrorBoundary name='welcome-page'>
 				<div className='welcome-page'>
 					<AppHeader>
-						{topNav}
+						<ButtonGroup buttons={[ menu ]} />
 					</AppHeader>
 					<ErrorBoundary>
 						<div className='welcome-page-content compact'>
@@ -95,7 +89,17 @@ export const WelcomePage = (props: Props) => {
 		<ErrorBoundary name='welcome-page'>
 			<div className='welcome-page'>
 				<AppHeader>
-					{topNav}
+					<ButtonGroup
+						buttons={[
+							{
+								type: 'button',
+								tooltip: 'Hide Tips',
+								icon: showTips ? <BulbFilled style={{ color: 'rgba(64, 150, 255)' }} /> : <BulbOutlined />,
+								onClick: () => setShowTips(!showTips)
+							},
+							menu
+						]}
+					/>
 				</AppHeader>
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
@@ -121,12 +125,6 @@ export const WelcomePage = (props: Props) => {
 											},
 											{
 												type: 'button',
-												tooltip: 'Hide Tips',
-												icon: <BulbFilled style={{ color: 'rgba(64, 150, 255)' }} />,
-												onClick: () => setShowTips(false)
-											},
-											{
-												type: 'button',
 												tooltip: 'Next Tip',
 												icon: <DoubleRightOutlined />,
 												onClick: () => setTipIndex(tipIndex + 1)
@@ -136,13 +134,7 @@ export const WelcomePage = (props: Props) => {
 								</Flex>
 								<TipPanel tip={tips[tipIndex % tips.length]} />
 							</div>
-							:
-							<Button
-								type='text'
-								icon={<BulbOutlined />}
-								title='Show Tips'
-								onClick={() => setShowTips(true)}
-							/>
+							: null
 					}
 				</div>
 				<AppFooter

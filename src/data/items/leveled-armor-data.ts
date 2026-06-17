@@ -195,7 +195,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.create({
 						id: 'item-grand-scarab-1',
 						name: '',
-						description: 'While you wear this armor, you can fly. If you don’t end your turn on the ground, you fall..'
+						description: 'While you wear this armor, you can fly. If you don’t end your turn on the ground, you fall.'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-grand-scarab-1a',

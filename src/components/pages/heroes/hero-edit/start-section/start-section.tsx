@@ -38,7 +38,7 @@ export const StartSection = (props: Props) => {
 					</div>
 				</SelectablePanel>
 			</div>
-			<div className='hero-edit-content-column choices'>
+			<div className='hero-edit-content-column selected'>
 				<HeroSourcebooksPanel
 					sourcebooks={props.sourcebooks}
 					sourcebookIDs={props.sourcebookIDs}

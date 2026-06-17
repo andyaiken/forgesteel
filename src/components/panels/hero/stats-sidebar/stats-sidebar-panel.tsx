@@ -10,6 +10,7 @@ import './stats-sidebar-panel.scss';
 interface Props {
 	hero: Hero;
 	showStats: boolean;
+	onSelectCharacteristic: (ch: Characteristic) => void;
 }
 
 export const StatsSidebarPanel = (props: Props) => {
@@ -22,11 +23,41 @@ export const StatsSidebarPanel = (props: Props) => {
 					{props.hero.name || 'Unnamed Hero'} - {HeroLogic.getHeroDescription(props.hero)}
 				</div>
 				<div className={props.showStats ? 'stats-section' : 'stats-section ghost'}>
-					<Field orientation='vertical' label='M' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
-					<Field orientation='vertical' label='A' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-					<Field orientation='vertical' label='R' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-					<Field orientation='vertical' label='I' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-					<Field orientation='vertical' label='P' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+					<div className='characteristic-btn' onClick={() => props.onSelectCharacteristic(Characteristic.Might)}>
+						<Field
+							orientation='vertical'
+							label='M'
+							value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)}
+						/>
+					</div>
+					<div className='characteristic-btn' onClick={() => props.onSelectCharacteristic(Characteristic.Agility)}>
+						<Field
+							orientation='vertical'
+							label='A'
+							value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)}
+						/>
+					</div>
+					<div className='characteristic-btn' onClick={() => props.onSelectCharacteristic(Characteristic.Reason)}>
+						<Field
+							orientation='vertical'
+							label='R'
+							value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)}
+						/>
+					</div>
+					<div className='characteristic-btn' onClick={() => props.onSelectCharacteristic(Characteristic.Intuition)}>
+						<Field
+							orientation='vertical'
+							label='I'
+							value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)}
+						/>
+					</div>
+					<div className='characteristic-btn' onClick={() => props.onSelectCharacteristic(Characteristic.Presence)}>
+						<Field
+							orientation='vertical'
+							label='P'
+							value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)}
+						/>
+					</div>
 				</div>
 				<div className={props.showStats ? 'stats-section' : 'stats-section ghost'}>
 					<Field orientation='vertical' label='Size' value={FormatLogic.getSize(HeroLogic.getSize(props.hero))} />

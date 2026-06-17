@@ -167,7 +167,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 				FactoryLogic.feature.create({
 					id: 'griffon-1-feature-5',
 					name: 'Beast of Prey',
-					description: 'While grabbed by the griffon, a creature has a double bane on the Escape Grab maneuver..'
+					description: 'While grabbed by the griffon, a creature has a double bane on the Escape Grab maneuver.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'griffon-1-feature-6',

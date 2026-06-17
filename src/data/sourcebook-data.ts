@@ -9,6 +9,7 @@ import { ratcatcher } from '@/data/sourcebooks/third-party/magazine-ratcatcher';
 import { steelEchoes } from '@/data/sourcebooks/third-party/steel-echoes';
 import { summonerSourcebook } from '@/data/sourcebooks/official/summoner';
 import { triglav } from '@/data/sourcebooks/third-party/triglav';
+import { weaponsOfLegend } from '@/data/sourcebooks/third-party/weapons-of-legend';
 
 export class SourcebookData {
 	// Official
@@ -24,6 +25,7 @@ export class SourcebookData {
 	static magazineRatcatcher = ratcatcher;
 	static steelEchoes = steelEchoes;
 	static triglav = triglav;
+	static weaponsOfLegend = weaponsOfLegend;
 
 	// Community
 	static communityPrerelease = communityPrerelease;

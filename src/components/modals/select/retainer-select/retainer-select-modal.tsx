@@ -1,3 +1,4 @@
+import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -29,6 +30,11 @@ interface Props {
 export const RetainerSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ filter, setFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
+
+	const onSelect = (monster: Monster) => {
+		Analytics.logElementSelected(monster, 'Retainer');
+		props.onSelect(monster);
+	};
 
 	const monsters = props.monsters
 		.filter(m => m.role.organization === MonsterOrganizationType.Retainer)
@@ -64,7 +70,7 @@ export const RetainerSelectModal = (props: Props) => {
 							sortedMonsters.map(m => (
 								<SelectablePanel
 									key={m.id}
-									onSelect={() => props.onSelect(Utils.copy(m))}
+									onSelect={() => onSelect(Utils.copy(m))}
 								>
 									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} />
 								</SelectablePanel>

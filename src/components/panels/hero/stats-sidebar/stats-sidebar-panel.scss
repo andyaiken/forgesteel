@@ -39,6 +39,16 @@
 
 	.stats-section {
 		flex: 1 1 0;
+
+		.characteristic-btn {
+			width: 30px;
+			cursor: pointer;
+			border-radius: 5px;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+		}
 	}
 }
 
@@ -48,6 +58,12 @@ html[data-theme="dark"] {
 		.stats-section {
 			background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 			color: rgba(255, 255, 255, 0.88);
+
+			.characteristic-btn {
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.1);
+				}
+			}
 		}
 	}
 }

@@ -151,7 +151,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 								description: 'These massive clods of animated stone roll upon smaller piles of rocks that could be perceived as limbs. Walking boulders are useful for taking up space and forming barricades.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
-								keywords: [ 'Elemental (fire)' ],
+								keywords: [ 'Elemental (earth)' ],
 								encounterValue: 0,
 								size: FactoryLogic.createSize(2),
 								speed: FactoryLogic.createSpeed(4, 'climb'),

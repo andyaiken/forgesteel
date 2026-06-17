@@ -88,7 +88,7 @@ export const AncestrySection = (props: Props) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column choices' id='ancestry-choices'>
+					<div className='hero-edit-content-column selected' id='ancestry-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>

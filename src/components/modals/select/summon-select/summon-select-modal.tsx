@@ -1,3 +1,4 @@
+import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Hero } from '@/models/hero';
@@ -27,6 +28,11 @@ interface Props {
 export const SummonSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
+	const onSelect = (summon: Summon) => {
+		Analytics.logElementSelected(summon, 'Summon');
+		props.onSelect(summon);
+	};
+
 	const summons = props.summons
 		.filter(s => Utils.textMatches([
 			s.monster.name,
@@ -48,7 +54,7 @@ export const SummonSelectModal = (props: Props) => {
 							sortedSummons.map(s => (
 								<SelectablePanel
 									key={s.id}
-									onSelect={() => props.onSelect(s)}
+									onSelect={() => onSelect(s)}
 								>
 									<MonsterPanel monster={SummonLogic.getSummonedMonster(s, props.hero)} summon={s.info} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>

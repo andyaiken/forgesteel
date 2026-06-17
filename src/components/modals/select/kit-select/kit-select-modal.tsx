@@ -1,3 +1,4 @@
+import { Analytics } from '@/utils/analytics';
 import { Empty } from '@/components/controls/empty/empty';
 import { Hero } from '@/models/hero';
 import { Kit } from '@/models/kit';
@@ -18,11 +19,16 @@ interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
-	onSelect: (kits: Kit) => void;
+	onSelect: (kit: Kit) => void;
 }
 
 export const KitSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+
+	const onSelect = (kit: Kit) => {
+		Analytics.logElementSelected(kit, 'Kit');
+		props.onSelect(kit);
+	};
 
 	const kits = props.kits
 		.filter(k => Utils.textMatches([
@@ -42,7 +48,7 @@ export const KitSelectModal = (props: Props) => {
 							kits.map(k => (
 								<SelectablePanel
 									key={k.id}
-									onSelect={() => props.onSelect(k)}
+									onSelect={() => onSelect(k)}
 								>
 									<KitPanel kit={k} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>

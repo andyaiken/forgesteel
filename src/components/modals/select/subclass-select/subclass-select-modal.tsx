@@ -1,4 +1,5 @@
 import { Alert, Divider, Space } from 'antd';
+import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -24,6 +25,11 @@ interface Props {
 
 export const SubClassSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+
+	const onSelect = (subclass: SubClass) => {
+		Analytics.logElementSelected(subclass, 'Subclass');
+		props.onSelect(subclass);
+	};
 
 	const subClasses = props.subClasses
 		.filter(l => Utils.textMatches([
@@ -62,7 +68,7 @@ export const SubClassSelectModal = (props: Props) => {
 							subClasses.map(sc => (
 								<SelectablePanel
 									key={sc.id}
-									onSelect={() => props.onSelect(sc)}
+									onSelect={() => onSelect(sc)}
 								>
 									<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 								</SelectablePanel>
@@ -83,7 +89,7 @@ export const SubClassSelectModal = (props: Props) => {
 												customSubclasses.map(sc => (
 													<SelectablePanel
 														key={sc.id}
-														onSelect={() => props.onSelect(sc)}
+														onSelect={() => onSelect(sc)}
 													>
 														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 													</SelectablePanel>
@@ -109,7 +115,7 @@ export const SubClassSelectModal = (props: Props) => {
 												otherSubclasses.map(sc => (
 													<SelectablePanel
 														key={sc.id}
-														onSelect={() => props.onSelect(sc)}
+														onSelect={() => onSelect(sc)}
 													>
 														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} mode={PanelMode.Compact} />
 													</SelectablePanel>

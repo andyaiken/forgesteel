@@ -105,7 +105,7 @@ export const SelectionBox = (props: SelectionBoxProps) => {
 	return (
 		<ErrorBoundary>
 			<div className='selection-box'>
-				<Flex align='center' gap={10}>
+				<Flex align='center' justify='space-between' gap={10}>
 					{props.content}
 					<Flex vertical={true}>
 						{

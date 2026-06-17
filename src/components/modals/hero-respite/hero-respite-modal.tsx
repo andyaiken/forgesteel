@@ -16,7 +16,7 @@ import './hero-respite-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	onTakeRespite: () => void;
+	onTakeRespite: (hero: Hero) => void;
 	onChange: (hero: Hero) => void;
 	onClose: () => void;
 }
@@ -109,7 +109,7 @@ export const HeroRespiteModal = (props: Props) => {
 							key='take-respite'
 							block={true}
 							className='tall-button'
-							onClick={props.onTakeRespite}
+							onClick={() => props.onTakeRespite(hero)}
 						>
 							<div>
 								<div>Take a Respite</div>

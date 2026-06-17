@@ -19,6 +19,7 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
+import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterLogic } from './monster-logic';
@@ -334,6 +335,18 @@ export class FeatureLogic {
 			.map(f => {
 				return { feature: f, source: monster.name, level: undefined };
 			});
+
+		return FeatureLogic.simplifyFeatures(features, heroLevel);
+	};
+
+	static getFeaturesFromKit = (kit: Kit, heroLevel: number) => {
+		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
+
+		if (!kit) {
+			return FeatureLogic.simplifyFeatures(features, heroLevel);
+		}
+
+		features.push(...kit.features.map(f => ({ feature: f, source: kit.name, level: undefined })));
 
 		return FeatureLogic.simplifyFeatures(features, heroLevel);
 	};

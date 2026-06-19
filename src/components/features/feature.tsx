@@ -42,6 +42,7 @@ import { EditSaveThreshold, InfoSaveThreshold } from '@/components/features/feat
 import { EditSize, InfoSize } from '@/components/features/feature-data/size';
 import { EditSpeed, InfoSpeed } from '@/components/features/feature-data/speed';
 import { EditSummon, InfoSummon } from '@/components/features/feature-data/summon';
+import { EditSummonFormation, InfoSummonFormation } from './feature-data/summon-formation';
 import { EditSwitchOptions, InfoSwitchOptions } from '@/components/features/feature-data//switch-options';
 import { EditSwitchValue, InfoSwitchValue } from '@/components/features/feature-data//switch-value';
 import { EditTaggedFeature, InfoTaggedFeature } from '@/components/features/feature-data/tagged-feature';
@@ -130,6 +131,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoSummon data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SummonChoice:
 			return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.SummonFormation:
+			return <InfoSummonFormation data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchOptions:
 			return <InfoSwitchOptions data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchValue:
@@ -229,6 +232,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditSummon data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonChoice:
 			return <EditSummonChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SummonFormation:
+			return <EditSummonFormation data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchOptions:
 			return <EditSwitchOptions data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchValue:

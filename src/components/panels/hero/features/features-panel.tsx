@@ -40,7 +40,7 @@ export const FeaturesPanel = (props: Props) => {
 				return !featureTypes.includes(f.feature.type);
 			}
 
-			const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
+			const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package, FeatureType.SummonFormation ];
 			return featureTypes.includes(f.feature.type);
 		})
 		.filter(f => Utils.textMatches([ f.feature.name, f.feature.description ], featureSearch))

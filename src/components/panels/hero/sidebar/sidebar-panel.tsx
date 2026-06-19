@@ -10,6 +10,8 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
+import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -460,6 +462,12 @@ export const SidebarPanel = (props: Props) => {
 				</Popover>
 				{props.hero.state.controlledSlots.map(getSlot)}
 				{props.hero.state.controlledSlots.length === 0 ? <Empty /> : null}
+				{
+					HeroLogic.getFeatures(props.hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.SummonFormation)
+						.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} />)
+				}
 			</>
 		);
 	};

@@ -107,6 +107,11 @@ export class FeatureUpdateLogic {
 					feature.data.types.push('');
 				}
 				break;
+			case FeatureType.LanguageChoice:
+				if (feature.data.selectAt === undefined) {
+					feature.data.selectAt = 'build';
+				}
+				break;
 			case FeatureType.Malice:
 				if (feature.data.echelon === undefined) {
 					feature.data.echelon = 1;
@@ -128,6 +133,11 @@ export class FeatureUpdateLogic {
 			case FeatureType.Perk:
 				if (feature.data.lists === undefined) {
 					feature.data.lists = [];
+				}
+				break;
+			case FeatureType.SkillChoice:
+				if (feature.data.selectAt === undefined) {
+					feature.data.selectAt = 'build';
 				}
 				break;
 			case FeatureType.Summon:

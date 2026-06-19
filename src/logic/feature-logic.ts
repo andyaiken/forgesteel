@@ -828,6 +828,7 @@ export class FeatureLogic {
 				const data: FeatureLanguageChoiceData = {
 					options: [],
 					count: 1,
+					selectAt: 'build',
 					selected: []
 				};
 				return data;
@@ -922,6 +923,7 @@ export class FeatureLogic {
 					options: [],
 					listOptions: [],
 					count: 1,
+					selectAt: 'build',
 					selected: []
 				};
 				return data;

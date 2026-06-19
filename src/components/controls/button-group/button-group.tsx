@@ -59,7 +59,7 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
 									);
 								case 'danger':
 									return (
-										<DangerButton mode={item.label ? 'inline' : 'icon'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={() => item.onClick()} />
+										<DangerButton mode={item.label ? 'inline' : 'clear'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={() => item.onClick()} />
 									);
 								case 'dropdown':
 									return (

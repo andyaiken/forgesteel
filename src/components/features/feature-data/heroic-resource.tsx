@@ -25,30 +25,32 @@ interface InfoProps {
 }
 
 export const InfoHeroicResource = (props: InfoProps) => {
+	let data = props.data;
+
 	if (props.hero) {
 		const resource = HeroLogic.getHeroicResources(props.hero).find(hr => hr.name === props.feature.name);
 		if (resource) {
-			return (
-				<>
-					<ul>
-						{
-							resource.gains.map((g, n) => (
-								<li key={n}>
-									<Flex align='center' justify='space-between' gap={10}>
-										<div className='ds-text compact-text'>{g.trigger}</div>
-										<Pill>+{g.value}</Pill>
-									</Flex>
-								</li>
-							))
-						}
-					</ul>
-					<Markdown text={resource.details} />
-				</>
-			);
+			data = resource;
 		}
 	}
 
-	return null;
+	return (
+		<>
+			<ul>
+				{
+					data.gains.map((g, n) => (
+						<li key={n}>
+							<Flex align='center' justify='space-between' gap={10}>
+								<div className='ds-text compact-text'>{g.trigger}</div>
+								<Pill>+{g.value}</Pill>
+							</Flex>
+						</li>
+					))
+				}
+			</ul>
+			<Markdown text={data.details} />
+		</>
+	);
 };
 
 interface EditProps {

@@ -92,7 +92,7 @@ export const TerrainPanel = (props: Props) => {
 					tags={tags}
 					extra={props.extra}
 				>
-					{terrain.name || 'Unnamed Ancestry'}
+					{terrain.name || 'Unnamed Terrain'}
 				</HeaderText>
 				<Markdown text={terrain.description} />
 				<TerrainLabel terrain={terrain} />

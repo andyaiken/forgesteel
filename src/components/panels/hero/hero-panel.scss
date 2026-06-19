@@ -50,6 +50,22 @@
 					background-color: rgb(230, 244, 255);
 				}
 			}
+
+			.controlled-monster {
+				border-radius: 10px;
+				background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+				padding: 10px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: 5px;
+				cursor: pointer;
+
+				&:hover {
+					border-color: rgb(22, 119, 255);
+					background: rgb(230, 244, 255);
+				}
+			}
 		}
 
 		.selectable-row {
@@ -93,6 +109,14 @@ html[data-theme="dark"] {
 				&.clickable {
 					&:hover {
 						background-color: rgba(22, 119, 255, 0.2);
+					}
+				}
+
+				.controlled-monster {
+					background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+
+					&:hover {
+						background: rgba(22, 119, 255, 0.2);
 					}
 				}
 			}

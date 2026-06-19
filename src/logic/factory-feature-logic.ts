@@ -395,7 +395,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createLanguageChoice = (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }): FeatureLanguageChoice => {
+	createLanguageChoice = (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selectAt?: 'build' | 'respite' | 'play', selected?: string[] }): FeatureLanguageChoice => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
@@ -405,6 +405,7 @@ export class FactoryFeatureLogic {
 			data: {
 				options: data.options || [],
 				count: count,
+				selectAt: data.selectAt || 'build',
 				selected: data.selected || []
 			}
 		};
@@ -558,7 +559,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
+	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selectAt?: 'build' | 'respite' | 'play', selected?: string[] }): FeatureSkillChoice => {
 		const count = data.count || 1;
 		const options = data.options || [];
 		let listOptions = data.listOptions || [];
@@ -579,6 +580,7 @@ export class FactoryFeatureLogic {
 				options: data.options || [],
 				listOptions: listOptions || [],
 				count: count,
+				selectAt: data.selectAt || 'build',
 				selected: data.selected || []
 			}
 		};

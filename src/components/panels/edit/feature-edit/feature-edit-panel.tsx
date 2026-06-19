@@ -83,17 +83,7 @@ export const FeatureEditPanel = (props: Props) => {
 								key: '1',
 								label: isPerk ? 'Perk' : 'Feature',
 								children: (
-									<NameDescEditPanel
-										element={feature}
-										onChange={setNameDesc}
-									/>
-								)
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: (
-									<div>
+									<>
 										{
 											(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
 												<>
@@ -108,6 +98,18 @@ export const FeatureEditPanel = (props: Props) => {
 												</>
 												: null
 										}
+										<NameDescEditPanel
+											element={feature}
+											onChange={setNameDesc}
+										/>
+									</>
+								)
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: (
+									<>
 										{
 											isPerk ?
 												<div>
@@ -128,7 +130,7 @@ export const FeatureEditPanel = (props: Props) => {
 											sourcebooks={props.sourcebooks}
 											setData={setData}
 										/>
-									</div>
+									</>
 								)
 							}
 						]}

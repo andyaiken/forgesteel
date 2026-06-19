@@ -205,6 +205,7 @@ export type FeatureLanguage = FeatureOf<FeatureType.Language, FeatureLanguageDat
 export interface FeatureLanguageChoiceData extends _FeatureData {
 	options: string[];
 	count: number;
+	selectAt: 'build' | 'respite' | 'play';
 	selected: string[];
 };
 export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, FeatureLanguageChoiceData>;
@@ -276,6 +277,7 @@ export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
 	listOptions: SkillList[];
 	count: number;
+	selectAt: 'build' | 'respite' | 'play';
 	selected: string[];
 };
 export type FeatureSkillChoice = FeatureOf<FeatureType.SkillChoice, FeatureSkillChoiceData>;

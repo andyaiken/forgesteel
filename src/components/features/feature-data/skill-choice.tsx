@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Select, Space } from 'antd';
+import { Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureSkillChoiceData } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { FeatureType } from '@/enums/feature-type';
@@ -74,6 +74,13 @@ export const EditSkillChoice = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setSelectAt = (value: 'build' | 'respite' | 'play') => {
+		const copy = Utils.copy(data);
+		copy.selectAt = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
 	const setSkillSelected = (value: string[]) => {
 		const copy = Utils.copy(data);
 		copy.selected = value;
@@ -112,6 +119,17 @@ export const EditSkillChoice = (props: EditProps) => {
 			/>
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />
+			<HeaderText>Select</HeaderText>
+			<Segmented
+				block={true}
+				options={[
+					{ value: 'build', label: 'At build time' },
+					{ value: 'respite', label: 'During a respite' },
+					{ value: 'play', label: 'In play' }
+				]}
+				value={data.selectAt}
+				onChange={setSelectAt}
+			/>
 			<HeaderText>Default Selection</HeaderText>
 			<Select
 				style={{ width: '100%' }}

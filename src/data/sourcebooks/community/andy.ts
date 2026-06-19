@@ -1509,7 +1509,9 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 								tag: 'echo'
 							}),
 							FactoryLogic.feature.createSkillChoice({
-								id: 'siabhra-4-2b'
+								id: 'siabhra-4-2b',
+								name: 'Echo Expertise',
+								selectAt: 'play'
 							})
 						]
 					}),
@@ -1536,7 +1538,9 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 								tag: 'echo'
 							}),
 							FactoryLogic.feature.createLanguageChoice({
-								id: 'siabhra-4-4b'
+								id: 'siabhra-4-4b',
+								name: 'Echo Tongue',
+								selectAt: 'play'
 							})
 						]
 					}),

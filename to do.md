@@ -1,5 +1,17 @@
 # Development Plans
 
+### Bug Reports
+
+I don’t seem to be able to rename my familiar. I can see the customize box but I can’t save it (on iPad if that makes a difference)
+
+In the Encounter Builder, I put a couple encounters in the wrong sourcebook. The Move option appears to let me move them, but it doesn't do anything when I use it.
+
+Minor bug. When entering a custom class, the Details tab has textbox entry for Subclass Name. Forge Steel automatically adds an "s" when displaying this subclass name term in its pluralized form. If the subclass name ends in a "y", then the pluralization rules used should instead be: drop the 'y' and add 'ies'. For example, a subclass named "Chivalry" (singular form) should be pluralized as "Chivalries".
+
+When my brother tries to edit his Stamina, the text in the box is pushed off to the side so he can’t see what he’s typing (sometimes ends up taking 80 damage mistakenly, because of the zero that’s in there by default). Is that something that can be tweaked, or is it just the perils of using an android phone?
+
+### Plans
+
 * Improve editors:
   * Modifier editor
 

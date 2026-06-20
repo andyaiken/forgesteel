@@ -559,7 +559,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: FactoryLogic.createCharacteristics(3, 2, -4, 0, -3),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 1, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

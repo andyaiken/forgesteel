@@ -27,7 +27,7 @@ import './encounter-group-panel.scss';
 const widthBase = 500;
 const widthStaminaColumn = 90;
 const widthCharacteristicsColumn = 80;
-const widthStatsColumn = 50;
+const widthStatsColumn = 75;
 
 interface EncounterGroupHeroProps {
 	hero: Hero;
@@ -40,6 +40,7 @@ interface EncounterGroupHeroProps {
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onSetMonsterDefeated: (monster: Monster, value: boolean) => void;
 	onDelete: (hero: Hero) => void;
 }
 
@@ -103,67 +104,77 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 				</div>
 				<div className='encounter-slots'>
 					<div className='encounter-slot' ref={setRef}>
-						<div className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelect(props.hero)}>
-							<div className='name-column'>
-								<HeroInfo hero={props.hero} />
-							</div>
-							{
-								showStamina ?
-									HeroLogic.getStamina(props.hero) === 0 ?
-										<div className='stamina-column' />
-										:
-										<div className='stamina-column'>
-											{getStaminaDescription()}
-											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+						<Flex key='minions' align='center' gap={5}>
+							<div
+								style={{ flex: '1 1 0' }}
+								className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}
+								onClick={() => props.onSelect(props.hero)}
+							>
+								<div className='name-column'>
+									<HeroInfo hero={props.hero} />
+								</div>
+								{
+									showStamina ?
+										HeroLogic.getStamina(props.hero) === 0 ?
+											<div className='stamina-column' />
+											:
+											<div className='stamina-column'>
+												{getStaminaDescription()}
+												<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+											</div>
+										: null
+								}
+								{
+									showCharacteristics ?
+										<div className='characteristics-column'>
+											<div className='characteristics-column-item'>
+												<div>M</div>
+												<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Might)}</div>
+											</div>
+											<div className='characteristics-column-item'>
+												<div>A</div>
+												<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)}</div>
+											</div>
+											<div className='characteristics-column-item'>
+												<div>R</div>
+												<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)}</div>
+											</div>
+											<div className='characteristics-column-item'>
+												<div>I</div>
+												<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)}</div>
+											</div>
+											<div className='characteristics-column-item'>
+												<div>P</div>
+												<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)}</div>
+											</div>
 										</div>
-									: null
-							}
-							{
-								showCharacteristics ?
-									<div className='characteristics-column'>
-										<div className='characteristics-column-item'>
-											<div>M</div>
-											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Might)}</div>
+										: null
+								}
+								{
+									showStats ?
+										<div className='stats-column'>
+											<div className='stats-column-item'>
+												<div>Spd</div>
+												<div>{HeroLogic.getSpeed(props.hero).value}</div>
+											</div>
+											<div className='stats-column-item'>
+												<div>Stab</div>
+												<div>{HeroLogic.getStability(props.hero)}</div>
+											</div>
+											<div className='stats-column-item'>
+												<div>FS</div>
+												<div>-</div>
+											</div>
 										</div>
-										<div className='characteristics-column-item'>
-											<div>A</div>
-											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>R</div>
-											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>I</div>
-											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>P</div>
-											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)}</div>
-										</div>
-									</div>
-									: null
-							}
-							{
-								showStats ?
-									<div className='stats-column'>
-										<div className='stats-column-item'>
-											<div>Spd</div>
-											<div>{HeroLogic.getSpeed(props.hero).value}</div>
-										</div>
-										<div className='stats-column-item'>
-											<div>Stab</div>
-											<div>{HeroLogic.getStability(props.hero)}</div>
-										</div>
-									</div>
-									: null
-							}
-							<div className='conditions-column'>
-								<Flex gap={3}>
-									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
-									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-									{props.hero.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
-								</Flex>
+										: null
+								}
+								<div className='conditions-column'>
+									<Flex gap={3}>
+										{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
+										{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+										{props.hero.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+									</Flex>
+								</div>
 							</div>
 							{
 								HeroLogic.getCompanions(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length > 0 ?
@@ -228,7 +239,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									</Popover>
 									: null
 							}
-						</div>
+						</Flex>
 						{
 							props.hero.state.controlledSlots.map(slot => (
 								<div key={slot.id} className='encounter-slot controlled-slot'>
@@ -243,6 +254,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 										sourcebooks={props.sourcebooks}
 										onSelectMonster={props.onSelectMonster}
 										onSelectMinionSlot={props.onSelectMinionSlot}
+										onSetDefeated={props.onSetMonsterDefeated}
 									/>
 									{slot.monsters.length === 0 ? <div>Empty</div> : null}
 								</div>
@@ -266,6 +278,7 @@ interface EncounterGroupMonsterProps {
 	onSetState: (group: EncounterGroup, value: 'ready' | 'current' | 'finished') => void;
 	onDuplicate: (group: EncounterGroup) => void;
 	onDelete: (group: EncounterGroup) => void;
+	onSetDefeated: (monster: Monster, value: boolean) => void;
 }
 
 export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
@@ -324,6 +337,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 								sourcebooks={props.sourcebooks}
 								onSelectMonster={props.onSelectMonster}
 								onSelectMinionSlot={props.onSelectMinionSlot}
+								onSetDefeated={props.onSetDefeated}
 							/>
 						))
 					}
@@ -339,6 +353,7 @@ interface MonsterSlotProps {
 	sourcebooks: Sourcebook[];
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
+	onSetDefeated: (monster: Monster, value: boolean) => void;
 }
 
 export const MonsterSlot = (props: MonsterSlotProps) => {
@@ -409,98 +424,21 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 			<div key={props.slot.id} className='encounter-slot' ref={setRef}>
 				{
 					isMinionSlot ?
-						<div key='minions' className={props.slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'} onClick={() => props.onSelectMinionSlot(props.slot)}>
-							<div className='name-column'>
-								<b>Minions</b>
-							</div>
-							{
-								showStamina ?
-									<div className='stamina-column'>
-										{MonsterLogic.getMinionStaminaDescription(props.slot)}
-										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-									</div>
-									: null
-							}
-							{
-								showCharacteristics ?
-									<div className='characteristics-column'>
-										<div className='characteristics-column-item'>
-											<div>M</div>
-											<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Might)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>A</div>
-											<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Agility)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>R</div>
-											<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Reason)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>I</div>
-											<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Intuition)}</div>
-										</div>
-										<div className='characteristics-column-item'>
-											<div>P</div>
-											<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Presence)}</div>
-										</div>
-									</div>
-									: null
-							}
-							{
-								showStats ?
-									<div className='stats-column'>
-										<div className='stats-column-item'>
-											<div>Spd</div>
-											<div>{MonsterLogic.getSpeed(props.slot.monsters[0]).value}</div>
-										</div>
-										<div className='stats-column-item'>
-											<div>Stab</div>
-											<div>{props.slot.monsters[0].stability}</div>
-										</div>
-									</div>
-									: null
-							}
-							<div className='conditions-column'>
-								<Flex gap={3}>
-									{getMinionCaptainTag()}
-									{props.slot.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
-								</Flex>
-							</div>
-							<Button
-								type='text'
-								icon={showMonsters ? <DownOutlined rotate={180} /> : <DownOutlined />}
-								onClick={e => {
-									e.stopPropagation();
-									setShowMonsters(!showMonsters);
-								}}
-							/>
-						</div>
-						: null
-				}
-				{
-					isMinionSlot ? getMinionCountMessage() : null
-				}
-				{
-					showMonsters ?
-						props.slot.monsters.map(monster => (
+						<Flex key='minions' align='center' gap={5}>
 							<div
-								key={monster.id}
-								className={props.slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}
-								onClick={() => props.onSelectMonster(monster, monsterGroup ? monsterGroup.id : '')}
+								style={{ flex: '1 1 0' }}
+								className={props.slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'}
+								onClick={() => props.onSelectMinionSlot(props.slot)}
 							>
 								<div className='name-column'>
-									<MonsterInfo monster={monster} />
+									<b>Minions</b>
 								</div>
 								{
 									showStamina ?
-										isMinionSlot ?
-											<div className='stamina-column' />
-											:
-											<div className='stamina-column'>
-												{MonsterLogic.getStaminaDescription(monster)}
-												<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-											</div>
+										<div className='stamina-column'>
+											{MonsterLogic.getMinionStaminaDescription(props.slot)}
+											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+										</div>
 										: null
 								}
 								{
@@ -508,23 +446,23 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 										<div className='characteristics-column'>
 											<div className='characteristics-column-item'>
 												<div>M</div>
-												<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Might)}</div>
+												<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Might)}</div>
 											</div>
 											<div className='characteristics-column-item'>
 												<div>A</div>
-												<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Agility)}</div>
+												<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Agility)}</div>
 											</div>
 											<div className='characteristics-column-item'>
 												<div>R</div>
-												<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Reason)}</div>
+												<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Reason)}</div>
 											</div>
 											<div className='characteristics-column-item'>
 												<div>I</div>
-												<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Intuition)}</div>
+												<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Intuition)}</div>
 											</div>
 											<div className='characteristics-column-item'>
 												<div>P</div>
-												<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Presence)}</div>
+												<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Presence)}</div>
 											</div>
 										</div>
 										: null
@@ -534,23 +472,134 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 										<div className='stats-column'>
 											<div className='stats-column-item'>
 												<div>Spd</div>
-												<div>{MonsterLogic.getSpeed(monster).value}</div>
+												<div>{MonsterLogic.getSpeed(props.slot.monsters[0]).value}</div>
 											</div>
 											<div className='stats-column-item'>
 												<div>Stab</div>
-												<div>{monster.stability}</div>
+												<div>{props.slot.monsters[0].stability}</div>
+											</div>
+											<div className='stats-column-item'>
+												<div>FS</div>
+												<div>{props.slot.monsters[0].freeStrikeDamage}</div>
 											</div>
 										</div>
 										: null
 								}
 								<div className='conditions-column'>
 									<Flex gap={3}>
-										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
-										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-										{monster.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+										{getMinionCaptainTag()}
+										{props.slot.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 									</Flex>
 								</div>
 							</div>
+							<Button
+								type='text'
+								icon={showMonsters ? <DownOutlined rotate={180} /> : <DownOutlined />}
+								onClick={e => {
+									e.stopPropagation();
+									setShowMonsters(!showMonsters);
+								}}
+							/>
+						</Flex>
+						: null
+				}
+				{
+					isMinionSlot ? getMinionCountMessage() : null
+				}
+				{
+					showMonsters ?
+						props.slot.monsters.map(monster => (
+							<Flex key={monster.id} align='center' gap={5}>
+								<div
+									style={{ flex: '1 1 0' }}
+									className={props.slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}
+									onClick={() => props.onSelectMonster(monster, monsterGroup ? monsterGroup.id : '')}
+								>
+									<div className='name-column'>
+										<MonsterInfo monster={monster} />
+									</div>
+									{
+										showStamina ?
+											isMinionSlot ?
+												<div className='stamina-column' />
+												:
+												<div className='stamina-column'>
+													{MonsterLogic.getStaminaDescription(monster)}
+													<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+												</div>
+											: null
+									}
+									{
+										showCharacteristics ?
+											<div className='characteristics-column'>
+												<div className='characteristics-column-item'>
+													<div>M</div>
+													<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Might)}</div>
+												</div>
+												<div className='characteristics-column-item'>
+													<div>A</div>
+													<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Agility)}</div>
+												</div>
+												<div className='characteristics-column-item'>
+													<div>R</div>
+													<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Reason)}</div>
+												</div>
+												<div className='characteristics-column-item'>
+													<div>I</div>
+													<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Intuition)}</div>
+												</div>
+												<div className='characteristics-column-item'>
+													<div>P</div>
+													<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Presence)}</div>
+												</div>
+											</div>
+											: null
+									}
+									{
+										showStats ?
+											<div className='stats-column'>
+												<div className='stats-column-item'>
+													<div>Spd</div>
+													<div>{MonsterLogic.getSpeed(monster).value}</div>
+												</div>
+												<div className='stats-column-item'>
+													<div>Stab</div>
+													<div>{monster.stability}</div>
+												</div>
+												<div className='stats-column-item'>
+													<div>FS</div>
+													<div>{props.slot.monsters[0].freeStrikeDamage}</div>
+												</div>
+											</div>
+											: null
+									}
+									<div className='conditions-column'>
+										<Flex gap={3}>
+											{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
+											{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
+											{monster.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+										</Flex>
+									</div>
+								</div>
+								<Popover
+									trigger='click'
+									content={(
+										<div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<Segmented
+												block={true}
+												options={[
+													{ value: true, label: 'Defeated' },
+													{ value: false, label: 'Active' }
+												]}
+												value={monster.state.defeated}
+												onChange={value => props.onSetDefeated(monster, value)}
+											/>
+										</div>
+									)}
+								>
+									<Button type='text' icon={<EllipsisOutlined />} />
+								</Popover>
+							</Flex>
 						))
 						: null
 				}

@@ -17,7 +17,7 @@ interface InfoProps {
 
 export const InfoSaveThreshold = (props: InfoProps) => {
 	return (
-		<Field label='Value' value={`${props.data.value}+`} />
+		<Field label='Save' value={`${props.data.value}+`} />
 	);
 };
 

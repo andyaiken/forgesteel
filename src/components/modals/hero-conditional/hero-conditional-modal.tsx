@@ -27,12 +27,6 @@ interface Props {
 export const HeroConditionalModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 
-	const features = HeroLogic.getFeatures(hero);
-	const list = [
-		...features.filter(f => f.feature.type === FeatureType.Toggle),
-		...features.filter(f => (f.feature.type === FeatureType.Choice) && (f.feature.data.selectAt === 'play'))
-	];
-
 	const setData = (featureID: string, data: FeatureData) => {
 		const copy = Utils.copy(hero);
 		const feature = HeroLogic.getFeatures(copy).find(f => f.feature.id === featureID);
@@ -43,6 +37,21 @@ export const HeroConditionalModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const list = HeroLogic.getFeatures(hero)
+		.map(f => f.feature)
+		.filter(f => {
+			switch (f.type) {
+				case FeatureType.Choice:
+				case FeatureType.LanguageChoice:
+				case FeatureType.SkillChoice:
+					return f.data.selectAt === 'play';
+				case FeatureType.Toggle:
+					return true;
+				default:
+					return false;
+			}
+		});
+
 	return (
 		<ErrorBoundary>
 			<Modal
@@ -52,9 +61,9 @@ export const HeroConditionalModal = (props: Props) => {
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								list.map(f => (
-									<SelectablePanel key={f.feature.id}>
+									<SelectablePanel key={f.id}>
 										<FeatureConfigPanel
-											feature={f.feature}
+											feature={f}
 											hero={hero}
 											sourcebooks={props.sourcebooks}
 											setData={setData}

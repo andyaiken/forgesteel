@@ -2,6 +2,7 @@ import { Button, Divider, Space } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -24,17 +25,29 @@ interface Props {
 export const HeroRespiteModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 
-	const respiteFeatures = HeroLogic.getFeatures(hero)
+	const setData = (featureID: string, data: FeatureData) => {
+		const copy = Utils.copy(hero);
+		const feature = HeroLogic.getFeatures(copy).find(f => f.feature.id === featureID);
+		if (feature) {
+			feature.feature.data = data;
+		}
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const list = HeroLogic.getFeatures(hero)
 		.map(f => f.feature)
 		.filter(f => {
 			switch (f.type) {
 				case FeatureType.Choice:
+				case FeatureType.LanguageChoice:
+				case FeatureType.SkillChoice:
 					return f.data.selectAt === 'respite';
 				case FeatureType.Kit:
 					return true;
+				default:
+					return false;
 			}
-
-			return false;
 		});
 
 	return (
@@ -72,31 +85,21 @@ export const HeroRespiteModal = (props: Props) => {
 							</li>
 						</ul>
 						{
-							respiteFeatures.length > 0 ?
+							list.length > 0 ?
 								<Divider />
 								: null
 						}
 						{
-							respiteFeatures.length > 0 ?
+							list.length > 0 ?
 								<Space orientation='vertical' style={{ width: '100%' }}>
 									{
-										respiteFeatures.map(f => (
+										list.map(f => (
 											<Expander key={f.id} title={f.name}>
 												<FeatureConfigPanel
 													feature={f}
 													hero={hero}
 													sourcebooks={props.sourcebooks}
-													setData={(featureID, data) => {
-														const copy = Utils.copy(hero);
-														const feature = HeroLogic.getFeatures(copy)
-															.map(f => f.feature)
-															.find(f => f.id === featureID);
-														if (feature) {
-															feature.data = data;
-														}
-														setHero(copy);
-														props.onChange(copy);
-													}}
+													setData={setData}
 												/>
 											</Expander>
 										))

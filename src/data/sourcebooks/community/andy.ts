@@ -1498,11 +1498,22 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createPackageContent({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'siabhra-4-2',
 						name: 'Echo Expertise',
-						description: 'Select one skill your prime is proficient in; you are proficient in that skill until you use *Echo Expertise* again.',
-						tag: 'echo'
+						features: [
+							FactoryLogic.feature.createPackageContent({
+								id: 'siabhra-4-2a',
+								name: 'Echo Expertise',
+								description: 'Select one skill your prime is proficient in; you are proficient in that skill until you use *Echo Expertise* again.',
+								tag: 'echo'
+							}),
+							FactoryLogic.feature.createSkillChoice({
+								id: 'siabhra-4-2b',
+								name: 'Echo Expertise',
+								selectAt: 'play'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -1516,11 +1527,22 @@ Identity fragmentation comes with a cost: if you use *Echo* on a different creat
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createPackageContent({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'siabhra-4-4',
-						name: 'Echo Tongue',
-						description: 'Select a language your prime knows; you know that language until you use *Echo Tongue* again.',
-						tag: 'echo'
+						name: 'Echo Expertise',
+						features: [
+							FactoryLogic.feature.createPackageContent({
+								id: 'siabhra-4-4a',
+								name: 'Echo Tongue',
+								description: 'Select a language your prime knows; you know that language until you use *Echo Tongue* again.',
+								tag: 'echo'
+							}),
+							FactoryLogic.feature.createLanguageChoice({
+								id: 'siabhra-4-4b',
+								name: 'Echo Tongue',
+								selectAt: 'play'
+							})
+						]
 					}),
 					value: 1
 				},

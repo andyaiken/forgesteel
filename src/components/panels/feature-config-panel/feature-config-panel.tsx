@@ -97,6 +97,7 @@ export const FeatureConfigPanel = (props: Props) => {
 interface SelectionBoxProps {
 	content: ReactNode;
 	customizeContent?: ReactNode;
+	transparent?: boolean;
 	onSelect?: () => void;
 	onRemove?: () => void;
 }
@@ -104,7 +105,7 @@ interface SelectionBoxProps {
 export const SelectionBox = (props: SelectionBoxProps) => {
 	return (
 		<ErrorBoundary>
-			<div className='selection-box'>
+			<div className={props.transparent ? 'selection-box' : 'selection-box with-border'}>
 				<Flex align='center' justify='space-between' gap={10}>
 					{props.content}
 					<Flex vertical={true}>
@@ -114,7 +115,10 @@ export const SelectionBox = (props: SelectionBoxProps) => {
 									type='text'
 									title='Show details'
 									icon={<InfoCircleOutlined />}
-									onClick={props.onSelect}
+									onClick={e => {
+										e.stopPropagation();
+										props.onSelect!();
+									}}
 								/>
 								: null
 						}
@@ -124,7 +128,10 @@ export const SelectionBox = (props: SelectionBoxProps) => {
 									type='text'
 									title='Remove'
 									icon={<CloseOutlined />}
-									onClick={props.onRemove}
+									onClick={e => {
+										e.stopPropagation();
+										props.onRemove!();
+									}}
 								/>
 								: null
 						}

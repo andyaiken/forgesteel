@@ -390,21 +390,23 @@ export const HeroEditPage = (props: Props) => {
 	};
 
 	const selectRandom = () => {
+		const sourcebooks = props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
+
 		switch (page) {
 			case 'ancestry':
-				setAncestry(Collections.draw(SourcebookLogic.getAncestries(props.sourcebooks)));
+				setAncestry(Collections.draw(SourcebookLogic.getAncestries(sourcebooks).filter(a => Utils.textMatches([ a.name, a.description ], searchTerm))));
 				break;
 			case 'culture':
-				setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ]));
+				setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(sourcebooks, true).filter(c => Utils.textMatches([ c.name, c.description ], searchTerm)) ]));
 				break;
 			case 'career':
-				setCareer(Collections.draw(SourcebookLogic.getCareers(props.sourcebooks)));
+				setCareer(Collections.draw(SourcebookLogic.getCareers(sourcebooks).filter(c => Utils.textMatches([ c.name, c.description ], searchTerm))));
 				break;
 			case 'class':
-				setClass(Collections.draw(SourcebookLogic.getClasses(props.sourcebooks)));
+				setClass(Collections.draw(SourcebookLogic.getClasses(sourcebooks).filter(c => Utils.textMatches([ c.name, c.description ], searchTerm))));
 				break;
 			case 'complication':
-				setComplication(Collections.draw(SourcebookLogic.getComplications(props.sourcebooks)));
+				setComplication(Collections.draw(SourcebookLogic.getComplications(sourcebooks).filter(c => Utils.textMatches([ c.name, c.description ], searchTerm))));
 				break;
 		}
 	};

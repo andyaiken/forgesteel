@@ -227,7 +227,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 					description: 'You’ve practiced a specific formation for your minions.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSummonFormation({
 								id: 'summoner-1-7a',
 								name: 'Horde Formation',
 								description: 'Your maximum number of minions increases by 4 and you summon up to four of your signature minions at the start of each of your turns instead of three.'
@@ -235,7 +235,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSummonFormation({
 								id: 'summoner-1-7b',
 								name: 'Platoon Formation',
 								description: 'Whenever one of your squads uses a damaging ability, choose one target of that ability to take additional damage equal to your Reason score.'
@@ -243,7 +243,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSummonFormation({
 								id: 'summoner-1-7c',
 								name: 'Elite Formation',
 								description: 'Each of your minions have their Stamina increased by 3 and their stability increased by 1.'
@@ -254,7 +254,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'summoner-1-7d',
 								features: [
-									FactoryLogic.feature.create({
+									FactoryLogic.feature.createSummonFormation({
 										id: 'summoner-1-7da',
 										name: 'Leader Formation',
 										description: 'You aren’t affected by excess damage after all minions in a squad are dead. If your minion is within your Summoner’s Range when they take damage, you can choose to take damage in place of the minion.'

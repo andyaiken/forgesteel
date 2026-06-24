@@ -19,6 +19,14 @@
 
 			&.closed {
 				flex: 0 0 auto;
+
+				.selection-toolbar {
+					height: 100%;
+
+					.ant-btn {
+						height: 100%;
+					}
+				}
 			}
 
 			.selection-toolbar {

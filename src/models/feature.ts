@@ -205,6 +205,7 @@ export type FeatureLanguage = FeatureOf<FeatureType.Language, FeatureLanguageDat
 export interface FeatureLanguageChoiceData extends _FeatureData {
 	options: string[];
 	count: number;
+	selectAt: 'build' | 'respite' | 'play';
 	selected: string[];
 };
 export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, FeatureLanguageChoiceData>;
@@ -276,6 +277,7 @@ export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
 	listOptions: SkillList[];
 	count: number;
+	selectAt: 'build' | 'respite' | 'play';
 	selected: string[];
 };
 export type FeatureSkillChoice = FeatureOf<FeatureType.SkillChoice, FeatureSkillChoiceData>;
@@ -296,6 +298,10 @@ export interface FeatureSummonChoiceData extends _FeatureData {
 	selected: Summon[];
 };
 export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface FeatureSummonFormationData extends _FeatureData {};
+export type FeatureSummonFormation = FeatureOf<FeatureType.SummonFormation, FeatureSummonFormationData>;
 
 export interface FeatureSwitchOptionsData extends _FeatureData {
 	switch: string;
@@ -382,6 +388,7 @@ export type Feature =
 	| FeatureSpeed
 	| FeatureSummon
 	| FeatureSummonChoice
+	| FeatureSummonFormation
 	| FeatureSwitchOptions
 	| FeatureSwitchValue
 	| FeatureText

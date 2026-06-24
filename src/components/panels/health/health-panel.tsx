@@ -1,10 +1,8 @@
-import { Alert, Button, Drawer, Flex, InputNumber, Popover, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Divider, Flex, InputNumber, Popover, Segmented, Space, Tag } from 'antd';
 import { ConditionEndType, ConditionType } from '@/enums/condition-type';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { Condition } from '@/models/condition';
 import { ConditionPanel } from '@/components/panels/condition/condition-panel';
-import { ConditionSelectModal } from '@/components/modals/select/condition-select/condition-select-modal';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -24,6 +22,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { PlusOutlined } from '@ant-design/icons';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -581,7 +580,6 @@ interface Props {
 const HealthPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>(!props.stamina && props.recoveries ? 'recoveries' : 'stamina');
 	const [ damageValue, setDamageValue ] = useState<number>(0);
-	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 
 	const takeDamage = () => {
 		if (props.stamina) {
@@ -605,7 +603,6 @@ const HealthPanel = (props: Props) => {
 	};
 
 	const addCondition = (type: ConditionType) => {
-		setConditionsVisible(false);
 		props.addCondition({
 			id: Utils.guid(),
 			type: type,
@@ -615,7 +612,6 @@ const HealthPanel = (props: Props) => {
 	};
 
 	const addSpecial = (text: string) => {
-		setConditionsVisible(false);
 		props.addCondition({
 			id: Utils.guid(),
 			type: ConditionType.Quick,
@@ -862,24 +858,37 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 				<HeaderText
 					extra={
 						<Space>
-							<Button onClick={() => setConditionsVisible(true)}>
-								<PlusOutlined />
-								Add a condition
-							</Button>
 							<Popover
 								trigger='click'
 								content={
 									<Space orientation='vertical'>
-										<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
-										<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
-										<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Bleeding)}>{ConditionType.Bleeding}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Dazed)}>{ConditionType.Dazed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Frightened)}>{ConditionType.Frightened}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Grabbed)}>{ConditionType.Grabbed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Prone)}>{ConditionType.Prone}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Restrained)}>{ConditionType.Restrained}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Slowed)}>{ConditionType.Slowed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Taunted)}>{ConditionType.Taunted}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Weakened)}>{ConditionType.Weakened}</Button>
+										</div>
+										<Divider />
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
+											<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+											<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
+										</div>
+										<Divider />
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Custom)}>{ConditionType.Custom}</Button>
+										</div>
 									</Space>
 								}
 							>
 								<Button>
 									<PlusOutlined />
-									Add other
-									<DownOutlined />
+									Add
 								</Button>
 							</Popover>
 						</Space>
@@ -902,9 +911,6 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 						<Empty text='You are not affected by any conditions.' />
 						: null
 				}
-				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} size={500}>
-					<ConditionSelectModal immunities={props.conditions.immunities} onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
-				</Drawer>
 			</div>
 		</ErrorBoundary>
 	);

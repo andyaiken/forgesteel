@@ -28,6 +28,21 @@
 	}
 }
 
+.reward-hero-row {
+	border: 1px solid rgba(5, 5, 5, 0.1);
+	border-radius: 5px;
+	padding: 8px 10px;
+}
+
+.reward-spin-content {
+	text-align: center;
+
+	.ant-statistic-content {
+		font-size: 24px;
+		line-height: 1.2;
+	}
+}
+
 html[data-theme="dark"] {
 	.session-director-page {
 		.session-director-page-content {
@@ -37,5 +52,9 @@ html[data-theme="dark"] {
 				background-color: rgb(0, 0, 0);
 			}
 		}
+	}
+
+	.reward-hero-row {
+		border-color: rgba(255, 255, 255, 0.2);
 	}
 }

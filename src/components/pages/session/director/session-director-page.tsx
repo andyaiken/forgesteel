@@ -1,4 +1,4 @@
-import { Alert, Button, Segmented, Space } from 'antd';
+import { Alert, Button, Drawer, Flex, Segmented, Space } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
 import { PlayCircleOutlined, ReadOutlined } from '@ant-design/icons';
 import { AdventureLogic } from '@/logic/adventure-logic';
@@ -12,7 +12,9 @@ import { EncounterData } from '@/data/encounter-data';
 import { EncounterRunPanel } from '@/components/panels/run/encounter-run/encounter-run-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Modal } from '@/components/modals/modal/modal';
 import { Montage } from '@/models/montage';
 import { MontageData } from '@/data/montage-data';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
@@ -55,6 +57,20 @@ interface Props {
 	showEncounterTools: (encounter: Encounter, tool: string) => void;
 }
 
+interface EncounterRewards {
+	victories: number;
+	wealth: number;
+	renown: number;
+	heroTokens: number;
+}
+
+const emptyRewards: EncounterRewards = {
+	victories: 0,
+	wealth: 0,
+	renown: 0,
+	heroTokens: 0
+};
+
 export const SessionDirectorPage = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
@@ -66,6 +82,8 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ startElement, setStartElement ] = useState<string>('encounter');
 	const [ newCounterName, setNewCounterName ] = useState<string>('');
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
+	const [ finishingEncounter, setFinishingEncounter ] = useState<Encounter | null>(null);
+	const [ encounterRewards, setEncounterRewards ] = useState<EncounterRewards>(Utils.copy(emptyRewards));
 	useTitle('Session');
 
 	const getSelector = () => {
@@ -363,9 +381,123 @@ export const SessionDirectorPage = (props: Props) => {
 
 	const finish = () => {
 		if (selectedElementID) {
-			const id = props.finishSessionElement(selectedElementID);
-			setSelectedElementID(id);
+			const encounter = session.encounters.find(e => e.id === selectedElementID);
+			if (encounter && (encounter.heroes.length > 0)) {
+				setFinishingEncounter(encounter);
+				setEncounterRewards(Utils.copy(emptyRewards));
+				return;
+			}
+
+			finishSessionElement(selectedElementID);
 		}
+	};
+
+	const finishSessionElement = (id: string) => {
+		const nextID = props.finishSessionElement(id);
+		setSelectedElementID(nextID);
+	};
+
+	const setReward = (field: keyof EncounterRewards, value: number) => {
+		const copy = Utils.copy(encounterRewards);
+		copy[field] = value;
+		setEncounterRewards(copy);
+	};
+
+	const closeEncounterRewards = () => {
+		setFinishingEncounter(null);
+		setEncounterRewards(Utils.copy(emptyRewards));
+	};
+
+	const finishEncounter = () => {
+		if (!finishingEncounter) {
+			return;
+		}
+
+		finishingEncounter.heroes.forEach(hero => {
+			const copy = Utils.copy(hero);
+			copy.state.victories += encounterRewards.victories;
+			copy.state.wealth += encounterRewards.wealth;
+			copy.state.renown += encounterRewards.renown;
+			copy.state.heroTokens += encounterRewards.heroTokens;
+			props.updateHero(copy);
+		});
+
+		finishSessionElement(finishingEncounter.id);
+		closeEncounterRewards();
+	};
+
+	const getEncounterRewards = () => {
+		if (!finishingEncounter) {
+			return null;
+		}
+
+		return (
+			<Drawer open={!!finishingEncounter} onClose={closeEncounterRewards} closeIcon={null} size={500}>
+				<Modal
+					toolbar={
+						<Space>
+							<Button type='primary' onClick={finishEncounter}>Finish Encounter</Button>
+							<Button onClick={closeEncounterRewards}>Cancel</Button>
+						</Space>
+					}
+					content={
+						<Space orientation='vertical' style={{ width: '100%' }}>
+							<HeaderText level={1}>Encounter Rewards</HeaderText>
+							<div className='ds-text'>
+								Choose the rewards to grant to each hero in {finishingEncounter.name || 'this encounter'}.
+							</div>
+							<Space orientation='vertical' style={{ width: '100%' }}>
+								<HeaderText>Heroes</HeaderText>
+								{
+									finishingEncounter.heroes.map(hero => (
+										<Flex key={hero.id} align='center' justify='space-between' gap={10} className='reward-hero-row'>
+											<div className='ds-text bold-text'>{hero.name || 'Unnamed Hero'}</div>
+											<div className='ds-text compact-text'>
+												Victories {hero.state.victories}; Wealth {hero.state.wealth}; Renown {hero.state.renown}; Hero Tokens {hero.state.heroTokens}
+											</div>
+										</Flex>
+									))
+								}
+							</Space>
+							<Space orientation='vertical' style={{ width: '100%' }}>
+								<HeaderText>Rewards</HeaderText>
+								<NumberSpin
+									label='Victories'
+									min={0}
+									value={encounterRewards.victories}
+									onChange={value => setReward('victories', value)}
+								/>
+								<NumberSpin
+									label='Wealth'
+									min={0}
+									value={encounterRewards.wealth}
+									onChange={value => setReward('wealth', value)}
+								/>
+								<NumberSpin
+									label='Renown'
+									min={0}
+									value={encounterRewards.renown}
+									onChange={value => setReward('renown', value)}
+								/>
+								<NumberSpin
+									label='Hero Tokens'
+									min={0}
+									value={encounterRewards.heroTokens}
+									onChange={value => setReward('heroTokens', value)}
+								>
+									<div className='spin-middle reward-spin-content'>
+										<div className='ant-statistic-title'>Hero Tokens</div>
+										<div className='ant-statistic-content'>{encounterRewards.heroTokens}</div>
+										<div className='ds-text compact-text'>Party resource; applies to each listed hero.</div>
+									</div>
+								</NumberSpin>
+							</Space>
+						</Space>
+					}
+					onClose={closeEncounterRewards}
+				/>
+			</Drawer>
+		);
 	};
 
 	return (
@@ -407,6 +539,7 @@ export const SessionDirectorPage = (props: Props) => {
 					page='session'
 					params={props.params}
 				/>
+				{getEncounterRewards()}
 			</div>
 		</ErrorBoundary>
 	);

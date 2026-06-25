@@ -370,7 +370,7 @@ export const beastheartSourcebook: Sourcebook = {
 			id: 'pack-harness',
 			name: 'Pack Harness',
 			description: '(Beastheart only) While wearing these worn leather bands, your companion appears as not a single creature but a hunting pack.',
-			type: ItemType.ImbuedArmor,
+			type: ItemType.LeveledArmor,
 			keywords: [
 				AbilityKeyword.Magic,
 				KitArmor.Light
@@ -444,7 +444,7 @@ export const beastheartSourcebook: Sourcebook = {
 			id: 'thorn-dragonscale',
 			name: 'Thorn Dragonscale',
 			description: '(Beastheart only) This armor, fashioned from the barbed scales of a thorn dragon, still pulses with the echo of the dragon’s heartbeat.',
-			type: ItemType.ImbuedArmor,
+			type: ItemType.LeveledArmor,
 			keywords: [
 				AbilityKeyword.Magic,
 				KitArmor.Medium
@@ -518,7 +518,7 @@ export const beastheartSourcebook: Sourcebook = {
 			id: 'rampant-shield',
 			name: 'Rampant Shield',
 			description: '(Beastheart only) This battered shield bears a magically animated painting of a lion rampant.',
-			type: ItemType.ImbuedArmor,
+			type: ItemType.LeveledArmor,
 			keywords: [
 				AbilityKeyword.Magic,
 				KitArmor.Shield

@@ -330,6 +330,10 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSidebar = () => {
 		const getElementListHeader = () => {
+			if (isSmall) {
+				return null;
+			}
+
 			switch (category) {
 				case 'monster-group':
 					return (
@@ -539,13 +543,13 @@ export const LibraryListPage = (props: Props) => {
 				{
 					showSidebar ?
 						<div className='selection-content'>
-							<div className='selection-list categories'>
+							<div className='selection-list'>
 								<HeaderText level={3}>For Players</HeaderText>
 								{playerCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
 								<HeaderText level={3}>For Directors</HeaderText>
 								{directorCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
 							</div>
-							<div className='selection-list elements'>
+							<div className='selection-list'>
 								{getElementListHeader()}
 								{getElementListItems()}
 							</div>

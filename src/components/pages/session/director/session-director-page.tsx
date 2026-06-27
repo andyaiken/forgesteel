@@ -441,7 +441,7 @@ export const SessionDirectorPage = (props: Props) => {
 						</Space>
 					}
 					content={
-						<Space orientation='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%', padding: '0 20px 20px 20px' }}>
 							<HeaderText level={1}>Encounter Rewards</HeaderText>
 							<div className='ds-text'>
 								Choose the rewards to grant to each hero in {finishingEncounter.name || 'this encounter'}.
@@ -460,7 +460,7 @@ export const SessionDirectorPage = (props: Props) => {
 								}
 							</Space>
 							<Space orientation='vertical' style={{ width: '100%' }}>
-								<HeaderText>Rewards</HeaderText>
+								<HeaderText>Individual Rewards</HeaderText>
 								<NumberSpin
 									label='Victories'
 									min={0}
@@ -479,18 +479,13 @@ export const SessionDirectorPage = (props: Props) => {
 									value={encounterRewards.renown}
 									onChange={value => setReward('renown', value)}
 								/>
+								<HeaderText>Party Rewards</HeaderText>
 								<NumberSpin
 									label='Hero Tokens'
 									min={0}
 									value={encounterRewards.heroTokens}
 									onChange={value => setReward('heroTokens', value)}
-								>
-									<div className='spin-middle reward-spin-content'>
-										<div className='ant-statistic-title'>Hero Tokens</div>
-										<div className='ant-statistic-content'>{encounterRewards.heroTokens}</div>
-										<div className='ds-text compact-text'>Party resource; applies to each listed hero.</div>
-									</div>
-								</NumberSpin>
+								/>
 							</Space>
 						</Space>
 					}

@@ -31,13 +31,15 @@ interface Props {
 export const ClassPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 
+	const pluralsubclassName = props.heroClass.subclassName.endsWith('y') ? props.heroClass.subclassName.slice(0, -1) + 'ies' : props.heroClass.subclassName.endsWith('s') ? `${props.heroClass.subclassName}es` : `${props.heroClass.subclassName}s`;
+
 	const getOverview = () => {
 		return (
 			<>
 				<Markdown text={props.heroClass.description} />
 				{
 					props.heroClass.subclasses.length > 0 ?
-						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
+						<Field label={pluralsubclassName} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 						: null
 				}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />

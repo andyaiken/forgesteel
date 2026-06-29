@@ -330,6 +330,10 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSidebar = () => {
 		const getElementListHeader = () => {
+			if (isSmall) {
+				return null;
+			}
+
 			switch (category) {
 				case 'monster-group':
 					return (
@@ -400,9 +404,7 @@ export const LibraryListPage = (props: Props) => {
 			sortedHeaders.forEach(header => {
 				if (header) {
 					listItems.push(
-						<div key={`${header}-header`} className='selection-list-group-header'>
-							<HeaderText level={3}>{header || 'List'}</HeaderText>
-						</div>
+						<HeaderText key={`${header}-header`} level={3}>{header || 'List'}</HeaderText>
 					);
 				}
 
@@ -415,7 +417,12 @@ export const LibraryListPage = (props: Props) => {
 							selected={selectedID === a.id}
 							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`}
 							info={LibraryLogic.getInfo(a, category, showMonsters)}
-							onSelect={() => navigation.goToLibrary(category, a.id)}
+							onSelect={() => {
+								if (isSmall) {
+									setShowSidebar(false);
+								}
+								navigation.goToLibrary(category, a.id);
+							}}
 						/>
 					);
 				});
@@ -436,55 +443,113 @@ export const LibraryListPage = (props: Props) => {
 			return listItems;
 		};
 
+		const playerCategories: { kind: SourcebookElementKind, label: string }[] = [
+			{
+				kind: 'ancestry',
+				label: 'Ancestries'
+			},
+			{
+				kind: 'career',
+				label: 'Careers'
+			},
+			{
+				kind: 'class',
+				label: 'Classes'
+			},
+			{
+				kind: 'complication',
+				label: 'Complications'
+			},
+			{
+				kind: 'culture',
+				label: 'Cultures'
+			},
+			{
+				kind: 'domain',
+				label: 'Domains'
+			},
+			{
+				kind: 'imbuement',
+				label: 'Imbuements'
+			},
+			{
+				kind: 'item',
+				label: 'Items'
+			},
+			{
+				kind: 'kit',
+				label: 'Kits'
+			},
+			{
+				kind: 'perk',
+				label: 'Perks'
+			},
+			{
+				kind: 'project',
+				label: 'Projects'
+			},
+			{
+				kind: 'subclass',
+				label: 'Subclasses'
+			},
+			{
+				kind: 'title',
+				label: 'Titles'
+			}
+		];
+
+		const directorCategories: { kind: SourcebookElementKind, label: string }[] = [
+			{
+				kind: 'adventure',
+				label: 'Adventures'
+			},
+			{
+				kind: 'encounter',
+				label: 'Encounters'
+			},
+			{
+				kind: 'monster-group',
+				label: showMonsters ? 'Monsters' : 'Monster Groups'
+			},
+			{
+				kind: 'montage',
+				label: 'Montages'
+			},
+			{
+				kind: 'negotiation',
+				label: 'Negotiations'
+			},
+			{
+				kind: 'tactical-map',
+				label: 'Tactical Maps'
+			},
+			{
+				kind: 'terrain',
+				label: 'Terrain'
+			}
+		];
+
+		let className = 'selection-sidebar';
+		if (!showSidebar) {
+			className += ' closed';
+		}
+		if (isSmall) {
+			className += ' full-width';
+		}
+
 		return (
-			<div className={showSidebar ? 'selection-sidebar' : 'selection-sidebar closed'}>
-				<div className='selection-toolbar'>
-					{
-						showSidebar ?
-							<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-							: null
-					}
-					{
-						showSidebar ?
-							<Button onClick={props.showSourcebooks}>
-								Sourcebooks
-							</Button>
-							: null
-					}
-					<Button icon={showSidebar ? <DoubleLeftOutlined /> : <DoubleRightOutlined />} style={{ flex: '0 0 auto' }} onClick={() => setShowSidebar(!showSidebar)} />
-				</div>
+			<div className={className}>
+				<Button icon={showSidebar ? <DoubleLeftOutlined /> : <DoubleRightOutlined />} style={{ height: '100%' }} onClick={() => setShowSidebar(!showSidebar)} />
 				{
 					showSidebar ?
 						<div className='selection-content'>
-							<div className='selection-list categories'>
-								<div className='selection-list-group-header'>
-									<HeaderText level={3}>For Players</HeaderText>
-								</div>
-								<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getList('ancestry').length} onSelect={() => navigation.goToLibrary('ancestry')} />
-								<SelectorRow selected={category === 'career'} content='Careers' info={getList('career').length} onSelect={() => navigation.goToLibrary('career')} />
-								<SelectorRow selected={category === 'class'} content='Classes' info={getList('class').length} onSelect={() => navigation.goToLibrary('class')} />
-								<SelectorRow selected={category === 'complication'} content='Complications' info={getList('complication').length} onSelect={() => navigation.goToLibrary('complication')} />
-								<SelectorRow selected={category === 'culture'} content='Cultures' info={getList('culture').length} onSelect={() => navigation.goToLibrary('culture')} />
-								<SelectorRow selected={category === 'domain'} content='Domains' info={getList('domain').length} onSelect={() => navigation.goToLibrary('domain')} />
-								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getList('imbuement').length} onSelect={() => navigation.goToLibrary('imbuement')} />
-								<SelectorRow selected={category === 'item'} content='Items' info={getList('item').length} onSelect={() => navigation.goToLibrary('item')} />
-								<SelectorRow selected={category === 'kit'} content='Kits' info={getList('kit').length} onSelect={() => navigation.goToLibrary('kit')} />
-								<SelectorRow selected={category === 'perk'} content='Perks' info={getList('perk').length} onSelect={() => navigation.goToLibrary('perk')} />
-								<SelectorRow selected={category === 'project'} content='Projects' info={getList('project').length} onSelect={() => navigation.goToLibrary('project')} />
-								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getList('subclass').length} onSelect={() => navigation.goToLibrary('subclass')} />
-								<SelectorRow selected={category === 'title'} content='Titles' info={getList('title').length} onSelect={() => navigation.goToLibrary('title')} />
-								<div className='selection-list-group-header'>
-									<HeaderText level={3}>For Directors</HeaderText>
-								</div>
-								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getList('adventure').length} onSelect={() => navigation.goToLibrary('adventure')} />
-								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getList('encounter').length} onSelect={() => navigation.goToLibrary('encounter')} />
-								<SelectorRow selected={category === 'monster-group'} content={showMonsters ? 'Monsters' : 'Monster Groups'} info={showMonsters ? getList('monster').length : getList('monster-group').length} onSelect={() => navigation.goToLibrary('monster-group')} />
-								<SelectorRow selected={category === 'montage'} content='Montages' info={getList('montage').length} onSelect={() => navigation.goToLibrary('montage')} />
-								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getList('negotiation').length} onSelect={() => navigation.goToLibrary('negotiation')} />
-								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getList('tactical-map').length} onSelect={() => navigation.goToLibrary('tactical-map')} />
-								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getList('terrain').length} onSelect={() => navigation.goToLibrary('terrain')} />
+							<div className='selection-list'>
+								<HeaderText level={3}>For Players</HeaderText>
+								{playerCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
+								<HeaderText level={3}>For Directors</HeaderText>
+								{directorCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
 							</div>
-							<div className='selection-list elements'>
+							<div className='selection-list'>
 								{getElementListHeader()}
 								{getElementListItems()}
 							</div>
@@ -847,6 +912,10 @@ export const LibraryListPage = (props: Props) => {
 						buttons={[
 							{
 								type: 'control',
+								control: <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+							},
+							{
+								type: 'control',
 								control: (
 									<AddBtn
 										category={category}
@@ -861,21 +930,27 @@ export const LibraryListPage = (props: Props) => {
 								)
 							},
 							...getElementToolbarItems(),
-							{ type: 'control', control: getViewSelector() }
+							{ type: 'control', control: getViewSelector() },
+							{ type: 'button', label: 'Sourcebooks', onClick: props.showSourcebooks }
 						]}
 					/>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>
 						{getSidebar()}
-						<div className='element-selected'>
-							{
-								selected ?
-									getPanel(selected)
-									:
-									<Empty text='Nothing selected' />
-							}
-						</div>
+						{
+							isSmall && showSidebar ?
+								null
+								:
+								<div className='element-selected'>
+									{
+										selected ?
+											getPanel(selected)
+											:
+											<Empty text='Nothing selected' />
+									}
+								</div>
+						}
 					</div>
 				</ErrorBoundary>
 				<AppFooter

@@ -23,6 +23,7 @@ export class LorePerkData {
 			options: [],
 			listOptions: [ SkillList.Lore ],
 			count: 1,
+			selectAt: 'respite',
 			selected: []
 		},
 		list: PerkList.Lore

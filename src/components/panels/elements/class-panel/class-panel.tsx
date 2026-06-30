@@ -5,6 +5,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
@@ -31,15 +32,13 @@ interface Props {
 export const ClassPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 
-	const pluralsubclassName = props.heroClass.subclassName.toLowerCase().endsWith('y') ? props.heroClass.subclassName.slice(0, -1) + 'ies' : props.heroClass.subclassName.toLowerCase().endsWith('s') ? `${props.heroClass.subclassName}es` : `${props.heroClass.subclassName}s`;
-
 	const getOverview = () => {
 		return (
 			<>
 				<Markdown text={props.heroClass.description} />
 				{
 					props.heroClass.subclasses.length > 0 ?
-						<Field label={pluralsubclassName} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
+						<Field label={Format.pluralize(props.heroClass.subclassName)} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 						: null
 				}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />

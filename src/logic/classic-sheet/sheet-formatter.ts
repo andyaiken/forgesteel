@@ -138,10 +138,16 @@ export class SheetFormatter {
 	static pluralize = (text: string, n: number): string => {
 		let result = text;
 		if (n > 1) {
-			if (text.toLowerCase().endsWith('s')) {
+			if (text.toLowerCase().endsWith('ss') || text.toLowerCase().endsWith('j') || text.toLowerCase().endsWith('sh') || text.toLowerCase().endsWith('x') || text.toLowerCase().endsWith('z') || text.toLowerCase().endsWith('ch') || text.toLowerCase().endsWith('o')) {
 				result += 'es';
+			} else if (text.toLowerCase().endsWith('ay') || text.toLowerCase().endsWith('ey') || text.toLowerCase().endsWith('iy') || text.toLowerCase().endsWith('oy') || text.toLowerCase().endsWith('uy')) {
+				result += 's';
 			} else if (text.toLowerCase().endsWith('y')) {
 				result = text.slice(0, -1) + 'ies';
+			} else if (text.toLowerCase().endsWith('f')) {
+				result = text.slice(0, -1) + 'ves';
+			} else if (text.toLowerCase().endsWith('fe')) {
+				result = text.slice(0, -2) + 'ves';
 			} else {
 				result += 's';
 			}

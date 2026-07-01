@@ -119,5 +119,9 @@ export class OptionsUpdateLogic {
 		if (options.shownStandardAbilities === undefined) {
 			options.shownStandardAbilities = [];
 		}
+
+		if (options.showPartyNameInHeroCards === undefined) {
+			options.showPartyNameInHeroCards = false;
+		}
 	};
 }

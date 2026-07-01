@@ -96,7 +96,8 @@ export class FactoryLogic {
 				})
 			],
 			state: FactoryLogic.createHeroState(),
-			abilityCustomizations: []
+			abilityCustomizations: [],
+			isDisabled: false
 		};
 	};
 
@@ -1046,6 +1047,7 @@ export class FactoryLogic {
 			showDataSource: false,
 			// Hero
 			shownStandardAbilities: [],
+			showPartyNameInHeroCards: false,
 			xpPerLevel: 16,
 			// Hero: Modern Sheet
 			singlePage: false,

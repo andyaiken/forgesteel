@@ -22,7 +22,7 @@ export class OptionsLogic {
 	static getHeroCount = (options: Options, heroes: Hero[]) => {
 		let heroCount = options.heroCount;
 		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
+			const party = HeroLogic.getPartyHeroes(heroes, options.heroParty);
 			heroCount = party.length;
 			party.forEach(h => {
 				const retainers = HeroLogic.getRetainers(h);
@@ -37,7 +37,7 @@ export class OptionsLogic {
 	static getHeroLevel = (options: Options, heroes: Hero[]) => {
 		let heroLevel = options.heroLevel;
 		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
+			const party = HeroLogic.getPartyHeroes(heroes, options.heroParty);
 			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
 		}
 		return heroLevel;
@@ -46,7 +46,7 @@ export class OptionsLogic {
 	static getHeroVictories = (options: Options, heroes: Hero[]) => {
 		let heroVictories = options.heroVictories;
 		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
+			const party = HeroLogic.getPartyHeroes(heroes, options.heroParty);
 			heroVictories = Math.round(Collections.mean(party, h => h.state.victories));
 		}
 		return heroVictories;

@@ -21,11 +21,16 @@ export class SessionLogic {
 		copy.id = Utils.guid();
 		copy.round = 0;
 
+		const activeEncounterHeroes = options.party !== ''
+			? HeroLogic.getPartyHeroes(heroes, options.party)
+			: heroes.filter(HeroLogic.isActive);
+		const activeHeroCount = activeEncounterHeroes.length;
+
 		const monsterInfo: { monsterID: string, monster: Monster, name: string, count: number, added: number }[] = [];
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
@@ -50,8 +55,8 @@ export class SessionLogic {
 
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
@@ -70,8 +75,8 @@ export class SessionLogic {
 
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.forEach(g => {
 				const minions = g.slots.filter(s => {
@@ -88,8 +93,7 @@ export class SessionLogic {
 			});
 
 		if (options.party !== '') {
-			heroes
-				.filter(h => h.folder === options.party)
+			activeEncounterHeroes
 				.forEach(h => {
 					h.state.controlledSlots = [];
 					HeroLogic.getCompanions(h).forEach(monster => {

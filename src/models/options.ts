@@ -7,6 +7,7 @@ export interface Options {
 	showDataSource: boolean;
 	// Hero
 	shownStandardAbilities: string[];
+	showPartyNameInHeroCards: boolean;
 	xpPerLevel: number;
 	// Hero: Modern Sheet
 	singlePage: boolean;

@@ -32,6 +32,14 @@ export class HeroUpdateLogic {
 			hero.folder = '';
 		}
 
+		if (hero.isDisabled === undefined) {
+			hero.isDisabled = false;
+		} else if (hero.isDisabled === 'true' as unknown as boolean) {
+			hero.isDisabled = true;
+		} else if (hero.isDisabled !== true) {
+			hero.isDisabled = false;
+		}
+
 		if (hero.sourcebookIDs === undefined) {
 			hero.sourcebookIDs = SourcebookLogic.getSourcebooks()
 				.filter(sb => sb.type === SourcebookType.Official)

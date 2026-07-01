@@ -5,6 +5,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
@@ -37,7 +38,7 @@ export const ClassPanel = (props: Props) => {
 				<Markdown text={props.heroClass.description} />
 				{
 					props.heroClass.subclasses.length > 0 ?
-						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
+						<Field label={Format.pluralize(props.heroClass.subclassName)} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 						: null
 				}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />

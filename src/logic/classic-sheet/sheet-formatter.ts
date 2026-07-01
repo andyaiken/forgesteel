@@ -136,11 +136,7 @@ export class SheetFormatter {
 	};
 
 	static pluralize = (text: string, n: number): string => {
-		let result = text;
-		if (n > 1 && text.slice(-1).toLowerCase() !== 's') {
-			result += 's';
-		}
-		return result;
+		return Format.pluralize(text, n);
 	};
 
 	static joinCommasOr = (options: string[] | undefined): string => {

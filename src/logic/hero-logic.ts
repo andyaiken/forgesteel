@@ -36,6 +36,16 @@ import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
 
 export class HeroLogic {
+	static isDisabled = (hero: Hero) => {
+		const value = (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
+		return (value === true) || (value === 'true');
+	};
+
+	static isActive = (hero: Hero) => !HeroLogic.isDisabled(hero);
+
+	static getPartyHeroes = (heroes: Hero[], party: string) =>
+		heroes.filter(h => h.folder === party).filter(HeroLogic.isActive);
+
 	static getHeroDescription = (hero: Hero) => {
 		if (!hero.class || !hero.ancestry) {
 			return 'Hero';
@@ -1450,7 +1460,8 @@ export class HeroLogic {
 			class: hero.class ? `${hero.class.name} (${[ `Level ${hero.class.level}`, ...HeroLogic.getClassSpecialization(hero) ].join(' ')})` : null,
 			complication: hero.complication ? hero.complication.name : null,
 			picture: hero.picture,
-			folder: hero.folder
+			folder: hero.folder,
+			isDisabled: HeroLogic.isDisabled(hero)
 		};
 
 		return overview;

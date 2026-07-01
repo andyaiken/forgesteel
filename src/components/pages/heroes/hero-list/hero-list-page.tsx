@@ -32,6 +32,7 @@ interface Props {
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
+	toggleHeroAvailability: (hero: Hero) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -77,14 +78,39 @@ export const HeroListPage = (props: Props) => {
 			);
 		}
 
+		const showFolderTag = options.showPartyNameInHeroCards && !currentTab;
+
 		return (
 			<div className='hero-section-row'>
 				{
-					list.map(hero => (
-						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroOverviewPanel hero={hero} />
-						</SelectablePanel>
-					))
+					list.map(hero => {
+						const fullHero = fullHeroes.find(h => h.id === hero.id);
+
+						return (
+							<SelectablePanel
+								key={hero.id}
+								watermark={hero.picture || undefined}
+								onSelect={() => navigation.goToHeroView(hero.id)}
+							>
+								<HeroOverviewPanel
+									hero={hero}
+									showFolderTag={showFolderTag}
+									visibility={
+										fullHero ?
+											{
+												visible: !hero.isDisabled,
+												onSetVisibility: visible => {
+													const copy = Utils.copy(fullHero);
+													copy.isDisabled = !visible;
+													props.toggleHeroAvailability(copy);
+												}
+											}
+											: undefined
+									}
+								/>
+							</SelectablePanel>
+						);
+					})
 				}
 			</div>
 		);

@@ -77,6 +77,13 @@ export const SettingsModal = (props: Props) => {
 			saveOptions(copy);
 		};
 
+		const setShowPartyNameInHeroCards = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.showPartyNameInHeroCards = value;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
 		return (
 			<Expander title='Appearance'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
@@ -91,6 +98,7 @@ export const SettingsModal = (props: Props) => {
 						]}
 					/>
 					<Toggle label='Show data source' value={options.showDataSource} onChange={setShowDataSource} />
+					<Toggle label='Show party name on hero cards' value={options.showPartyNameInHeroCards} onChange={setShowPartyNameInHeroCards} />
 				</Space>
 			</Expander>
 		);

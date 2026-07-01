@@ -1,6 +1,7 @@
 import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Montage } from '@/models/montage';
 import { Options } from '@/models/options';
 
@@ -8,8 +9,7 @@ export class MontageLogic {
 	static getHeroCount = (heroes: Hero[], options: Options) => {
 		let heroCount = options.heroCount;
 		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
+			heroCount = HeroLogic.getPartyHeroes(heroes, options.heroParty).length;
 		}
 		return heroCount;
 	};

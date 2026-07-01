@@ -28,6 +28,18 @@ describe('getHeroCount', () => {
 
 		expect(MontageLogic.getHeroCount(heroes, options)).toBe(4);
 	});
+
+	test('excludes disabled heroes when a party is defined', () => {
+		const partyHero = FactoryLogic.createHero([]);
+		partyHero.folder = 'test';
+		const disabledHero = FactoryLogic.createHero([]);
+		disabledHero.folder = 'test';
+		disabledHero.isDisabled = true;
+		const heroes: Hero[] = [ partyHero, partyHero, partyHero, disabledHero ];
+		const options = { heroParty: 'test' } as Options;
+
+		expect(MontageLogic.getHeroCount(heroes, options)).toBe(3);
+	});
 });
 
 describe('getSuccessLimit', () => {

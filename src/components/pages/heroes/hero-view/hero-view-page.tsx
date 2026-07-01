@@ -1,6 +1,6 @@
 import { Alert, Button, Divider } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { CloseOutlined, CopyOutlined, DeleteOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { Ancestry } from '@/models/ancestry';
@@ -18,6 +18,7 @@ import { Fixture } from '@/models/fixture';
 import { Follower } from '@/models/follower';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
@@ -29,6 +30,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { Utils } from '@/utils/utils';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useHeroes } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -69,6 +71,7 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	toggleHeroAvailability: (hero: Hero) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -82,6 +85,8 @@ export const HeroViewPage = (props: Props) => {
 		[ heroID, heroes ]
 	);
 	useTitle(hero.name || 'Unnamed Hero');
+
+	const isDisabled = HeroLogic.isDisabled(hero);
 
 	const getContent = () => {
 		switch (view) {
@@ -143,6 +148,16 @@ export const HeroViewPage = (props: Props) => {
 					<ButtonGroup
 						buttons={[
 							{ type: 'button', label: isSmall ? undefined : 'Edit', icon: <EditOutlined />, onClick: () => navigation.goToHeroEdit(heroID!, 'details') },
+							{
+								type: 'button',
+								label: isSmall ? undefined : (isDisabled ? 'Show' : 'Hide'),
+								icon: isDisabled ? <EyeOutlined /> : <EyeInvisibleOutlined />,
+								onClick: () => {
+									const copy = Utils.copy(hero);
+									copy.isDisabled = !copy.isDisabled;
+									props.toggleHeroAvailability(copy);
+								}
+							},
 							{ type: 'button', label: isSmall ? undefined : 'Copy', icon: <CopyOutlined />, onClick: () => props.copyHero(hero) },
 							{
 								type: 'dropdown',

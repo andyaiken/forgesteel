@@ -136,25 +136,7 @@ export class SheetFormatter {
 	};
 
 	static pluralize = (text: string, n: number): string => {
-		let result = text;
-		if (n > 1) {
-			const esEndings = [ 'ss', 'j', 'sh', 'x', 'z', 'ch', 'o' ];
-			const ysEndings = [ 'ay', 'ey', 'iy', 'oy', 'uy' ];
-			if (esEndings.some(j => text.toLowerCase().endsWith(j))) {
-				result += 'es';
-			} else if (ysEndings.some(j => text.toLowerCase().endsWith(j))) {
-				result += 's';
-			} else if (text.toLowerCase().endsWith('y')) {
-				result = text.slice(0, -1) + 'ies';
-			} else if (text.toLowerCase().endsWith('f')) {
-				result = text.slice(0, -1) + 'ves';
-			} else if (text.toLowerCase().endsWith('fe')) {
-				result = text.slice(0, -2) + 'ves';
-			} else {
-				result += 's';
-			}
-		}
-		return result;
+		return Format.pluralize(text, n);
 	};
 
 	static joinCommasOr = (options: string[] | undefined): string => {

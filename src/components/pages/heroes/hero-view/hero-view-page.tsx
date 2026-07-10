@@ -78,10 +78,31 @@ export const HeroViewPage = (props: Props) => {
 	const [ view, setView ] = useState<string>('modern');
 	const heroes = useHeroes();
 	const hero = useMemo(
-		() => heroes.find(h => h.id === heroID)!,
+		() => heroes.find(h => h.id === heroID),
 		[ heroID, heroes ]
 	);
-	useTitle(hero.name || 'Unnamed Hero');
+	useTitle(hero?.name || 'Unnamed Hero');
+
+	if (!hero) {
+		return (
+			<div className='hero-view-page'>
+				<AppHeader subheader='Hero' />
+				<ErrorBoundary>
+					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
+						<Alert
+							type='warning'
+							showIcon={true}
+							title='This hero could not be found. It may have been deleted, or the link points to a hero that only exists on another device.'
+						/>
+					</div>
+				</ErrorBoundary>
+				<AppFooter
+					page='heroes'
+					params={props.params}
+				/>
+			</div>
+		);
+	}
 
 	const getContent = () => {
 		switch (view) {

@@ -1,6 +1,9 @@
 import { Alert, Button, Drawer, Flex, Segmented, Select, Space } from 'antd';
 import { FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
-import { useDataManager, useHeroes, useOptions } from '@/contexts/data-context';
+import { useAllSourcebooks, useDataManager, useHeroes, useOptions } from '@/contexts/data-context';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -173,6 +176,53 @@ export const SettingsModal = (props: Props) => {
 						onClose={closeStandardAbilitiesModal}
 					/>
 				</Drawer>
+			</Expander>
+		);
+	};
+
+	const getHeroesSourcebooks = () => {
+		const sourcebooks = useAllSourcebooks();
+
+		const toggleSourcebook = (include: boolean, id: string) => {
+			const currentIDs = options.defaultSourcebookIDs || [];
+			const newIDs = include ? [ ...currentIDs, id ] : currentIDs.filter(i => i !== id);
+			
+			const copy = Utils.copy(options);
+			copy.defaultSourcebookIDs = newIDs;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
+		return (
+			<Expander title='Default Sourcebooks'>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					<div className='ds-text' style={{ marginBottom: '8px' }}>
+						Select the sourcebooks to enable by default for new heroes:
+					</div>
+					{
+						[ SourcebookType.Official, SourcebookType.Homebrew, SourcebookType.ThirdParty, SourcebookType.Community ]
+							.map(type => ({ type: type, sourcebooks: sourcebooks.filter(sb => sb.type === type).filter(sb => SourcebookLogic.getElements(sb).length > 0) }))
+							.filter(item => item.sourcebooks.length > 0)
+							.map(item => (
+								<div key={item.type} className='sourcebook-type-section' style={{ width: '100%', marginBottom: '12px' }}>
+									<HeaderText level={3}>{item.type} Sourcebooks</HeaderText>
+									<Space orientation='vertical' style={{ width: '100%', paddingLeft: '8px' }}>
+										{
+											item.sourcebooks.map(sb => (
+												<Toggle
+													key={sb.id}
+													label={<Field label={sb.name || 'Unnamed Sourcebook'} value={<Markdown text={sb.description} useSpan={true} />} />}
+													value={(options.defaultSourcebookIDs || []).includes(sb.id)}
+													disabled={sb.id === 'core'}
+													onChange={value => toggleSourcebook(value, sb.id)}
+												/>
+											))
+										}
+									</Space>
+								</div>
+							))
+					}
+				</Space>
 			</Expander>
 		);
 	};
@@ -724,6 +774,7 @@ export const SettingsModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getAppearance()}
 						{getHeroesGeneral()}
+						{getHeroesSourcebooks()}
 						{getHeroesInteractive()}
 						{getHeroesClassic()}
 						{getClassicView()}

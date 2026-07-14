@@ -226,9 +226,11 @@ export const Main = (props: Props) => {
 	// #region Heroes
 
 	const newHero = (folder: string) => {
-		const sourcebookIDs = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
-			.filter(sb => sb.type === SourcebookType.Official)
-			.map(sb => sb.id);
+		const sourcebookIDs = options.defaultSourcebookIDs && options.defaultSourcebookIDs.length > 0
+			? options.defaultSourcebookIDs
+			: SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+				.filter(sb => sb.type === SourcebookType.Official)
+				.map(sb => sb.id);
 
 		const hero = FactoryLogic.createHero(sourcebookIDs);
 		hero.folder = folder;

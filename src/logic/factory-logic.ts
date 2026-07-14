@@ -1046,6 +1046,7 @@ export class FactoryLogic {
 			// App
 			cookieConsent: false,
 			showDataSource: false,
+			defaultSourcebookIDs: [ 'core' ],
 			// Hero
 			shownStandardAbilities: [],
 			xpPerLevel: 16,

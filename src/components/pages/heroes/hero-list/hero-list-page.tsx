@@ -18,6 +18,7 @@ import { PregenLogic } from '@/logic/pregen-logic';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -126,7 +127,17 @@ export const HeroListPage = (props: Props) => {
 												Import a Hero File
 											</Button>
 										</Upload>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+										<Button
+											block={true}
+											icon={<ThunderboltOutlined />}
+											onClick={() => {
+												const ids = options.defaultSourcebookIDs;
+												const randomSourcebooks = ids && ids.length > 0
+													? props.sourcebooks.filter(sb => ids.includes(sb.id))
+													: props.sourcebooks.filter(sb => sb.type === SourcebookType.Official);
+												props.importHero(HeroLogic.createRandomHero(randomSourcebooks), currentTab);
+											}}
+										>
 											Generate a Random Hero
 										</Button>
 										<Expander title='Use a premade example'>

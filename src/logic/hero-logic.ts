@@ -1247,8 +1247,7 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static createRandomHero = () => {
-		const sourcebooks = SourcebookLogic.getSourcebooks();
+	static createRandomHero = (sourcebooks: Sourcebook[]) => {
 		const hero = FactoryLogic.createHero(sourcebooks.map(sb => sb.id));
 		hero.name = NameGenerator.generateName();
 		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));
@@ -1386,6 +1385,9 @@ export class HeroLogic {
 							const options = SourcebookLogic
 								.getLanguages(sourcebooks)
 								.filter(l => !current.includes(l.name));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options).name);
 						}
 						break;
@@ -1397,6 +1399,9 @@ export class HeroLogic {
 								.getPerks(sourcebooks)
 								.filter(p => !currentIDs.includes(p.id))
 								.filter(p => (feature.data.lists.length === 0) || feature.data.lists.includes(p.list));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1414,6 +1419,9 @@ export class HeroLogic {
 							});
 							const options = allOptions
 								.filter(s => !current.includes(s));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;

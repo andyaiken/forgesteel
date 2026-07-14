@@ -12,6 +12,12 @@ export class OptionsUpdateLogic {
 			options.showDataSource = false;
 		}
 
+		if (options.defaultSourcebookIDs === undefined) {
+			options.defaultSourcebookIDs = [ 'core' ];
+		} else if (!options.defaultSourcebookIDs.includes('core')) {
+			options.defaultSourcebookIDs.push('core');
+		}
+
 		if (options.xpPerLevel === undefined) {
 			options.xpPerLevel = 16;
 		}

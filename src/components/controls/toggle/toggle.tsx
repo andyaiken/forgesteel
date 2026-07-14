@@ -18,6 +18,9 @@ interface Props {
 
 export const Toggle = (props: Props) => {
 	const onClick = () => {
+		if (props.disabled) {
+			return;
+		}
 		props.onChange(!props.value);
 	};
 
@@ -26,6 +29,7 @@ export const Toggle = (props: Props) => {
 			<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
 				<div>{props.label}</div>
 				<Switch
+					disabled={props.disabled}
 					unCheckedChildren={props.text ? props.text.unchecked : undefined}
 					checkedChildren={props.text ? props.text.checked : undefined}
 					checked={props.value}

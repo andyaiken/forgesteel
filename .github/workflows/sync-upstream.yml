@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync:
@@ -17,6 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Add upstream and merge, keeping our custom icon
+        id: sync
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -38,8 +40,16 @@ jobs:
 
           if git diff --cached --quiet && git diff --quiet; then
             echo "No changes from upstream today — nothing to commit."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           git commit -m "Sync upstream (keeping custom shield icon)"
           git push origin main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger image build
+        if: steps.sync.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build-and-push.yml --ref main

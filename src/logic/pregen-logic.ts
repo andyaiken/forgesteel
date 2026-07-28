@@ -52,9 +52,10 @@ export class PregenLogic {
 	};
 
 	static pregenToHero = (pregen: Pregen, sourcebooks: Sourcebook[], options: Options): Hero => {
-		const hero = FactoryLogic.createHero(pregen.sourcebookIDs);
+		const hero = FactoryLogic.createHero();
 
 		hero.name = pregen.name;
+		hero.sourcebookIDs = pregen.sourcebookIDs;
 
 		const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === pregen.ancestryID);
 		if (ancestry) {

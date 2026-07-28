@@ -1249,8 +1249,9 @@ export class HeroLogic {
 
 	static createRandomHero = () => {
 		const sourcebooks = SourcebookLogic.getSourcebooks();
-		const hero = FactoryLogic.createHero(sourcebooks.map(sb => sb.id));
+		const hero = FactoryLogic.createHero();
 		hero.name = NameGenerator.generateName();
+		hero.sourcebookIDs = sourcebooks.map(sb => sb.id);
 		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));
 		hero.culture = Collections.draw(SourcebookLogic.getCultures(sourcebooks, true));
 		hero.career = Collections.draw(SourcebookLogic.getCareers(sourcebooks));

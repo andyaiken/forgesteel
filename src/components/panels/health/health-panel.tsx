@@ -646,7 +646,15 @@ const HealthPanel = (props: Props) => {
 								value={damageValue}
 								onChange={setDamageValue}
 							>
-								<InputNumber min={0} value={damageValue} onChange={value => setDamageValue(Math.round(value || 0))} />
+								<InputNumber
+									className='spin-middle'
+									style={{ width: '100%' }}
+									controls={false}
+									min={0}
+									value={damageValue}
+									onChange={value => setDamageValue(Math.round(value || 0))}
+									onFocus={e => e.target.select()}
+								/>
 							</NumberSpin>
 							<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
 							<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>

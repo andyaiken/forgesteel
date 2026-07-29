@@ -52,4 +52,4 @@ jobs:
         if: steps.sync.outputs.pushed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run build-and-push.yml --ref main
+        run: gh workflow run build-and-push.yml --ref main --repo RickyTan01/forgesteel

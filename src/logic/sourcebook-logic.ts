@@ -30,11 +30,11 @@ import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { SourcebookData } from '@/data/sourcebook-data';
-import { SourcebookUpdateLogic } from './update/sourcebook-update-logic';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
+import { UpdateLogic } from './update/update-logic';
 
 export class SourcebookLogic {
 	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
@@ -67,7 +67,7 @@ export class SourcebookLogic {
 			list.push(SourcebookData.ageOfSecrets);
 		}
 
-		list.forEach(SourcebookUpdateLogic.updateSourcebook);
+		list.forEach(UpdateLogic.updateSourcebook);
 
 		list.push(...homebrew);
 

@@ -6,8 +6,8 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -72,7 +72,7 @@ export const HeroSourcebooksPanel = (props: Props) => {
 							.then(json => {
 								const sourcebook = JSON.parse(json) as Sourcebook;
 								sourcebook.id = Utils.guid();
-								SourcebookUpdateLogic.updateSourcebook(sourcebook);
+								UpdateLogic.updateSourcebook(sourcebook);
 								props.onImportSourcebook(sourcebook);
 							});
 						return false;

@@ -37,6 +37,7 @@ interface MarkdownEditorProps {
 }
 
 export const MarkdownEditor = (props: MarkdownEditorProps) => {
+	const [ initialMarkdown ] = useState(() => props.value.replaceAll('<', '\\<'));
 	const [ value, setValue ] = useState(props.value);
 	const debouncedValue = useDebounce(value);
 
@@ -72,7 +73,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 					)
 				})
 			]}
-			markdown={value}
+			markdown={initialMarkdown}
 			onChange={onChange}
 		/>
 	);

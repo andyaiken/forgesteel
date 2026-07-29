@@ -105,7 +105,7 @@ const minionSummon1 = undeadSignatureChoices.options.find(o => o.monster.id === 
 
 const beastheartCompanionChoices = beastheart.featuresByLevel.find(fbl => fbl.level === 1)
 	?.features.find(f => f.id === 'beastheart-1-2a')?.data as FeatureSummonChoiceData;
-const companion1 = beastheartCompanionChoices.options.find(o => o.monster.id === 'beastheart-1-2a-1') as Summon;
+const companion1 = beastheartCompanionChoices.options.find(o => o.monster.id === 'beastheart-companion-1') as Summon;
 
 const mockSummonChoiceFeature = {
 	id: 'mock-summon-choice',
@@ -193,7 +193,7 @@ describe('buildHeroSheet', () => {
 
 		expect(result).toBeDefined();
 		expect(result).not.toBeNullable();
-		expect(result.followers.length).toBe(3);
+		expect(result.followers.length).toBe(4);
 		expect(result.summons.length).toBe(2);
 	});
 });

@@ -1,4 +1,4 @@
-import { afterEach, assert, describe, expect, it, test, vi } from 'vitest';
+import { afterEach, assert, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -7,6 +7,7 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { Monster } from '@/models/monster';
 
 describe('getPowerRollCharacteristics', () => {
 	afterEach(() => {
@@ -126,5 +127,133 @@ describe('getTextEffect', () => {
 		const hero = {} as Hero;
 
 		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
+		[ 'Regain 5 + M', 'Regain 8' ],
+		[ 'Regain 5 + 2M', 'Regain 11' ],
+		[ 'Regain 5 + 2m', 'Regain 11' ],
+		[ 'Regain 5 + 2 x Might', 'Regain 11' ],
+		[ 'Regain 5 + 2×Might', 'Regain 11' ]
+	])('should properly apply a multiplier on a short-form characteristic reference (%s)', (text, expected) => {
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
+		[ 'A<0 restrained (save ends)', '`A<0` **restrained** (save ends)' ],
+		[ 'the target is dazed and slowed (save ends)', 'the target is **dazed** and **slowed** (save ends)' ],
+		[ 'the target takes 3 fire damage', 'the target takes 3 fire damage' ]
+	])('should bold known condition names (%s)', (text, expected) => {
+		expect(AbilityLogic.getTextEffect(text, undefined)).toBe(expected);
+	});
+});
+
+describe('getTierEffect', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	vi.mock('@/logic/hero-logic', () => {
+		const HeroLogic = vi.fn();
+		return { HeroLogic: HeroLogic };
+	});
+
+	const ability = AbilityData.freeStrikeMelee;
+	const hero = {} as Hero;
+
+	beforeEach(() => {
+		HeroLogic.getFeatures = vi.fn().mockReturnValue([]);
+		HeroLogic.getKitDamageBonuses = vi.fn().mockReturnValue([]);
+		HeroLogic.getFeatureDamageBonuses = vi.fn().mockReturnValue([]);
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
+		HeroLogic.getPotency = vi.fn().mockReturnValue(0);
+		HeroLogic.getForcedMovementBonus = vi.fn().mockReturnValue(0);
+	});
+
+	test.each([
+		[ '5 + 2M damage', '11 damage' ],
+		[ '7 + 3M damage', '16 damage' ],
+		[ '10 + 4M damage', '22 damage' ],
+		[ '5 + 2m damage', '11 damage' ],
+		[ '5 + 2 x M damage', '11 damage' ],
+		[ '5 + 2 x Might damage', '11 damage' ],
+		[ '5 + 2×Might damage', '11 damage' ]
+	])('should apply a per-tier characteristic multiplier (%s)', (text, expected) => {
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(expected);
+	});
+
+	it('should still support a bare, unmultiplied characteristic reference', () => {
+		expect(AbilityLogic.getTierEffect('3 + M damage', 1, ability, undefined, hero)).toBe('6 damage');
+	});
+
+	it('should still take the max of an "or" list of bare characteristics', () => {
+		HeroLogic.getCharacteristic = vi.fn().mockImplementation((_hero: Hero, characteristic: Characteristic) => {
+			return characteristic === Characteristic.Agility ? 5 : 3;
+		});
+
+		expect(AbilityLogic.getTierEffect('3 + M or A damage', 1, ability, undefined, hero)).toBe('8 damage');
+	});
+
+	it('should combine a later untyped damage section into the primary (typed) damage section', () => {
+		const text = '2 corruption damage; A<0 restrained (save ends); +4 damage';
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe('6 corruption damage; `A<0` **restrained** (save ends)');
+	});
+
+	it('should combine a later damage section that repeats the same type', () => {
+		expect(AbilityLogic.getTierEffect('2 corruption damage; +4 corruption damage', 1, ability, undefined, hero)).toBe('6 corruption damage');
+	});
+
+	it('should NOT combine damage sections that specify different types', () => {
+		expect(AbilityLogic.getTierEffect('2 lightning damage; 2 sonic damage', 1, ability, undefined, hero)).toBe('2 lightning damage; 2 sonic damage');
+	});
+
+	it('should NOT combine a later damage section that is conditional', () => {
+		const text = '3 damage; if the target is prone, an extra 2 damage';
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe('3 damage; if the target is **prone**, an extra 2 damage');
+	});
+
+	it('should NOT combine a later conditional damage section even if it repeats the primary type', () => {
+		const text = '3 fire damage; if burning, an extra 2 fire damage';
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(text);
+	});
+});
+
+describe('getTierEffectRetainer', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	vi.mock('@/logic/hero-logic', () => {
+		const HeroLogic = vi.fn();
+		return { HeroLogic: HeroLogic };
+	});
+
+	const ability = { cost: 1 } as Ability;
+	const retainer = {} as Monster;
+
+	it('should combine a later untyped damage section into the primary (typed) damage section', () => {
+		const text = '2 corruption damage; A<0 restrained (save ends); +4 damage';
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe('6 corruption damage; `A<0` **restrained** (save ends)');
+	});
+
+	it('should combine a later damage section that repeats the same type', () => {
+		expect(AbilityLogic.getTierEffectRetainer('2 corruption damage; +4 corruption damage', 1, ability, retainer)).toBe('6 corruption damage');
+	});
+
+	it('should NOT combine damage sections that specify different types', () => {
+		expect(AbilityLogic.getTierEffectRetainer('2 lightning damage; 2 sonic damage', 1, ability, retainer)).toBe('2 lightning damage; 2 sonic damage');
+	});
+
+	it('should NOT combine a later damage section that is conditional', () => {
+		const text = '3 damage; if the target is prone, an extra 2 damage';
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe('3  damage; if the target is **prone**, an extra 2 damage');
+	});
+
+	it('should NOT combine a later conditional damage section even if it repeats the primary type', () => {
+		const text = '3 fire damage; if burning, an extra 2 fire damage';
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(text);
 	});
 });

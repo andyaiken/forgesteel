@@ -39,7 +39,7 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
-	const [ autoCalc, setAutoCalc ] = useState<boolean>(!!props.hero);
+	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 
 	const keywords = AbilityLogic.getKeywords(props.ability, props.hero);
 	const isSignature = (props.cost ?? props.ability.cost) === 'signature';
@@ -73,10 +73,6 @@ export const AbilityPanel = (props: Props) => {
 	};
 
 	const autoCalcAvailable = () => {
-		if (!props.hero) {
-			return false;
-		}
-
 		if ((props.ability.sections || []).some(s => s.type === 'roll')) {
 			return true;
 		}
@@ -86,7 +82,7 @@ export const AbilityPanel = (props: Props) => {
 			...(props.ability.sections || []).filter(s => s.type === 'field').map(s => s.effect)
 		];
 
-		return texts.some(text => AbilityLogic.getTextEffect(text, props.hero!) !== text);
+		return texts.some(text => AbilityLogic.getTextEffect(text, props.hero) !== text);
 	};
 
 	const getWarnings = () => {

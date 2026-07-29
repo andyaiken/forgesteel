@@ -511,15 +511,15 @@ export const EncounterRunPanel = (props: Props) => {
 
 			return (
 				<div style={{ padding: '5px' }}>
-					{
-						encounter.description ?
-							<SelectablePanel>
-								<HeaderText level={1}>Encounter Description</HeaderText>
-								<Markdown text={encounter.description} />
-							</SelectablePanel>
-							: null
-					}
 					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							encounter.description ?
+								<SelectablePanel>
+									<HeaderText level={1}>Encounter Description</HeaderText>
+									<Markdown text={encounter.description} />
+								</SelectablePanel>
+								: null
+						}
 						{encounter.notes.map(note => <NotePanel key={note.id} note={note} onChange={setNote} />)}
 					</Space>
 					<Divider />

@@ -156,7 +156,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
-	const fakeHero = FactoryLogic.createHero(props.sourcebooks.map(s => s.id));
+	const fakeHero = FactoryLogic.createHero();
+	fakeHero.sourcebookIDs = props.sourcebooks.map(s => s.id);
 	const getPageClasses = () => {
 		return [
 			'hero-sheet',

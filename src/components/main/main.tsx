@@ -1,4 +1,4 @@
-import { Feature, FeatureCompanion, FeatureRetainer } from '@/models/feature';
+import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
@@ -1021,7 +1021,8 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		persistHomebrewSourcebook(destinationSourcebook);
+		persistHomebrewSourcebook(destinationSourcebook)
+			.then(() => persistHomebrewSourcebook(sourceSourcebook));
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -1509,13 +1510,36 @@ export const Main = (props: Props) => {
 					hero ?
 						monster => {
 							const heroCopy = Utils.copy(hero);
-							const feature = HeroLogic.getFeatures(heroCopy)
-								.map(f => f.feature)
+							const features = HeroLogic.getFeatures(heroCopy).map(f => f.feature);
+
+							const companionOrRetainer = features
 								.filter(f => [ FeatureType.Companion, FeatureType.Retainer ].includes(f.type))
 								.map(f => f as FeatureCompanion | FeatureRetainer)
 								.find(f => !!f.data.selected && f.data.selected.id === monster.id);
-							if (feature) {
-								feature.data.selected = Utils.copy(monster);
+							if (companionOrRetainer) {
+								companionOrRetainer.data.selected = Utils.copy(monster);
+								persistHero(heroCopy);
+								return;
+							}
+
+							const summon = features
+								.filter(f => f.type === FeatureType.Summon)
+								.map(f => f as FeatureSummon)
+								.flatMap(f => f.data.summons)
+								.find(s => s.monster.id === monster.id);
+							if (summon) {
+								summon.monster = Utils.copy(monster);
+								persistHero(heroCopy);
+								return;
+							}
+
+							const summonChoice = features
+								.filter(f => f.type === FeatureType.SummonChoice)
+								.map(f => f as FeatureSummonChoice)
+								.flatMap(f => f.data.selected)
+								.find(s => s.monster.id === monster.id);
+							if (summonChoice) {
+								summonChoice.monster = Utils.copy(monster);
 								persistHero(heroCopy);
 							}
 						}

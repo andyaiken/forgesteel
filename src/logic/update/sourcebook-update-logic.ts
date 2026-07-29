@@ -133,6 +133,10 @@ export class SourcebookUpdateLogic {
 			a.features.forEach(FeatureUpdateLogic.updateFeature);
 		});
 
+		sourcebook.careers.forEach(career => {
+			career.features.forEach(FeatureUpdateLogic.updateFeature);
+		});
+
 		sourcebook.classes.forEach(c => {
 			if (c.type === undefined) {
 				c.type = 'standard';
@@ -158,6 +162,24 @@ export class SourcebookUpdateLogic {
 			});
 
 			c.abilities.forEach(AbilityUpdateLogic.updateAbility);
+		});
+
+		sourcebook.complications.forEach(complication => {
+			complication.features.forEach(FeatureUpdateLogic.updateFeature);
+		});
+
+		sourcebook.cultures.forEach(culture => {
+			FeatureUpdateLogic.updateFeature(culture.language);
+
+			if (culture.environment) {
+				FeatureUpdateLogic.updateFeature(culture.environment);
+			}
+			if (culture.organization) {
+				FeatureUpdateLogic.updateFeature(culture.organization);
+			}
+			if (culture.upbringing) {
+				FeatureUpdateLogic.updateFeature(culture.upbringing);
+			}
 		});
 
 		sourcebook.domains.forEach(domain => {

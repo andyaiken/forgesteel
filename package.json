@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.125.0",
+	"version": "14.128.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://forgesteel.net/",
@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^6.3.2",
 		"@dnd-kit/core": "^6.3.1",
-		"@mdxeditor/editor": "^4.0.4",
+		"@mdxeditor/editor": "^4.1.0",
 		"@types/showdown": "^2.0.6",
 		"antd": "^6.5.1",
 		"axios": "^1.18.1",
@@ -29,7 +29,7 @@
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
 		"react-router": "^8.2.0",
-		"sass": "^1.101.0",
+		"sass": "^1.101.3",
 		"showdown": "^2.1.0",
 		"uuid": "^14.0.1"
 	},
@@ -46,7 +46,7 @@
 		"eslint": "^10.7.0",
 		"globals": "^17.7.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.64.0",
+		"typescript-eslint": "^8.65.0",
 		"vite": "^8.1.5",
 		"vitest": "^4.1.10"
 	}

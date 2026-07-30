@@ -331,6 +331,8 @@ ${encounter.objective.victories}`
 				if (feature.data.respiteChange) {
 					feature.data.selectAt = 'respite';
 				}
+				feature.data.selected = Collections.distinct(feature.data.selected, f => f.id);
+				feature.data.selected.forEach(UpdateLogic.updateFeature);
 				break;
 			case FeatureType.ClassAbility:
 				if (feature.data.source === undefined) {

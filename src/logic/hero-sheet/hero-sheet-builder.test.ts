@@ -16,6 +16,7 @@ import { PregenLogic } from '../pregen-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { Summon } from '@/models/summon';
+import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { retainer } from '@/data/monsters/retainer';
@@ -126,6 +127,28 @@ const mockSummonFeature = {
 	}
 } as FeatureSummon;
 // #endregion
+
+describe('buildCompanionSheet', () => {
+	const buildBeastheartHero = (level: number) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(beastheart);
+		hero.class.level = level;
+		return hero;
+	};
+
+	test('it should apply the beastheart companion characteristic bonus that scales with hero level', () => {
+		const heroAtLevel1 = buildBeastheartHero(1);
+		const heroAtLevel4 = buildBeastheartHero(4);
+
+		const sheetAtLevel1 = HeroSheetBuilder.buildCompanionSheet(companion1, heroAtLevel1);
+		const sheetAtLevel4 = HeroSheetBuilder.buildCompanionSheet(companion1, heroAtLevel4);
+
+		expect(sheetAtLevel1.characteristics.might).toBe(2);
+		expect(sheetAtLevel1.characteristics.intuition).toBe(2);
+		expect(sheetAtLevel4.characteristics.might).toBe(3);
+		expect(sheetAtLevel4.characteristics.intuition).toBe(3);
+	});
+});
 
 describe('buildFollowerCompanionSheet()', () => {
 	test('it should call the correct builder method for Follower features', () => {

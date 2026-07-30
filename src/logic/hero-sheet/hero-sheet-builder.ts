@@ -31,6 +31,7 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Summon } from '@/models/summon';
+import { SummonLogic } from '@/logic/summon-logic';
 
 export class HeroSheetBuilder {
 	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
@@ -601,7 +602,7 @@ export class HeroSheetBuilder {
 	};
 
 	static buildCompanionSheet = (companion: Summon, hero: Hero): FollowerSheet => {
-		const monster = companion.monster;
+		const monster = SummonLogic.getSummonedMonster(companion, hero);
 		const sheet: FollowerSheet = {
 			id: companion.id,
 			name: companion.name,

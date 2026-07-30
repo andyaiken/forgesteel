@@ -24,6 +24,7 @@ import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-p
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NamePanel } from '@/components/panels/hero/name/name-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
@@ -137,10 +138,15 @@ export const HeroViewPage = (props: Props) => {
 				);
 			case 'classic':
 				return (
-					<HeroSheetPage
-						hero={hero}
-						sourcebooks={props.sourcebooks}
-					/>
+					<>
+						<div style={{ padding: '10px' }}>
+							<NamePanel hero={hero} onShowState={page => props.showHeroState(hero, page)} />
+						</div>
+						<HeroSheetPage
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+						/>
+					</>
 				);
 			case 'abilities':
 				return (

@@ -118,25 +118,31 @@ Project goal is 240 if your career granted you two skills, or 360 if your career
 		goal: 0
 	});
 
-	static learnFromMaster = FactoryLogic.createProject({
-		id: 'project-learn-from-a-master',
-		name: 'Learn from a Master',
-		description: `
-When you seek to learn from a master, you choose the goal you wish to work on as well as the benefit you would gain from it. The Director tells you whether the master or the materials they've left behind are able to teach you what you want to learn.
-
-| Project         | Goal  |
-|:----------------|:------|
-| Hone Ability    | 120   |
-| Improve Control | 500   |
-| Acquire Ability | 1,000 |
-
-**Acquire Ability**: You gain one signature ability of your choice from the master's class (gaining a second signature ability if the master is of the same class as you). If the master is a tactician, you can gain the Strike Now ability instead. You can't gain this benefit again for the same class.
-
-**Hone Ability**: You sharpen the effectiveness of one of your abilities of your choice. Choose between adding a +1/+1/+1 damage bonus to the ability, or improving the distance of a ranged ability by 2. An ability can be honed only once this way.
-
-**Improve Control**: You learn to use one of your heroic abilities more efficiently, reducing its baseline Heroic Resource cost by 1 (to a minimum of 1). An ability can only be improved this way once.`,
+	static learnFromMaster1 = FactoryLogic.createProject({
+		id: 'project-learn-from-a-master-1',
+		name: 'Learn from a Master (hone ability)',
+		description: 'You sharpen the effectiveness of one of your abilities of your choice. Choose between adding a +1/+1/+1 damage bonus to the ability, or improving the distance of a ranged ability by 2. An ability can be honed only once this way.',
 		source: 'An NPC of a higher level, or records of such an NPC\'s teachings in a language you know',
-		characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+		characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+		goal: 120
+	});
+
+	static learnFromMaster2 = FactoryLogic.createProject({
+		id: 'project-learn-from-a-master-2',
+		name: 'Learn from a Master (improve control)',
+		description: 'You learn to use one of your heroic abilities more efficiently, reducing its baseline Heroic Resource cost by 1 (to a minimum of 1). An ability can only be improved this way once.',
+		source: 'An NPC of a higher level, or records of such an NPC\'s teachings in a language you know',
+		characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+		goal: 500
+	});
+
+	static learnFromMaster3 = FactoryLogic.createProject({
+		id: 'project-learn-from-a-master-3',
+		name: 'Learn from a Master (acquire ability)',
+		description: 'You gain one signature ability of your choice from the master\'s class (gaining a second signature ability if the master is of the same class as you). If the master is a tactician, you can gain the Strike Now ability instead. You can\'t gain this benefit again for the same class.',
+		source: 'An NPC of a higher level, or records of such an NPC\'s teachings in a language you know',
+		characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+		goal: 1000
 	});
 
 	static learnNewLanguage = FactoryLogic.createProject({

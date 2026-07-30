@@ -190,15 +190,15 @@ export const MonsterEditPanel = (props: Props) => {
 				copy.retainer.level = copy.level;
 				if (copy.level >= 4) {
 					copy.retainer.level4 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 7) {
 					copy.retainer.level7 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 10) {
 					copy.retainer.level10 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 			}
 			setMonster(copy);
@@ -209,7 +209,7 @@ export const MonsterEditPanel = (props: Props) => {
 			const copy = Utils.copy(monster);
 			copy.role.type = value || MonsterRoleType.NoRole;
 			if (copy.retainer) {
-				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 			}
 			setMonster(copy);
 			props.onChange(copy);
@@ -257,7 +257,7 @@ export const MonsterEditPanel = (props: Props) => {
 					level4: lvl4,
 					level7: lvl7,
 					level10: lvl10,
-					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, lvl4, lvl7, lvl10)
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, lvl4, lvl7, lvl10)
 				};
 			} else {
 				copy.retainer = null;
@@ -453,7 +453,7 @@ export const MonsterEditPanel = (props: Props) => {
 					copy.retainer!.level10 = feature;
 					break;
 			}
-			copy.retainer!.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
+			copy.retainer!.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
 			setMonster(copy);
 			props.onChange(copy);
 		};

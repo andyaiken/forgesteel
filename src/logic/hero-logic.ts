@@ -951,11 +951,11 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.AbilityDamage)
 			.filter(f => {
 				if (distance === AbilityDistanceType.Melee) {
-					return f.data.keywords.includes(AbilityKeyword.Melee);
+					return !f.data.keywords.includes(AbilityKeyword.Ranged);
 				}
 
 				if (distance === AbilityDistanceType.Ranged) {
-					return f.data.keywords.includes(AbilityKeyword.Ranged);
+					return !f.data.keywords.includes(AbilityKeyword.Melee);
 				}
 
 				return true;

@@ -10,7 +10,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';

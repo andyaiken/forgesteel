@@ -1,7 +1,7 @@
 import { Segmented, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
 import { HeaderText } from '@/components/controls/header-text/header-text';

@@ -1,7 +1,7 @@
+import { AbilityListEditPanel, FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Alert, Button, Drawer, Popover, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
-import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
 import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
 import { Collections } from '@/utils/collections';
@@ -11,7 +11,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroClass } from '@/models/class';
 import { Modal } from '@/components/modals/modal/modal';
@@ -221,83 +220,18 @@ export const ClassEditPanel = (props: Props) => {
 	};
 
 	const getClassAbilitiesEditSection = () => {
-		const addAbility = () => {
+		const onChange = (abilities: Ability[]) => {
 			const copy = Utils.copy(heroClass);
-			copy.abilities.push(FactoryLogic.createAbility({
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				type: FactoryLogic.type.createMain(),
-				keywords: [],
-				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '',
-				sections: []
-			}));
-			setHeroClass(copy);
-			props.onChange(copy);
-		};
-
-		const changeAbility = (ability: Ability) => {
-			const copy = Utils.copy(heroClass);
-			const index = copy.abilities.findIndex(a => a.id === ability.id);
-			if (index !== -1) {
-				copy.abilities[index] = ability;
-			}
-			setHeroClass(copy);
-			props.onChange(copy);
-		};
-
-		const moveAbility = (ability: Ability, direction: 'up' | 'down') => {
-			const copy = Utils.copy(heroClass);
-			const index = copy.abilities.findIndex(a => a.id === ability.id);
-			copy.abilities = Collections.move(copy.abilities, index, direction);
-			setHeroClass(copy);
-			props.onChange(copy);
-		};
-
-		const deleteAbility = (ability: Ability) => {
-			const copy = Utils.copy(heroClass);
-			copy.abilities = copy.abilities.filter(a => a.id !== ability.id);
+			copy.abilities = Utils.copy(abilities);
 			setHeroClass(copy);
 			props.onChange(copy);
 		};
 
 		return (
-			<>
-				<HeaderText
-					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={addAbility} />
-					}
-				>
-					Abilities
-				</HeaderText>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						heroClass.abilities.map(a => (
-							<Expander
-								key={a.id}
-								title={a.name || 'Unnamed Ability'}
-								tags={[ a.type.usage ]}
-								extra={[
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
-								]}
-							>
-								<AbilityEditPanel
-									ability={a}
-									onChange={changeAbility}
-								/>
-							</Expander>
-						))
-					}
-					{
-						heroClass.abilities.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
-			</>
+			<AbilityListEditPanel
+				abilities={heroClass.abilities}
+				onChange={onChange}
+			/>
 		);
 	};
 

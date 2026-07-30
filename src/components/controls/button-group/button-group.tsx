@@ -44,6 +44,10 @@ interface ButtonGroupProps {
 }
 
 export const ButtonGroup = (props: ButtonGroupProps) => {
+	if (props.buttons.filter(b => !!b).length === 0) {
+		return null;
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className='button-group'>
@@ -53,13 +57,13 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
 							switch (item.type) {
 								case 'button':
 									return (
-										<Button key={n} type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip} onClick={item.onClick}>
+										<Button key={n} type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip} onClick={e => { e.stopPropagation(); item.onClick(); }}>
 											{item.label}
 										</Button>
 									);
 								case 'danger':
 									return (
-										<DangerButton mode={item.label ? 'inline' : 'clear'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={() => item.onClick()} />
+										<DangerButton mode={item.label ? 'inline' : 'clear'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={e => { e.stopPropagation(); item.onClick(); }} />
 									);
 								case 'dropdown':
 									return (

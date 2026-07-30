@@ -752,6 +752,10 @@ ${encounter.objective.victories}`
 		if (options.shownStandardAbilities === undefined) {
 			options.shownStandardAbilities = [];
 		}
+
+		if (options.showClipboardOptions === undefined) {
+			options.showClipboardOptions = false;
+		}
 	};
 
 	static updatePerk = (perk: Perk) => {

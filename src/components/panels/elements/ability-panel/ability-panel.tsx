@@ -1,13 +1,14 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Alert, Button, Flex, Space, Tag } from 'antd';
+import { Alert, Flex, Space, Tag } from 'antd';
 import { CSSProperties, useState } from 'react';
+import { CopyOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
-import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityInfoPanel } from '@/components/panels/ability-info/ability-info-panel';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -22,6 +23,8 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { useClipboard } from '@/hooks/use-clipboard';
+import { useOptions } from '@/contexts/data-context';
 
 import './ability-panel.scss';
 
@@ -40,6 +43,8 @@ interface Props {
 
 export const AbilityPanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+	const options = useOptions();
+	const clipboard = useClipboard();
 
 	const keywords = AbilityLogic.getKeywords(props.ability, props.hero);
 	const isSignature = (props.cost ?? props.ability.cost) === 'signature';
@@ -73,7 +78,7 @@ export const AbilityPanel = (props: Props) => {
 	};
 
 	const autoCalcAvailable = () => {
-		if ((props.ability.sections || []).some(s => s.type === 'roll')) {
+		if (props.hero && (props.ability.sections || []).some(s => s.type === 'roll')) {
 			return true;
 		}
 
@@ -305,14 +310,21 @@ export const AbilityPanel = (props: Props) => {
 					ribbon={getRibbon()}
 					tags={props.tags}
 					extra={
-						autoCalcAvailable() ?
-							<Button
-								type='text'
-								title='Auto-calculate damage, potency, etc'
-								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-							/>
-							: null
+						<ButtonGroup
+							buttons={[
+								autoCalcAvailable() ?
+									{
+										type: 'button',
+										icon: autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />,
+										tooltip: 'Auto-calculate damage, potency, etc',
+										onClick: () => setAutoCalc(!autoCalc)
+									}
+									: null,
+								options.showClipboardOptions ?
+									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Ability', onClick: () => clipboard.setAbility(props.ability) }
+									: null
+							]}
+						/>
 					}
 				>
 					{props.ability.name || 'Unnamed Ability'}

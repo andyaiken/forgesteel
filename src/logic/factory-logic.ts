@@ -1082,7 +1082,9 @@ export class FactoryLogic {
 			heroVictories: 0,
 			// Tactical Map
 			gridSize: 50,
-			playerGridSize: 50
+			playerGridSize: 50,
+			// Homebrewing
+			showClipboardOptions: false
 		};
 	};
 

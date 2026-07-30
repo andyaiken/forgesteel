@@ -1,10 +1,10 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
 import { CSSProperties, useState } from 'react';
+import { CopyOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
-import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
-import { Button } from 'antd';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
@@ -19,6 +19,8 @@ import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
+import { useClipboard } from '@/hooks/use-clipboard';
+import { useOptions } from '@/contexts/data-context';
 
 import './feature-panel.scss';
 
@@ -35,6 +37,8 @@ interface Props {
 
 export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+	const options = useOptions();
+	const clipboard = useClipboard();
 
 	const getTags = () => {
 		const tags = [];
@@ -84,9 +88,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const autoCalcAvailable = () => {
-		return props.hero
-			&& (props.feature.type === FeatureType.Text)
-			&& (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
+		return (props.feature.type === FeatureType.Text) && (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
 	};
 
 	if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
@@ -136,14 +138,21 @@ export const FeaturePanel = (props: Props) => {
 					}
 					tags={getTags()}
 					extra={
-						autoCalcAvailable() ?
-							<Button
-								type='text'
-								title='Auto-calculate damage, potency, etc'
-								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-							/>
-							: null
+						<ButtonGroup
+							buttons={[
+								autoCalcAvailable() ?
+									{
+										type: 'button',
+										icon: autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />,
+										tooltip: 'Auto-calculate damage, potency, etc',
+										onClick: () => setAutoCalc(!autoCalc)
+									}
+									: null,
+								options.showClipboardOptions ?
+									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Feature', onClick: () => clipboard.setFeature(props.feature) }
+									: null
+							]}
+						/>
 					}
 				>
 					{customization?.name || props.feature.name || 'Unnamed Feature'}

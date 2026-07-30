@@ -27,16 +27,12 @@ export class EncounterDifficultyLogic {
 			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 
 			if (monster) {
-				const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
-				const addOnPoints = group ? Collections.sum(slot.customization.addOnIDs, id => group.addOns.find(a => a.id === id)?.data.cost ?? 0) : 0;
-				const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
-
 				let count = slot.count;
 				if (monster.role.organization === MonsterOrganizationType.Minion) {
 					count += slot.customization.minionCountAdjustment / MonsterLogic.getRoleMultiplier(monster.role.organization);
 				}
 
-				return (monster.encounterValue + addOnCost) * count;
+				return monster.encounterValue * count;
 			}
 			return 0;
 		});

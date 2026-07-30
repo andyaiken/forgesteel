@@ -426,12 +426,25 @@ export class HeroUpdateLogic {
 
 					let availableOptions = [ ...feature.data.options ];
 					if (feature.data.count === 'ancestry') {
-						availableOptions = sourcebooks
+						// Prefer options from the hero's own (current and former) ancestries first, so that an id
+						// collision with an unrelated ancestry's trait (eg homebrew content reusing an official
+						// trait's id) can't silently resolve to the wrong feature; only fall back to the full
+						// cross-ancestry list to support choosing a trait from another ancestry (comprehensive mode).
+						const ownAncestries = hero.ancestry ? [ hero.ancestry, ...HeroLogic.getFormerAncestries(hero) ] : HeroLogic.getFormerAncestries(hero);
+						const ownOptions = ownAncestries
+							.flatMap(a => a.features)
+							.filter(f => f.type === FeatureType.Choice)
+							.filter(f => f.data.count === 'ancestry')
+							.flatMap(f => f.data.options);
+
+						const allOptions = sourcebooks
 							.flatMap(sb => sb.ancestries)
 							.flatMap(a => a.features)
 							.filter(f => f.type === FeatureType.Choice)
 							.filter(f => f.data.count === 'ancestry')
 							.flatMap(f => f.data.options);
+
+						availableOptions = [ ...ownOptions, ...allOptions ];
 					}
 
 					selectedIDs.forEach(id => {

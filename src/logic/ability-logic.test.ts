@@ -145,6 +145,19 @@ describe('getTextEffect', () => {
 	])('should bold known condition names (%s)', (text, expected) => {
 		expect(AbilityLogic.getTextEffect(text, undefined)).toBe(expected);
 	});
+
+	test.each([
+		[ 'Push 1', 'Push 2' ],
+		[ 'pushed 2 squares away', 'pushed 3 squares away' ],
+		[ 'pulled 5 squares', 'pulled 6 squares' ],
+		[ 'slides 3 squares', 'slides 4 squares' ],
+		[ 'slid 2 squares', 'slid 3 squares' ]
+	])('should apply the forced movement bonus to push/pull/slide text regardless of verb conjugation (%s)', (text, expected) => {
+		HeroLogic.getForcedMovementBonus = vi.fn().mockReturnValue(1);
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
 });
 
 describe('getTierEffect', () => {

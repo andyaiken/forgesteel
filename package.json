@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.129.0",
+	"version": "14.130.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://forgesteel.net/",
@@ -28,8 +28,8 @@
 		"pdf-lib": "^1.17.1",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
-		"react-router": "^8.2.0",
-		"sass": "^1.101.3",
+		"react-router": "^8.3.0",
+		"sass": "^1.101.6",
 		"showdown": "^2.1.0",
 		"uuid": "^14.0.1"
 	},

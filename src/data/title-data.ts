@@ -227,7 +227,9 @@ export class TitleData {
 				id: 'title-faction-member-1',
 				name: 'Academic Faction',
 				description: `
-When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+You gain membership in a faction. You’re regarded as a promising but untested agent, and you’re allowed to operate independently. You can be assigned tasks to further your faction’s goals, and you can expect rewards and promotion if you succeed.
+
+When engaged in a negotiation with any member of your faction, their patience increases by 2 (to a maximum of 5).
 
 You find a sage who can make up to three Reason tests to recall lore or make project rolls for research projects on your behalf. The sage has a +5 bonus to these tests. These project rolls take 10 minutes each and don’t need to be made during a respite.`
 			}),
@@ -235,7 +237,9 @@ You find a sage who can make up to three Reason tests to recall lore or make pro
 				id: 'title-faction-member-2',
 				name: 'Guild Faction',
 				description: `
-When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+You gain membership in a faction. You’re regarded as a promising but untested agent, and you’re allowed to operate independently. You can be assigned tasks to further your faction’s goals, and you can expect rewards and promotion if you succeed.
+
+When engaged in a negotiation with any member of your faction, their patience increases by 2 (to a maximum of 5).
 
 You find an expert crafter who can make up to three project rolls for crafting projects on your behalf. The crafter has a +5 bonus to these tests. These project rolls take 10 uninterrupted minutes each and don’t need to be made during a respite.`
 			}),
@@ -243,7 +247,9 @@ You find an expert crafter who can make up to three project rolls for crafting p
 				id: 'title-faction-member-3',
 				name: 'Martial Faction',
 				description: `
-When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+You gain membership in a faction. You’re regarded as a promising but untested agent, and you’re allowed to operate independently. You can be assigned tasks to further your faction’s goals, and you can expect rewards and promotion if you succeed.
+
+When engaged in a negotiation with any member of your faction, their patience increases by 2 (to a maximum of 5).
 
 You recruit up to three minions with levels no greater than your own, of a type appropriate for the faction (such as human guards). These minions follow your orders for a day.`
 			}),
@@ -251,7 +257,9 @@ You recruit up to three minions with levels no greater than your own, of a type 
 				id: 'title-faction-member-4',
 				name: 'Spy Faction',
 				description: `
-When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+You gain membership in a faction. You’re regarded as a promising but untested agent, and you’re allowed to operate independently. You can be assigned tasks to further your faction’s goals, and you can expect rewards and promotion if you succeed.
+
+When engaged in a negotiation with any member of your faction, their patience increases by 2 (to a maximum of 5).
 
 You find an agent who can provide you with three pieces of information about the settlement you’re in, such as the location of a hidden person, a secret entrance into a guarded area, or the negotiation motivation or pitfall of an important person.`
 			})

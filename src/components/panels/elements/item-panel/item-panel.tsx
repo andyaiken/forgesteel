@@ -97,6 +97,11 @@ export const ItemPanel = (props: Props) => {
 								</Expander>
 							))
 					}
+					{
+						item.featuresByLevel.flatMap(lvl => lvl.features).length === 0 ?
+							<Empty />
+							: null
+					}
 				</Space>
 			</>
 		);
@@ -268,9 +273,11 @@ export const ItemPanel = (props: Props) => {
 		}
 
 		const pages = [
-			{ value: 'overview', label: 'Overview' },
-			{ value: 'features', label: 'Features' }
+			{ value: 'overview', label: 'Overview' }
 		];
+		if (item.featuresByLevel.flatMap(lvl => lvl.features).length > 0) {
+			pages.push({ value: 'features', label: 'Features' });
+		}
 		const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 		if (imbueable) {
 			pages.push({ value: 'imbuements', label: 'Imbuements' });

@@ -65,6 +65,7 @@ export type FeatureAbilityKeyword = FeatureOf<FeatureType.AbilityKeyword, Featur
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
+	repeatable: boolean;
 };
 export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>;
 

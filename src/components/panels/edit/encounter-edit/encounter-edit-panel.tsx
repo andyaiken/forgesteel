@@ -1101,9 +1101,9 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
 
-			const removeAddOn = (addOnID: string) => {
+			const removeAddOn = (index: number) => {
 				const copy = Utils.copy(props.slot.customization);
-				copy.addOnIDs = copy.addOnIDs.filter(id => id !== addOnID);
+				copy.addOnIDs = copy.addOnIDs.filter((_, n) => n !== index);
 				setShowAddOns(false);
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
@@ -1118,17 +1118,17 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.slot.customization.addOnIDs
-								.map(id => monsterGroup.addOns.find(a => a.id === id))
-								.filter(addOn => !!addOn)
-								.map(addOn => (
+								.map((id, index) => ({ addOn: monsterGroup.addOns.find(a => a.id === id), index }))
+								.filter(entry => !!entry.addOn)
+								.map(entry => (
 									<Expander
-										key={addOn.id}
-										title={addOn.name}
+										key={`${entry.addOn!.id}-${entry.index}`}
+										title={entry.addOn!.name}
 										extra={[
-											<DangerButton key='delete' mode='clear' onConfirm={() => removeAddOn(addOn.id)} />
+											<DangerButton key='delete' mode='clear' onConfirm={() => removeAddOn(entry.index)} />
 										]}
 									>
-										<Markdown text={addOn.description} />
+										<Markdown text={entry.addOn!.description} />
 									</Expander>
 								))
 						}
@@ -1141,7 +1141,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 									<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
 										{
 											monsterGroup.addOns
-												.filter(a => !props.slot.customization.addOnIDs.includes(a.id))
+												.filter(a => a.data.repeatable || !props.slot.customization.addOnIDs.includes(a.id))
 												.map(a => (
 													<SelectablePanel key={a.id} onSelect={() => addAddOn(a.id)}>
 														<HeaderText>{a.name}</HeaderText>

@@ -624,7 +624,8 @@ export class FeatureLogic {
 			case FeatureType.AddOn: {
 				const data: FeatureAddOnData = {
 					category: FeatureAddOnType.Defensive,
-					cost: 1
+					cost: 1,
+					repeatable: false
 				};
 				return data;
 			}

@@ -306,6 +306,11 @@ ${encounter.objective.victories}`
 			case FeatureType.Ability:
 				UpdateLogic.updateAbility(feature.data.ability);
 				break;
+			case FeatureType.AddOn:
+				if (feature.data.repeatable === undefined) {
+					feature.data.repeatable = false;
+				}
+				break;
 			case FeatureType.Bonus:
 				if (feature.data.valueCharacteristics === undefined) {
 					feature.data.valueCharacteristics = [];

@@ -28,8 +28,7 @@ export class EncounterDifficultyLogic {
 
 			if (monster) {
 				const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
-				const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
-				const addOnPoints = Collections.sum(addOns, a => a.data.cost);
+				const addOnPoints = group ? Collections.sum(slot.customization.addOnIDs, id => group.addOns.find(a => a.id === id)?.data.cost ?? 0) : 0;
 				const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
 
 				let count = slot.count;

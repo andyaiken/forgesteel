@@ -505,7 +505,8 @@ The animal has a +2 bonus to speed, and they ignore difficult terrain.
 
 **Typically Used By:** Tigers, wolves.`,
 			category: FeatureAddOnType.Mobility,
-			cost: 1
+			cost: 1,
+			repeatable: true
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'animal-swimming-1',
@@ -587,7 +588,8 @@ The animal starts any combat encounter with 10 temporary Stamina.
 
 **Typically Used By:** Bears, elephants, rhinoceroses.`,
 			category: FeatureAddOnType.Defensive,
-			cost: 1
+			cost: 1,
+			repeatable: true
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'animal-unrelenting-1',
@@ -671,7 +673,8 @@ The animal can target one additional creature or object whenever they make a fre
 
 **Typically Used By:** Monkeys, octopuses, quadrakangas`,
 			category: FeatureAddOnType.Offensive,
-			cost: 2
+			cost: 2,
+			repeatable: true
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'animal-pouncer-1',
@@ -717,7 +720,8 @@ The animal’s signature ability gains a +2 bonus to distance.
 
 **Typically Used By:** Frogs, giraffes, pistol shrimp.`,
 			category: FeatureAddOnType.Offensive,
-			cost: 1
+			cost: 1,
+			repeatable: true
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'animal-venom-1',

@@ -1,5 +1,4 @@
 import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
-import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -7,15 +6,14 @@ import { CultureData } from '@/data/culture-data';
 import { CultureType } from '@/enums/culture-type';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
-import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TutorialMode } from '@/enums/tutorial-mode';
+import { UpdateLogic } from './update-logic';
 import { Utils } from '@/utils/utils';
 
 export class HeroUpdateLogic {
@@ -42,7 +40,7 @@ export class HeroUpdateLogic {
 		hero.sourcebookIDs = hero.sourcebookIDs.map(id => id === '' ? SourcebookData.core.id : id);
 
 		if (hero.ancestry) {
-			hero.ancestry.features.forEach(FeatureUpdateLogic.updateFeature);
+			hero.ancestry.features.forEach(UpdateLogic.updateFeature);
 
 			if (hero.ancestry.ancestryPoints === undefined) {
 				switch (hero.ancestry.id) {
@@ -67,7 +65,7 @@ export class HeroUpdateLogic {
 		}
 
 		if (hero.career) {
-			hero.career.features.forEach(FeatureUpdateLogic.updateFeature);
+			hero.career.features.forEach(UpdateLogic.updateFeature);
 
 			if (hero.career.incitingIncidents === undefined) {
 				hero.career.incitingIncidents = {
@@ -90,11 +88,11 @@ export class HeroUpdateLogic {
 
 			hero.class.featuresByLevel
 				.flatMap(lvl => lvl.features)
-				.forEach(FeatureUpdateLogic.updateFeature);
+				.forEach(UpdateLogic.updateFeature);
 			hero.class.subclasses
 				.flatMap(sc => sc.featuresByLevel)
 				.flatMap(lvl => lvl.features)
-				.forEach(FeatureUpdateLogic.updateFeature);
+				.forEach(UpdateLogic.updateFeature);
 
 			hero.class.abilities.forEach(a => {
 				if (a.sections === undefined) {
@@ -104,7 +102,7 @@ export class HeroUpdateLogic {
 		}
 
 		if (hero.complication) {
-			hero.complication.features.forEach(FeatureUpdateLogic.updateFeature);
+			hero.complication.features.forEach(UpdateLogic.updateFeature);
 		}
 
 		if (hero.features === undefined) {
@@ -165,7 +163,7 @@ export class HeroUpdateLogic {
 			hero.state.defeated = false;
 		}
 
-		hero.state.inventory.forEach(ItemUpdateLogic.updateItem);
+		hero.state.inventory.forEach(UpdateLogic.updateItem);
 
 		hero.state.projects.forEach(p => {
 			if (p.progress) {
@@ -200,12 +198,12 @@ export class HeroUpdateLogic {
 			}
 		});
 
-		HeroLogic.getFormerAncestries(hero).flatMap(t => t.features).forEach(FeatureUpdateLogic.updateFeature);
-		HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
-		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(FeatureUpdateLogic.updateFeature);
+		HeroLogic.getFormerAncestries(hero).flatMap(t => t.features).forEach(UpdateLogic.updateFeature);
+		HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel).flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
+		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(UpdateLogic.updateFeature);
 
-		HeroLogic.getFeatures(hero).map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
-		HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability).forEach(AbilityUpdateLogic.updateAbility);
+		HeroLogic.getFeatures(hero).map(f => f.feature).forEach(UpdateLogic.updateFeature);
+		HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability).forEach(UpdateLogic.updateAbility);
 
 		const x = hero.state as unknown as { heroicResource: number | undefined };
 		if (x.heroicResource) {
@@ -351,7 +349,7 @@ export class HeroUpdateLogic {
 					.find(of => of.id === f.id);
 
 				if (originalFeature) {
-					HeroUpdateLogic.updateFeatureData(f, originalFeature, hero, sourcebooks);
+					HeroUpdateLogic.updateHeroFeatureData(f, originalFeature, hero, sourcebooks);
 				}
 			});
 
@@ -364,12 +362,12 @@ export class HeroUpdateLogic {
 					.find(of => of.id === f.id);
 
 				if (originalFeature) {
-					HeroUpdateLogic.updateFeatureData(f, originalFeature, hero, sourcebooks);
+					HeroUpdateLogic.updateHeroFeatureData(f, originalFeature, hero, sourcebooks);
 				}
 			});
 	};
 
-	static updateFeatureData = (feature: Feature, originalFeature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
+	static updateHeroFeatureData = (feature: Feature, originalFeature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
 		try {
 			switch (feature.type) {
 				case FeatureType.AncestryChoice: {
@@ -445,7 +443,7 @@ export class HeroUpdateLogic {
 					feature.data.selected.forEach(child => {
 						const oChild = oFeature.data.selected.find(x => x.id === child.id);
 						if (oChild) {
-							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
 					});
 					break;
@@ -512,7 +510,7 @@ export class HeroUpdateLogic {
 					feature.data.selected.forEach(child => {
 						const oChild = oFeature.data.selected.find(x => x.id === child.id);
 						if (oChild) {
-							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
 					});
 					break;
@@ -566,7 +564,7 @@ export class HeroUpdateLogic {
 					feature.data.features.forEach(child => {
 						const oChild = oFeature.data.features.find(x => x.id === child.id);
 						if (oChild) {
-							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
 					});
 					break;
@@ -585,7 +583,7 @@ export class HeroUpdateLogic {
 					feature.data.selected.forEach(child => {
 						const oChild = oFeature.data.selected.find(x => x.id === child.id);
 						if (oChild) {
-							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
 					});
 					break;

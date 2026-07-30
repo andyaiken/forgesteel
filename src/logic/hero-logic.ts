@@ -263,6 +263,33 @@ export class HeroLogic {
 				}
 			});
 
+		const companionMonsters: Monster[] = [];
+		HeroLogic.getFeatures(hero).forEach(f => {
+			switch (f.feature.type) {
+				case FeatureType.Companion:
+				case FeatureType.Retainer:
+					if (f.feature.data.selected) {
+						companionMonsters.push(f.feature.data.selected);
+					}
+					break;
+				case FeatureType.Summon:
+					f.feature.data.summons.forEach(s => companionMonsters.push(s.monster));
+					break;
+				case FeatureType.SummonChoice:
+					f.feature.data.selected.forEach(s => companionMonsters.push(s.monster));
+					break;
+			}
+		});
+		companionMonsters.forEach(monster => {
+			monster.features
+				.filter(cf => cf.type === FeatureType.Ability)
+				.map(cf => cf as FeatureAbility)
+				.filter(cf => cf.data.ability.keywords.includes(AbilityKeyword.Companion))
+				.forEach(cf => {
+					choices.push({ ability: cf.data.ability, source: monster.name, level: undefined });
+				});
+		});
+
 		let abilities = choices
 			.sort((a, b) => a.ability.name.localeCompare(b.ability.name))
 			.sort((a, b) => {

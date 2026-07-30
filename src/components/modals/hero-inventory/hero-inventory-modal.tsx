@@ -33,8 +33,11 @@ export const HeroInventoryModal = (props: Props) => {
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 
 	const addItem = (item: Item) => {
+		const itemCopy = Utils.copy(item);
+		itemCopy.id = Utils.guid();
+
 		const copy = Utils.copy(hero);
-		copy.state.inventory.push(item);
+		copy.state.inventory.push(itemCopy);
 		setHero(copy);
 		setShopVisible(false);
 		props.onChange(copy);

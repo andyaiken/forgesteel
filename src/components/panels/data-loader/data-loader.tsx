@@ -4,7 +4,6 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
-import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/services/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -13,15 +12,13 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Options } from '@/models/options';
-import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
 import { PatreonLogic } from '@/logic/patreon-logic';
 import { PatreonService } from '@/services/patreon-service';
 import { Session } from '@/models/session';
-import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import localforage from 'localforage';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -62,7 +59,7 @@ export const DataLoader = (props: Props) => {
 		if (!settings) {
 			settings = FactoryLogic.createConnectionSettings();
 		}
-		ConnectionSettingsUpdateLogic.updateSettings(settings);
+		UpdateLogic.updateConnectionSettings(settings);
 
 		let source: FSDataSource = undefined;
 
@@ -194,7 +191,7 @@ export const DataLoader = (props: Props) => {
 					const sourcebooks = results[0] as Sourcebook[];
 					sourcebooks.forEach(sourcebook => {
 						try {
-							SourcebookUpdateLogic.updateSourcebook(sourcebook);
+							UpdateLogic.updateSourcebook(sourcebook);
 						} catch (error) {
 							console.error(`Error while updating sourcebook [${sourcebook.name} - ${sourcebook.id}]`, error);
 						}
@@ -212,10 +209,10 @@ export const DataLoader = (props: Props) => {
 					const hiddenSourcebookIDs = results[2] as string[];
 
 					const session = results[3] as Session;
-					SessionUpdateLogic.updateSession(session);
+					UpdateLogic.updateSession(session);
 
 					const options = results[4] as Options;
-					OptionsUpdateLogic.updateOptions(options);
+					UpdateLogic.updateOptions(options);
 					if (isSmall) {
 						options.compactView = true;
 					}

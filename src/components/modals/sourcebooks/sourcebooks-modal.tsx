@@ -13,7 +13,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -207,7 +207,7 @@ export const SourcebooksModal = (props: Props) => {
 												.then(json => {
 													const sourcebook = JSON.parse(json) as Sourcebook;
 													sourcebook.id = Utils.guid();
-													SourcebookUpdateLogic.updateSourcebook(sourcebook);
+													UpdateLogic.updateSourcebook(sourcebook);
 													importSourcebook(sourcebook);
 												});
 											return false;

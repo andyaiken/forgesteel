@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
+import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FormatLogic } from '@/logic/format-logic';
@@ -251,147 +252,252 @@ export class AbilityLogic {
 		return [];
 	};
 
+	// Parses a token such as 'm', 'might,', '2m', or '2might' (an attached multiplier collapsed by the caller)
+	// into a characteristic reference with an optional leading multiplier (defaults to x1)
+	static getCharacteristicReference = (token: string) => {
+		const match = token.trim().replace(/,$/, '').match(/^(\d+)?(might|agility|reason|intuition|presence|m|a|r|i|p)$/i);
+		if (!match) {
+			return null;
+		}
+
+		let characteristic = Characteristic.Might;
+		switch (match[2].toLowerCase()) {
+			case 'agility':
+			case 'a':
+				characteristic = Characteristic.Agility;
+				break;
+			case 'reason':
+			case 'r':
+				characteristic = Characteristic.Reason;
+				break;
+			case 'intuition':
+			case 'i':
+				characteristic = Characteristic.Intuition;
+				break;
+			case 'presence':
+			case 'p':
+				characteristic = Characteristic.Presence;
+				break;
+		}
+
+		return {
+			characteristic: characteristic,
+			multiplier: match[1] ? parseInt(match[1]) : 1
+		};
+	};
+
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		const keywords = AbilityLogic.getKeywords(ability, hero);
 
-		return value
-			.split(';')
-			.map(section => section.trim())
-			.map((section, n) => {
-				if (hero && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
-					let value = 0;
-					let sign = '+';
-					const dice: string[] = [];
-					const characteristics: Characteristic[] = [];
-					const types: string[] = [];
+		const isDamageSection = (section: string) => [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s));
 
-					let isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
-					let isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
-					if (distance) {
-						isMelee = (distance === AbilityDistanceType.Melee) && keywords.includes(AbilityKeyword.Weapon);
-						isRanged = (distance === AbilityDistanceType.Ranged) && keywords.includes(AbilityKeyword.Weapon);
-					}
+		// Tokenizes a single 'damage'-ending section into its value / dice / damage type(s), without any
+		// kit or feature bonus (that's only ever applied once, to the primary damage section - see below)
+		const parseDamageTokens = (section: string) => {
+			let value = 0;
+			let sign = '+';
+			const dice: string[] = [];
+			const characteristics: { characteristic: Characteristic; multiplier: number }[] = [];
+			const types: string[] = [];
 
-					const dmgKits = HeroLogic
-						.getKitDamageBonuses(hero)
-						.filter(dmg => {
-							switch (dmg.type) {
-								case 'melee':
-									return isMelee;
-								case 'ranged':
-									return isRanged;
-							}
-						});
+			// Collapse 'N x Characteristic' / 'N × Characteristic' into a single 'NCharacteristic' token,
+			// so (for example) '2 x Might' and '2Might' are both recognized as a x2 characteristic multiplier below
+			const tokenSource = section
+				.toLowerCase()
+				.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/g, '$1$2');
 
-					const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
-					if ((dmgKits.length === 1) && hasMeleeXorRanged) {
-						// There's only one applicable kit bonus, and the ability can only be used in one mode
-						const dmg = dmgKits[0];
-						switch (tier) {
-							case 1:
-								value += dmg.tier1;
-								break;
-							case 2:
-								value += dmg.tier2;
-								break;
-							case 3:
-								value += dmg.tier3;
-								break;
-						}
-					}
+			tokenSource.split(' ').forEach(token => {
+				const charRef = AbilityLogic.getCharacteristicReference(token);
 
-					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
-					value += Collections.sum(dmgFeatures, x => x.value);
+				if ((token === 'damage') || (token === 'dmg')) {
+					// Damage; ignore
+				} else if (token === 'or') {
+					// Ignore
+				} else if (/\d+d\d+/.test(token)) {
+					dice.push(token);
+				} else if (charRef) {
+					characteristics.push(charRef);
+				} else if (!isNaN(parseInt(token))) {
+					value += parseInt(token);
+				} else if ((token === '+') || (token === '-')) {
+					sign = token;
+				} else {
+					types.push(token);
+				}
+			});
 
-					section.toLowerCase().split(' ').forEach(token => {
-						if ((token === 'damage') || (token === 'dmg')) {
-							// Damage; ignore
-						} else if (token === 'or') {
-							// Ignore
-						} else if (/\d+d\d+/.test(token)) {
-							dice.push(token);
-						} else if (!isNaN(parseInt(token))) {
-							value += parseInt(token);
-						} else if ((token === '+') || (token === '-')) {
-							sign = token;
-						} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
-							characteristics.push(Characteristic.Might);
-						} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
-							characteristics.push(Characteristic.Agility);
-						} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
-							characteristics.push(Characteristic.Reason);
-						} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
-							characteristics.push(Characteristic.Intuition);
-						} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
-							characteristics.push(Characteristic.Presence);
-						} else {
-							types.push(token);
+			const charValues = characteristics.map(c => (hero ? HeroLogic.getCharacteristic(hero, c.characteristic) : 0) * c.multiplier);
+			const maxCharValue = Collections.max(charValues, n => n) || 0;
+			const total = sign === '+' ? value + maxCharValue : value - maxCharValue;
+
+			return { total: total, dice: dice, types: types };
+		};
+
+		const sections = value.split(';').map(section => section.trim());
+
+		// Additional damage sections later in the same tier text get folded into the primary (first) damage
+		// section when they don't introduce a conflicting damage type (eg an untyped '+4 damage' bonus, or a
+		// repeated '+4 fire damage' clause) - their indices are recorded here so they're dropped from the output
+		const mergedIndices = new Set<number>();
+
+		const results = sections.map((section, n) => {
+			if (hero && (n === 0) && isDamageSection(section)) {
+				let isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
+				let isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
+				if (distance) {
+					isMelee = (distance === AbilityDistanceType.Melee) && keywords.includes(AbilityKeyword.Weapon);
+					isRanged = (distance === AbilityDistanceType.Ranged) && keywords.includes(AbilityKeyword.Weapon);
+				}
+
+				const dmgKits = HeroLogic
+					.getKitDamageBonuses(hero)
+					.filter(dmg => {
+						switch (dmg.type) {
+							case 'melee':
+								return isMelee;
+							case 'ranged':
+								return isRanged;
 						}
 					});
 
-					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
-					const maxCharValue = Collections.max(charValues, n => n) || 0;
-					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
-					if (dice.length > 0) {
-						total = `${dice.join(' + ')} + ${total}`;
+				let bonus = 0;
+				const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
+				if ((dmgKits.length === 1) && hasMeleeXorRanged) {
+					// There's only one applicable kit bonus, and the ability can only be used in one mode
+					const dmg = dmgKits[0];
+					switch (tier) {
+						case 1:
+							bonus += dmg.tier1;
+							break;
+						case 2:
+							bonus += dmg.tier2;
+							break;
+						case 3:
+							bonus += dmg.tier3;
+							break;
 					}
-
-					const damage = [ ...types, 'damage' ].join(' ');
-
-					return `${total} ${damage}`;
 				}
 
-				return AbilityLogic.getTextEffect(section, hero);
-			})
-			.join('; ');
+				const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
+				bonus += Collections.sum(dmgFeatures, x => x.value);
+
+				const primary = parseDamageTokens(section);
+				let total = bonus + primary.total;
+				let dice = [ ...primary.dice ];
+				const types = [ ...primary.types ];
+
+				for (let m = n + 1; m < sections.length; m++) {
+					if (isDamageSection(sections[m])) {
+						const extra = parseDamageTokens(sections[m]);
+						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
+						if (mergeable) {
+							total += extra.total;
+							dice = [ ...dice, ...extra.dice ];
+							mergedIndices.add(m);
+						}
+					}
+				}
+
+				let totalDisplay: number | string = total;
+				if (dice.length > 0) {
+					totalDisplay = `${dice.join(' + ')} + ${total}`;
+				}
+
+				const damage = [ ...types, 'damage' ].join(' ');
+
+				return `${totalDisplay} ${damage}`;
+			}
+
+			if (mergedIndices.has(n)) {
+				return null;
+			}
+
+			return AbilityLogic.getTextEffect(section, hero);
+		});
+
+		return results.filter((s): s is string => s !== null).join('; ');
 	};
 
 	static getTierEffectRetainer = (value: string, tier: number, ability: Ability, retainer: Monster | undefined) => {
-		return value
-			.split(';')
-			.map(section => section.trim())
-			.map((section, n) => {
-				if (retainer && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
-					let value = 0;
-					const types: string[] = [];
+		const isDamageSection = (section: string) => [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s));
 
-					const isSignature = (ability.cost === 'signature');
-					const signatureBonus = MonsterLogic.getSignatureDamageBonus(retainer);
+		// Tokenizes a single 'damage'-ending section into its flat value and damage type(s), without any
+		// signature bonus (that's only ever applied once, to the primary damage section - see below)
+		const parseDamageTokens = (section: string) => {
+			let value = 0;
+			const types: string[] = [];
 
-					if (isSignature && signatureBonus) {
-						switch (tier) {
-							case 1:
-								value += signatureBonus.tier1;
-								break;
-							case 2:
-								value += signatureBonus.tier2;
-								break;
-							case 3:
-								value += signatureBonus.tier3;
-								break;
-						}
+			section.toLowerCase().split(' ').forEach(token => {
+				if ((token === 'damage') || (token === 'dmg')) {
+					// Damage; ignore
+				} else if (token === 'or') {
+					// Ignore
+				} else if (!isNaN(parseInt(token))) {
+					value += parseInt(token);
+				} else {
+					types.push(token);
+				}
+			});
+
+			return { value: value, types: types };
+		};
+
+		const sections = value.split(';').map(section => section.trim());
+
+		// Additional damage sections later in the same tier text get folded into the primary (first) damage
+		// section when they don't introduce a conflicting damage type (eg an untyped '+4 damage' bonus, or a
+		// repeated '+4 fire damage' clause) - their indices are recorded here so they're dropped from the output
+		const mergedIndices = new Set<number>();
+
+		const results = sections.map((section, n) => {
+			if (retainer && (n === 0) && isDamageSection(section)) {
+				let value = 0;
+
+				const isSignature = (ability.cost === 'signature');
+				const signatureBonus = MonsterLogic.getSignatureDamageBonus(retainer);
+
+				if (isSignature && signatureBonus) {
+					switch (tier) {
+						case 1:
+							value += signatureBonus.tier1;
+							break;
+						case 2:
+							value += signatureBonus.tier2;
+							break;
+						case 3:
+							value += signatureBonus.tier3;
+							break;
 					}
-
-					section.toLowerCase().split(' ').forEach(token => {
-						if ((token === 'damage') || (token === 'dmg')) {
-							// Damage; ignore
-						} else if (token === 'or') {
-							// Ignore
-						} else if (!isNaN(parseInt(token))) {
-							value += parseInt(token);
-						} else {
-							types.push(token);
-						}
-					});
-
-					const damage = [ types.sort().join(' or '), 'damage' ].join(' ');
-
-					return `${value} ${damage}`;
 				}
 
-				return AbilityLogic.getTextEffect(section, undefined);
-			})
-			.join('; ');
+				const primary = parseDamageTokens(section);
+				value += primary.value;
+				const types = [ ...primary.types ];
+
+				for (let m = n + 1; m < sections.length; m++) {
+					if (isDamageSection(sections[m])) {
+						const extra = parseDamageTokens(sections[m]);
+						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
+						if (mergeable) {
+							value += extra.value;
+							mergedIndices.add(m);
+						}
+					}
+				}
+
+				const damage = [ types.sort().join(' or '), 'damage' ].join(' ');
+
+				return `${value} ${damage}`;
+			}
+
+			if (mergedIndices.has(n)) {
+				return null;
+			}
+
+			return AbilityLogic.getTextEffect(section, undefined);
+		});
+
+		return results.filter((s): s is string => s !== null).join('; ');
 	};
 
 	static getTierEffectCreature = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, creature: Hero | Monster | undefined): string => {
@@ -412,29 +518,18 @@ export class AbilityLogic {
 				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'strong')}`);
 		}
 
-		// N + [Characteristic]
+		// N + [Characteristic], optionally with a multiplier on the characteristic (eg 'N + 2M' / 'N + 2 x Might')
 		if (hero) {
-			const regex = /(\d+)\s*\+\s*(M|A|R|I|P)/gi;
-			text = text.replace(regex, (_match, value, characteristic) => {
-				let ch = 0;
-				switch (characteristic.toUpperCase()) {
-					case 'M':
-						ch = HeroLogic.getCharacteristic(hero, Characteristic.Might);
-						break;
-					case 'A':
-						ch = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
-						break;
-					case 'R':
-						ch = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
-						break;
-					case 'I':
-						ch = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
-						break;
-					case 'P':
-						ch = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
-						break;
+			text = text.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/gi, '$1$2');
+
+			const regex = /(\d+)\s*\+\s*(\d*(?:might|agility|reason|intuition|presence|m|a|r|i|p))\b/gi;
+			text = text.replace(regex, (match, value, characteristicToken) => {
+				const charRef = AbilityLogic.getCharacteristicReference(characteristicToken);
+				if (!charRef) {
+					return match;
 				}
-				const total = Number(value) + ch;
+
+				const total = Number(value) + (HeroLogic.getCharacteristic(hero, charRef.characteristic) * charRef.multiplier);
 				return `${total}`;
 			});
 		}
@@ -564,6 +659,11 @@ export class AbilityLogic {
 			const x = str.endsWith(',') ? str.substring(0, str.length - 1) : str;
 			text = text.replace(str, `\`${x}\``);
 		});
+
+		// Condition names
+		const conditionNames = Object.values(ConditionType).filter(c => (c !== ConditionType.Custom) && (c !== ConditionType.Quick));
+		const conditionRegex = new RegExp(`\\b(${conditionNames.join('|')})\\b`, 'gi');
+		text = text.replace(conditionRegex, '**$1**');
 
 		return text;
 	};

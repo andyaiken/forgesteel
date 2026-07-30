@@ -139,11 +139,11 @@ export const MonsterPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<>
 							<StatsRow>
-								<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
-								<Field orientation='vertical' label='Speed' value={speedStr} />
-								<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
-								<Field orientation='vertical' label='Stability' value={MonsterLogic.getStability(props.monster)} />
-								<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Size' value={FormatLogic.getSize(props.monster.size)} />
+								<Field orientation='vertical' compact={true} label='Speed' value={speedStr} />
+								<Field orientation='vertical' compact={true} label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Stability' value={MonsterLogic.getStability(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 							</StatsRow>
 							{
 								![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(props.monster)) ?
@@ -159,7 +159,7 @@ export const MonsterPanel = (props: Props) => {
 									[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 										.map(ch => (
 											<StatsRow key={ch} style={{ flex: '1 1 0' }} onClick={() => setSelectedCharacteristic(ch)}>
-												<Field orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />
+												<Field orientation='vertical' compact={true} label={ch.substring(0, 1)} value={MonsterLogic.getCharacteristic(props.monster, ch)} />
 											</StatsRow>
 										))
 								}

@@ -6,7 +6,6 @@ import { Spin, notification } from 'antd';
 import { useDataManager, useHeroes, useHomebrewSourcebooks, useOptions, useSession } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
-import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
@@ -36,7 +35,6 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { FeatureType } from '@/enums/feature-type';
-import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Fixture } from '@/models/fixture';
 import { FixtureModal } from '@/components/modals/fixture/fixture-modal';
 import { Follower } from '@/models/follower';
@@ -90,7 +88,6 @@ import { SessionPlayerPage } from '@/components/pages/session/player/session-pla
 import { SettingsModal } from '@/components/modals/settings/settings-modal';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import { SubClass } from '@/models/subclass';
@@ -100,6 +97,7 @@ import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Title } from '@/models/title';
 import { TransferPage } from '@/components/pages/transfer/transfer-page';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -437,7 +435,7 @@ export const Main = (props: Props) => {
 				ancestry = Utils.copy(original);
 				ancestry.id = Utils.guid();
 				ancestry.features.forEach(FeatureLogic.changeFeatureIDs);
-				ancestry.features.forEach(FeatureUpdateLogic.updateFeature);
+				ancestry.features.forEach(UpdateLogic.updateFeature);
 			} else {
 				ancestry = FactoryLogic.createAncestry();
 			}
@@ -452,7 +450,7 @@ export const Main = (props: Props) => {
 				career = Utils.copy(original);
 				career.id = Utils.guid();
 				career.features.forEach(FeatureLogic.changeFeatureIDs);
-				career.features.forEach(FeatureUpdateLogic.updateFeature);
+				career.features.forEach(UpdateLogic.updateFeature);
 			} else {
 				career = FactoryLogic.createCareer();
 			}
@@ -484,14 +482,14 @@ export const Main = (props: Props) => {
 				});
 
 				heroClass.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
-				heroClass.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
+				heroClass.featuresByLevel.flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
 				heroClass.abilities.forEach(a => a.id = Utils.guid());
-				heroClass.abilities.forEach(AbilityUpdateLogic.updateAbility);
+				heroClass.abilities.forEach(UpdateLogic.updateAbility);
 				heroClass.subclasses.forEach(sc => sc.id = Utils.guid());
 				heroClass.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
-				heroClass.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
+				heroClass.subclasses.flatMap(sc => sc.featuresByLevel).flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
 				heroClass.subclasses.flatMap(sc => sc.abilities).forEach(a => a.id = Utils.guid());
-				heroClass.subclasses.flatMap(sc => sc.abilities).forEach(AbilityUpdateLogic.updateAbility);
+				heroClass.subclasses.flatMap(sc => sc.abilities).forEach(UpdateLogic.updateAbility);
 			} else {
 				heroClass = FactoryLogic.createClass();
 			}
@@ -506,7 +504,7 @@ export const Main = (props: Props) => {
 				complication = Utils.copy(original);
 				complication.id = Utils.guid();
 				complication.features.forEach(FeatureLogic.changeFeatureIDs);
-				complication.features.forEach(FeatureUpdateLogic.updateFeature);
+				complication.features.forEach(UpdateLogic.updateFeature);
 			} else {
 				complication = FactoryLogic.createComplication();
 			}
@@ -521,16 +519,16 @@ export const Main = (props: Props) => {
 				culture = Utils.copy(original);
 				culture.id = Utils.guid();
 				if (culture.environment) {
-					FeatureUpdateLogic.updateFeature(culture.environment);
+					UpdateLogic.updateFeature(culture.environment);
 				}
 				if (culture.organization) {
-					FeatureUpdateLogic.updateFeature(culture.organization);
+					UpdateLogic.updateFeature(culture.organization);
 				}
 				if (culture.upbringing) {
-					FeatureUpdateLogic.updateFeature(culture.upbringing);
+					UpdateLogic.updateFeature(culture.upbringing);
 				}
 				if (culture.language) {
-					FeatureUpdateLogic.updateFeature(culture.language);
+					UpdateLogic.updateFeature(culture.language);
 				}
 			} else {
 				culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
@@ -555,7 +553,7 @@ export const Main = (props: Props) => {
 				}
 
 				domain.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
-				domain.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
+				domain.featuresByLevel.flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
 			} else {
 				domain = FactoryLogic.createDomain();
 			}
@@ -588,7 +586,7 @@ export const Main = (props: Props) => {
 					imbuement.crafting.id = Utils.guid();
 				}
 				FeatureLogic.changeFeatureIDs(imbuement.feature);
-				FeatureUpdateLogic.updateFeature(imbuement.feature);
+				UpdateLogic.updateFeature(imbuement.feature);
 			} else {
 				imbuement = FactoryLogic.createImbuement({
 					type: ItemType.Consumable1st,
@@ -615,7 +613,7 @@ export const Main = (props: Props) => {
 					item.crafting.id = Utils.guid();
 				}
 				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
-				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
+				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
 			} else {
 				item = FactoryLogic.createItem({
 					id: Utils.guid(),
@@ -636,7 +634,7 @@ export const Main = (props: Props) => {
 				kit = Utils.copy(original);
 				kit.id = Utils.guid();
 				kit.features.forEach(FeatureLogic.changeFeatureIDs);
-				kit.features.forEach(FeatureUpdateLogic.updateFeature);
+				kit.features.forEach(UpdateLogic.updateFeature);
 			} else {
 				kit = FactoryLogic.createKit();
 			}
@@ -651,10 +649,10 @@ export const Main = (props: Props) => {
 				monsterGroup = Utils.copy(original);
 				monsterGroup.id = Utils.guid();
 				monsterGroup.malice.forEach(FeatureLogic.changeFeatureIDs);
-				monsterGroup.malice.forEach(FeatureUpdateLogic.updateFeature);
+				monsterGroup.malice.forEach(UpdateLogic.updateFeature);
 				monsterGroup.monsters.forEach(m => m.id = Utils.guid());
 				monsterGroup.monsters.flatMap(m => m.features).forEach(FeatureLogic.changeFeatureIDs);
-				monsterGroup.monsters.flatMap(m => m.features).forEach(FeatureUpdateLogic.updateFeature);
+				monsterGroup.monsters.flatMap(m => m.features).forEach(UpdateLogic.updateFeature);
 			} else {
 				monsterGroup = FactoryLogic.createMonsterGroup();
 			}
@@ -695,7 +693,7 @@ export const Main = (props: Props) => {
 			if (original) {
 				perk = Utils.copy(original);
 				FeatureLogic.changeFeatureIDs(perk);
-				FeatureUpdateLogic.updateFeature(perk);
+				UpdateLogic.updateFeature(perk);
 			} else {
 				perk = FactoryLogic.createPerk();
 			}
@@ -732,9 +730,9 @@ export const Main = (props: Props) => {
 				}
 
 				sc.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
-				sc.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
+				sc.featuresByLevel.flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
 				sc.abilities.forEach(a => a.id = Utils.guid());
-				sc.abilities.forEach(AbilityUpdateLogic.updateAbility);
+				sc.abilities.forEach(UpdateLogic.updateAbility);
 			} else {
 				sc = FactoryLogic.createSubclass();
 			}
@@ -776,7 +774,7 @@ export const Main = (props: Props) => {
 				title = Utils.copy(original);
 				title.id = Utils.guid();
 				title.features.forEach(FeatureLogic.changeFeatureIDs);
-				title.features.forEach(FeatureUpdateLogic.updateFeature);
+				title.features.forEach(UpdateLogic.updateFeature);
 			} else {
 				title = FactoryLogic.createTitle();
 			}
@@ -1282,7 +1280,7 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		SourcebookUpdateLogic.updateSourcebook(sourcebook);
+		UpdateLogic.updateSourcebook(sourcebook);
 
 		setDrawer(null);
 		persistHomebrewSourcebook(sourcebook)

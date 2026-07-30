@@ -1,6 +1,7 @@
+import { Ability, isAbility } from '@/models/ability';
 import { Button, Drawer, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, SnippetsOutlined } from '@ant-design/icons';
-import { Ability } from '@/models/ability';
+import { Feature, isFeature } from '@/models/feature';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
@@ -9,7 +10,6 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -50,7 +50,7 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 	};
 
 	const pasteAbility = () => {
-		const ability = clipboard.getAbility();
+		const ability = clipboard.getData(isAbility);
 		if (ability) {
 			ability.id = Utils.guid();
 
@@ -95,7 +95,13 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 							buttons={[
 								{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: addAbility },
 								options.showClipboardOptions ?
-									{ type: 'button', icon: <SnippetsOutlined />, tooltip: 'Paste Ability', disabled: !clipboard.hasAbility(), onClick: pasteAbility }
+									{
+										type: 'button',
+										icon: <SnippetsOutlined />,
+										tooltip: clipboard.hasData(isAbility) ? `Paste ${clipboard.getData(isAbility)?.name || 'Unknown Ability'}` : 'Paste Ability',
+										disabled: !clipboard.hasData(isAbility),
+										onClick: pasteAbility
+									}
 									: null
 							]}
 						/>
@@ -164,7 +170,7 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 	};
 
 	const pasteFeature = () => {
-		const feature = clipboard.getFeature();
+		const feature = clipboard.getData(isFeature);
 		if (feature) {
 			FeatureLogic.changeFeatureIDs(feature);
 
@@ -209,7 +215,13 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 							buttons={[
 								{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: () => setTypeSelectorVisible(true) },
 								options.showClipboardOptions ?
-									{ type: 'button', icon: <SnippetsOutlined />, tooltip: 'Paste Feature', disabled: !clipboard.hasFeature(), onClick: pasteFeature }
+									{
+										type: 'button',
+										icon: <SnippetsOutlined />,
+										tooltip: clipboard.hasData(isFeature) ? `Paste ${clipboard.getData(isFeature)?.name || 'Unknown Feature'}` : 'Paste Feature',
+										disabled: !clipboard.hasData(isFeature),
+										onClick: pasteFeature
+									}
 									: null
 							]}
 						/>

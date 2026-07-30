@@ -401,3 +401,11 @@ export type Feature =
 	| FeatureToggle;
 
 export type FeatureData = Feature['data'];
+
+export const isFeature = (value: unknown): value is Feature => {
+	return !!value
+		&& (typeof value === 'object')
+		&& ('type' in value)
+		&& (typeof value.type === 'string')
+		&& (Object.values(FeatureType) as string[]).includes(value.type);
+};

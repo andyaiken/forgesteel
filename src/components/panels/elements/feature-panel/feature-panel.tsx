@@ -149,7 +149,7 @@ export const FeaturePanel = (props: Props) => {
 									}
 									: null,
 								options.showClipboardOptions ?
-									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Feature', onClick: () => clipboard.setFeature(props.feature) }
+									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Feature', onClick: () => clipboard.setData(props.feature) }
 									: null
 							]}
 						/>

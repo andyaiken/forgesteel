@@ -321,7 +321,7 @@ export const AbilityPanel = (props: Props) => {
 									}
 									: null,
 								options.showClipboardOptions ?
-									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Ability', onClick: () => clipboard.setAbility(props.ability) }
+									{ type: 'button', icon: <CopyOutlined />, tooltip: 'Copy Ability', onClick: () => clipboard.setData(props.ability) }
 									: null
 							]}
 						/>

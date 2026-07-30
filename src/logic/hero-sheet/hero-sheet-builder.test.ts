@@ -20,16 +20,17 @@ import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { retainer } from '@/data/monsters/retainer';
 
+vi.mock('@/logic/hero-logic', () => {
+	const HeroLogic = vi.fn();
+	return { HeroLogic: HeroLogic };
+});
+vi.unmock('@/logic/hero-logic');
+
 afterEach(() => {
 	vi.resetAllMocks();
 });
 
 describe('buildSummonSheet', () => {
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
-	});
-
 	test('it builds sheets for Summoner minions properly', () => {
 		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
@@ -173,8 +174,6 @@ describe('buildRetainerSheet', () => {
 });
 
 describe('buildHeroSheet', () => {
-	vi.unmock('@/logic/hero-logic');
-
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
 		const pregen = PregenData.getPregens()[0];
 		const options = { xpPerLevel: 16 } as Options;

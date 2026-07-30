@@ -9,19 +9,19 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
 
+vi.mock('@/logic/creature-logic', () => {
+	const CreatureLogic = vi.fn();
+	return { CreatureLogic: CreatureLogic };
+});
+
+vi.mock('@/logic/hero-logic', () => {
+	const HeroLogic = vi.fn();
+	return { HeroLogic: HeroLogic };
+});
+
 describe('getPowerRollCharacteristics', () => {
 	afterEach(() => {
 		vi.resetAllMocks();
-	});
-
-	vi.mock('@/logic/creature-logic', () => {
-		const CreatureLogic = vi.fn();
-		return { CreatureLogic: CreatureLogic };
-	});
-
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
 	});
 
 	test.each([
@@ -70,10 +70,6 @@ describe('getTextEffect', () => {
 		vi.resetAllMocks();
 	});
 
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
-	});
 	HeroLogic.getPotency = vi.fn();
 
 	it('should calculate constant dice roll effects properly when no hero is provided', () => {
@@ -156,11 +152,6 @@ describe('getTierEffect', () => {
 		vi.resetAllMocks();
 	});
 
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
-	});
-
 	const ability = AbilityData.freeStrikeMelee;
 	const hero = {} as Hero;
 
@@ -224,11 +215,6 @@ describe('getTierEffect', () => {
 describe('getTierEffectRetainer', () => {
 	afterEach(() => {
 		vi.resetAllMocks();
-	});
-
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
 	});
 
 	const ability = { cost: 1 } as Ability;

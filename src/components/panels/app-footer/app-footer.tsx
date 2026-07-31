@@ -3,7 +3,6 @@ import { Button, Divider, Drawer, Flex, Space, Tag } from 'antd';
 import { ButtonConfig, ButtonGroup } from '@/components/controls/button-group/button-group';
 import { useDataManager, useOptions } from '@/contexts/data-context';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
@@ -66,7 +65,7 @@ export const AppFooter = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='app-footer'>
 				{
 					(props.page === 'player-view') ?
@@ -133,6 +132,6 @@ export const AppFooter = (props: Props) => {
 					onClose={() => setShowSidebar(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

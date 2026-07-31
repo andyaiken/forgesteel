@@ -9,7 +9,6 @@ import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter-slot';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -481,24 +480,22 @@ export const SidebarPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className={`hero-sidebar ${display}`}>
-				{
-					showRetinue ?
-						<Segmented
-							block={true}
-							options={[
-								{ label: 'You', value: 'hero' },
-								{ label: 'Retinue', value: 'retinue' }
-							]}
-							value={page}
-							onChange={setPage}
-						/>
-						: null
-				}
-				{page === 'hero' ? getHeroPage() : null}
-				{page === 'retinue' ? getRetinuePage() : null}
-			</div>
-		</ErrorBoundary>
+		<div className={`hero-sidebar ${display}`}>
+			{
+				showRetinue ?
+					<Segmented
+						block={true}
+						options={[
+							{ label: 'You', value: 'hero' },
+							{ label: 'Retinue', value: 'retinue' }
+						]}
+						value={page}
+						onChange={setPage}
+					/>
+					: null
+			}
+			{page === 'hero' ? getHeroPage() : null}
+			{page === 'retinue' ? getRetinuePage() : null}
+		</div>
 	);
 };

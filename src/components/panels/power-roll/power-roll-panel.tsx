@@ -6,7 +6,6 @@ import { AbilityLogic } from '@/logic/ability-logic';
 import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -180,49 +179,47 @@ export const PowerRollPanel = (props: Props) => {
 	const footer = getFooter();
 
 	return (
-		<ErrorBoundary>
-			<div className='power-roll-panel'>
-				<div className='power-roll-row power-roll-header'>
-					{getHeader()}
-					<Space onClick={e => e.stopPropagation()}>
-						{
-							props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
-								<Segmented
-									options={props.ability.distance.map(d => d.type)}
-									value={distance}
-									onChange={setDistance}
-								/>
-								: null
-						}
-						{
-							props.odds ?
-								<Button
-									type='text'
-									title='Odds'
-									icon={<BarChartOutlined style={showOdds ? { color: 'rgb(22, 119, 255)' } : undefined} />}
-									onClick={() => setShowOdds(!showOdds)}
-								/>
-								: null
-						}
-					</Space>
-				</div>
-				<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>!</div>
-					<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
-					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 1).length}%</div> : null}
-				</div>
-				<div className={props.highlightTier === 2 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>@</div>
-					<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
-					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 2).length}%</div> : null}
-				</div>
-				<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-					<div className='tier'>#</div>
-					<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
-					{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 3).length}%</div> : null}
-				</div>
-				{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
+		<div className='power-roll-panel'>
+			<div className='power-roll-row power-roll-header'>
+				{getHeader()}
+				<Space onClick={e => e.stopPropagation()}>
+					{
+						props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
+							<Segmented
+								options={props.ability.distance.map(d => d.type)}
+								value={distance}
+								onChange={setDistance}
+							/>
+							: null
+					}
+					{
+						props.odds ?
+							<Button
+								type='text'
+								title='Odds'
+								icon={<BarChartOutlined style={showOdds ? { color: 'rgb(22, 119, 255)' } : undefined} />}
+								onClick={() => setShowOdds(!showOdds)}
+							/>
+							: null
+					}
+				</Space>
 			</div>
-		</ErrorBoundary>
+			<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
+				<div className='tier'>!</div>
+				<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
+				{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 1).length}%</div> : null}
+			</div>
+			<div className={props.highlightTier === 2 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
+				<div className='tier'>@</div>
+				<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
+				{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 2).length}%</div> : null}
+			</div>
+			<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
+				<div className='tier'>#</div>
+				<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
+				{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 3).length}%</div> : null}
+			</div>
+			{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
+		</div>
 	);
 };

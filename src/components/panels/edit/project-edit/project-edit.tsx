@@ -1,6 +1,5 @@
 import { Select, Space, Tabs } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -109,48 +108,46 @@ export const ProjectEditPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className='project-edit-panel'>
-				<div className='project-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Project',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getDetailsSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='project-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<ProjectPanel
-													project={project}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='project-edit-panel'>
+			<div className='project-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Project',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getDetailsSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='project-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<ProjectPanel
+												project={project}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

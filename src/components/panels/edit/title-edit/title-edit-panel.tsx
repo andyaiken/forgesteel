@@ -1,5 +1,4 @@
 import { Space, Tabs } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -95,54 +94,52 @@ export const TitleEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='title-edit-panel'>
-				<div className='title-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Title',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getTitleEditSection()
-							},
-							{
-								key: '3',
-								label: 'Features',
-								children: getFeaturesEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='title-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<TitlePanel
-													key={revision}
-													title={title}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='title-edit-panel'>
+			<div className='title-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Title',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getTitleEditSection()
+						},
+						{
+							key: '3',
+							label: 'Features',
+							children: getFeaturesEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='title-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<TitlePanel
+												key={revision}
+												title={title}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

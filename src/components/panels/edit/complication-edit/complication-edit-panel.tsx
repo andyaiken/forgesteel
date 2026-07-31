@@ -1,6 +1,5 @@
 import { Complication } from '@/models/complication';
 import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
@@ -59,48 +58,46 @@ export const ComplicationEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='complication-edit-panel'>
-				<div className='complication-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Complication',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Features',
-								children: getFeaturesEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='complication-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<ComplicationPanel
-													complication={complication}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='complication-edit-panel'>
+			<div className='complication-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Complication',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Features',
+							children: getFeaturesEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='complication-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<ComplicationPanel
+												complication={complication}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

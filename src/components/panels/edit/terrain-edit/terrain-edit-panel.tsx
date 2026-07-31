@@ -6,7 +6,6 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -631,64 +630,62 @@ export const TerrainEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='terrain-edit-panel'>
-				<div className='terrain-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Terrain',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Stats',
-								children: getTerrainStatsSection()
-							},
-							{
-								key: '3',
-								label: 'Damage',
-								children: getTerrainDamageSection()
-							},
-							{
-								key: '4',
-								label: 'Sections',
-								children: getTerrainSectionsSection()
-							},
-							{
-								key: '5',
-								label: 'Customization',
-								children: getTerrainCustomizationSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='terrain-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<TerrainPanel
-													key={revision}
-													terrain={terrain}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='terrain-edit-panel'>
+			<div className='terrain-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Terrain',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Stats',
+							children: getTerrainStatsSection()
+						},
+						{
+							key: '3',
+							label: 'Damage',
+							children: getTerrainDamageSection()
+						},
+						{
+							key: '4',
+							label: 'Sections',
+							children: getTerrainSectionsSection()
+						},
+						{
+							key: '5',
+							label: 'Customization',
+							children: getTerrainCustomizationSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='terrain-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<TerrainPanel
+												key={revision}
+												terrain={terrain}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

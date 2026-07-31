@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureConfigPanel } from '../feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
@@ -21,35 +20,33 @@ interface Props {
 
 export const ControlledMonsterCustomizePanel = (props: Props) => {
 	return (
-		<ErrorBoundary>
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<div>
-					<HeaderText>Name</HeaderText>
-					<Space.Compact style={{ width: '100%' }}>
-						<TextInput
-							status={props.monster.name === '' ? 'warning' : ''}
-							placeholder='Name'
-							allowClear={true}
-							value={props.monster.name}
-							onChange={props.onChangeName}
+		<Space orientation='vertical' style={{ width: '100%' }}>
+			<div>
+				<HeaderText>Name</HeaderText>
+				<Space.Compact style={{ width: '100%' }}>
+					<TextInput
+						status={props.monster.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={props.monster.name}
+						onChange={props.onChangeName}
+					/>
+					<NameSuggestions onSelect={props.onChangeName} />
+				</Space.Compact>
+			</div>
+			{
+				MonsterLogic.getFeatures(props.monster)
+					.filter(FeatureLogic.isChoice)
+					.map(feature => (
+						<FeatureConfigPanel
+							key={feature.id}
+							feature={feature}
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							setData={props.onChangeFeature}
 						/>
-						<NameSuggestions onSelect={props.onChangeName} />
-					</Space.Compact>
-				</div>
-				{
-					MonsterLogic.getFeatures(props.monster)
-						.filter(FeatureLogic.isChoice)
-						.map(feature => (
-							<FeatureConfigPanel
-								key={feature.id}
-								feature={feature}
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								setData={props.onChangeFeature}
-							/>
-						))
-				}
-			</Space>
-		</ErrorBoundary>
+					))
+			}
+		</Space>
 	);
 };

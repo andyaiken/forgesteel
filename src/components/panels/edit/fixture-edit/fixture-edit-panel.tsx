@@ -1,5 +1,4 @@
 import { Segmented, Select, Space, Tabs } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Field } from '@/components/controls/field/field';
@@ -142,28 +141,26 @@ export const FixtureEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='domain-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Fixture',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getDetailsSection()
-						},
-						{
-							key: '3',
-							label: 'Levels',
-							children: getFeaturesByLevelEditSection()
-						}
-					]}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='domain-edit-panel'>
+			<Tabs
+				items={[
+					{
+						key: '1',
+						label: 'Fixture',
+						children: getNameAndDescriptionSection()
+					},
+					{
+						key: '2',
+						label: 'Details',
+						children: getDetailsSection()
+					},
+					{
+						key: '3',
+						label: 'Levels',
+						children: getFeaturesByLevelEditSection()
+					}
+				]}
+			/>
+		</div>
 	);
 };

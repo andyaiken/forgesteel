@@ -11,7 +11,6 @@ import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { EncounterSlot } from '@/models/encounter-slot';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturesPanel } from '@/components/panels/hero/features/features-panel';
 import { Fixture } from '@/models/fixture';
@@ -226,88 +225,86 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
-				<NamePanel
-					hero={props.hero}
-					onShowState={props.onShowState}
-				/>
-				<div className='hero-main-section'>
+		<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
+			<NamePanel
+				hero={props.hero}
+				onShowState={props.onShowState}
+			/>
+			<div className='hero-main-section'>
+				{
+					!isSmall && !options.singlePage ?
+						<StatsSidebarPanel
+							hero={props.hero}
+							showStats={tab !== 'Hero'}
+							onSelectCharacteristic={props.onSelectCharacteristic}
+						/>
+						: null
+				}
+				<div className='hero-center-column'>
 					{
-						!isSmall && !options.singlePage ?
-							<StatsSidebarPanel
-								hero={props.hero}
-								showStats={tab !== 'Hero'}
-								onSelectCharacteristic={props.onSelectCharacteristic}
-							/>
-							: null
+						options.singlePage ?
+							null
+							:
+							<div className='center-top'>
+								<Flex align='center' justify='space-between' gap={10}>
+									{
+										isSmall ?
+											<Select
+												style={{ flex: '1 1 0' }}
+												options={
+													getTabs().map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												optionRender={o => <div className='ds-text'>{o.label}</div>}
+												value={tab}
+												onChange={setTab}
+											/>
+											:
+											<Segmented
+												style={{ flex: '1 1 0' }}
+												name='sections'
+												block={true}
+												options={
+													getTabs().map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												value={tab}
+												onChange={setTab}
+											/>
+									}
+								</Flex>
+							</div>
 					}
-					<div className='hero-center-column'>
+					<div className='center-content'>
 						{
 							options.singlePage ?
-								null
+								getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
 								:
-								<div className='center-top'>
-									<Flex align='center' justify='space-between' gap={10}>
-										{
-											isSmall ?
-												<Select
-													style={{ flex: '1 1 0' }}
-													options={
-														getTabs().map(tab => ({
-															value: tab,
-															label: tab
-														}))
-													}
-													optionRender={o => <div className='ds-text'>{o.label}</div>}
-													value={tab}
-													onChange={setTab}
-												/>
-												:
-												<Segmented
-													style={{ flex: '1 1 0' }}
-													name='sections'
-													block={true}
-													options={
-														getTabs().map(tab => ({
-															value: tab,
-															label: tab
-														}))
-													}
-													value={tab}
-													onChange={setTab}
-												/>
-										}
-									</Flex>
-								</div>
+								getContent(tab)
 						}
-						<div className='center-content'>
-							{
-								options.singlePage ?
-									getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
-									:
-									getContent(tab)
-							}
-						</div>
 					</div>
-					{
-						!isSmall && !options.singlePage ?
-							<SidebarPanel
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								setTab={setTab}
-								onShowState={props.onShowState}
-								onShowReference={props.onShowReference}
-								onAddSquad={props.onAddSquad}
-								onRemoveSquad={props.onRemoveSquad}
-								onAddMonsterToSquad={props.onAddMonsterToSquad}
-								onSelectControlledMonster={props.onSelectControlledMonster}
-								onSelectControlledSquad={props.onSelectControlledSquad}
-							/>
-							: null
-					}
 				</div>
+				{
+					!isSmall && !options.singlePage ?
+						<SidebarPanel
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							setTab={setTab}
+							onShowState={props.onShowState}
+							onShowReference={props.onShowReference}
+							onAddSquad={props.onAddSquad}
+							onRemoveSquad={props.onRemoveSquad}
+							onAddMonsterToSquad={props.onAddMonsterToSquad}
+							onSelectControlledMonster={props.onSelectControlledMonster}
+							onSelectControlledSquad={props.onSelectControlledSquad}
+						/>
+						: null
+				}
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };

@@ -7,7 +7,6 @@ import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -87,56 +86,54 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='ability-list-edit-panel'>
-				<HeaderText
-					extra={
-						<ButtonGroup
-							buttons={[
-								{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: addAbility },
-								options.showClipboardOptions ?
-									{
-										type: 'button',
-										icon: <SnippetsOutlined />,
-										tooltip: clipboard.hasData(isAbility) ? `Paste ${clipboard.getData(isAbility)?.name || 'Unknown Ability'}` : 'Paste Ability',
-										disabled: !clipboard.hasData(isAbility),
-										onClick: pasteAbility
-									}
-									: null
+		<div className='ability-list-edit-panel'>
+			<HeaderText
+				extra={
+					<ButtonGroup
+						buttons={[
+							{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: addAbility },
+							options.showClipboardOptions ?
+								{
+									type: 'button',
+									icon: <SnippetsOutlined />,
+									tooltip: clipboard.hasData(isAbility) ? `Paste ${clipboard.getData(isAbility)?.name || 'Unknown Ability'}` : 'Paste Ability',
+									disabled: !clipboard.hasData(isAbility),
+									onClick: pasteAbility
+								}
+								: null
+						]}
+					/>
+				}
+			>
+				Abilities
+			</HeaderText>
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				{
+					abilities.map(a => (
+						<Expander
+							key={a.id}
+							title={a.name || 'Unnamed Ability'}
+							tags={[ a.type.usage ]}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
 							]}
-						/>
-					}
-				>
-					Abilities
-				</HeaderText>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					{
-						abilities.map(a => (
-							<Expander
-								key={a.id}
-								title={a.name || 'Unnamed Ability'}
-								tags={[ a.type.usage ]}
-								extra={[
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
-								]}
-							>
-								<AbilityEditPanel
-									ability={a}
-									onChange={changeAbility}
-								/>
-							</Expander>
-						))
-					}
-					{
-						abilities.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
-			</div>
-		</ErrorBoundary>
+						>
+							<AbilityEditPanel
+								ability={a}
+								onChange={changeAbility}
+							/>
+						</Expander>
+					))
+				}
+				{
+					abilities.length === 0 ?
+						<Empty />
+						: null
+				}
+			</Space>
+		</div>
 	);
 };
 
@@ -207,7 +204,7 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 	};
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='feature-list-edit-panel'>
 				<HeaderText
 					extra={
@@ -265,6 +262,6 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 					onClose={() => setTypeSelectorVisible(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

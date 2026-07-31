@@ -10,7 +10,6 @@ import { CultureEditPanel } from '@/components/panels/edit/culture-edit/culture-
 import { CultureType } from '@/enums/culture-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -356,63 +355,61 @@ export const AncestryEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='ancestry-edit-panel'>
-				<div className='ancestry-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Ancestry',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Signature Traits',
-								children: getSignatureEditSection()
-							},
-							{
-								key: '3',
-								label: 'Purchased Traits',
-								children: getPurchasedEditSection()
-							},
-							{
-								key: '4',
-								label: 'Culture',
-								children: getCultureEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='ancestry-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<AncestryPanel
-													ancestry={ancestry}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Cherry Pick',
-										children: getCherryPick()
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='ancestry-edit-panel'>
+			<div className='ancestry-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Ancestry',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Signature Traits',
+							children: getSignatureEditSection()
+						},
+						{
+							key: '3',
+							label: 'Purchased Traits',
+							children: getPurchasedEditSection()
+						},
+						{
+							key: '4',
+							label: 'Culture',
+							children: getCultureEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='ancestry-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<AncestryPanel
+												ancestry={ancestry}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Cherry Pick',
+									children: getCherryPick()
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

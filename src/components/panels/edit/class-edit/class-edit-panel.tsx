@@ -7,7 +7,6 @@ import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -363,7 +362,7 @@ export const ClassEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
+		<>
 			<Select
 				options={[
 					{ label: `Class: ${heroClass.name || 'Unnamed Class'}`, value: '' },
@@ -448,6 +447,6 @@ export const ClassEditPanel = (props: Props) => {
 						}}
 					/>
 			}
-		</ErrorBoundary>
+		</>
 	);
 };

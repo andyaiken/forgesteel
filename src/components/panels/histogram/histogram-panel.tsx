@@ -1,5 +1,4 @@
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './histogram-panel.scss';
 
@@ -32,26 +31,24 @@ export const HistogramPanel = (props: HistogramPanelProps) => {
 	const height = 100 / mode;
 
 	return (
-		<ErrorBoundary>
-			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
-				{
-					data.map(v => (
-						<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
-							<div style={{ height: `${height * (mode - v.value)}px` }} />
-							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
-							<div className='label'>{props.getLabel ? props.getLabel(v.x) : v.x}</div>
-							{
-								props.showPercentages && (props.values.length > 0) ?
-									<div className='percentage'>
-										{Math.round(100 * v.value / props.values.length)}%
-									</div>
-									: null
-							}
-						</div>
-					))
-				}
-			</div>
-		</ErrorBoundary>
+		<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
+			{
+				data.map(v => (
+					<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
+						<div style={{ height: `${height * (mode - v.value)}px` }} />
+						{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
+						<div className='label'>{props.getLabel ? props.getLabel(v.x) : v.x}</div>
+						{
+							props.showPercentages && (props.values.length > 0) ?
+								<div className='percentage'>
+									{Math.round(100 * v.value / props.values.length)}%
+								</div>
+								: null
+						}
+					</div>
+				))
+			}
+		</div>
 	);
 };
 
@@ -84,18 +81,16 @@ export const HistogramTextPanel = (props: HistogramTextPanelProps) => {
 	const height = 100 / mode;
 
 	return (
-		<ErrorBoundary>
-			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
-				{
-					sortedData.map(v => (
-						<div key={v.key} className={v.key === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.key)}>
-							<div style={{ height: `${height * (mode - v.value)}px` }} />
-							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
-							<div className='label'>{v.key}</div>
-						</div>
-					))
-				}
-			</div>
-		</ErrorBoundary>
+		<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
+			{
+				sortedData.map(v => (
+					<div key={v.key} className={v.key === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.key)}>
+						<div style={{ height: `${height * (mode - v.value)}px` }} />
+						{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
+						<div className='label'>{v.key}</div>
+					</div>
+				))
+			}
+		</div>
 	);
 };

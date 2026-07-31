@@ -5,7 +5,6 @@ import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -518,58 +517,56 @@ export const MontageEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='montage-edit-panel'>
-				<div className='montage-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Montage',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Scene',
-								children: getMontageSceneSection()
-							},
-							{
-								key: '3',
-								label: 'Sections',
-								children: getMontageSectionsSection()
-							},
-							{
-								key: '4',
-								label: 'Outcomes',
-								children: getMontageOutcomesSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='montage-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<MontagePanel
-													montage={montage}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='montage-edit-panel'>
+			<div className='montage-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Montage',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Scene',
+							children: getMontageSceneSection()
+						},
+						{
+							key: '3',
+							label: 'Sections',
+							children: getMontageSectionsSection()
+						},
+						{
+							key: '4',
+							label: 'Outcomes',
+							children: getMontageOutcomesSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='montage-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MontagePanel
+												montage={montage}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

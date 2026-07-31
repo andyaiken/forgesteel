@@ -3,7 +3,6 @@ import { ReactNode, useState } from 'react';
 import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
@@ -109,7 +108,7 @@ export const DieRollPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='die-roll-panel'>
 				{
 					props.type === 'Power Roll' ?
@@ -227,6 +226,6 @@ export const DieRollPanel = (props: Props) => {
 					onClose={() => setShowOdds(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

@@ -2,7 +2,6 @@ import { Button, Drawer, Flex, Select, Tabs } from 'antd';
 import { Feature, FeatureData } from '@/models/feature';
 import { EditFeature } from '@/components/features/feature';
 import { EditOutlined } from '@ant-design/icons';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -74,7 +73,7 @@ export const FeatureEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='feature-edit-panel'>
 				<div className='feature-workspace-column'>
 					<Tabs
@@ -176,6 +175,6 @@ export const FeatureEditPanel = (props: Props) => {
 					onClose={() => setTypeSelectorVisible(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

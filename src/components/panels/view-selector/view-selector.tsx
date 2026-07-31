@@ -1,6 +1,5 @@
 import { DesktopOutlined, FilePdfOutlined, FileTextOutlined, PrinterOutlined, TableOutlined } from '@ant-design/icons';
 import { Popover, Segmented } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -44,13 +43,11 @@ export const ViewSelector = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Segmented
-				block={true}
-				options={getOptions()}
-				value={props.value}
-				onChange={props.onChange}
-			/>
-		</ErrorBoundary>
+		<Segmented
+			block={true}
+			options={getOptions()}
+			value={props.value}
+			onChange={props.onChange}
+		/>
 	);
 };

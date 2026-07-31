@@ -4,7 +4,6 @@ import { AttitudeType } from '@/enums/attitude-type';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -297,63 +296,61 @@ export const NegotiationEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='negotiation-edit-panel'>
-				<div className='negotiation-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Negotiation',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getNegotiationDetailsSection()
-							},
-							{
-								key: '3',
-								label: 'Motivations',
-								children: getNegotiationMotivationsSection()
-							},
-							{
-								key: '4',
-								label: 'Pitfalls',
-								children: getNegotiationPitfallsSection()
-							},
-							{
-								key: '5',
-								label: 'Outcomes',
-								children: getNegotiationOutcomesSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='negotiation-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<NegotiationPanel
-													negotiation={negotiation}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='negotiation-edit-panel'>
+			<div className='negotiation-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Negotiation',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getNegotiationDetailsSection()
+						},
+						{
+							key: '3',
+							label: 'Motivations',
+							children: getNegotiationMotivationsSection()
+						},
+						{
+							key: '4',
+							label: 'Pitfalls',
+							children: getNegotiationPitfallsSection()
+						},
+						{
+							key: '5',
+							label: 'Outcomes',
+							children: getNegotiationOutcomesSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='negotiation-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<NegotiationPanel
+												negotiation={negotiation}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

@@ -5,7 +5,6 @@ import { ReactNode, useState } from 'react';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { ConfigFeature } from '@/components/features/feature';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -52,45 +51,43 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='feature-config-panel'>
-				<HeaderText
-					extra={
-						<>
-							{
-								autoCalcAvailable() ?
-									<Button
-										key='autocalc'
-										type='text'
-										title='Auto-calculate damage, potency, etc'
-										icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-										onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-									/>
-									: null
-							}
-							{
-								props.onDelete ?
-									<DangerButton
-										key='delete'
-										mode='clear'
-										onConfirm={() => props.onDelete!()}
-									/>
-									: null
-							}
-						</>
-					}
-				>
-					{props.feature.name || 'Unnamed Feature'}
-				</HeaderText>
-				<Markdown text={getDescription()} />
-				<ConfigFeature
-					feature={props.feature}
-					hero={props.hero}
-					sourcebooks={props.sourcebooks}
-					setData={data => props.setData(props.feature.id, data)}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='feature-config-panel'>
+			<HeaderText
+				extra={
+					<>
+						{
+							autoCalcAvailable() ?
+								<Button
+									key='autocalc'
+									type='text'
+									title='Auto-calculate damage, potency, etc'
+									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+								/>
+								: null
+						}
+						{
+							props.onDelete ?
+								<DangerButton
+									key='delete'
+									mode='clear'
+									onConfirm={() => props.onDelete!()}
+								/>
+								: null
+						}
+					</>
+				}
+			>
+				{props.feature.name || 'Unnamed Feature'}
+			</HeaderText>
+			<Markdown text={getDescription()} />
+			<ConfigFeature
+				feature={props.feature}
+				hero={props.hero}
+				sourcebooks={props.sourcebooks}
+				setData={data => props.setData(props.feature.id, data)}
+			/>
+		</div>
 	);
 };
 
@@ -104,41 +101,39 @@ interface SelectionBoxProps {
 
 export const SelectionBox = (props: SelectionBoxProps) => {
 	return (
-		<ErrorBoundary>
-			<div className={props.transparent ? 'selection-box' : 'selection-box with-border'}>
-				<Flex align='center' justify='space-between' gap={10}>
-					{props.content}
-					<Flex vertical={true}>
-						{
-							props.onSelect ?
-								<Button
-									type='text'
-									title='Show details'
-									icon={<InfoCircleOutlined />}
-									onClick={e => {
-										e.stopPropagation();
-										props.onSelect!();
-									}}
-								/>
-								: null
-						}
-						{
-							props.onRemove ?
-								<Button
-									type='text'
-									title='Remove'
-									icon={<CloseOutlined />}
-									onClick={e => {
-										e.stopPropagation();
-										props.onRemove!();
-									}}
-								/>
-								: null
-						}
-					</Flex>
+		<div className={props.transparent ? 'selection-box' : 'selection-box with-border'}>
+			<Flex align='center' justify='space-between' gap={10}>
+				{props.content}
+				<Flex vertical={true}>
+					{
+						props.onSelect ?
+							<Button
+								type='text'
+								title='Show details'
+								icon={<InfoCircleOutlined />}
+								onClick={e => {
+									e.stopPropagation();
+									props.onSelect!();
+								}}
+							/>
+							: null
+					}
+					{
+						props.onRemove ?
+							<Button
+								type='text'
+								title='Remove'
+								icon={<CloseOutlined />}
+								onClick={e => {
+									e.stopPropagation();
+									props.onRemove!();
+								}}
+							/>
+							: null
+					}
 				</Flex>
-				{props.customizeContent}
-			</div>
-		</ErrorBoundary>
+			</Flex>
+			{props.customizeContent}
+		</div>
 	);
 };

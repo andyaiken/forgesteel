@@ -1,5 +1,4 @@
 import { CSSProperties, useEffect, useState } from 'react';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Input } from 'antd';
 import { useDebounce } from '@/hooks/use-debounce';
 
@@ -28,16 +27,14 @@ export const MultiLine = (props: Props) => {
 	);
 
 	return (
-		<ErrorBoundary>
-			<div className='multi-line' style={props.style}>
-				<Input.TextArea
-					className='multi-line-input'
-					style={props.inputStyle}
-					placeholder={props.placeholder}
-					value={value}
-					onChange={e => setValue(e.target.value)}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='multi-line' style={props.style}>
+			<Input.TextArea
+				className='multi-line-input'
+				style={props.inputStyle}
+				placeholder={props.placeholder}
+				value={value}
+				onChange={e => setValue(e.target.value)}
+			/>
+		</div>
 	);
 };

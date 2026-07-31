@@ -6,7 +6,6 @@ import { AdventureLogic } from '@/logic/adventure-logic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -327,27 +326,25 @@ export const AdventureEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='adventure-edit-panel'>
-				<div className='plot-workspace'>
-					<PlotGraphPanel
-						label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
-						tags={[]}
-						plot={currentPlot}
-						adventure={adventure}
-						selectedPlot={selectedPlot || undefined}
-						onSelect={setSelectedPlot}
-						onOpen={plot => {
-							setSelectedPlot(null);
-							setCurrentPlot(plot);
-						}}
-						onCreate={addPlotPoint}
-					/>
-				</div>
-				<div className='plot-editor'>
-					{getEditor()}
-				</div>
+		<div className='adventure-edit-panel'>
+			<div className='plot-workspace'>
+				<PlotGraphPanel
+					label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+					tags={[]}
+					plot={currentPlot}
+					adventure={adventure}
+					selectedPlot={selectedPlot || undefined}
+					onSelect={setSelectedPlot}
+					onOpen={plot => {
+						setSelectedPlot(null);
+						setCurrentPlot(plot);
+					}}
+					onCreate={addPlotPoint}
+				/>
 			</div>
-		</ErrorBoundary>
+			<div className='plot-editor'>
+				{getEditor()}
+			</div>
+		</div>
 	);
 };

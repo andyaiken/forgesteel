@@ -1,7 +1,6 @@
 import { Button, Popover } from 'antd';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './danger-button.scss';
 
@@ -53,31 +52,29 @@ export const DangerButton = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Popover
-				className={props.mode === 'icon' ? 'danger-button icon' : 'danger-button'}
-				open={disabled ? false : open}
-				onOpenChange={setOpen}
-				trigger='click'
-				content={(
-					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-						{
-							props.disabledMessage || props.message || <div className='ds-text'>This can't be undone; are you sure?</div>
-						}
-						{
-							!props.disabledMessage ?
-								<Button danger={true} onClick={e => { e.stopPropagation(); setOpen(false); props.onConfirm(e); }}>
-									{props.label || 'Delete'}
-								</Button>
-								: null
-						}
-					</div>
-				)}
-			>
-				<div onClick={e => e.stopPropagation()}>
-					{getContent()}
+		<Popover
+			className={props.mode === 'icon' ? 'danger-button icon' : 'danger-button'}
+			open={disabled ? false : open}
+			onOpenChange={setOpen}
+			trigger='click'
+			content={(
+				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+					{
+						props.disabledMessage || props.message || <div className='ds-text'>This can't be undone; are you sure?</div>
+					}
+					{
+						!props.disabledMessage ?
+							<Button danger={true} onClick={e => { e.stopPropagation(); setOpen(false); props.onConfirm(e); }}>
+								{props.label || 'Delete'}
+							</Button>
+							: null
+					}
 				</div>
-			</Popover>
-		</ErrorBoundary>
+			)}
+		>
+			<div onClick={e => e.stopPropagation()}>
+				{getContent()}
+			</div>
+		</Popover>
 	);
 };

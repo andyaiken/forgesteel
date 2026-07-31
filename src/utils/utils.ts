@@ -1,12 +1,16 @@
-import { Converter } from 'showdown';
+import DOMPurify from 'dompurify';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { domToImage } from 'modern-screenshot';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
+import { marked } from 'marked';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Utils {
-	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
+	static markdownToHtml = (text: string): string => {
+		const html = marked(text, { async: false, gfm: true, breaks: true });
+		return DOMPurify.sanitize(html);
+	};
 
 	static isDev = () => {
 		return window.location.hostname === 'localhost';

@@ -1823,7 +1823,13 @@ export const Main = (props: Props) => {
 
 	return (
 		<ErrorBoundary name='main'>
-			<Suspense fallback={<div style={{ height: '100%', width: '100%', backgroundColor: 'rgb(230, 230, 230)' }} />}>
+			<Suspense
+				fallback={
+					<div style={{ height: '100%', width: '100%', backgroundColor: 'rgb(230, 230, 230)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+						<Spin size='large' />
+					</div>
+				}
+			>
 				<Routes>
 					<Route
 						path='/'

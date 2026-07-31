@@ -6,7 +6,6 @@ import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 interface DataManagerDispatchers {
@@ -281,12 +280,4 @@ export function useHomebrewSourcebooks() {
 		throw new Error('useHomebrewSourcebooks may only be used within <HomebrewSourcebooksContext>');
 	}
 	return context;
-}
-
-export function useAllSourcebooks() {
-	const homebrewSourcebooks = useContext(HomebrewSourcebooksContext);
-	if (!homebrewSourcebooks) {
-		throw new Error('useAllSourcebooks may only be used within <HomebrewSourcebooksContext>');
-	}
-	return SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 }

@@ -3,25 +3,11 @@ import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 
 import './project-info-card.scss';
 
-interface InfoProps {
-	project: ProjectSheet;
-}
-
-export const ProjectInfoCard = (props: InfoProps) => {
-	const project = props.project;
-	return (
-		<div className='project-info card'>
-			<h2>Project: {project.name}</h2>
-			<ProjectInfoComponent project={project} />
-		</div>
-	);
-};
-
-interface OverviewProps {
+interface Props {
 	projects: ProjectSheet[];
 }
 
-export const ProjectsOverviewCard = (props: OverviewProps) => {
+export const ProjectsOverviewCard = (props: Props) => {
 	const projects = props.projects;
 	return (
 		<div className='projects-overview card'>

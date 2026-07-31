@@ -89,7 +89,6 @@ import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
 
@@ -116,7 +115,6 @@ interface Props {
 export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
-	const { triggerSyncOnChange } = useSyncStatus();
 	const options = useOptions();
 	const session = useSession();
 	const heroes = useHeroes();
@@ -145,10 +143,6 @@ export const Main = (props: Props) => {
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
-			})
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 
@@ -167,8 +161,6 @@ export const Main = (props: Props) => {
 				if (playerView) {
 					playerView.location.reload();
 				}
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 
@@ -182,10 +174,6 @@ export const Main = (props: Props) => {
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
-			})
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 

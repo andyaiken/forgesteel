@@ -6,20 +6,18 @@ import { Main } from '@/components/main/main.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
+import { registerSW } from 'virtual:pwa-register';
 
 import './index.scss';
 
 initializeTheme();
 
 // Register Service Worker for PWA functionality
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', () => {
-		navigator.serviceWorker.register('/sw.js')
-			.catch(registrationError => {
-				console.error('SW registration failed: ', registrationError);
-			});
-	});
-}
+registerSW({
+	onRegisterError: error => {
+		console.error('SW registration failed: ', error);
+	}
+});
 
 const root = createRoot(document.getElementById('root')!);
 root.render(

@@ -6,7 +6,6 @@ import { ConnectionSettings } from '@/models/connection-settings';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
-import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import shield from '@/assets/shield.png';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -97,7 +96,6 @@ export const AppFooter = (props: Props) => {
 						: null
 				}
 				<Space>
-					<SyncStatus />
 					{
 						options.showDataSource && props.params.connectionSettings.dataSource && !isSmall ?
 							<Tag

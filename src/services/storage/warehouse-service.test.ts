@@ -7,6 +7,13 @@ import { Sourcebook } from '@/models/sourcebook';
 import { WarehouseService } from '@/services/storage/warehouse-service';
 import axios from 'axios';
 
+vi.mock('axios', async () => {
+	return {
+		...(await vi.importActual('axios') as object),
+		create: vi.fn().mockReturnValue(await vi.importActual('axios'))
+	};
+});
+
 afterEach(() => {
 	vi.resetAllMocks();
 });
@@ -22,13 +29,6 @@ const defaultSettings: ConnectionSettings = {
 };
 
 describe('WarehouseService', () => {
-	vi.mock('axios', async () => {
-		return {
-			...(await vi.importActual('axios') as object),
-			create: vi.fn().mockReturnValue(await vi.importActual('axios'))
-		};
-	});
-
 	const catchFn = vi.fn();
 	const thenFn = vi.fn();
 

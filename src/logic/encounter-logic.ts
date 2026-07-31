@@ -131,7 +131,9 @@ export class EncounterLogic {
 			customization.addOnIDs.forEach(id => {
 				const addOn = monsterGroup.addOns.find(a => a.id === id);
 				if (addOn) {
-					copy.features.push(addOn);
+					const addOnCopy = Utils.copy(addOn);
+					addOnCopy.id = Utils.guid();
+					copy.features.push(addOnCopy);
 					points += addOn.data.cost;
 				}
 			});

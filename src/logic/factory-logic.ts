@@ -571,7 +571,7 @@ export class FactoryLogic {
 					level4: data.retainer.level4,
 					level7: data.retainer.level7,
 					level10: data.retainer.level10,
-					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.characteristics, data.retainer.level4, data.retainer.level7, data.retainer.level10)
 				}
 				: null,
 			state: FactoryLogic.createMonsterState()
@@ -1082,7 +1082,9 @@ export class FactoryLogic {
 			heroVictories: 0,
 			// Tactical Map
 			gridSize: 50,
-			playerGridSize: 50
+			playerGridSize: 50,
+			// Homebrewing
+			showClipboardOptions: false
 		};
 	};
 

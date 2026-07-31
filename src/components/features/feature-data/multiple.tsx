@@ -1,6 +1,6 @@
 import { Feature, FeatureMultipleData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { PanelMode } from '@/enums/panel-mode';

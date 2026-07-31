@@ -110,7 +110,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createAddOn = (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost: number }): FeatureAddOn => {
+	createAddOn = (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost: number, repeatable?: boolean }): FeatureAddOn => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -118,7 +118,8 @@ export class FactoryFeatureLogic {
 			type: FeatureType.AddOn,
 			data: {
 				category: data.category,
-				cost: data.cost
+				cost: data.cost,
+				repeatable: data.repeatable || false
 			}
 		};
 	};
@@ -402,7 +403,7 @@ export class FactoryFeatureLogic {
 
 		const source = (allowedTypes.length === 4) ? '' : allowedTypes.join(', ');
 		const description = data.description || count > 1 ?
-			`Choose ${count} {source} languages.`
+			`Choose ${count} ${source} languages.`
 			:
 			`Choose a ${source} language.`;
 

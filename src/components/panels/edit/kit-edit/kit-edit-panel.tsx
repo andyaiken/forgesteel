@@ -4,7 +4,7 @@ import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Kit } from '@/models/kit';

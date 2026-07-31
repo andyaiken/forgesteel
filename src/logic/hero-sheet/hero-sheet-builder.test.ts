@@ -16,20 +16,22 @@ import { PregenLogic } from '../pregen-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { Summon } from '@/models/summon';
+import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { retainer } from '@/data/monsters/retainer';
+
+vi.mock('@/logic/hero-logic', () => {
+	const HeroLogic = vi.fn();
+	return { HeroLogic: HeroLogic };
+});
+vi.unmock('@/logic/hero-logic');
 
 afterEach(() => {
 	vi.resetAllMocks();
 });
 
 describe('buildSummonSheet', () => {
-	vi.mock('@/logic/hero-logic', () => {
-		const HeroLogic = vi.fn();
-		return { HeroLogic: HeroLogic };
-	});
-
 	test('it builds sheets for Summoner minions properly', () => {
 		const signatureMinions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
 			.find(f => f.id === 'summoner-4-1-4') as FeatureSummonChoice;
@@ -126,6 +128,28 @@ const mockSummonFeature = {
 } as FeatureSummon;
 // #endregion
 
+describe('buildCompanionSheet', () => {
+	const buildBeastheartHero = (level: number) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(beastheart);
+		hero.class.level = level;
+		return hero;
+	};
+
+	test('it should apply the beastheart companion characteristic bonus that scales with hero level', () => {
+		const heroAtLevel1 = buildBeastheartHero(1);
+		const heroAtLevel4 = buildBeastheartHero(4);
+
+		const sheetAtLevel1 = HeroSheetBuilder.buildCompanionSheet(companion1, heroAtLevel1);
+		const sheetAtLevel4 = HeroSheetBuilder.buildCompanionSheet(companion1, heroAtLevel4);
+
+		expect(sheetAtLevel1.characteristics.might).toBe(2);
+		expect(sheetAtLevel1.characteristics.intuition).toBe(2);
+		expect(sheetAtLevel4.characteristics.might).toBe(3);
+		expect(sheetAtLevel4.characteristics.intuition).toBe(3);
+	});
+});
+
 describe('buildFollowerCompanionSheet()', () => {
 	test('it should call the correct builder method for Follower features', () => {
 		const mockResult = { id: 'foo' } as FollowerSheet;
@@ -173,8 +197,6 @@ describe('buildRetainerSheet', () => {
 });
 
 describe('buildHeroSheet', () => {
-	vi.unmock('@/logic/hero-logic');
-
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
 		const pregen = PregenData.getPregens()[0];
 		const options = { xpPerLevel: 16 } as Options;

@@ -65,6 +65,7 @@ export type FeatureAbilityKeyword = FeatureOf<FeatureType.AbilityKeyword, Featur
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
+	repeatable: boolean;
 };
 export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>;
 
@@ -400,3 +401,11 @@ export type Feature =
 	| FeatureToggle;
 
 export type FeatureData = Feature['data'];
+
+export const isFeature = (value: unknown): value is Feature => {
+	return !!value
+		&& (typeof value === 'object')
+		&& ('type' in value)
+		&& (typeof value.type === 'string')
+		&& (Object.values(FeatureType) as string[]).includes(value.type);
+};

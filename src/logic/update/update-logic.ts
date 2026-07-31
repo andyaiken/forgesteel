@@ -306,6 +306,11 @@ ${encounter.objective.victories}`
 			case FeatureType.Ability:
 				UpdateLogic.updateAbility(feature.data.ability);
 				break;
+			case FeatureType.AddOn:
+				if (feature.data.repeatable === undefined) {
+					feature.data.repeatable = false;
+				}
+				break;
 			case FeatureType.Bonus:
 				if (feature.data.valueCharacteristics === undefined) {
 					feature.data.valueCharacteristics = [];
@@ -326,6 +331,8 @@ ${encounter.objective.victories}`
 				if (feature.data.respiteChange) {
 					feature.data.selectAt = 'respite';
 				}
+				feature.data.selected = Collections.distinct(feature.data.selected, f => f.id);
+				feature.data.selected.forEach(UpdateLogic.updateFeature);
 				break;
 			case FeatureType.ClassAbility:
 				if (feature.data.source === undefined) {
@@ -746,6 +753,10 @@ ${encounter.objective.victories}`
 
 		if (options.shownStandardAbilities === undefined) {
 			options.shownStandardAbilities = [];
+		}
+
+		if (options.showClipboardOptions === undefined) {
+			options.showClipboardOptions = false;
 		}
 	};
 

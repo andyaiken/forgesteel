@@ -643,13 +643,15 @@ export class AbilityLogic {
 			});
 		}
 
-		// Handle [pull / push / slide] N
+		// Handle [pull / push / slide] N, including past / third-person forms (pushed, pushes, pulled, pulls, slides, slid)
 		if (hero) {
-			const forcedMovementRegex = /(pull|push|slide)\s+(\d+)/gi;
-			text = text.replace(forcedMovementRegex, (_match, type, value) => {
+			const forcedMovementRegex = /(pushed|pushes|push|pulled|pulls|pull|slides|slide|slid)\s+(\d+)/gi;
+			text = text.replace(forcedMovementRegex, (_match, verb, value) => {
+				const lower = verb.toLowerCase();
+				const type = lower.startsWith('push') ? 'push' : lower.startsWith('pull') ? 'pull' : 'slide';
 				const bonus = HeroLogic.getForcedMovementBonus(hero, type);
 				const total = Number(value) + bonus;
-				return `${type} ${total}`;
+				return `${verb} ${total}`;
 			});
 		}
 

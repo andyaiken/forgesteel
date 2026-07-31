@@ -55,3 +55,11 @@ export interface Ability extends Element {
 	minLevel: number;
 	sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[];
 }
+
+export const isAbility = (value: unknown): value is Ability => {
+	return !!value
+		&& (typeof value === 'object')
+		&& ('distance' in value)
+		&& ('sections' in value)
+		&& ('keywords' in value);
+};

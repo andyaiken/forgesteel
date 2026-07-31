@@ -6,7 +6,7 @@ import { Feature } from '@/models/feature';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 
 export class RetainerLogic {
-	static getRetainerAdvancementFeatures = (level: number, role: MonsterRoleType, level4?: Feature, level7?: Feature, level10?: Feature): { level: number, feature: Feature }[] => {
+	static getRetainerAdvancementFeatures = (level: number, role: MonsterRoleType, characteristics: { characteristic: Characteristic, value: number }[], level4?: Feature, level7?: Feature, level10?: Feature): { level: number, feature: Feature }[] => {
 		const options4 = level4 ? [ level4 ] : [];
 		const options7 = level7 ? [ level7 ] : [];
 		const options10 = level10 ? [ level10 ] : [];
@@ -22,54 +22,47 @@ export class RetainerLogic {
 			options10.push(std.level10);
 		}
 
+		const getCharacteristicValue = (characteristic: Characteristic) => {
+			return characteristics.find(c => c.characteristic === characteristic)?.value ?? 0;
+		};
+		const level2Characteristics = [
+			Characteristic.Might,
+			Characteristic.Agility,
+			Characteristic.Reason,
+			Characteristic.Intuition,
+			Characteristic.Presence
+		].filter(c => getCharacteristicValue(c) < 2);
+
+		const level5Characteristics = [
+			Characteristic.Might,
+			Characteristic.Agility,
+			Characteristic.Reason,
+			Characteristic.Intuition,
+			Characteristic.Presence
+		].filter(c => getCharacteristicValue(c) < 3);
+
+		const level8Characteristics = [
+			Characteristic.Might,
+			Characteristic.Agility,
+			Characteristic.Reason,
+			Characteristic.Intuition,
+			Characteristic.Presence
+		].filter(c => getCharacteristicValue(c) < 4);
+
 		const levels = [
 			{
 				level: 2,
 				feature: FactoryLogic.feature.createChoice({
 					id: 'retainer-2',
 					name: 'Level 2 Characteristic Increase',
-					options: [
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-2-1',
-								characteristic: Characteristic.Might,
-								value: 1
-							}),
+					options: level2Characteristics.map(c => ({
+						feature: FactoryLogic.feature.createCharacteristicBonus({
+							id: `retainer-2-${c}`,
+							characteristic: c,
 							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-2-2',
-								characteristic: Characteristic.Agility,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-2-3',
-								characteristic: Characteristic.Reason,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-2-4',
-								characteristic: Characteristic.Intuition,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-2-5',
-								characteristic: Characteristic.Presence,
-								value: 1
-							}),
-							value: 1
-						}
-					]
+						}),
+						value: 1
+					}))
 				})
 			},
 			{
@@ -85,33 +78,11 @@ export class RetainerLogic {
 				feature: FactoryLogic.feature.createMultiple({
 					id: 'retainer-5',
 					name: 'Level 5 Characteristic Increase',
-					features: [
-						FactoryLogic.feature.createCharacteristicBonus({
-							id: 'retainer-5-1',
-							characteristic: Characteristic.Might,
-							value: 1
-						}),
-						FactoryLogic.feature.createCharacteristicBonus({
-							id: 'retainer-5-2',
-							characteristic: Characteristic.Agility,
-							value: 1
-						}),
-						FactoryLogic.feature.createCharacteristicBonus({
-							id: 'retainer-5-3',
-							characteristic: Characteristic.Reason,
-							value: 1
-						}),
-						FactoryLogic.feature.createCharacteristicBonus({
-							id: 'retainer-5-4',
-							characteristic: Characteristic.Intuition,
-							value: 1
-						}),
-						FactoryLogic.feature.createCharacteristicBonus({
-							id: 'retainer-5-5',
-							characteristic: Characteristic.Presence,
-							value: 1
-						})
-					]
+					features: level5Characteristics.map(c => FactoryLogic.feature.createCharacteristicBonus({
+						id: `retainer-5-${c}`,
+						characteristic: c,
+						value: 1
+					}))
 				})
 			},
 			{
@@ -127,48 +98,14 @@ export class RetainerLogic {
 				feature: FactoryLogic.feature.createChoice({
 					id: 'retainer-8',
 					name: 'Level 8 Characteristic Increase',
-					options: [
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-8-1',
-								characteristic: Characteristic.Might,
-								value: 1
-							}),
+					options: level8Characteristics.map(c => ({
+						feature: FactoryLogic.feature.createCharacteristicBonus({
+							id: `retainer-8-${c}`,
+							characteristic: c,
 							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-8-2',
-								characteristic: Characteristic.Agility,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-8-3',
-								characteristic: Characteristic.Reason,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-8-4',
-								characteristic: Characteristic.Intuition,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'retainer-8-5',
-								characteristic: Characteristic.Presence,
-								value: 1
-							}),
-							value: 1
-						}
-					]
+						}),
+						value: 1
+					}))
 				})
 			},
 			{

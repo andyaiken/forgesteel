@@ -621,6 +621,23 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
+	const getHomebrewing = () => {
+		const setShowClipboardOptions = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.showClipboardOptions = value;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
+		return (
+			<Expander title='Homebrewing'>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					<Toggle label='Show clipboard buttons' value={options.showClipboardOptions} onChange={setShowClipboardOptions} />
+				</Space>
+			</Expander>
+		);
+	};
+
 	const getConnections = () => {
 		const getWarehouseConnection = () => {
 			if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
@@ -731,6 +748,7 @@ export const SettingsModal = (props: Props) => {
 						{getEncounterRunner()}
 						{getDifficulty()}
 						{getTacticalMaps()}
+						{getHomebrewing()}
 						{getConnections()}
 					</Space>
 				);

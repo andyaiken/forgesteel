@@ -426,14 +426,24 @@ export class HeroUpdateLogic {
 
 					let availableOptions = [ ...feature.data.options ];
 					if (feature.data.count === 'ancestry') {
-						availableOptions = sourcebooks
+						const ownAncestries = hero.ancestry ? [ hero.ancestry, ...HeroLogic.getFormerAncestries(hero) ] : HeroLogic.getFormerAncestries(hero);
+						const ownOptions = ownAncestries
+							.flatMap(a => a.features)
+							.filter(f => f.type === FeatureType.Choice)
+							.filter(f => f.data.count === 'ancestry')
+							.flatMap(f => f.data.options);
+
+						const allOptions = sourcebooks
 							.flatMap(sb => sb.ancestries)
 							.flatMap(a => a.features)
 							.filter(f => f.type === FeatureType.Choice)
 							.filter(f => f.data.count === 'ancestry')
 							.flatMap(f => f.data.options);
+
+						availableOptions = [ ...ownOptions, ...allOptions ];
 					}
 
+					feature.data.selected = [];
 					selectedIDs.forEach(id => {
 						const option = availableOptions.find(o => o.feature.id === id);
 						if (option) {

@@ -1454,11 +1454,11 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			cost: 11,
 			minLevel: 9,
 			sections: [
-				FactoryLogic.createAbilitySectionText('You create a fissure in the ground adjacent to you that is a 10 × 2 line and 6 squares deep. Each creature in the area who is prone and size 2 or smaller falls in. Other creatures can enter the fissure or can shift to the nearest unoccupied space of their choice outside it.'),
+				FactoryLogic.createAbilitySectionText('You conjure an elemental shield that protects the target until the end of your next turn. While the shield is active, the target can take the Defend main action as a maneuver on each of their turns. The target gains 30 temporary Stamina that lasts until depleted or until the effect ends. If this temporary Stamina disappears, the effect ends and the shield explodes, dealing 10 damage to each enemy within 5 squares of the target'),
 				FactoryLogic.createAbilitySectionSpend({
 					name: 'Persist',
 					value: 2,
-					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
+					effect: 'The effect lasts until the start of your next turn.'
 				})
 			]
 		}),

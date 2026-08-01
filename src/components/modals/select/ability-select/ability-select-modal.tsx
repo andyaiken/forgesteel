@@ -1,3 +1,5 @@
+import { Divider, Space } from 'antd';
+import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -9,10 +11,8 @@ import { PanelMode } from '@/enums/panel-mode';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
-import { Divider, Space } from 'antd';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { useMemo, useState } from 'react';
 
 import './ability-select-modal.scss';
 
@@ -41,7 +41,7 @@ export const AbilitySelectModal = (props: Props) => {
 			], searchTerm))
 			.filter(a => (abilityType === null) || (a.type.usage === abilityType))
 			.filter(a => (abilityCost === null) || (a.cost === abilityCost));
-	}, [ props.abilities, abilityType, abilityCost]);
+	}, [ props.abilities, abilityType, abilityCost ]);
 
 	return (
 		<Modal

@@ -429,10 +429,11 @@ export class SourcebookLogic {
 
 	static getAllAbilities = (sourcebook: Sourcebook) => {
 		return [
-			...sourcebook.ancestries.flatMap(a => SourcebookLogic.getAbilitiesFromAncestry(a)),
+			...sourcebook.ancestries.flatMap(SourcebookLogic.getAbilitiesFromAncestry),
 			...sourcebook.classes.flatMap(c => SourcebookLogic.getAbilitiesFromClass(c, true, true, true, true, true, true)),
 			...sourcebook.subclasses.flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, true, true)),
-			...sourcebook.items.flatMap(i => SourcebookLogic.getAbilitiesFromItem(i))
+			...sourcebook.items.flatMap(SourcebookLogic.getAbilitiesFromItem),
+			...sourcebook.monsterGroups.flatMap(SourcebookLogic.getAbilitiesFromMonsterGroup)
 		];
 	};
 
@@ -479,32 +480,13 @@ export class SourcebookLogic {
 			abilities.push(...heroClass.abilities);
 		}
 
-		if (selectedSubclassAbilities) {
-			abilities.push(...heroClass.subclasses.filter(sc => sc.selected).flatMap(sc => sc.abilities));
-		}
-
-		if (unselectedSubclassAbilities) {
-			abilities.push(...heroClass.subclasses.filter(sc => !sc.selected).flatMap(sc => sc.abilities));
-		}
-
 		if (classLevels) {
 			heroClass.featuresByLevel
 				.forEach(lvl => lvl.features.forEach(addFeature));
 		}
 
-		if (selectedSubclassLevels) {
-			heroClass.subclasses
-				.filter(sc => sc.selected)
-				.flatMap(sc => sc.featuresByLevel)
-				.forEach(lvl => lvl.features.forEach(addFeature));
-		}
-
-		if (unselectedSubclassLevels) {
-			heroClass.subclasses
-				.filter(sc => !sc.selected)
-				.flatMap(sc => sc.featuresByLevel)
-				.forEach(lvl => lvl.features.forEach(addFeature));
-		}
+		abilities.push(...heroClass.subclasses.filter(sc => sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, selectedSubclassAbilities, selectedSubclassLevels)));
+		abilities.push(...heroClass.subclasses.filter(sc => !sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, unselectedSubclassAbilities, unselectedSubclassLevels)));
 
 		return abilities;
 	};
@@ -556,6 +538,51 @@ export class SourcebookLogic {
 		};
 
 		item.featuresByLevel.forEach(lvl => lvl.features.forEach(addFeature));
+
+		return abilities;
+	};
+
+	static getAbilitiesFromMonsterGroup = (group: MonsterGroup) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		group.malice.forEach(addFeature);
+		abilities.push(...group.monsters.flatMap(SourcebookLogic.getAbilitiesFromMonster));
+
+		return abilities;
+	};
+
+	static getAbilitiesFromMonster = (monster: Monster) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		monster.features.forEach(addFeature);
 
 		return abilities;
 	};

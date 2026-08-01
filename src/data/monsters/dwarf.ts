@@ -398,7 +398,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-6-feature-1',
+						id: 'dwarf-7-feature-1',
 						name: 'Snaring Crossbow',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -418,7 +418,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-6-feature-2',
+						id: 'dwarf-7-feature-2',
 						name: 'Reel Them In',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -431,7 +431,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-6-feature-3',
+					id: 'dwarf-7-feature-3',
 					name: 'We Have a Quota!',
 					description: 'If a target made slowed by the reel winch is already grabbed or slowed, the grabbed and slowed conditions end and the target is restrained (save ends).'
 				})

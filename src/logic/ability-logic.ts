@@ -217,10 +217,6 @@ export class AbilityLogic {
 			const rollSections = ability.sections.filter(s => s.type === 'roll');
 			if (rollSections.length) {
 				const rollSection = rollSections[0];
-				if (rollSections.length > 1) {
-					console.warn('More than one roll section!', ability.name, rollSections);
-				}
-
 				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
 					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
 					if (potency && potency[1]) {
@@ -236,10 +232,6 @@ export class AbilityLogic {
 		const rollSections = ability.sections.filter(s => s.type === 'roll');
 		if (rollSections.length) {
 			const rollSection = rollSections[0];
-			if (rollSections.length > 1) {
-				console.warn('More than one roll section!', ability.name, rollSections);
-			}
-
 			let rollCharacteristics = rollSection.roll.characteristic;
 			// Specific check for Grab/Knockback + Psionic Martial Arts override
 			if (CreatureLogic.isHero(creature)

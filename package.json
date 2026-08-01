@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.142.0",
+	"version": "14.143.0",
 	"type": "module",
 	"engines": {
 		"node": ">=24"

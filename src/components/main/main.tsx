@@ -29,6 +29,7 @@ import { EncounterToolsModal } from '@/components/modals/encounter-tools/encount
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ErrorsModal } from '../modals/errors/errors-modal';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FallbackPage } from '@/components/pages/fallback/fallback-page';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { FeatureType } from '@/enums/feature-type';
@@ -1811,13 +1812,7 @@ export const Main = (props: Props) => {
 
 	return (
 		<ErrorBoundary name='main'>
-			<Suspense
-				fallback={
-					<div style={{ height: '100%', width: '100%', backgroundColor: 'rgb(230, 230, 230)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						<Spin size='large' />
-					</div>
-				}
-			>
+			<Suspense fallback={<FallbackPage />}>
 				<Routes>
 					<Route
 						path='/'

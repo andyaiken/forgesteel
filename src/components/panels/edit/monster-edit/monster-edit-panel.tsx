@@ -5,7 +5,6 @@ import { Collections } from '@/utils/collections';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -1066,50 +1065,48 @@ export const MonsterEditPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className='monster-edit-panel'>
-				<div className='monster-workspace-column'>
-					<Tabs items={tabs} />
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='monster-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<MonsterPanel
-													monster={monster}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Suggested Statistics',
-										children: getMonsterStatsSection()
-									},
-									{
-										key: '3',
-										label: 'Example Abilities',
-										children: getExampleAbilitiesSection()
-									},
-									{
-										key: '4',
-										label: 'Similar Monsters',
-										children: getSimilarMonstersSection()
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='monster-edit-panel'>
+			<div className='monster-workspace-column'>
+				<Tabs items={tabs} />
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='monster-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterPanel
+												monster={monster}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Suggested Statistics',
+									children: getMonsterStatsSection()
+								},
+								{
+									key: '3',
+									label: 'Example Abilities',
+									children: getExampleAbilitiesSection()
+								},
+								{
+									key: '4',
+									label: 'Similar Monsters',
+									children: getSimilarMonstersSection()
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

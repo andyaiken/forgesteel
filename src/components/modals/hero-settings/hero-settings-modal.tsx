@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
 import { HeroSourcebooksPanel } from '@/components/panels/hero-sourcebooks/hero-sourcebooks-panel';
 import { HeroTutorialPanel } from '@/components/panels/hero-tutorial/hero-tutorial-panel';
@@ -37,24 +36,22 @@ export const HeroSettingsModal = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Modal
-				content={
-					<div className='hero-settings-modal'>
-						<HeroTutorialPanel
-							value={hero.state.tutorialMode}
-							onChange={setTutorialMode}
-						/>
-						<HeroSourcebooksPanel
-							sourcebooks={props.allSourcebooks}
-							sourcebookIDs={hero.sourcebookIDs}
-							onImportSourcebook={props.onImportSourcebook}
-							onChange={setSourcebookIDs}
-						/>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		</ErrorBoundary>
+		<Modal
+			content={
+				<div className='hero-settings-modal'>
+					<HeroTutorialPanel
+						value={hero.state.tutorialMode}
+						onChange={setTutorialMode}
+					/>
+					<HeroSourcebooksPanel
+						sourcebooks={props.allSourcebooks}
+						sourcebookIDs={hero.sourcebookIDs}
+						onImportSourcebook={props.onImportSourcebook}
+						onChange={setSourcebookIDs}
+					/>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
 	);
 };

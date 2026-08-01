@@ -1,7 +1,6 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Flex, Statistic } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -42,84 +41,82 @@ export const StatsPanel = (props: Props) => {
 	const recoveriesSuffix = props.hero.state.recoveriesUsed === 0 ? null : `/ ${maxRecoveries}`;
 
 	return (
-		<ErrorBoundary>
-			<div className='stats-section'>
-				<Flex gap={10}>
-					<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => props.onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
-						<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
-					</StatsRow>
-					<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => props.onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
-						<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-					</StatsRow>
-					<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => props.onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
-						<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-					</StatsRow>
-					<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => props.onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
-						<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-					</StatsRow>
-					<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => props.onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
-						<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-					</StatsRow>
-				</Flex>
-				{
-					useRows ?
-						<>
-							<div className='selectable-row clickable' onClick={() => props.onShowState(HeroModalType.Resources)}>
-								{
-									HeroLogic.getHeroicResources(props.hero).map(hr => (
-										<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
-									))
-								}
-								<div>Surges: <b>{props.hero.state.surges}</b></div>
-								<div>Victories: <b>{props.hero.state.victories}</b></div>
-								<div>XP: <b>{props.hero.state.xp}</b></div>
-								<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
-								<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
-							</div>
-							<div className='selectable-row'>
-								<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
-								<div>{speedStr}: <b>{speed.value}</b></div>
-								<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
-								<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
-								<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
-							</div>
-							<div className='selectable-row clickable' onClick={() => props.onShowState(HeroModalType.Vitals)}>
-								<div>Stamina: <b>{stamina}</b></div>
-								<div>Recoveries: <b>{recoveries}</b></div>
-								<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
-							</div>
-						</>
-						:
-						<>
-							<StatsRow caption='Resources' onClick={() => props.onShowState(HeroModalType.Resources)}>
-								{
-									HeroLogic.getHeroicResources(props.hero).map(hr => (
-										<Statistic key={hr.id} title={hr.name} value={hr.value} />
-									))
-								}
-								<Statistic title='Surges' value={props.hero.state.surges} />
-								<Statistic title='Victories' value={props.hero.state.victories} />
-								<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
-								<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
-								<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+		<div className='stats-section'>
+			<Flex gap={10}>
+				<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => props.onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
+					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+				</StatsRow>
+				<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => props.onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
+					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+				</StatsRow>
+				<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => props.onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
+					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+				</StatsRow>
+				<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => props.onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
+					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
+				</StatsRow>
+				<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => props.onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
+					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+				</StatsRow>
+			</Flex>
+			{
+				useRows ?
+					<>
+						<div className='selectable-row clickable' onClick={() => props.onShowState(HeroModalType.Resources)}>
+							{
+								HeroLogic.getHeroicResources(props.hero).map(hr => (
+									<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
+								))
+							}
+							<div>Surges: <b>{props.hero.state.surges}</b></div>
+							<div>Victories: <b>{props.hero.state.victories}</b></div>
+							<div>XP: <b>{props.hero.state.xp}</b></div>
+							<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
+							<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
+						</div>
+						<div className='selectable-row'>
+							<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
+							<div>{speedStr}: <b>{speed.value}</b></div>
+							<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
+							<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
+							<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
+						</div>
+						<div className='selectable-row clickable' onClick={() => props.onShowState(HeroModalType.Vitals)}>
+							<div>Stamina: <b>{stamina}</b></div>
+							<div>Recoveries: <b>{recoveries}</b></div>
+							<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
+						</div>
+					</>
+					:
+					<>
+						<StatsRow caption='Resources' onClick={() => props.onShowState(HeroModalType.Resources)}>
+							{
+								HeroLogic.getHeroicResources(props.hero).map(hr => (
+									<Statistic key={hr.id} title={hr.name} value={hr.value} />
+								))
+							}
+							<Statistic title='Surges' value={props.hero.state.surges} />
+							<Statistic title='Victories' value={props.hero.state.victories} />
+							<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
+							<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
+							<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+						</StatsRow>
+						<Flex gap={10}>
+							<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
+								<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+								<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
+								<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
+								<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
+								<Statistic title='Save' value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
 							</StatsRow>
-							<Flex gap={10}>
-								<StatsRow caption='Statistics' style={{ flex: '5 5 0' }}>
-									<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
-									<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
-									<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-									<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
-									<Statistic title='Save' value={HeroLogic.getSaveThreshold(props.hero)} suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined} />
-								</StatsRow>
-								<StatsRow caption='Vitals' onClick={() => props.onShowState(HeroModalType.Vitals)} style={{ flex: '3 3 0' }}>
-									<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
-									<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
-									<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
-								</StatsRow>
-							</Flex>
-						</>
-				}
-			</div>
-		</ErrorBoundary>
+							<StatsRow caption='Vitals' onClick={() => props.onShowState(HeroModalType.Vitals)} style={{ flex: '3 3 0' }}>
+								<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
+								<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
+								<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+							</StatsRow>
+						</Flex>
+					</>
+			}
+		</div>
 	);
 };

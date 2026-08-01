@@ -13,7 +13,6 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -184,11 +183,7 @@ export const PrintSheet = (props: Props) => {
 		return null;
 	}
 
-	return (
-		<ErrorBoundary>
-			{content}
-		</ErrorBoundary>
-	);
+	return content;
 };
 
 interface AncestryProps {

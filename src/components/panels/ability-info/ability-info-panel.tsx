@@ -2,7 +2,6 @@ import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
@@ -61,40 +60,38 @@ export const AbilityInfoPanel = (props: Props) => {
 	const monogram = getMonogram();
 
 	return (
-		<ErrorBoundary>
-			<div className='ability-info-panel'>
-				{monogram ? <SashPanel monogram={monogram} /> : null}
-				<div className='ds-text compact-text bold-text' style={{ position: 'relative', zIndex: '10' }}>
-					{FormatLogic.getAbilityType(props.ability.type)}
-				</div>
-				{
-					distance ?
-						<Field
-							compact={true}
-							label={props.ability.target !== distance ? 'Distance' : 'Distance / Target'}
-							value={<Markdown useSpan={true} text={distance} />}
-						/>
-						: null
-				}
-				{
-					props.ability.target && (props.ability.target !== distance) ?
-						<Field
-							compact={true}
-							label='Target'
-							value={<Markdown useSpan={true} text={props.ability.target} />}
-						/>
-						: null
-				}
-				{
-					props.ability.type.trigger ?
-						<Field
-							compact={true}
-							label='Trigger'
-							value={<Markdown useSpan={true} text={props.ability.type.trigger} />}
-						/>
-						: null
-				}
+		<div className='ability-info-panel'>
+			{monogram ? <SashPanel monogram={monogram} /> : null}
+			<div className='ds-text compact-text bold-text' style={{ position: 'relative', zIndex: '10' }}>
+				{FormatLogic.getAbilityType(props.ability.type)}
 			</div>
-		</ErrorBoundary>
+			{
+				distance ?
+					<Field
+						compact={true}
+						label={props.ability.target !== distance ? 'Distance' : 'Distance / Target'}
+						value={<Markdown useSpan={true} text={distance} />}
+					/>
+					: null
+			}
+			{
+				props.ability.target && (props.ability.target !== distance) ?
+					<Field
+						compact={true}
+						label='Target'
+						value={<Markdown useSpan={true} text={props.ability.target} />}
+					/>
+					: null
+			}
+			{
+				props.ability.type.trigger ?
+					<Field
+						compact={true}
+						label='Trigger'
+						value={<Markdown useSpan={true} text={props.ability.type.trigger} />}
+					/>
+					: null
+			}
+		</div>
 	);
 };

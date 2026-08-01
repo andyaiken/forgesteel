@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Popover } from 'antd';
 import { ReactNode } from 'react';
@@ -10,10 +9,8 @@ interface Props {
 }
 export const Info = (props: Props) => {
 	return (
-		<ErrorBoundary>
-			<Popover content={props.children}>
-				<InfoCircleOutlined className='info-icon' />
-			</Popover>
-		</ErrorBoundary>
+		<Popover content={props.children}>
+			<InfoCircleOutlined className='info-icon' />
+		</Popover>
 	);
 };

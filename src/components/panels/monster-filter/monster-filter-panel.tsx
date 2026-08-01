@@ -1,6 +1,5 @@
 import { Flex, Select, Slider, Space, Tag } from 'antd';
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
@@ -113,114 +112,112 @@ export const MonsterFilterPanel = (props: Props) => {
 	const maxEV = Collections.max(props.monsters.map(m => m.encounterValue), x => x) || 0;
 
 	return (
-		<ErrorBoundary>
-			<div className='monster-filter-panel'>
-				<Space orientation='vertical' style={{ width: '100%' }}>
-					<Flex align='center' justify='center' gap={5} wrap={true}>
-						{props.includeNameFilter ? <Tag.CheckableTag checked={showName} onChange={toggleName}>Name</Tag.CheckableTag> : null}
-						<Tag.CheckableTag checked={showKeywords} onChange={toggleKeywords}>Keywords</Tag.CheckableTag>
-						<Tag.CheckableTag checked={showRole} onChange={toggleRoles}>Role</Tag.CheckableTag>
-						{props.includeOrgFilter ? <Tag.CheckableTag checked={showOrg} onChange={toggleOrg}>Organization</Tag.CheckableTag> : null}
-						<Tag.CheckableTag checked={showSize} onChange={toggleSize}>Size</Tag.CheckableTag>
-						<Tag.CheckableTag checked={showLevel} onChange={toggleLevel}>Level</Tag.CheckableTag>
-						{props.includeEVFilter ? <Tag.CheckableTag checked={showEV} onChange={toggleEV}>EV</Tag.CheckableTag> : null}
-					</Flex>
-					{
-						showName && props.includeNameFilter ?
-							<TextInput
-								placeholder='Name'
-								allowClear={true}
-								value={props.monsterFilter.name}
-								onChange={setFilterName}
+		<div className='monster-filter-panel'>
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Flex align='center' justify='center' gap={5} wrap={true}>
+					{props.includeNameFilter ? <Tag.CheckableTag checked={showName} onChange={toggleName}>Name</Tag.CheckableTag> : null}
+					<Tag.CheckableTag checked={showKeywords} onChange={toggleKeywords}>Keywords</Tag.CheckableTag>
+					<Tag.CheckableTag checked={showRole} onChange={toggleRoles}>Role</Tag.CheckableTag>
+					{props.includeOrgFilter ? <Tag.CheckableTag checked={showOrg} onChange={toggleOrg}>Organization</Tag.CheckableTag> : null}
+					<Tag.CheckableTag checked={showSize} onChange={toggleSize}>Size</Tag.CheckableTag>
+					<Tag.CheckableTag checked={showLevel} onChange={toggleLevel}>Level</Tag.CheckableTag>
+					{props.includeEVFilter ? <Tag.CheckableTag checked={showEV} onChange={toggleEV}>EV</Tag.CheckableTag> : null}
+				</Flex>
+				{
+					showName && props.includeNameFilter ?
+						<TextInput
+							placeholder='Name'
+							allowClear={true}
+							value={props.monsterFilter.name}
+							onChange={setFilterName}
+						/>
+						: null
+				}
+				{
+					showKeywords ?
+						<Select
+							style={{ width: '100%' }}
+							mode='tags'
+							allowClear={true}
+							placeholder='Keywords'
+							options={keywords.map(k => ({ label: k, value: k }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={props.monsterFilter.keywords}
+							onChange={setFilterKeywords}
+						/>
+						: null
+				}
+				{
+					showRole ?
+						<Select
+							style={{ width: '100%' }}
+							mode='multiple'
+							allowClear={true}
+							placeholder='Role'
+							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={props.monsterFilter.roles}
+							onChange={setFilterRoles}
+						/>
+						: null
+				}
+				{
+					showOrg ?
+						<Select
+							style={{ width: '100%' }}
+							mode='multiple'
+							allowClear={true}
+							placeholder='Organization'
+							options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(r => ({ label: r, value: r }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={props.monsterFilter.organizations}
+							onChange={setFilterOrganizations}
+						/>
+						: null
+				}
+				{
+					showSize && (props.monsterFilter.size.length > 0) ?
+						<>
+							<Slider
+								range={{ draggableTrack: true }}
+								min={1}
+								max={maxSize}
+								value={props.monsterFilter.size}
+								onChange={setFilterSize}
 							/>
-							: null
-					}
-					{
-						showKeywords ?
-							<Select
-								style={{ width: '100%' }}
-								mode='tags'
-								allowClear={true}
-								placeholder='Keywords'
-								options={keywords.map(k => ({ label: k, value: k }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={props.monsterFilter.keywords}
-								onChange={setFilterKeywords}
+							<Field label='Size' value={`${Math.min(...props.monsterFilter.size)} to ${Math.max(...props.monsterFilter.size)}`} />
+						</>
+						: null
+				}
+				{
+					showLevel && (props.monsterFilter.level.length > 0) ?
+						<>
+							<Slider
+								range={{ draggableTrack: true }}
+								min={1}
+								max={maxLevel}
+								value={props.monsterFilter.level}
+								onChange={setFilterLevel}
 							/>
-							: null
-					}
-					{
-						showRole ?
-							<Select
-								style={{ width: '100%' }}
-								mode='multiple'
-								allowClear={true}
-								placeholder='Role'
-								options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={props.monsterFilter.roles}
-								onChange={setFilterRoles}
+							<Field label='Level' value={`${Math.min(...props.monsterFilter.level)} to ${Math.max(...props.monsterFilter.level)}`} />
+						</>
+						: null
+				}
+				{
+					showEV && (props.monsterFilter.ev.length > 0) ?
+						<>
+							<Slider
+								range={{ draggableTrack: true }}
+								min={0}
+								max={maxEV}
+								value={props.monsterFilter.ev}
+								onChange={setFilterEV}
 							/>
-							: null
-					}
-					{
-						showOrg ?
-							<Select
-								style={{ width: '100%' }}
-								mode='multiple'
-								allowClear={true}
-								placeholder='Organization'
-								options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(r => ({ label: r, value: r }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={props.monsterFilter.organizations}
-								onChange={setFilterOrganizations}
-							/>
-							: null
-					}
-					{
-						showSize && (props.monsterFilter.size.length > 0) ?
-							<>
-								<Slider
-									range={{ draggableTrack: true }}
-									min={1}
-									max={maxSize}
-									value={props.monsterFilter.size}
-									onChange={setFilterSize}
-								/>
-								<Field label='Size' value={`${Math.min(...props.monsterFilter.size)} to ${Math.max(...props.monsterFilter.size)}`} />
-							</>
-							: null
-					}
-					{
-						showLevel && (props.monsterFilter.level.length > 0) ?
-							<>
-								<Slider
-									range={{ draggableTrack: true }}
-									min={1}
-									max={maxLevel}
-									value={props.monsterFilter.level}
-									onChange={setFilterLevel}
-								/>
-								<Field label='Level' value={`${Math.min(...props.monsterFilter.level)} to ${Math.max(...props.monsterFilter.level)}`} />
-							</>
-							: null
-					}
-					{
-						showEV && (props.monsterFilter.ev.length > 0) ?
-							<>
-								<Slider
-									range={{ draggableTrack: true }}
-									min={0}
-									max={maxEV}
-									value={props.monsterFilter.ev}
-									onChange={setFilterEV}
-								/>
-								<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
-							</>
-							: null
-					}
-				</Space>
-			</div>
-		</ErrorBoundary>
+							<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
+						</>
+						: null
+				}
+			</Space>
+		</div>
 	);
 };

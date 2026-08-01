@@ -9,7 +9,6 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
@@ -738,45 +737,43 @@ export const HeroCustomizeModal = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Modal
-				content={
-					<div className='hero-customize-modal'>
-						<HeaderText extra={getMenu()}>
-							Customize
-						</HeaderText>
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							{
-								hero.features
-									.filter(f => f.id !== 'default-language')
-									.map(f => (
-										<Expander
-											key={f.id}
-											title={f.name}
-											extra={[
-												<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
-											]}
-										>
-											{getEditSection(f)}
-											<ConfigFeature
-												feature={f}
-												hero={props.hero}
-												sourcebooks={props.sourcebooks}
-												setData={data => setFeatureData(f.id, data)}
-											/>
-										</Expander>
-									))
-							}
-							{
-								hero.features.filter(f => f.id !== 'default-language').length === 0 ?
-									<Empty text='You have no customizations.' />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		</ErrorBoundary>
+		<Modal
+			content={
+				<div className='hero-customize-modal'>
+					<HeaderText extra={getMenu()}>
+						Customize
+					</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							hero.features
+								.filter(f => f.id !== 'default-language')
+								.map(f => (
+									<Expander
+										key={f.id}
+										title={f.name}
+										extra={[
+											<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
+										]}
+									>
+										{getEditSection(f)}
+										<ConfigFeature
+											feature={f}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={data => setFeatureData(f.id, data)}
+										/>
+									</Expander>
+								))
+						}
+						{
+							hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+								<Empty text='You have no customizations.' />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
 	);
 };

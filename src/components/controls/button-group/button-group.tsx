@@ -1,6 +1,5 @@
 import { Button, Divider, Popover, Space } from 'antd';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 import './button-group.scss';
@@ -49,37 +48,35 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className='button-group'>
-				<Space size={2} separator={<Divider orientation='vertical' />}>
-					{
-						props.buttons.filter(item => !!item).map((item, n) => {
-							switch (item.type) {
-								case 'button':
-									return (
-										<Button key={n} type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip} onClick={e => { e.stopPropagation(); item.onClick(); }}>
+		<div className='button-group'>
+			<Space size={2} separator={<Divider orientation='vertical' />}>
+				{
+					props.buttons.filter(item => !!item).map((item, n) => {
+						switch (item.type) {
+							case 'button':
+								return (
+									<Button key={n} type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip} onClick={e => { e.stopPropagation(); item.onClick(); }}>
+										{item.label}
+									</Button>
+								);
+							case 'danger':
+								return (
+									<DangerButton mode={item.label ? 'inline' : 'clear'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={e => { e.stopPropagation(); item.onClick(); }} />
+								);
+							case 'dropdown':
+								return (
+									<Popover className='dropdown' trigger='click' content={item.popover}>
+										<Button type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip}>
 											{item.label}
 										</Button>
-									);
-								case 'danger':
-									return (
-										<DangerButton mode={item.label ? 'inline' : 'clear'} label={item.label} icon={item.icon} disabled={item.disabled} disabledMessage={item.disabledMessage} onConfirm={e => { e.stopPropagation(); item.onClick(); }} />
-									);
-								case 'dropdown':
-									return (
-										<Popover className='dropdown' trigger='click' content={item.popover}>
-											<Button type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip}>
-												{item.label}
-											</Button>
-										</Popover>
-									);
-								case 'control':
-									return item.control;
-							}
-						})
-					}
-				</Space>
-			</div>
-		</ErrorBoundary>
+									</Popover>
+								);
+							case 'control':
+								return item.control;
+						}
+					})
+				}
+			</Space>
+		</div>
 	);
 };

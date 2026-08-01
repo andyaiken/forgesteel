@@ -12,7 +12,6 @@ import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Feature } from '@/models/feature';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
@@ -38,34 +37,7 @@ import { UpdateLogic } from './update/update-logic';
 
 export class SourcebookLogic {
 	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
-		const list: Sourcebook[] = [
-			// Official
-			SourcebookData.core,
-			SourcebookData.orden,
-			SourcebookData.beastheart,
-			SourcebookData.summoner,
-
-			// Third Party
-			SourcebookData.community,
-			SourcebookData.lookOut,
-			SourcebookData.magazineBlacksmith,
-			SourcebookData.magazineRatcatcher,
-			SourcebookData.steelEchoes,
-			SourcebookData.triglav,
-			SourcebookData.weaponsOfLegend
-		];
-
-		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
-			list.push(SourcebookData.patreon);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {
-			list.push(SourcebookData.communityPrerelease);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.ageOfSecrets.code)) {
-			list.push(SourcebookData.ageOfSecrets);
-		}
+		const list = [ ...SourcebookData.getCached() ];
 
 		list.forEach(UpdateLogic.updateSourcebook);
 

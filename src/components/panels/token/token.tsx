@@ -1,6 +1,5 @@
 import { Hero, HeroOverview } from '@/models/hero';
 import { CSSProperties } from 'react';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Format } from '@/utils/format';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
@@ -40,26 +39,24 @@ export const Token = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
+		<div
+			className={className}
+			style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
+			title={props.name}
+			onClick={props.onClick}
+		>
 			<div
-				className={className}
-				style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
-				title={props.name}
-				onClick={props.onClick}
+				className={innerClassName}
+				style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
 			>
-				<div
-					className={innerClassName}
-					style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
-				>
-					{
-						props.picture ?
-							<img className='portrait' src={props.picture} title={props.name} />
-							:
-							Format.getMonogram(props.name)
-					}
-				</div>
+				{
+					props.picture ?
+						<img className='portrait' src={props.picture} title={props.name} />
+						:
+						Format.getMonogram(props.name)
+				}
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };
 
@@ -71,17 +68,15 @@ interface HeroTokenProps {
 
 export const HeroToken = (props: HeroTokenProps) => {
 	return (
-		<ErrorBoundary>
-			<Token
-				name={props.hero.name || 'Hero'}
-				picture={props.hero.picture || undefined}
-				role={MonsterRoleType.NoRole}
-				type='hero'
-				isDefeated={props.hero.state.defeated}
-				size={props.size}
-				onClick={props.onClick}
-			/>
-		</ErrorBoundary>
+		<Token
+			name={props.hero.name || 'Hero'}
+			picture={props.hero.picture || undefined}
+			role={MonsterRoleType.NoRole}
+			type='hero'
+			isDefeated={props.hero.state.defeated}
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };
 
@@ -93,15 +88,13 @@ interface PregenTokenProps {
 
 export const PregenToken = (props: PregenTokenProps) => {
 	return (
-		<ErrorBoundary>
-			<Token
-				name={props.pregen.name || 'Pregen'}
-				role={MonsterRoleType.NoRole}
-				type='hero'
-				size={props.size}
-				onClick={props.onClick}
-			/>
-		</ErrorBoundary>
+		<Token
+			name={props.pregen.name || 'Pregen'}
+			role={MonsterRoleType.NoRole}
+			type='hero'
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };
 
@@ -113,16 +106,14 @@ interface HeroOverviewTokenProps {
 
 export const HeroOverviewToken = (props: HeroOverviewTokenProps) => {
 	return (
-		<ErrorBoundary>
-			<Token
-				name={props.hero.name || 'Hero'}
-				picture={props.hero.picture || undefined}
-				role={MonsterRoleType.NoRole}
-				type='hero'
-				size={props.size}
-				onClick={props.onClick}
-			/>
-		</ErrorBoundary>
+		<Token
+			name={props.hero.name || 'Hero'}
+			picture={props.hero.picture || undefined}
+			role={MonsterRoleType.NoRole}
+			type='hero'
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };
 
@@ -133,15 +124,13 @@ interface HeroInfoProps {
 
 export const HeroInfo = (props: HeroInfoProps) => {
 	return (
-		<ErrorBoundary>
-			<div className='combatant-button-content' style={props.style}>
-				<HeroToken hero={props.hero} size={30} />
-				<div className='combatant-button-details'>
-					<div className='combatant-name'>{props.hero.name}</div>
-					<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
-				</div>
+		<div className='combatant-button-content' style={props.style}>
+			<HeroToken hero={props.hero} size={30} />
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.hero.name}</div>
+				<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };
 
@@ -152,15 +141,13 @@ interface PregenInfoProps {
 
 export const PregenInfo = (props: PregenInfoProps) => {
 	return (
-		<ErrorBoundary>
-			<div className='combatant-button-content' style={props.style}>
-				<PregenToken pregen={props.pregen} size={30} />
-				<div className='combatant-button-details'>
-					<div className='combatant-name'>{props.pregen.name}</div>
-					<div className='combatant-info'>{props.pregen.description}</div>
-				</div>
+		<div className='combatant-button-content' style={props.style}>
+			<PregenToken pregen={props.pregen} size={30} />
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.pregen.name}</div>
+				<div className='combatant-info'>{props.pregen.description}</div>
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };
 
@@ -173,17 +160,15 @@ interface MonsterTokenProps {
 
 export const MonsterToken = (props: MonsterTokenProps) => {
 	return (
-		<ErrorBoundary>
-			<Token
-				name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
-				picture={props.monster.picture || props.monsterGroup?.picture || undefined}
-				role={props.monster.role.type}
-				type='monster'
-				isDefeated={props.monster.state.defeated}
-				size={props.size}
-				onClick={props.onClick}
-			/>
-		</ErrorBoundary>
+		<Token
+			name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+			picture={props.monster.picture || props.monsterGroup?.picture || undefined}
+			role={props.monster.role.type}
+			type='monster'
+			isDefeated={props.monster.state.defeated}
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };
 
@@ -194,15 +179,13 @@ interface MonsterInfoProps {
 
 export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
-		<ErrorBoundary>
-			<div className='combatant-button-content' style={props.style}>
-				<MonsterToken monster={props.monster} size={30} />
-				<div className='combatant-button-details'>
-					<div className='combatant-name'>{props.monster.name}</div>
-					<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
-				</div>
+		<div className='combatant-button-content' style={props.style}>
+			<MonsterToken monster={props.monster} size={30} />
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.monster.name}</div>
+				<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };
 
@@ -213,13 +196,11 @@ interface TerrainInfoProps {
 
 export const TerrainInfo = (props: TerrainInfoProps) => {
 	return (
-		<ErrorBoundary>
-			<div className='combatant-button-content' style={props.style}>
-				<div className='combatant-button-details'>
-					<div className='combatant-name'>{props.terrain.name}</div>
-					<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
-				</div>
+		<div className='combatant-button-content' style={props.style}>
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.terrain.name}</div>
+				<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };

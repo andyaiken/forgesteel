@@ -8,7 +8,6 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -712,33 +711,31 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='ability-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Ability',
-							children: getAbilityPage()
-						},
-						{
-							key: '2',
-							label: 'Type',
-							children: getTypePage()
-						},
-						{
-							key: '3',
-							label: 'Usage',
-							children: getUsagePage()
-						},
-						{
-							key: '4',
-							label: 'Content',
-							children: getContentPage()
-						}
-					]}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='ability-edit-panel'>
+			<Tabs
+				items={[
+					{
+						key: '1',
+						label: 'Ability',
+						children: getAbilityPage()
+					},
+					{
+						key: '2',
+						label: 'Type',
+						children: getTypePage()
+					},
+					{
+						key: '3',
+						label: 'Usage',
+						children: getUsagePage()
+					},
+					{
+						key: '4',
+						label: 'Content',
+						children: getContentPage()
+					}
+				]}
+			/>
+		</div>
 	);
 };

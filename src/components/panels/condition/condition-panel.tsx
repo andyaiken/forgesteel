@@ -4,7 +4,6 @@ import { Segmented, Space } from 'antd';
 import { Condition } from '@/models/condition';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -39,44 +38,42 @@ export const ConditionPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='condition-panel'>
-				<Space orientation='vertical' style={{ width: '100%', margin: '5px 0' }}>
-					{
-						condition.type === ConditionType.Custom ?
-							<MarkdownEditor placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
-							: null
-					}
-					{
-						condition.type === ConditionType.Quick ?
-							<div className='ds-text bold-text'>{condition.text}</div>
-							: null
-					}
-					{
-						(condition.type !== ConditionType.Custom) && (condition.type !== ConditionType.Quick) ?
-							<Field
-								label={condition.type}
-								value={
-									<Markdown
-										text={ConditionLogic.getDescription(condition.type)}
-										useSpan={true}
-									/>
-								}
-							/>
-							: null
-					}
-					<Segmented
-						name='endtypes'
-						block={true}
-						options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
-						value={condition.ends}
-						onChange={setConditionEndType}
-					/>
-				</Space>
-				<div className='action-buttons'>
-					<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
-				</div>
+		<div className='condition-panel'>
+			<Space orientation='vertical' style={{ width: '100%', margin: '5px 0' }}>
+				{
+					condition.type === ConditionType.Custom ?
+						<MarkdownEditor placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+						: null
+				}
+				{
+					condition.type === ConditionType.Quick ?
+						<div className='ds-text bold-text'>{condition.text}</div>
+						: null
+				}
+				{
+					(condition.type !== ConditionType.Custom) && (condition.type !== ConditionType.Quick) ?
+						<Field
+							label={condition.type}
+							value={
+								<Markdown
+									text={ConditionLogic.getDescription(condition.type)}
+									useSpan={true}
+								/>
+							}
+						/>
+						: null
+				}
+				<Segmented
+					name='endtypes'
+					block={true}
+					options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
+					value={condition.ends}
+					onChange={setConditionEndType}
+				/>
+			</Space>
+			<div className='action-buttons'>
+				<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };

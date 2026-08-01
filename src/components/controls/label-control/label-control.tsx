@@ -1,5 +1,4 @@
 import { CSSProperties, ReactNode } from 'react';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './label-control.scss';
 
@@ -17,17 +16,15 @@ export const LabelControl = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className={className} style={props.style}>
-				<span className='label-control-label'>
-					{
-						props.label
-					}
-				</span>
-				<span className='label-control-control'>
-					{props.control}
-				</span>
-			</div>
-		</ErrorBoundary>
+		<div className={className} style={props.style}>
+			<span className='label-control-label'>
+				{
+					props.label
+				}
+			</span>
+			<span className='label-control-control'>
+				{props.control}
+			</span>
+		</div>
 	);
 };

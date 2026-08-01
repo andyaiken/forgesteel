@@ -13,7 +13,6 @@ import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficul
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterTurnModal } from '@/components/modals/encounter-turn/encounter-turn-modal';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -748,7 +747,7 @@ export const EncounterRunPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className={className} id={encounter.id}>
 				<Flex align='flex-start' gap={20} style={{ height: '100%' }}>
 					<div style={{ flex: '1 1 0', height: '100%', padding: '0 5px', overflowY: 'auto' }}>
@@ -958,7 +957,7 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };
 
@@ -986,26 +985,22 @@ const NotePanel = (props: NotePanelProps) => {
 
 	if (editing) {
 		return (
-			<ErrorBoundary>
-				<SelectablePanel key={note.id}>
-					<HeaderText level={1} extra={editBtn}>
-						Note
-					</HeaderText>
-					<ElementEditPanel element={note} onChange={onChange} />
-				</SelectablePanel>
+			<SelectablePanel key={note.id}>
+				<HeaderText level={1} extra={editBtn}>
+					Note
+				</HeaderText>
+				<ElementEditPanel element={note} onChange={onChange} />
+			</SelectablePanel>
 
-			</ErrorBoundary>
 		);
 	}
 
 	return (
-		<ErrorBoundary>
-			<SelectablePanel key={note.id}>
-				<HeaderText level={1} extra={editBtn}>
-					{note.name || 'Note'}
-				</HeaderText>
-				{note.description ? <Markdown text={note.description} /> : <Empty />}
-			</SelectablePanel>
-		</ErrorBoundary>
+		<SelectablePanel key={note.id}>
+			<HeaderText level={1} extra={editBtn}>
+				{note.name || 'Note'}
+			</HeaderText>
+			{note.description ? <Markdown text={note.description} /> : <Empty />}
+		</SelectablePanel>
 	);
 };

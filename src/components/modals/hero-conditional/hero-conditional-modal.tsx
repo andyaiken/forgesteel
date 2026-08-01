@@ -1,5 +1,4 @@
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
@@ -53,34 +52,32 @@ export const HeroConditionalModal = (props: Props) => {
 		});
 
 	return (
-		<ErrorBoundary>
-			<Modal
-				content={
-					<div className='hero-conditional-modal'>
-						<HeaderText>Conditional Features</HeaderText>
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							{
-								list.map(f => (
-									<SelectablePanel key={f.id}>
-										<FeatureConfigPanel
-											feature={f}
-											hero={hero}
-											sourcebooks={props.sourcebooks}
-											setData={setData}
-										/>
-									</SelectablePanel>
-								))
-							}
-							{
-								list.length === 0 ?
-									<Empty text='You have no conditional features.' />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		</ErrorBoundary>
+		<Modal
+			content={
+				<div className='hero-conditional-modal'>
+					<HeaderText>Conditional Features</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							list.map(f => (
+								<SelectablePanel key={f.id}>
+									<FeatureConfigPanel
+										feature={f}
+										hero={hero}
+										sourcebooks={props.sourcebooks}
+										setData={setData}
+									/>
+								</SelectablePanel>
+							))
+						}
+						{
+							list.length === 0 ?
+								<Empty text='You have no conditional features.' />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
 	);
 };

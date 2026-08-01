@@ -4,7 +4,6 @@ import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
 import { useHeroes, useOptions } from '@/contexts/data-context';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -166,52 +165,50 @@ export const MontageRunPanel = (props: Props) => {
 	const outcome = MontageLogic.getOutcome(props.montage, heroes, options);
 
 	return (
-		<ErrorBoundary>
-			<div className='montage-run-panel' id={montage.id}>
-				<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
-				<Markdown text={montage.description} />
-				<StatsRow>
-					<Field
-						orientation='vertical'
-						label='Difficulty'
-						value={props.montage.difficulty}
-					/>
-					<Field
-						orientation='vertical'
-						label='Successes'
-						value={(
-							<Space>
-								{successes} / {successLimit}
-								<CheckIcon state='success' />
-							</Space>
-						)}
-					/>
-					<Field
-						orientation='vertical'
-						label='Failures'
-						value={(
-							<Space>
-								{failures} / {failureLimit}
-								<CheckIcon state='failure' />
-							</Space>
-						)}
-					/>
-					<Field
-						orientation='vertical'
-						label='Outcome'
-						value={outcome}
-					/>
-				</StatsRow>
-				<HeaderText>Setting the Scene</HeaderText>
-				<Markdown text={montage.scene} />
-				{montage.sections.map(getSection)}
-				<div>
-					<HeaderText>Montage Test Outcomes</HeaderText>
-					<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
-					<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
-					<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
-				</div>
+		<div className='montage-run-panel' id={montage.id}>
+			<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
+			<Markdown text={montage.description} />
+			<StatsRow>
+				<Field
+					orientation='vertical'
+					label='Difficulty'
+					value={props.montage.difficulty}
+				/>
+				<Field
+					orientation='vertical'
+					label='Successes'
+					value={(
+						<Space>
+							{successes} / {successLimit}
+							<CheckIcon state='success' />
+						</Space>
+					)}
+				/>
+				<Field
+					orientation='vertical'
+					label='Failures'
+					value={(
+						<Space>
+							{failures} / {failureLimit}
+							<CheckIcon state='failure' />
+						</Space>
+					)}
+				/>
+				<Field
+					orientation='vertical'
+					label='Outcome'
+					value={outcome}
+				/>
+			</StatsRow>
+			<HeaderText>Setting the Scene</HeaderText>
+			<Markdown text={montage.scene} />
+			{montage.sections.map(getSection)}
+			<div>
+				<HeaderText>Montage Test Outcomes</HeaderText>
+				<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
+				<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
+				<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };

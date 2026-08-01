@@ -1,7 +1,6 @@
 import { AbilityListEditPanel, FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Space, Tabs } from 'antd';
 import { Ability } from '@/models/ability';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { PanelMode } from '@/enums/panel-mode';
@@ -85,53 +84,51 @@ export const SubClassEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='subclass-edit-panel'>
-				<div className='subclass-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Subclass',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Levels',
-								children: getFeaturesByLevelEditSection()
-							},
-							{
-								key: '3',
-								label: 'Abilities',
-								children: getAbilitiesEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='subclass-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<SubclassPanel
-													subclass={subClass}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='subclass-edit-panel'>
+			<div className='subclass-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Subclass',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Levels',
+							children: getFeaturesByLevelEditSection()
+						},
+						{
+							key: '3',
+							label: 'Abilities',
+							children: getAbilitiesEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='subclass-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<SubclassPanel
+												subclass={subClass}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

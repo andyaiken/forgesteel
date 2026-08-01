@@ -9,7 +9,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TutorialMode } from '@/enums/tutorial-mode';
@@ -37,7 +36,7 @@ export class HeroUpdateLogic {
 				.map(sb => sb.id);
 		}
 
-		hero.sourcebookIDs = hero.sourcebookIDs.map(id => id === '' ? SourcebookData.core.id : id);
+		hero.sourcebookIDs = hero.sourcebookIDs.map(id => id === '' ? 'core' : id);
 
 		if (hero.ancestry) {
 			hero.ancestry.features.forEach(UpdateLogic.updateFeature);

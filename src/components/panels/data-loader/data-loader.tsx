@@ -8,7 +8,6 @@ import { DataService } from '@/services/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
-import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Options } from '@/models/options';
@@ -16,6 +15,7 @@ import { PatreonLogic } from '@/logic/patreon-logic';
 import { PatreonService } from '@/services/patreon-service';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import { UpdateLogic } from '@/logic/update/update-logic';
@@ -180,7 +180,11 @@ export const DataLoader = (props: Props) => {
 				setHiddenSourcebookIDsState('pending');
 
 				const promises = [
-					updateLoadingStatus(dataService.getHomebrew(), setSourcebookState),
+					updateLoadingStatus(
+						Promise.all([ SourcebookData.loadAll(), dataService.getHomebrew() ])
+							.then(([ , homebrew ]) => homebrew),
+						setSourcebookState
+					),
 					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
@@ -258,9 +262,9 @@ export const DataLoader = (props: Props) => {
 				<div className='overall-state'>
 					<CheckIcon state={overallLoadState} />
 				</div>
-				<HeaderText level={1}>Loading Data</HeaderText>
 				<Flex vertical={true}>
 					<Flex className='load-states' vertical={true}>
+						<Progress percent={heroesProgress} size='small' showInfo={false} />
 						<CheckLabel state={connectionSettingsState}>
 							Connection Settings
 							{
@@ -271,7 +275,6 @@ export const DataLoader = (props: Props) => {
 						</CheckLabel>
 						<CheckLabel state={sourcebookState}>Sourcebooks</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
-						<Progress percent={heroesProgress} size='small' showInfo={false} />
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSourcebookIDsState}>Manifold</CheckLabel>

@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { ReactNode } from 'react';
 import { Tag } from 'antd';
@@ -46,18 +45,12 @@ export const RadioGroup = <T extends string>(props: Props<T>) => {
 
 	if (props.label) {
 		return (
-			<ErrorBoundary>
-				<LabelControl
-					label={props.label}
-					control={content}
-				/>
-			</ErrorBoundary>
+			<LabelControl
+				label={props.label}
+				control={content}
+			/>
 		);
 	}
 
-	return (
-		<ErrorBoundary>
-			{content}
-		</ErrorBoundary>
-	);
+	return content;
 };

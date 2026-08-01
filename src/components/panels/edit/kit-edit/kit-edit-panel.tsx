@@ -2,7 +2,6 @@ import { Alert, Select, Slider, Space, Tabs } from 'antd';
 import { ReactNode, useState } from 'react';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Field } from '@/components/controls/field/field';
@@ -420,68 +419,66 @@ export const KitEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='kit-edit-panel'>
-				<div className='kit-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Kit',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getKitDetailsSection()
-							},
-							{
-								key: '3',
-								label: 'Stats',
-								children: getKitStatsEditSection()
-							},
-							{
-								key: '4',
-								label: 'Damage',
-								children: getKitDamageEditSection()
-							},
-							{
-								key: '5',
-								label: 'Features',
-								children: getFeaturesEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='kit-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<KitPanel
-													kit={kit}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Tuning',
-										children: getTuningSection()
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='kit-edit-panel'>
+			<div className='kit-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Kit',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getKitDetailsSection()
+						},
+						{
+							key: '3',
+							label: 'Stats',
+							children: getKitStatsEditSection()
+						},
+						{
+							key: '4',
+							label: 'Damage',
+							children: getKitDamageEditSection()
+						},
+						{
+							key: '5',
+							label: 'Features',
+							children: getFeaturesEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='kit-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<KitPanel
+												kit={kit}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Tuning',
+									children: getTuningSection()
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

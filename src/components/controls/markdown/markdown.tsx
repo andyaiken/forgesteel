@@ -22,9 +22,9 @@ export const Markdown = (props: MarkdownProps) => {
 		<ErrorBoundary>
 			{
 				props.useSpan ?
-					<span className={props.className} dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.text.trim()) }} />
+					<span className={props.className} dangerouslySetInnerHTML={{ __html: Utils.markdownToHtml(props.text.trim()) }} />
 					:
-					<div className={props.className} dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.text.trim()) }} />
+					<div className={props.className} dangerouslySetInnerHTML={{ __html: Utils.markdownToHtml(props.text.trim()) }} />
 			}
 		</ErrorBoundary>
 	);

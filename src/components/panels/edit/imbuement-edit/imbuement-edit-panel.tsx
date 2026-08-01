@@ -1,5 +1,4 @@
 import { Select, Space, Tabs } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -140,58 +139,56 @@ export const ImbuementEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='imbuement-edit-panel'>
-				<div className='imbuement-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'imbuement',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getImbuementEditSection()
-							},
-							{
-								key: '3',
-								label: 'Crafting',
-								children: getCraftingEditSection()
-							},
-							{
-								key: '4',
-								label: 'Feature',
-								children: getFeatureEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='imbuement-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<ImbuementPanel
-													imbuement={imbuement}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='imbuement-edit-panel'>
+			<div className='imbuement-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'imbuement',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getImbuementEditSection()
+						},
+						{
+							key: '3',
+							label: 'Crafting',
+							children: getCraftingEditSection()
+						},
+						{
+							key: '4',
+							label: 'Feature',
+							children: getFeatureEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='imbuement-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<ImbuementPanel
+												imbuement={imbuement}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

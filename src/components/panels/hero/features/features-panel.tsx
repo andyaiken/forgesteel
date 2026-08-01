@@ -2,7 +2,6 @@ import { Select, Space, Tag } from 'antd';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { EllipsisOutlined } from '@ant-design/icons';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -138,36 +137,34 @@ export const FeaturesPanel = (props: Props) => {
 	);
 
 	return (
-		<ErrorBoundary>
-			<div className='features-section'>
-				{
-					buckets.map((bucket, n) =>
-						<div key={n}>
-							<HeaderText extra={n === 0 ? controls : null}>
-								{bucket.name}
-							</HeaderText>
-							<Space orientation='vertical' style={{ width: '100%' }}>
-								{
-									bucket.features.map(f =>
-										useRows ?
-											getRow(f)
-											:
-											<SelectablePanel key={f.feature.id} onSelect={() => props.onSelectFeature(f.feature)}>
-												<FeaturePanel
-													feature={f.feature}
-													source={options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
-													hero={props.hero}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-									)
-								}
-							</Space>
-						</div>
-					)
-				}
-			</div>
-		</ErrorBoundary>
+		<div className='features-section'>
+			{
+				buckets.map((bucket, n) =>
+					<div key={n}>
+						<HeaderText extra={n === 0 ? controls : null}>
+							{bucket.name}
+						</HeaderText>
+						<Space orientation='vertical' style={{ width: '100%' }}>
+							{
+								bucket.features.map(f =>
+									useRows ?
+										getRow(f)
+										:
+										<SelectablePanel key={f.feature.id} onSelect={() => props.onSelectFeature(f.feature)}>
+											<FeaturePanel
+												feature={f.feature}
+												source={options.showSources ? (f.level ? `${f.source} (level ${f.level})` : f.source) : undefined}
+												hero={props.hero}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+								)
+							}
+						</Space>
+					</div>
+				)
+			}
+		</div>
 	);
 };

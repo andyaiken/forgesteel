@@ -1,6 +1,6 @@
 import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
-import { ReactNode, useState } from 'react';
+import { ReactNode, Suspense, lazy, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
 import { useDataManager, useHeroes, useHomebrewSourcebooks, useOptions, useSession } from '@/contexts/data-context';
@@ -11,11 +11,8 @@ import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Analytics } from '@/utils/analytics';
 import { Ancestry } from '@/models/ancestry';
-import { AuthPage } from '@/components/pages/auth/auth-page';
-import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
-import { ClocktowerPage } from '@/components/pages/clocktower/clocktower-page';
 import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -45,27 +42,20 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroConditionalModal } from '@/components/modals/hero-conditional/hero-conditional-modal';
 import { HeroCustomizeModal } from '@/components/modals/hero-customize/hero-customize-modal';
-import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
 import { HeroInventoryModal } from '@/components/modals/hero-inventory/hero-inventory-modal';
-import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
 import { HeroProjectsModal } from '@/components/modals/hero-projects/hero-projects-modal';
 import { HeroResourcesModal } from '@/components/modals/hero-resources/hero-resources-modal';
 import { HeroRespiteModal } from '@/components/modals/hero-respite/hero-respite-modal';
 import { HeroSettingsModal } from '@/components/modals/hero-settings/hero-settings-modal';
-import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
 import { HeroTitlesModal } from '@/components/modals/hero-titles/hero-titles-modal';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
-import { HeroViewPage } from '@/components/pages/heroes/hero-view/hero-view-page';
 import { HeroVitalsModal } from '@/components/modals/hero-vitals/hero-vitals-modal';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
-import { LibraryEditPage } from '@/components/pages/library/library-edit/library-edit-page';
-import { LibraryListPage } from '@/components/pages/library/library-list/library-list-page';
-import { LibraryPrintPage } from '@/components/pages/library/library-print/library-print-page';
 import { MainLayout } from '@/components/main/main-layout';
 import { MinionSlotModal } from '@/components/modals/minion-slot/minion-slot-modal';
 import { Monster } from '@/models/monster';
@@ -82,9 +72,7 @@ import { ReferenceModal } from '@/components/modals/reference/reference-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { Session } from '@/models/session';
-import { SessionDirectorPage } from '@/components/pages/session/director/session-director-page';
 import { SessionLogic } from '@/logic/session-logic';
-import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
 import { SettingsModal } from '@/components/modals/settings/settings-modal';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -96,16 +84,28 @@ import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Title } from '@/models/title';
-import { TransferPage } from '@/components/pages/transfer/transfer-page';
 import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
-import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
+
+const AuthPage = lazy(() => import('@/components/pages/auth/auth-page').then(m => ({ default: m.AuthPage })));
+const BackupPage = lazy(() => import('@/components/pages/backup/backup-page').then(m => ({ default: m.BackupPage })));
+const ClocktowerPage = lazy(() => import('@/components/pages/clocktower/clocktower-page').then(m => ({ default: m.ClocktowerPage })));
+const HeroEditPage = lazy(() => import('@/components/pages/heroes/hero-edit/hero-edit-page').then(m => ({ default: m.HeroEditPage })));
+const HeroListPage = lazy(() => import('@/components/pages/heroes/hero-list/hero-list-page').then(m => ({ default: m.HeroListPage })));
+const HeroSheetPreviewPage = lazy(() => import('@/components/pages/heroes/hero-sheet/hero-sheet-preview-page').then(m => ({ default: m.HeroSheetPreviewPage })));
+const HeroViewPage = lazy(() => import('@/components/pages/heroes/hero-view/hero-view-page').then(m => ({ default: m.HeroViewPage })));
+const LibraryEditPage = lazy(() => import('@/components/pages/library/library-edit/library-edit-page').then(m => ({ default: m.LibraryEditPage })));
+const LibraryListPage = lazy(() => import('@/components/pages/library/library-list/library-list-page').then(m => ({ default: m.LibraryListPage })));
+const LibraryPrintPage = lazy(() => import('@/components/pages/library/library-print/library-print-page').then(m => ({ default: m.LibraryPrintPage })));
+const SessionDirectorPage = lazy(() => import('@/components/pages/session/director/session-director-page').then(m => ({ default: m.SessionDirectorPage })));
+const SessionPlayerPage = lazy(() => import('@/components/pages/session/player/session-player-page').then(m => ({ default: m.SessionPlayerPage })));
+const TransferPage = lazy(() => import('@/components/pages/transfer/transfer-page').then(m => ({ default: m.TransferPage })));
+const WelcomePage = lazy(() => import('@/components/pages/welcome/welcome-page').then(m => ({ default: m.WelcomePage })));
 
 interface Props {
 	connectionSettings: ConnectionSettings;
@@ -115,7 +115,6 @@ interface Props {
 export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
-	const { triggerSyncOnChange } = useSyncStatus();
 	const options = useOptions();
 	const session = useSession();
 	const heroes = useHeroes();
@@ -144,10 +143,6 @@ export const Main = (props: Props) => {
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
-			})
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 
@@ -166,8 +161,6 @@ export const Main = (props: Props) => {
 				if (playerView) {
 					playerView.location.reload();
 				}
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 
@@ -181,10 +174,6 @@ export const Main = (props: Props) => {
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
-			})
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
 			});
 	};
 
@@ -1822,209 +1811,217 @@ export const Main = (props: Props) => {
 
 	return (
 		<ErrorBoundary name='main'>
-			<Routes>
-				<Route
-					path='/'
-					element={<MainLayout drawer={drawer} setDrawer={setDrawer} />}
-				>
+			<Suspense
+				fallback={
+					<div style={{ height: '100%', width: '100%', backgroundColor: 'rgb(230, 230, 230)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+						<Spin size='large' />
+					</div>
+				}
+			>
+				<Routes>
 					<Route
-						index={true}
-						element={
-							<WelcomePage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								params={footerParams}
-								onNewHero={() => newHero('')}
-								onPregen={hero => importHero(hero, '')}
-								onNewEncounter={() => createLibraryElement('encounter', '', null)}
+						path='/'
+						element={<MainLayout drawer={drawer} setDrawer={setDrawer} />}
+					>
+						<Route
+							index={true}
+							element={
+								<WelcomePage
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									params={footerParams}
+									onNewHero={() => newHero('')}
+									onPregen={hero => importHero(hero, '')}
+									onNewEncounter={() => createLibraryElement('encounter', '', null)}
+								/>
+							}
+						/>
+						<Route path='hero'>
+							<Route
+								index={true}
+								path=':folder?'
+								element={
+									<HeroListPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										addHero={newHero}
+										importHero={importHero}
+										showParty={onShowParty}
+									/>
+								}
 							/>
-						}
-					/>
-					<Route path='hero'>
-						<Route
-							index={true}
-							path=':folder?'
-							element={
-								<HeroListPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									addHero={newHero}
-									importHero={importHero}
-									showParty={onShowParty}
-								/>
-							}
-						/>
-						<Route
-							path='view/:heroID'
-							element={
-								<HeroViewPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									exportHeroData={exportHeroData}
-									exportHeroImage={exportHeroImage}
-									exportHeroPdf={exportHeroPdf}
-									exportStandardAbilities={exportStandardAbilities}
-									copyHero={copyHero}
-									deleteHero={deleteHero}
-									showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
-									showCulture={culture => onSelectLibraryElement(culture, 'culture')}
-									showCareer={career => onSelectLibraryElement(career, 'career')}
-									showClass={heroClass => onSelectLibraryElement(heroClass, 'class')}
-									showComplication={complication => onSelectLibraryElement(complication, 'complication')}
-									showDomain={domain => onSelectLibraryElement(domain, 'domain')}
-									showKit={kit => onSelectLibraryElement(kit, 'kit')}
-									showTitle={title => onSelectLibraryElement(title, 'title')}
-									showMonster={(hero, monster, summon) => onSelectMonster(hero, monster, undefined, summon)}
-									showFollower={onSelectFollower}
-									showFixture={onSelectFixture}
-									showCharacteristic={onSelectCharacteristic}
-									showFeature={onSelectFeature}
-									showAbility={onSelectAbility}
-									showHeroState={onShowHeroState}
-									showHeroReference={onShowReference}
-									setNotes={setNotes}
-									onAddSquad={addSquad}
-									onRemoveSquad={removeSquad}
-									onAddMonsterToSquad={addMonsterToSquad}
-									onSelectControlledMonster={selectControlledMonster}
-									onSelectControlledSquad={selectControlledSquad}
-								/>
-							}
-						/>
-						<Route
-							path='edit/:heroID'
-							element={<Navigate to='start' replace={true} />}
-						/>
-						<Route
-							path='edit/:heroID/:page'
-							element={
-								<HeroEditPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									saveChanges={saveHero}
-									importSourcebook={persistHomebrewSourcebook}
-								/>
-							}
-						/>
-						<Route
-							path='sheet/:heroID'
-							element={<HeroSheetPreviewPage sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)} />}
-						/>
-					</Route>
-					<Route path='library'>
-						<Route
-							index={true}
-							element={<Navigate to='ancestry' replace={true} />}
-						/>
-						<Route
-							path=':kind/:elementID?'
-							element={
-								<LibraryListPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									showSourcebooks={showSourcebooks}
-									showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
-									showEncounterTools={showEncounterTools}
-									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
-									importElement={importLibraryElement}
-									moveElement={moveLibraryElement}
-									deleteElement={deleteLibraryElement}
-									exportElementData={exportLibraryElementData}
-									exportElementImage={exportLibraryElementImage}
-									exportElementPdf={exportLibraryElementPdf}
-									startEncounter={startEncounter}
-									startMontage={startMontage}
-									startNegotiation={startNegotiation}
-									startMap={startMap}
-								/>
-							}
-						/>
-						<Route
-							path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
-							element={
-								<LibraryEditPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
-									showTerrain={onSelectTerrain}
-									saveChanges={saveLibraryElement}
-								/>
-							}
-						/>
-						<Route
-							path='print/:kind/:sourcebookID/:elementID'
-							element={
-								<LibraryPrintPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								/>
-							}
-						/>
-					</Route>
-					<Route path='session'>
-						<Route
-							index={true}
-							element={<Navigate to='director' replace={true} />}
-						/>
-						<Route
-							path='director'
-							element={
-								<SessionDirectorPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-									showPlayerView={showPlayerView}
-									startEncounter={startEncounter}
-									startMontage={startMontage}
-									startNegotiation={startNegotiation}
-									startMap={startMap}
-									startCounter={startCounter}
-									updateHero={persistHero}
-									updateEncounter={updateEncounter}
-									updateMontage={updateMontage}
-									updateNegotiation={updateNegotiation}
-									updateMap={updateMap}
-									updateCounter={updateCounter}
-									finishSessionElement={finishSessionElement}
-									showEncounterTools={showEncounterTools}
-								/>
-							}
-						/>
-						<Route
-							path='player'
-							element={
-								<SessionPlayerPage
-									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									params={footerParams}
-								/>
-							}
-						/>
-					</Route>
-					<Route
-						path='oauth-redirect'
-						element={
-							<AuthPage
-								connectionSettings={connectionSettings}
-								params={footerParams}
-								setConnectionSettings={persistConnectionSettings}
+							<Route
+								path='view/:heroID'
+								element={
+									<HeroViewPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										exportHeroData={exportHeroData}
+										exportHeroImage={exportHeroImage}
+										exportHeroPdf={exportHeroPdf}
+										exportStandardAbilities={exportStandardAbilities}
+										copyHero={copyHero}
+										deleteHero={deleteHero}
+										showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
+										showCulture={culture => onSelectLibraryElement(culture, 'culture')}
+										showCareer={career => onSelectLibraryElement(career, 'career')}
+										showClass={heroClass => onSelectLibraryElement(heroClass, 'class')}
+										showComplication={complication => onSelectLibraryElement(complication, 'complication')}
+										showDomain={domain => onSelectLibraryElement(domain, 'domain')}
+										showKit={kit => onSelectLibraryElement(kit, 'kit')}
+										showTitle={title => onSelectLibraryElement(title, 'title')}
+										showMonster={(hero, monster, summon) => onSelectMonster(hero, monster, undefined, summon)}
+										showFollower={onSelectFollower}
+										showFixture={onSelectFixture}
+										showCharacteristic={onSelectCharacteristic}
+										showFeature={onSelectFeature}
+										showAbility={onSelectAbility}
+										showHeroState={onShowHeroState}
+										showHeroReference={onShowReference}
+										setNotes={setNotes}
+										onAddSquad={addSquad}
+										onRemoveSquad={removeSquad}
+										onAddMonsterToSquad={addMonsterToSquad}
+										onSelectControlledMonster={selectControlledMonster}
+										onSelectControlledSquad={selectControlledSquad}
+									/>
+								}
 							/>
-						}
-					/>
+							<Route
+								path='edit/:heroID'
+								element={<Navigate to='start' replace={true} />}
+							/>
+							<Route
+								path='edit/:heroID/:page'
+								element={
+									<HeroEditPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										saveChanges={saveHero}
+										importSourcebook={persistHomebrewSourcebook}
+									/>
+								}
+							/>
+							<Route
+								path='sheet/:heroID'
+								element={<HeroSheetPreviewPage sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)} />}
+							/>
+						</Route>
+						<Route path='library'>
+							<Route
+								index={true}
+								element={<Navigate to='ancestry' replace={true} />}
+							/>
+							<Route
+								path=':kind/:elementID?'
+								element={
+									<LibraryListPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										showSourcebooks={showSourcebooks}
+										showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
+										showEncounterTools={showEncounterTools}
+										createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
+										importElement={importLibraryElement}
+										moveElement={moveLibraryElement}
+										deleteElement={deleteLibraryElement}
+										exportElementData={exportLibraryElementData}
+										exportElementImage={exportLibraryElementImage}
+										exportElementPdf={exportLibraryElementPdf}
+										startEncounter={startEncounter}
+										startMontage={startMontage}
+										startNegotiation={startNegotiation}
+										startMap={startMap}
+									/>
+								}
+							/>
+							<Route
+								path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
+								element={
+									<LibraryEditPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
+										showTerrain={onSelectTerrain}
+										saveChanges={saveLibraryElement}
+									/>
+								}
+							/>
+							<Route
+								path='print/:kind/:sourcebookID/:elementID'
+								element={
+									<LibraryPrintPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									/>
+								}
+							/>
+						</Route>
+						<Route path='session'>
+							<Route
+								index={true}
+								element={<Navigate to='director' replace={true} />}
+							/>
+							<Route
+								path='director'
+								element={
+									<SessionDirectorPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+										showPlayerView={showPlayerView}
+										startEncounter={startEncounter}
+										startMontage={startMontage}
+										startNegotiation={startNegotiation}
+										startMap={startMap}
+										startCounter={startCounter}
+										updateHero={persistHero}
+										updateEncounter={updateEncounter}
+										updateMontage={updateMontage}
+										updateNegotiation={updateNegotiation}
+										updateMap={updateMap}
+										updateCounter={updateCounter}
+										finishSessionElement={finishSessionElement}
+										showEncounterTools={showEncounterTools}
+									/>
+								}
+							/>
+							<Route
+								path='player'
+								element={
+									<SessionPlayerPage
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										params={footerParams}
+									/>
+								}
+							/>
+						</Route>
+						<Route
+							path='oauth-redirect'
+							element={
+								<AuthPage
+									connectionSettings={connectionSettings}
+									params={footerParams}
+									setConnectionSettings={persistConnectionSettings}
+								/>
+							}
+						/>
+						<Route
+							path='backup'
+							element={<BackupPage homebrewSourcebooks={homebrewSourcebooks} />}
+						/>
+						<Route
+							path='transfer'
+							element={<TransferPage connectionSettings={connectionSettings} />}
+						/>
+						<Route
+							path='clocktower'
+							element={<ClocktowerPage params={footerParams} />}
+						/>
+					</Route>
 					<Route
-						path='backup'
-						element={<BackupPage homebrewSourcebooks={homebrewSourcebooks} />}
+						path='*'
+						element={<Navigate to='/' replace={true} />}
 					/>
-					<Route
-						path='transfer'
-						element={<TransferPage connectionSettings={connectionSettings} />}
-					/>
-					<Route
-						path='clocktower'
-						element={<ClocktowerPage params={footerParams} />}
-					/>
-				</Route>
-				<Route
-					path='*'
-					element={<Navigate to='/' replace={true} />}
-				/>
-			</Routes>
+				</Routes>
+			</Suspense>
 			{notifyContext}
 			<Spin spinning={spinning} size='large' fullscreen={true} />
 		</ErrorBoundary>

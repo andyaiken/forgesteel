@@ -1,7 +1,8 @@
 import { Button, Drawer, Flex, Select, Tabs } from 'antd';
-import { Feature, FeatureData } from '@/models/feature';
+import { EditOutlined, SnippetsOutlined } from '@ant-design/icons';
+import { Feature, FeatureData, isFeature } from '@/models/feature';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { EditFeature } from '@/components/features/feature';
-import { EditOutlined } from '@ant-design/icons';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -16,6 +17,8 @@ import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
+import { useClipboard } from '@/hooks/use-clipboard';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './feature-edit-panel.scss';
@@ -31,6 +34,8 @@ interface Props {
 export const FeatureEditPanel = (props: Props) => {
 	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
 	const [ typeSelectorVisible, setTypeSelectorVisible ] = useState<boolean>(false);
+	const options = useOptions();
+	const clipboard = useClipboard();
 
 	const isPerk = (feature as Perk).list !== undefined;
 
@@ -133,6 +138,28 @@ export const FeatureEditPanel = (props: Props) => {
 								)
 							}
 						]}
+						tabBarExtraContent={
+							<ButtonGroup
+								buttons={[
+									options.showClipboardOptions ?
+										{
+											type: 'button',
+											icon: <SnippetsOutlined />,
+											tooltip: clipboard.hasData(isFeature) ? `Paste ${clipboard.getData(isFeature)?.name || 'Unknown Feature'}` : 'Paste Feature',
+											disabled: !clipboard.hasData(isFeature),
+											onClick: () => {
+												const feature = clipboard.getData(isFeature);
+												if (feature) {
+													feature.id = Utils.guid();
+													setFeature(feature);
+													props.onChange(feature);
+												}
+											}
+										}
+										: null
+								]}
+							/>
+						}
 					/>
 				</div>
 				{

@@ -427,6 +427,15 @@ export class SourcebookLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getAllAbilities = (sourcebook: Sourcebook) => {
+		return [
+			...sourcebook.ancestries.flatMap(a => SourcebookLogic.getAbilitiesFromAncestry(a)),
+			...sourcebook.classes.flatMap(c => SourcebookLogic.getAbilitiesFromClass(c, true, true, true, true, true, true)),
+			...sourcebook.subclasses.flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, true, true)),
+			...sourcebook.items.flatMap(i => SourcebookLogic.getAbilitiesFromItem(i))
+		];
+	};
+
 	static getAbilitiesFromAncestry = (ancestry: Ancestry) => {
 		const abilities: Ability[] = [];
 

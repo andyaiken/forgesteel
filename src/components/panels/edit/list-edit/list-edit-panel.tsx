@@ -1,8 +1,9 @@
 import { Ability, isAbility } from '@/models/ability';
 import { Button, Drawer, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, SnippetsOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined, SnippetsOutlined } from '@ant-design/icons';
 import { Feature, isFeature } from '@/models/feature';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
+import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -15,6 +16,8 @@ import { FeatureType } from '@/enums/feature-type';
 import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { useOptions } from '@/contexts/data-context';
@@ -29,8 +32,12 @@ interface AbilityListEditPanelProps {
 
 export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 	const [ abilities, setAbilities ] = useState(Utils.copy(props.abilities));
+	const [ browserOpen, setBrowserOpen ] = useState<boolean>(false);
 	const options = useOptions();
 	const clipboard = useClipboard();
+
+	const sourcebooks = SourcebookData.getCached();
+	const allAbilities = Collections.sort(sourcebooks.flatMap(SourcebookLogic.getAllAbilities), a => a.name);
 
 	const addAbility = () => {
 		const copy = Utils.copy(abilities);
@@ -44,6 +51,16 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 			target: '',
 			sections: []
 		}));
+		setAbilities(copy);
+		props.onChange(copy);
+	};
+
+	const importAbility = (ability: Ability) => {
+		const abilityCopy = Utils.copy(ability);
+		abilityCopy.id = Utils.guid();
+
+		const copy = Utils.copy(abilities);
+		copy.push(abilityCopy);
 		setAbilities(copy);
 		props.onChange(copy);
 	};
@@ -92,6 +109,7 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 					<ButtonGroup
 						buttons={[
 							{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add', onClick: addAbility },
+							{ type: 'button', icon: <DownloadOutlined />, tooltip: 'Copy an existing ability', onClick: () => setBrowserOpen(true) },
 							options.showClipboardOptions ?
 								{
 									type: 'button',
@@ -133,6 +151,17 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 						: null
 				}
 			</Space>
+			<Drawer open={browserOpen} onClose={() => setBrowserOpen(false)} closeIcon={null} size={500}>
+				<AbilitySelectModal
+					abilities={allAbilities}
+					showFilter={true}
+					onSelect={a => {
+						importAbility(a);
+						setBrowserOpen(false);
+					}}
+					onClose={() => setBrowserOpen(false)}
+				/>
+			</Drawer>
 		</div>
 	);
 };

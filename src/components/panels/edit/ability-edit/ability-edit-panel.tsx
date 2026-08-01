@@ -37,12 +37,7 @@ export const AbilityEditPanel = (props: Props) => {
 	const [ browserOpen, setBrowserOpen ] = useState<boolean>(false);
 
 	const sourcebooks = SourcebookData.getCached();
-	const abilities = Collections.sort([
-		...sourcebooks.flatMap(sb => sb.ancestries).flatMap(a => SourcebookLogic.getAbilitiesFromAncestry(a)),
-		...sourcebooks.flatMap(sb => sb.classes).flatMap(c => SourcebookLogic.getAbilitiesFromClass(c, true, true, true, true, true, true)),
-		...sourcebooks.flatMap(sb => sb.subclasses).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, true, true)),
-		...sourcebooks.flatMap(sb => sb.items).flatMap(i => SourcebookLogic.getAbilitiesFromItem(i))
-	], a => a.name);
+	const allAbilities = Collections.sort(sourcebooks.flatMap(SourcebookLogic.getAllAbilities), a => a.name);
 
 	const getAbilityPage = () => {
 		const onChange = (name: string, desc: string) => {
@@ -758,7 +753,7 @@ export const AbilityEditPanel = (props: Props) => {
 			/>
 			<Drawer open={browserOpen} onClose={() => setBrowserOpen(false)} closeIcon={null} size={500}>
 				<AbilitySelectModal
-					abilities={abilities}
+					abilities={allAbilities}
 					showFilter={true}
 					onSelect={a => {
 						const copy = Utils.copy(a);

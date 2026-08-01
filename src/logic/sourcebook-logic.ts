@@ -427,6 +427,28 @@ export class SourcebookLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getAbilitiesFromAncestry = (ancestry: Ancestry) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		ancestry.features.forEach(addFeature);
+
+		return abilities;
+	};
+
 	static getAbilitiesFromClass = (heroClass: HeroClass, classAbilities: boolean, selectedSubclassAbilities: boolean, unselectedSubclassAbilities: boolean, classLevels: boolean, selectedSubclassLevels: boolean, unselectedSubclassLevels: boolean) => {
 		const abilities: Ability[] = [];
 
@@ -474,6 +496,57 @@ export class SourcebookLogic {
 				.flatMap(sc => sc.featuresByLevel)
 				.forEach(lvl => lvl.features.forEach(addFeature));
 		}
+
+		return abilities;
+	};
+
+	static getAbilitiesFromSubclass = (subclass: SubClass, subclassAbilities: boolean, subclassLevels: boolean) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		if (subclassAbilities) {
+			abilities.push(...subclass.abilities);
+		}
+
+		if (subclassLevels) {
+			subclass.featuresByLevel
+				.forEach(lvl => lvl.features.forEach(addFeature));
+		}
+
+		return abilities;
+	};
+
+	static getAbilitiesFromItem = (item: Item) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		item.featuresByLevel.forEach(lvl => lvl.features.forEach(addFeature));
 
 		return abilities;
 	};

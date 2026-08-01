@@ -4,7 +4,9 @@ import { AbilityUsage } from '@/enums/ability-usage';
 import { Empty } from '@/components/controls/empty/empty';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
+import { RadioGroup } from '@/components/controls/radio-group/radio-group';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Divider, Space } from 'antd';
@@ -13,8 +15,6 @@ import { Utils } from '@/utils/utils';
 import { useMemo, useState } from 'react';
 
 import './ability-select-modal.scss';
-import { RadioGroup } from '@/components/controls/radio-group/radio-group';
-import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 
 interface Props {
 	abilities: Ability[];

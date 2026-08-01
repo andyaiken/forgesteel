@@ -3,6 +3,7 @@ import { Alert, AutoComplete, Button, Drawer, Popover, Segmented, Select, Space,
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Characteristic } from '@/enums/characteristic';
@@ -17,15 +18,14 @@ import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
+import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './ability-edit-panel.scss';
-import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
-import { SourcebookData } from '@/data/sourcebook-data';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
 interface Props {
 	ability: Ability;

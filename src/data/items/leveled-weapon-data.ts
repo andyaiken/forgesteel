@@ -877,7 +877,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-thunderhead-bident-1',
 						name: '',
-						description: 'When the weapon is used with any ability that pushes a target, you gain a +1 bonus to the forced movement distance. If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
+						description: 'If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-1a',
@@ -885,6 +885,21 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Sonic
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1b',
+						field: FeatureField.ForcedMovementPull,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1c',
+						field: FeatureField.ForcedMovementPush,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1d',
+						field: FeatureField.ForcedMovementSlide,
+						value: 1
 					})
 				]
 			},
@@ -894,7 +909,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-thunderhead-bident-5',
 						name: '',
-						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares. Additionally, the weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
+						description: 'The weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-5a',
@@ -902,6 +917,21 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Sonic
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5b',
+						field: FeatureField.ForcedMovementPull,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5c',
+						field: FeatureField.ForcedMovementPush,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5d',
+						field: FeatureField.ForcedMovementSlide,
+						value: 1
 					})
 				]
 			},

@@ -98,7 +98,8 @@ export class FactoryLogic {
 				})
 			],
 			state: FactoryLogic.createHeroState(),
-			abilityCustomizations: []
+			abilityCustomizations: [],
+			isDisabled: false
 		};
 	};
 

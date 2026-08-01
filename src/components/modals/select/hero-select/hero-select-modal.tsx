@@ -26,7 +26,8 @@ interface Props {
 export const HeroSelectModal = (props: Props) => {
 	const [ mode, setMode ] = useState<string>('folder');
 	const [ heroName, setHeroName ] = useState<string>('');
-	const heroes = useHeroes();
+	const allHeroes = useHeroes();
+	const heroes = allHeroes.filter(HeroLogic.isActive);
 
 	const getContent = () => {
 		switch (mode) {
@@ -53,7 +54,7 @@ export const HeroSelectModal = (props: Props) => {
 							folders.map(f => (
 								<SelectablePanel
 									key={f}
-									onSelect={() => props.onSelect(heroes.filter(h => h.folder === f))}
+									onSelect={() => props.onSelect(HeroLogic.getPartyHeroes(allHeroes, f))}
 								>
 									<HeaderText level={1}>{f}</HeaderText>
 									<Space orientation='vertical' style={{ width: '100%' }}>

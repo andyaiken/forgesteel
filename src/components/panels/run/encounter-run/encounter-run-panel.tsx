@@ -252,6 +252,25 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const moveSlot = (slot: EncounterSlot, toGroupID: string) => {
+				const copy = Utils.copy(encounter);
+				const fromGroup = copy.groups.find(g => g.id === group.id);
+				let toGroup = copy.groups.find(g => g.id === toGroupID);
+				if (!toGroup) {
+					toGroup = FactoryLogic.createEncounterGroup();
+					copy.groups.push(toGroup);
+				}
+				if (fromGroup && toGroup && (fromGroup.id !== toGroup.id)) {
+					const slotIndex = fromGroup.slots.findIndex(s => s.id === slot.id);
+					if (slotIndex !== -1) {
+						const [ moved ] = fromGroup.slots.splice(slotIndex, 1);
+						toGroup.slots.push(moved);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			return (
 				<EncounterGroupMonster
 					key={group.id}
@@ -269,6 +288,7 @@ export const EncounterRunPanel = (props: Props) => {
 					onDuplicate={duplicateGroup}
 					onDelete={deleteGroup}
 					onSetDefeated={setDefeated}
+					onMoveSlot={moveSlot}
 				/>
 			);
 		};

@@ -143,13 +143,17 @@ export const HeroTitlesModal = (props: Props) => {
 						}
 					</Space>
 					<Drawer open={titlesVisible} onClose={() => setTitlesVisible(false)} closeIcon={null} size={500}>
-						<TitleSelectModal
-							hero={hero}
-							sourcebooks={props.sourcebooks}
-							onSelect={addTitle}
-							onCustomize={props.onCustomize}
-							onClose={() => setTitlesVisible(false)}
-						/>
+						{
+							titlesVisible ?
+								<TitleSelectModal
+									hero={hero}
+									sourcebooks={props.sourcebooks}
+									onSelect={addTitle}
+									onCustomize={props.onCustomize}
+									onClose={() => setTitlesVisible(false)}
+								/>
+								: null
+						}
 					</Drawer>
 				</div>
 			}

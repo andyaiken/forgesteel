@@ -38,6 +38,9 @@ import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 
 export class HeroLogic {
+	static getPartyHeroes = (heroes: Hero[], party: string) =>
+		heroes.filter(h => h.folder === party).filter(h => h.isActive);
+
 	static getHeroDescription = (hero: Hero) => {
 		if (!hero.class || !hero.ancestry) {
 			return 'Hero';
@@ -1517,7 +1520,8 @@ export class HeroLogic {
 			class: hero.class ? `${hero.class.name} (${[ `Level ${hero.class.level}`, ...HeroLogic.getClassSpecialization(hero) ].join(' ')})` : null,
 			complication: hero.complication ? hero.complication.name : null,
 			picture: hero.picture,
-			folder: hero.folder
+			folder: hero.folder,
+			isActive: hero.isActive
 		};
 
 		return overview;

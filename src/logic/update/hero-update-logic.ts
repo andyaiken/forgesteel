@@ -30,6 +30,18 @@ export class HeroUpdateLogic {
 			hero.folder = '';
 		}
 
+		if (hero.isActive === undefined) {
+			const legacy = (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
+			if (legacy !== undefined) {
+				hero.isActive = !(legacy === true || legacy === 'true');
+				delete (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
+			} else {
+				hero.isActive = true;
+			}
+		} else {
+			hero.isActive = hero.isActive === true;
+		}
+
 		if (hero.sourcebookIDs === undefined) {
 			hero.sourcebookIDs = SourcebookLogic.getSourcebooks()
 				.filter(sb => sb.type === SourcebookType.Official)

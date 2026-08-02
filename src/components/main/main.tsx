@@ -1743,7 +1743,7 @@ export const Main = (props: Props) => {
 	const onShowParty = (folder: string) => {
 		setDrawer(
 			<PartyModal
-				heroes={heroes.filter(h => h.folder === folder)}
+				heroes={HeroLogic.getPartyHeroes(heroes, folder)}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1841,6 +1841,7 @@ export const Main = (props: Props) => {
 										addHero={newHero}
 										importHero={importHero}
 										showParty={onShowParty}
+										onActiveChanged={persistHero}
 									/>
 								}
 							/>

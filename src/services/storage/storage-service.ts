@@ -39,4 +39,8 @@ export interface StorageService {
 	// Hidden sourcebook IDs
 	getHiddenSourcebookIDs(): Promise<string[] | null>;
 	putHiddenSourcebookIDs(ids: string[]): Promise<string[]>;
+
+	// Hidden library element IDs
+	getHiddenElementIDs(): Promise<string[] | null>;
+	putHiddenElementIDs(ids: string[]): Promise<string[]>;
 };

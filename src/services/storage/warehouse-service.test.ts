@@ -700,4 +700,48 @@ describe('WarehouseService', () => {
 		});
 	});
 	// #endregion
+
+	// #region Hidden Element IDs
+	const testElementIDs = [ 'test-element-x', 'test-element-y' ];
+	describe('getHiddenElementIDs', () => {
+		test('calls the correct api endpoint with the correct authorization', async () => {
+			mockAdapter.onGet('data/forgesteel-hidden-element-ids').reply(config => {
+				expect(config.headers?.Authorization).toBe('Bearer fake_token');
+				return [ 200, { data: testElementIDs } ];
+			});
+
+			const service = new WarehouseService(defaultSettings);
+			const connected = await service.initialize();
+			expect(connected).toBe(true);
+
+			await service.getHiddenElementIDs()
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(catchFn).not.toHaveBeenCalled();
+			expect(thenFn).toHaveBeenCalledWith(testElementIDs);
+		});
+	});
+
+	describe('putHiddenElementIDs', () => {
+		test('calls the correct api endpoint with the correct authorization', async () => {
+			mockAdapter.onPut('data/forgesteel-hidden-element-ids').reply(config => {
+				expect(config.headers?.Authorization).toBe('Bearer fake_token');
+				expect(config.data).toBe(testElementIDs);
+				return [ 204 ];
+			});
+
+			const service = new WarehouseService(defaultSettings);
+			const connected = await service.initialize();
+			expect(connected).toBe(true);
+
+			await service.putHiddenElementIDs(testElementIDs)
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(catchFn).not.toHaveBeenCalled();
+			expect(thenFn).toHaveBeenCalledWith(testElementIDs);
+		});
+	});
+	// #endregion
 });

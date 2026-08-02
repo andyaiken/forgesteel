@@ -100,4 +100,17 @@ export class DataService {
 	}
 
 	// #endregion
+
+	// #region Hidden element IDs
+
+	async getHiddenElementIDs(): Promise<string[]> {
+		const result = await this.storageService.getHiddenElementIDs();
+		return result ?? [];
+	}
+
+	async saveHiddenElementIDs(ids: string[]): Promise<string[]> {
+		return this.storageService.putHiddenElementIDs(ids);
+	}
+
+	// #endregion
 };

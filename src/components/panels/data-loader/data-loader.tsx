@@ -30,6 +30,7 @@ export interface LoadedData {
 	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
+	hiddenElementIDs: string[];
 	session: Session;
 	options: Options;
 };
@@ -48,6 +49,7 @@ export const DataLoader = (props: Props) => {
 	const [ optionsState, setOptionsState ] = useState<LoadingStatus>(undefined);
 	const [ sessionState, setSessionState ] = useState<LoadingStatus>(undefined);
 	const [ hiddenSourcebookIDsState, setHiddenSourcebookIDsState ] = useState<LoadingStatus>(undefined);
+	const [ hiddenElementIDsState, setHiddenElementIDsState ] = useState<LoadingStatus>(undefined);
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('pending');
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 	const [ dataSource, setDataSource ] = useState<FSDataSource>(undefined);
@@ -167,6 +169,7 @@ export const DataLoader = (props: Props) => {
 		setSessionState(undefined);
 		setOptionsState(undefined);
 		setHiddenSourcebookIDsState(undefined);
+		setHiddenElementIDsState(undefined);
 
 		initializeConnectionSettings().then(settings => {
 			setConnectionSettings(settings);
@@ -178,6 +181,7 @@ export const DataLoader = (props: Props) => {
 				setSessionState('pending');
 				setOptionsState('pending');
 				setHiddenSourcebookIDsState('pending');
+				setHiddenElementIDsState('pending');
 
 				const promises = [
 					updateLoadingStatus(
@@ -187,6 +191,7 @@ export const DataLoader = (props: Props) => {
 					),
 					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
+					updateLoadingStatus(dataService.getHiddenElementIDs(), setHiddenElementIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
 					updateLoadingStatus(dataService.getOptions(), setOptionsState)
 				];
@@ -211,11 +216,12 @@ export const DataLoader = (props: Props) => {
 					});
 
 					const hiddenSourcebookIDs = results[2] as string[];
+					const hiddenElementIDs = results[3] as string[];
 
-					const session = results[3] as Session;
+					const session = results[4] as Session;
 					UpdateLogic.updateSession(session);
 
-					const options = results[4] as Options;
+					const options = results[5] as Options;
 					UpdateLogic.updateOptions(options);
 					if (isSmall) {
 						options.compactView = true;
@@ -229,6 +235,7 @@ export const DataLoader = (props: Props) => {
 						heroes: heroes,
 						homebrewSourcebooks: sourcebooks,
 						hiddenSourcebookIDs: hiddenSourcebookIDs,
+						hiddenElementIDs: hiddenElementIDs,
 						session: session,
 						options: options
 					});
@@ -278,6 +285,7 @@ export const DataLoader = (props: Props) => {
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSourcebookIDsState}>Manifold</CheckLabel>
+						<CheckLabel state={hiddenElementIDsState}>Hidden Items</CheckLabel>
 					</Flex>
 					{
 						error ?

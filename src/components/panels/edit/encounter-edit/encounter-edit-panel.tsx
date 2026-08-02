@@ -44,6 +44,7 @@ import { TerrainLogic } from '@/logic/terrain-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useVisibleSourcebooks } from '@/hooks/use-visible-sourcebooks';
 
 import './encounter-edit-panel.scss';
 
@@ -66,6 +67,7 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
 	const options = useOptions();
 	const heroes = useHeroes();
+	const pickerSourcebooks = useVisibleSourcebooks(props.sourcebooks);
 
 	const switchLeftTab = (key: string) => {
 		setActiveLeftTabKey(key);
@@ -573,7 +575,7 @@ ${value.victories}`
 	};
 
 	const getMonsterListSection = () => {
-		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
+		const groups = Collections.sort(pickerSourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%', padding: '5px' }}>
@@ -582,7 +584,7 @@ ${value.victories}`
 						<>
 							<MonsterFilterPanel
 								monsterFilter={monsterFilter}
-								monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+								monsters={pickerSourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 								includeNameFilter={true}
 								includeOrgFilter={true}
 								includeEVFilter={true}
@@ -601,7 +603,7 @@ ${value.victories}`
 										<MonsterListItem
 											key={m.id}
 											monster={m}
-											monsterGroup={SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup}
+											monsterGroup={SourcebookLogic.getMonsterGroup(pickerSourcebooks, m.id) as MonsterGroup}
 											encounter={encounter}
 											addMonster={addMonster}
 											showMonster={props.showMonster}
@@ -622,7 +624,7 @@ ${value.victories}`
 	};
 
 	const getTerrainListSection = () => {
-		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
+		const allTerrains = SourcebookLogic.getTerrains(pickerSourcebooks);
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (

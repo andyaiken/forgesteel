@@ -36,6 +36,7 @@ root.render(
 										initialHeroes={data.heroes}
 										initialHomebrewSourcebooks={data.homebrewSourcebooks}
 										initialHiddenSourcebookIDs={data.hiddenSourcebookIDs}
+										initialHiddenElementIDs={data.hiddenElementIDs}
 									>
 										<Main
 											connectionSettings={data.connectionSettings}

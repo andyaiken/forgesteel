@@ -90,6 +90,7 @@ import { Utils } from '@/utils/utils';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useVisibleSourcebooks } from '@/hooks/use-visible-sourcebooks';
 
 import './main.scss';
 
@@ -121,6 +122,8 @@ export const Main = (props: Props) => {
 	const heroes = useHeroes();
 	const homebrewSourcebooks = useHomebrewSourcebooks();
 	const dataManager = useDataManager();
+	const allSourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+	const visibleSourcebooks = useVisibleSourcebooks(allSourcebooks);
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
 	const [ dataService, setDataService ] = useState<DataService>(props.dataService);
@@ -219,7 +222,7 @@ export const Main = (props: Props) => {
 		const hero = FactoryLogic.createHero();
 
 		hero.folder = folder;
-		hero.sourcebookIDs = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+		hero.sourcebookIDs = visibleSourcebooks
 			.filter(sb => sb.type === SourcebookType.Official)
 			.map(sb => sb.id);
 
@@ -1598,7 +1601,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectFeature = (feature: Feature, hero: Hero) => {
-		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+		const sourcebooks = visibleSourcebooks
 			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
 		setDrawer(
@@ -1624,7 +1627,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onShowHeroState = (hero: Hero, type: HeroModalType) => {
-		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+		const sourcebooks = visibleSourcebooks
 			.filter(sb => hero.sourcebookIDs.includes(sb.id));
 
 		const takeRespite = (updatedHero: Hero) => {
@@ -1729,8 +1732,8 @@ export const Main = (props: Props) => {
 				setDrawer(
 					<HeroSettingsModal
 						hero={hero}
-						sourcebooks={sourcebooks}
-						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={visibleSourcebooks}
+						allSourcebooks={allSourcebooks}
 						onClose={() => setDrawer(null)}
 						onImportSourcebook={persistHomebrewSourcebook}
 						onChange={persistHero}
@@ -1890,7 +1893,7 @@ export const Main = (props: Props) => {
 								path='edit/:heroID/:page'
 								element={
 									<HeroEditPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={visibleSourcebooks}
 										params={footerParams}
 										saveChanges={saveHero}
 										importSourcebook={persistHomebrewSourcebook}
@@ -1911,7 +1914,7 @@ export const Main = (props: Props) => {
 								path=':kind/:elementID?'
 								element={
 									<LibraryListPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={allSourcebooks}
 										params={footerParams}
 										showSourcebooks={showSourcebooks}
 										showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
@@ -1934,7 +1937,7 @@ export const Main = (props: Props) => {
 								path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
 								element={
 									<LibraryEditPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={allSourcebooks}
 										params={footerParams}
 										showMonster={(monster, monsterGroup) => onSelectMonster(undefined, monster, monsterGroup, undefined)}
 										showTerrain={onSelectTerrain}
@@ -1946,7 +1949,7 @@ export const Main = (props: Props) => {
 								path='print/:kind/:sourcebookID/:elementID'
 								element={
 									<LibraryPrintPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={allSourcebooks}
 									/>
 								}
 							/>
@@ -1960,7 +1963,7 @@ export const Main = (props: Props) => {
 								path='director'
 								element={
 									<SessionDirectorPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={allSourcebooks}
 										params={footerParams}
 										showPlayerView={showPlayerView}
 										startEncounter={startEncounter}
@@ -1983,7 +1986,7 @@ export const Main = (props: Props) => {
 								path='player'
 								element={
 									<SessionPlayerPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										sourcebooks={allSourcebooks}
 										params={footerParams}
 									/>
 								}

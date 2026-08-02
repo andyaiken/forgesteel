@@ -364,7 +364,7 @@ export const SourcebookPanel = (props: Props) => {
 				<Button
 					key='show-hide'
 					type='text'
-					title='Show / Hide'
+					title='Show / hide this sourcebook. Toggling also resets its library items so their visibility matches the source.'
 					icon={props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
 					onClick={e => {
 						e.stopPropagation();

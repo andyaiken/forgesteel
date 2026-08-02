@@ -9,7 +9,8 @@ export enum DataStorageKeys {
 	Heroes = 'forgesteel-heroes',
 	Sourcebooks = 'forgesteel-homebrew-settings',
 	Session = 'forgesteel-session',
-	HiddenSourcebookIDs = 'forgesteel-hidden-setting-ids'
+	HiddenSourcebookIDs = 'forgesteel-hidden-setting-ids',
+	HiddenElementIDs = 'forgesteel-hidden-element-ids'
 };
 
 export class LocalService implements StorageService {
@@ -135,5 +136,18 @@ export class LocalService implements StorageService {
 
 	putHiddenSourcebookIDs(ids: string[]): Promise<string[]> {
 		return localforage.setItem<string[]>(DataStorageKeys.HiddenSourcebookIDs, ids);
+	}
+
+	getHiddenElementIDs(): Promise<string[] | null> {
+		try {
+			return localforage.getItem<string[]>(DataStorageKeys.HiddenElementIDs);
+		} catch (error) {
+			console.error('Error getting hidden element ids', error);
+			return Promise.resolve(null);
+		}
+	}
+
+	putHiddenElementIDs(ids: string[]): Promise<string[]> {
+		return localforage.setItem<string[]>(DataStorageKeys.HiddenElementIDs, ids);
 	}
 };

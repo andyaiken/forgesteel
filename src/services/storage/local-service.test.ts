@@ -480,4 +480,33 @@ describe('LocalService', () => {
 			expect(catchFn).not.toHaveBeenCalled();
 		});
 	});
+
+	const testElementIDs = [ 'test-element-x', 'test-element-y' ];
+	describe('getHiddenElementIDs', () => {
+		test('retrieves ids stored at correct key', async () => {
+			localforage.getItem = vi.fn().mockImplementation(() => Promise.resolve(testElementIDs));
+
+			await service.getHiddenElementIDs()
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(localforage.getItem).toHaveBeenCalledWith(DataStorageKeys.HiddenElementIDs);
+			expect(thenFn).toHaveBeenCalledWith(testElementIDs);
+			expect(catchFn).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('putHiddenElementIDs', () => {
+		test('sets ids at correct key', async () => {
+			localforage.setItem = vi.fn().mockImplementation(() => Promise.resolve(testElementIDs));
+
+			await service.putHiddenElementIDs(testElementIDs)
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(localforage.setItem).toHaveBeenCalledWith(DataStorageKeys.HiddenElementIDs, testElementIDs);
+			expect(thenFn).toHaveBeenCalledWith(testElementIDs);
+			expect(catchFn).not.toHaveBeenCalled();
+		});
+	});
 });

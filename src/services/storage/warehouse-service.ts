@@ -281,4 +281,24 @@ export class WarehouseService implements StorageService {
 			throw new Error(this.getErrorMessage(error), { cause: error });
 		}
 	}
+
+	async getHiddenElementIDs(): Promise<string[] | null> {
+		try {
+			const response = await this.api.get('data/forgesteel-hidden-element-ids');
+			return response.data.data;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
+
+	async putHiddenElementIDs(value: string[]): Promise<string[]> {
+		try {
+			await this.api.put('data/forgesteel-hidden-element-ids', value);
+			return value;
+		} catch (error) {
+			console.error('Error communicating with FS Warehouse', error);
+			throw new Error(this.getErrorMessage(error), { cause: error });
+		}
+	}
 };

@@ -1048,6 +1048,7 @@ export class FactoryLogic {
 			// App
 			cookieConsent: false,
 			showDataSource: false,
+			showHiddenLibraryItems: false,
 			// Hero
 			shownStandardAbilities: [],
 			xpPerLevel: 16,

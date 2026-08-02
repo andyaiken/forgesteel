@@ -647,6 +647,10 @@ ${encounter.objective.victories}`
 			options.showDataSource = false;
 		}
 
+		if (options.showHiddenLibraryItems === undefined) {
+			options.showHiddenLibraryItems = false;
+		}
+
 		if (options.xpPerLevel === undefined) {
 			options.xpPerLevel = 16;
 		}

@@ -96,6 +96,30 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
+	const getLibrary = () => {
+		const setShowHiddenLibraryItems = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.showHiddenLibraryItems = value;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
+		return (
+			<Expander title='Library'>
+				<Space orientation='vertical' style={{ width: '100%' }}>
+					<Toggle
+						label='Display all hidden library items'
+						value={options.showHiddenLibraryItems}
+						onChange={setShowHiddenLibraryItems}
+					/>
+					<div className='ds-text'>
+						Hidden library items can be shown again here, or by re-toggling their sourcebook visibility.
+					</div>
+				</Space>
+			</Expander>
+		);
+	};
+
 	const getHeroesGeneral = () => {
 		const setXPPerLevel = (value: number) => {
 			const copy = Utils.copy(options);
@@ -749,6 +773,7 @@ export const SettingsModal = (props: Props) => {
 						{getDifficulty()}
 						{getTacticalMaps()}
 						{getHomebrewing()}
+						{getLibrary()}
 						{getConnections()}
 					</Space>
 				);

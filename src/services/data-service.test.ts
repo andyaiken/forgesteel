@@ -162,4 +162,53 @@ describe('DataService', () => {
 		});
 	});
 	// #endregion HiddenSettingIds
+
+	// #region HiddenElementIds
+	const mockHiddenElementIds = [ 'elem-one', 'elem-two' ];
+
+	describe('getHiddenElementIDs', () => {
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
+
+			mockStorage.getHiddenElementIDs = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenElementIds));
+
+			await ds.getHiddenElementIDs()
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(mockStorage.getHiddenElementIDs).toHaveBeenCalled();
+			expect(thenFn).toHaveBeenCalledWith(mockHiddenElementIds);
+			expect(catchFn).not.toHaveBeenCalled();
+		});
+
+		test('returns empty array when storage returns null', async () => {
+			const ds = new DataService(mockStorage);
+
+			mockStorage.getHiddenElementIDs = vi.fn().mockImplementation(() => Promise.resolve(null));
+
+			await ds.getHiddenElementIDs()
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(thenFn).toHaveBeenCalledWith([]);
+			expect(catchFn).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('saveHiddenElementIDs', () => {
+		test('forwards to the storage service', async () => {
+			const ds = new DataService(mockStorage);
+
+			mockStorage.putHiddenElementIDs = vi.fn().mockImplementation(() => Promise.resolve(mockHiddenElementIds));
+
+			await ds.saveHiddenElementIDs(mockHiddenElementIds)
+				.then(thenFn)
+				.catch(catchFn);
+
+			expect(mockStorage.putHiddenElementIDs).toHaveBeenCalledWith(mockHiddenElementIds);
+			expect(thenFn).toHaveBeenCalledWith(mockHiddenElementIds);
+			expect(catchFn).not.toHaveBeenCalled();
+		});
+	});
+	// #endregion HiddenElementIds
 });

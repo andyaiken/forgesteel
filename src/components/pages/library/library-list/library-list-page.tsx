@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Flex, Segmented } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { ArrowRightOutlined, CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, EditOutlined, FilterFilled, FilterOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, FilterFilled, FilterOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { ButtonConfig, ButtonGroup, DangerConfig, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
@@ -72,9 +72,13 @@ import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { VisibilityLogic } from '@/logic/visibility-logic';
+import { useDataManager } from '@/contexts/data-context';
+import { useHiddenElementIDs } from '@/contexts/data-context';
 import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
+import { useOptions } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
 
@@ -119,6 +123,57 @@ export const LibraryListPage = (props: Props) => {
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? Collections.sort(props.sourcebooks, sb => sb.name).filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
 	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	const hiddenElementIDs = useHiddenElementIDs();
+	const dataManager = useDataManager();
+	const options = useOptions();
+	const visibleSourcebooks = VisibilityLogic.getVisibleSourcebooks(
+		props.sourcebooks,
+		hiddenSourcebookIDs,
+		options.showHiddenLibraryItems ? [] : hiddenElementIDs
+	);
+
+	const toggleElementVisibility = (elementID: string) => {
+		const copy = hiddenElementIDs.includes(elementID)
+			? VisibilityLogic.showElement(hiddenElementIDs, elementID)
+			: VisibilityLogic.hideElement(hiddenElementIDs, elementID);
+		dataManager.saveHiddenElementIDs(copy);
+	};
+
+	const toggleCategoryVisibility = (kind: SourcebookElementKind) => {
+		const activeSourcebooks = props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
+		const copy = VisibilityLogic.toggleCategoryHidden(hiddenElementIDs, activeSourcebooks, kind, {
+			showMonsters,
+			includeCulturesFromAncestries: showCulturesFromAncestries,
+			includeSubclassesFromClasses: showSubclassesFromClasses,
+			includeProjectsFromImbuements: showProjectsFromImbuements,
+			includeProjectsFromItems: showProjectsFromItems
+		});
+		dataManager.saveHiddenElementIDs(copy);
+	};
+
+	const createVisibilityEye = (elementID: string | null, title: string, onClick: () => void) => {
+		const isHidden = !!elementID && hiddenElementIDs.includes(elementID);
+		return (
+			<span
+				title={title}
+				role='button'
+				tabIndex={0}
+				onClick={e => {
+					e.stopPropagation();
+					onClick();
+				}}
+				onKeyDown={e => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						e.stopPropagation();
+						onClick();
+					}
+				}}
+			>
+				{isHidden ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+			</span>
+		);
+	};
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -136,7 +191,7 @@ export const LibraryListPage = (props: Props) => {
 		let list: Element[] = [];
 
 		const getSourcebooks = () => {
-			return props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
+			return visibleSourcebooks;
 		};
 
 		switch (type) {
@@ -411,12 +466,18 @@ export const LibraryListPage = (props: Props) => {
 				const items = getList(category).filter(item => LibraryLogic.getGroupHeader(item, category, props.sourcebooks) === header);
 
 				items.forEach(a => {
+					const isHidden = hiddenElementIDs.includes(a.id);
 					listItems.push(
 						<SelectorRow
 							key={a.id}
 							selected={selectedID === a.id}
-							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`}
+							content={
+								<span style={isHidden && options.showHiddenLibraryItems ? { opacity: 0.5 } : undefined}>
+									{(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`}
+								</span>
+							}
 							info={LibraryLogic.getInfo(a, category, showMonsters)}
+							hoverInfo={createVisibilityEye(a.id, 'Show / hide this item only. Hidden items can be shown again via Settings › Library, or by re-toggling their source.', () => toggleElementVisibility(a.id))}
 							onSelect={() => {
 								if (isSmall) {
 									setShowSidebar(false);
@@ -545,9 +606,27 @@ export const LibraryListPage = (props: Props) => {
 						<div className='selection-content'>
 							<div className='selection-list'>
 								<HeaderText level={3}>For Players</HeaderText>
-								{playerCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
+								{playerCategories.map(c => (
+									<SelectorRow
+										key={c.kind}
+										selected={category === c.kind}
+										content={c.label}
+										info={getList(c.kind).length}
+										hoverInfo={createVisibilityEye(null, 'Show / hide all items in this category for currently visible sources. Hidden items can be shown again via Settings › Library, or by re-toggling their source.', () => toggleCategoryVisibility(c.kind))}
+										onSelect={() => navigation.goToLibrary(c.kind)}
+									/>
+								))}
 								<HeaderText level={3}>For Directors</HeaderText>
-								{directorCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
+								{directorCategories.map(c => (
+									<SelectorRow
+										key={c.kind}
+										selected={category === c.kind}
+										content={c.label}
+										info={getList(c.kind).length}
+										hoverInfo={createVisibilityEye(null, 'Show / hide all items in this category for currently visible sources. Hidden items can be shown again via Settings › Library, or by re-toggling their source.', () => toggleCategoryVisibility(c.kind))}
+										onSelect={() => navigation.goToLibrary(c.kind)}
+									/>
+								))}
 							</div>
 							<div className='selection-list'>
 								{getElementListHeader()}

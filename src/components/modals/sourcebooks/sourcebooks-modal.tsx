@@ -1,6 +1,6 @@
 import { Button, Drawer, Flex, Segmented, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import { useDataManager, useHiddenSourcebookIDs } from '@/contexts/data-context';
+import { useDataManager, useHiddenElementIDs, useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -15,6 +15,7 @@ import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/s
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
+import { VisibilityLogic } from '@/logic/visibility-logic';
 import { useState } from 'react';
 
 import './sourcebooks-modal.scss';
@@ -32,10 +33,15 @@ export const SourcebooksModal = (props: Props) => {
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(useHiddenSourcebookIDs()));
+	const [ hiddenElementIDs, setHiddenElementIDs ] = useState<string[]>(Utils.copy(useHiddenElementIDs()));
 
 	const dataManager = useDataManager();
 
 	const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
+		const clearedElementIDs = VisibilityLogic.clearHiddenForSourcebook(hiddenElementIDs, sourcebook);
+		setHiddenElementIDs(clearedElementIDs);
+		dataManager.saveHiddenElementIDs(clearedElementIDs);
+
 		if (visible) {
 			const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
 			setHiddenSourcebookIDs(copy);

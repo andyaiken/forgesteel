@@ -1,5 +1,6 @@
-import { Button, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -10,6 +11,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
+import { MontageLogic } from '@/logic/montage-logic';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -31,6 +33,8 @@ interface Props {
 
 export const MontageEditPanel = (props: Props) => {
 	const [ montage, setMontage ] = useState<Montage>(props.montage);
+	const heroes = useHeroes();
+	const options = useOptions();
 
 	const getNameAndDescriptionSection = () => {
 		const onChange = (name: string, desc: string) => {
@@ -64,6 +68,20 @@ export const MontageEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setSuccessLimitOverride = (value: number | undefined) => {
+			const copy = Utils.copy(montage);
+			copy.successLimitOverride = value;
+			setMontage(copy);
+			props.onChange(copy);
+		};
+
+		const setFailureLimitOverride = (value: number | undefined) => {
+			const copy = Utils.copy(montage);
+			copy.failureLimitOverride = value;
+			setMontage(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Difficulty</HeaderText>
@@ -73,6 +91,40 @@ export const MontageEditPanel = (props: Props) => {
 					options={[ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ].map(diff => ({ value: diff, label: <div className='ds-text'>{diff}</div> }))}
 					value={montage.difficulty}
 					onChange={setDifficulty}
+				/>
+				<Alert
+					type='info'
+					showIcon={true}
+					title={`${MontageLogic.getSuccessLimit(montage, heroes, options)} successes before ${MontageLogic.getFailureLimit(montage, heroes, options)} failures`}
+				/>
+				<HeaderText
+					extra={
+						montage.successLimitOverride !== undefined ?
+							<Button type='text' onClick={() => setSuccessLimitOverride(undefined)}>Reset To Default</Button>
+							: null
+					}
+				>
+					Success Limit
+				</HeaderText>
+				<NumberSpin
+					min={1}
+					value={MontageLogic.getSuccessLimit(montage, heroes, options)}
+					onChange={setSuccessLimitOverride}
+				/>
+				<HeaderText
+					extra={
+						montage.failureLimitOverride !== undefined ?
+							<Button type='text' onClick={() => setFailureLimitOverride(undefined)}>Reset To Default</Button>
+							: null
+					}
+				>
+					Failure Limit
+				</HeaderText>
+				<NumberSpin
+					min={1}
+					value={MontageLogic.getFailureLimit(montage, heroes, options)}
+					format={value => value === undefined ? 'Default' : `${value}`}
+					onChange={setFailureLimitOverride}
 				/>
 				<HeaderText>Setting the Scene</HeaderText>
 				<MarkdownEditor value={montage.scene} onChange={setScene} />

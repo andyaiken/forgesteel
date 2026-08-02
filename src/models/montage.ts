@@ -19,6 +19,8 @@ export interface MontageSection extends Element {
 
 export interface Montage extends Element {
 	difficulty: EncounterDifficulty
+	successLimitOverride?: number;
+	failureLimitOverride?: number;
 	scene: string;
 	sections: MontageSection[];
 	outcomes: {

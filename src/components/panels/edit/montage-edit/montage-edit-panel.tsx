@@ -19,6 +19,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -97,35 +98,34 @@ export const MontageEditPanel = (props: Props) => {
 					showIcon={true}
 					title={`${MontageLogic.getSuccessLimit(montage, heroes, options)} successes before ${MontageLogic.getFailureLimit(montage, heroes, options)} failures`}
 				/>
-				<HeaderText
-					extra={
-						montage.successLimitOverride !== undefined ?
-							<Button type='text' onClick={() => setSuccessLimitOverride(undefined)}>Reset To Default</Button>
-							: null
-					}
-				>
-					Success Limit
-				</HeaderText>
-				<NumberSpin
-					min={1}
-					value={MontageLogic.getSuccessLimit(montage, heroes, options)}
-					onChange={setSuccessLimitOverride}
+				<Toggle
+					label='Override successes'
+					value={montage.successLimitOverride !== undefined}
+					onChange={value => setSuccessLimitOverride(value ? MontageLogic.getSuccessLimit(montage, heroes, options) : undefined)}
 				/>
-				<HeaderText
-					extra={
-						montage.failureLimitOverride !== undefined ?
-							<Button type='text' onClick={() => setFailureLimitOverride(undefined)}>Reset To Default</Button>
-							: null
-					}
-				>
-					Failure Limit
-				</HeaderText>
-				<NumberSpin
-					min={1}
-					value={MontageLogic.getFailureLimit(montage, heroes, options)}
-					format={value => value === undefined ? 'Default' : `${value}`}
-					onChange={setFailureLimitOverride}
+				{
+					montage.successLimitOverride !== undefined ?
+						<NumberSpin
+							min={1}
+							value={MontageLogic.getSuccessLimit(montage, heroes, options)}
+							onChange={setSuccessLimitOverride}
+						/>
+						: null
+				}
+				<Toggle
+					label='Override failures'
+					value={montage.failureLimitOverride !== undefined}
+					onChange={value => setFailureLimitOverride(value ? MontageLogic.getFailureLimit(montage, heroes, options) : undefined)}
 				/>
+				{
+					montage.failureLimitOverride !== undefined ?
+						<NumberSpin
+							min={1}
+							value={MontageLogic.getFailureLimit(montage, heroes, options)}
+							onChange={setFailureLimitOverride}
+						/>
+						: null
+				}
 				<HeaderText>Setting the Scene</HeaderText>
 				<MarkdownEditor value={montage.scene} onChange={setScene} />
 			</Space>

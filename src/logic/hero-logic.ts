@@ -808,6 +808,19 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getRolledDamageBonus = (hero: Hero) => {
+		let value = 0;
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === FeatureField.RolledDamage)
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
+
+		return value;
+	};
+
 	static getRenown = (hero: Hero) => {
 		let value = hero.state.renown;
 

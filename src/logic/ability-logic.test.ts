@@ -172,6 +172,7 @@ describe('getTierEffect', () => {
 		HeroLogic.getFeatures = vi.fn().mockReturnValue([]);
 		HeroLogic.getKitDamageBonuses = vi.fn().mockReturnValue([]);
 		HeroLogic.getFeatureDamageBonuses = vi.fn().mockReturnValue([]);
+		HeroLogic.getRolledDamageBonus = vi.fn().mockReturnValue(0);
 		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
 		HeroLogic.getPotency = vi.fn().mockReturnValue(0);
 		HeroLogic.getForcedMovementBonus = vi.fn().mockReturnValue(0);

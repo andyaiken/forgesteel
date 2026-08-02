@@ -174,7 +174,13 @@ export const HeroListPage = (props: Props) => {
 									</Space>
 								)
 							},
-							{ type: 'button', label: isSmall ? undefined : 'Party', icon: <TeamOutlined />, disabled: getHeroes(currentTab).length < 2, onClick: () => props.showParty(currentTab) }
+							{
+								type: 'button',
+								label: isSmall ? undefined : 'Party',
+								icon: <TeamOutlined />,
+								disabled: getHeroes(currentTab).filter(h => h.isActive).length < 2,
+								onClick: () => props.showParty(currentTab)
+							}
 						]}
 					/>
 				</AppHeader>

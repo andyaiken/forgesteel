@@ -111,7 +111,6 @@ export const HeroSheetPage = (props: Props) => {
 					refH = Math.min(layout.linesY, refH);// Will need a better solution at some point
 				}
 			}
-			// console.log('###### Reference size: ', refH);
 			required.unshift({
 				element: <FeatureReferenceCard character={character} columns={refW - 1} key='feature-reference' />,
 				width: refW,
@@ -263,7 +262,6 @@ export const HeroSheetPage = (props: Props) => {
 							refH = Math.min(layoutEnd.linesY, refH);// Will need a better solution at some point
 						}
 					}
-					// console.log('###### RECALC Reference size: ', refH, refW);
 					card.width = refW;
 					card.height = refH;
 

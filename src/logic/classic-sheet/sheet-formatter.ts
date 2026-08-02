@@ -575,7 +575,6 @@ export class SheetFormatter {
 			}
 		}
 		size = +size.toFixed(1);
-		// console.log('###### Feature', f.name, f.id, size);
 		return size;
 	};
 

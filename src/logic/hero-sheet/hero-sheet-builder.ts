@@ -509,7 +509,6 @@ export class HeroSheetBuilder {
 	};
 
 	static buildFollowerSheet = (follower: Follower): FollowerSheet => {
-		// console.log(follower);
 		const followerType = `${follower.type}`;
 		const sheet: FollowerSheet = {
 			id: follower.id,

@@ -408,7 +408,6 @@ export class ClassicSheetBuilder {
 		const features = FeatureLogic.getFeaturesFromItem(item, hero.class?.level || 1, hero.state.tutorialMode)
 			.map(f => f.feature)
 			.filter(f => ClassicSheetLogic.includeFeature(f, options));
-		// console.log(features);
 		const sheet: ItemSheet = {
 			id: item.id,
 			item: item,

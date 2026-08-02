@@ -38,15 +38,8 @@ import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 
 export class HeroLogic {
-	static isDisabled = (hero: Hero) => {
-		const value = (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
-		return (value === true) || (value === 'true');
-	};
-
-	static isActive = (hero: Hero) => !HeroLogic.isDisabled(hero);
-
 	static getPartyHeroes = (heroes: Hero[], party: string) =>
-		heroes.filter(h => h.folder === party).filter(HeroLogic.isActive);
+		heroes.filter(h => h.folder === party).filter(h => h.isActive);
 
 	static getHeroDescription = (hero: Hero) => {
 		if (!hero.class || !hero.ancestry) {
@@ -1528,7 +1521,7 @@ export class HeroLogic {
 			complication: hero.complication ? hero.complication.name : null,
 			picture: hero.picture,
 			folder: hero.folder,
-			isDisabled: HeroLogic.isDisabled(hero)
+			isActive: hero.isActive
 		};
 
 		return overview;

@@ -23,7 +23,7 @@ export class SessionLogic {
 
 		const activeEncounterHeroes = options.party !== ''
 			? HeroLogic.getPartyHeroes(heroes, options.party)
-			: heroes.filter(HeroLogic.isActive);
+			: heroes.filter(h => h.isActive);
 		const activeHeroCount = activeEncounterHeroes.length;
 
 		const monsterInfo: { monsterID: string, monster: Monster, name: string, count: number, added: number }[] = [];

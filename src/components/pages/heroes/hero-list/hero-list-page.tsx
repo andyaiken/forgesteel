@@ -32,7 +32,7 @@ interface Props {
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
-	toggleHeroAvailability: (hero: Hero) => void;
+	onActiveChanged: (hero: Hero) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -95,11 +95,11 @@ export const HeroListPage = (props: Props) => {
 									visibility={
 										fullHero ?
 											{
-												visible: !hero.isDisabled,
+												visible: hero.isActive,
 												onSetVisibility: visible => {
 													const copy = Utils.copy(fullHero);
-													copy.isDisabled = !visible;
-													props.toggleHeroAvailability(copy);
+													copy.isActive = visible;
+													props.onActiveChanged(copy);
 												}
 											}
 											: undefined

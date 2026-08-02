@@ -99,7 +99,7 @@ export class FactoryLogic {
 			],
 			state: FactoryLogic.createHeroState(),
 			abilityCustomizations: [],
-			isDisabled: false
+			isActive: true
 		};
 	};
 

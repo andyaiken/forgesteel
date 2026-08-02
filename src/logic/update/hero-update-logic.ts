@@ -30,12 +30,16 @@ export class HeroUpdateLogic {
 			hero.folder = '';
 		}
 
-		if (hero.isDisabled === undefined) {
-			hero.isDisabled = false;
-		} else if (hero.isDisabled === 'true' as unknown as boolean) {
-			hero.isDisabled = true;
-		} else if (hero.isDisabled !== true) {
-			hero.isDisabled = false;
+		if (hero.isActive === undefined) {
+			const legacy = (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
+			if (legacy !== undefined) {
+				hero.isActive = !(legacy === true || legacy === 'true');
+				delete (hero as unknown as { isDisabled?: boolean | string }).isDisabled;
+			} else {
+				hero.isActive = true;
+			}
+		} else {
+			hero.isActive = hero.isActive === true;
 		}
 
 		if (hero.sourcebookIDs === undefined) {

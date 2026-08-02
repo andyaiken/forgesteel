@@ -1841,7 +1841,7 @@ export const Main = (props: Props) => {
 										addHero={newHero}
 										importHero={importHero}
 										showParty={onShowParty}
-										toggleHeroAvailability={persistHero}
+										onActiveChanged={persistHero}
 									/>
 								}
 							/>
@@ -1879,7 +1879,6 @@ export const Main = (props: Props) => {
 										onAddMonsterToSquad={addMonsterToSquad}
 										onSelectControlledMonster={selectControlledMonster}
 										onSelectControlledSquad={selectControlledSquad}
-										toggleHeroAvailability={persistHero}
 									/>
 								}
 							/>

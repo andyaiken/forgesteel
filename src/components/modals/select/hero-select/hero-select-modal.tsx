@@ -27,7 +27,7 @@ export const HeroSelectModal = (props: Props) => {
 	const [ mode, setMode ] = useState<string>('folder');
 	const [ heroName, setHeroName ] = useState<string>('');
 	const allHeroes = useHeroes();
-	const heroes = allHeroes.filter(HeroLogic.isActive);
+	const heroes = allHeroes.filter(h => h.isActive);
 
 	const getContent = () => {
 		switch (mode) {

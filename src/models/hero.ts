@@ -35,7 +35,7 @@ export interface Hero {
 	features: Feature[];
 	state: HeroState;
 	abilityCustomizations: AbilityCustomization[];
-	isDisabled: boolean;
+	isActive: boolean;
 }
 
 export interface HeroOverview {
@@ -47,7 +47,7 @@ export interface HeroOverview {
 	complication: string | null;
 	picture: string | null;
 	folder: string;
-	isDisabled: boolean;
+	isActive: boolean;
 }
 
 export type HeroEditTab = 'start' | 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';

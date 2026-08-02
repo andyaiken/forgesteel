@@ -4,10 +4,10 @@ import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { SessionLogic } from '@/logic/session-logic';
 
-const createPartyHero = (folder: string, isDisabled = false) => {
+const createPartyHero = (folder: string, isActive = true) => {
 	const hero = FactoryLogic.createHero();
 	hero.folder = folder;
-	hero.isDisabled = isDisabled;
+	hero.isActive = isActive;
 	return hero;
 };
 
@@ -16,7 +16,7 @@ describe('startEncounter', () => {
 		const heroes: Hero[] = [
 			createPartyHero('party'),
 			createPartyHero('party'),
-			createPartyHero('party', true)
+			createPartyHero('party', false)
 		];
 		const encounter = FactoryLogic.createEncounter();
 		const options = { party: 'party' } as Options;
@@ -29,8 +29,8 @@ describe('startEncounter', () => {
 	test('skips group monster population when active party is below minHeroCount', () => {
 		const heroes: Hero[] = [
 			createPartyHero('party'),
-			createPartyHero('party', true),
-			createPartyHero('party', true)
+			createPartyHero('party', false),
+			createPartyHero('party', false)
 		];
 		const encounter = FactoryLogic.createEncounter();
 		encounter.groups.push(FactoryLogic.createEncounterGroup());

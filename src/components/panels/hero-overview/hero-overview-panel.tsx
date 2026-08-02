@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const HeroOverviewPanel = (props: Props) => {
-	const className = props.hero.isDisabled ? 'hero-overview-panel disabled' : 'hero-overview-panel';
+	const className = props.hero.isActive ? 'hero-overview-panel' : 'hero-overview-panel disabled';
 
 	const getButtons = () => {
 		const buttons: ReactNode[] = [];

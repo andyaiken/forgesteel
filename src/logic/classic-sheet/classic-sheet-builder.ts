@@ -321,9 +321,6 @@ export class ClassicSheetBuilder {
 		if (rollSections.length) {
 			sheet.hasPowerRoll = true;
 			const rollSection = rollSections[0];
-			if (rollSections.length > 1) {
-				console.warn('More than one roll section!', ability.name, rollSections);
-			}
 			const rollAutoCalc = options?.showPowerRollCalculation ?? true;
 
 			if (rollAutoCalc) {

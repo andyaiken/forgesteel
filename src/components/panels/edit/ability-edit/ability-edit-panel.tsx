@@ -1,9 +1,11 @@
-import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Alert, AutoComplete, Button, Popover, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, isAbility } from '@/models/ability';
+import { Alert, AutoComplete, Button, Drawer, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined, SnippetsOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -16,9 +18,13 @@ import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { RadioGroup } from '@/components/controls/radio-group/radio-group';
+import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useClipboard } from '@/hooks/use-clipboard';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './ability-edit-panel.scss';
@@ -30,6 +36,12 @@ interface Props {
 
 export const AbilityEditPanel = (props: Props) => {
 	const [ ability, setAbility ] = useState<Ability>(props.ability);
+	const [ browserOpen, setBrowserOpen ] = useState<boolean>(false);
+	const options = useOptions();
+	const clipboard = useClipboard();
+
+	const sourcebooks = SourcebookData.getCached();
+	const allAbilities = Collections.sort(sourcebooks.flatMap(SourcebookLogic.getAllAbilities), a => a.name);
 
 	const getAbilityPage = () => {
 		const onChange = (name: string, desc: string) => {
@@ -735,7 +747,45 @@ export const AbilityEditPanel = (props: Props) => {
 						children: getContentPage()
 					}
 				]}
+				tabBarExtraContent={
+					<ButtonGroup
+						buttons={[
+							{ type: 'button', icon: <DownloadOutlined />, tooltip: 'Copy an existing ability', onClick: () => setBrowserOpen(true) },
+							options.showClipboardOptions ?
+								{
+									type: 'button',
+									icon: <SnippetsOutlined />,
+									tooltip: clipboard.hasData(isAbility) ? `Paste ${clipboard.getData(isAbility)?.name || 'Unknown Ability'}` : 'Paste Ability',
+									disabled: !clipboard.hasData(isAbility),
+									onClick: () => {
+										const ability = clipboard.getData(isAbility);
+										if (ability) {
+											ability.id = Utils.guid();
+											setAbility(ability);
+											props.onChange(ability);
+										}
+									}
+								}
+								: null
+						]}
+					/>
+				}
 			/>
+			<Drawer open={browserOpen} onClose={() => setBrowserOpen(false)} closeIcon={null} size={500}>
+				<AbilitySelectModal
+					abilities={allAbilities}
+					showFilter={true}
+					onSelect={a => {
+						const copy = Utils.copy(a);
+						a.id = Utils.guid();
+						setAbility(copy);
+						props.onChange(copy);
+
+						setBrowserOpen(false);
+					}}
+					onClose={() => setBrowserOpen(false)}
+				/>
+			</Drawer>
 		</div>
 	);
 };

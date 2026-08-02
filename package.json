@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.141.0",
+	"version": "14.145.0",
 	"type": "module",
 	"engines": {
 		"node": ">=24"
@@ -35,7 +35,7 @@
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
 		"react-router": "^8.3.0",
-		"sass": "^1.101.7",
+		"sass": "^1.102.0",
 		"uuid": "^14.0.1"
 	},
 	"devDependencies": {
@@ -46,7 +46,7 @@
 		"@vitejs/plugin-react": "^6.0.4",
 		"@vitest/coverage-v8": "^4.1.10",
 		"axios-mock-adapter": "^2.1.0",
-		"eslint": "^10.7.0",
+		"eslint": "^10.8.0",
 		"globals": "^17.7.0",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.65.0",

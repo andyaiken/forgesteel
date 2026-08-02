@@ -945,18 +945,6 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					]
 				}),
 				FactoryLogic.createAbility({
-					id: 'collegium-backlash',
-					name: 'Backlash',
-					description: 'Touch the fire and the fire answers.',
-					type: FactoryLogic.type.createTrigger('An enemy hits you with a strike'),
-					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
-					distance: [ FactoryLogic.distance.createMelee() ],
-					target: 'The attacker',
-					sections: [
-						FactoryLogic.createAbilitySectionText('The triggering enemy takes fire or force damage equal to twice your Reason.')
-					]
-				}),
-				FactoryLogic.createAbility({
 					id: 'collegium-flame-cone',
 					name: 'Flame Cone',
 					description: 'The cheapest argument the Collegium knows.',

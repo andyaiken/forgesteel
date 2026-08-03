@@ -231,6 +231,9 @@ export const SourcebooksModal = (props: Props) => {
 												visible: !hiddenSourcebookIDs.includes(s.id),
 												onSetVisibility: (value: boolean) => setVisibility(s, value)
 											}}
+											showEditButtons={true}
+											onChange={changeSourcebook}
+											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>
 								))
@@ -275,8 +278,6 @@ export const SourcebooksModal = (props: Props) => {
 											sourcebook={selectedSourcebook}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											mode={PanelMode.Full}
-											onChange={changeSourcebook}
-											onDelete={deleteSourcebook}
 										/>
 									</div>
 									: null

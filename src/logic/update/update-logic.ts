@@ -186,6 +186,7 @@ export class UpdateLogic {
 						addOnIDs: [],
 						itemIDs: [],
 						levelAdjustment: 0,
+						staminaAdjustment: 0,
 						minionCountAdjustment: 0,
 						convertToSolo: false
 					};
@@ -197,6 +198,10 @@ export class UpdateLogic {
 
 				if (s.customization.levelAdjustment === undefined) {
 					s.customization.levelAdjustment = 0;
+				}
+
+				if (s.customization.staminaAdjustment === undefined) {
+					s.customization.staminaAdjustment = 0;
 				}
 
 				if (s.customization.minionCountAdjustment === undefined) {

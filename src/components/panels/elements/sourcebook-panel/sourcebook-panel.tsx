@@ -33,6 +33,7 @@ interface Props {
 		onSetVisibility: (value: boolean) => void;
 	};
 	mode?: PanelMode;
+	showEditButtons?: boolean;
 	onChange?: (sourcebook: Sourcebook) => void;
 	onDelete?: (sourcebook: Sourcebook) => void;
 }
@@ -374,7 +375,7 @@ export const SourcebookPanel = (props: Props) => {
 			);
 		}
 
-		if ((props.mode === PanelMode.Full) && (sourcebook.type === SourcebookType.Homebrew)) {
+		if (props.showEditButtons && (sourcebook.type === SourcebookType.Homebrew)) {
 			if (isEditing) {
 				buttons.push(
 					<Button

@@ -695,6 +695,7 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
 				convertToSolo: false
 			},
@@ -724,6 +725,7 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
 				convertToSolo: false
 			},

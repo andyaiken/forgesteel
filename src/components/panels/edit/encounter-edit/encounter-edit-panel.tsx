@@ -1057,6 +1057,25 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			);
 		};
 
+		const getStaminaAdjust = () => {
+			const setAdjustment = (value: number) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.staminaAdjustment = value;
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			return (
+				<Expander title='Stamina'>
+					<NumberSpin
+						min={1 - originalMonster.stamina}
+						value={props.slot.customization.staminaAdjustment}
+						format={value => `${value + originalMonster.stamina}`}
+						onChange={setAdjustment}
+					/>
+				</Expander>
+			);
+		};
+
 		const getMinionCountAdjust = () => {
 			const setAdjustment = (value: number) => {
 				const copy = Utils.copy(props.slot.customization);
@@ -1213,6 +1232,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 		return (
 			<div className='customize-panel'>
 				{getLevelAdjust()}
+				{getStaminaAdjust()}
 				{getMinionCountAdjust()}
 				{getPromote()}
 				{getAddOns()}

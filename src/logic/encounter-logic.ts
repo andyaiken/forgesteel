@@ -74,6 +74,7 @@ export class EncounterLogic {
 						addOnIDs: [ ...s.customization.addOnIDs ],
 						itemIDs: [ ...s.customization.itemIDs ],
 						levelAdjustment: s.customization.levelAdjustment,
+						staminaAdjustment: s.customization.staminaAdjustment,
 						minionCountAdjustment: s.customization.minionCountAdjustment,
 						convertToSolo: s.customization.convertToSolo
 					}
@@ -226,6 +227,10 @@ export class EncounterLogic {
 						description: 'At the end of each of their turns, the creature can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 					}));
 				}
+			}
+
+			if (customization.staminaAdjustment !== 0) {
+				copy.stamina = Math.max(1, copy.stamina + customization.staminaAdjustment);
 			}
 
 			return copy;

@@ -9,6 +9,7 @@ export interface EncounterSlotCustomization {
 	addOnIDs: string[];
 	itemIDs: string[];
 	levelAdjustment: number;
+	staminaAdjustment: number;
 	minionCountAdjustment: number;
 	convertToSolo: boolean;
 }

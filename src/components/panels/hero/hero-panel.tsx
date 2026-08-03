@@ -10,7 +10,7 @@ import { ChoicesPanel } from '@/components/panels/hero/choices/choices-panel';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { Feature } from '@/models/feature';
 import { FeaturesPanel } from '@/components/panels/hero/features/features-panel';
 import { Fixture } from '@/models/fixture';

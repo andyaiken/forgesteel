@@ -1,3 +1,4 @@
+import { FactionType } from '@/enums/faction-type';
 import { Feature } from '@/models/feature';
 import { Monster } from '@/models/monster';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
@@ -34,6 +35,7 @@ export interface EncounterSheet {
 export interface EncounterGroupSheet {
 	id: string;
 	name: string;
+	faction: FactionType;
 	slots: EncounterSlotSheet[];
 	groupEv: number;
 }

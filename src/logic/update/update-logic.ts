@@ -14,6 +14,7 @@ import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
@@ -169,6 +170,10 @@ export class UpdateLogic {
 		encounter.groups.forEach(g => {
 			if (g.name === undefined) {
 				g.name = '';
+			}
+
+			if (g.faction === undefined) {
+				g.faction = FactionType.Enemy;
 			}
 
 			if (g.encounterState === undefined) {

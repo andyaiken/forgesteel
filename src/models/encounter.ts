@@ -1,11 +1,31 @@
 import { Element } from '@/models/element';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { FactionType } from '@/enums/faction-type';
 import { Hero } from '@/models/hero';
+import { Monster } from '@/models/monster';
+import { MonsterState } from '@/models/monster-state';
 import { Terrain } from '@/models/terrain';
+
+export interface EncounterSlotCustomization {
+	addOnIDs: string[];
+	itemIDs: string[];
+	levelAdjustment: number;
+	minionCountAdjustment: number;
+	convertToSolo: boolean;
+}
+
+export interface EncounterSlot {
+	id: string;
+	monsterID: string;
+	count: number;
+	customization: EncounterSlotCustomization;
+	monsters: Monster[];
+	state: MonsterState;
+}
 
 export interface EncounterGroup {
 	id: string;
 	name: string;
+	faction: FactionType;
 	slots: EncounterSlot[];
 	minHeroCount: number | undefined;
 	encounterState: 'ready' | 'current' | 'finished';

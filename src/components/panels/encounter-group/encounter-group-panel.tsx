@@ -7,7 +7,8 @@ import { Collections } from '@/utils/collections';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
+import { FactionType } from '@/enums/faction-type';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -74,7 +75,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 
 	return (
 		<div className={className}>
-			<div className='group-column'>
+			<div className='group-column hero'>
 				<Flex align='center' justify='space-between'>
 					<div className='group-name'>
 						Hero
@@ -273,6 +274,7 @@ interface EncounterGroupMonsterProps {
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 	onSetName: (group: EncounterGroup, value: string) => void;
+	onSetFaction: (group: EncounterGroup, value: FactionType) => void;
 	onSetState: (group: EncounterGroup, value: 'ready' | 'current' | 'finished') => void;
 	onDuplicate: (group: EncounterGroup) => void;
 	onDelete: (group: EncounterGroup) => void;
@@ -292,7 +294,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 
 	return (
 		<div className={className}>
-			<div className='group-column'>
+			<div className={`group-column ${props.group.faction.toLowerCase()}`}>
 				<Flex align='center' justify='space-between'>
 					<div className='group-name'>
 						{props.group.name || `Group ${props.index + 1}`}
@@ -300,7 +302,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
 								<TextInput
 									placeholder='Group name'
 									allowClear={true}
@@ -308,6 +310,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 									onChange={value => props.onSetName(props.group, value)}
 								/>
 								<Segmented
+									block={true}
 									disabled={defeated}
 									options={[
 										{ value: 'ready', label: 'Ready To Act' },
@@ -316,6 +319,13 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 									]}
 									value={props.group.encounterState}
 									onChange={value => props.onSetState(props.group, value as 'ready' | 'current' | 'finished')}
+								/>
+								<Segmented
+									block={true}
+									disabled={defeated}
+									options={[ FactionType.Enemy, FactionType.Ally ].map(ft => ({ value: ft, label: ft }))}
+									value={props.group.faction}
+									onChange={value => props.onSetFaction(props.group, value)}
 								/>
 								{
 									props.group.slots.map(slot => (
@@ -644,7 +654,7 @@ interface EncounterGroupTerrainProps {
 export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 	return (
 		<div className='encounter-group'>
-			<div className='group-column'>
+			<div className='group-column terrain'>
 				<Flex align='center' justify='space-between'>
 					<div className='group-name'>
 						Terrain

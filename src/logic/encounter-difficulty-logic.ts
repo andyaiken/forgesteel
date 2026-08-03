@@ -2,6 +2,7 @@ import { Encounter, EncounterGroup, TerrainSlot } from '@/models/encounter';
 import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
+import { FactionType } from '@/enums/faction-type';
 import { Hero } from '@/models/hero';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -17,7 +18,10 @@ export class EncounterDifficultyLogic {
 			return heroCount >= minHeroes;
 		});
 
-		const monsters = Collections.sum(groups, g => EncounterDifficultyLogic.getGroupStrength(g, sourcebooks));
+		const monsters = Collections.sum(groups, g => {
+			const groupStrength = EncounterDifficultyLogic.getGroupStrength(g, sourcebooks);
+			return g.faction === FactionType.Ally ? -groupStrength : groupStrength;
+		});
 		const terrain = Collections.sum(encounter.terrain, t => EncounterDifficultyLogic.getTerrainStrength(t, sourcebooks));
 		return Math.floor(monsters + terrain);
 	};

@@ -20,7 +20,8 @@ import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryAbilityTypeLogic } from '@/logic/factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from '@/logic/factory-damage-modifier-logic';
 import { FactoryDistanceLogic } from '@/logic/factory-distance-logic';
@@ -678,6 +679,7 @@ export class FactoryLogic {
 		return {
 			id: Utils.guid(),
 			name: '',
+			faction: FactionType.Enemy,
 			slots: [],
 			minHeroCount: undefined,
 			encounterState: 'ready'

@@ -1,8 +1,7 @@
-import { Alert, Button, Divider, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ToolFilled, ToolOutlined } from '@ant-design/icons';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
-import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
-import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
+import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, EncounterSlotCustomization, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
@@ -20,6 +19,7 @@ import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '@/components/controls/expander/expander';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -152,6 +152,13 @@ export const EncounterEditPanel = (props: Props) => {
 		const setName = (group: EncounterGroup, value: string) => {
 			const copy = Utils.copy(encounter);
 			copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const setFaction = (group: EncounterGroup, value: FactionType) => {
+			const copy = Utils.copy(encounter);
+			copy.groups.filter(g => g.id === group.id).forEach(g => g.faction = value);
 			setEncounter(copy);
 			props.onChange(copy);
 		};
@@ -300,6 +307,7 @@ export const EncounterEditPanel = (props: Props) => {
 								sourcebooks={props.sourcebooks}
 								draggedMonster={draggedMonster}
 								setName={setName}
+								setFaction={setFaction}
 								setMinHeroCount={setMinHeroCount}
 								copyGroup={copyGroup}
 								moveGroup={moveGroup}
@@ -814,6 +822,7 @@ interface GroupPanelProps {
 	sourcebooks: Sourcebook[];
 	draggedMonster: Monster | null;
 	setName: (group: EncounterGroup, value: string) => void;
+	setFaction: (group: EncounterGroup, value: FactionType) => void;
 	setMinHeroCount: (group: EncounterGroup, value: number | undefined) => void;
 	copyGroup: (group: EncounterGroup) => void;
 	moveGroup: (index: number, direction: 'up' | 'down') => void;
@@ -829,6 +838,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 		<div className='encounter-group-panel'>
 			<HeaderText
 				level={3}
+				tags={props.group.faction === FactionType.Ally ? [ 'Ally' ] : []}
 				extra={
 					<ButtonGroup
 						buttons={[
@@ -861,8 +871,14 @@ const GroupPanel = (props: GroupPanelProps) => {
 			{
 				editing ?
 					<div className='group-edit-row'>
+						<Segmented
+							block={true}
+							options={[ FactionType.Enemy, FactionType.Ally ].map(ft => ({ value: ft, label: ft }))}
+							value={props.group.faction}
+							onChange={value => props.setFaction(props.group, value)}
+						/>
 						<Toggle
-							label={`Only include this group when there are ${props.group.minHeroCount || 5} or more heroes`}
+							label={props.group.minHeroCount === undefined ? 'Depends on number of heroes' : `Only include this group when there are ${props.group.minHeroCount || 5} or more heroes`}
 							value={props.group.minHeroCount !== undefined}
 							onChange={checked => props.setMinHeroCount(props.group, checked ? 5 : undefined)}
 						/>

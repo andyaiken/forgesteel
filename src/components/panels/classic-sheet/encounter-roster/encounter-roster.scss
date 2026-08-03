@@ -97,6 +97,12 @@
             font-size: round(0.8rem, 1px);
             overflow-x: hidden;
         }
+
+        .group-faction {
+            @include common.font-serif;
+            font-size: round(0.7rem, 1px);
+            font-style: italic;
+        }
     }
 
     .wrapper {

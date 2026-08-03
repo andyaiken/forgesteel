@@ -1,5 +1,6 @@
 import { Encounter } from '@/models/encounter';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
+import { FactionType } from '@/enums/faction-type';
 import { MonsterData } from '@/data/monster-data';
 import { TerrainData } from '@/data/terrain-data';
 
@@ -12,6 +13,7 @@ export class EncounterData {
 			{
 				id: 'group-1',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-1-slot-1',
@@ -43,6 +45,7 @@ export class EncounterData {
 			{
 				id: 'group-2',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-2-slot-1',
@@ -74,6 +77,7 @@ export class EncounterData {
 			{
 				id: 'group-3',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-3-slot-1',
@@ -105,6 +109,7 @@ export class EncounterData {
 			{
 				id: 'group-4',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-4-slot-1',
@@ -168,6 +173,7 @@ export class EncounterData {
 			{
 				id: 'group-1',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-1-slot-1',

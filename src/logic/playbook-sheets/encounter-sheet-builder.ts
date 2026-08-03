@@ -4,7 +4,8 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { CreatureLogic } from '@/logic/creature-logic';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
+import { FactionType } from '@/enums/faction-type';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { MonsterLogic } from '@/logic/monster-logic';
@@ -141,8 +142,9 @@ export class EncounterSheetBuilder {
 		const sheet: EncounterGroupSheet = {
 			id: group.id,
 			name: group.name,
+			faction: group.faction,
 			slots: adjustedSlots,
-			groupEv: groupEv
+			groupEv: group.faction === FactionType.Ally ? -groupEv : groupEv
 		};
 
 		return sheet;

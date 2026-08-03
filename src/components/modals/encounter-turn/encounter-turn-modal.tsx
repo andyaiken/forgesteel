@@ -4,6 +4,7 @@ import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo } from '@/components/panels/token/token';
 import { Condition } from '@/models/condition';
 import { EncounterLogic } from '@/logic/encounter-logic';
+import { FactionType } from '@/enums/faction-type';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -143,7 +144,7 @@ export const EncounterTurnModal = (props: Props) => {
 		const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
 			return (
 				<SelectablePanel key={group.id} onSelect={onClick}>
-					<HeaderText style={{ marginTop: '0' }}>
+					<HeaderText tags={group.faction === FactionType.Ally ? [ 'Ally' ] : []} style={{ marginTop: '0' }}>
 						{group.name ? group.name : `Group ${encounter.groups.indexOf(group) + 1}`}
 					</HeaderText>
 					<Space orientation='vertical' style={{ width: '100%' }}>
@@ -178,7 +179,8 @@ export const EncounterTurnModal = (props: Props) => {
 			);
 		};
 
-		const activeGroups = encounter.groups.filter(g => g.slots.some(s => !s.state.defeated && s.monsters.some(m => !m.state.defeated)));
+		const activeEnemyGroups = encounter.groups.filter(g => (g.faction === FactionType.Enemy) && !EncounterLogic.isGroupDefeated(g));
+		const activeAllyGroups = encounter.groups.filter(g => (g.faction === FactionType.Ally) && !EncounterLogic.isGroupDefeated(g));
 		const activeHeroes = encounter.heroes.filter(h => !h.state.defeated);
 
 		if (!encounter.initiative) {
@@ -218,34 +220,39 @@ export const EncounterTurnModal = (props: Props) => {
 				</div>
 			);
 
-			const allMonstersReady = activeGroups.every(g => g.encounterState === 'ready');
-			const allHeroesReady = activeHeroes.every(h => h.state.encounterState === 'ready');
-			const allMonstersFinished = activeGroups.every(g => g.encounterState === 'finished');
-			const allHeroesFinished = activeHeroes.every(h => h.state.encounterState === 'finished');
+			const allMonstersReady = activeEnemyGroups.every(g => g.encounterState === 'ready');
+			const allHeroesReady = activeAllyGroups.every(g => g.encounterState === 'ready') && activeHeroes.every(h => h.state.encounterState === 'ready');
+			const allMonstersFinished = activeEnemyGroups.every(g => g.encounterState === 'finished');
+			const allHeroesFinished = activeAllyGroups.every(g => g.encounterState === 'finished') && activeHeroes.every(h => h.state.encounterState === 'finished');
 			if ((allMonstersReady && allHeroesReady) || (allMonstersFinished && allHeroesFinished)) {
 				content.push(
 					<div key='start-round'>
 						<HeaderText>Round {encounter.round + 1}</HeaderText>
 						<div className='ds-text'>
-							Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero'} to start the round and gain <b>{EncounterLogic.getMaliceGained(encounter)} malice</b>.
+							Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero or ally'} to start the round and gain <b>{EncounterLogic.getMaliceGained(encounter)} malice</b>.
 						</div>
 						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								encounter.initiative === 'monsters' ?
-									activeGroups
+									activeEnemyGroups
 										.filter(g => g.encounterState === 'ready')
 										.map(g => getGroupButton(g, () => startRound(g.id)))
 									:
-									activeHeroes
-										.filter(h => h.state.encounterState === 'ready')
-										.map(h => getHeroButton(h, () => startRound(h.id)))
+									[
+										...activeAllyGroups
+											.filter(g => g.encounterState === 'ready')
+											.map(g => getGroupButton(g, () => startRound(g.id))),
+										...activeHeroes
+											.filter(h => h.state.encounterState === 'ready')
+											.map(h => getHeroButton(h, () => startRound(h.id)))
+									]
 							}
 						</Space>
 					</div>
 				);
 			} else {
-				const noCurrentMonsters = activeGroups.every(g => g.encounterState !== 'current');
-				const noCurrentHeroes = activeHeroes.every(h => h.state.encounterState !== 'current');
+				const noCurrentMonsters = activeEnemyGroups.every(g => g.encounterState !== 'current');
+				const noCurrentHeroes = activeAllyGroups.every(g => g.encounterState !== 'current') && activeHeroes.every(h => h.state.encounterState !== 'current');
 				if (noCurrentMonsters && noCurrentHeroes) {
 					const selectGroup = (groupID: string) => {
 						const copy = Utils.copy(encounter);
@@ -273,7 +280,7 @@ export const EncounterTurnModal = (props: Props) => {
 						<Space key='select-group' orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Select a Group</HeaderText>
 							{
-								activeGroups
+								activeEnemyGroups
 									.filter(g => g.encounterState === 'ready')
 									.map(g => getGroupButton(g, () => selectGroup(g.id)))
 							}
@@ -282,25 +289,34 @@ export const EncounterTurnModal = (props: Props) => {
 
 					content.push(
 						<Space key='select-hero' orientation='vertical' style={{ width: '100%' }}>
-							<HeaderText>Select a Hero</HeaderText>
+							<HeaderText>Select a Hero or Ally</HeaderText>
 							{
-								activeHeroes
-									.filter(h => h.state.encounterState === 'ready')
-									.map(h => getHeroButton(h, () => selectHero(h.id)))
+								[
+									...activeAllyGroups
+										.filter(g => g.encounterState === 'ready')
+										.map(g => getGroupButton(g, () => selectGroup(g.id))),
+									...activeHeroes
+										.filter(h => h.state.encounterState === 'ready')
+										.map(h => getHeroButton(h, () => selectHero(h.id)))
+								]
 							}
 						</Space>
 					);
 				}
 			}
 
-			const groups = activeGroups.filter(g => g.encounterState === 'ready');
+			const groups = activeEnemyGroups.filter(g => g.encounterState === 'ready');
+			const allies = activeAllyGroups.filter(g => g.encounterState === 'ready');
 			const heroes = activeHeroes.filter(h => h.state.encounterState === 'ready');
 
 			encounter.groups
 				.filter(g => g.encounterState === 'current')
 				.forEach(group => {
 					const groupButtons = groups.map(g => getGroupButton(g, () => endTurnAndStartNext(group.id, g.id)));
-					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)));
+					const heroButtons = [
+						...allies.map(g => getGroupButton(g, () => endTurnAndStartNext(group.id, g.id))),
+						...heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)))
+					];
 
 					content.push(
 						<Space key={group.id} orientation='vertical' style={{ width: '100%' }}>
@@ -313,14 +329,14 @@ export const EncounterTurnModal = (props: Props) => {
 							<HeaderText>{EncounterLogic.getGroupName(group, encounter)}: End Turn</HeaderText>
 							<div className='ds-text'>
 								{
-									(groups.length > 0) || (heroes.length > 0) ?
+									(groups.length > 0) || (allies.length > 0) || (heroes.length > 0) ?
 										'Ready to finish this turn? Choose who\'s next.'
 										:
 										'Ready to finish this turn? That\'ll be the end of this round.'
 								}
 							</div>
 							{
-								heroes.length > 0 ?
+								heroButtons.length > 0 ?
 									<>
 										{heroButtons}
 										<div className='ds-text'>Or choose a monster group:</div>
@@ -330,7 +346,7 @@ export const EncounterTurnModal = (props: Props) => {
 									groupButtons
 							}
 							{
-								(groups.length === 0) && (heroes.length === 0) ?
+								(groups.length === 0) && (allies.length === 0) && (heroes.length === 0) ?
 									<Button block={true} onClick={() => endTurnAndStartNext(group.id, null)}>
 										Next Round
 									</Button>
@@ -344,7 +360,10 @@ export const EncounterTurnModal = (props: Props) => {
 				.filter(h => h.state.encounterState === 'current')
 				.forEach(hero => {
 					const groupButtons = groups.map(g => getGroupButton(g, () => endTurnAndStartNext(hero.id, g.id)));
-					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)));
+					const heroButtons = [
+						...allies.map(g => getGroupButton(g, () => endTurnAndStartNext(hero.id, g.id))),
+						...heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)))
+					];
 
 					content.push(
 						<Space key={hero.id} orientation='vertical' style={{ width: '100%' }}>
@@ -352,7 +371,7 @@ export const EncounterTurnModal = (props: Props) => {
 							<HeaderText>{hero.name}: End Turn</HeaderText>
 							<div className='ds-text'>
 								{
-									(groups.length > 0) || (heroes.length > 0) ?
+									(groups.length > 0) || (allies.length > 0) || (heroes.length > 0) ?
 										'Ready to finish this turn? Choose who\'s next.'
 										:
 										'Ready to finish this turn? That\'ll be the end of this round.'
@@ -362,14 +381,14 @@ export const EncounterTurnModal = (props: Props) => {
 								groups.length > 0 ?
 									<>
 										{groupButtons}
-										<div className='ds-text'>Or choose a hero:</div>
+										<div className='ds-text'>Or choose a hero or ally:</div>
 										{heroButtons}
 									</>
 									:
 									heroButtons
 							}
 							{
-								(groups.length === 0) && (heroes.length === 0) ?
+								(groups.length === 0) && (allies.length === 0) && (heroes.length === 0) ?
 									<Button block={true} onClick={() => endTurnAndStartNext(hero.id, null)}>
 										Next Round
 									</Button>

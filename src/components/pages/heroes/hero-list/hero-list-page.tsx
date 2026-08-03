@@ -192,8 +192,17 @@ export const HeroListPage = (props: Props) => {
 								key: f,
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>{f || 'Heroes'}</div>
-										<div className='section-count'>{getHeroes(f).length}</div>
+										<div className='section-title'>
+											{f || 'Heroes'}
+										</div>
+										<div className='section-count'>
+											{
+												getHeroes(f).every(h => h.isActive) ?
+													`${getHeroes(f).length}`
+													:
+													`${getHeroes(f).filter(h => h.isActive).length} of ${getHeroes(f).length}`
+											}
+										</div>
 									</div>
 								),
 								children: getHeroesSection(getHeroes(f))

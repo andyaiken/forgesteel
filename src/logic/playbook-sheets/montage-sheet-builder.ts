@@ -4,6 +4,7 @@ import { Montage } from '@/models/montage';
 import { MontageLogic } from '@/logic/montage-logic';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
 import { Options } from '@/models/options';
+import { OptionsLogic } from '../options-logic';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 export class MontageSheetBuilder {
@@ -28,7 +29,7 @@ export class MontageSheetBuilder {
 			sheet.successLimit = MontageLogic.getSuccessLimit(montage, heroes, options);
 			sheet.failureLimit = MontageLogic.getFailureLimit(montage, heroes, options);
 		}
-		sheet.numHeroes = MontageLogic.getHeroCount(heroes, options);
+		sheet.numHeroes = OptionsLogic.getHeroCount(options, heroes);
 
 		let hazards = '';
 		let eventsNotes = '';

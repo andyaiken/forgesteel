@@ -3,18 +3,14 @@ import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
 import { Options } from '@/models/options';
+import { OptionsLogic } from './options-logic';
 
 export class MontageLogic {
-	static getHeroCount = (heroes: Hero[], options: Options) => {
-		let heroCount = options.heroCount;
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
-		}
-		return heroCount;
-	};
-
 	static getSuccessLimit = (montage: Montage, heroes: Hero[], options: Options) => {
+		if (montage.successLimitOverride !== undefined) {
+			return montage.successLimitOverride;
+		}
+
 		let value = 6;
 
 		switch (montage.difficulty) {
@@ -29,7 +25,7 @@ export class MontageLogic {
 				break;
 		}
 
-		const heroCount = this.getHeroCount(heroes, options);
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
 		if (heroCount < 5) {
 			value -= (5 - heroCount);
 		}
@@ -41,6 +37,10 @@ export class MontageLogic {
 	};
 
 	static getFailureLimit = (montage: Montage, heroes: Hero[], options: Options) => {
+		if (montage.failureLimitOverride !== undefined) {
+			return montage.failureLimitOverride;
+		}
+
 		let value = 6;
 
 		switch (montage.difficulty) {
@@ -55,7 +55,7 @@ export class MontageLogic {
 				break;
 		}
 
-		const heroCount = this.getHeroCount(heroes, options);
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
 		if (heroCount < 5) {
 			value -= (5 - heroCount);
 		}
@@ -72,7 +72,7 @@ export class MontageLogic {
 		const successLimit = MontageLogic.getSuccessLimit(montage, heroes, options);
 		const failureLimit = MontageLogic.getFailureLimit(montage, heroes, options);
 
-		const heroCount = this.getHeroCount(heroes, options);
+		const heroCount = OptionsLogic.getHeroCount(options, heroes);
 		// 2 rounds = 2 * number of heroes chances
 		const totalChances = heroCount * 2;
 		const testsUsed = successes + failures;

@@ -6,6 +6,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
@@ -276,6 +277,8 @@ interface EncounterGroupMonsterProps {
 	onDuplicate: (group: EncounterGroup) => void;
 	onDelete: (group: EncounterGroup) => void;
 	onSetDefeated: (monster: Monster, value: boolean) => void;
+	onMoveSlot: (slot: EncounterSlot, toGroupID: string) => void;
+	onCopySlot: (slot: EncounterSlot, toGroupID: string) => void;
 }
 
 export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
@@ -314,7 +317,37 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 									value={props.group.encounterState}
 									onChange={value => props.onSetState(props.group, value as 'ready' | 'current' | 'finished')}
 								/>
-								<Button block={true} onClick={() => props.onDuplicate(props.group)}>Duplicate</Button>
+								{
+									props.group.slots.map(slot => (
+										<DropdownButton
+											key={`mode-${slot.id}`}
+											label={`Move ${slot.monsters[0].name}${slot.monsters.length > 1 ? ' (et al)' : ''} To`}
+											items={[
+												...props.encounter.groups
+													.filter(g => g.id !== props.group.id)
+													.map(g => ({ key: g.id, label: <Button type='text' block={true}>{g.name || `Group ${props.encounter.groups.indexOf(g) + 1}`}</Button> })),
+												{ key: '', label: <Button type='text' block={true}>New Group</Button> }
+											]}
+											onClick={toGroupID => props.onMoveSlot(slot, toGroupID)}
+										/>
+									))
+								}
+								{
+									props.group.slots.map(slot => (
+										<DropdownButton
+											key={`copy-${slot.id}`}
+											label={`Copy ${slot.monsters[0].name}${slot.monsters.length > 1 ? ' (et al)' : ''} To`}
+											items={[
+												...props.encounter.groups
+													.filter(g => g.id !== props.group.id)
+													.map(g => ({ key: g.id, label: <Button type='text' block={true}>{g.name || `Group ${props.encounter.groups.indexOf(g) + 1}`}</Button> })),
+												{ key: '', label: <Button type='text' block={true}>New Group</Button> }
+											]}
+											onClick={toGroupID => props.onCopySlot(slot, toGroupID)}
+										/>
+									))
+								}
+								<Button block={true} onClick={() => props.onDuplicate(props.group)}>Duplicate Group</Button>
 								<DangerButton mode='block' onConfirm={() => props.onDelete(props.group)} />
 							</div>
 						)}

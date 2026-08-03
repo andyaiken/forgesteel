@@ -32,6 +32,7 @@ interface Props {
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
+	onActiveChanged: (hero: Hero) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -80,11 +81,33 @@ export const HeroListPage = (props: Props) => {
 		return (
 			<div className='hero-section-row'>
 				{
-					list.map(hero => (
-						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroOverviewPanel hero={hero} />
-						</SelectablePanel>
-					))
+					list.map(hero => {
+						const fullHero = fullHeroes.find(h => h.id === hero.id);
+
+						return (
+							<SelectablePanel
+								key={hero.id}
+								watermark={hero.picture || undefined}
+								onSelect={() => navigation.goToHeroView(hero.id)}
+							>
+								<HeroOverviewPanel
+									hero={hero}
+									visibility={
+										fullHero ?
+											{
+												visible: hero.isActive,
+												onSetVisibility: visible => {
+													const copy = Utils.copy(fullHero);
+													copy.isActive = visible;
+													props.onActiveChanged(copy);
+												}
+											}
+											: undefined
+									}
+								/>
+							</SelectablePanel>
+						);
+					})
 				}
 			</div>
 		);
@@ -151,7 +174,13 @@ export const HeroListPage = (props: Props) => {
 									</Space>
 								)
 							},
-							{ type: 'button', label: isSmall ? undefined : 'Party', icon: <TeamOutlined />, disabled: getHeroes(currentTab).length < 2, onClick: () => props.showParty(currentTab) }
+							{
+								type: 'button',
+								label: isSmall ? undefined : 'Party',
+								icon: <TeamOutlined />,
+								disabled: getHeroes(currentTab).filter(h => h.isActive).length < 2,
+								onClick: () => props.showParty(currentTab)
+							}
 						]}
 					/>
 				</AppHeader>

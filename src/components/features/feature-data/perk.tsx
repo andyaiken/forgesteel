@@ -67,6 +67,15 @@ export const EditPerk = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setSelected = (value: Perk[]) => {
+		const copy = Utils.copy(data);
+		copy.selected = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const perksInLists = Collections.sort(SourcebookLogic.getPerks(props.sourcebooks).filter(p => data.lists.includes(p.list)), p => p.name);
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Lists</HeaderText>
@@ -83,6 +92,17 @@ export const EditPerk = (props: EditProps) => {
 			/>
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />
+			<HeaderText>Default Selection</HeaderText>
+			<Select
+				style={{ width: '100%' }}
+				placeholder='Perks'
+				mode='multiple'
+				allowClear={true}
+				options={perksInLists.map(p => ({ label: p.name, value: p.id, desc: p.description }))}
+				optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+				value={data.selected.map(p => p.id)}
+				onChange={ids => setSelected(ids.map(id => SourcebookLogic.getPerks(props.sourcebooks).find(p => p.id === id)).filter(p => !!p).map(Utils.copy))}
+			/>
 		</Space>
 	);
 };

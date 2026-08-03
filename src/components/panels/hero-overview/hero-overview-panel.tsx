@@ -1,21 +1,57 @@
+import { Button, Flex } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroOverview } from '@/models/hero';
 import { HeroOverviewToken } from '@/components/panels/token/token';
+import { ReactNode } from 'react';
 
 import './hero-overview-panel.scss';
 
 interface Props {
 	hero: HeroOverview;
+	extra?: ReactNode;
+	visibility?: {
+		visible: boolean;
+		onSetVisibility: (value: boolean) => void;
+	};
 }
 
 export const HeroOverviewPanel = (props: Props) => {
+	const className = props.hero.isActive ? 'hero-overview-panel' : 'hero-overview-panel disabled';
+
+	const getButtons = () => {
+		const buttons: ReactNode[] = [];
+
+		if (props.visibility) {
+			buttons.push(
+				<Button
+					key='show-hide'
+					type='text'
+					title='Show/Hide'
+					icon={props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+					onClick={e => {
+						e.stopPropagation();
+						props.visibility!.onSetVisibility(!props.visibility!.visible);
+					}}
+				/>
+			);
+		}
+
+		if (props.extra) {
+			buttons.push(props.extra);
+		}
+
+		return buttons.length > 0 ? <Flex>{buttons}</Flex> : null;
+	};
+
 	return (
-		<div className='hero-overview-panel'>
+		<div className={className}>
 			<HeaderText
 				level={1}
 				ribbon={props.hero.picture ? <HeroOverviewToken hero={props.hero} size={34} /> : null}
 				tags={props.hero.folder ? [ props.hero.folder ] : []}
+				extra={getButtons()}
 			>
 				{props.hero.name || 'Unnamed Hero'}
 			</HeaderText>

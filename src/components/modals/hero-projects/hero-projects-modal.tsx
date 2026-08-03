@@ -133,12 +133,16 @@ export const HeroProjectsModal = (props: Props) => {
 						}
 					</Space>
 					<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} size={500}>
-						<ProjectSelectModal
-							sourcebooks={props.sourcebooks}
-							onSelect={addProject}
-							onCustomize={props.onCustomize}
-							onClose={() => setProjectsVisible(false)}
-						/>
+						{
+							projectsVisible ?
+								<ProjectSelectModal
+									sourcebooks={props.sourcebooks}
+									onSelect={addProject}
+									onCustomize={props.onCustomize}
+									onClose={() => setProjectsVisible(false)}
+								/>
+								: null
+						}
 					</Drawer>
 				</div>
 			}

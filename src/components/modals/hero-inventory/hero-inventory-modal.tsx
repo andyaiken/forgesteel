@@ -148,14 +148,35 @@ export const HeroInventoryModal = (props: Props) => {
 						}
 					</Space>
 					<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} size={500}>
-						<ItemSelectModal
-							types={[ ItemType.Artifact, ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
-							sourcebooks={props.sourcebooks}
-							hero={hero}
-							onSelect={addItem}
-							onCustomize={props.onCustomize}
-							onClose={() => setShopVisible(false)}
-						/>
+						{
+							shopVisible ?
+								<ItemSelectModal
+									types={[
+										ItemType.Artifact,
+										ItemType.Consumable1st,
+										ItemType.Consumable2nd,
+										ItemType.Consumable3rd,
+										ItemType.Consumable4th,
+										ItemType.ImbuedArmor,
+										ItemType.ImbuedImplement,
+										ItemType.ImbuedWeapon,
+										ItemType.Leveled,
+										ItemType.LeveledArmor,
+										ItemType.LeveledImplement,
+										ItemType.LeveledWeapon,
+										ItemType.Trinket1st,
+										ItemType.Trinket2nd,
+										ItemType.Trinket3rd,
+										ItemType.Trinket4th
+									]}
+									sourcebooks={props.sourcebooks}
+									hero={hero}
+									onSelect={addItem}
+									onCustomize={props.onCustomize}
+									onClose={() => setShopVisible(false)}
+								/>
+								: null
+						}
 					</Drawer>
 				</div>
 			}

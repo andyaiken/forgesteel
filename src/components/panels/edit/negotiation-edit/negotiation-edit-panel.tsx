@@ -1,4 +1,4 @@
-import { Button, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { AttitudeType } from '@/enums/attitude-type';
 import { Collections } from '@/utils/collections';
@@ -60,6 +60,20 @@ export const NegotiationEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setInterest = (value: number) => {
+			const copy = Utils.copy(negotiation);
+			copy.interest = value;
+			setNegotiation(copy);
+			props.onChange(copy);
+		};
+
+		const setPatience = (value: number) => {
+			const copy = Utils.copy(negotiation);
+			copy.patience = value;
+			setNegotiation(copy);
+			props.onChange(copy);
+		};
+
 		const setImpression = (value: number) => {
 			const copy = Utils.copy(negotiation);
 			copy.impression = value;
@@ -84,6 +98,15 @@ export const NegotiationEditPanel = (props: Props) => {
 					value={negotiation.attitude}
 					onChange={setAttitude}
 				/>
+				<Alert
+					type='info'
+					showIcon={true}
+					title={`Defaults to ${NegotiationLogic.getInterest(negotiation.attitude)} Interest and ${NegotiationLogic.getPatience(negotiation.attitude)} Patience`}
+				/>
+				<HeaderText>Interest</HeaderText>
+				<NumberSpin min={0} max={5} value={negotiation.interest} onChange={setInterest} />
+				<HeaderText>Patience</HeaderText>
+				<NumberSpin min={0} max={5} value={negotiation.patience} onChange={setPatience} />
 				<HeaderText>Impression</HeaderText>
 				<NumberSpin min={0} max={15} value={negotiation.impression} onChange={setImpression} />
 				<HeaderText>Languages</HeaderText>

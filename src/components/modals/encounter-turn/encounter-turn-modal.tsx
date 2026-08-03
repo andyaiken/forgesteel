@@ -221,10 +221,10 @@ export const EncounterTurnModal = (props: Props) => {
 			);
 
 			const allMonstersReady = activeEnemyGroups.every(g => g.encounterState === 'ready');
-			const allHeroesReady = activeAllyGroups.every(g => g.encounterState === 'ready') && activeHeroes.every(h => h.state.encounterState === 'ready');
+			const allFriendliesReady = activeAllyGroups.every(g => g.encounterState === 'ready') && activeHeroes.every(h => h.state.encounterState === 'ready');
 			const allMonstersFinished = activeEnemyGroups.every(g => g.encounterState === 'finished');
-			const allHeroesFinished = activeAllyGroups.every(g => g.encounterState === 'finished') && activeHeroes.every(h => h.state.encounterState === 'finished');
-			if ((allMonstersReady && allHeroesReady) || (allMonstersFinished && allHeroesFinished)) {
+			const allFriendliesFinished = activeAllyGroups.every(g => g.encounterState === 'finished') && activeHeroes.every(h => h.state.encounterState === 'finished');
+			if ((allMonstersReady && allFriendliesReady) || (allMonstersFinished && allFriendliesFinished)) {
 				content.push(
 					<div key='start-round'>
 						<HeaderText>Round {encounter.round + 1}</HeaderText>
@@ -252,8 +252,8 @@ export const EncounterTurnModal = (props: Props) => {
 				);
 			} else {
 				const noCurrentMonsters = activeEnemyGroups.every(g => g.encounterState !== 'current');
-				const noCurrentHeroes = activeAllyGroups.every(g => g.encounterState !== 'current') && activeHeroes.every(h => h.state.encounterState !== 'current');
-				if (noCurrentMonsters && noCurrentHeroes) {
+				const noCurrentFriendlies = activeAllyGroups.every(g => g.encounterState !== 'current') && activeHeroes.every(h => h.state.encounterState !== 'current');
+				if (noCurrentMonsters && noCurrentFriendlies) {
 					const selectGroup = (groupID: string) => {
 						const copy = Utils.copy(encounter);
 						const group = copy.groups.find(g => g.id === groupID);

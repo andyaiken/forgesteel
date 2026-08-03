@@ -40,15 +40,6 @@
 		border-radius: 5px 0 0 5px;
 		padding: 5px;
 
-		&.enemy {
-			background-color: rgba(255, 0, 0, 0.1);
-		}
-
-		&.ally,
-		&.hero {
-			background-color: rgba(0, 128, 0, 0.1);
-		}
-
 		.group-name {
 			margin: 0 5px;
 			font-weight: 600;
@@ -173,6 +164,18 @@
 
 	.group-acted {
 		flex: 0 0 auto;
+	}
+
+	.group-column,
+	.encounter-slots {
+		&.enemy {
+			background: rgb(255, 250, 250);
+		}
+
+		&.ally,
+		&.hero {
+			background: rgb(250, 255, 250);
+		}
 	}
 }
 

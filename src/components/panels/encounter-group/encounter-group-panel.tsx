@@ -102,7 +102,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 					</Popover>
 				</Flex>
 			</div>
-			<div className='encounter-slots'>
+			<div className='encounter-slots hero'>
 				<div className='encounter-slot' ref={setRef}>
 					<Flex key='minions' align='center' gap={5}>
 						<div
@@ -366,7 +366,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 					</Popover>
 				</Flex>
 			</div>
-			<div className='encounter-slots'>
+			<div className={`encounter-slots ${props.group.faction.toLowerCase()}`}>
 				{
 					props.group.slots.map(slot => (
 						<MonsterSlot
@@ -672,7 +672,7 @@ export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 					</Popover>
 				</Flex>
 			</div>
-			<div className='encounter-slots'>
+			<div className='encounter-slots terrain'>
 				<div className='encounter-slot'>
 					<div className='encounter-slot-row' onClick={() => props.onSelect(props.terrain)}>
 						<div className='name-column'>

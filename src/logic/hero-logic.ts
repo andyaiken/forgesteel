@@ -1291,8 +1291,7 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static createRandomHero = () => {
-		const sourcebooks = SourcebookLogic.getSourcebooks();
+	static createRandomHero = (sourcebooks: Sourcebook[]) => {
 		const hero = FactoryLogic.createHero();
 		hero.name = NameGenerator.generateName();
 		hero.sourcebookIDs = sourcebooks.map(sb => sb.id);
@@ -1347,6 +1346,9 @@ export class HeroLogic {
 							const options = feature.data.options
 								.filter(o => !currentIDs.includes(o.feature.id))
 								.filter(o => o.value <= remaining);
+							if (options.length === 0) {
+								break;
+							}
 							const selected = Collections.draw(options);
 							feature.data.selected.push(selected.feature);
 							remaining -= selected.value;
@@ -1360,6 +1362,9 @@ export class HeroLogic {
 								const options = hero.class.abilities
 									.filter(a => !currentIDs.includes(a.id))
 									.filter(a => a.cost === feature.data.cost);
+								if (options.length === 0) {
+									break;
+								}
 								const selected = Collections.draw(options);
 								feature.data.selectedIDs.push(selected.id);
 							}
@@ -1387,6 +1392,9 @@ export class HeroLogic {
 							const options = SourcebookLogic
 								.getDomains(sourcebooks)
 								.filter(a => !currentIDs.includes(a.id));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1399,6 +1407,9 @@ export class HeroLogic {
 								.filter(lvl => lvl.level === feature.data.level)
 								.flatMap(lvl => lvl.features)
 								.filter(f => !currentIDs.includes(f.id));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1410,6 +1421,9 @@ export class HeroLogic {
 								.getItems(sourcebooks)
 								.filter(i => !currentIDs.includes(i.id))
 								.filter(i => (feature.data.types.length === 0) || feature.data.types.includes(i.type));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1421,6 +1435,9 @@ export class HeroLogic {
 								.getKits(sourcebooks)
 								.filter(k => !currentIDs.includes(k.id))
 								.filter(k => (feature.data.types.length === 0) || feature.data.types.includes(k.type));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1431,6 +1448,9 @@ export class HeroLogic {
 							const options = SourcebookLogic
 								.getLanguages(sourcebooks)
 								.filter(l => !current.includes(l.name));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options).name);
 						}
 						break;
@@ -1442,6 +1462,9 @@ export class HeroLogic {
 								.getPerks(sourcebooks)
 								.filter(p => !currentIDs.includes(p.id))
 								.filter(p => (feature.data.lists.length === 0) || feature.data.lists.includes(p.list));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1459,6 +1482,9 @@ export class HeroLogic {
 							});
 							const options = allOptions
 								.filter(s => !current.includes(s));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1476,6 +1502,9 @@ export class HeroLogic {
 								.map(f => f.id);
 							const options = taggedFeatures
 								.filter(t => !currentIDs.includes(t.id));
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;
@@ -1487,6 +1516,9 @@ export class HeroLogic {
 								.getTitles(sourcebooks)
 								.filter(t => !currentIDs.includes(t.id))
 								.filter(t => feature.data.echelon === t.echelon);
+							if (options.length === 0) {
+								break;
+							}
 							feature.data.selected.push(Collections.draw(options));
 						}
 						break;

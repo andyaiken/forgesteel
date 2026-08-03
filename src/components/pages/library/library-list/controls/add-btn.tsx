@@ -1,7 +1,7 @@
 import { Alert, Button, Flex, Popover, Segmented, Select, Space, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
-import { useHeroes, useOptions } from '@/contexts/data-context';
+import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
 import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
 import { Element } from '@/models/element';
@@ -40,6 +40,8 @@ export const AddBtn = (props: Props) => {
 	const [ mapGenerateSize, setMapGenerateSize ] = useState<number>(5);
 	const options = useOptions();
 	const heroes = useHeroes();
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	const visibleSourcebooks = props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
 
 	if ((props.category === 'monster-group') && props.showMonsters) {
 		return (
@@ -76,13 +78,13 @@ export const AddBtn = (props: Props) => {
 		const budgets = EncounterDifficultyLogic.getBudgets(options, heroes);
 		switch (difficulty) {
 			case EncounterDifficulty.Easy:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
+				EncounterLogic.generateEncounter(enc, visibleSourcebooks, heroCount, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
 				break;
 			case EncounterDifficulty.Standard:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
+				EncounterLogic.generateEncounter(enc, visibleSourcebooks, heroCount, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
 				break;
 			case EncounterDifficulty.Hard:
-				EncounterLogic.generateEncounter(enc, props.sourcebooks, heroCount, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
+				EncounterLogic.generateEncounter(enc, visibleSourcebooks, heroCount, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
 				break;
 		}
 
@@ -143,7 +145,7 @@ export const AddBtn = (props: Props) => {
 							style={{ width: '100%', margin: '10px 0' }}
 							mode='tags'
 							placeholder='Use monsters with any keywords'
-							options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: kw }))}
+							options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(visibleSourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: kw }))}
 							optionRender={opt => <div className='ds-text'>{opt.data.value}</div>}
 							value={keywords}
 							onChange={setKeywords}

@@ -5,7 +5,7 @@ import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, Encounter
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
-import { useHeroes, useOptions } from '@/contexts/data-context';
+import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-context';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -66,6 +66,8 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
 	const options = useOptions();
 	const heroes = useHeroes();
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	const visibleSourcebooks = props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
 
 	const switchLeftTab = (key: string) => {
 		setActiveLeftTabKey(key);
@@ -581,7 +583,7 @@ ${value.victories}`
 	};
 
 	const getMonsterListSection = () => {
-		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
+		const groups = Collections.sort(visibleSourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%', padding: '5px' }}>
@@ -590,7 +592,7 @@ ${value.victories}`
 						<>
 							<MonsterFilterPanel
 								monsterFilter={monsterFilter}
-								monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+								monsters={visibleSourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 								includeNameFilter={true}
 								includeOrgFilter={true}
 								includeEVFilter={true}
@@ -609,7 +611,7 @@ ${value.victories}`
 										<MonsterListItem
 											key={m.id}
 											monster={m}
-											monsterGroup={SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup}
+											monsterGroup={SourcebookLogic.getMonsterGroup(visibleSourcebooks, m.id) as MonsterGroup}
 											encounter={encounter}
 											addMonster={addMonster}
 											showMonster={props.showMonster}
@@ -630,7 +632,7 @@ ${value.victories}`
 	};
 
 	const getTerrainListSection = () => {
-		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
+		const allTerrains = SourcebookLogic.getTerrains(visibleSourcebooks);
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (

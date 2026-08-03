@@ -433,7 +433,7 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.map(s => s.id);
+					const selectedIDs = oFeature.data.selected.filter(s => !!s).map(s => s.id);
 
 					let availableOptions = [ ...feature.data.options ];
 					if (feature.data.count === 'ancestry') {
@@ -502,7 +502,7 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.map(d => d.id);
+					const selectedIDs = oFeature.data.selected.filter(d => !!d).map(d => d.id);
 					feature.data.selected = SourcebookLogic.getDomains(sourcebooks)
 						.filter(d => selectedIDs.includes(d.id))
 						.map(d => {
@@ -526,10 +526,10 @@ export class HeroUpdateLogic {
 							.forEach(lvl => domainFeatures.push(...lvl.features));
 					});
 
-					const selectedIDs = oFeature.data.selected.map(f => f.id);
+					const selectedIDs = oFeature.data.selected.filter(f => !!f).map(f => f.id);
 					feature.data.selected = domainFeatures.filter(df => selectedIDs.includes(df.id));
 					feature.data.selected.forEach(child => {
-						const oChild = oFeature.data.selected.find(x => x.id === child.id);
+						const oChild = oFeature.data.selected.find(x => x && (x.id === child.id));
 						if (oChild) {
 							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
@@ -542,12 +542,12 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.map(i => i.id);
+					const selectedIDs = oFeature.data.selected.filter(i => !!i).map(i => i.id);
 					feature.data.selected = SourcebookLogic.getItems(sourcebooks)
 						.filter(i => selectedIDs.includes(i.id))
 						.map(i => {
 							const copiedItem = Utils.copy(i);
-							const origItem = oFeature.data.selected.find(oi => oi.id === i.id);
+							const origItem = oFeature.data.selected.find(oi => oi && (oi.id === i.id));
 							if (origItem) {
 								copiedItem.count = origItem.count;
 							}
@@ -561,7 +561,7 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.map(k => k.id);
+					const selectedIDs = oFeature.data.selected.filter(k => !!k).map(k => k.id);
 					feature.data.selected = SourcebookLogic.getKits(sourcebooks)
 						.filter(k => selectedIDs.includes(k.id))
 						.map(k => Utils.copy(k));
@@ -596,13 +596,13 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.map(p => p.id);
+					const selectedIDs = oFeature.data.selected.filter(p => !!p).map(p => p.id);
 					feature.data.selected = SourcebookLogic.getPerks(sourcebooks)
 						.filter(p => selectedIDs.includes(p.id))
 						.map(p => Utils.copy(p));
 
 					feature.data.selected.forEach(child => {
-						const oChild = oFeature.data.selected.find(x => x.id === child.id);
+						const oChild = oFeature.data.selected.find(x => x && (x.id === child.id));
 						if (oChild) {
 							HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
 						}
@@ -655,7 +655,7 @@ export class HeroUpdateLogic {
 						.map(f => f.feature)
 						.filter(f => f.type === FeatureType.TaggedFeature)
 						.filter(f => f.data.tag === oFeature.data.tag);
-					const selectedIDs = oFeature.data.selected.map(f => f.id);
+					const selectedIDs = oFeature.data.selected.filter(f => !!f).map(f => f.id);
 					feature.data.selected = taggedFeatures.filter(f => selectedIDs.includes(f.id));
 					break;
 				}
@@ -665,7 +665,7 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					feature.data.selected = oFeature.data.selected.map(oTitle => {
+					feature.data.selected = oFeature.data.selected.filter(oTitle => !!oTitle).map(oTitle => {
 						const title = SourcebookLogic.getTitles(sourcebooks).find(t => t.id === oTitle.id);
 						if (title) {
 							const copy = Utils.copy(title);

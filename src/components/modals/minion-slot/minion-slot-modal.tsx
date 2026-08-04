@@ -1,5 +1,4 @@
-import { Encounter } from '@/models/encounter';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { Encounter, EncounterSlot } from '@/models/encounter';
 import { MinionGroupHealthPanel } from '@/components/panels/health/health-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Utils } from '@/utils/utils';

@@ -2,7 +2,7 @@ import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-foot
 import { Button, Divider, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, TeamOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Hero, HeroOverview } from '@/models/hero';
-import { useHeroes, useOptions } from '@/contexts/data-context';
+import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-context';
 import { useMemo, useState } from 'react';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
@@ -45,6 +45,7 @@ export const HeroListPage = (props: Props) => {
 	useTitle('Heroes');
 	const options = useOptions();
 	const fullHeroes = useHeroes();
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
 	const heroes = useMemo(() => {
 		return fullHeroes.map(HeroLogic.createOverview);
 	}, [ fullHeroes ]);
@@ -149,7 +150,7 @@ export const HeroListPage = (props: Props) => {
 												Import a Hero File
 											</Button>
 										</Upload>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id))), currentTab)}>
 											Generate a Random Hero
 										</Button>
 										<Expander title='Use a premade example'>
@@ -192,8 +193,17 @@ export const HeroListPage = (props: Props) => {
 								key: f,
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>{f || 'Heroes'}</div>
-										<div className='section-count'>{getHeroes(f).length}</div>
+										<div className='section-title'>
+											{f || 'Heroes'}
+										</div>
+										<div className='section-count'>
+											{
+												getHeroes(f).every(h => h.isActive) ?
+													`${getHeroes(f).length}`
+													:
+													`${getHeroes(f).filter(h => h.isActive).length} of ${getHeroes(f).length}`
+											}
+										</div>
 									</div>
 								),
 								children: getHeroesSection(getHeroes(f))

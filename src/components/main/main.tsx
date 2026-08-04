@@ -1,3 +1,4 @@
+import { Encounter, EncounterSlot } from '@/models/encounter';
 import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, Suspense, lazy, useState } from 'react';
@@ -23,8 +24,6 @@ import { DataService } from '@/services/data-service';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { ElementModal } from '@/components/modals/element/element-modal';
-import { Encounter } from '@/models/encounter';
-import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ErrorsModal } from '../modals/errors/errors-modal';

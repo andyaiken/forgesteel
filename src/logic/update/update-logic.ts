@@ -14,6 +14,7 @@ import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
@@ -171,6 +172,10 @@ export class UpdateLogic {
 				g.name = '';
 			}
 
+			if (g.faction === undefined) {
+				g.faction = FactionType.Enemy;
+			}
+
 			if (g.encounterState === undefined) {
 				g.encounterState = 'ready';
 			}
@@ -181,6 +186,7 @@ export class UpdateLogic {
 						addOnIDs: [],
 						itemIDs: [],
 						levelAdjustment: 0,
+						staminaAdjustment: 0,
 						minionCountAdjustment: 0,
 						convertToSolo: false
 					};
@@ -192,6 +198,10 @@ export class UpdateLogic {
 
 				if (s.customization.levelAdjustment === undefined) {
 					s.customization.levelAdjustment = 0;
+				}
+
+				if (s.customization.staminaAdjustment === undefined) {
+					s.customization.staminaAdjustment = 0;
 				}
 
 				if (s.customization.minionCountAdjustment === undefined) {

@@ -1,5 +1,5 @@
 import { Condition } from '@/models/condition';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { Item } from '@/models/item';
 import { Project } from '@/models/project';
 import { Title } from '@/models/title';

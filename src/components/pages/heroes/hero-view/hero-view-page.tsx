@@ -11,7 +11,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { Fixture } from '@/models/fixture';

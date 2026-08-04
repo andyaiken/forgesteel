@@ -1,4 +1,4 @@
-import { BlockTypeSelect, BoldItalicUnderlineToggles, CodeToggle, ListsToggle, MDXEditor, UndoRedo, headingsPlugin, listsPlugin, quotePlugin, thematicBreakPlugin, toolbarPlugin } from '@mdxeditor/editor';
+import { BlockTypeSelect, BoldItalicUnderlineToggles, CodeToggle, InsertTable, ListsToggle, MDXEditor, UndoRedo, headingsPlugin, listsPlugin, quotePlugin, tablePlugin, thematicBreakPlugin, toolbarPlugin } from '@mdxeditor/editor';
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Utils } from '@/utils/utils';
@@ -59,6 +59,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 				headingsPlugin(),
 				listsPlugin(),
 				quotePlugin(),
+				tablePlugin(),
 				thematicBreakPlugin(),
 				toolbarPlugin({
 					toolbarClassName: 'markdown-editor-toolbar',
@@ -69,6 +70,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 							<BoldItalicUnderlineToggles />
 							<ListsToggle />
 							<CodeToggle />
+							<InsertTable />
 						</>
 					)
 				})

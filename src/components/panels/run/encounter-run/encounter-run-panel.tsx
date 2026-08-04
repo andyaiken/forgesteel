@@ -11,8 +11,9 @@ import { ElementEditPanel } from '../../edit/element-edit/element-edit-panel';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { EncounterTurnModal } from '@/components/modals/encounter-turn/encounter-turn-modal';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -50,7 +51,7 @@ import './encounter-run-panel.scss';
 interface SelectedMonsterInfo {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
-	isTeamHero: boolean;
+	isFriendly: boolean;
 }
 
 interface Props {
@@ -231,6 +232,15 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const setGroupFaction = (value: FactionType) => {
+				const copy = Utils.copy(encounter);
+				copy.groups
+					.filter(g => g.id === group.id)
+					.forEach(g => g.faction = value);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const setGroupEncounterState = (value: 'ready' | 'current' | 'finished') => {
 				const copy = Utils.copy(encounter);
 				copy.groups
@@ -306,11 +316,12 @@ export const EncounterRunPanel = (props: Props) => {
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
 					onSelectMonster={(monster, monsterGroupID) => {
-						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
-						setSelectedMonster({ monster: monster, monsterGroup: group, isTeamHero: false });
+						const monsterGroup = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
+						setSelectedMonster({ monster: monster, monsterGroup: monsterGroup, isFriendly: group.faction === FactionType.Ally });
 					}}
 					onSelectMinionSlot={setSelectedMinionSlot}
 					onSetName={(_group, value) => setGroupName(value)}
+					onSetFaction={(_group, value) => setGroupFaction(value)}
 					onSetState={(_group, value) => setGroupEncounterState(value)}
 					onDuplicate={duplicateGroup}
 					onDelete={deleteGroup}
@@ -410,7 +421,7 @@ export const EncounterRunPanel = (props: Props) => {
 					onSelect={setSelectedHero}
 					onSelectMonster={(monster, monsterGroupID) => {
 						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
-						setSelectedMonster({ monster: monster, monsterGroup: group, isTeamHero: true });
+						setSelectedMonster({ monster: monster, monsterGroup: group, isFriendly: true });
 					}}
 					onSelectMinionSlot={setSelectedMinionSlot}
 					onSetState={setEncounterState}
@@ -704,16 +715,17 @@ export const EncounterRunPanel = (props: Props) => {
 		const active: SelectedMonsterInfo[] = [];
 		encounter.groups
 			.filter(g => g.encounterState === 'current')
-			.flatMap(g => g.slots)
-			.forEach(s => {
-				const group = SourcebookLogic.getMonsterGroup(props.sourcebooks, s.monsterID);
-				s.monsters
-					.filter(m => !m.state.defeated)
-					.forEach(m => active.push({
-						monster: m,
-						monsterGroup: group || undefined,
-						isTeamHero: false
-					}));
+			.forEach(g => {
+				g.slots.forEach(s => {
+					const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, s.monsterID);
+					s.monsters
+						.filter(m => !m.state.defeated)
+						.forEach(m => active.push({
+							monster: m,
+							monsterGroup: monsterGroup || undefined,
+							isFriendly: g.faction === FactionType.Ally
+						}));
+				});
 			});
 
 		const tabs = [];
@@ -890,7 +902,7 @@ export const EncounterRunPanel = (props: Props) => {
 						<MonsterModal
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
-							encounter={selectedMonster.isTeamHero ? undefined : encounter}
+							encounter={selectedMonster.isFriendly ? undefined : encounter}
 							sourcebooks={props.sourcebooks}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {

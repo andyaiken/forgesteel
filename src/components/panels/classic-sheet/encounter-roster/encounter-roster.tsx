@@ -1,4 +1,5 @@
 import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { FactionType } from '@/enums/faction-type';
 import { FormatLogic } from '@/logic/format-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -42,6 +43,9 @@ export const EncounterRosterCard = (props: Props) => {
 									<div className='group-number'>{`${i + 1}`}</div>
 									{group.name ?
 										<div className='group-name'>{group.name}</div>
+										: null}
+									{group.faction === FactionType.Ally ?
+										<div className='group-faction'>(Ally)</div>
 										: null}
 									<div className='turn-tracker'>
 										Turn

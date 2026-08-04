@@ -1,7 +1,7 @@
-import { Encounter, EncounterGroup } from '@/models/encounter';
-import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
+import { Encounter, EncounterGroup, EncounterSlot, EncounterSlotCustomization } from '@/models/encounter';
 import { Collections } from '@/utils/collections';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
@@ -74,6 +74,7 @@ export class EncounterLogic {
 						addOnIDs: [ ...s.customization.addOnIDs ],
 						itemIDs: [ ...s.customization.itemIDs ],
 						levelAdjustment: s.customization.levelAdjustment,
+						staminaAdjustment: s.customization.staminaAdjustment,
 						minionCountAdjustment: s.customization.minionCountAdjustment,
 						convertToSolo: s.customization.convertToSolo
 					}
@@ -228,6 +229,10 @@ export class EncounterLogic {
 				}
 			}
 
+			if (customization.staminaAdjustment !== 0) {
+				copy.stamina = Math.max(1, copy.stamina + customization.staminaAdjustment);
+			}
+
 			return copy;
 		}
 
@@ -267,13 +272,17 @@ export class EncounterLogic {
 		return result;
 	};
 
+	static isGroupDefeated = (group: EncounterGroup) => {
+		return group.slots.every(s => s.state.defeated) || group.slots.flatMap(s => s.monsters).every(m => m.state.defeated);
+	};
+
 	static getCombatants = (encounter: Encounter) => {
 		const combatants: { type: 'group' | 'hero', id: string, section: 'ready' | 'current' | 'finished' | 'defeated' }[] = [];
 
 		encounter.groups
 			.filter(g => g.slots.length > 0)
 			.forEach(g => {
-				const section = g.slots.every(s => s.state.defeated) || g.slots.flatMap(s => s.monsters).every(m => m.state.defeated) ? 'defeated' : g.encounterState;
+				const section = EncounterLogic.isGroupDefeated(g) ? 'defeated' : g.encounterState;
 				combatants.push({ type: 'group', id: g.id, section: section });
 			});
 
@@ -286,16 +295,16 @@ export class EncounterLogic {
 	};
 
 	static getEncounterVictory = (encounter: Encounter) => {
-		const combatants = EncounterLogic.getCombatants(encounter);
-		const activeCombatants = combatants.filter(c => c.section !== 'defeated');
-		const inactiveCombatants = combatants.filter(c => c.section === 'defeated');
+		const enemyGroups = encounter.groups.filter(g => (g.faction === FactionType.Enemy) && (g.slots.length > 0));
+		const activeEnemyGroups = enemyGroups.filter(g => !EncounterLogic.isGroupDefeated(g));
+		const activeHeroes = encounter.heroes.filter(h => !h.state.defeated);
 
-		if (activeCombatants.every(c => c.type === 'group') && inactiveCombatants.some(c => c.type === 'hero')) {
-			return 'monsters';
+		if ((enemyGroups.length > 0) && (activeEnemyGroups.length === 0)) {
+			return 'heroes';
 		}
 
-		if (activeCombatants.every(c => c.type === 'hero') && inactiveCombatants.some(c => c.type === 'group')) {
-			return 'heroes';
+		if ((encounter.heroes.length > 0) && (activeHeroes.length === 0)) {
+			return 'monsters';
 		}
 
 		return null;

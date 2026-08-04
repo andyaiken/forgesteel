@@ -41,6 +41,10 @@
 			color: rgba(0, 0, 0, 0.88);
 			font-weight: 600;
 			text-transform: uppercase;
+
+			&.strikethrough {
+				text-decoration: line-through;
+			}
 		}
 	}
 }

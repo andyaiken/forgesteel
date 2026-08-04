@@ -1,7 +1,7 @@
 import { Button, Flex, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { ButtonConfig, ButtonGroup, DangerConfig } from '@/components/controls/button-group/button-group';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Element } from '@/models/element';
@@ -22,6 +22,7 @@ import { SourcebookType } from '@/enums/sourcebook-type';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
 import { useHeroes } from '@/contexts/data-context';
+import { useState } from 'react';
 
 import './sourcebook-panel.scss';
 
@@ -44,38 +45,6 @@ export const SourcebookPanel = (props: Props) => {
 	const allHeroes = useHeroes();
 
 	const getContent = () => {
-		if (props.mode !== PanelMode.Full) {
-			const elementCount = SourcebookLogic.getElements(sourcebook).length;
-
-			return (
-				<>
-					<Markdown text={sourcebook.description} />
-					{
-						elementCount > 3 ?
-							<div className='ds-text'>
-								{elementCount} elements, including:
-							</div>
-							: null
-					}
-					{
-						elementCount > 0 ?
-							<ul>
-								{
-									SourcebookLogic.getExampleContent(sourcebook)
-										.map(x => (
-											<li key={x.element.id}>
-												{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
-											</li>
-										))
-								}
-							</ul>
-							:
-							<Empty text='No content in this sourcebook' />
-					}
-				</>
-			);
-		}
-
 		if (props.onChange && isEditing) {
 			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
 			const distinctLanguages = Collections.distinct(languages, l => l.name);
@@ -315,6 +284,38 @@ export const SourcebookPanel = (props: Props) => {
 			);
 		}
 
+		if (props.mode !== PanelMode.Full) {
+			const elementCount = SourcebookLogic.getElements(sourcebook).length;
+
+			return (
+				<>
+					<Markdown text={sourcebook.description} />
+					{
+						elementCount > 3 ?
+							<div className='ds-text'>
+								{elementCount} elements, including:
+							</div>
+							: null
+					}
+					{
+						elementCount > 0 ?
+							<ul>
+								{
+									SourcebookLogic.getExampleContent(sourcebook)
+										.map(x => (
+											<li key={x.element.id}>
+												{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
+											</li>
+										))
+								}
+							</ul>
+							:
+							<Empty text='No content in this sourcebook' />
+					}
+				</>
+			);
+		}
+
 		return (
 			<div>
 				{
@@ -358,62 +359,45 @@ export const SourcebookPanel = (props: Props) => {
 	};
 
 	const getButtons = () => {
-		const buttons: ReactNode[] = [];
+		const buttons: (ButtonConfig | DangerConfig)[] = [];
 
-		if (props.visibility) {
+		if (props.visibility && !isEditing) {
 			buttons.push(
-				<Button
-					key='show-hide'
-					type='text'
-					title='Show / Hide'
-					icon={props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-					onClick={e => {
-						e.stopPropagation();
-						props.visibility!.onSetVisibility(!props.visibility!.visible);
-					}}
-				/>
+				{
+					type: 'button',
+					icon: props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />,
+					tooltip: 'Show / Hide',
+					onClick: () => props.visibility!.onSetVisibility(!props.visibility!.visible)
+				}
 			);
 		}
 
 		if (props.showEditButtons && (sourcebook.type === SourcebookType.Homebrew)) {
 			if (isEditing) {
 				buttons.push(
-					<Button
-						key='save'
-						type='text'
-						title='OK'
-						icon={<CheckCircleOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							setIsEditing(false);
-						}}
-					/>
+					{
+						type: 'button',
+						label: 'OK',
+						onClick: () => setIsEditing(false)
+					}
 				);
 			} else {
 				buttons.push(
-					<Button
-						key='edit'
-						type='text'
-						title='Edit'
-						icon={<EditOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							setIsEditing(true);
-						}}
-					/>
+					{
+						type: 'button',
+						icon: <EditOutlined />,
+						tooltip: 'Edit',
+						onClick: () => setIsEditing(true)
+					}
 				);
 
 				buttons.push(
-					<Button
-						key='export'
-						type='text'
-						title='Export'
-						icon={<UploadOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook');
-						}}
-					/>
+					{
+						type: 'button',
+						icon: <UploadOutlined />,
+						tooltip: 'Export',
+						onClick: () => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')
+					}
 				);
 
 				const heroes = allHeroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
@@ -458,17 +442,19 @@ export const SourcebookPanel = (props: Props) => {
 				}
 
 				buttons.push(
-					<DangerButton
-						key='delete'
-						mode='clear'
-						disabledMessage={msg}
-						onConfirm={() => props.onDelete!(sourcebook)}
-					/>
+					{
+						type: 'danger',
+						disabled: msg === undefined,
+						disabledMessage: msg,
+						onClick: () => props.onDelete!(sourcebook)
+					}
 				);
 			}
 		}
 
-		return buttons;
+		return (
+			<ButtonGroup buttons={buttons} />
+		);
 	};
 
 	return (
@@ -476,6 +462,7 @@ export const SourcebookPanel = (props: Props) => {
 			<div className='sourcebook-panel' id={sourcebook.id}>
 				<HeaderText
 					level={1}
+					strikethrough={props.visibility && !props.visibility.visible}
 					tags={[ sourcebook.type ]}
 					extra={<Flex>{getButtons()}</Flex>}
 				>

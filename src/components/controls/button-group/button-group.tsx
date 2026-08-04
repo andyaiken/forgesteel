@@ -19,7 +19,7 @@ export interface DangerConfig {
 	label?: string;
 	icon?: ReactNode;
 	disabled?: boolean;
-	disabledMessage?: string;
+	disabledMessage?: ReactNode;
 	onClick: () => void;
 }
 

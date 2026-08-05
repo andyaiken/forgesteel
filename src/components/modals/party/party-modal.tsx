@@ -1,12 +1,14 @@
 import { Characteristic } from '@/enums/characteristic';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Tag } from 'antd';
 
 import './party-modal.scss';
 
@@ -30,6 +32,40 @@ export const PartyModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='party-modal'>
+					<HeaderText>Stamina</HeaderText>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								{props.heroes.map(h => <th key={h.id} className='hero-column-header'>{h.name}</th>)}
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td className='row-label stamina-cell'>Stamina</td>
+								{
+									props.heroes.map(h => {
+										const max = HeroLogic.getStamina(h);
+										const current = max - h.state.staminaDamage;
+										const state = HeroLogic.getCombatState(h);
+
+										return (
+											<td key={h.id} className='row-cell stamina-cell'>
+												{max > 0 ? `${current} / ${max}` : '-'}
+												{
+													!([ 'healthy', 'injured' ].includes(state)) ?
+														<div>
+															<Tag color={state === 'winded' ? 'orange' : 'red'} variant='outlined'>{Format.capitalize(state)}</Tag>
+														</div>
+														: null
+												}
+											</td>
+										);
+									})
+								}
+							</tr>
+						</tbody>
+					</table>
 					<HeaderText>Languages</HeaderText>
 					<table>
 						<thead>

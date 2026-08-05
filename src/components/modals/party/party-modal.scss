@@ -14,6 +14,14 @@
 	.row-cell {
 		text-align: center;
 	}
+
+	.stamina-cell {
+		vertical-align: top;
+
+		.ant-tag {
+			margin-top: 5px;
+		}
+	}
 }
 
 html[data-theme="dark"] {

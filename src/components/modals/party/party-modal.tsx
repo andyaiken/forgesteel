@@ -64,6 +64,54 @@ export const PartyModal = (props: Props) => {
 									})
 								}
 							</tr>
+							<tr>
+								<td className='row-label'>Recoveries</td>
+								{
+									props.heroes.map(h => {
+										const max = HeroLogic.getRecoveries(h);
+										const current = max - h.state.recoveriesUsed;
+
+										return (
+											<td key={h.id} className='row-cell'>
+												{max > 0 ? `${current} / ${max}` : '-'}
+											</td>
+										);
+									})
+								}
+							</tr>
+						</tbody>
+					</table>
+					<HeaderText>Heroic Resource</HeaderText>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								{props.heroes.map(h => <th key={h.id} className='hero-column-header'>{h.name}</th>)}
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td className='row-label'>Resources</td>
+								{
+									props.heroes.map(h => {
+										const resources = HeroLogic.getHeroicResources(h);
+										return (
+											<td key={h.id} className='row-cell'>
+												{
+													resources.length > 0 ?
+														resources.map(hr => (
+															<div key={hr.id}>
+																<div>{hr.value}</div>
+																<div className='resource-name'>{hr.name}</div>
+															</div>
+														))
+														: '-'
+												}
+											</td>
+										);
+									})
+								}
+							</tr>
 						</tbody>
 					</table>
 					<HeaderText>Languages</HeaderText>

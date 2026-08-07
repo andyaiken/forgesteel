@@ -1,0 +1,41 @@
+////
+/// Theme tokens.
+///
+/// Each token is a light/dark pair for one *role*, so that a component says
+/// what a colour means and the theme decides what it is. That replaces the
+/// `html[data-theme="dark"]` block a component would otherwise need.
+///
+/// The values here are exactly the ones the app already uses - this file on
+/// its own changes nothing on screen. Components move onto the tokens one
+/// role at a time.
+///
+/// Only roles whose light and dark values are both already established are
+/// defined. Several dark overrides in the app set a colour that light mode
+/// never sets (borders and body text, mainly); those need a light value
+/// chosen deliberately rather than derived, so they are not tokens yet.
+////
+
+:root {
+	/// The page behind everything.
+	--fs-canvas: rgb(230, 230, 230);
+
+	/// The app frame: header and footer bars.
+	--fs-chrome: rgb(200, 200, 200);
+
+	/// A raised panel - cards, expander bodies - with its slight sheen.
+	--fs-surface-raised: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+
+	/// A neutral wash for hovered rows and pressed states.
+	--fs-hover-fill: rgba(0, 0, 0, 0.06);
+
+	/// Body text.
+	--fs-text: rgba(0, 0, 0, 0.88);
+}
+
+html[data-theme='dark'] {
+	--fs-canvas: rgb(55, 55, 55);
+	--fs-chrome: rgb(0, 0, 0);
+	--fs-surface-raised: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+	--fs-hover-fill: rgba(250, 250, 250, 0.3);
+	--fs-text: rgba(255, 255, 255, 0.88);
+}

@@ -38,22 +38,12 @@
 		gap: 10px;
 	
 		.header-text {
-			color: rgba(0, 0, 0, 0.88);
+			color: var(--fs-text);
 			font-weight: 600;
 			text-transform: uppercase;
 
 			&.strikethrough {
 				text-decoration: line-through;
-			}
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.header-text-panel {
-		.header-text-content {
-			.header-text {
-				color: rgba(255, 255, 255, 0.88);
 			}
 		}
 	}

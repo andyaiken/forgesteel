@@ -28,7 +28,7 @@
 
 	.label-control-control {
 		flex: 3 3 0;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--fs-text);
 	}
 }
 
@@ -38,8 +38,5 @@ html[data-theme="dark"] {
 			color: rgb(255, 255, 255);
 		}
 
-		.label-control-control {
-			color: rgba(255, 255, 255, 0.88);
-		}
 	}
 }

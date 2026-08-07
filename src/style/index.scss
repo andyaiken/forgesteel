@@ -113,7 +113,7 @@ h3 {
 p,
 .ds-text {
 	margin: 10px 0;
-	color: rgba(0, 0, 0, 0.88);
+	color: var(--fs-text);
 
 	&.bold-text {
 		font-weight: 600;
@@ -361,8 +361,6 @@ html[data-theme="dark"] {
 		color: rgba(255, 255, 255, 0.88);
 	}
 
-	p,
-	.ds-text,
 	ul {
 		color: rgba(255, 255, 255, 0.88);
 	}

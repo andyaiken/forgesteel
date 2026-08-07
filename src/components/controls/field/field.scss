@@ -76,7 +76,7 @@
 	}
 
 	.field-value {
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--fs-text);
 
 		p {
 			display: inline;
@@ -92,10 +92,6 @@ html[data-theme="dark"] {
 	.field {
 		.field-label {
 			color: rgb(255, 255, 255);
-		}
-
-		.field-value {
-			color: rgba(255, 255, 255, 0.88);
 		}
 
 	}

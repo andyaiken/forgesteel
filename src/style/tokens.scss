@@ -30,6 +30,9 @@
 
 	/// Body text.
 	--fs-text: rgba(0, 0, 0, 0.88);
+
+	/// Hairline separating or outlining content.
+	--fs-border: rgba(5, 5, 5, 0.06);
 }
 
 html[data-theme='dark'] {
@@ -38,4 +41,5 @@ html[data-theme='dark'] {
 	--fs-surface-raised: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 	--fs-hover-fill: rgba(250, 250, 250, 0.3);
 	--fs-text: rgba(255, 255, 255, 0.88);
+	--fs-border: rgba(250, 250, 250, 0.6);
 }

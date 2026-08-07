@@ -74,7 +74,7 @@
 			flex-direction: row;
 			align-items: center;
 			gap: 10px;
-			border: 1px solid rgba(5, 5, 5, 0.06);
+			border: 1px solid var(--fs-border);
 			border-radius: 5px;
 			background: var(--fs-surface-raised);
 			padding: 10px;
@@ -120,8 +120,6 @@ html[data-theme="dark"] {
 			}
 
 			.selectable-row {
-				border-color: rgba(250, 250, 250, 0.6);
-
 				&.clickable {
 					&:hover {
 						background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));

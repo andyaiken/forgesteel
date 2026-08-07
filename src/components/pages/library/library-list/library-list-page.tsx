@@ -351,7 +351,7 @@ export const LibraryListPage = (props: Props) => {
 								/>
 								<Button
 									disabled={!showMonsters}
-									icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+									icon={showMonsterFilter ? <FilterFilled style={{ color: 'var(--fs-accent)' }} /> : <FilterOutlined />}
 									onClick={() => setShowMonsterFilter(!showMonsterFilter)}
 								/>
 							</Flex>

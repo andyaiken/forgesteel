@@ -46,7 +46,7 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
+					border-color: var(--fs-accent);
 					background-color: var(--fs-accent-wash);
 				}
 			}
@@ -62,7 +62,7 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
+					border-color: var(--fs-accent);
 					background: var(--fs-accent-wash);
 				}
 			}
@@ -78,7 +78,7 @@
 			border-radius: 5px;
 			background: var(--fs-surface-raised);
 			padding: 10px;
-			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+			box-shadow: var(--fs-shadow-raised);
 
 			&.danger {
 				border-color: red;
@@ -94,7 +94,7 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
+					border-color: var(--fs-accent);
 					background: var(--fs-accent-wash);
 				}
 			}

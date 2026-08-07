@@ -197,7 +197,7 @@ export const PowerRollPanel = (props: Props) => {
 							<Button
 								type='text'
 								title='Odds'
-								icon={<BarChartOutlined style={showOdds ? { color: 'rgb(22, 119, 255)' } : undefined} />}
+								icon={<BarChartOutlined style={showOdds ? { color: 'var(--fs-accent)' } : undefined} />}
 								onClick={() => setShowOdds(!showOdds)}
 							/>
 							: null

@@ -12,7 +12,7 @@
         padding: 20px;
         border-radius: 10px;
         background-color: var(--fs-surface);
-	    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+	    box-shadow: var(--fs-shadow-raised);
 
         .overall-state {
             display: flex;

@@ -15,12 +15,12 @@
 		cursor: pointer;
 
 		&:hover {
-			outline: 5px solid rgb(64, 150, 255);
+			outline: 5px solid var(--fs-accent-light);
 		}
 	}
 
 	&.selected {
-		outline: 6px solid rgb(64, 150, 255);
+		outline: 6px solid var(--fs-accent-light);
 	}
 
 	&.hidden {

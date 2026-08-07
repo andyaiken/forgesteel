@@ -20,7 +20,7 @@
 
 		.plot-box-container {
 			border-radius: 5px;
-			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+			box-shadow: var(--fs-shadow-ambient);
 
 			.plot-box {
 				width: 100%;
@@ -37,13 +37,13 @@
 					cursor: pointer;
 
 					&:hover {
-						border-color: rgb(22, 119, 255);
+						border-color: var(--fs-accent);
 					}
 				}
 
 				&.selected {
 					background: rgb(230, 244, 255);
-					border-color: rgb(22, 119, 255);
+					border-color: var(--fs-accent);
 				}
 
 				.plot-name {

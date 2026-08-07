@@ -115,7 +115,7 @@ export const MonsterModal = (props: Props) => {
 									<Button
 										type='text'
 										title='Edit the name'
-										icon={editingName ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />}
+										icon={editingName ? <EditFilled style={{ color: 'var(--fs-accent-light)' }} /> : <EditOutlined />}
 										onClick={() => setEditingName(!editingName)}
 									/>
 									: undefined

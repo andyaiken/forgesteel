@@ -53,6 +53,25 @@
 
 	/// Hairline separating or outlining content.
 	--fs-border: rgba(5, 5, 5, 0.06);
+
+	// ---------------------------------------------------------------
+	// Theme-invariant tokens.
+	//
+	// These have no entry in the dark block below, deliberately: the same
+	// value is correct in both themes. They are here for the other half of
+	// the job - naming a repeated value so it lives in one place.
+	// ---------------------------------------------------------------
+
+	/// The accent, and its lighter partner used for selection outlines.
+	--fs-accent: rgb(22, 119, 255);
+	--fs-accent-light: rgb(64, 150, 255);
+
+	/// Elevation. Two styles, not two levels: raised casts downward, ambient
+	/// is an offsetless halo. Both are unchanged in dark mode, where a black
+	/// shadow does little against a black card - worth revisiting, and now a
+	/// one-line change rather than a sixteen-file one.
+	--fs-shadow-raised: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+	--fs-shadow-ambient: 0 0 5px 0 rgba(0, 0, 0, 0.25);
 }
 
 html[data-theme='dark'] {

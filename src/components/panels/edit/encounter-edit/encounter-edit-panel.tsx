@@ -803,7 +803,7 @@ ${value.victories}`
 							<Button
 								className='filter-button'
 								type='text'
-								icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+								icon={filterVisible ? <FilterFilled style={{ color: 'var(--fs-accent)' }} /> : <FilterOutlined />}
 								onClick={() => setFilterVisible(!filterVisible)}
 							>
 								Search
@@ -847,7 +847,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 				extra={
 					<ButtonGroup
 						buttons={[
-							{ type: 'button', icon: editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />, tooltip: 'Edit Group', onClick: () => setEditing(!editing) },
+							{ type: 'button', icon: editing ? <EditFilled style={{ color: 'var(--fs-accent)' }} /> : <EditOutlined />, tooltip: 'Edit Group', onClick: () => setEditing(!editing) },
 							{ type: 'button', icon: <CopyOutlined />, tooltip: 'Duplicate Group', onClick: () => props.copyGroup(props.group) },
 							{ type: 'button', icon: <CaretUpOutlined />, tooltip: 'Move Up', disabled: props.index === 0, onClick: () => props.moveGroup(props.index, 'up') },
 							{ type: 'button', icon: <CaretDownOutlined />, tooltip: 'Move Down', disabled: false, onClick: () => props.moveGroup(props.index, 'down') },
@@ -1405,7 +1405,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 						<ButtonGroup
 							buttons={[
 								{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Show stat block', onClick: () => props.showMonster(monster, monsterGroup) },
-								{ type: 'button', icon: showCustomize ? <ToolFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <ToolOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) },
+								{ type: 'button', icon: showCustomize ? <ToolFilled style={{ color: 'var(--fs-accent-light)' }} /> : <ToolOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) },
 								{ type: 'dropdown', icon: <EllipsisOutlined />, popover: getMenu() }
 							]}
 						/>
@@ -1472,7 +1472,7 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 						<ButtonGroup
 							buttons={[
 								{ type: 'button', icon: <InfoCircleOutlined />, tooltip: 'Show stat block', onClick: () => props.showTerrain(terrain, props.slot.upgradeIDs) },
-								terrain.upgrades.length > 0 ? { type: 'button', icon: showCustomize ? <ToolFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <ToolOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) } : null
+								terrain.upgrades.length > 0 ? { type: 'button', icon: showCustomize ? <ToolFilled style={{ color: 'var(--fs-accent-light)' }} /> : <ToolOutlined />, tooltip: 'Customize', onClick: () => setShowCustomize(!showCustomize) } : null
 							]}
 						/>
 					</Flex>

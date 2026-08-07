@@ -836,7 +836,7 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 														style={{
 															padding: '5px 10px',
 															borderRadius: '5px',
-															background: (m.id === props.captain!.captainID ? 'rgb(64, 150, 255)' : undefined),
+															background: (m.id === props.captain!.captainID ? 'var(--fs-accent-light)' : undefined),
 															color: (m.id === props.captain!.captainID ? 'rgb(255, 255, 255)' : undefined)
 														}}
 													>

@@ -1063,7 +1063,7 @@ const NotePanel = (props: NotePanelProps) => {
 	const editBtn = (
 		<Button
 			type='text'
-			icon={editing ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />}
+			icon={editing ? <EditFilled style={{ color: 'var(--fs-accent-light)' }} /> : <EditOutlined />}
 			onClick={() => setEditing(!editing)}
 		/>
 	);

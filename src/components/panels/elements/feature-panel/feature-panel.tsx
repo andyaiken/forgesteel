@@ -143,7 +143,7 @@ export const FeaturePanel = (props: Props) => {
 								autoCalcAvailable() ?
 									{
 										type: 'button',
-										icon: autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />,
+										icon: autoCalc ? <ThunderboltFilled style={{ color: 'var(--fs-accent)' }} /> : <ThunderboltOutlined />,
 										tooltip: 'Auto-calculate damage, potency, etc',
 										onClick: () => setAutoCalc(!autoCalc)
 									}

@@ -711,7 +711,7 @@ export const SettingsModal = (props: Props) => {
 					{
 						FeatureFlags.active().map(flag => (
 							<div key={flag.code} className='feature-flag'>
-								<FlagFilled style={{ color: 'rgb(64, 150, 255)' }} />
+								<FlagFilled style={{ color: 'var(--fs-accent-light)' }} />
 								<div className='ds-text' style={{ flex: '1 1 0' }}>{flag.description}</div>
 								<DangerButton
 									mode='clear'

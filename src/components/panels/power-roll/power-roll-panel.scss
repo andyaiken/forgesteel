@@ -20,7 +20,7 @@
 		&.highlight-row {
 			font-weight: 600;
 			background-color: rgba(64, 150, 255, 0.18);
-			box-shadow: inset 2px 0 0 rgb(22, 119, 255);
+			box-shadow: inset 2px 0 0 var(--fs-accent);
 		}
 
 		&.power-roll-header {

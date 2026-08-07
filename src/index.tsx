@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
 import { registerSW } from 'virtual:pwa-register';
 
-import './index.scss';
+import './style/index.scss';
 
 initializeTheme();
 

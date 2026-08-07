@@ -13,7 +13,7 @@
 		height: 65px;
 		border: 1px solid var(--fs-border);
 		border-radius: 5px;
-		background-color: rgb(255, 255, 255);
+		background-color: var(--fs-surface);
 		padding: 5px;
 
 		.toggle-button-label {
@@ -29,12 +29,4 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 	gap: 10px;
-}
-
-html[data-theme="dark"] {
-	.health-panel {
-		.toggle-button {
-			background-color: rgb(0, 0, 0);
-		}
-	}
 }

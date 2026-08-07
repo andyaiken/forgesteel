@@ -11,7 +11,7 @@
         min-width: 250px;
         padding: 20px;
         border-radius: 10px;
-        background-color: rgb(255, 255, 255);
+        background-color: var(--fs-surface);
 	    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
         .overall-state {
@@ -33,12 +33,4 @@
             margin-bottom: 10px;
         }
     }
-}
-
-html[data-theme="dark"] {
-	.data-loader {
-        .data-loader-container {
-            background-color: rgb(55, 55, 55);
-        }
-	}
 }

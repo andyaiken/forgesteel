@@ -47,7 +47,7 @@
 
 				&:hover {
 					border-color: rgb(22, 119, 255);
-					background-color: rgb(230, 244, 255);
+					background-color: var(--fs-accent-wash);
 				}
 			}
 
@@ -63,7 +63,7 @@
 
 				&:hover {
 					border-color: rgb(22, 119, 255);
-					background: rgb(230, 244, 255);
+					background: var(--fs-accent-wash);
 				}
 			}
 		}
@@ -95,35 +95,7 @@
 
 				&:hover {
 					border-color: rgb(22, 119, 255);
-					background: rgb(230, 244, 255);
-				}
-			}
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.hero-panel {
-		.hero-main-section {
-			.overview-tile {
-				&.clickable {
-					&:hover {
-						background-color: rgba(22, 119, 255, 0.2);
-					}
-				}
-
-				.controlled-monster {
-					&:hover {
-						background: rgba(22, 119, 255, 0.2);
-					}
-				}
-			}
-
-			.selectable-row {
-				&.clickable {
-					&:hover {
-						background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
-					}
+					background: var(--fs-accent-wash);
 				}
 			}
 		}

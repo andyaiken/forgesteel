@@ -41,7 +41,7 @@
 			cursor: pointer;
 
 			&:hover {
-				background-color: rgb(230, 244, 255);
+				background-color: var(--fs-accent-wash);
 			}
 		}
 	}
@@ -59,10 +59,6 @@ html[data-theme="dark"] {
 		&.clickable {
 			.bar-section {
 				cursor: pointer;
-	
-				&:hover {
-					background-color: rgb(64, 150, 255);
-				}
 			}
 		}
 	}

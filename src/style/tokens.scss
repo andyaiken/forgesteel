@@ -22,11 +22,31 @@
 	/// The app frame: header and footer bars.
 	--fs-chrome: rgb(200, 200, 200);
 
+	/// A flat card or list item sitting on the canvas.
+	///
+	/// Note this is *darker* than the canvas in dark mode, which is the
+	/// convention the app already follows - see --fs-surface-raised, whose
+	/// gradient also ends darker than the page behind it.
+	--fs-surface: rgb(255, 255, 255);
+
 	/// A raised panel - cards, expander bodies - with its slight sheen.
 	--fs-surface-raised: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 
 	/// A neutral wash for hovered rows and pressed states.
 	--fs-hover-fill: rgba(0, 0, 0, 0.06);
+
+	/// An accent wash marking a hovered or selected element.
+	///
+	/// Dark mode had six different answers to this: a translucent blue veil,
+	/// two flat greys, a solid blue, the canvas colour, and in one place the
+	/// card gradient - i.e. no hover effect at all. The veil wins because it
+	/// is the only one that keeps the accent meaning while working over any
+	/// surface, and it was already the most used.
+	///
+	/// This is for state on a themed surface. Elements that deliberately stay
+	/// a pale chip in dark mode - pills, plot boxes, chart bars, tactical map
+	/// overlays - keep the literal colour instead.
+	--fs-accent-wash: rgb(230, 244, 255);
 
 	/// Body text.
 	--fs-text: rgba(0, 0, 0, 0.88);
@@ -38,8 +58,10 @@
 html[data-theme='dark'] {
 	--fs-canvas: rgb(55, 55, 55);
 	--fs-chrome: rgb(0, 0, 0);
+	--fs-surface: rgb(0, 0, 0);
 	--fs-surface-raised: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 	--fs-hover-fill: rgba(250, 250, 250, 0.3);
+	--fs-accent-wash: rgba(22, 119, 255, 0.2);
 	--fs-text: rgba(255, 255, 255, 0.88);
 	--fs-border: rgba(250, 250, 250, 0.6);
 }

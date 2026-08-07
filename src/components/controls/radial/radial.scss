@@ -17,7 +17,7 @@
 			font-size: 20px;
 
 			&:not(.empty):hover {
-				background-color: rgb(230, 244, 255);
+				background-color: var(--fs-accent-wash);
 			}
 
 			&.diagonal {

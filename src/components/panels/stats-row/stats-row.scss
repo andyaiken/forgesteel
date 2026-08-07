@@ -9,7 +9,7 @@
 		cursor: pointer;
 
 		&:hover {
-			background: rgb(230, 244, 255);
+			background: var(--fs-accent-wash);
 		}
 	}
 
@@ -36,15 +36,5 @@
 		text-transform: uppercase;
 		letter-spacing: 2px;
 		opacity: 0.5;
-	}
-}
-
-html[data-theme="dark"] {
-	.stats-row {
-		&.clickable {
-			&:hover {
-				background: rgba(22, 119, 255, 0.2);
-			}
-		}
 	}
 }

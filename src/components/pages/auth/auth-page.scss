@@ -5,7 +5,7 @@
 
     .auth-page-content {
 		height: 100%;
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		padding: 50px;
 		display: flex;
 		flex-direction: column;
@@ -40,8 +40,6 @@
 html[data-theme="dark"] {
 	.auth-page {
 		.auth-page-content {
-			background-color: rgb(55, 55, 55);
-
 			.data-loader-container {
 				background-color: rgb(55, 55, 55);
 			}

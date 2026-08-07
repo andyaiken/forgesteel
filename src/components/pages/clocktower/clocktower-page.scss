@@ -2,25 +2,15 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(230, 230, 230);
+	background-color: var(--fs-canvas);
 
 	.clocktower-page-content {
 		height: 100%;
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		padding: 10px 40px 40px 40px;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
 		overflow-y: auto;
-	}
-}
-
-html[data-theme="dark"] {
-	.clocktower-page {
-		background-color: rgb(55, 55, 55);
-
-		.clocktower-page-content {
-			background-color: rgb(55, 55, 55);
-		}
 	}
 }

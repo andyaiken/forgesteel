@@ -174,7 +174,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								<Flex gap={3}>
 									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
 									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-									{props.hero.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+									{props.hero.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 								</Flex>
 							</div>
 						</div>
@@ -531,7 +531,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 							<div className='conditions-column'>
 								<Flex gap={3}>
 									{getMinionCaptainTag()}
-									{props.slot.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+									{props.slot.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 								</Flex>
 							</div>
 						</div>
@@ -620,7 +620,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									<Flex gap={3}>
 										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
 										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-										{monster.state.conditions.map(c => <Tooltip title={ConditionLogic.getDescription(c.type)}><Tag key={c.id} variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+										{monster.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
 									</Flex>
 								</div>
 							</div>

@@ -203,9 +203,8 @@ export const ReferenceModal = (props: Props) => {
 									allLanguages
 										.filter(l => l.type === type)
 										.map((l, n2) => (
-											<div>
+											<div key={n2}>
 												<Field
-													key={n2}
 													highlight={languageNames.includes(l.name)}
 													label={l.name}
 													value={l.description}

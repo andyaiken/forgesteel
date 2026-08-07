@@ -1,3 +1,5 @@
+@use 'tokens.scss';
+
 @font-face {
 	font-family: 'PT Sans';
 	src: url('../src/assets/fonts/pt/regular.ttf') format('truetype');
@@ -89,7 +91,7 @@ h1 {
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	margin: 15px 0;
-	border-bottom: 5px solid rgba(5, 5, 5, 0.06);
+	border-bottom: 5px solid var(--fs-border);
 	padding-bottom: 10px;
 }
 
@@ -98,7 +100,7 @@ h2 {
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	margin: 15px 0;
-	border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+	border-bottom: 1px solid var(--fs-border);
 	padding-bottom: 10px;
 }
 
@@ -111,7 +113,7 @@ h3 {
 p,
 .ds-text {
 	margin: 10px 0;
-	color: rgba(0, 0, 0, 0.88);
+	color: var(--fs-text);
 
 	&.bold-text {
 		font-weight: 600;
@@ -327,7 +329,7 @@ td {
 	&.ant-tabs-bottom >.ant-tabs-nav::before,
 	&.ant-tabs-top >div>.ant-tabs-nav::before,
 	&.ant-tabs-bottom >div>.ant-tabs-nav::before {
-		border-color: rgba(5, 5, 5, 0.06);
+		border-color: var(--fs-border);
 	}
 
 	.ant-tabs-tab+.ant-tabs-tab {
@@ -356,12 +358,9 @@ html[data-theme="dark"] {
 	h3,
 	h4,
 	h5 {
-		border-bottom-color: rgba(250, 250, 250, 0.6);
 		color: rgba(255, 255, 255, 0.88);
 	}
 
-	p,
-	.ds-text,
 	ul {
 		color: rgba(255, 255, 255, 0.88);
 	}

@@ -1,6 +1,6 @@
 .header-text-panel {
 	padding: 5px 0;
-	border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+	border-bottom: 1px solid var(--fs-border);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -38,24 +38,12 @@
 		gap: 10px;
 	
 		.header-text {
-			color: rgba(0, 0, 0, 0.88);
+			color: var(--fs-text);
 			font-weight: 600;
 			text-transform: uppercase;
 
 			&.strikethrough {
 				text-decoration: line-through;
-			}
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.header-text-panel {
-		border-bottom-color: rgba(250, 250, 250, 0.6);
-
-		.header-text-content {
-			.header-text {
-				color: rgba(255, 255, 255, 0.88);
 			}
 		}
 	}

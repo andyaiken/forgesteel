@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(230, 230, 230);
+    background-color: var(--fs-canvas);
     overflow-y: scroll;
 
     .data-loader-container {
@@ -37,8 +37,6 @@
 
 html[data-theme="dark"] {
 	.data-loader {
-        background-color: rgb(100, 100, 100);
-
         .data-loader-container {
             background-color: rgb(55, 55, 55);
         }

@@ -23,27 +23,20 @@
 	}
 
 	&:hover {
-		background-color: rgba(0, 0, 0, 0.06);
+		background-color: var(--fs-hover-fill);
 	}
 
 	.label-control-control {
 		flex: 3 3 0;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--fs-text);
 	}
 }
 
 html[data-theme="dark"] {
 	.label-control {
-		&:hover {
-			background-color: rgba(250, 250, 250, 0.3);
-		}
-
 		.label-control-label {
 			color: rgb(255, 255, 255);
 		}
 
-		.label-control-control {
-			color: rgba(255, 255, 255, 0.88);
-		}
 	}
 }

@@ -1106,44 +1106,19 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			);
 		};
 
-		const getStaminaDamagePreset = () => {
-			const setValue = (value: number) => {
+		const getInitialState = () => {
+			const setStaminaDamage = (value: number) => {
 				const copy = Utils.copy(props.slot.customization);
 				copy.staminaDamage = value;
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
 
-			return (
-				<Expander title='Preset Damage'>
-					<NumberSpin
-						min={0}
-						steps={[ 1, 5 ]}
-						value={props.slot.customization.staminaDamage}
-						onChange={setValue}
-					/>
-				</Expander>
-			);
-		};
-
-		const getStaminaTempPreset = () => {
-			const setValue = (value: number) => {
+			const setStaminaTemp = (value: number) => {
 				const copy = Utils.copy(props.slot.customization);
 				copy.staminaTemp = value;
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
 
-			return (
-				<Expander title='Preset Temporary Stamina'>
-					<NumberSpin
-						min={0}
-						value={props.slot.customization.staminaTemp}
-						onChange={setValue}
-					/>
-				</Expander>
-			);
-		};
-
-		const getConditionsPreset = () => {
 			const addCondition = (type: ConditionType) => {
 				const copy = Utils.copy(props.slot.customization);
 				copy.conditions.push({
@@ -1182,42 +1157,58 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			};
 
 			return (
-				<Expander
-					title='Preset Conditions'
-					extra={[
-						<Popover
-							key='add'
-							trigger='click'
-							content={
-								<Space orientation='vertical'>
-									<div className='conditions-grid'>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Bleeding)}>{ConditionType.Bleeding}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Dazed)}>{ConditionType.Dazed}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Frightened)}>{ConditionType.Frightened}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Grabbed)}>{ConditionType.Grabbed}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Prone)}>{ConditionType.Prone}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Restrained)}>{ConditionType.Restrained}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Slowed)}>{ConditionType.Slowed}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Taunted)}>{ConditionType.Taunted}</Button>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Weakened)}>{ConditionType.Weakened}</Button>
-									</div>
-									<Divider />
-									<div className='conditions-grid'>
-										<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
-										<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
-										<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
-									</div>
-									<Divider />
-									<div className='conditions-grid'>
-										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Custom)}>{ConditionType.Custom}</Button>
-									</div>
-								</Space>
-							}
-						>
-							<Button type='text' icon={<PlusOutlined />} />
-						</Popover>
-					]}
-				>
+				<Expander title='Initial State'>
+					<HeaderText>Stamina</HeaderText>
+					<NumberSpin
+						label='Damage'
+						min={0}
+						steps={[ 1, 5 ]}
+						value={props.slot.customization.staminaDamage}
+						onChange={setStaminaDamage}
+					/>
+					<NumberSpin
+						label='Temp Stamina'
+						min={0}
+						steps={[ 1, 5 ]}
+						value={props.slot.customization.staminaTemp}
+						onChange={setStaminaTemp}
+					/>
+					<HeaderText
+						extra={
+							<Popover
+								trigger='click'
+								content={
+									<Space orientation='vertical'>
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Bleeding)}>{ConditionType.Bleeding}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Dazed)}>{ConditionType.Dazed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Frightened)}>{ConditionType.Frightened}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Grabbed)}>{ConditionType.Grabbed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Prone)}>{ConditionType.Prone}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Restrained)}>{ConditionType.Restrained}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Slowed)}>{ConditionType.Slowed}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Taunted)}>{ConditionType.Taunted}</Button>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Weakened)}>{ConditionType.Weakened}</Button>
+										</div>
+										<Divider />
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
+											<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+											<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
+										</div>
+										<Divider />
+										<div className='conditions-grid'>
+											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Custom)}>{ConditionType.Custom}</Button>
+										</div>
+									</Space>
+								}
+							>
+								<Button type='text' icon={<PlusOutlined />} />
+							</Popover>
+						}
+					>
+						Conditions
+					</HeaderText>
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.slot.customization.conditions.map(c => (
@@ -1371,9 +1362,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				{getPromote()}
 				{getAddOns()}
 				{getTreasures()}
-				{getStaminaDamagePreset()}
-				{getStaminaTempPreset()}
-				{getConditionsPreset()}
+				{getInitialState()}
 			</div>
 		);
 	};

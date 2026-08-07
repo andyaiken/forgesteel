@@ -1,32 +1,61 @@
 # Forge Steel
 
-**FORGE STEEL** is a hero builder app for **DRAW STEEL**, designed by [Andy Aiken](mailto:andy.aiken@live.co.uk).
+**FORGE STEEL** is a hero builder and Director's toolkit for the **DRAW STEEL** tabletop RPG, designed and built by [Andy Aiken](mailto:andy.aiken@live.co.uk).
 
-You can find it [here](https://forgesteel.net).
+[![Build and deploy](https://github.com/andyaiken/forgesteel/actions/workflows/digitalocean.yml/badge.svg)](https://github.com/andyaiken/forgesteel/actions/workflows/digitalocean.yml)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](license.md)
+[![Live app](https://img.shields.io/badge/live-forgesteel.net-orange)](https://forgesteel.net)
+
+**➜ [Try it now at forgesteel.net](https://forgesteel.net)**
+
+## Contents
+
+- [Heroes](#heroes)
+- [Library](#library)
+- [Homebrew](#homebrew)
+- [Session](#session)
+- [Legal](#legal)
+- [Development](#development)
 
 ## Heroes
 
-With this app you can create heroes using the **DRAW STEEL** core rules.
+Build a hero step-by-step, start from a pregen, or let Forge Steel generate one at random. Heroes can be organized into folders once your collection grows.
 
-![Hero Sheet](./src/assets/screenshots/hero-sheet-interactive.png)
+<p>
+  <img src="./src/assets/screenshots/hero-edit.png" alt="Building a hero" width="49%" />
+  <img src="./src/assets/screenshots/hero-sheet-interactive.png" alt="Interactive hero sheet" width="49%" />
+</p>
 
-This shows a hero's character sheet.
+Each hero gets an interactive character sheet for use at the table, or a classic view if you'd rather print it out. From the sheet you can make ability rolls, manage stamina and conditions, track inventory and downtime projects, customize your hero with almost anything in the game, and manage a retinue of mounts, retainers, or summoned monsters.
 
-![Hero Edit](./src/assets/screenshots/hero-edit.png)
+## Library
 
-Here is a hero being edited.
+The Library holds every piece of official content in the game - ancestries, classes, kits, and more - organized by sourcebook, including third-party content from the Blacksmith's Guild, Ratcatcher magazine, Triglav Games, and the Draw Steel homebrew community.
+
+<p>
+  <img src="./src/assets/screenshots/library.png" alt="The Library" width="49%" />
+  <img src="./src/assets/screenshots/playbook-encounter-builder.png" alt="Building an encounter" width="49%" />
+</p>
+
+It's also where you design the building blocks of a session - encounters, negotiations, montages, adventures, and tactical maps. Forge Steel can generate a balanced encounter or a random tactical map for you in a hurry, and every element can be switched to a classic, printable view.
 
 ## Homebrew
 
-You can also use this app to create homebrew hero-building elements - ancestries, classes, kits, and so on.
+You can create your own homebrew elements from scratch or by copying an official one. Forge Steel helps as you go: it shows comparable monsters while you build a new one, checks that a homebrew kit isn't overpowered, and offers a Genesplice tool that mashes existing creatures together to spark new ones.
 
-![Library](./src/assets/screenshots/library.png)
+<p>
+  <img src="./src/assets/screenshots/homebrew.png" alt="Creating a homebrew kit" width="49%" />
+  <img src="./src/assets/screenshots/homebrew-kit-tuning.png" alt="Kit building advice" width="49%" />
+</p>
 
-Here we can see the list of elements that can be homebrewed. To create a homebrew element you can create it from whole cloth, or copy an official element.
+## Session
 
-![Homebrew](./src/assets/screenshots/homebrew.png)
+When it's time to play, the Session screen runs what you built in the Library. Track stamina and conditions for every combatant in an encounter, successes and failures in a montage, and interest and patience in a negotiation - and set up counters for anything else your adventure needs to track. You can run several encounters, montages, or negotiations at once and switch between them freely.
 
-Here we can see a homebrew kit being created.
+<p>
+  <img src="./src/assets/screenshots/session-encounter.png" alt="Running an encounter" width="49%" />
+  <img src="./src/assets/screenshots/session-negotiation.png" alt="Running a negotiation" width="49%" />
+</p>
 
 ## Legal
 
@@ -34,28 +63,32 @@ Here we can see a homebrew kit being created.
 
 **DRAW STEEL** © 2024 MCDM Productions, LLC.
 
+Forge Steel is released under the [GNU General Public License v3.0](license.md).
+
 ## Development
 
-**FORGE STEEL** is written in Typescript, using React and Ant Design.
+**FORGE STEEL** is written in TypeScript, using React and Ant Design.
 
 If you would like to contribute, you can:
 
 * Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
 * Fork the repository, make your changes to the code, and raise a pull request
 
-To run the app locally, run the following commands:
+### Getting started
 
-```
+Requires [Node.js](https://nodejs.org/) 24 or later.
+
+```bash
 npm install
 npm run start
 ```
 
-Once built, the app should then be available at `http://localhost:5173/`.
+Once running, the app is available at `http://localhost:5173/`.
 
-When you've finished with your changes, make sure to appease the linter and run the unit tests:
+### Before submitting a pull request
 
-```
+Make sure the linter, type checker, and unit tests all pass:
+
+```bash
 npm run check
 ```
-
-If all is well, you can then create your pull request.

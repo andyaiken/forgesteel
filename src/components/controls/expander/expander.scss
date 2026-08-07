@@ -1,13 +1,18 @@
 .ant-collapse {
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+	box-shadow:
+		0 1px 2px 0 rgba(0, 0, 0, 0.06),
+		0 4px 10px -2px rgba(0, 0, 0, 0.08);
+	border-radius: 8px;
 	line-height: unset;
+	transition: box-shadow 0.2s ease-in-out;
 
 	>.ant-collapse-item {
 		>.ant-collapse-header {
 			background-color: rgb(255, 255, 255);
-			border-radius: 7px !important;
+			border-radius: 8px !important;
 			align-items: center;
 			user-select: none;
+			transition: background-color 0.15s ease-in-out;
 
 			>.ant-collapse-extra {
 				display: flex;
@@ -23,10 +28,13 @@
 	}
 
 	&:hover {
+		box-shadow:
+			0 2px 4px 0 rgba(0, 0, 0, 0.07),
+			0 10px 20px -6px rgba(0, 0, 0, 0.12);
+
 		>.ant-collapse-item {
 			>.ant-collapse-header {
 				background-color: rgb(230, 244, 255);
-				border-color: rgb(64, 150, 255);
 			}
 		}
 	}
@@ -38,8 +46,8 @@
 
 .ant-collapse .ant-collapse-panel>.ant-collapse-body {
 	padding: 15px;
-	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
-    border-radius: 0 0 6px 6px;
+	background: var(--fs-surface-raised);
+	border-radius: 0 0 8px 8px;
 }
 
 html[data-theme="dark"] {
@@ -58,7 +66,7 @@ html[data-theme="dark"] {
 		&:hover {
 			>.ant-collapse-item {
 				>.ant-collapse-header {
-					background-color: rgb(64, 150, 255);
+					background-color: rgb(100, 100, 100);
 				}
 			}
 		}

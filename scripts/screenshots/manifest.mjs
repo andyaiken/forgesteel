@@ -172,11 +172,13 @@ export const shots = [
 
 	{
 		name: 'library-beastheart',
-		route: '/library/class/class-beastheart'
+		route: '/library/class/class-beastheart',
+		clip: '.class-panel'
 	},
 	{
 		name: 'library-summoner',
-		route: '/library/class/class-summoner'
+		route: '/library/class/class-summoner',
+		clip: '.class-panel'
 	},
 	{
 		name: 'third-party',

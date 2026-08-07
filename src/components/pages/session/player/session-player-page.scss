@@ -1,6 +1,6 @@
 .session-player-page {
 	height: 100%;
-	background-color: rgb(230, 230, 230);
+	background-color: var(--fs-canvas);
 	display: flex;
 	flex-direction: column;
 
@@ -10,14 +10,6 @@
 
 		.tactical-map-container {
 			overflow: hidden;
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.session-player-page {
-		.session-player-page-content {
-			background-color: rgb(55, 55, 55);
 		}
 	}
 }

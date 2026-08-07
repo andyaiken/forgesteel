@@ -697,7 +697,10 @@ export class FactoryLogic {
 				levelAdjustment: 0,
 				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
-				convertToSolo: false
+				convertToSolo: false,
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: []
 			},
 			monsters: [],
 			state: {
@@ -727,7 +730,10 @@ export class FactoryLogic {
 				levelAdjustment: 0,
 				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
-				convertToSolo: false
+				convertToSolo: false,
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: []
 			},
 			monsters: [ m ],
 			state: {

@@ -1,5 +1,6 @@
 import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ToolFilled, ToolOutlined } from '@ant-design/icons';
+import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, EncounterSlotCustomization, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -8,6 +9,8 @@ import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-context';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
+import { Condition } from '@/models/condition';
+import { ConditionPanel } from '@/components/panels/condition/condition-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
 import { Element } from '@/models/element';
@@ -1103,6 +1106,135 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			);
 		};
 
+		const getStaminaDamagePreset = () => {
+			const setValue = (value: number) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.staminaDamage = value;
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			return (
+				<Expander title='Preset Damage'>
+					<NumberSpin
+						min={0}
+						steps={[ 1, 5 ]}
+						value={props.slot.customization.staminaDamage}
+						onChange={setValue}
+					/>
+				</Expander>
+			);
+		};
+
+		const getStaminaTempPreset = () => {
+			const setValue = (value: number) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.staminaTemp = value;
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			return (
+				<Expander title='Preset Temporary Stamina'>
+					<NumberSpin
+						min={0}
+						value={props.slot.customization.staminaTemp}
+						onChange={setValue}
+					/>
+				</Expander>
+			);
+		};
+
+		const getConditionsPreset = () => {
+			const addCondition = (type: ConditionType) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.conditions.push({
+					id: Utils.guid(),
+					type: type,
+					text: '',
+					ends: ConditionEndType.UntilRemoved
+				});
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			const addSpecial = (text: string) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.conditions.push({
+					id: Utils.guid(),
+					type: ConditionType.Quick,
+					text: text,
+					ends: ConditionEndType.UntilRemoved
+				});
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			const editCondition = (condition: Condition) => {
+				const copy = Utils.copy(props.slot.customization);
+				const index = copy.conditions.findIndex(c => c.id === condition.id);
+				if (index !== -1) {
+					copy.conditions[index] = condition;
+					props.setCustomization(props.groupID, props.slot.id, copy);
+				}
+			};
+
+			const deleteCondition = (condition: Condition) => {
+				const copy = Utils.copy(props.slot.customization);
+				copy.conditions = copy.conditions.filter(c => c.id !== condition.id);
+				props.setCustomization(props.groupID, props.slot.id, copy);
+			};
+
+			return (
+				<Expander
+					title='Preset Conditions'
+					extra={[
+						<Popover
+							key='add'
+							trigger='click'
+							content={
+								<Space orientation='vertical'>
+									<div className='conditions-grid'>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Bleeding)}>{ConditionType.Bleeding}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Dazed)}>{ConditionType.Dazed}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Frightened)}>{ConditionType.Frightened}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Grabbed)}>{ConditionType.Grabbed}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Prone)}>{ConditionType.Prone}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Restrained)}>{ConditionType.Restrained}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Slowed)}>{ConditionType.Slowed}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Taunted)}>{ConditionType.Taunted}</Button>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Weakened)}>{ConditionType.Weakened}</Button>
+									</div>
+									<Divider />
+									<div className='conditions-grid'>
+										<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
+										<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+										<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
+									</div>
+									<Divider />
+									<div className='conditions-grid'>
+										<Button block={true} type='text' onClick={() => addCondition(ConditionType.Custom)}>{ConditionType.Custom}</Button>
+									</div>
+								</Space>
+							}
+						>
+							<Button type='text' icon={<PlusOutlined />} />
+						</Popover>
+					]}
+				>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							props.slot.customization.conditions.map(c => (
+								<ConditionPanel
+									key={c.id}
+									condition={c}
+									onChange={editCondition}
+									onDelete={deleteCondition}
+								/>
+							))
+						}
+						{props.slot.customization.conditions.length === 0 ? <Empty /> : null}
+					</Space>
+				</Expander>
+			);
+		};
+
 		const getPromote = () => {
 			const setSlotConvertToSolo = (value: boolean) => {
 				const copy = Utils.copy(props.slot.customization);
@@ -1239,6 +1371,9 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				{getPromote()}
 				{getAddOns()}
 				{getTreasures()}
+				{getStaminaDamagePreset()}
+				{getStaminaTempPreset()}
+				{getConditionsPreset()}
 			</div>
 		);
 	};

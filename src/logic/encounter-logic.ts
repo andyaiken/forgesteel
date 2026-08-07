@@ -76,7 +76,10 @@ export class EncounterLogic {
 						levelAdjustment: s.customization.levelAdjustment,
 						staminaAdjustment: s.customization.staminaAdjustment,
 						minionCountAdjustment: s.customization.minionCountAdjustment,
-						convertToSolo: s.customization.convertToSolo
+						convertToSolo: s.customization.convertToSolo,
+						staminaDamage: s.customization.staminaDamage,
+						staminaTemp: s.customization.staminaTemp,
+						conditions: [ ...s.customization.conditions ]
 					}
 				});
 			}

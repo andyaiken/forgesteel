@@ -62,13 +62,23 @@ export class SessionLogic {
 			.forEach(slot => {
 				const info = monsterInfo.find(info => info.monsterID === slot.monsterID);
 				if (info) {
+					const isMinion = info.monster.role.organization === MonsterOrganizationType.Minion;
 					const count = (slot.count * MonsterLogic.getRoleMultiplier(info.monster.role.organization)) + slot.customization.minionCountAdjustment;
 					for (let n = 1; n <= count; ++n) {
 						const monsterCopy = Utils.copy(info.monster);
 						monsterCopy.id = Utils.guid();
 						monsterCopy.name = info.count === 1 ? info.name : `${info.name} ${info.added + 1}`;
+						if (!isMinion) {
+							monsterCopy.state.staminaDamage = slot.customization.staminaDamage;
+							monsterCopy.state.staminaTemp = slot.customization.staminaTemp;
+							monsterCopy.state.conditions = slot.customization.conditions.map(c => ({ ...c, id: Utils.guid() }));
+						}
 						slot.monsters.push(monsterCopy);
 						info.added += 1;
+					}
+					if (isMinion) {
+						slot.state.staminaDamage = slot.customization.staminaDamage;
+						slot.state.conditions = slot.customization.conditions.map(c => ({ ...c, id: Utils.guid() }));
 					}
 				}
 			});

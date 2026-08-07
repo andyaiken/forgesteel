@@ -20,6 +20,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
 import { TerrainLogic } from '@/logic/terrain-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { useDimensions } from '@/hooks/use-dimensions';
 import { useState } from 'react';
 
@@ -42,6 +43,7 @@ interface EncounterGroupHeroProps {
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSetMonsterDefeated: (monster: Monster, value: boolean) => void;
+	onSetMonsterHidden: (monster: Monster, value: boolean) => void;
 	onDelete: (hero: Hero) => void;
 }
 
@@ -255,6 +257,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									onSelectMonster={props.onSelectMonster}
 									onSelectMinionSlot={props.onSelectMinionSlot}
 									onSetDefeated={props.onSetMonsterDefeated}
+									onSetHidden={props.onSetMonsterHidden}
 								/>
 								{slot.monsters.length === 0 ? <div>Empty</div> : null}
 							</div>
@@ -279,6 +282,7 @@ interface EncounterGroupMonsterProps {
 	onDuplicate: (group: EncounterGroup) => void;
 	onDelete: (group: EncounterGroup) => void;
 	onSetDefeated: (monster: Monster, value: boolean) => void;
+	onSetHidden: (monster: Monster, value: boolean) => void;
 	onMoveSlot: (slot: EncounterSlot, toGroupID: string) => void;
 	onCopySlot: (slot: EncounterSlot, toGroupID: string) => void;
 }
@@ -377,6 +381,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 							onSelectMonster={props.onSelectMonster}
 							onSelectMinionSlot={props.onSelectMinionSlot}
 							onSetDefeated={props.onSetDefeated}
+							onSetHidden={props.onSetHidden}
 						/>
 					))
 				}
@@ -392,6 +397,7 @@ interface MonsterSlotProps {
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 	onSetDefeated: (monster: Monster, value: boolean) => void;
+	onSetHidden: (monster: Monster, value: boolean) => void;
 }
 
 export const MonsterSlot = (props: MonsterSlotProps) => {
@@ -631,6 +637,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 											value={monster.state.defeated}
 											onChange={value => props.onSetDefeated(monster, value)}
 										/>
+										<Toggle label='Hidden' value={monster.state.hidden} onChange={value => props.onSetHidden(monster, value)} />
 									</div>
 								)}
 							>

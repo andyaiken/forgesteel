@@ -188,7 +188,10 @@ export class UpdateLogic {
 						levelAdjustment: 0,
 						staminaAdjustment: 0,
 						minionCountAdjustment: 0,
-						convertToSolo: false
+						convertToSolo: false,
+						staminaDamage: 0,
+						staminaTemp: 0,
+						conditions: []
 					};
 				}
 
@@ -210,6 +213,18 @@ export class UpdateLogic {
 
 				if (s.customization.convertToSolo === undefined) {
 					s.customization.convertToSolo = false;
+				}
+
+				if (s.customization.staminaDamage === undefined) {
+					s.customization.staminaDamage = 0;
+				}
+
+				if (s.customization.staminaTemp === undefined) {
+					s.customization.staminaTemp = 0;
+				}
+
+				if (s.customization.conditions === undefined) {
+					s.customization.conditions = [];
 				}
 
 				if (s.monsters === undefined) {

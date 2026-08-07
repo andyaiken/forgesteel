@@ -1,3 +1,4 @@
+import { Condition } from '@/models/condition';
 import { Element } from '@/models/element';
 import { FactionType } from '@/enums/faction-type';
 import { Hero } from '@/models/hero';
@@ -12,6 +13,9 @@ export interface EncounterSlotCustomization {
 	staminaAdjustment: number;
 	minionCountAdjustment: number;
 	convertToSolo: boolean;
+	staminaDamage: number;
+	staminaTemp: number;
+	conditions: Condition[];
 }
 
 export interface EncounterSlot {

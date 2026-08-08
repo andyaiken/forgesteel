@@ -63,17 +63,6 @@ out of the crop.
 `prepare` is handed a `settle` helper as its second argument, for shots that click through
 several steps and need to wait for a menu or drawer to finish opening in between.
 
-38 of the 47 images are wired up. The nine that aren't:
-
-| Image | Why not |
-| --- | --- |
-| `hero-sheet-manage`, `hero-sheet-customize`, `hero-sheet-retinue` | The Tools button and the Customize and Retinue tabs no longer exist. The tips need rewriting before there's anything to photograph. |
-| `hero-roll` | The Roll button has moved out of the footer; the current equivalent needs finding. |
-| `playbook-adventure`, `playbook-map`, `playbook-map-autobuild` | No sample adventure or tactical map exists to seed, and an empty one makes a poor screenshot. Needs a fixture building by hand. |
-| `playbook-encounter-random`, `monster-builder-genesplice` | The random-encounter and Genesplice generators weren't reachable from the editor screens they used to live on. |
-
-The `playbook-*` names are historical - the Playbook was folded into the Library, and those tips
-already say "in the **Library**", so only the filenames are stale.
 
 ## Notes
 
@@ -81,9 +70,17 @@ already say "in the **Library**", so only the filenames are stale.
 - `Math.random` and `crypto.getRandomValues` are replaced with a fixed sequence, so screens that
   genuinely roll dice - the random hero generator, most obviously - don't produce a different
   image every run.
-- Animations are made instant rather than disabled. `animation: none` leaves antd's drawers and
-  dropdowns stuck at the start of their fade: invisible, and unclickable to Playwright.
+- Animations are made instant rather than disabled, and only *after* `prepare` has run. Two
+  traps here: `animation: none` leaves antd's drawers and dropdowns stuck at the start of their
+  fade, invisible and unclickable; and applying the instant-animation CSS before `prepare`
+  makes antd realign its popovers forever, so Playwright never sees anything inside one as
+  stable and every click into a popover times out.
 - `cookieConsent` is seeded as accepted, otherwise the footer banner appears in every image.
 - The PNGs aren't run through an optimiser, so they're somewhat larger than the originals.
 - The party is seeded and the heroes' folder set to match it. Without that, `startEncounter`
   puts no heroes in the encounter and every session screen shows its empty state.
+- `options.gridSize` is seeded well below its default. It's the map zoom - the same value the
+  - and + buttons under Settings > Tactical Maps change - and there's no zoom-to-fit, so at the
+  default 50 even a small dungeon runs off the edge of a shot.
+- The hero is given a summon so the Retinue tab exists at all - it is hidden until a hero has
+  companions, retainers, summons, followers or fixtures, and no pregen has any.

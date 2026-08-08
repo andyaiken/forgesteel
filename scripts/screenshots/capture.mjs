@@ -101,10 +101,43 @@ const settleStyles = `
  * Boxes are resolved to rectangles here rather than in the page so that shots can use
  * Playwright's selector engine - `:has-text(...)` and friends - not just plain CSS.
  */
+// Floating elements antd repositions after its own initial guess - once real content has been
+// measured, not on a fixed schedule - so waiting on CSS animations alone isn't enough to catch it
+const floatingSelector = '.ant-popover:not(.ant-popover-hidden), .ant-dropdown:not(.ant-dropdown-hidden), '
+	+ '.ant-select-dropdown:not(.ant-select-dropdown-hidden), .ant-drawer-content-wrapper, .ant-modal';
+
 /**
- * Waits for in-flight animations to finish. They're already near-instant, but "near-instant"
- * still isn't "finished" - without this, drawers and dropdowns get measured or clicked while
- * they're a frame or two from their final position.
+ * Waits for any open popover/dropdown/drawer to stop moving.
+ *
+ * antd measures a floating element's real content after it first mounts, then corrects its
+ * position - a plain style write, not a CSS animation, so `document.getAnimations()` never sees
+ * it. A popover with tall or variable-height content (a scrollable list, wrapped text) is
+ * particularly prone to this: it can still be sliding into its final spot on the frame a
+ * screenshot is taken, which is silent - nothing fails, the shot is just wrong on some runs.
+ */
+const waitForFloatingLayoutStable = async (page, selector) => {
+	let previous = null;
+	for (let i = 0; i < 10; i++) {
+		await page.evaluate(() => new Promise(requestAnimationFrame));
+		const current = await page.evaluate(sel => JSON.stringify(
+			[ ...document.querySelectorAll(sel) ].map(el => {
+				const r = el.getBoundingClientRect();
+				return [ Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height) ];
+			})
+		), selector);
+
+		if (current === previous) {
+			return;
+		}
+		previous = current;
+	}
+};
+
+/**
+ * Waits for in-flight animations to finish, then for any floating element's position to settle.
+ * They're already near-instant, but "near-instant" still isn't "finished" - without this,
+ * drawers and dropdowns get measured or clicked while they're a frame or two from their final
+ * position.
  */
 const settle = async page => {
 	// Twice, because a transition triggered by a click doesn't exist yet on the frame the
@@ -120,6 +153,8 @@ const settle = async page => {
 			]);
 		});
 	}
+
+	await waitForFloatingLayoutStable(page, floatingSelector);
 };
 
 const drawHighlights = async (page, selectors, style) => {
@@ -251,9 +286,7 @@ const capture = async (page, baseUrl, state, shot, helper) => {
 	await page.goto(`${baseUrl}#${resolveRoute(shot.route, state)}`);
 	await page.reload({ waitUntil: 'networkidle' });
 
-	await page.addStyleTag({ content: settleStyles });
 	await page.evaluate(() => document.fonts.ready);
-
 	await settle(page);
 
 	if (shot.prepare) {
@@ -263,6 +296,13 @@ const capture = async (page, baseUrl, state, shot, helper) => {
 		await page.waitForLoadState('networkidle');
 		await settle(page);
 	}
+
+	// Applied after prepare, not before: antd keeps realigning a popover for as long as
+	// anything inside it is animating, and shrinking every animation to 1ms turns that into a
+	// permanent jitter that Playwright never sees as stable, so nothing in a popover can be
+	// clicked. By now everything is open and settled, and this just pins it down for the shot.
+	await page.addStyleTag({ content: settleStyles });
+	await settle(page);
 
 	if (shot.highlight) {
 		const selectors = Array.isArray(shot.highlight) ? shot.highlight : [ shot.highlight ];

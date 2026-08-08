@@ -18,8 +18,22 @@ import heroBuilderPregens from '@/assets/screenshots/hero-pregens.png';
 import heroBuilderRandom from '@/assets/screenshots/hero-random.png';
 import heroBuilderSourcebooks from '@/assets/screenshots/hero-edit-sourcebooks.png';
 
+import libraryAdventure from '@/assets/screenshots/library-adventure.png';
 import libraryBeastheart from '@/assets/screenshots/library-beastheart.png';
+import libraryEncounter from '@/assets/screenshots/library-encounter.png';
+import libraryEncounterBuilder from '@/assets/screenshots/library-encounter-builder.png';
+import libraryEncounterClassic from '@/assets/screenshots/library-encounter-classic.png';
+import libraryEncounterRandom from '@/assets/screenshots/library-encounter-random.png';
+import libraryEncounterTools from '@/assets/screenshots/library-encounter-tools.png';
 import libraryMain from '@/assets/screenshots/library.png';
+import libraryMap from '@/assets/screenshots/library-map.png';
+import libraryMapAutobuild from '@/assets/screenshots/library-map-autobuild.png';
+import libraryMontage from '@/assets/screenshots/library-montage.png';
+import libraryMontageBuilder from '@/assets/screenshots/library-montage-builder.png';
+import libraryMontageClassic from '@/assets/screenshots/library-montage-classic.png';
+import libraryNegotiation from '@/assets/screenshots/library-negotiation.png';
+import libraryNegotiationBuilder from '@/assets/screenshots/library-negotiation-builder.png';
+import libraryNegotiationClassic from '@/assets/screenshots/library-negotiation-classic.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 import librarySummoner from '@/assets/screenshots/library-summoner.png';
 import libraryThirdParty from '@/assets/screenshots/third-party.png';
@@ -28,21 +42,6 @@ import homebrewEditor from '@/assets/screenshots/homebrew.png';
 import homebrewKitTuning from '@/assets/screenshots/homebrew-kit-tuning.png';
 import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
 import homebrewMonsterBuilderGenesplice from '@/assets/screenshots/monster-builder-genesplice.png';
-
-import playbookAdventure from '@/assets/screenshots/playbook-adventure.png';
-import playbookEncounter from '@/assets/screenshots/playbook-encounter.png';
-import playbookEncounterBuilder from '@/assets/screenshots/playbook-encounter-builder.png';
-import playbookEncounterClassic from '@/assets/screenshots/playbook-encounter-classic.png';
-import playbookEncounterRandom from '@/assets/screenshots/playbook-encounter-random.png';
-import playbookEncounterTools from '@/assets/screenshots/playbook-encounter-tools.png';
-import playbookMap from '@/assets/screenshots/playbook-map.png';
-import playbookMapAutobuild from '@/assets/screenshots/playbook-map-autobuild.png';
-import playbookMontage from '@/assets/screenshots/playbook-montage.png';
-import playbookMontageBuilder from '@/assets/screenshots/playbook-montage-builder.png';
-import playbookMontageClassic from '@/assets/screenshots/playbook-montage-classic.png';
-import playbookNegotiation from '@/assets/screenshots/playbook-negotiation.png';
-import playbookNegotiationBuilder from '@/assets/screenshots/playbook-negotiation-builder.png';
-import playbookNegotiationClassic from '@/assets/screenshots/playbook-negotiation-classic.png';
 
 import sessionCounter from '@/assets/screenshots/session-counter.png';
 import sessionEncounter from '@/assets/screenshots/session-encounter.png';
@@ -73,7 +72,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetManage,
-				content: 'You can access your hero\'s resources, inventory, projects, and more through the **Tools** button.'
+				content: 'Your hero\'s resources, inventory, projects, and more are in the buttons beside their name - or under the **Tools** button, if your screen is narrow.'
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetState,
@@ -85,15 +84,15 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetInventory,
-				content: 'You can manage your hero\'s equipment in the **Inventory** tab. If you have an imbued item, this is where to set it up.'
+				content: 'You can manage your hero\'s equipment with the **Inventory** button. If you have an imbued item, this is where to set it up.'
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetProjects,
-				content: 'On the **Projects** tab you can track the progress of your hero\'s downtime projects.'
+				content: 'The **Projects** button lets you track the progress of your hero\'s downtime projects.'
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetCustomize,
-				content: 'You can add almost anything to your hero in the **Customize** tab.'
+				content: 'You can add almost anything to your hero with **Customize**, in the overflow menu beside your hero\'s name.'
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetRetinue,
@@ -120,7 +119,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: heroBuilderFolder,
-				content: 'If you have built a lot of heroes, you organize them by adding them to folders.'
+				content: 'If you have built a lot of heroes, you can organize them by adding them to folders.'
 			}),
 			// #endregion
 
@@ -135,7 +134,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: libraryThirdParty,
-				content: 'Forge Steel now includes third-party content from the Blacksmith\'s Guild, Ratcatcher magazine, Triglav Games, and the Draw Steel homebrew community.'
+				content: 'Forge Steel now includes third-party content from the Blacksmith\'s Guild, Look Out Behind You Studios, Ratcatcher Magazine, Steel Echoes, Triglav Games, Weapons of Legend, and the Draw Steel homebrew community.'
 			}),
 			FactoryLogic.createTip({
 				image: libraryBeastheart,
@@ -170,71 +169,71 @@ export class TipData {
 
 			// #region Adventures
 			FactoryLogic.createTip({
-				image: playbookAdventure,
+				image: libraryAdventure,
 				content: 'You can design adventures in the **Library**.'
 			}),
 			// #endregion
 
 			// #region Encounters
 			FactoryLogic.createTip({
-				image: playbookEncounter,
+				image: libraryEncounter,
 				content: 'You can design encounters in the **Library**.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookEncounterTools,
+				image: libraryEncounterTools,
 				content: 'If you tap the Minis button in the encounter header, you\'ll see information that\'ll help you pick minis for this encounter.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookEncounterClassic,
+				image: libraryEncounterClassic,
 				content: 'If you want to print out your encounter, switch to the Classic view.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookEncounterBuilder,
+				image: libraryEncounterBuilder,
 				content: 'Forge Steel makes it easy to build encounters by adding monsters and terrain elements.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookEncounterRandom,
+				image: libraryEncounterRandom,
 				content: 'If you need an encounter in a hurry, Forge Steel can generate one - you just specify the difficulty and, optionally, the sort of monsters you want it to showcase.'
 			}),
 			// #endregion
 
 			// #region Montages
 			FactoryLogic.createTip({
-				image: playbookMontage,
+				image: libraryMontage,
 				content: 'You can design montages in the **Library**.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookMontageClassic,
+				image: libraryMontageClassic,
 				content: 'If you want to print out your montage, switch to the Classic view.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookMontageBuilder,
+				image: libraryMontageBuilder,
 				content: 'Forge Steel makes it easy to build montages by adding challenges and twists.'
 			}),
 			// #endregion
 
 			// #region Negotiations
 			FactoryLogic.createTip({
-				image: playbookNegotiation,
+				image: libraryNegotiation,
 				content: 'You can design negotiations in the **Library**.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookNegotiationClassic,
+				image: libraryNegotiationClassic,
 				content: 'If you want to print out your negotiation, switch to the Classic view.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookNegotiationBuilder,
+				image: libraryNegotiationBuilder,
 				content: 'Forge Steel makes it easy to build negotiations by adding motivatons and pitfalls.'
 			}),
 			// #endregion
 
 			// #region Maps
 			FactoryLogic.createTip({
-				image: playbookMap,
+				image: libraryMap,
 				content: 'You can design tactical maps in the **Library**.'
 			}),
 			FactoryLogic.createTip({
-				image: playbookMapAutobuild,
+				image: libraryMapAutobuild,
 				content: 'If you\'re in a hurry, you can get Forge Steel to generate a random tactical map for your encounters.'
 			}),
 			// #endregion

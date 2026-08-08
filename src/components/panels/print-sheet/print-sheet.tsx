@@ -404,8 +404,8 @@ const ItemSheet = (props: ItemProps) => {
 				props.item.featuresByLevel
 					.filter(lvl => lvl.features.length > 0)
 					.map(lvl => (
-						<>
-							<HeaderText key={lvl.level}>Level {lvl.level.toString()}</HeaderText>
+						<div key={lvl.level}>
+							<HeaderText>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
 									<FeaturePanel
@@ -415,7 +415,7 @@ const ItemSheet = (props: ItemProps) => {
 									/>
 								))
 							}
-						</>
+						</div>
 					))
 			}
 		</>

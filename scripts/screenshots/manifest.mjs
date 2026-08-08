@@ -44,6 +44,22 @@ const editorTab = name => async page => page.locator('.ant-tabs-tab', { hasText:
 const footerButton = name => `.app-footer button:has-text("${name}")`;
 const clickFooter = name => async page => page.locator(footerButton(name)).click();
 
+// Customize, Conditional Features and Settings live behind the '...' button at the end of the
+// hero's tool row, rather than having a button of their own
+const openHeroOverflow = name => async (page, settle) => {
+	await page.locator('.header-text-panel .button-group button:has(.anticon-ellipsis)').click();
+	await settle();
+	await page.getByRole('button', { name: name, exact: true }).click();
+};
+
+// The Library's Add button opens a popover of collapsed sections - premade examples, random
+// generators - one of which has to be expanded before it shows anything
+const openAddSection = title => async (page, settle) => {
+	await page.getByRole('button', { name: 'Add' }).click();
+	await settle();
+	await page.locator('.ant-collapse-header', { hasText: title }).click();
+};
+
 export const shots = [
 	{
 		name: 'hero-sheet-interactive',
@@ -87,6 +103,43 @@ export const shots = [
 		name: 'hero-sheet-projects',
 		route: state => `/hero/view/${state.heroes.tactician.id}`,
 		prepare: openHeroPanel('Projects'),
+		viewport: heroPanelViewport,
+		clip: heroPanelDrawer,
+		clipAvoid: appChrome
+	},
+	{
+		name: 'hero-sheet-customize',
+		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		prepare: openHeroOverflow('Customize'),
+		viewport: heroPanelViewport,
+		clip: heroPanelDrawer,
+		clipAvoid: appChrome
+	},
+	{
+		name: 'hero-sheet-manage',
+		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		// The Tools button only exists in the compact layout; on a wide screen the same
+		// buttons are laid out individually and there's no Tools button to point at
+		viewport: { width: 700, height: 900 },
+		prepare: async page => page.getByRole('button', { name: 'Tools', exact: true }).click(),
+		highlight: 'button:has-text("Tools")'
+	},
+	{
+		name: 'hero-sheet-retinue',
+		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		// The hero panel's tab strip is a Segmented control, and 'Retinue' also appears in the
+		// sidebar - the first match is the one in the tab strip
+		prepare: async page => page.locator('.ant-segmented-item:has-text("Retinue")').first().click(),
+		// nth=0 because 'Retinue' also appears in the sidebar, and every match gets a box
+		highlight: '.ant-segmented-item:has-text("Retinue") >> nth=0'
+	},
+	{
+		name: 'hero-roll',
+		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		// Rolls are made by clicking the characteristic you're rolling against. The copies in the
+		// left rail are hover-reveal - they sit under a .ghost overlay with pointer-events: none -
+		// so this clicks the tile in the centre column instead.
+		prepare: async page => page.locator('.stats-row.clickable', { hasText: 'Might' }).first().click(),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
 		clipAvoid: appChrome
@@ -189,37 +242,55 @@ export const shots = [
 		}
 	},
 	{
-		name: 'playbook-encounter',
+		name: 'library-encounter',
 		route: state => `/library/encounter/${state.homebrew.encounter}`
 	},
 	{
-		name: 'playbook-encounter-classic',
+		name: 'library-encounter-classic',
 		route: state => `/library/encounter/${state.homebrew.encounter}`,
 		prepare: switchToClassic,
 		highlight: viewSelector
 	},
 	{
-		name: 'playbook-encounter-tools',
+		name: 'library-encounter-tools',
 		route: state => `/library/encounter/${state.homebrew.encounter}`,
 		// The tools modal covers the button that opened it, so there's nothing to call out
 		prepare: async page => page.getByRole('button', { name: 'Minis' }).click()
 	},
 	{
-		name: 'playbook-montage',
+		name: 'library-encounter-random',
+		route: '/library/encounter',
+		prepare: openAddSection('Generate a random encounter')
+	},
+	{
+		name: 'library-adventure',
+		route: state => `/library/adventure/${state.homebrew.adventure}`
+	},
+	{
+		name: 'library-map',
+		route: state => `/library/tactical-map/${state.homebrew.map}`
+	},
+	{
+		name: 'library-map-autobuild',
+		route: '/library/tactical-map',
+		prepare: openAddSection('Generate a random map')
+	},
+	{
+		name: 'library-montage',
 		route: state => `/library/montage/${state.homebrew.montage}`
 	},
 	{
-		name: 'playbook-montage-classic',
+		name: 'library-montage-classic',
 		route: state => `/library/montage/${state.homebrew.montage}`,
 		prepare: switchToClassic,
 		highlight: viewSelector
 	},
 	{
-		name: 'playbook-negotiation',
+		name: 'library-negotiation',
 		route: state => `/library/negotiation/${state.homebrew.negotiation}`
 	},
 	{
-		name: 'playbook-negotiation-classic',
+		name: 'library-negotiation-classic',
 		route: state => `/library/negotiation/${state.homebrew.negotiation}`,
 		prepare: switchToClassic,
 		highlight: viewSelector
@@ -230,17 +301,17 @@ export const shots = [
 	// #region Homebrew editors
 
 	{
-		name: 'playbook-encounter-builder',
+		name: 'library-encounter-builder',
 		route: state => `/library/edit/encounter/${state.homebrew.id}/${state.homebrew.encounter}`,
 		prepare: editorTab('Monsters')
 	},
 	{
-		name: 'playbook-montage-builder',
+		name: 'library-montage-builder',
 		route: state => `/library/edit/montage/${state.homebrew.id}/${state.homebrew.montage}`,
 		prepare: editorTab('Sections')
 	},
 	{
-		name: 'playbook-negotiation-builder',
+		name: 'library-negotiation-builder',
 		route: state => `/library/edit/negotiation/${state.homebrew.id}/${state.homebrew.negotiation}`,
 		prepare: editorTab('Motivations')
 	},
@@ -258,6 +329,23 @@ export const shots = [
 			await editorTab('Stats')(page);
 			await page.locator('.ant-tabs-tab', { hasText: 'Similar Monsters' }).click();
 		}
+	},
+	{
+		name: 'monster-builder-genesplice',
+		route: state => `/library/edit/monster-group/${state.homebrew.id}/${state.homebrew.monsterGroup}/${state.homebrew.monster}`,
+		// Genesplice sits behind the tool icon on the Similar Monsters panel, which is only
+		// reachable once a specific monster is picked out of the group
+		prepare: async (page, settle) => {
+			await page.locator('.ant-select').first().click();
+			await settle();
+			await page.locator('.ant-select-item-option').nth(1).click();
+			await settle();
+			await editorTab('Stats')(page);
+			await page.locator('.ant-tabs-tab', { hasText: 'Similar Monsters' }).click();
+			await settle();
+			await page.locator('button:has(.anticon-tool)').last().click();
+		},
+		highlight: 'button:has-text("Genesplice")'
 	},
 	{
 		name: 'homebrew',

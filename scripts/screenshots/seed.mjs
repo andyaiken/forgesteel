@@ -55,6 +55,7 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 		const { ProjectData } = await import('/src/data/project-data.ts');
 		const { MonsterData } = await import('/src/data/monster-data.ts');
 		const { KitData } = await import('/src/data/kit-data.ts');
+		const { TacticalMapLogic } = await import('/src/logic/tactical-map-logic.ts');
 		const { ConditionEndType, ConditionType } = await import('/src/enums/condition-type.ts');
 		const { Utils } = await import('/src/utils/utils.ts');
 
@@ -66,7 +67,15 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 		// heroes in them, and the session screens all show their empty state.
 		// This shows on screen as the heroes' folder, so it wants to read like a real party name
 		const party = 'Adventuring Party';
-		const options = { ...FactoryLogic.createOptions(), cookieConsent: true, party: party };
+		const options = {
+			...FactoryLogic.createOptions(),
+			cookieConsent: true,
+			party: party,
+			// gridSize is the map zoom - the same value the - and + buttons under
+			// Settings > Tactical Maps change. Zoomed out from the default 50, because there's
+			// no zoom-to-fit and at 50 even a small dungeon runs off the edge of the shot.
+			gridSize: 15
+		};
 		const sourcebooks = SourcebookLogic.getSourcebooks([]);
 		const pregens = PregenData.getPregens();
 
@@ -106,6 +115,16 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 			];
 			played.state.inventory = SourcebookLogic.getItems(sourcebooks).slice(0, 3);
 			played.state.projects = [ { ...ProjectData.discoverLore, progress: { prerequisites: true, source: true, followerID: null, points: 24 } } ];
+
+			// The Retinue tab only appears once a hero has something in their retinue, so give
+			// this one a summon. No pregen has companions, retainers or summons of its own.
+			played.features.push(FactoryLogic.feature.createSummon({
+				id: 'screenshot-summon',
+				name: 'Summoned Allies',
+				summons: [
+					FactoryLogic.createSummon({ monster: Utils.copy(MonsterData.angulotl.monsters[0]), cost: 3, count: 1 })
+				]
+			}));
 		}
 
 		// #endregion
@@ -146,11 +165,32 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 		// The built-in sourcebooks carry no encounters, montages, negotiations or monster groups
 		// of your own, so the Library's director sections and every homebrew editor would open
 		// on an empty list. This gives them something real to show.
+		// Built the same way the Library's own 'Generate a random map' button builds one
+		const tacticalMap = FactoryLogic.createTacticalMap();
+		TacticalMapLogic.generateDungeon(5, tacticalMap);
+		tacticalMap.id = 'screenshot-library-map';
+		tacticalMap.name = 'The Sunken Vault';
+
+		const adventure = {
+			...FactoryLogic.createAdventure(),
+			id: 'screenshot-library-adventure',
+			name: 'A Knife in the Dark',
+			description: 'A short mystery for four heroes, set in the lower city.'
+		};
+		// createAdventure leaves Introduction and Hooks empty, which renders as 'No details'
+		adventure.introduction[0].description = 'A dock worker is found dead with a guild seal clutched in one hand. Nobody will say whose.';
+		adventure.introduction[1].description = 'A heroes\' contact asks them to look into it quietly, before the watch does.';
+		adventure.plot.plots = [ 'The Body', 'The Warehouse', 'The Reckoning' ]
+			.map((name, n) => ({ ...FactoryLogic.createAdventurePlot(name), id: `screenshot-plot-${n + 1}` }));
+
 		const homebrew = {
 			...FactoryLogic.createSourcebook(),
 			id: 'screenshot-sourcebook',
-			name: 'Screenshot Sourcebook',
-			description: 'Homebrew content for the tip screenshots.',
+			// Shows on screen in the sourcebook lists, so it needs to read like a real one
+			name: 'My Homebrew',
+			description: 'Custom content for my campaign.',
+			adventures: [ adventure ],
+			tacticalMaps: [ tacticalMap ],
 			// Re-IDed so they don't collide with the built-in copies they were taken from -
 			// a collision resolves to the built-in one, which isn't editable
 			encounters: [ { ...Utils.copy(EncounterData.goblinAmbush), id: 'screenshot-library-encounter' } ],
@@ -179,7 +219,9 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 				monsterGroup: homebrew.monsterGroups[0].id,
 				// The monster builder edits one monster within its group, so shots need its ID too
 				monster: homebrew.monsterGroups[0].monsters[0].id,
-				kit: homebrew.kits[0].id
+				kit: homebrew.kits[0].id,
+				adventure: homebrew.adventures[0].id,
+				map: homebrew.tacticalMaps[0].id
 			},
 			storage: {
 				[keys.Options]: options,

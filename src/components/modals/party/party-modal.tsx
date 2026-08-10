@@ -32,7 +32,7 @@ export const PartyModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='party-modal'>
-					<HeaderText>Stamina</HeaderText>
+					<HeaderText>Resources</HeaderText>
 					<table>
 						<thead>
 							<tr>
@@ -58,6 +58,43 @@ export const PartyModal = (props: Props) => {
 															<Tag color={state === 'winded' ? 'orange' : 'red'} variant='outlined'>{Format.capitalize(state)}</Tag>
 														</div>
 														: null
+												}
+											</td>
+										);
+									})
+								}
+							</tr>
+							<tr>
+								<td className='row-label'>Recoveries</td>
+								{
+									props.heroes.map(h => {
+										const max = HeroLogic.getRecoveries(h);
+										const current = max - h.state.recoveriesUsed;
+
+										return (
+											<td key={h.id} className='row-cell'>
+												{max > 0 ? `${current} / ${max}` : '-'}
+											</td>
+										);
+									})
+								}
+							</tr>
+							<tr>
+								<td className='row-label'>Heroic Resource</td>
+								{
+									props.heroes.map(h => {
+										const resources = HeroLogic.getHeroicResources(h);
+										return (
+											<td key={h.id} className='row-cell'>
+												{
+													resources.length > 0 ?
+														resources.map(hr => (
+															<div key={hr.id}>
+																<div>{hr.value}</div>
+																<div className='resource-name'>{hr.name}</div>
+															</div>
+														))
+														: '-'
 												}
 											</td>
 										);

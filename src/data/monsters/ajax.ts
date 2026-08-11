@@ -170,7 +170,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
-								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
+								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has M < 5 is knocked prone.'
 							})
 						]
 					})
@@ -207,7 +207,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have <code>A < 5</code>, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')
+							FactoryLogic.createAbilitySectionText('Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have A < 5, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')
 						]
 					})
 				}),
@@ -250,7 +250,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has R < 4, this free strike also makes them weakened until the end of their next turn.')
 						]
 					})
 				}),
@@ -263,7 +263,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
+							FactoryLogic.createAbilitySectionText('If the target has I < 4, they use a signature ability against a target of Ajax’s choice.')
 						]
 					})
 				}),
@@ -324,7 +324,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
+							FactoryLogic.createAbilitySectionText('Each target who has I < 5 is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
 						]
 					})
 				})
@@ -398,7 +398,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
-								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
+								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has M < 5 is knocked prone.'
 							})
 						]
 					})
@@ -454,7 +454,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has R < 4, this free strike also makes them weakened until the end of their next turn.')
 						]
 					})
 				}),
@@ -467,7 +467,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
+							FactoryLogic.createAbilitySectionText('If the target has I < 4, they use a signature ability against a target of Ajax’s choice.')
 						]
 					})
 				}),
@@ -527,7 +527,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
+							FactoryLogic.createAbilitySectionText('Each target who has I < 5 is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
 						]
 					})
 				})

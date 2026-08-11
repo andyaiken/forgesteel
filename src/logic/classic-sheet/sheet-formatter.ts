@@ -44,27 +44,28 @@ export class SheetFormatter {
 		}
 	};
 
-	static convertFeaturesShort = (features: Feature[]): Feature[] => {
-		return this.convertFeatures(features.map(f => ({ feature: f, display: 'short' })));
+	static convertFeaturesShort = (features: Feature[], hero?: Hero): Feature[] => {
+		return this.convertFeatures(features.map(f => ({ feature: f, display: 'short' })), hero);
 	};
 
-	static convertFeatures = (features: { feature: Feature, display: 'short' | 'full' }[]): Feature[] => {
+	static convertFeatures = (features: { feature: Feature, display: 'short' | 'full' }[], hero?: Hero): Feature[] => {
 		features.sort((a, b) => this.sortFeatures(a.feature, b.feature));
 		const results: Feature[] = [];
 		for (const fd of features) {
-			results.push(this.cleanupFeature(fd.feature, fd.display));
+			results.push(this.cleanupFeature(fd.feature, fd.display, hero));
 		}
 		return results;
 	};
 
-	static cleanupFeature = (feature: Feature, display: 'short' | 'full' = 'short'): Feature => {
+	static cleanupFeature = (feature: Feature, display: 'short' | 'full' = 'short', hero?: Hero): Feature => {
 		const result = Utils.copy(feature);
+		const description = feature.type === FeatureType.Text ? AbilityLogic.getTextEffect(feature.description, hero) : feature.description;
 		if (display !== 'full' && this.isVERYLongFeature(feature)) {
 			result.description = '*See Reference for details…*';
 		} else if (display !== 'full' && this.isLongFeature(feature)) {
-			result.description = this.shortenText(feature.description);
+			result.description = this.shortenText(description);
 		} else {
-			result.description = this.cleanupText(feature.description);
+			result.description = this.cleanupText(description);
 		}
 
 		return result;
@@ -90,18 +91,19 @@ export class SheetFormatter {
 		return result;
 	};
 
-	static enhanceFeatures = (features: Feature[]): Feature[] => {
+	static enhanceFeatures = (features: Feature[], hero?: Hero): Feature[] => {
 		features.sort(this.sortFeatures);
 		const results: Feature[] = [];
 		for (const feature of features) {
-			results.push(this.enhanceFeature(feature));
+			results.push(this.enhanceFeature(feature, hero));
 		}
 		return results;
 	};
 
-	static enhanceFeature = (feature: Feature): Feature => {
+	static enhanceFeature = (feature: Feature, hero?: Hero): Feature => {
 		const result = Utils.copy(feature);
-		result.description = this.enhanceMarkdown(feature.description);
+		const description = feature.type === FeatureType.Text ? AbilityLogic.getTextEffect(feature.description, hero) : feature.description;
+		result.description = this.enhanceMarkdown(description);
 		return result;
 	};
 
@@ -410,18 +412,22 @@ export class SheetFormatter {
 	};
 
 	static abilitySection = (section: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage), creature: Hero | Monster | undefined): string => {
+		const hero = CreatureLogic.isHero(creature) ? creature : undefined;
+
 		let text = '';
 		switch (section.type) {
 			case 'text':
-				text = section.text.replace(/^\s+/, '');
+				text = AbilityLogic.getTextEffect(section.text, hero).replace(/^\s+/, '');
 				break;
-			case 'field':
+			case 'field': {
+				const effect = AbilityLogic.getTextEffect(section.effect, hero);
 				if (section.value !== 0) {
-					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
+					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${effect}`;
 				} else {
-					text = `\n#### ${section.name}:\n${section.effect}`;
+					text = `\n#### ${section.name}:\n${effect}`;
 				}
 				break;
+			}
 			case 'package':
 				if (CreatureLogic.isHero(creature)) {
 					text = HeroLogic.getFeatures(creature)
@@ -429,7 +435,7 @@ export class SheetFormatter {
 						.filter(f => f.type === FeatureType.PackageContent)
 						.filter(f => f.data.tag === section.tag)
 						.map(f => (
-							`\n#### ${f.name}:\n${f.description}`
+							`\n#### ${f.name}:\n${AbilityLogic.getTextEffect(f.description, hero)}`
 						)).join('\n');
 				} else if (creature !== undefined) {
 					console.warn('Ability package in NON-HERO!', section, creature);

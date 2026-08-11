@@ -70,11 +70,7 @@ export const AbilityPanel = (props: Props) => {
 	};
 
 	const parseText = (text: string) => {
-		if (autoCalc) {
-			text = AbilityLogic.getTextEffect(text, props.hero);
-		}
-
-		return text;
+		return AbilityLogic.getTextEffect(text, autoCalc ? props.hero : undefined);
 	};
 
 	const autoCalcAvailable = () => {

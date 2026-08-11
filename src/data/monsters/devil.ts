@@ -325,7 +325,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 				FactoryLogic.feature.create({
 					id: 'devil-4-feature-5',
 					name: 'Vexatious Litigation',
-					description: 'Any creature within 10 squares of the adjudicator who has <code>P < 3</code> takes a −2 penalty to saving throws.'
+					description: 'Any creature within 10 squares of the adjudicator who has P < 3 takes a −2 penalty to saving throws.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'devil-4-feature-6',
@@ -391,7 +391,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 								tier2: '10 damage; slide 3',
 								tier3: '12 damage; slide 5'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target has <code>M < 2</code>, the forced distance movement gains a +3 bonus.')
+							FactoryLogic.createAbilitySectionText('If the target has M < 2, the forced distance movement gains a +3 bonus.')
 						]
 					})
 				}),

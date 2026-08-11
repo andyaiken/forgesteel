@@ -35,11 +35,11 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 			name: 'Restorative Salve',
 			description: `After a basilisk dies, a character can make a Reason test to claim oil from the basilisk’s mouth, which can be used to create a special salve. One dose of salve can be applied to a petrified creature as a main action, and 1 minute after the salve is applied, that creature is no longer petrified.
 			
-<code><11</code> The character must complete the Find a Cure downtime project in Draw Steel: Heroes to create one dose of salve.
+<11 The character must complete the Find a Cure downtime project in Draw Steel: Heroes to create one dose of salve.
 
-<code>12-16</code> The character creates one dose of salve and can create two more doses by completing the Find a Cure downtime project.
+12-16 The character creates one dose of salve and can create two more doses by completing the Find a Cure downtime project.
 
-<code>17+</code> The character creates three doses of salve.` }
+17+ The character creates three doses of salve.` }
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
@@ -173,7 +173,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target takes 5 damage. Any target who has <code>A < 2</code> is also bleeding (save ends).')
+							FactoryLogic.createAbilitySectionText('Each target takes 5 damage. Any target who has A < 2 is also bleeding (save ends).')
 						]
 					})
 				}),
@@ -284,14 +284,14 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target takes 4 acid damage. Any target who has <code>M < 2</code> is also slowed (save ends).')
+							FactoryLogic.createAbilitySectionText('Each target takes 4 acid damage. Any target who has M < 2 is also slowed (save ends).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'basilisk-2-feature-5',
 					name: 'Petrifying Fumes',
-					description: 'Any creature who starts their turn adjacent to the tonguesnapper and has <code>M < 1</code> is slowed (save ends).'
+					description: 'Any creature who starts their turn adjacent to the tonguesnapper and has M < 1 is slowed (save ends).'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'basilisk-2-feature-6',

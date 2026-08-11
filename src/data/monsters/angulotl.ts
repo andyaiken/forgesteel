@@ -312,7 +312,7 @@ Pinna, Hedge Witch, Gravesford`,
 							FactoryLogic.createAbilitySectionSpend({
 								name: 'Malice:',
 								value: 2,
-								effect: 'A target who has <code>M < 2</code> is weakened (save ends). A target weakened this way takes 2 poison damage at the start of each of their turns.'
+								effect: 'A target who has M < 2 is weakened (save ends). A target weakened this way takes 2 poison damage at the start of each of their turns.'
 							})
 						]
 					})

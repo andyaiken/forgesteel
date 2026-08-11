@@ -169,7 +169,7 @@ export class HeroSheetBuilder {
 
 			const kitFeatures = kits.flatMap(k => k.features)
 				.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f));
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures, hero);
 
 			coveredFeatureIds.push(...kitFeatures.map(f => f.id));
 		} else if (modifiers) {
@@ -201,7 +201,7 @@ export class HeroSheetBuilder {
 						break;
 				}
 			});
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifiers);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifiers, hero);
 		}
 		// #endregion
 
@@ -251,7 +251,7 @@ export class HeroSheetBuilder {
 			classFeatureSpace = classFeatureSpace * numCols;
 			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures, hero, classFeatureSpace, classFeatureLineLen, numCols);
 
-			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed));
+			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed, hero), hero);
 
 			const referenceFeatures = dividedClassFeatures.reference;
 			sheet.featuresReferenceOther.push(...referenceFeatures);
@@ -366,7 +366,7 @@ export class HeroSheetBuilder {
 			}
 		}
 		const divided = SheetFormatter.divideFeatures(combinedAncestryPerks, hero, perkSpace * 2, perkLineLen, 2);
-		sheet.ancestryTraitsPerksCombined = SheetFormatter.convertFeatures(divided.displayed);
+		sheet.ancestryTraitsPerksCombined = SheetFormatter.convertFeatures(divided.displayed, hero);
 
 		const additional = divided.reference;
 		sheet.featuresReferenceOther.push(...additional);

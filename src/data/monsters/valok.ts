@@ -156,7 +156,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** This ability targets only metal-clad enemies and metal objects of size 3 or smaller.'),
-							FactoryLogic.createAbilitySectionText('Each target is pulled up to 8 squares, or if they have <code>M < 3</code>, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
+							FactoryLogic.createAbilitySectionText('Each target is pulled up to 8 squares, or if they have M < 3, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
 						]
 					})
 				}),

@@ -88,7 +88,17 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const autoCalcAvailable = () => {
-		return (props.feature.type === FeatureType.Text) && (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
+		if (props.feature.type !== FeatureType.Ability) {
+			return false;
+		}
+
+		let customization: AbilityCustomization | null = null;
+		if (props.hero) {
+			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
+		}
+
+		const text = customization?.description || props.feature.description;
+		return AbilityLogic.getTextEffect(text, props.hero) !== text;
 	};
 
 	if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
@@ -158,12 +168,7 @@ export const FeaturePanel = (props: Props) => {
 					{customization?.name || props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				<Markdown
-					text={
-						(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
-							AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
-							:
-							(customization?.description || props.feature.description)
-					}
+					text={AbilityLogic.getTextEffect(customization?.description || props.feature.description, autoCalc ? props.hero : undefined)}
 				/>
 				{
 					props.mode === PanelMode.Full ?

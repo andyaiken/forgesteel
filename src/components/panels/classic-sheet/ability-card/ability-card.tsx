@@ -95,7 +95,7 @@ export const AbilityCard = (props: Props) => {
 	const getTriggerSection = () => {
 		if (ability.trigger) {
 			return (
-				<p className='trigger'><label>Trigger: </label>{ability.trigger}</p>
+				<p className='trigger'><label>Trigger: </label><Markdown useSpan={true} text={ability.trigger} /></p>
 			);
 		}
 	};

@@ -61,7 +61,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			cost: 3,
 			icon: StatBlockIcon.Self,
 			sections: [
-				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have <code>M < 2</code>, they are knocked prone.'
+				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have M < 2, they are knocked prone.'
 			]
 		}),
 		FactoryLogic.feature.createMaliceAbility({

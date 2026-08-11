@@ -532,7 +532,7 @@ The animal can attempt to hide even while observed. While no enemy has line of e
 			id: 'animal-fearsome-1',
 			name: 'Fearsome',
 			description: `
-As a maneuver, the animal makes an imposing display. Each enemy within 2 squares of the animal who has <code>I < 1</code> must shift 3 squares in a straight line away from the animal.
+As a maneuver, the animal makes an imposing display. Each enemy within 2 squares of the animal who has I < 1 must shift 3 squares in a straight line away from the animal.
 
 **Typically Used By:** Aardvarks, lions, peacocks.`,
 			category: FeatureAddOnType.Defensive,
@@ -572,7 +572,7 @@ Whenever an adjacent enemy grabs the animal or uses a melee ability against them
 			id: 'animal-stench-1',
 			name: 'Stench',
 			description: `
-At the start of the animal’s turn, each enemy adjacent to the animal who has <code>M < 1</code> must shift 1 square away from the animal.
+At the start of the animal’s turn, each enemy adjacent to the animal who has M < 1 must shift 1 square away from the animal.
 
 **Typically Used By:** Oxen, skunks, wolverines.`,
 			category: FeatureAddOnType.Defensive,
@@ -645,7 +645,7 @@ The animal gains an edge on strikes against creatures who are bleeding or winded
 			id: 'animal-grappler-1',
 			name: 'Grappler',
 			description: `
-If the target of the animal’s signature ability has <code>A < 1</code>, they are grabbed by the animal.
+If the target of the animal’s signature ability has A < 1, they are grabbed by the animal.
 
 <span class='pill'>+1pt</span> An enemy grabbed by the animal takes a bane on the Escape Grab maneuver.
 
@@ -727,7 +727,7 @@ The animal’s signature ability gains a +2 bonus to distance.
 			id: 'animal-venom-1',
 			name: 'Venom',
 			description: `
-The animal’s signature ability deals an extra 2 poison damage, and if the target has <code>M < 1</code>, they are weakened (save ends).
+The animal’s signature ability deals an extra 2 poison damage, and if the target has M < 1, they are weakened (save ends).
 
 **Typically Used By:** Platypuses, snakes, wasps.`,
 			category: FeatureAddOnType.Offensive,
@@ -744,9 +744,9 @@ The animal gains the following ability.
 **Distance** 3 cube within 1
 **Target** Each creature in the area
 **Power Roll** 2d10 + highest characteristic
-**11-** <code>A < 0</code> restrained (save ends)
-**12–16** <code>A < 1</code> restrained (save ends)
-**17+** <code>A < 2</code> restrained (save ends)
+**11-** A < 0 restrained (save ends)
+**12–16** A < 1 restrained (save ends)
+**17+** A < 2 restrained (save ends)
 **Effect** The area is difficult terrain for enemies until the end of the encounter.
 
 **Typically Used By:** Pelagic snails, spiders.`,
@@ -757,7 +757,7 @@ The animal gains the following ability.
 			id: 'animal-death-fumes-1',
 			name: 'Death Fumes',
 			description: `
-Whenever the animal takes damage, each creature adjacent to the animal who has <code>M < 1</code> takes damage equal to half the creature’s current Stamina.
+Whenever the animal takes damage, each creature adjacent to the animal who has M < 1 takes damage equal to half the creature’s current Stamina.
 
 **Typically Used By:** Death snails.`,
 			category: FeatureAddOnType.Supernatural,
@@ -787,7 +787,7 @@ The animal can move through spaces as if they were size 1T. Whenever the animal 
 			id: 'animal-hypnosis-1',
 			name: 'Hypnosis',
 			description: `
-As a maneuver, the animal targets one enemy within 5 squares with their gaze, movements, or vocalizations. If the enemy has <code>R < 1</code>, they are dazed (save ends).
+As a maneuver, the animal targets one enemy within 5 squares with their gaze, movements, or vocalizations. If the enemy has R < 1, they are dazed (save ends).
 
 **Typically Used By:** Angler fish, snakes, tigers.`,
 			category: FeatureAddOnType.Supernatural,

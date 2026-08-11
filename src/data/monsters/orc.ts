@@ -123,7 +123,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has <code>M < 1</code> is also knocked prone.')
+							FactoryLogic.createAbilitySectionText('The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has M < 1 is also knocked prone.')
 						]
 					})
 				}),
@@ -997,7 +997,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '11 damage; prone',
 								tier3: '14 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('The scyza roars, and if the target has <code>I < 2</code>, they are frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('The scyza roars, and if the target has I < 2, they are frightened (save ends).')
 						]
 					})
 				}),

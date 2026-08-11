@@ -1,0 +1,11 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "forgesteel-dev",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": [ "run", "start" ],
+			"port": 5173
+		}
+	]
+}

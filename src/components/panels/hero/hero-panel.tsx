@@ -188,8 +188,8 @@ export const HeroPanel = (props: Props) => {
 						{getAbilitiesSection('Triggered Actions', triggers)}
 						{getAbilitiesSection('Other Abilities', others)}
 						{getAbilitiesSection('Free Strikes', [
-							{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
-							{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined }
+							{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeMelee), source: 'Standard', level: undefined },
+							{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeRanged), source: 'Standard', level: undefined }
 						])}
 					</>
 				);
@@ -205,8 +205,8 @@ export const HeroPanel = (props: Props) => {
 				return getAbilitiesSection('Other Abilities', others);
 			case 'Free Strikes':
 				return getAbilitiesSection('Free Strikes', [
-					{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
-					{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined },
+					{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeMelee), source: 'Standard', level: undefined },
+					{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeRanged), source: 'Standard', level: undefined },
 					...abilities.filter(a => a.ability.type.freeStrike)
 				]);
 			case 'Retinue':

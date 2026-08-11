@@ -327,33 +327,35 @@ export class HeroLogic {
 				// Nothing to do here
 		}
 
-		return abilities.map(a => {
-			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === a.ability.id) || null;
-			if (customization) {
-				const ability = Utils.copy(a.ability);
+		return abilities.map(a => ({ ability: HeroLogic.applyAbilityCustomization(hero, a.ability), source: a.source, level: a.level }));
+	};
 
-				ability.name = customization.name || ability.name;
-				ability.description = customization.description || ability.description;
+	static applyAbilityCustomization = (hero: Hero, ability: Ability) => {
+		const customization = hero.abilityCustomizations.find(ac => ac.abilityID === ability.id) || null;
+		if (!customization) {
+			return ability;
+		}
 
-				if (ability.cost !== 'signature') {
-					ability.cost += customization.costModifier;
-				}
+		const copy = Utils.copy(ability);
 
-				// Distance bonus / damage bonus are handled separately
+		copy.name = customization.name || copy.name;
+		copy.description = customization.description || copy.description;
 
-				if (customization.characteristic) {
-					ability.sections.filter(s => s.type === 'roll').forEach(s => s.roll.characteristic = [ customization.characteristic! ]);
-				}
+		if (copy.cost !== 'signature') {
+			copy.cost += customization.costModifier;
+		}
 
-				if (customization.notes) {
-					ability.sections.push(FactoryLogic.createAbilitySectionField({ name: 'Notes', effect: customization.notes }));
-				}
+		// Distance bonus / damage bonus are handled separately
 
-				return { ability: ability, source: a.source, level: a.level };
-			}
+		if (customization.characteristic) {
+			copy.sections.filter(s => s.type === 'roll').forEach(s => s.roll.characteristic = [ customization.characteristic! ]);
+		}
 
-			return a;
-		});
+		if (customization.notes) {
+			copy.sections.push(FactoryLogic.createAbilitySectionField({ name: 'Notes', effect: customization.notes }));
+		}
+
+		return copy;
 	};
 
 	static getPerks = (hero: Hero) => {

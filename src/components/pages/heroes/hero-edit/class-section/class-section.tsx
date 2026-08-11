@@ -110,7 +110,7 @@ export const ClassSection = (props: Props) => {
 			options.choices.push(
 				<SelectablePanel key='subclass'>
 					<HeaderText>{heroClass.subclassName}</HeaderText>
-					<div className='ds-text'>Choose {heroClass.subclassCount === 1 ? `${Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} ${heroClass.subclassName || 'subclass'}` : `${heroClass.subclassCount} ${heroClass.subclassName || 'subclasse'}s`}.</div>
+					<div className='ds-text'>Choose {heroClass.subclassCount === 1 ? `${Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} ${heroClass.subclassName || 'subclass'}` : `${heroClass.subclassCount} ${Format.pluralize(heroClass.subclassName) || 'subclasses'}`}.</div>
 					{
 						heroClass.subclasses
 							.filter(sc => sc.selected)

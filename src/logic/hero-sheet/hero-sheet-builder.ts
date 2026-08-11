@@ -387,6 +387,7 @@ export class HeroSheetBuilder {
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 
 		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ]
+			.map(a => HeroLogic.applyAbilityCustomization(hero, a))
 			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options));
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options)).concat(freeStrikes);
 

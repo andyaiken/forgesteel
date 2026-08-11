@@ -498,10 +498,13 @@ You can increase each of your minions’ Stamina as shown on the table. Addition
 | 5-Essence Minion | Stamina +2.      |`,
 					tag: 'minions'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'summoner-4-4',
 					name: 'Essence Salvage',
-					description: 'The first time each combat round that any minion unwillingly dies within your Summoner’s Range, you gain 2 essence instead of 1. '
+					tag: 'minion-death 2',
+					trigger: 'The first time each round that any minion dies unwillingly within your Summoner’s Range',
+					value: '1',
+					replacesTags: [ 'minion-death' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-4-5',

@@ -1,4 +1,4 @@
-import { Button, Flex, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Segmented, Select, Space, Tabs } from 'antd';
 import { ButtonConfig, ButtonGroup, DangerConfig } from '@/components/controls/button-group/button-group';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
@@ -444,7 +444,7 @@ export const SourcebookPanel = (props: Props) => {
 				buttons.push(
 					{
 						type: 'danger',
-						disabled: msg === undefined,
+						disabled: msg !== undefined,
 						disabledMessage: msg,
 						onClick: () => props.onDelete!(sourcebook)
 					}
@@ -464,7 +464,7 @@ export const SourcebookPanel = (props: Props) => {
 					level={1}
 					strikethrough={props.visibility && !props.visibility.visible}
 					tags={[ sourcebook.type ]}
-					extra={<Flex>{getButtons()}</Flex>}
+					extra={getButtons()}
 				>
 					{sourcebook.name || 'Unnamed Sourcebook'}
 				</HeaderText>

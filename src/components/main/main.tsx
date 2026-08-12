@@ -10,6 +10,7 @@ import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
+import { AnalysisModal } from '@/components/modals/analysis/analysis-modal';
 import { Analytics } from '@/utils/analytics';
 import { Ancestry } from '@/models/ancestry';
 import { Career } from '@/models/career';
@@ -1774,6 +1775,15 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const showAnalysis = () => {
+		setDrawer(
+			<AnalysisModal
+				sourcebooks={SourcebookLogic.getSourcebooks()}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	const showEncounterTools = (encounter: Encounter, tool: string) => {
 		switch (tool) {
 			case 'minis':
@@ -1913,6 +1923,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										params={footerParams}
 										showSourcebooks={showSourcebooks}
+										showAnalysis={showAnalysis}
 										showMonster={monster => onSelectMonster(undefined, monster, undefined, undefined)}
 										showEncounterTools={showEncounterTools}
 										createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}

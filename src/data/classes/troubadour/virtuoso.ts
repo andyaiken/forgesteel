@@ -37,49 +37,41 @@ export const virtuoso: SubClass = {
 						]
 					})
 				}),
-				FactoryLogic.feature.createMultiple({
-					id: 'troubadour-virtuoso-3',
-					name: 'Virtuoso Performances',
-					description: `You have the following performance abilities, which are usable with
-your Routines feature.`,
-					features: [
-						FactoryLogic.feature.createAbility({
-							ability: FactoryLogic.createAbility({
-								id: 'troubadour-virtuoso-4',
-								name: '“Thunder Mother”',
-								description: 'All for thunder motherrr! ♪ Run and hide for coverrr! ♪',
-								type: FactoryLogic.type.createNoAction(),
-								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Performance, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-								distance: [ FactoryLogic.distance.createRanged(10) ],
-								target: 'One creature',
-								sections: [
-									FactoryLogic.createAbilitySectionText('At the end of each combat round while this performance is active, you can make a power roll against the target that ignores cover. You can’t target the same creature twice with this effect.'),
-									FactoryLogic.createAbilitySectionRoll(
-										FactoryLogic.createPowerRoll({
-											characteristic: [ Characteristic.Presence ],
-											tier1: 'Lightning damage equal to your level',
-											tier2: 'Lightning damage equal to 5 + your level',
-											tier3: 'Lightning damage equal to 10 + your level'
-										})
-									)
-								]
-							})
-						}),
-						FactoryLogic.feature.createAbility({
-							ability: FactoryLogic.createAbility({
-								id: 'troubadour-virtuoso-5',
-								name: '“Ballad of the Beast”',
-								description: 'Teeth are bare! ♪ Eyes black! ♪ No escaping the beast! ♪',
-								type: FactoryLogic.type.createNoAction(),
-								keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Performance ],
-								distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
-								target: 'Self and each ally in the area',
-								sections: [
-									FactoryLogic.createAbilitySectionText('While this performance is active, each target who starts their turn in the area gains 1 surge.')
-								]
-							})
-						})
-					]
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troubadour-virtuoso-4',
+						name: '“Thunder Mother”',
+						description: 'All for thunder motherrr! ♪ Run and hide for coverrr! ♪',
+						type: FactoryLogic.type.createNoAction(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Performance, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionText('At the end of each combat round while this performance is active, you can make a power roll against the target that ignores cover. You can’t target the same creature twice with this effect.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Presence ],
+									tier1: 'Lightning damage equal to your level',
+									tier2: 'Lightning damage equal to 5 + your level',
+									tier3: 'Lightning damage equal to 10 + your level'
+								})
+							)
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troubadour-virtuoso-5',
+						name: '“Ballad of the Beast”',
+						description: 'Teeth are bare! ♪ Eyes black! ♪ No escaping the beast! ♪',
+						type: FactoryLogic.type.createNoAction(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Performance ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
+						target: 'Self and each ally in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionText('While this performance is active, each target who starts their turn in the area gains 1 surge.')
+						]
+					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

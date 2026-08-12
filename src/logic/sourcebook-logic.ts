@@ -432,6 +432,7 @@ export class SourcebookLogic {
 			...sourcebook.ancestries.flatMap(SourcebookLogic.getAbilitiesFromAncestry),
 			...sourcebook.classes.flatMap(c => SourcebookLogic.getAbilitiesFromClass(c, true, true, true, true, true, true)),
 			...sourcebook.subclasses.flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, true, true)),
+			...sourcebook.domains.flatMap(SourcebookLogic.getAbilitiesFromDomain),
 			...sourcebook.items.flatMap(SourcebookLogic.getAbilitiesFromItem),
 			...sourcebook.monsterGroups.flatMap(SourcebookLogic.getAbilitiesFromMonsterGroup)
 		];
@@ -455,6 +456,29 @@ export class SourcebookLogic {
 		};
 
 		ancestry.features.forEach(addFeature);
+
+		return abilities;
+	};
+
+	static getAbilitiesFromDomain = (domain: Domain) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		domain.defaultFeatures.forEach(addFeature);
+		domain.featuresByLevel.flatMap(fbl => fbl.features).forEach(addFeature);
 
 		return abilities;
 	};

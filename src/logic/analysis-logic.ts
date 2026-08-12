@@ -80,6 +80,7 @@ export type AbilityEffect =
 	MiscEffectData;
 
 export interface AbilityData {
+	name: string;
 	cost: 'signature' | number;
 	action: AbilityUsage;
 	usage: {
@@ -720,6 +721,7 @@ export class AnalysisLogic {
 			: Collections.sum(nonRollSections, s => getExtraDamage(s.type === 'text' ? s.text : s.effect));
 
 		return {
+			name: ability.name,
 			cost: ability.cost,
 			action: ability.type.usage,
 			usage: {

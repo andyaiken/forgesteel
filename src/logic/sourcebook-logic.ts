@@ -566,6 +566,50 @@ export class SourcebookLogic {
 		return abilities;
 	};
 
+	static getAbilitiesFromKit = (kit: Kit) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		kit.features.forEach(addFeature);
+
+		return abilities;
+	};
+
+	static getAbilitiesFromComplication = (complication: Complication) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		complication.features.forEach(addFeature);
+
+		return abilities;
+	};
+
 	static getAbilitiesFromMonsterGroup = (group: MonsterGroup) => {
 		const abilities: Ability[] = [];
 

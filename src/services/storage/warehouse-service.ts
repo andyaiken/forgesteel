@@ -40,6 +40,22 @@ export class WarehouseService implements StorageService {
 		});
 	};
 
+	private isJwtExpired = (token: string): boolean => {
+		try {
+			const payload = token.split('.')[1];
+			const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+			const decoded = JSON.parse(atob(base64));
+			if (typeof decoded.exp !== 'number') {
+				return false;
+			}
+
+			const bufferSeconds = 5;
+			return (decoded.exp - bufferSeconds) * 1000 <= Date.now();
+		} catch {
+			return false;
+		}
+	};
+
 	private isExpiredTokenError = (err: unknown): boolean => {
 		if ((err as AxiosError).isAxiosError) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,6 +97,12 @@ export class WarehouseService implements StorageService {
 			if (!this.useNewAuth) {
 				if (this.jwt === null) {
 					await this.ensureAuth();
+				} else if (this.isJwtExpired(this.jwt)) {
+					// Refresh before sending rather than after a failed round-trip: a large save
+					// (the full hero payload) that gets rejected can have its response body
+					// truncated by the proxy, which is otherwise indistinguishable from a network error.
+					this.jwt = null;
+					await this.refreshJwt();
 				}
 				config.headers.Authorization = `Bearer ${this.jwt}`;
 			}

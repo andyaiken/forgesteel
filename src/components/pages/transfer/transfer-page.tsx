@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Popconfirm, Segmented, Space, Spin, Tabs } from 'antd';
+import { Alert, Button, Flex, Popconfirm, Segmented, Space, Spin, Tabs, notification } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { ConnectionSettings } from '@/models/connection-settings';
@@ -28,6 +28,8 @@ interface Props {
 };
 
 export const TransferPage = (props: Props) => {
+	const [ notify, notifyContext ] = notification.useNotification();
+
 	const [ mergeBehavior, setMergeBehavior ] = useState<MergeDuplicateBehavior>(MergeDuplicateBehavior.Skip);
 	const [ copyLocalOpen, setCopyLocalOpen ] = useState<boolean>(false);
 
@@ -42,13 +44,25 @@ export const TransferPage = (props: Props) => {
 
 	const localDs = useMemo(() => {
 		const ds = new DataService(new LocalService());
-		ds.initialize();
+		ds.initialize().catch(err => {
+			notify.error({
+				title: 'Error initializing local storage',
+				description: Utils.getErrorMessage(err),
+				placement: 'top'
+			});
+		});
 		return ds;
 	}, []);
 	const warehouseDs = useMemo(() => {
 		const storage = StorageServiceFactory.fromConnectionSettings(props.connectionSettings);
 		const ds = new DataService(storage);
-		ds.initialize();
+		ds.initialize().catch(err => {
+			notify.error({
+				title: 'Error connecting to Warehouse',
+				description: Utils.getErrorMessage(err),
+				placement: 'top'
+			});
+		});
 		return ds;
 	}, [ props.connectionSettings ]);
 
@@ -339,6 +353,7 @@ export const TransferPage = (props: Props) => {
 					}
 					{getTransferContent()}
 				</div>
+				{notifyContext}
 			</div>
 		</ErrorBoundary>
 	);

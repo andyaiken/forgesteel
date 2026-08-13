@@ -255,7 +255,13 @@ export const Main = (props: Props) => {
 			).then(() => {
 				const storage = StorageServiceFactory.fromConnectionSettings(connectionSettings);
 				const ds = new DataService(storage);
-				ds.initialize();
+				ds.initialize().catch(err => {
+					notify.error({
+						title: 'Couldn\'t connect to Warehouse with the new settings',
+						description: Utils.getErrorMessage(err),
+						placement: 'top'
+					});
+				});
 				setDataService(ds);
 			});
 	};

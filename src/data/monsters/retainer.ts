@@ -2013,8 +2013,8 @@ export const retainer: MonsterGroup = {
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '5 damage',
-								tier2: '5 damage, 3 corruption damage',
-								tier3: '5 damage, 6 corruption damage; M < [strong] bleeding (save ends)'
+								tier2: '5 damage; 3 corruption damage',
+								tier3: '5 damage; 6 corruption damage; M < [strong] bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The vampire rebel gains temporary Stamina equal to any corruption damage dealt.')
 						]

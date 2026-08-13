@@ -1122,7 +1122,7 @@ If you have a kit, you can’t take this upgrade.`,
 						characteristic: Characteristic.Reason,
 						tier1: '2 damage',
 						tier2: '5 damage',
-						tier3: '7 damage: M < [strong], prone'
+						tier3: '7 damage; M < [strong], prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionSpend({

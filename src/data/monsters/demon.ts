@@ -979,9 +979,9 @@ A number of lesser demons have been identified across categories 1 to 3:
 							FactoryLogic.createAbilitySectionText('**Special:** The bale eye must create the cube beneath themself.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '3 psychic damage, A<1 the target is warped (save ends)',
-								tier2: '5 psychic damage, A<2 the target is warped (save ends)',
-								tier3: '6 psychic damage, A<3 the target is warped (save ends)'
+								tier1: '3 psychic damage; A<1 the target is warped (save ends)',
+								tier2: '5 psychic damage; A<2 the target is warped (save ends)',
+								tier3: '6 psychic damage; A<3 the target is warped (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('While warped, a creature has a double bane on power rolls using any characteristic higher than 0, and has a double edge on power rolls using any characteristic lower than 0.')
 						]
@@ -1436,7 +1436,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								bonus: 4,
 								tier1: '3 poison damage',
 								tier2: '5 poison damage; the scout can shift 1 square',
-								tier3: '7 poison damage: the scout shifts up to 3 square'
+								tier3: '7 poison damage; the scout shifts up to 3 square'
 							}))
 						]
 					})

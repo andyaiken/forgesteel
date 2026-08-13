@@ -230,9 +230,9 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '4 fire damage, I<2 frightened (save ends)',
-								tier2: '6 fire damage, I<3 frightened (save ends)',
-								tier3: '8 fire damage, I<4 frightened (save ends)'
+								tier1: '4 fire damage; I<2 frightened (save ends)',
+								tier2: '6 fire damage; I<3 frightened (save ends)',
+								tier3: '8 fire damage; I<4 frightened (save ends)'
 							}))
 						]
 					})
@@ -261,9 +261,9 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Agility,
-									tier1: '16 damage, pull 10 or push 10',
-									tier2: '13 damage, pull 8 or push 8',
-									tier3: '7 damage, pull 5 or push 5'
+									tier1: '16 damage; pull 10 or push 10',
+									tier2: '13 damage; pull 8 or push 8',
+									tier3: '7 damage; pull 5 or push 5'
 								})
 							)
 						]

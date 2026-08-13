@@ -212,9 +212,9 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '6 damage, vertical push 2',
-								tier2: '11 damage, vertical push 3',
-								tier3: '14 damage, vertical push 4'
+								tier1: '6 damage; vertical push 2',
+								tier2: '11 damage; vertical push 3',
+								tier3: '14 damage; vertical push 4'
 							})),
 							FactoryLogic.createAbilitySectionText('Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).')
 						]

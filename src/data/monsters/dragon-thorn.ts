@@ -218,9 +218,9 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '5 damage, A<1 restrained (save ends)',
-								tier2: '9 damage, A<2 restrained (save ends)',
-								tier3: '12 damage, A<3 restrained (save ends)'
+								tier1: '5 damage; A<1 restrained (save ends)',
+								tier2: '9 damage; A<2 restrained (save ends)',
+								tier3: '12 damage; A<3 restrained (save ends)'
 							}))
 						]
 					})

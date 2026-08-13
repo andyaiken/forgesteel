@@ -74,7 +74,7 @@ Liches know they have all the time in the world to plot against their foes, and 
 				'The lich summons a swirling cloud of angry spirits to surround them until the start of the next round. Any creature who deals damage to the lich with a melee strike while the spirit shell is active makes a **Presence test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Presence,
-					tier1: '16 psychic damage, dazed (save ends)',
+					tier1: '16 psychic damage; dazed (save ends)',
 					tier2: 'Dazed (save ends)',
 					tier3: 'No effect.'
 				})

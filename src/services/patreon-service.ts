@@ -40,6 +40,8 @@ export class PatreonService {
 
 				return this.api(error.config);
 			}
+
+			return Promise.reject(error);
 		});
 	};
 

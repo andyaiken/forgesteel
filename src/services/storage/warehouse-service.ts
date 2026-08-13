@@ -102,6 +102,8 @@ export class WarehouseService implements StorageService {
 
 				return this.api(error.config);
 			}
+
+			return Promise.reject(error);
 		});
 
 		const connected = await this.ensureAuth();

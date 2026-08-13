@@ -22,6 +22,12 @@ import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { TerrainCategory } from '@/enums/terrain-category';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { censor } from '@/data/classes/censor/censor';
+import { elementalist } from '@/data/classes/elementalist/elementalist';
+import { nullClass } from '@/data/classes/null/null';
+import { shadow } from '@/data/classes/shadow/shadow';
+import { tactician } from '@/data/classes/tactician/tactician';
+import { talent } from '@/data/classes/talent/talent';
 
 const thaumaturge: HeroClass = {
 	id: 'class-thaumaturge',
@@ -610,6 +616,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-cavendish',
 			name: 'The Cavendish Institute',
 			description: 'The Augur fights a battle they\'ve already watched. The Cavendish Institute, in Serne, trains them to read the threads of what-will-be. An Augur knows where the blade falls and whose nerve breaks, and spends that knowledge like coin.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -841,6 +848,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-collegium',
 			name: 'The Collegium',
 			description: 'Where another school finesses, the Sunderer unmakes: lines of flame, bursts of force, the spell that ends the argument. They were born to Overchannel, and the Veil knows it.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1141,6 +1149,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-dashin-hagwan',
 			name: 'The Dashin Hagwan',
 			description: 'The Sanctioner doesn\'t out-burn the enemy mage; they make the enemy mage irrelevant. Schooled in Bashra\'s halls of shields, they raise wards, turn workings aside, and keep the soldier next to them alive.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1365,6 +1374,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-ginnhall',
 			name: 'The Ginnhall',
 			description: 'Valhaven\'s Ginnhall teaches the charm and the lie as a single craft, and graduates the Gardeners into the shadows. The Beguiler turns enemies into doubts and the field into a hall of mirrors: minds bent one way, eyes sent another.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1644,6 +1654,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-hetaeria-occulta',
 			name: 'The Hetaeria Occulta',
 			description: 'The thing the orthodox fear most. A Gatecaller opens ways and calls things through - and in a world whose apocalypse is precisely things coming through the Veil, that is not a comfortable gift. They conjure walls and blades out of empty air, and step across distance as if it were a courtesy.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1905,6 +1916,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 			id: 'thaumaturge-school-magisterium',
 			name: 'The Magisterium',
 			description: 'Icewell\'s Magisterium refines aether and reshapes the world. The Shaper alters what is: hardening a friend\'s skin, withering a foe\'s strength, turning ground to tar - and, at need, remaking their own body into something the moment requires.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -4939,8 +4951,9 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 	subclasses: [
 		{
 			id: 'aos-sub-aether-elementalist',
-			name: 'Aether Elementalist',
+			name: 'Aether',
 			description: 'Aether is the stuff of the Veil itself - all seven elements churned together into raw, unrefined arcane force, the substance empires kill a city for. Channel it and you can throw any element at all; channel it carelessly and it spills, because nothing about raw aether wants to stay in the lines you draw. The aetherist is the most versatile elementalist alive, and the most dangerous to stand beside.',
+			classID: elementalist.id,
 			featuresByLevel: [
 				{
 					level: 1,
@@ -5000,8 +5013,9 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 		},
 		{
 			id: 'aos-sub-hexbreaker-tactician',
-			name: 'Hexbreaker Tactician',
+			name: 'Hexbreaker',
 			description: 'A Hexbreaker is the martial answer to a world where magic is coming back and nobody asked it to. Where the Sanctioners of Ryvos meet sorcery with sorcery, the Hexbreaker meets it with drill, steel, and a cold, sapper\'s understanding of exactly how a working is built - and therefore how it comes apart. A Hexbreaker casts nothing. That is the entire point.',
+			classID: tactician.id,
 			featuresByLevel: [
 				{
 					level: 1,
@@ -5049,8 +5063,9 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 		},
 		{
 			id: 'aos-sub-kaza-null',
-			name: 'Kaza Null',
+			name: 'Kaza',
 			description: 'A kaza is a wandering weaponmaster sworn to nithadas, an ancient code that is equal parts martial art and honour, fought out with a pair of long curved knives. Some kaza are merely peerless duellists. The ones who walk the Null\'s road are something stranger: their devotion to the code has become a discipline of the mind as much as the body. They read a fight before it happens, turn an enemy\'s own force back through the edge that delivered it, and meet violence with a stillness that is its own kind of violence.',
+			classID: nullClass.id,
 			featuresByLevel: [
 				{
 					level: 1,
@@ -5100,6 +5115,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 			id: 'aos-sub-mnemopath',
 			name: 'Mnemopath',
 			description: 'Mnemopathy abilities reach into memory: the memories of the living, the memories held by places, and above all the memories of the dying, which are loudest at the moment they are abandoned. Most psionic power announces itself; yours arrives as something the target believes they already knew. A mnemopath takes what is left behind and gives back only what they choose - and neither transaction leaves a mark anyone can point to.',
+			classID: talent.id,
 			featuresByLevel: [
 				{
 					level: 1,
@@ -5149,6 +5165,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 			id: 'aos-sub-watchful-host',
 			name: 'Watchful Host',
 			description: 'Every other college looks outward - Black Ash steps away, Caustic poisons, the Harlequin wears a face. The Watchful Host looks in. They are the Veilwatchers and Deathguards who stand at the Breach and the thin places, and their art is not escape but refusal: nothing crosses past them, nothing slips away, nothing leaves the line. But the long vigil cuts both ways - watch the Breach long enough and the Breach watches back, and a little of what lies beyond soaks into the watcher.',
+			classID: shadow.id,
 			featuresByLevel: [
 				{
 					level: 1,
@@ -5197,6 +5214,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 			id: 'aos-sub-winnower',
 			name: 'Winnower',
 			description: 'The wheat is kept; the chaff is given to the fire. A Winnower\'s judgment is never for one soul alone: it leaps from the fallen to the standing, gathers heat as it goes, and does not stop until the field is sorted. Other orders hunt what hides; the Winnower\'s concern is what remains when nothing can.',
+			classID: censor.id,
 			featuresByLevel: [
 				{
 					level: 1,

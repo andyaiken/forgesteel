@@ -8,6 +8,7 @@ export const causticAlchemy: SubClass = {
 	id: 'shadow-sub-2',
 	name: 'College of Caustic Alchemy',
 	description: 'The College of Caustic Alchemy teaches its students recipes for the acids, bombs, and poisons used in their grim work. Graduates of the college are exceptional assassins.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

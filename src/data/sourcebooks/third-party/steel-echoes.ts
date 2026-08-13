@@ -184,9 +184,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '2 damage, push 1',
-						tier2: '3 damage, push 1',
-						tier3: '5 damage, push 1'
+						tier1: '2 damage; push 1',
+						tier2: '3 damage; push 1',
+						tier3: '5 damage; push 1'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('This ability ignores stability. Gain damage immunity equal to your Reason until the end of your next turn.')
@@ -226,9 +226,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '5 + R psychic damage, R < [weak], disoriented (save ends)',
-						tier2: '8 + R psychic damage, R < [average], disoriented (save ends)',
-						tier3: '11 + R psychic damage, R < [strong], disoriented (save ends)'
+						tier1: '5 + R psychic damage; R < [weak], disoriented (save ends)',
+						tier2: '8 + R psychic damage; R < [average], disoriented (save ends)',
+						tier3: '11 + R psychic damage; R < [strong], disoriented (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('A disoriented creature has line of effect only within 2 squares.')
@@ -268,9 +268,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '3 + A damage, I < [weak], taunted (save ends)',
-						tier2: '6 + A damage, I < [average], taunted (save ends)',
-						tier3: '9 + A damage, I < [strong], taunted (save ends)'
+						tier1: '3 + A damage; I < [weak], taunted (save ends)',
+						tier2: '6 + A damage; I < [average], taunted (save ends)',
+						tier3: '9 + A damage; I < [strong], taunted (save ends)'
 					})
 				)
 			]
@@ -413,9 +413,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '5 cold damage, A < [weak], slowed (save ends)',
-						tier2: '8 cold damage, A < [average], slowed (save ends)',
-						tier3: '11 cold damage, A < [strong], restrained (save ends)'
+						tier1: '5 cold damage; A < [weak], slowed (save ends)',
+						tier2: '8 cold damage; A < [average], slowed (save ends)',
+						tier3: '11 cold damage; A < [strong], restrained (save ends)'
 					})
 				)
 			]
@@ -536,6 +536,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			id: 'scion-blinkblade-1',
 			name: 'Blinkblade',
 			description: 'A master of teleportation magic, the Blinkblades weave in and out of reach with uncanny speed - difficult to catch, and harder still to escape.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -678,6 +679,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			id: 'scion-runewright-1',
 			name: 'Runewright',
 			description: 'The Runewright wields the ancient craft of runebranding to sear volatile runes onto living beings and shape the battlefield through groundlaid writs.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -800,6 +802,7 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 			id: 'scion-soulforged-1',
 			name: 'Soulforged',
 			description: 'The Soulforged binds a fragment of their soul into a chosen weapon, forging a sentient extension of their will - a Soulblade. Through this bond, they shape and empower their blade, adapting its form and function to meet the shifting demands of battle.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

@@ -8,6 +8,7 @@ export const punisher: SubClass = {
 	id: 'beastheart-sub-3',
 	name: 'Punisher',
 	description: 'Using brute force, you overwhelm anyone unwise enough to earn your wrath.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

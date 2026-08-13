@@ -8,6 +8,7 @@ export const telekinesis: SubClass = {
 	id: 'talent-sub-2',
 	name: 'Telekinesis',
 	description: 'Telekinesis abilities allow you to physically manipulate creatures and objects.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

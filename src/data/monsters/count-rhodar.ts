@@ -215,9 +215,9 @@ How his return might be possible is not clear, but it would surely involve the R
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 5,
-									tier1: '6 damage, 2 corruption damage; push 2; M<4 bleeding (save ends)',
-									tier2: '6 damage, 7 corruption damage; push 5; M<5 bleeding (save ends)',
-									tier3: '6 damage, 10 corruption damage; push 7; M<6 bleeding (save ends)'
+									tier1: '6 damage; 2 corruption damage; push 2; M<4 bleeding (save ends)',
+									tier2: '6 damage; 7 corruption damage; push 5; M<5 bleeding (save ends)',
+									tier3: '6 damage; 10 corruption damage; push 7; M<6 bleeding (save ends)'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('Rhodar shifts up to his speed before or after using this ability. He regains Stamina equal to half the total corruption damage dealt.')

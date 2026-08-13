@@ -14,6 +14,7 @@ export const circleOfBlight: SubClass = {
 	id: 'summoner-sub-1',
 	name: 'Circle of Blight',
 	description: 'You are a demonologist who calls forth demons from the Abyssal Waste. Your portfolio includes shapechanging demons that grow in hunger and power over time.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

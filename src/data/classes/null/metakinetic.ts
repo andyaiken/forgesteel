@@ -8,6 +8,7 @@ export const metakinetic: SubClass = {
 	id: 'null-sub-3',
 	name: 'Metakinetic',
 	description: 'You learn to see through the illusions of the universe to more fully understand your body and its psionic potential.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

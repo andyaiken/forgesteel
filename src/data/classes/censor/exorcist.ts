@@ -8,6 +8,7 @@ export const exorcist: SubClass = {
 	id: 'censor-sub-1',
 	name: 'Exorcist',
 	description: 'You specialize in hunting your order’s hidden enemies, knowing that an open mind is an unguarded fortress.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

@@ -8,6 +8,7 @@ export const virtuoso: SubClass = {
 	id: 'troubadour-virtuoso',
 	name: 'Virtuoso',
 	description: 'You find drama in music and song, weaving magic between vibrations and filling the audience with your pathos.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

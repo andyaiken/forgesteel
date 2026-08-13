@@ -8,6 +8,7 @@ export const paragon: SubClass = {
 	id: 'censor-sub-3',
 	name: 'Paragon',
 	description: 'Without a strong example and a firm hand, the weak will be corrupted. You specialize in setting an example for your order.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

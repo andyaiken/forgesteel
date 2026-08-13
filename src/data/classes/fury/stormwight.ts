@@ -8,6 +8,7 @@ export const stormwight: SubClass = {
 	id: 'fury-sub-3',
 	name: 'Stormwight',
 	description: 'You channel your rage into the form of animals and primordial storms.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

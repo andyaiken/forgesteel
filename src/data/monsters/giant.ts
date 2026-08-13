@@ -771,7 +771,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '12 damagee',
+								tier1: '12 damage',
 								tier2: '17 damage; A<3 bleeding (save ends)',
 								tier3: '21 damage; A<4 bleeding (save ends)'
 							})),

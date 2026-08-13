@@ -394,8 +394,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '8 damage',
-								tier2: '8 damage, 4 corruption damage',
-								tier3: '8 damage, 7 corruption damage'
+								tier2: '8 damage; 4 corruption damage',
+								tier3: '8 damage; 7 corruption damage'
 							})),
 							FactoryLogic.createAbilitySectionText('The next strike made against the target has a double edge.'),
 							FactoryLogic.createAbilitySectionSpend({
@@ -758,7 +758,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '10 corruption damage',
-								tier2: '10 corruption damage, or if the target has P < 2 they are judged',
+								tier2: '10 corruption damage; or if the target has P < 2 they are judged',
 								tier3: 'The target is judged'
 							})),
 							FactoryLogic.createAbilitySectionText('Until the end of the encounter, a judged target takes 10 corruption damage at the start of each of their turns, and regains 5 Stamina each time they use an ability or other effect that allows another creature to spend a Recovery.')

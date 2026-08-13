@@ -8,6 +8,7 @@ export const duelist: SubClass = {
 	id: 'troubadour-duelist',
 	name: 'Duelist',
 	description: 'Drama infuses your every movement done in tandem with another. You perform dances of death, putting trust in your opponent to return your passion in kind.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

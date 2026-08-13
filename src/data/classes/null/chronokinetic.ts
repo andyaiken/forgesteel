@@ -8,6 +8,7 @@ export const chronokinetic: SubClass = {
 	id: 'null-sub-1',
 	name: 'Chronokinetic',
 	description: 'Your training unmoors you from temporal reality, allowing you to use the flow of time as another dimension that all things move through.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

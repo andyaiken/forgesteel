@@ -1235,7 +1235,7 @@ export class HeroLogic {
 	static setLevel = (hero: Hero, options: Options, level: number) => {
 		if (hero.class) {
 			hero.class.level = level;
-			hero.state.xp = HeroLogic.getMinXP(level, options);
+			hero.state.xp = Math.max(hero.state.xp, HeroLogic.getMinXP(level, options));
 		}
 
 		HeroLogic.getFeatures(hero)

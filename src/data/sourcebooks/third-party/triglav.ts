@@ -920,6 +920,7 @@ For each condition the target suffers from, treat the thirst spent on this abili
 			id: 'vampire-subclass-1',
 			name: 'Shrouded Lurker',
 			description: 'You are a master of darkness and shadows do your bidding. You use your dark tools to bind and wound your victims, as well as to escape their retaliation, hide, and patiently wait for the best moment to strike.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1168,6 +1169,7 @@ Some of your abilities have a shroud effect entry. Whenever you use a shroud abi
 			id: 'vampire-subclass-2',
 			name: 'Spore Bearer',
 			description: 'You are a host to innumerable parasites that prey upon both the dead and the living. Infectious spores swirl around you, poisoning and wearing down your victims as well as nourishing and bolstering your allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

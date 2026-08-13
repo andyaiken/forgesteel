@@ -14,6 +14,7 @@ export const circleOfGraves: SubClass = {
 	id: 'summoner-sub-4',
 	name: 'Circle of Graves',
 	description: 'You are a necromancer who raises undead creatures from the Necropolitan Ruin. The corporeal and incorporeal creatures under your command are hardy and many.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

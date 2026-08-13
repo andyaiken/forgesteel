@@ -9,6 +9,7 @@ export const mastermind: SubClass = {
 	id: 'tactician-sub-2',
 	name: 'Mastermind',
 	description: 'You have an encyclopedic knowledge of warfare, viewing the battlefield as a game board and seeking victory by thinking steps ahead of your opponents.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

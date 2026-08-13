@@ -8,6 +8,7 @@ export const blackAsh: SubClass = {
 	id: 'shadow-sub-1',
 	name: 'College of Black Ash',
 	description: 'The College of Black Ash founded the art of being a shadow. Its graduates use Black Ash sorcery to teleport around the battlefield in clouds of soot, and to manipulate and create darkness. Graduates of the college are unmatched in mobility.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

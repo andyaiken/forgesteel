@@ -8,6 +8,7 @@ export const insurgent: SubClass = {
 	id: 'tactician-sub-1',
 	name: 'Insurgent',
 	description: 'Doing your duty, playing fair, and dying honorably in battle is your opponent’s job. You’ll do whatever it takes to keep your allies alive.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

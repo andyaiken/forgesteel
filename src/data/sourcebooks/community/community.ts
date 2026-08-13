@@ -1122,7 +1122,7 @@ If you have a kit, you can’t take this upgrade.`,
 						characteristic: Characteristic.Reason,
 						tier1: '2 damage',
 						tier2: '5 damage',
-						tier3: '7 damage: M < [strong], prone'
+						tier3: '7 damage; M < [strong], prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionSpend({
@@ -1386,6 +1386,7 @@ Until the end of the encounter or you are dying, the target gains the following 
 			id: 'magewright-automancer',
 			name: 'Automancer',
 			description: 'Automancers focus on the creation of servitor constructs that serve as shields and weapons for themselves and their allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2399,6 +2400,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 			id: 'magewright-catalyst',
 			name: 'Catalyst',
 			description: 'Catalysts are magewrights who focus on the impermanence of creation, and learn to embrace the benefits of the ephemeral.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2599,6 +2601,7 @@ As a maneuver, you can expend project points from the stone and craft any consum
 			id: 'magewright-gilder',
 			name: 'Gilder',
 			description: 'Gilders are artisans that fuse magic and metallurgy to inscribe equipment with powerful glyphs.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2729,6 +2732,7 @@ You can target yourself instead of one creature with this ability. The targets b
 			id: 'magewright-magitecht',
 			name: 'Magitecht',
 			description: 'Magitechts are tinkerers and inventors who develop experimental devices that can aid themselves and their allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -3662,6 +3666,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-1',
 			name: 'The Infernal',
 			description: 'You bartered with a devil from the hells.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -3813,6 +3818,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-2',
 			name: 'The Undying',
 			description: 'Your spirit or flesh have been changed by a necromantic being, such as a lich.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -3968,6 +3974,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-3',
 			name: 'The Aberrant',
 			description: 'Your mind slipped as you witnessed a being far beyond your comprehension.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

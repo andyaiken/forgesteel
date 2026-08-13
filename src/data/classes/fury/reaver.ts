@@ -8,6 +8,7 @@ export const reaver: SubClass = {
 	id: 'fury-sub-2',
 	name: 'Reaver',
 	description: 'You channel your rage into instinct and cunning, challenging the false order of civilization.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

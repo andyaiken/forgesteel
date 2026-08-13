@@ -14,6 +14,7 @@ export const circleofStorms: SubClass = {
 	id: 'summoner-sub-2',
 	name: 'Circle of Storms',
 	description: 'You are a storm caster who summons elementals from Quintessence. This portfolio contains forces of nature that leave a big impact on the environment.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

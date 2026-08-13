@@ -536,6 +536,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			id: 'scion-blinkblade-1',
 			name: 'Blinkblade',
 			description: 'A master of teleportation magic, the Blinkblades weave in and out of reach with uncanny speed - difficult to catch, and harder still to escape.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -678,6 +679,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			id: 'scion-runewright-1',
 			name: 'Runewright',
 			description: 'The Runewright wields the ancient craft of runebranding to sear volatile runes onto living beings and shape the battlefield through groundlaid writs.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -800,6 +802,7 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 			id: 'scion-soulforged-1',
 			name: 'Soulforged',
 			description: 'The Soulforged binds a fragment of their soul into a chosen weapon, forging a sentient extension of their will - a Soulblade. Through this bond, they shape and empower their blade, adapting its form and function to meet the shifting demands of battle.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

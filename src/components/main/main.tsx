@@ -1079,7 +1079,20 @@ export const Main = (props: Props) => {
 					break;
 			}
 
-			persistHomebrewSourcebook(sourcebook)
+			const affected = [ sourcebook ];
+			if (kind === 'class') {
+				copy.forEach(sb => {
+					const orphaned = sb.subclasses.filter(sc => sc.classID === element.id);
+					if (orphaned.length > 0) {
+						orphaned.forEach(sc => sc.classID = '');
+						if (!affected.includes(sb)) {
+							affected.push(sb);
+						}
+					}
+				});
+			}
+
+			Promise.all(affected.map(persistHomebrewSourcebook))
 				.then(() => navigation.goToLibrary(kind, element.id));
 		}
 

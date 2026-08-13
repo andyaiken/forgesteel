@@ -149,8 +149,7 @@ export const ClassSection = (props: Props) => {
 					}
 					<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} size={500}>
 						<SubClassSelectModal
-							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
-							classID={heroClass.id}
+							heroClass={heroClass}
 							sourcebooks={props.sourcebooks}
 							onSelect={sc => {
 								setSubclassSelectorOpen(false);

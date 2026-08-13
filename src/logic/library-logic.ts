@@ -438,7 +438,12 @@ export class LibraryLogic {
 		}
 
 		if (category === 'subclass') {
-			const c = SourcebookLogic.getClasses(sourcebooks).find(c => c.subclasses.some(sc => sc.id === element.id));
+			const subclass = element as SubClass;
+			const classes = SourcebookLogic.getClasses(sourcebooks);
+			let c = classes.find(c => c.id === subclass.classID);
+			if (!c) {
+				c = classes.find(c => c.subclasses.some(sc => sc.id === element.id));
+			}
 			if (c) {
 				return c.name;
 			}

@@ -1,11 +1,13 @@
 import { AbilityListEditPanel, FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
-import { Space, Tabs } from 'antd';
+import { Select, Space, Tabs } from 'antd';
 import { Ability } from '@/models/ability';
 import { Feature } from '@/models/feature';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { Utils } from '@/utils/utils';
@@ -32,11 +34,37 @@ export const SubClassEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setClassID = (value: string) => {
+			const copy = Utils.copy(subClass);
+			copy.classID = value;
+			setSubClass(copy);
+			props.onChange(copy);
+		};
+
+		const classes = SourcebookLogic.getClasses(props.sourcebooks);
+		const classOrphaned = !!subClass.classID && !classes.some(c => c.id === subClass.classID);
+
 		return (
-			<NameDescEditPanel
-				element={subClass}
-				onChange={onChange}
-			/>
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<NameDescEditPanel
+					element={subClass}
+					onChange={onChange}
+				/>
+				<HeaderText>Class</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					allowClear={!!subClass.classID}
+					placeholder='Choose a class'
+					options={[
+						{ value: '', label: 'Any class' },
+						...(classOrphaned ? [ { value: subClass.classID, label: 'Unknown class' } ] : []),
+						...classes.map(c => ({ value: c.id, label: c.name }))
+					]}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={subClass.classID || ''}
+					onChange={value => setClassID(value || '')}
+				/>
+			</Space>
 		);
 	};
 

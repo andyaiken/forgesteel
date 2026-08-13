@@ -9,6 +9,7 @@ export const berserker: SubClass = {
 	id: 'fury-sub-1',
 	name: 'Berserker',
 	description: 'You channel your rage into expressions of physical might, acting as a living version of the forces that reshape the world.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

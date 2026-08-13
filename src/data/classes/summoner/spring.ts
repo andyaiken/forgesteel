@@ -14,6 +14,7 @@ export const circleOfSpring: SubClass = {
 	id: 'summoner-sub-3',
 	name: 'Circle of Spring',
 	description: 'You are a feybright who beckons pixies, nixies, and sprites from Arcadia. Your portfolio features ephemeral fey spirits surrounded by weird and powerful magic.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

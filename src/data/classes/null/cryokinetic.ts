@@ -11,6 +11,7 @@ export const cryokinetic: SubClass = {
 	id: 'null-sub-2',
 	name: 'Cryokinetic',
 	description: 'You can tap into absolute cold, the most essential energy of myriad manifolds, and manifest its effects in your body.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

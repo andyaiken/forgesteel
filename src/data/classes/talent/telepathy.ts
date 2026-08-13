@@ -8,6 +8,7 @@ export const telepathy: SubClass = {
 	id: 'talent-sub-3',
 	name: 'Telepathy',
 	description: 'Telepathy abilities allow you to communicate with, read, and influence the minds of other creatures.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

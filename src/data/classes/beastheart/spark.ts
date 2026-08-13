@@ -8,6 +8,7 @@ export const spark: SubClass = {
 	id: 'beastheart-sub-4',
 	name: 'Spark',
 	description: 'Your connection with nature has imbued you and your companion with the raging magic of the elemental storm. Flame, frost, and lightning crackle from your hands and their claws.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

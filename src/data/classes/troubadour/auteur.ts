@@ -8,6 +8,7 @@ export const auteur: SubClass = {
 	id: 'troubadour-auteur',
 	name: 'Auteur',
 	description: 'You seek drama from story and recount, using your magic to manipulate the sequence of events unfolding before you.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

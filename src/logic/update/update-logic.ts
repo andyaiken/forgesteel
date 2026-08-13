@@ -930,6 +930,10 @@ ${encounter.objective.victories}`
 	};
 
 	static updateSubclass = (subclass: SubClass) => {
+		if (subclass.classID === undefined) {
+			subclass.classID = '';
+		}
+
 		subclass.featuresByLevel.forEach(lvl => {
 			lvl.features.forEach(UpdateLogic.updateFeature);
 		});

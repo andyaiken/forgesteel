@@ -9,6 +9,7 @@ export const vanguard: SubClass = {
 	id: 'tactician-sub-3',
 	name: 'Vanguard',
 	description: 'You have learned the stratagems of ancient heroes, letting you lead from the front lines and seek victory through sheer force of will and personality.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

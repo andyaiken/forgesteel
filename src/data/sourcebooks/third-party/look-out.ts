@@ -393,6 +393,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 			id: 'kiln-flameweaver-1',
 			name: 'Flameweaver',
 			description: 'You weave through the battlefield from skirmish to skirmish like a thread in the wind. Your power guides you to where you are needed most.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -473,6 +474,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 			id: 'kiln-hexblaze-1',
 			name: 'Hexblaze',
 			description: 'You are an eruption, and the battlefield will burn to ash. The explosive force of your power shatters any hope of victory for your enemies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -581,6 +583,7 @@ Changing the color of your flames requires the use of this ability again.`)
 			id: 'kiln-smokewight-1',
 			name: 'Smokewight',
 			description: 'You are at once everywhere and nowhere. You slip through the grasp of your foes and you cannot be pinned down.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

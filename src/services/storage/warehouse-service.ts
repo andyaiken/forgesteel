@@ -33,8 +33,8 @@ export class WarehouseService implements StorageService {
 
 		this.api = axios.create({
 			baseURL: this.host,
-			withCredentials: true,
-			withXSRFToken: true,
+			withCredentials: this.useNewAuth,
+			withXSRFToken: this.useNewAuth,
 			xsrfCookieName: 'csrf_access_token',
 			xsrfHeaderName: 'X-CSRF-TOKEN'
 		});
@@ -60,8 +60,8 @@ export class WarehouseService implements StorageService {
 		try {
 			const refreshConfig = {
 				headers: {},
-				withCredentials: true,
-				withXSRFToken: true,
+				withCredentials: this.useNewAuth,
+				withXSRFToken: this.useNewAuth,
 				xsrfCookieName: 'csrf_refresh_token',
 				xsrfHeaderName: 'X-CSRF-TOKEN'
 			};

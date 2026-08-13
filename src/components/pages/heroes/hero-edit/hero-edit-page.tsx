@@ -84,7 +84,9 @@ export const HeroEditPage = (props: Props) => {
 						return PageState.InProgress;
 					}
 					const features: Feature[] = [];
-					features.push(hero.culture.language);
+					if (hero.culture.language) {
+						features.push(hero.culture.language);
+					}
 					if (hero.culture.environment) {
 						features.push(hero.culture.environment);
 					}

@@ -71,7 +71,6 @@ import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
-import { Utils } from '@/utils/utils';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -85,7 +84,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	params: FooterParams;
 	showSourcebooks: () => void;
-	showAnalysis: () => void;
 	showMonster: (monster: Monster) => void;
 	showEncounterTools: (encounter: Encounter, tool: string) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element | null) => void;
@@ -933,8 +931,7 @@ export const LibraryListPage = (props: Props) => {
 							},
 							...getElementToolbarItems(),
 							{ type: 'control', control: getViewSelector() },
-							{ type: 'button', label: 'Sourcebooks', onClick: props.showSourcebooks },
-							Utils.isDev() ? { type: 'button', label: 'Analysis', onClick: props.showAnalysis } : null
+							{ type: 'button', label: 'Sourcebooks', onClick: props.showSourcebooks }
 						]}
 					/>
 				</AppHeader>

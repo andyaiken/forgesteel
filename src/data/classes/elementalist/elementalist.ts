@@ -9,6 +9,7 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { earth } from '@/data/classes/elementalist/earth';
 import { fire } from '@/data/classes/elementalist/fire';
@@ -51,12 +52,16 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'take-damage',
-							trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
-							value: '1'
+							trigger: 'You or a creature within 10 of you takes damage that isn’t untyped or holy',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -466,6 +471,7 @@ If you have a kit, you can’t take this enchantment.`,
 					tag: 'take-damage 2',
 					trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -548,6 +554,7 @@ If you have a kit, you can’t take this enchantment.`,
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -597,9 +604,11 @@ Additionally, when you have 5 or more Victories, choose one of the following dam
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `
@@ -657,6 +666,7 @@ Breath remains until you convert it to essence.`
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '4',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.createPerk({

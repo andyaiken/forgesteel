@@ -1050,8 +1050,7 @@ export class HeroLogic {
 
 						const gainsFromDomains = HeroLogic.getDomains(hero)
 							.flatMap(d => d.resourceGains)
-							.filter(g => g.resource === f.name)
-							.map(g => g);
+							.filter(g => g.resource === f.name);
 
 						const replacedTags = gainsFromFeatures.flatMap(g => g.replacesTags);
 

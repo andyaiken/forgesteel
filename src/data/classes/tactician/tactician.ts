@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { insurgent } from '@/data/classes/tactician/insurgent';
 import { mastermind } from '@/data/classes/tactician/mastermind';
@@ -46,17 +47,23 @@ As a tactician, you have abilities that heal your allies and grant them increase
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage',
-							trigger: 'The first time each round that you or an ally damages a creature you have marked',
-							value: '1'
+							trigger: 'You or an ally damages a creature you have marked',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'ability',
-							trigger: 'The first time in a round that an ally within 10 squares of you uses a heroic ability',
-							value: '1'
+							trigger: 'An ally within 10 squares of you uses a heroic ability',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -192,8 +199,9 @@ You can’t gain more than one benefit from the same trigger.`),
 					id: 'tactician-4-2',
 					name: 'Focus on Their Weakness',
 					tag: 'deal-damage 2',
-					trigger: 'The first time each round that you or an ally damages a creature you have marked',
+					trigger: 'You or an ally damages a creature you have marked',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage' ]
 				}),
 				FactoryLogic.feature.create({
@@ -266,6 +274,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.create({
@@ -319,9 +328,11 @@ You can’t gain more than one benefit from the same trigger.`),
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `
@@ -344,6 +355,7 @@ Command remains until you spend it.`
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '4',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.create({

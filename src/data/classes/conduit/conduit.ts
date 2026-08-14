@@ -7,6 +7,7 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const conduit: HeroClass = {
@@ -45,7 +46,9 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -368,6 +371,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					name: 'Blessed Domain',
 					tag: 'domain',
 					trigger: 'You gain piety from a domain effect.',
+					frequency: ResourceGainFrequency.AtWill,
 					value: '1'
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
@@ -504,7 +508,8 @@ You are infused with the power your deity reserves for their most worthy instrum
 					name: 'Faithful’s Reward',
 					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '1d3 + 1'
+					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-7-3',
@@ -618,9 +623,11 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

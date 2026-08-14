@@ -5,8 +5,8 @@ import heroSheetClassic from '@/assets/screenshots/hero-sheet-classic.png';
 import heroSheetCustomize from '@/assets/screenshots/hero-sheet-customize.png';
 import heroSheetInteractive from '@/assets/screenshots/hero-sheet-interactive.png';
 import heroSheetInventory from '@/assets/screenshots/hero-sheet-inventory.png';
-import heroSheetManage from '@/assets/screenshots/hero-sheet-manage.png';
 import heroSheetProjects from '@/assets/screenshots/hero-sheet-projects.png';
+import heroSheetResourceFrequency from '@/assets/screenshots/hero-resource-frequency.png';
 import heroSheetRetinue from '@/assets/screenshots/hero-sheet-retinue.png';
 import heroSheetRoll from '@/assets/screenshots/hero-roll.png';
 import heroSheetState from '@/assets/screenshots/hero-state.png';
@@ -71,12 +71,13 @@ export class TipData {
 				content: 'Forge Steel can make your ability rolls for you, if you\'re playing online.'
 			}),
 			FactoryLogic.createTip({
-				image: heroSheetManage,
-				content: 'Your hero\'s resources, inventory, projects, and more are in the buttons beside their name - or under the **Tools** button, if your screen is narrow.'
-			}),
-			FactoryLogic.createTip({
 				image: heroSheetState,
 				content: 'Click on your hero\'s resources to manage them.'
+			}),
+			FactoryLogic.createTip({
+				image: heroSheetResourceFrequency,
+				content: 'Each way of gaining a heroic resource shows how often you can claim it, and dims once you\'ve used it, until it refreshes.',
+				isNew: true
 			}),
 			FactoryLogic.createTip({
 				image: heroSheetVitals,

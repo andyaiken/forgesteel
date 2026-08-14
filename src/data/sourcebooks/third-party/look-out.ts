@@ -10,6 +10,7 @@ import { HeroClass } from '@/models/class';
 import { Kit } from '@/models/kit';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -67,12 +68,16 @@ As a kiln, you arrive to stoke the flame wherever the spark of opportunity prese
 						{
 							trigger: 'Start of your turn',
 							value: '1d3',
-							tag: 'start-turn'
+							tag: 'start-turn',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							trigger: 'You use the Stoke the Flame ability targeting an ally',
 							value: '1',
-							tag: 'stoke-ally'
+							tag: 'stoke-ally',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					]
 				}),

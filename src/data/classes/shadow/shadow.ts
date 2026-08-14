@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { blackAsh } from '@/data/classes/shadow/black-ash';
 import { causticAlchemy } from '@/data/classes/shadow/caustic-alchemy';
@@ -46,12 +47,16 @@ As a shadow, you possess abilities that deal significant damage, enable you to m
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage',
-							trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
-							value: '1'
+							trigger: 'You deal damage incorporating 1 or more surges',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					],
 					details: `
@@ -217,8 +222,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					id: 'shadow-4-6',
 					name: 'Surge of Insight',
 					tag: 'deal-damage 2',
-					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
+					trigger: 'You deal damage incorporating 1 or more surges',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage' ]
 				})
 			]
@@ -293,6 +299,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -389,8 +396,9 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 					id: 'shadow-10-2',
 					name: 'Death Pool',
 					tag: 'deal-damage 3',
-					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
+					trigger: 'You deal damage incorporating 1 or more surges',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage', 'deal-damage 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -419,9 +427,11 @@ While you are in your umbral form, you can spend 1 uninterrupted minute concentr
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

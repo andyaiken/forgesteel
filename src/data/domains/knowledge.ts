@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const knowledge: Domain = {
@@ -153,8 +154,10 @@ export const knowledge: Domain = {
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that the Director spends Malice',
-			value: '2'
+			trigger: 'The Director spends Malice',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

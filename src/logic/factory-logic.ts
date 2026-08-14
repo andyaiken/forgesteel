@@ -54,6 +54,7 @@ import { PerkList } from '@/enums/perk-list';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
 import { Pregen } from '@/models/pregen';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RetainerLogic } from '@/logic/retainer-logic';
 import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -276,7 +277,9 @@ export class FactoryLogic {
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}));

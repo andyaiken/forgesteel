@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const trickery: Domain = {
@@ -147,8 +148,10 @@ export const trickery: Domain = {
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that you or a creature within 10 squares takes the Aid Attack or Hide maneuver',
-			value: '2'
+			trigger: 'You or a creature within 10 squares takes the Aid Attack or Hide maneuver',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

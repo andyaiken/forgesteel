@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { auteur } from '@/data/classes/troubadour/auteur';
 import { duelist } from '@/data/classes/troubadour/duelist';
@@ -61,27 +62,37 @@ Jackson Bootblack`,
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'The first time three or more heroes use an ability on the same turn',
-							value: '2'
+							tag: 'hero-ability',
+							trigger: 'Three or more heroes use an ability on the same turn',
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'The first time any hero is made winded during the encounter',
-							value: '2'
+							tag: 'hero-winded',
+							trigger: 'Any hero is made winded',
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'Whenever a creature within your line of effect rolls a natural 19 or 20',
-							value: '3'
+							tag: 'crit',
+							trigger: 'A creature within your line of effect rolls a natural 19 or 20',
+							value: '3',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'When you or another hero dies',
-							value: '10'
+							tag: 'die',
+							trigger: 'You or another hero dies',
+							value: '10',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					details: 'When you are dead, you continue to gain drama during combat as long as your body is intact. If you have 30 drama during the encounter in which you died, you can come back to life with 1 Stamina and 0 drama (no action required). If you are still dead after the encounter in which you died, you can’t gain drama during future encounters.'
@@ -236,8 +247,9 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 								id: 'troubadour-25',
 								name: 'Melodrama #1',
 								tag: 'crit-fail',
-								trigger: 'Whenever a creature rolls a natural 2 on a power roll.',
-								value: '2'
+								trigger: 'A creature rolls a natural 2 on a power roll.',
+								value: '2',
+								frequency: ResourceGainFrequency.AtWill
 							}),
 							value: 1
 						},
@@ -246,8 +258,9 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 								id: 'troubadour-26',
 								name: 'Melodrama #2',
 								tag: 'villain-malice',
-								trigger: 'The first time the Director deals damage to a hero using a Villain action or an ability that costs Malice.',
-								value: '2'
+								trigger: 'The Director deals damage to a hero using a Villain action or an ability that costs Malice.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
@@ -256,8 +269,9 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 								id: 'troubadour-27',
 								name: 'Melodrama #3',
 								tag: 'falls',
-								trigger: 'The first time a hero unwillingly falls 5 or more squares.',
-								value: '2'
+								trigger: 'A hero unwillingly falls 5 or more squares.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
@@ -266,8 +280,9 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 								id: 'troubadour-28',
 								name: 'Melodrama #4',
 								tag: 'surges',
-								trigger: 'The first time a hero deals damage with 3 surges.',
-								value: '2'
+								trigger: 'A hero deals damage with 3 surges.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
@@ -276,8 +291,9 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 								id: 'troubadour-29',
 								name: 'Melodrama #5',
 								tag: 'last-recovery',
-								trigger: 'Whenever a hero spends their last Recovery.',
-								value: '2'
+								trigger: 'A hero spends their last Recovery.',
+								value: '2',
+								frequency: ResourceGainFrequency.AtWill
 							}),
 							value: 1
 						},
@@ -396,6 +412,7 @@ Additionally, you and creatures you are bonded with gain a +1 bonus to saving th
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -436,9 +453,11 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					name: 'Applause',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					]
 				}),

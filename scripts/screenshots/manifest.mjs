@@ -63,12 +63,12 @@ const openAddSection = title => async (page, settle) => {
 export const shots = [
 	{
 		name: 'hero-sheet-interactive',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		highlight: '.app-header .ant-segmented'
 	},
 	{
 		name: 'hero-sheet-classic',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		// The classic sheet is a fixed-width page, and needs the room
 		viewport: { width: 1500, height: 1000 },
 		// The view selector is icon-only, so it has to be picked out by position
@@ -77,15 +77,32 @@ export const shots = [
 	},
 	{
 		name: 'hero-state',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: openHeroPanel('Resources'),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
 		clipAvoid: appChrome
 	},
 	{
+		name: 'hero-resource-frequency',
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
+		// The first gain is tagged 'start' and resets every Per Round gain when claimed, rather
+		// than marking itself used - claim the second gain instead so the shot actually shows
+		// the frequency pill next to a dimmed, already-used gain
+		prepare: async (page, settle) => {
+			await openHeroPanel('Resources')(page);
+			await settle();
+			await page.locator('.gain-btn').nth(1).click();
+			await settle();
+			await page.mouse.move(0, 0);
+		},
+		viewport: heroPanelViewport,
+		clip: heroPanelDrawer,
+		clipAvoid: appChrome
+	},
+	{
 		name: 'hero-vitals',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: openHeroPanel('Vitals'),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
@@ -93,7 +110,7 @@ export const shots = [
 	},
 	{
 		name: 'hero-sheet-inventory',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: openHeroPanel('Inventory'),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
@@ -101,7 +118,7 @@ export const shots = [
 	},
 	{
 		name: 'hero-sheet-projects',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: openHeroPanel('Projects'),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
@@ -109,24 +126,15 @@ export const shots = [
 	},
 	{
 		name: 'hero-sheet-customize',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: openHeroOverflow('Customize'),
 		viewport: heroPanelViewport,
 		clip: heroPanelDrawer,
 		clipAvoid: appChrome
 	},
 	{
-		name: 'hero-sheet-manage',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
-		// The Tools button only exists in the compact layout; on a wide screen the same
-		// buttons are laid out individually and there's no Tools button to point at
-		viewport: { width: 700, height: 900 },
-		prepare: async page => page.getByRole('button', { name: 'Tools', exact: true }).click(),
-		highlight: 'button:has-text("Tools")'
-	},
-	{
 		name: 'hero-sheet-retinue',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		// The hero panel's tab strip is a Segmented control, and 'Retinue' also appears in the
 		// sidebar - the first match is the one in the tab strip
 		prepare: async page => page.locator('.ant-segmented-item:has-text("Retinue")').first().click(),
@@ -135,7 +143,7 @@ export const shots = [
 	},
 	{
 		name: 'hero-roll',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		// Rolls are made by clicking the characteristic you're rolling against. The copies in the
 		// left rail are hover-reveal - they sit under a .ghost overlay with pointer-events: none -
 		// so this clicks the tile in the centre column instead.
@@ -181,7 +189,7 @@ export const shots = [
 	},
 	{
 		name: 'navigation',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		clip: '.app-footer',
 		clipPadding: 6,
 		highlight: '.navigation-buttons-panel'
@@ -192,7 +200,10 @@ export const shots = [
 	{
 		name: 'hero-pregens',
 		route: '/',
-		prepare: async page => page.getByRole('button', { name: 'Use a Premade Hero' }).click()
+		prepare: async (page, settle) => {
+			await page.getByRole('button', { name: 'Use a Premade Hero' }).click();
+			await settle();
+		}
 	},
 	{
 		name: 'hero-random',
@@ -207,16 +218,18 @@ export const shots = [
 	},
 	{
 		name: 'hero-folder',
-		route: '/hero',
+		// A bare '/hero' leaves no folder selected, and the heroes all live in a named folder -
+		// the tab strip would highlight fine but the list underneath would be empty
+		route: state => `/hero/${encodeURIComponent(state.party)}`,
 		highlight: '.section-header'
 	},
 	{
 		name: 'hero-edit',
-		route: state => `/hero/edit/${state.heroes.tactician.id}/class`
+		route: state => `/hero/edit/${state.heroes.troubadour.id}/class`
 	},
 	{
 		name: 'hero-edit-sourcebooks',
-		route: state => `/hero/edit/${state.heroes.tactician.id}/start`
+		route: state => `/hero/edit/${state.heroes.troubadour.id}/start`
 	},
 
 	// #endregion
@@ -344,6 +357,10 @@ export const shots = [
 			await page.locator('.ant-tabs-tab', { hasText: 'Similar Monsters' }).click();
 			await settle();
 			await page.locator('button:has(.anticon-tool)').last().click();
+			// The popover's own open animation has to finish here, before the pipeline's later
+			// style pass forces every transition to 1ms - interrupting it mid-flight leaves the
+			// popover full-size but misaligned, pinned to the left edge of the viewport
+			await settle();
 		},
 		highlight: 'button:has-text("Genesplice")'
 	},
@@ -364,19 +381,25 @@ export const shots = [
 
 	{
 		name: 'footer',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		clip: '.app-footer',
 		clipPadding: 6,
 		highlight: footerButton('About')
 	},
 	{
 		name: 'footer-reference',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
-		prepare: clickFooter('Reference')
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
+		// Opens on the Rules tab by default - switch to Conditions so the shot shows something
+		// more useful than a bare topic list
+		prepare: async (page, settle) => {
+			await clickFooter('Reference')(page);
+			await settle();
+			await page.locator('.ant-segmented-item', { hasText: 'Conditions' }).click();
+		}
 	},
 	{
 		name: 'footer-settings',
-		route: state => `/hero/view/${state.heroes.tactician.id}`,
+		route: state => `/hero/view/${state.heroes.troubadour.id}`,
 		prepare: clickFooter('Settings')
 	}
 

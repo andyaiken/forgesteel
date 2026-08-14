@@ -34,6 +34,7 @@ import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
 import { Perk } from '@/models/perk';
 import { PlotContentReference } from '@/models/plot';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Skill } from '@/models/skill';
@@ -163,6 +164,16 @@ export class UpdateLogic {
 		domain.featuresByLevel.forEach(lvl => {
 			lvl.features.forEach(UpdateLogic.updateFeature);
 		});
+
+		domain.resourceGains.forEach(g => {
+			if (g.frequency === undefined) {
+				g.frequency = ResourceGainFrequency.OncePerRound;
+			}
+			if (g.used === undefined) {
+				g.used = false;
+			}
+		});
+
 		domain.defaultFeatures.forEach(UpdateLogic.updateFeature);
 	};
 
@@ -416,11 +427,23 @@ ${encounter.objective.victories}`
 					if (g.tag === undefined) {
 						g.tag = '';
 					}
+					if (g.frequency === undefined) {
+						g.frequency = ResourceGainFrequency.OncePerRound;
+					}
+					if (g.used === undefined) {
+						g.used = false;
+					}
 				});
 				break;
 			case FeatureType.HeroicResourceGain:
 				if (feature.data.tag === undefined) {
 					feature.data.tag = '';
+				}
+				if (feature.data.frequency === undefined) {
+					feature.data.frequency = ResourceGainFrequency.OncePerRound;
+				}
+				if (feature.data.used === undefined) {
+					feature.data.used = false;
 				}
 				if (feature.data.replacesTags === undefined) {
 					feature.data.replacesTags = [];

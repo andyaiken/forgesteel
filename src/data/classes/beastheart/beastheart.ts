@@ -8,6 +8,7 @@ import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { guardian } from '@/data/classes/beastheart/guardian';
 import { prowler } from '@/data/classes/beastheart/prowler';
@@ -1426,12 +1427,16 @@ As a beastheart, you face the world’s dangers alongside your wild companion. W
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage-adjacent-companion',
-							trigger: 'The first time in a round that a creature adjacent to your companion takes damage',
-							value: '2'
+							trigger: 'A creature adjacent to your companion takes damage',
+							frequency: ResourceGainFrequency.OncePerRound,
+							value: '2',
+							used: false
 						}
 					]
 				}),
@@ -1651,6 +1656,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'deal-damage-companion 2',
 					trigger: 'The first time in a round that a creature adjacent to your companion takes damage',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage-adjacent-companion' ]
 				})
 			]
@@ -1708,6 +1714,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 +1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -1764,6 +1771,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '2d3 +1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -1777,9 +1785,11 @@ You and your companion both gain the benefits of the kit, with the following exc
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: 'You can spend 1 ferox as a free maneuver to allow you and your companion to each to take a main action on your turn, instead of a main action and a maneuver. On that turn, the ferocity cost of your heroic abilities is reduced by 1.'

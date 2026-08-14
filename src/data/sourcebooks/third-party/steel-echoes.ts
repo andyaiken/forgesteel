@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -49,17 +50,23 @@ As a Scion, you are the the quiet before the storm. You move like the wind, and 
 						{
 							trigger: 'Start of your turn',
 							value: '2',
-							tag: 'Start 1'
+							tag: 'Start 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a combat round that you or an ally within 10 squares of you uses an ability with a Weapon tag',
+							trigger: 'You or an ally within 10 squares of you uses an ability with a Weapon tag',
 							value: '1',
-							tag: 'Weapon 1'
+							tag: 'Weapon 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a combat round that you or an ally within 10 squares of you uses an ability with a Magic tag',
+							trigger: 'You or an ally within 10 squares of you uses an ability with a Magic tag',
 							value: '1',
-							tag: 'Magic 1'
+							tag: 'Magic 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),

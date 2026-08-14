@@ -16,6 +16,7 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -543,17 +544,23 @@ As a vampire, you possess supernatural abilities that make you an excellent hunt
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'bleeding',
-							trigger: 'The first time each round that a non-minion creature within 10 squares of you is made bleeding, winded, or dying, or reduced to 0 Stamina',
-							value: '1'
+							trigger: 'A non-minion creature within 10 squares of you is made bleeding, winded, or dying, or reduced to 0 Stamina',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage-self',
-							trigger: 'The first time each round that you deal damage to a bleeding, winded, or dying creature',
-							value: '1'
+							trigger: 'You deal damage to a bleeding, winded, or dying creature',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),

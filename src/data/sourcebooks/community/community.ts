@@ -18,6 +18,7 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -636,17 +637,23 @@ As a magewright, you are able to utilize the majesty of magic and infuse it into
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'ally-surge-damage',
-							trigger: 'The first time in an encounter you or an ally spends 3 or more surges on a single ability to increase the damage',
-							value: '1d3'
+							trigger: 'You or an ally spends 3 or more surges on a single ability to increase the damage',
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
 							tag: 'ally-surge-potency',
-							trigger: 'The first time in an encounter you or an ally spends 2 surges on a single ability to increase the potency',
-							value: '1d3'
+							trigger: 'You or an ally spends 2 surges on a single ability to increase the potency',
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -1399,8 +1406,9 @@ Until the end of the encounter or you are dying, the target gains the following 
 							id: 'magewright-automancer-wonder-gain-1',
 							name: 'Automancer Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that your servitor takes damage',
+							trigger: 'Your servitor takes damage',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.createMultiple({
@@ -2413,8 +2421,9 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 							id: 'magewright-catalyst-wonder-gain-1',
 							name: 'Catalyst Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that a creature uses an elixir or you create an elixir',
+							trigger: 'A creature uses an elixir or you create an elixir',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.createMultiple({
@@ -2614,8 +2623,9 @@ As a maneuver, you can expend project points from the stone and craft any consum
 							id: 'magewright-gilder-wonder-gain-1',
 							name: 'Gilder Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that an primed creature takes a main action',
+							trigger: 'A primed creature takes a main action',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.create({
@@ -2745,8 +2755,9 @@ You can target yourself instead of one creature with this ability. The targets b
 							id: 'magewright-magitecht-wonder-gain-1',
 							name: 'Magitecht Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that a hero activates one of your experimental devices',
+							trigger: 'A hero activates one of your experimental devices',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.create({
@@ -2918,22 +2929,30 @@ As a vessel, you debilitate your enemies and bolster yourself, sacrificing long-
 						{
 							trigger: 'Start of your turn',
 							value: '1d3',
-							tag: 'Start 1'
+							tag: 'Start 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a round a creature within 10 squares of you uses an ability with an associated potency',
+							trigger: 'A creature within 10 squares of you uses an ability with an associated potency',
 							value: '1',
-							tag: 'Potency 1'
+							tag: 'Potency 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in an encounter a creature within 10 squares is reduced to 0 Stamina, or the first time in an encounter that a solo creature within 10 squares becomes winded',
+							trigger: 'A creature within 10 squares is reduced to 0 Stamina, or a solo creature within 10 squares becomes winded',
 							value: '2',
-							tag: 'Winded 1'
+							tag: 'Winded 1',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							trigger: 'The first time in an encounter an enemy within 10 squares makes a power roll with a bane',
+							trigger: 'An enemy within 10 squares makes a power roll with a bane',
 							value: '2',
-							tag: 'Bane 1'
+							tag: 'Bane 1',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -3197,8 +3216,9 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 					id: 'vessel-4-2',
 					name: 'Eternal Fragment',
 					tag: 'Potency 2',
-					trigger: 'The first time in a round a creature within 10 squares of you uses an ability with an associated potency',
+					trigger: 'A creature within 10 squares of you uses an ability with an associated potency',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'Potency 1' ]
 				}),
 				FactoryLogic.feature.create({

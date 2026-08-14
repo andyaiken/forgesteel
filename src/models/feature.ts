@@ -22,6 +22,7 @@ import { Monster } from '@/models/monster';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
+import { ResourceGain } from '@/models/resource-gain';
 import { Size } from '@/models/size';
 import { SkillList } from '@/enums/skill-list';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
@@ -170,17 +171,14 @@ export type FeatureForController = FeatureOf<FeatureType.ForController, FeatureF
 
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
-	gains: { tag: string, trigger: string, value: string }[];
+	gains: ResourceGain[];
 	details: string;
 	canBeNegative: boolean;
 	value: number;
 };
 export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
 
-export interface FeatureHeroicResourceGainData extends _FeatureData {
-	tag: string;
-	trigger: string;
-	value: string;
+export interface FeatureHeroicResourceGainData extends _FeatureData, ResourceGain {
 	replacesTags: string[];
 };
 export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;

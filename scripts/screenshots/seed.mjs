@@ -26,6 +26,7 @@ const LocalForageDb = { name: 'localforage', store: 'keyvaluepairs' };
 // Values are the pregen's `name` in src/data/pregen-data.ts.
 const heroPicks = {
 	tactician: 'The Earth Cries The Skies Divide',
+	troubadour: 'Lliarion',
 	fury: 'Keth'
 };
 
@@ -107,7 +108,7 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 
 		// A pristine hero makes for dull screenshots: the vitals, inventory and project
 		// panels would all be empty. Rough this one up a bit so those shots have content.
-		const played = builtHeroes.tactician;
+		const played = builtHeroes.troubadour;
 		if (played) {
 			played.state.staminaDamage = 11;
 			played.state.conditions = [
@@ -207,6 +208,7 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 		const summarise = source => Object.fromEntries(Object.entries(source).map(([ key, value ]) => [ key, { id: value.id, name: value.name } ]));
 
 		return {
+			party: party,
 			heroes: summarise(builtHeroes),
 			encounters: summarise(built.encounters),
 			montages: summarise(built.montages),

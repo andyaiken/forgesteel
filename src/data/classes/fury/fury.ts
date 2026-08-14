@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { berserker } from '@/data/classes/fury/berserker';
 import { reaver } from '@/data/classes/fury/reaver';
@@ -46,17 +47,23 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'take-damage',
-							trigger: 'The first time each combat round that you take damage',
-							value: '1'
+							trigger: 'You take damage',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'winded',
-							trigger: 'The first time you become winded or are dying in an encounter',
-							value: '1d3'
+							trigger: 'You become winded or are dying',
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -125,6 +132,7 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 					tag: 'take-damage 2',
 					trigger: 'The first time each combat round that you take damage',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -221,6 +229,7 @@ Additionally, if you are a berserker or reaver, you have immunity to acid, cold,
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -282,6 +291,7 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 					tag: 'take-damage 3',
 					trigger: 'The first time each combat round that you take damage',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage', 'take-damage 2' ]
 				}),
 				FactoryLogic.feature.createHeroicResource({
@@ -290,9 +300,11 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

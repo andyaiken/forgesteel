@@ -100,7 +100,7 @@ const dwarfFuryPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-dwarf-language',
 			selections: [
 				'Zaliac'
 			]
@@ -218,7 +218,7 @@ const highElfTacticianPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-high-elf-language',
 			selections: [
 				'Hyrallic'
 			]
@@ -369,7 +369,7 @@ const humanCensorPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-human-language',
 			selections: [
 				'Vaslorian'
 			]
@@ -484,7 +484,7 @@ const humanNullPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Kalliak'
 			]
@@ -615,7 +615,7 @@ const humanTalentPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-monastic-order-language',
 			selections: [
 				'Hyrallic'
 			]
@@ -745,7 +745,7 @@ const orcConduitPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Kalliak'
 			]
@@ -872,7 +872,7 @@ const polderElementalistPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-polder-language',
 			selections: [
 				'Khoursirian'
 			]
@@ -1005,7 +1005,7 @@ const polderShadowPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-polder-language',
 			selections: [
 				'Khoursirian'
 			]
@@ -1063,31 +1063,31 @@ const wodeElfTroubadourPregen: Pregen = {
 	ancestryID: 'ancestry-wode-elf',
 	cultureID: 'culture-bespoke-culture',
 	careerID: 'career-performer',
-	classID: '9y3Jx3koKZipiPh1',
+	classID: 'class-troubadour',
 	complicationID: null,
 	incitingIncidentID: 'career-performer-ii-6',
 	level: 1,
 	characteristics: FactoryLogic.createCharacteristics(1, 2, 1, -1, 2),
 	selectedSubclassIDs: [
-		'tWBfpTKQXZ12jGsU'
+		'troubadour-virtuoso'
 	],
 	featureSelections: [
 		{
-			featureID: 'JEPrmTnFwNbi7kWO',
+			featureID: 'troubadour-12',
 			selections: [
-				'oklqgAHvGNBYvZ6Y'
+				'troubadour-58'
 			]
 		},
 		{
-			featureID: 'cCfz5o1dUmzOYVPL',
+			featureID: 'troubadour-13',
 			selections: [
-				'48Ek5173XbbcaIuv'
+				'troubadour-60'
 			]
 		},
 		{
-			featureID: 'smLIhr6BGJPZscJG',
+			featureID: 'troubadour-14',
 			selections: [
-				'MKhak5HyGbRZdhWy'
+				'troubadour-63'
 			]
 		},
 		{
@@ -1115,13 +1115,13 @@ const wodeElfTroubadourPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'UH5m1URtvSjZqfQb',
+			featureID: 'troubadour-3',
 			selections: [
 				'Brag'
 			]
 		},
 		{
-			featureID: 'zVuRuelOOMRXxCgG',
+			featureID: 'troubadour-virtuoso-1',
 			selections: [
 				'Read Person'
 			]
@@ -1134,26 +1134,26 @@ const wodeElfTroubadourPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'GjD2ZwdbvEIZOKQV',
+			featureID: 'troubadour-4',
 			selections: [
 				'Flirt',
 				'Persuade'
 			]
 		},
 		{
-			featureID: 'WpHiobCwPhxC5q2g',
+			featureID: 'troubadour-5',
 			selections: [
 				'Hide'
 			]
 		},
 		{
-			featureID: '3rwc3gnUTZ6Ta7a0',
+			featureID: 'troubadour-7',
 			selections: [
 				'kit-swashbuckler'
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Yllyric'
 			]

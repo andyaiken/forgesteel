@@ -19,6 +19,8 @@ import { Monster } from '@/models/monster';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
+import { ResourceGain } from '@/models/resource-gain';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { Summon } from '@/models/summon';
@@ -325,7 +327,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: ResourceGain[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -341,7 +343,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResourceGain = (data: { id: string, name: string, tag: string, trigger: string, value: string, replacesTags?: string[] }): FeatureHeroicResourceGain => {
+	createHeroicResourceGain = (data: { id: string, name: string, tag: string, trigger: string, value: string, frequency: ResourceGainFrequency, replacesTags?: string[] }): FeatureHeroicResourceGain => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -351,6 +353,8 @@ export class FactoryFeatureLogic {
 				tag: data.tag,
 				trigger: data.trigger,
 				value: data.value,
+				frequency: data.frequency,
+				used: false,
 				replacesTags: data.replacesTags || []
 			}
 		};

@@ -13,7 +13,9 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Pill } from '@/components/controls/pill/pill';
 import { Random } from '@/utils/random';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -26,6 +28,7 @@ import './hero-resources-modal.scss';
 interface Expression {
 	resourceID: string;
 	resourceName: string;
+	tag: string;
 	throws: number;
 	sides: number;
 	constant: number;
@@ -58,8 +61,9 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const gainResource = (featureID: string, value: number) => {
+		const gainResource = (featureID: string, tag: string, value: number) => {
 			const copy = Utils.copy(hero);
+
 			HeroLogic.getFeatures(copy, false)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
@@ -67,31 +71,53 @@ export const HeroResourcesModal = (props: Props) => {
 				.forEach(f => {
 					f.data.value += value;
 				});
+
+			if (tag.toLowerCase().startsWith('start')) {
+				HeroLogic.getHeroicResources(copy)
+					.filter(hr => hr.id === featureID)
+					.flatMap(hr => hr.gains)
+					.filter(g => g.frequency === ResourceGainFrequency.OncePerRound)
+					.forEach(g => g.used = false);
+			} else {
+				HeroLogic.getHeroicResources(copy)
+					.filter(hr => hr.id === featureID)
+					.flatMap(hr => hr.gains)
+					.filter(g => g.tag === tag)
+					.filter(g => g.frequency !== ResourceGainFrequency.AtWill)
+					.forEach(g => g.used = true);
+			}
+
 			setHero(copy);
 			props.onChange(copy);
 		};
 
-		const startEncounter = (featureID: string) => {
+		const startEncounter = () => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy, false)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
-				.filter(f => f.id === featureID)
 				.forEach(f => f.data.value = copy.state.victories);
 
+			HeroLogic.getHeroicResources(copy)
+				.flatMap(hr => hr.gains)
+				.forEach(g => g.used = false);
+
 			setHero(copy);
 			props.onChange(copy);
 		};
 
-		const endEncounter = (featureID: string) => {
+		const endEncounter = () => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy, false)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
-				.filter(f => f.id === featureID)
 				.forEach(f => f.data.value = 0);
+
+			HeroLogic.getHeroicResources(copy)
+				.flatMap(hr => hr.gains)
+				.forEach(g => g.used = false);
 
 			copy.state.victories += 1;
 			copy.state.surges = 0;
@@ -123,8 +149,8 @@ export const HeroResourcesModal = (props: Props) => {
 													if (digits.test(g.value)) {
 														const v = parseInt(g.value);
 														btn = (
-															<Button className='gain-btn' onClick={() => gainResource(hr.id, v)}>
-																+{g.value}
+															<Button className='gain-btn' disabled={g.used} onClick={() => gainResource(hr.id, g.tag, v)}>
+																<div>+{g.value}</div>
 															</Button>
 														);
 													}
@@ -134,23 +160,25 @@ export const HeroResourcesModal = (props: Props) => {
 														const exp: Expression = {
 															resourceID: hr.id,
 															resourceName: hr.name,
+															tag: g.tag,
 															throws: parseInt(match.groups?.throws || '1'),
 															sides: parseInt(match.groups?.sides || '3'),
 															constant: parseInt(match.groups?.constant || '0'),
 															result: null
 														};
 														btn = (
-															<Button className='gain-btn' onClick={() => setExpression(exp)}>
-																+{g.value}
+															<Button className='gain-btn' disabled={g.used} onClick={() => setExpression(exp)}>
+																<div>+{g.value}</div>
 															</Button>
 														);
 													}
 
 													return (
-														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{g.trigger}</div>
+														<div className={g.used ? 'gain used' : 'gain'} key={n}>
+															<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
+															{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
 															{btn}
-														</Flex>
+														</div>
 													);
 												})
 											}
@@ -161,7 +189,7 @@ export const HeroResourcesModal = (props: Props) => {
 															key='start-encounter'
 															style={{ flex: '1 1 0' }}
 															className='tall-button'
-															onClick={() => startEncounter(hr.id)}
+															onClick={startEncounter}
 														>
 															<div>
 																<div>Start Encounter</div>
@@ -174,7 +202,7 @@ export const HeroResourcesModal = (props: Props) => {
 															key='end-encounter'
 															style={{ flex: '1 1 0' }}
 															className='tall-button'
-															onClick={() => endEncounter(hr.id)}
+															onClick={endEncounter}
 														>
 															<div>
 																<div>End Encounter</div>
@@ -230,7 +258,7 @@ export const HeroResourcesModal = (props: Props) => {
 										disabled={expression.result === null}
 										onClick={() => {
 											if (expression.result !== null) {
-												gainResource(expression.resourceID, expression.result);
+												gainResource(expression.resourceID, expression.tag, expression.result);
 												setExpression(null);
 											}
 										}}

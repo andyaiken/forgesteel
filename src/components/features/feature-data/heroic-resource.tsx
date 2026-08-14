@@ -11,6 +11,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Pill } from '@/components/controls/pill/pill';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -42,7 +43,7 @@ export const InfoHeroicResource = (props: InfoProps) => {
 						<li key={n}>
 							<Flex align='center' justify='space-between' gap={10}>
 								<div className='ds-text compact-text'>{g.trigger}</div>
-								<Pill>+{g.value}</Pill>
+								<Pill>+{g.value} {g.frequency !== ResourceGainFrequency.AtWill ? g.frequency : null}</Pill>
 							</Flex>
 						</li>
 					))
@@ -74,7 +75,9 @@ export const EditHeroicResource = (props: EditProps) => {
 		copy.gains.push({
 			tag: '',
 			trigger: '',
-			value: '1'
+			value: '1',
+			frequency: ResourceGainFrequency.AtWill,
+			used: false
 		});
 		setData(copy);
 		props.setData(copy);
@@ -111,6 +114,13 @@ export const EditHeroicResource = (props: EditProps) => {
 	const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
 		const copy = Utils.copy(data);
 		copy.gains[index].value = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setResourceGainFrequency = (data: FeatureHeroicResourceData, index: number, value: ResourceGainFrequency) => {
+		const copy = Utils.copy(data);
+		copy.gains[index].frequency = value;
 		setData(copy);
 		props.setData(copy);
 	};
@@ -180,6 +190,14 @@ export const EditHeroicResource = (props: EditProps) => {
 								allowClear={true}
 								value={gain.value}
 								onChange={value => setResourceGainValue(data, n, value)}
+							/>
+							<HeaderText>Frequency</HeaderText>
+							<Segmented
+								name={`frequency-${n}`}
+								block={true}
+								options={[ ResourceGainFrequency.AtWill, ResourceGainFrequency.OncePerRound, ResourceGainFrequency.OncePerEncounter ].map(o => ({ value: o, label: o }))}
+								value={gain.frequency}
+								onChange={value => setResourceGainFrequency(data, n, value as ResourceGainFrequency)}
 							/>
 						</Space>
 					</Expander>

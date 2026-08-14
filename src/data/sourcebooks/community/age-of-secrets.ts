@@ -16,6 +16,7 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -65,17 +66,23 @@ Their power is broad, precise, and a little dangerous, because the surest way to
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'damage-condition',
-							trigger: 'The first time each combat round that one of your magic abilities damages an enemy or imposes a condition on one',
-							value: '1'
+							trigger: 'One of your magic abilities damages an enemy or imposes a condition on one',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'tier3',
 							trigger: 'You score a tier-3 result with an ability with the Magic keyword',
-							value: '1'
+							value: '1',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					details: `
@@ -274,8 +281,9 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					id: 'thaumaturge-font-of-essence-1',
 					name: 'Font of Essence',
 					tag: 'damage-condition',
-					trigger: 'The first time each combat round that one of your magic abilities damages an enemy or imposes a condition on one',
+					trigger: 'One of your magic abilities damages an enemy or imposes a condition on one',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'damage-condition' ]
 				}),
 				FactoryLogic.feature.createHeroicResourceGain({
@@ -284,6 +292,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					tag: 'tier3',
 					trigger: 'You score a tier-3 result with an ability with the Magic keyword',
 					value: '2',
+					frequency: ResourceGainFrequency.AtWill,
 					replacesTags: [ 'tier3' ]
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
@@ -345,6 +354,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					tag: 'start',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({ id: 'thaumaturge-7-might', characteristic: Characteristic.Might, value: 1 }),
@@ -397,8 +407,10 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					gains: [
 						{
 							tag: 'respite',
-							trigger: 'Each time you finish a respite',
-							value: 'the XP you earned'
+							trigger: 'You finish a respite',
+							value: 'the XP you earned',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					details: 'You can spend Aegis as though it were Essence, and you can spend Aegis to use any heroic ability as a free maneuver if you pay that spell\'s whole cost in Aegis.'
@@ -414,6 +426,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					tag: 'start',
 					trigger: 'Start of your turn',
 					value: '4',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				})
 			]

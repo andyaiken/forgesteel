@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { exorcist } from '@/data/classes/censor/exorcist';
 import { oracle } from '@/data/classes/censor/oracle';
@@ -46,17 +47,23 @@ As a censor, you’re at your best against the strongest foes. Your judgment ter
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'take-damage',
-							trigger: 'The first time each round that a creature judged by you deals damage to you',
-							value: '1'
+							trigger: 'A creature judged by you deals damage to you',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage',
-							trigger: 'The first time each round that you deal damage to a creature judged by you',
-							value: '1'
+							trigger: 'You deal damage to a creature judged by you',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -187,6 +194,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					tag: 'deal-damage 2',
 					trigger: 'The first time each round that you deal damage to a creature judged by you',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage' ]
 				}),
 				FactoryLogic.feature.createDomainFeature({
@@ -263,6 +271,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -336,9 +345,11 @@ While you rest in their presence, your god might also give you priority targets 
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `
@@ -352,6 +363,7 @@ Virtue remains until you spend it.`
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '4',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				})
 			]

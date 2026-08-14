@@ -25,6 +25,7 @@ import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterLogic } from './monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Title } from '@/models/title';
@@ -804,6 +805,8 @@ export class FeatureLogic {
 					tag: '',
 					trigger: '',
 					value: '1',
+					frequency: ResourceGainFrequency.OncePerRound,
+					used: false,
 					replacesTags: []
 				};
 				return data;

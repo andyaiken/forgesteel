@@ -8,6 +8,7 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { circleOfBlight } from '@/data/classes/summoner/blight';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
@@ -52,12 +53,16 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'minion-death',
-							trigger: 'The first time each round that any minion dies unwillingly within your Summoner’s Range',
-							value: '1'
+							trigger: 'Any minion dies unwillingly within your Summoner’s Range',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					],
 					details: 'Whenever you use a heroic ability or call forth a minion that costs essence, you can willingly sacrifice one or more of your minions within your Summoner’s Range to reduce the cost by 1. You can’t kill minions this way if they used a main action or maneuver during the turn. You can sacrifice more minions than you would reduce the cost by.'
@@ -502,8 +507,9 @@ You can increase each of your minions’ Stamina as shown on the table. Addition
 					id: 'summoner-4-4',
 					name: 'Essence Salvage',
 					tag: 'minion-death 2',
-					trigger: 'The first time each round that any minion dies unwillingly within your Summoner’s Range',
-					value: '1',
+					trigger: 'Any minion dies unwillingly within your Summoner’s Range',
+					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'minion-death' ]
 				}),
 				FactoryLogic.feature.create({
@@ -671,6 +677,7 @@ Additionally, you can increase each of your minions’ Stamina as shown on the 7
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.create({
@@ -844,9 +851,11 @@ Each of your minions’ Stamina improves as shown in the table. Additionally, ea
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

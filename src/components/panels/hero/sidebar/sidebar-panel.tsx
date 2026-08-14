@@ -24,6 +24,7 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Pill } from '@/components/controls/pill/pill';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RulesPage } from '@/enums/rules-page';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
@@ -228,10 +229,10 @@ export const SidebarPanel = (props: Props) => {
 											</HeaderText>
 											{
 												hr.gains.map((g, n) => (
-													<Flex key={n} align='center' justify='space-between' gap={10}>
-														<div className='ds-text compact-text'>{g.trigger}</div>
-														<Pill>+{g.value}</Pill>
-													</Flex>
+													<div className={g.used ? 'gain used' : 'gain'} key={n}>
+														<div>{g.trigger}</div>
+														<Pill>+{g.value} {g.frequency !== ResourceGainFrequency.AtWill ? g.frequency : null}</Pill>
+													</div>
 												))
 											}
 										</div>

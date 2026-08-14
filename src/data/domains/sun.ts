@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const sun: Domain = {
@@ -145,8 +146,10 @@ export const sun: Domain = {
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that an enemy within 10 squares takes fire or holy damage',
-			value: '2'
+			trigger: 'An enemy within 10 squares takes fire or holy damage',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

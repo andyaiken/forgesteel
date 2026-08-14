@@ -86,8 +86,7 @@ export class Utils {
 					const offsetX = (maxSize - scaledWidth) / 2;
 					const offsetY = (maxSize - scaledHeight) / 2;
 					ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-					const mime = data.match(/^data:([^;,]+)[;,]/)?.[1] || 'image/png';
-					resolve(canvas.toDataURL(mime));
+					resolve(canvas.toDataURL('image/webp', 0.85));
 				} else {
 					resolve(data);
 				}

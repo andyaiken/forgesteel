@@ -1,7 +1,7 @@
 import { Encounter, EncounterSlot } from '@/models/encounter';
 import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
 import { Navigate, Route, Routes } from 'react-router';
-import { ReactNode, Suspense, lazy, useState } from 'react';
+import { ReactNode, Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
 import { useDataManager, useHeroes, useHomebrewSourcebooks, useOptions, useSession } from '@/contexts/data-context';
@@ -133,9 +133,27 @@ export const Main = (props: Props) => {
 
 	// #region Persistence
 
-	const persistHero = (hero: Hero) => {
-		return dataManager
-			.saveHero(hero)
+	const HERO_SAVE_DEBOUNCE_MS = 400;
+
+	interface PendingHeroSave {
+		hero: Hero;
+		timer: ReturnType<typeof setTimeout>;
+		resolvers: (() => void)[];
+	}
+
+	const pendingHeroSavesRef = useRef<Map<string, PendingHeroSave>>(new Map());
+
+	const flushHeroSave = (heroId: string) => {
+		const pending = pendingHeroSavesRef.current.get(heroId);
+		if (!pending) {
+			return;
+		}
+
+		pendingHeroSavesRef.current.delete(heroId);
+		clearTimeout(pending.timer);
+
+		dataManager
+			.saveHero(pending.hero)
 			.catch(err => {
 				console.error(err);
 				notify.error({
@@ -143,7 +161,39 @@ export const Main = (props: Props) => {
 					description: Utils.getErrorMessage(err),
 					placement: 'top'
 				});
+			})
+			.then(() => {
+				pending.resolvers.forEach(resolve => resolve());
 			});
+	};
+
+	// Keep a stable indirection to the latest closure so the unmount effect
+	// below (which must only run once) always flushes with fresh dataManager / notify.
+	const flushHeroSaveRef = useRef(flushHeroSave);
+	flushHeroSaveRef.current = flushHeroSave;
+
+	useEffect(() => {
+		return () => {
+			// Flush any hero saves still debouncing so a last-second edit isn't lost on unmount.
+			pendingHeroSavesRef.current.forEach((_, heroId) => flushHeroSaveRef.current(heroId));
+		};
+	}, []);
+
+	const persistHero = (hero: Hero) => {
+		// UI / local state is already updated synchronously by callers before this is invoked;
+		// only the network PUT is delayed and coalesced here, per hero.id.
+		return new Promise<void>(resolve => {
+			const existing = pendingHeroSavesRef.current.get(hero.id);
+			if (existing) {
+				clearTimeout(existing.timer);
+				existing.hero = hero;
+				existing.resolvers.push(resolve);
+				existing.timer = setTimeout(() => flushHeroSave(hero.id), HERO_SAVE_DEBOUNCE_MS);
+			} else {
+				const timer = setTimeout(() => flushHeroSave(hero.id), HERO_SAVE_DEBOUNCE_MS);
+				pendingHeroSavesRef.current.set(hero.id, { hero, timer, resolvers: [ resolve ] });
+			}
+		});
 	};
 
 	const persistSession = (session: Session) => {
@@ -205,7 +255,13 @@ export const Main = (props: Props) => {
 			).then(() => {
 				const storage = StorageServiceFactory.fromConnectionSettings(connectionSettings);
 				const ds = new DataService(storage);
-				ds.initialize();
+				ds.initialize().catch(err => {
+					notify.error({
+						title: 'Couldn\'t connect to Warehouse with the new settings',
+						description: Utils.getErrorMessage(err),
+						placement: 'top'
+					});
+				});
 				setDataService(ds);
 			});
 	};

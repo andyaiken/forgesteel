@@ -124,6 +124,7 @@ export class FactoryLogic {
 			titles: [],
 			controlledSlots: [],
 			notes: '',
+			inventoryText: '',
 			encounterState: 'ready',
 			hidden: false,
 			defeated: false

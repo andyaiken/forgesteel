@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -12,6 +12,7 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
@@ -62,6 +63,13 @@ export const HeroInventoryModal = (props: Props) => {
 	const deleteItem = (item: Item) => {
 		const copy = Utils.copy(hero);
 		copy.state.inventory = copy.state.inventory.filter(i => i.id !== item.id);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setInventoryText = (value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.inventoryText = value;
 		setHero(copy);
 		props.onChange(copy);
 	};
@@ -146,6 +154,8 @@ export const HeroInventoryModal = (props: Props) => {
 								<Empty text='Your inventory is empty.' />
 								: null
 						}
+						<Divider />
+						<MarkdownEditor value={hero.state.inventoryText} onChange={setInventoryText} />
 					</Space>
 					<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} size={500}>
 						{

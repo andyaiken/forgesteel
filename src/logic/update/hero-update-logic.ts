@@ -166,6 +166,10 @@ export class HeroUpdateLogic {
 			hero.state.notes = '';
 		}
 
+		if (hero.state.inventoryText === undefined) {
+			hero.state.inventoryText = '';
+		}
+
 		if (hero.state.encounterState === undefined) {
 			hero.state.encounterState = 'ready';
 		}

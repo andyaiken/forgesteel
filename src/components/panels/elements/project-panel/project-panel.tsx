@@ -80,10 +80,22 @@ export const ProjectPanel = (props: Props) => {
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
-				{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
-				{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
-				{project.source ? <Field label='Source' value={props.project.source} /> : null}
-				{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
+				{
+					project.itemPrerequisites ?
+						project.progress ?
+							<Toggle label={props.project.itemPrerequisites} value={project.progress.prerequisites} onChange={setPrerequisites} />
+							:
+							<Field label='Item Prerequisites' value={props.project.itemPrerequisites} />
+						: null
+				}
+				{
+					project.source ?
+						project.progress ?
+							<Toggle label={props.project.source} value={project.progress.source} onChange={setSource} />
+							:
+							<Field label='Source' value={props.project.source} />
+						: null
+				}
 			</Space>
 		);
 	};

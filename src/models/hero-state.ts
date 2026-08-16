@@ -23,6 +23,7 @@ export interface HeroState {
 	titles: Title[];
 	controlledSlots: EncounterSlot[];
 	notes: string;
+	inventoryText: string;
 	hidden: boolean;
 	encounterState: 'ready' | 'current' | 'finished';
 	defeated: boolean;

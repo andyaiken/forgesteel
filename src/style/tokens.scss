@@ -54,6 +54,9 @@
 	/// Hairline separating or outlining content.
 	--fs-border: rgba(5, 5, 5, 0.06);
 
+	/// Surface of a control
+	--fs-control-surface: rgb(245, 245, 245);
+
 	// ---------------------------------------------------------------
 	// Theme-invariant tokens.
 	//
@@ -83,4 +86,5 @@ html[data-theme='dark'] {
 	--fs-accent-wash: rgba(22, 119, 255, 0.2);
 	--fs-text: rgba(255, 255, 255, 0.88);
 	--fs-border: rgba(250, 250, 250, 0.6);
+	--fs-control-surface: rgb(80, 80, 80);
 }

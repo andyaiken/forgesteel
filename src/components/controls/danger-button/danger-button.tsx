@@ -2,8 +2,6 @@ import { Button, Popover } from 'antd';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 
-import './danger-button.scss';
-
 interface Props {
 	mode?: 'default' | 'block' | 'inline' | 'clear' | 'icon';
 	label?: string;

@@ -199,7 +199,7 @@ td {
 }
 
 .ant-btn {
-	box-shadow: none;
+	box-shadow: none !important;
 	min-height: 32px;
 
 	&.ant-btn-text {
@@ -370,11 +370,6 @@ html[data-theme="dark"] {
 		background-color: rgb(30, 30, 30);
 		color: rgba(255, 255, 255, 0.88);
 	}
-
-	// Ant Design's own dark surfaces - drawers, dropdowns, popovers, select
-	// menus, tabs, sliders, statistics - used to be repainted here because it
-	// was rendering in light mode. `darkAlgorithm` derives them now, so the
-	// only rules left are the ones about the app's own markup.
 
 	.ant-space-item>div:not([class^='ant-']) {
 		color: rgba(255, 255, 255, 0.88);

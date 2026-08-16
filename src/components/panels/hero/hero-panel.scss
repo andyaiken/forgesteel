@@ -100,4 +100,36 @@
 			}
 		}
 	}
+
+	.ant-menu-horizontal {
+		height: 36px;
+		line-height: unset;
+		min-width: 0;
+		border: none;
+		border-radius: 8px;
+		background-color: rgb(245, 245, 245);
+		padding: 2px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 2px;
+
+		.ant-menu-item,
+		.ant-menu-overflow-item {
+			height: 32px;
+			padding: 0 12px;
+			display: flex;
+			align-items: center;
+			border-radius: 6px;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.04);
+			}
+		}
+
+		.ant-menu-item::after,
+		.ant-menu-overflow-item::after {
+			border: none !important;
+		}
+	}
 }

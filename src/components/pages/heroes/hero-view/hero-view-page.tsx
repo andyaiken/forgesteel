@@ -23,7 +23,6 @@ import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NamePanel } from '@/components/panels/hero/name/name-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
@@ -151,15 +150,6 @@ export const HeroViewPage = (props: Props) => {
 			case 'abilities':
 				return (
 					<StandardAbilitiesPage hero={hero} />
-				);
-			case 'notes':
-				return (
-					<MultiLine
-						style={{ height: '100%', flex: '1 1 0' }}
-						inputStyle={{ flex: '1 1 0', resize: 'none' }}
-						value={hero.state.notes}
-						onChange={value => props.setNotes(hero, value)}
-					/>
 				);
 		}
 	};

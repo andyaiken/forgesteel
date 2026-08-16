@@ -45,6 +45,7 @@ import { HeroCustomizeModal } from '@/components/modals/hero-customize/hero-cust
 import { HeroInventoryModal } from '@/components/modals/hero-inventory/hero-inventory-modal';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
+import { HeroNotesModal } from '@/components/modals/hero-notes/hero-notes-modal';
 import { HeroProjectsModal } from '@/components/modals/hero-projects/hero-projects-modal';
 import { HeroResourcesModal } from '@/components/modals/hero-resources/hero-resources-modal';
 import { HeroRespiteModal } from '@/components/modals/hero-respite/hero-respite-modal';
@@ -1801,6 +1802,15 @@ export const Main = (props: Props) => {
 						allSourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						onClose={() => setDrawer(null)}
 						onImportSourcebook={persistHomebrewSourcebook}
+						onChange={persistHero}
+					/>
+				);
+				break;
+			case HeroModalType.Notes:
+				setDrawer(
+					<HeroNotesModal
+						hero={hero}
+						onClose={() => setDrawer(null)}
 						onChange={persistHero}
 					/>
 				);

@@ -33,6 +33,7 @@ export const Markdown = (props: MarkdownProps) => {
 interface MarkdownEditorProps {
 	placeholder?: string;
 	value: string;
+	fill?: boolean;
 	onChange: (value: string) => void;
 }
 
@@ -53,7 +54,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 
 	return (
 		<MDXEditor
-			className='markdown-editor'
+			className={props.fill ? 'markdown-editor fill' : 'markdown-editor'}
 			placeholder={props.placeholder}
 			plugins={[
 				headingsPlugin(),

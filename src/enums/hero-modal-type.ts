@@ -4,7 +4,8 @@ export enum HeroModalType {
 	Inventory = 'Inventory',
 	Projects = 'Projects',
 	Titles = 'Titles',
-	Respite = 'Respite',
+	Notes = 'Notes',
+	Respite = 'Take a Respite',
 	Customize = 'Customize',
 	Conditional = 'Conditional Features',
 	Settings = 'Settings'

@@ -238,6 +238,22 @@ export class HeroLogic {
 			});
 	};
 
+	static getConditionalFeatures = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.filter(f => {
+				switch (f.feature.type) {
+					case FeatureType.Choice:
+					case FeatureType.LanguageChoice:
+					case FeatureType.SkillChoice:
+						return f.feature.data.selectAt === 'play';
+					case FeatureType.Toggle:
+						return true;
+					default:
+						return false;
+				}
+			});
+	};
+
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], standardAbilityIDs: string[]) => {
 		const choices: { ability: Ability, source: string, level: number | undefined }[] = [];
 

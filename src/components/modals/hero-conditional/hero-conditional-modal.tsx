@@ -1,7 +1,6 @@
 import { Empty } from '@/components/controls/empty/empty';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
-import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -26,6 +25,8 @@ interface Props {
 export const HeroConditionalModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 
+	const list = HeroLogic.getConditionalFeatures(hero);
+
 	const setData = (featureID: string, data: FeatureData) => {
 		const copy = Utils.copy(hero);
 		const feature = HeroLogic.getFeatures(copy).find(f => f.feature.id === featureID);
@@ -36,21 +37,6 @@ export const HeroConditionalModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const list = HeroLogic.getFeatures(hero)
-		.map(f => f.feature)
-		.filter(f => {
-			switch (f.type) {
-				case FeatureType.Choice:
-				case FeatureType.LanguageChoice:
-				case FeatureType.SkillChoice:
-					return f.data.selectAt === 'play';
-				case FeatureType.Toggle:
-					return true;
-				default:
-					return false;
-			}
-		});
-
 	return (
 		<Modal
 			content={
@@ -59,9 +45,9 @@ export const HeroConditionalModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							list.map(f => (
-								<SelectablePanel key={f.id}>
+								<SelectablePanel key={f.feature.id}>
 									<FeatureConfigPanel
-										feature={f}
+										feature={f.feature}
 										hero={hero}
 										sourcebooks={props.sourcebooks}
 										setData={setData}

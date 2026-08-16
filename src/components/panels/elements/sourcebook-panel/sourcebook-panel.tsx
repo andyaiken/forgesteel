@@ -150,7 +150,7 @@ export const SourcebookPanel = (props: Props) => {
 			};
 
 			return (
-				<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }} onClick={e => e.stopPropagation()}>
 					<Tabs
 						items={[
 							{

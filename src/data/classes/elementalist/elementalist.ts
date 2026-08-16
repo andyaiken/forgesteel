@@ -60,7 +60,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 							tag: 'take-damage',
 							trigger: 'You or a creature within 10 of you takes damage that isn’t untyped or holy',
 							value: '1',
-							frequency: ResourceGainFrequency.OncePerEncounter,
+							frequency: ResourceGainFrequency.OncePerRound,
 							used: false
 						}
 					]
@@ -469,7 +469,7 @@ If you have a kit, you can’t take this enchantment.`,
 					id: 'elementalist-4-2',
 					name: 'Font of Essence',
 					tag: 'take-damage 2',
-					trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
+					trigger: 'You or a creature within 10 of you takes damage that isn’t untyped or holy',
 					value: '2',
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage' ]

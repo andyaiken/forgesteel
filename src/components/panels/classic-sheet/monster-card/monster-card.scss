@@ -286,9 +286,13 @@ main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.
     .feature .feature-description p {
         margin-left: 0;
         margin-right: 0;
+
+        em {
+            display: inline;
+        }
     }
 
-    .wrapper {
+    .wrapper, .advancement {
         display: grid;
         grid-template-columns: min-content 1fr;
         grid-template-rows: min-content 1fr;
@@ -298,9 +302,26 @@ main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.
         .ability {
             margin-bottom: 10px;
         }
+    }
 
-        &:not(:last-of-type) {
-            @include common.divider-plain(common.$color-medium, 1px);
+    .wrapper:not(:last-of-type):not(:has(+ .advancement-abilities)) {
+        @include common.divider-plain(common.$color-medium, 1px);
+    }
+    
+    .advancement-abilities {
+        display: flex;
+        flex-direction: column;
+
+        .advancement h4 {
+            grid-column-end: span 2;
+            color: #000;
+            background-color: common.$color-general-monster;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid common.$color-medium;
+        }
+
+        &:last-child .ability {
+            margin-bottom: 0;
         }
     }
 }
@@ -344,6 +365,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-ambusher);
         }
+        .advancement h4 {
+            background-color: common.$color-ambusher;
+        }
     }
     &.artillery {
         section.bordered .name-wrapper {
@@ -351,6 +375,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         }
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-artillery);
+        }
+        .advancement h4 {
+            background-color: common.$color-artillery;
         }
     }
     &.brute {
@@ -360,6 +387,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-brute);
         }
+        .advancement h4 {
+            background-color: common.$color-brute;
+        }
     }
     &.controller {
         section.bordered .name-wrapper {
@@ -367,6 +397,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         }
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-controller);
+        }
+        .advancement h4 {
+            background-color: common.$color-controller;
         }
     }
     &.defender {
@@ -376,6 +409,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-defender);
         }
+        .advancement h4 {
+            background-color: common.$color-defender;
+        }
     }
     &.harrier {
         section.bordered .name-wrapper {
@@ -383,6 +419,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         }
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-harrier);
+        }
+        .advancement h4 {
+            background-color: common.$color-harrier;
         }
     }
     &.hexer {
@@ -392,6 +431,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-hexer);
         }
+        .advancement h4 {
+            background-color: common.$color-hexer;
+        }
     }
     &.mount {
         section.bordered .name-wrapper {
@@ -400,6 +442,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-mount);
         }
+        .advancement h4 {
+            background-color: common.$color-mount;
+        }
     }
     &.support {
         section.bordered .name-wrapper {
@@ -407,6 +452,9 @@ main#classic-sheet .color :is(.monster.card, .terrain.card) {
         }
         &.wide section.bordered .name-wrapper {
             @include monster-header-gradient-half(common.$color-support);
+        }
+        .advancement h4 {
+            background-color: common.$color-support;
         }
     }
 }

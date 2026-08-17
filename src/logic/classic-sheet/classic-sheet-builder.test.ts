@@ -7,9 +7,12 @@ import { ArtifactData } from '@/data/items/artifact-data';
 import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureAbility } from '@/models/feature';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
+import { PowerRollSection } from '@/models/classic-sheets/ability-sheet';
 import { ajax } from '@/data/monsters/ajax';
+import { creation } from '@/data/domains/creation';
 import { goblin } from '@/data/monsters/goblin';
 
 describe('buildCharacteristicsSheet', () => {
@@ -60,7 +63,8 @@ describe('buildAbilitySheet', () => {
 		} as Options;
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
-		expect(result.rollPower).toBe('M or A');
+		const powerRoll = result.sections[1] as PowerRollSection;
+		expect(powerRoll.rollPower).toBe('M or A');
 	});
 
 	test('when showPowerRollCalc is true, calculates value', () => {
@@ -73,11 +77,13 @@ describe('buildAbilitySheet', () => {
 		} as Options;
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
-		expect(result.rollPower).toBe('4');
+		const powerRoll = result.sections[1] as PowerRollSection;
+		expect(powerRoll.rollPower).toBe('4');
 	});
 
 	test.each([
 		[ AbilityData.advance, true ],
+		[ AbilityData.freeStrikeMelee, false ],
 		[ AbilityData.escapeGrab, false ]
 	])('properly sets isNotTrueAbility for non-ability abilities', (ability: Ability, expected: boolean) => {
 		const hero = FactoryLogic.createHero();
@@ -99,7 +105,8 @@ describe('buildAbilitySheet', () => {
 		} as Options;
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
-		expect(result.rollPower).toBe('R or P');
+		const powerRoll = result.sections[1] as PowerRollSection;
+		expect(powerRoll.rollPower).toBe('R or P');
 	});
 
 	test('if a power roll can use any characteristic, clean up the text', () => {
@@ -117,7 +124,8 @@ describe('buildAbilitySheet', () => {
 		} as Options;
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
-		expect(result.rollPower).toBe('Highest Characteristic');
+		const powerRoll = result.sections[1] as PowerRollSection;
+		expect(powerRoll.rollPower).toBe('Highest Characteristic');
 	});
 
 	test('if a Hero does NOT has multiple kits that apply, rollBonuses is empty', () => {
@@ -125,7 +133,8 @@ describe('buildAbilitySheet', () => {
 		const options = {} as Options;
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.escapeGrab, hero, undefined, options);
-		expect(result.rollBonuses).toBeNullable();
+		const powerRoll = result.sections[1] as PowerRollSection;
+		expect(powerRoll.rollBonuses).toBeNullable();
 	});
 
 	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
@@ -138,7 +147,8 @@ describe('buildAbilitySheet', () => {
 		]);
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
-		expect(result.rollBonuses?.length).toBe(2);
+		const powerRoll = result.sections[0] as PowerRollSection;
+		expect(powerRoll.rollBonuses?.length).toBe(2);
 	});
 
 	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
@@ -152,7 +162,8 @@ describe('buildAbilitySheet', () => {
 		]);
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeRanged, hero, undefined, options);
-		expect(result.rollBonuses?.length).toBe(2);
+		const powerRoll = result.sections[0] as PowerRollSection;
+		expect(powerRoll.rollBonuses?.length).toBe(2);
 	});
 
 	test('if a Hero has multiple kits but one is always worse, rollBonuses stays empty', () => {
@@ -165,8 +176,26 @@ describe('buildAbilitySheet', () => {
 		]);
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
-		expect(result.rollBonuses).toBeNullable();
+		const powerRoll = result.sections[0] as PowerRollSection;
+		expect(powerRoll.rollBonuses).toBeNullable();
 	});
+
+	test('Ability sections are displayed in the same order as in the data', () => {
+		const divineDragon = creation.featuresByLevel
+			.find(lvlFeatures => lvlFeatures.level === 9)?.features
+			.find(feature => feature.name === 'Divine Dragon') as FeatureAbility;
+
+		const hero = FactoryLogic.createHero();
+		const options = {} as Options;
+
+		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
+			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 }
+		]);
+		const result = ClassicSheetBuilder.buildAbilitySheet(divineDragon.data.ability, hero, undefined, options);
+		expect(result).not.toBe(undefined);
+	});
+
+	// test('Grab and Knockback mention Intuition instead of Might for Null')
 });
 
 describe('buildMonsterSheet', () => {

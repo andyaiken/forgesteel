@@ -1,7 +1,7 @@
+import { AbilitySheet, PowerRollSection } from '@/models/classic-sheets/ability-sheet';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
-import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Characteristic } from '@/enums/characteristic';
 import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
@@ -111,6 +111,29 @@ export class ClassicSheetBuilder {
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
+
+		if (monster.retainer) {
+			const advancement = [];
+			if (monster.retainer.level4?.type === FeatureType.Ability) {
+				advancement.push({
+					level: 4,
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level4.data.ability, monster)
+				});
+			}
+			if (monster.retainer.level7?.type === FeatureType.Ability) {
+				advancement.push({
+					level: 7,
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level7.data.ability, monster)
+				});
+			}
+			if (monster.retainer.level10?.type === FeatureType.Ability) {
+				advancement.push({
+					level: 10,
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level10.data.ability, monster)
+				});
+			}
+			sheet.advancement = advancement;
+		}
 
 		return sheet;
 	};
@@ -272,7 +295,7 @@ export class ClassicSheetBuilder {
 			keywords: keywords.join(', '),
 			target: ability.target,
 			trigger: ability.type.trigger,
-			hasPowerRoll: false
+			sections: []
 		};
 
 		sheet.name = sheet.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
@@ -346,98 +369,107 @@ export class ClassicSheetBuilder {
 			sheet.distance = ability.distance.map(d => AbilityLogic.getDistanceCreature(d, ability, refCreature)).join(', ');
 		}
 
-		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		let effectText = SheetFormatter.abilitySections(effectSections, refCreature).trim();
+		const sections = ability.sections.map(s => {
+			if (s.type === 'roll') {
+				const rollSection = {
+					rollPower: '',
+					rollT1Effect: '',
+					rollT2Effect: '',
+					rollT3Effect: '',
+					rollBonuses: undefined
+				} as PowerRollSection;
 
-		// Kind of hacky, but this is a one-off at the moment
-		if (CreatureLogic.isHero(creature)
-				&& ([ 'grab', 'knockback' ].includes(ability.id))
-				&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
-			effectText = effectText.replace(/your Might/g, 'your Intuition');
-		}
-		sheet.effect = effectText;
+				const rollAutoCalc = options?.showPowerRollCalculation ?? true;
 
-		const rollSections = ability.sections.filter(s => s.type === 'roll');
-		if (rollSections.length) {
-			sheet.hasPowerRoll = true;
-			const rollSection = rollSections[0];
-			const rollAutoCalc = options?.showPowerRollCalculation ?? true;
-
-			if (rollAutoCalc) {
-				if (isSummon) {
-					sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, summoner).toString();
+				if (rollAutoCalc) {
+					if (isSummon) {
+						rollSection.rollPower = AbilityLogic.getPowerRollBonusValue(ability, summoner).toString();
+					} else {
+						rollSection.rollPower = AbilityLogic.getPowerRollBonusValue(ability, refCreature).toString();
+					}
 				} else {
-					sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, refCreature).toString();
+					const characteristics = AbilityLogic.getPowerRollCharacteristics(ability, undefined).sort(SheetFormatter.sortCharacteristics);
+					const allCharacteristics = Object.values(Characteristic).sort(SheetFormatter.sortCharacteristics);
+					const isAllCharacteristics = allCharacteristics.every((c, i) => characteristics[i] === c);
+					if (isAllCharacteristics) {
+						rollSection.rollPower = 'Highest Characteristic';
+					} else {
+						rollSection.rollPower = SheetFormatter.joinCommasOr(characteristics.map(c => c.toString().slice(0, 1)));
+					}
 				}
+
+				rollSection.rollT1Effect = SheetFormatter.formatAbilityTier(s.roll.tier1, 1, ability, refCreature);
+				rollSection.rollT2Effect = SheetFormatter.formatAbilityTier(s.roll.tier2, 2, ability, refCreature);
+				rollSection.rollT3Effect = SheetFormatter.formatAbilityTier(s.roll.tier3, 3, ability, refCreature);
+
+				if (CreatureLogic.isHero(creature)) {
+					const isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
+					const isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
+
+					const meleeKits = HeroLogic
+						.getKitDamageBonuses(creature)
+						.filter(dmg => dmg.type === 'melee');
+
+					const rangedKits = HeroLogic
+						.getKitDamageBonuses(creature)
+						.filter(dmg => dmg.type === 'ranged');
+
+					if (isMelee && meleeKits.length > 1) {
+						const bestT1 = Math.max(...meleeKits.map(k => k.tier1));
+						const bestT2 = Math.max(...meleeKits.map(k => k.tier2));
+						const bestT3 = Math.max(...meleeKits.map(k => k.tier3));
+
+						const meleeBonuses = meleeKits
+							.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
+							.map(k => {
+								return {
+									name: k.name,
+									type: k.type,
+									tier1: SheetFormatter.addSign(k.tier1) || '',
+									tier2: SheetFormatter.addSign(k.tier2) || '',
+									tier3: SheetFormatter.addSign(k.tier3) || ''
+								};
+							});
+						if (meleeBonuses.length > 1) {
+							rollSection.rollBonuses = (rollSection.rollBonuses ?? []).concat(meleeBonuses);
+						}
+					}
+					if (isRanged && rangedKits.length > 1) {
+						const bestT1 = Math.max(...rangedKits.map(k => k.tier1));
+						const bestT2 = Math.max(...rangedKits.map(k => k.tier2));
+						const bestT3 = Math.max(...rangedKits.map(k => k.tier3));
+
+						const rangedBonuses = rangedKits
+							.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
+							.map(k => {
+								return {
+									name: k.name,
+									type: k.type,
+									tier1: SheetFormatter.addSign(k.tier1) || '',
+									tier2: SheetFormatter.addSign(k.tier2) || '',
+									tier3: SheetFormatter.addSign(k.tier3) || ''
+								};
+							});
+						if (rangedBonuses.length > 1) {
+							rollSection.rollBonuses = (rollSection.rollBonuses ?? []).concat(rangedBonuses);
+						}
+					}
+				}
+				return rollSection;
 			} else {
-				const characteristics = AbilityLogic.getPowerRollCharacteristics(ability, undefined).sort(SheetFormatter.sortCharacteristics);
-				const allCharacteristics = Object.values(Characteristic).sort(SheetFormatter.sortCharacteristics);
-				const isAllCharacteristics = allCharacteristics.every((c, i) => characteristics[i] === c);
-				if (isAllCharacteristics) {
-					sheet.rollPower = 'Highest Characteristic';
-				} else {
-					sheet.rollPower = SheetFormatter.joinCommasOr(characteristics.map(c => c.toString().slice(0, 1)));
+				let effectText = SheetFormatter.abilitySection(s, refCreature);
+				effectText = SheetFormatter.enhanceMarkdown(effectText);
+
+				// Kind of hacky, but this is a one-off at the moment
+				if (CreatureLogic.isHero(creature)
+						&& ([ 'grab', 'knockback' ].includes(ability.id))
+						&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
+					effectText = effectText.replace(/your Might/g, 'your Intuition');
 				}
+				return effectText;
 			}
-
-			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, refCreature);
-			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, refCreature);
-			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, refCreature);
-
-			if (CreatureLogic.isHero(creature)) {
-				const isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
-				const isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
-
-				const meleeKits = HeroLogic
-					.getKitDamageBonuses(creature)
-					.filter(dmg => dmg.type === 'melee');
-
-				const rangedKits = HeroLogic
-					.getKitDamageBonuses(creature)
-					.filter(dmg => dmg.type === 'ranged');
-
-				if (isMelee && meleeKits.length > 1) {
-					const bestT1 = Math.max(...meleeKits.map(k => k.tier1));
-					const bestT2 = Math.max(...meleeKits.map(k => k.tier2));
-					const bestT3 = Math.max(...meleeKits.map(k => k.tier3));
-
-					const meleeBonuses = meleeKits
-						.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
-						.map(k => {
-							return {
-								name: k.name,
-								type: k.type,
-								tier1: SheetFormatter.addSign(k.tier1) || '',
-								tier2: SheetFormatter.addSign(k.tier2) || '',
-								tier3: SheetFormatter.addSign(k.tier3) || ''
-							};
-						});
-					if (meleeBonuses.length > 1) {
-						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(meleeBonuses);
-					}
-				}
-				if (isRanged && rangedKits.length > 1) {
-					const bestT1 = Math.max(...rangedKits.map(k => k.tier1));
-					const bestT2 = Math.max(...rangedKits.map(k => k.tier2));
-					const bestT3 = Math.max(...rangedKits.map(k => k.tier3));
-
-					const rangedBonuses = rangedKits
-						.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
-						.map(k => {
-							return {
-								name: k.name,
-								type: k.type,
-								tier1: SheetFormatter.addSign(k.tier1) || '',
-								tier2: SheetFormatter.addSign(k.tier2) || '',
-								tier3: SheetFormatter.addSign(k.tier3) || ''
-							};
-						});
-					if (rangedBonuses.length > 1) {
-						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(rangedBonuses);
-					}
-				}
-			}
-		}
+		});
+		sheet.sections = sections;
 
 		return sheet;
 	};

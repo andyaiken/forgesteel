@@ -61,7 +61,11 @@ export class SheetLayout {
 
 	static getMonsterCardsLayout = (options: Options): CardPageLayout => {
 		// FORCE portrait
-		return this.getCardsLayoutForOrientation(options, 'portrait');
+		const layout = this.getCardsLayoutForOrientation(options, 'portrait');
+		// more conservative for monster/library cards
+		layout.linesY = 85;
+		layout.cardGap = 2;
+		return layout;
 	};
 
 	static getCardsLayoutForOrientation = (options: Options, orientation: 'portrait' | 'landscape'): CardPageLayout => {

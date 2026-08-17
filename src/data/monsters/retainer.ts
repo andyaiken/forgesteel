@@ -1134,6 +1134,7 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-12-retainer-4',
 						name: '‘Scuse Me, Boss',
 						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'Encounter' ] }),
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [

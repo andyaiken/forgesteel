@@ -134,16 +134,17 @@
     .power-roll {
         display: grid;
         grid-template-rows: min-content 1fr;
+        margin: 5px 0 0;
 
         font-size: 15px;
 
         .roll-tiers {
             display: grid;
             grid-template-rows: min-content min-content min-content;
-            margin: 0 10px;
+            margin-left: -7px;
 
             .tier {
-                margin: 0 0 3px;
+                margin: 0;
             }
 
         }
@@ -159,8 +160,8 @@
 
     .trigger {
         font-size: 15px;
-        label {
-            font-weight: 450;
+        p {
+            margin: 0;
         }
     }
     .effect {
@@ -175,6 +176,11 @@
 
         ul {
             margin-left: 10px;
+        }
+
+        blockquote {
+            font-style: italic;
+            margin: 15px 15px 15px 40px;
         }
 
         .potency {

@@ -12,6 +12,8 @@ import { FactoryLogic } from '../factory-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureText } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { Fixture } from '@/models/fixture';
+import { FixtureLogic } from '@/logic/fixture-logic';
 import { Follower } from '@/models/follower';
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
@@ -211,6 +213,44 @@ export class ClassicSheetBuilder {
 		};
 
 		return sheet;
+	};
+
+	static buildFixtureSheet = (fixture: Fixture, hero: Hero | undefined): TerrainSheet => {
+		// Fixtures are stat blocks like terrain (no characteristics), so they reuse the terrain card
+		const sections: (FeatureText | AbilitySheet)[] = [];
+
+		fixture.featuresByLevel
+			.filter(lvl => !hero?.class || (lvl.level <= hero.class.level))
+			.flatMap(lvl => lvl.features)
+			.forEach(f => {
+				switch (f.type) {
+					case FeatureType.Text:
+						sections.push(f);
+						break;
+					case FeatureType.Ability:
+						sections.push(this.buildAbilitySheet(f.data.ability, undefined));
+						break;
+				}
+			});
+
+		return {
+			id: fixture.id,
+			name: fixture.name,
+			type: fixture.role.terrainType,
+			role: fixture.role.type,
+			size: FormatLogic.getSize(fixture.size),
+			stamina: FixtureLogic.getStamina(fixture),
+			description: FixtureLogic.getFixtureDescription(fixture),
+			details: fixture.description,
+			encounterValue: '',
+			typicalSpace: '',
+			direction: '',
+			link: '',
+			immunity: '',
+			weakness: '',
+
+			sections: sections
+		};
 	};
 	// #endregion
 

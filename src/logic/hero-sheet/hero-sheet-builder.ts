@@ -50,6 +50,7 @@ export class HeroSheetBuilder {
 			projects: [],
 			followers: [],
 			summons: [],
+			fixtures: [],
 			featuresReferenceOther: [],
 			extraReferenceItems: [],
 
@@ -398,12 +399,14 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 		// #endregion
 
-		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Retainer, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
+		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Retainer, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice, FeatureType.Fixture ].includes(f.feature.type))
 			.map(f => f.feature);
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 
 		sheet.summons = HeroLogic.getSummons(hero).filter(f => CreatureLogic.isSummon(f))
 			.map(f => this.buildSummonSheet(f, hero)).filter(s => !!s);
+
+		sheet.fixtures = HeroLogic.getFixtures(hero).map(f => ClassicSheetBuilder.buildFixtureSheet(f, hero));
 
 		coveredFeatureIds.push(...retinue.map(f => f.id));
 

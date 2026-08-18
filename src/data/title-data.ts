@@ -632,7 +632,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-wanted-dead-or-alive-2',
-				name: 'Minion Mover',
+				name: 'Minion Mower',
 				description: 'When you make a melee strike that targets a minion and at least one more minion is within distance of the strike, the strike gains a +3 damage bonus.'
 			}),
 			FactoryLogic.feature.create({

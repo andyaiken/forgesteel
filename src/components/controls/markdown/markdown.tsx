@@ -1,4 +1,4 @@
-import { BlockTypeSelect, BoldItalicUnderlineToggles, CodeToggle, InsertTable, ListsToggle, MDXEditor, headingsPlugin, listsPlugin, quotePlugin, tablePlugin, thematicBreakPlugin, toolbarPlugin } from '@mdxeditor/editor';
+import { BlockTypeSelect, BoldItalicUnderlineToggles, CodeToggle, CreateLink, InsertTable, ListsToggle, MDXEditor, headingsPlugin, imagePlugin, linkDialogPlugin, linkPlugin, listsPlugin, quotePlugin, tablePlugin, thematicBreakPlugin, toolbarPlugin } from '@mdxeditor/editor';
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Utils } from '@/utils/utils';
@@ -52,6 +52,12 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 		setValue(sanitized);
 	};
 
+	const onError = (payload: { error: string, source: string }) => {
+		console.error('Error parsing markdown');
+		console.error(payload.error);
+		console.error(payload.source);
+	};
+
 	return (
 		<MDXEditor
 			className={props.fill ? 'markdown-editor fill' : 'markdown-editor'}
@@ -62,6 +68,9 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 				quotePlugin(),
 				tablePlugin(),
 				thematicBreakPlugin(),
+				linkPlugin(),
+				linkDialogPlugin(),
+				imagePlugin(),
 				toolbarPlugin({
 					toolbarClassName: 'markdown-editor-toolbar',
 					toolbarContents: () => (
@@ -70,6 +79,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 							<BoldItalicUnderlineToggles />
 							<ListsToggle />
 							<CodeToggle />
+							<CreateLink />
 							<InsertTable />
 						</>
 					)
@@ -77,6 +87,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 			]}
 			markdown={initialMarkdown}
 			onChange={onChange}
+			onError={onError}
 		/>
 	);
 };

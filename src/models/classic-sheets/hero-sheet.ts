@@ -9,6 +9,7 @@ import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Perk } from '@/models/perk';
+import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 import { Title } from '@/models/title';
 
 // #region Character
@@ -132,6 +133,7 @@ export interface HeroSheet {
 	followers: FollowerSheet[];
 	// companions: FollowerSheet[];
 	summons: MonsterSheet[];
+	fixtures: TerrainSheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther: {

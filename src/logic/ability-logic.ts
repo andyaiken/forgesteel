@@ -650,15 +650,23 @@ export class AbilityLogic {
 
 		// Potencies
 		const potencyRegex = /[MARIP]\s*<\s*\[?(\d+|weak|average|avg|strong)\]?,?/gi;
-		[ ...text.matchAll(potencyRegex) ].map(r => r[0]).forEach(str => {
-			const x = str.endsWith(',') ? str.substring(0, str.length - 1) : str;
-			text = text.replace(str, `\`${x}\``);
+		text = text.replace(potencyRegex, (match: string, _value: string, offset: number, whole: string) => {
+			if (whole[offset - 1] === '`') {
+				return match;
+			}
+			const x = match.endsWith(',') ? match.substring(0, match.length - 1) : match;
+			return `\`${x}\``;
 		});
 
 		// Condition names
 		const conditionNames = Object.values(ConditionType).filter(c => (c !== ConditionType.Custom) && (c !== ConditionType.Quick));
 		const conditionRegex = new RegExp(`\\b(${conditionNames.join('|')})\\b`, 'gi');
-		text = text.replace(conditionRegex, '**$1**');
+		text = text.replace(conditionRegex, (match: string, name: string, offset: number, whole: string) => {
+			if (whole.substring(offset - 2, offset) === '**') {
+				return match;
+			}
+			return `**${name}**`;
+		});
 
 		return text;
 	};

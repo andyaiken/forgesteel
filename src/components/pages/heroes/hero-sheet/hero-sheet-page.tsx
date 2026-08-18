@@ -31,6 +31,7 @@ import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsResourcesCard } from '@/components/panels/classic-sheet/stats-resources-card/stats-resources-card';
+import { TerrainCard } from '@/components/panels/classic-sheet/monster-card/terrain-card';
 import { TitlesCard } from '@/components/panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
 import { useOptions } from '@/contexts/data-context';
@@ -302,6 +303,14 @@ export const HeroSheetPage = (props: Props) => {
 				element: <MonsterCard monster={fs} key={fs.id} />,
 				width: 1,
 				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateMonsterSize(fs, layoutEnd.cardLineLen)),
+				shown: false
+			});
+		});
+		character.fixtures.forEach(fx => {
+			extraCards.required.unshift({
+				element: <TerrainCard terrain={fx} key={fx.id} />,
+				width: 1,
+				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateTerrainSize(fx, layoutEnd.cardLineLen)),
 				shown: false
 			});
 		});

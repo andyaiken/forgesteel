@@ -187,10 +187,10 @@ describe('buildRetainerSheet', () => {
 	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
 
 	test.each([
-		[ 1, 0 ],
-		[ 4, 1 ],
-		[ 7, 2 ],
-		[ 10, 3 ]
+		[ 1, 3 ],
+		[ 4, 2 ],
+		[ 7, 1 ],
+		[ 10, 0 ]
 	])('should limit advancement features included based on level', (level, numAdvancements) => {
 		const sheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
 		expect(sheet.advancement?.length).toBe(numAdvancements);

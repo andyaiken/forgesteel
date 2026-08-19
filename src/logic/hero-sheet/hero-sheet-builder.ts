@@ -581,19 +581,19 @@ export class HeroSheetBuilder {
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, follower));
 
 		const advancement = [];
-		if ((!heroLevel || heroLevel >= 4) && follower.retainer?.level4?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 4) && follower.retainer?.level4?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 4,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level4.data.ability, follower)
 			});
 		}
-		if ((!heroLevel || heroLevel >= 7) && follower.retainer?.level7?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 7) && follower.retainer?.level7?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 7,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level7.data.ability, follower)
 			});
 		}
-		if ((!heroLevel || heroLevel >= 10) && follower.retainer?.level10?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 10) && follower.retainer?.level10?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 10,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level10.data.ability, follower)

@@ -1,4 +1,4 @@
-import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { AbilitySheet, PowerRollSection } from '@/models/classic-sheets/ability-sheet';
 import { Collections } from '@/utils/collections';
 import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -51,71 +51,82 @@ export const AbilityCard = (props: Props) => {
 		);
 	};
 
-	const getPowerRollSection = () => {
-		if (ability.hasPowerRoll) {
-			return (
-				<div className='power-roll'>
-					<div className='power'>Power Roll + <DrawSteelSymbolText content={ability.rollPower} lookFor='characteristics' /></div>
-					<div className='roll-tiers'>
-						<div className='tier t1'>
-							<img src={rollT1} alt='≤ 11' className='range' />
-							<div className='effect'>
-								<DrawSteelSymbolText content={ability.rollT1Effect} lookFor='potencies' />
-							</div>
-						</div>
-						<div className='tier t2'>
-							<img src={rollT2} alt='12 - 16' className='range' />
-							<div className='effect'>
-								<DrawSteelSymbolText content={ability.rollT2Effect} lookFor='potencies' />
-							</div>
-						</div>
-						<div className='tier t3'>
-							<img src={rollT3} alt='17 +' className='range' />
-							<div className='effect'>
-								<DrawSteelSymbolText content={ability.rollT3Effect} lookFor='potencies' />
-							</div>
-						</div>
-					</div>
-					{
-						ability.rollBonuses ?
-							<div className='roll-bonuses'>
-								{ability.rollBonuses.map(bonus => (
-									<p key={bonus.name}>
-										<strong>{bonus.name}</strong>: {bonus.tier1} | {bonus.tier2} | {bonus.tier3} {bonus.type} damage
-									</p>
-								))}
-							</div>
-							: null
-					}
-				</div>
-			);
-		}
-	};
-
 	const getTriggerSection = () => {
 		if (ability.trigger) {
 			return (
-				<p className='trigger'><label>Trigger: </label><Markdown useSpan={true} text={ability.trigger} /></p>
+				<Markdown
+					text={'**Trigger:** ' + ability.trigger}
+					className='trigger'
+				/>
 			);
 		}
 	};
 
-	const getEffectSection = () => {
-		if (ability.effect) {
-			return (
-				<div className='effect'>
-					{
-						!(ability.effect.startsWith('##') || ability.isNotTrueAbility) ?
-							<h4>Effect:</h4>
-							: null
-					}
-					<Markdown
-						text={ability.effect}
-						className='ability-effect'
-					/>
+	const getSections = () => {
+		let isFirstText = true;
+		return ability.sections.map(s => {
+			if (typeof s === 'string') {
+				const result = getEffectSection(s, isFirstText);
+				isFirstText = false;
+				return result;
+			} else {
+				return getPowerRollSection(s);
+			}
+		});
+	};
+
+	const getPowerRollSection = (section: PowerRollSection) => {
+		return (
+			<div className='power-roll'>
+				<div className='power'>Power Roll + <DrawSteelSymbolText content={section.rollPower} lookFor='characteristics' /></div>
+				<div className='roll-tiers'>
+					<div className='tier t1'>
+						<img src={rollT1} alt='≤ 11' className='range' />
+						<div className='effect'>
+							<DrawSteelSymbolText content={section.rollT1Effect} lookFor='potencies' />
+						</div>
+					</div>
+					<div className='tier t2'>
+						<img src={rollT2} alt='12 - 16' className='range' />
+						<div className='effect'>
+							<DrawSteelSymbolText content={section.rollT2Effect} lookFor='potencies' />
+						</div>
+					</div>
+					<div className='tier t3'>
+						<img src={rollT3} alt='17 +' className='range' />
+						<div className='effect'>
+							<DrawSteelSymbolText content={section.rollT3Effect} lookFor='potencies' />
+						</div>
+					</div>
 				</div>
-			);
+				{
+					section.rollBonuses ?
+						<div className='roll-bonuses'>
+							{section.rollBonuses.map(bonus => (
+								<p key={bonus.name}>
+									<strong>{bonus.name}</strong>: {bonus.tier1} | {bonus.tier2} | {bonus.tier3} {bonus.type} damage
+								</p>
+							))}
+						</div>
+						: null
+				}
+			</div>
+		);
+	};
+
+	const getEffectSection = (section: string, isFirstText: boolean) => {
+		let text = section;
+		if (isFirstText && !(section.startsWith('##') || ability.isNotTrueAbility)) {
+			text = '**Effect:** ' + section;
 		}
+		return (
+			<div className='effect'>
+				<Markdown
+					text={text}
+					className='ability-effect'
+				/>
+			</div>
+		);
 	};
 
 	const getCardClasses = (ability: AbilitySheet) => {
@@ -141,9 +152,8 @@ export const AbilityCard = (props: Props) => {
 				{ability.qualifiers?.map((q, i) => {
 					return (<div className='action-qualifier' key={`qualifier-${i}`}>{q}</div>);
 				})}
-				{getPowerRollSection()}
 				{getTriggerSection()}
-				{getEffectSection()}
+				{getSections()}
 			</section>
 		</div>
 	);

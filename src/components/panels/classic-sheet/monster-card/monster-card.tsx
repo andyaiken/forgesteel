@@ -123,6 +123,45 @@ export const MonsterCard = (props: Props) => {
 		);
 	};
 
+	const getAdvancement = () => {
+		if (monster.advancement?.length) {
+			return (
+				<div className='advancement-abilities'>
+					{monster.advancement?.map(a =>
+						<div className='advancement' key={`${monster.id}-advancement-${a.level}`}>
+							{
+								a.ability ?
+									<>
+										<h4>Level {a.level} Retainer Advancement Ability</h4>
+										{getAbilityIcon(a.ability)}
+										<AbilityComponent
+											ability={a.ability}
+										/>
+									</>
+									: null
+							}
+							{
+								a.features ?
+									<>
+										<h4>Level {a.level} {monster.name} Advancement Feature</h4>
+										<img src={starIcon} className='icon' />
+										{
+											a.features.map(f => {
+												return (
+													<FeatureComponent feature={f} key={`${monster.id}-advancement-${f.id}`} />
+												);
+											})
+										}
+									</>
+									: null
+							}
+						</div>
+					)}
+				</div>
+			);
+		}
+	};
+
 	const cardClasses = [ 'monster', 'card' ];
 	if (columns > 1) {
 		cardClasses.push('wide');
@@ -148,6 +187,7 @@ export const MonsterCard = (props: Props) => {
 				<CharacteristicsComponent characteristics={monster.characteristics} />
 				{getAbilities()}
 				{getFeatures()}
+				{getAdvancement()}
 			</section>
 		</div>
 	);

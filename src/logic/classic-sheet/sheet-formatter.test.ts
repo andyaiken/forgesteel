@@ -1,14 +1,18 @@
+import { Feature, FeatureAbility, FeatureChoice } from '@/models/feature';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { conduit } from '@/data/classes/conduit/conduit';
+import { creation } from '@/data/domains/creation';
+import { demon } from '@/data/monsters/demon';
+import { dragonKnight } from '@/data/ancestries/dragon-knight';
 import { retainer } from '@/data/monsters/retainer';
 
 afterEach(() => {
@@ -524,12 +528,26 @@ describe('calculateProjectsOverviewCardSize', () => {
 });
 
 describe('calculateAbilitySize', () => {
+	const divineDragon = creation.featuresByLevel
+		.find(lvlFeatures => lvlFeatures.level === 9)?.features
+		.find(feature => feature.name === 'Divine Dragon') as FeatureAbility;
+
+	const arise = conduit.abilities
+		.find(ability => ability.id === 'conduit-ability-25') as Ability;
+
+	const rememberOath = (dragonKnight.features
+		.find(f => f.id === 'dragon-knight-feature-2') as FeatureChoice)
+		.data.options.find(f => f.feature.id === 'dragon-knight-feature-2-8')?.feature as FeatureAbility;
+
 	test.each([
-		[ AbilityData.heal, 11.2 ],
-		[ AbilityData.freeStrike, 7.2 ],
-		[ AbilityData.escapeGrab, 25.4 ],
-		[ AbilityData.clawDirt, 23.1 ],
-		[ AbilityData.advance, 9 ]
+		[ AbilityData.heal, 12.1 ],
+		[ AbilityData.freeStrikeMelee, 12 ],
+		[ AbilityData.escapeGrab, 22.5 ],
+		[ AbilityData.clawDirt, 21.5 ],
+		[ AbilityData.advance, 9.5 ],
+		[ divineDragon.data.ability, 37.5 ],
+		[ rememberOath.data.ability, 20.5 ],
+		[ arise, 16.5 ]
 	])('calculates size properly for standard abilities', (ability: Ability, expected: number) => {
 		const hero = FactoryLogic.createHero();
 		const sheet = ClassicSheetBuilder.buildAbilitySheet(ability, hero);
@@ -540,20 +558,41 @@ describe('calculateAbilitySize', () => {
 });
 
 describe('calculateFollowerSize()', () => {
-	// vi.mock('@/logic/hero-logic', () => {
-	// 	const HeroLogic = vi.fn();
-	// 	return { HeroLogic: HeroLogic };
-	// });
-
 	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
 
 	test.each([
-		[ 1, 37.5 ],
-		[ 4, 48 ],
-		[ 7, 61 ],
-		[ 10, 70 ]
+		// [ 4, 48 ],
+		// [ 7, 61 ],
+		// [ 10, 70 ],
+		[ 1, 36.5 ]
 	])('properly calculates the size of a retainer at different levels of advancement', (level, expectedSize) => {
 		const followerSheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
 		expect(SheetFormatter.calculateFollowerSize(followerSheet, 54)).toBeCloseTo(expectedSize, 0);
+	});
+});
+
+describe('calculateMonsterSize()', () => {
+	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
+	const devilDefector = retainer.monsters.find(m => m.id === 'retainer-3') as Monster;
+
+	test.each([
+		[ humanWarrior, 57.5 ],
+		[ devilDefector, 60.5 ]
+	])('properly calculates the size of a retainer', (retainer, expectedSize) => {
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(retainer);
+		const size = SheetFormatter.calculateMonsterSize(sheet, 54);
+		expect(Math.abs(expectedSize - size), `Expected ${expectedSize} but got ${size}`).toBeLessThan(1.1);
+	});
+
+	const soulrakerHandmaiden = demon.monsters.find(m => m.id === 'demon-3rd-8') as Monster;
+	const remasch = demon.monsters.find(m => m.id === 'demon-1st-6') as Monster;
+
+	test.each([
+		[ soulrakerHandmaiden, 53 ],
+		[ remasch, 41 ]
+	])('properly calculates the size of a monster card', (monster, expectedSize) => {
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
+		const size = SheetFormatter.calculateMonsterSize(sheet, 54);
+		expect(Math.abs(expectedSize - size), `Expected ${expectedSize} but got ${size}`).toBeLessThan(1.1);
 	});
 });

@@ -422,7 +422,16 @@ export class SheetFormatter {
 			case 'field': {
 				const effect = AbilityLogic.getTextEffect(section.effect, hero);
 				if (section.value !== 0) {
-					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${effect}`;
+					if (section.name === 'Spend') {
+						const spendType = hero && HeroLogic.getHeroicResources(hero)[0]?.name;
+						let spendPost = '';
+						if (spendType) {
+							spendPost = ' ' + spendType;
+						}
+						text = `\n**${section.name} ${section.value}${section.repeatable ? '+' : ''}${spendPost}:** ${effect}`;
+					} else {
+						text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${effect}`;
+					}
 				} else {
 					text = `\n#### ${section.name}:\n${effect}`;
 				}
@@ -644,6 +653,7 @@ export class SheetFormatter {
 
 	static calculateFollowerSize = (follower: FollowerSheet, lineWidth: number): number => {
 		let size = 0;
+		// console.log(`=== Follower Size: ${follower?.name}`);
 		if (follower.classification === 'Follower') {
 			size = 6; // name, characteristics
 			size += this.countLines(`Skills: ${follower.skills?.join(', ')}`, lineWidth);
@@ -651,44 +661,78 @@ export class SheetFormatter {
 			size += 0.5;
 		} else {
 			size = 21.5; // name, stats, characteristics, stamina
+			// console.log(`---- header: ${size}`);
 			follower.abilities?.forEach(ability => {
 				size += this.calculateAbilityComponentSize(ability, lineWidth) + 1;
+				// console.log(`---- Ability ${ability.name}: ${size}`);
 			});
 			follower.features?.forEach(f => {
 				size += this.calculateFeatureSize(f, null, lineWidth, false) + 1;
+				// console.log(`---- Feature ${f.name}: ${size}`);
 			});
-			follower.advancement?.forEach(advancement => {
-				size += 1.5;
-				if (advancement.ability) {
-					size += this.calculateAbilityComponentSize(advancement.ability, lineWidth);
-				}
-				if (advancement.features?.length) {
-					advancement.features.forEach(f => {
-						size += this.calculateFeatureSize(f, null, lineWidth);
-					});
-				}
-			});
+			// follower.advancement?.forEach(advancement => {
+			// 	size += 1.5;
+			// 	if (advancement.ability) {
+			// 		size += this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+			// 	}
+			// 	if (advancement.features?.length) {
+			// 		advancement.features.forEach(f => {
+			// 			size += this.calculateFeatureSize(f, null, lineWidth);
+			// 		});
+			// 	}
+			//	console.log(`---- Advancement Lvl ${advancement.level}: ${size}`);
+			// });
 		}
+		size -= 1; // no final divider
+		// console.log(`=== Total: ${size}`);
+		// console.log('===================');
 		return size;
 	};
 
 	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number, columns: number = 1): number => {
 		let size = 0;
+		const denseLineWidth = lineWidth * 1.4;
+		// console.log(`=== Monster Size: ${monster?.name}`);
 		size = 12.5; // name, stats, characteristics
 		let largestBlock = 0;
+		// console.log(`---- header: ${size}`);
 		monster.abilities?.forEach(ability => {
-			const abilitySize = this.calculateAbilityComponentSize(ability, lineWidth - 5);
+			const abilitySize = this.calculateAbilityComponentSize(ability, denseLineWidth);
 			size += abilitySize;
+			size += 1.5;
 			largestBlock = Math.max(largestBlock, abilitySize);
+			// console.log(`>> ---- Ability ${ability.name}: ${size}`);
 		});
 		monster.features?.forEach(f => {
-			const featureSize = this.calculateFeatureSize(f, null, lineWidth, false);
+			let featureSize = this.calculateFeatureSize(f, null, denseLineWidth, false);
+			if (featureSize > 15) {
+				featureSize = featureSize * 1.1;
+			}
 			size += featureSize;
+			size += 1.5;
 			largestBlock = Math.max(largestBlock, featureSize);
+			// console.log(`>> ---- Feature ${f.name}: ${size}`);
 		});
+		size -= 1.5; // no final divider
 		// ability/feature dividers
-		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
-		size = Math.ceil(size / columns);
+		// size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+
+		monster.advancement?.forEach(advancement => {
+			size += 2; // header
+			if (advancement.ability) {
+				size += this.calculateAbilityComponentSize(advancement.ability, denseLineWidth);
+			}
+			if (advancement.features?.length) {
+				advancement.features.forEach(f => {
+					size += this.calculateFeatureSize(f, null, denseLineWidth);
+				});
+			}
+			// console.log(`---- Advancement Lvl ${advancement.level}: ${size}`);
+		});
+		size += 1;// bottom padding
+		size = columns > 1 ? Math.ceil(size / columns) : size;
+		// console.log(`=== Total: ${size}`);
+		// console.log('===================');
 		return size;
 	};
 
@@ -728,26 +772,35 @@ export class SheetFormatter {
 
 	// COMPACT Ability display - e.g. for Retainers & Monsters
 	static calculateAbilityComponentSize = (ability: AbilitySheet, lineWidth: number): number => {
-		let size = 1.5; // name, usage
+		let size = 1; // name, usage
 		size += this.countLines(`${ability.keywords} ${ability.actionType}`, lineWidth);
 		size += this.countLines(`${ability.distance} ${ability.target}`, lineWidth);
 
 		const rollLineLen = Math.ceil(lineWidth - 10); // account for icons
-		size += this.countLines(ability.rollT1Effect, rollLineLen);
-		size += this.countLines(ability.rollT2Effect, rollLineLen);
-		size += this.countLines(ability.rollT3Effect, rollLineLen);
+		// console.log(`>> -- Ability header: ${size}`);
 
 		if (ability.trigger) {
-			size += this.countLines(ability.trigger, lineWidth);
+			size += 0.4 + this.countLines(ability.trigger, lineWidth);
 		}
 
-		if (ability.effect) {
-			if (ability.hasPowerRoll) {
-				size += 0.5; // extra padding when effect follows power roll
+		// console.log(`>> -- Trigger: ${size}`);
+		ability.sections.forEach((s, n) => {
+			if (typeof s === 'string') {
+				const effectSize = this.countLines(s, lineWidth, 1, 0.8);
+				// size += (ability.isNotTrueAbility ? 0 : 1.5) + effectSize;
+				size += effectSize;
+			} else {
+				size += 0.3 + this.countLines(s.rollT1Effect, rollLineLen);
+				size += 0.3 + this.countLines(s.rollT2Effect, rollLineLen);
+				size += 0.3 + this.countLines(s.rollT3Effect, rollLineLen);
 			}
-			const effectSize = this.countLines(ability.effect, lineWidth);
-			size += effectSize;
-		}
+
+			if (n > 0) {
+				size += 0.4;
+			}
+			// console.log(`>> -- Section [${n + 1}]: ${size}`);
+		});
+		// console.log(`>> -- Ability total: ${size}`);
 		return size;
 	};
 
@@ -798,27 +851,42 @@ export class SheetFormatter {
 
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
-		const rollLineLen = Math.ceil(0.8 * lineWidth) - 10;
+		// console.log(`=== Ability Size: ${ability?.name}`);
+		const rollLineLen = Math.ceil(lineWidth) - 10;
 		if (ability) {
-			size += 4; // title
-			size += this.countLines(ability.description, lineWidth);
-			size += ability.isNotTrueAbility ? 1 : 2.5; // keywords, distance, etc
-			size += ability.hasPowerRoll ? 2 : 0;
-			if (ability.hasPowerRoll) {
-				size += 0.3 + this.countLines(ability.rollT1Effect, rollLineLen);
-				size += 0.3 + this.countLines(ability.rollT2Effect, rollLineLen);
-				size += 0.3 + this.countLines(ability.rollT3Effect, rollLineLen);
-			}
+			size += ability.cost ? 4 : 3.8; // title
+			// console.log(`-- Title: ${size}`);
+			size += this.countLines(ability.description, lineWidth * 1.1);
+			// console.log(`-- Description: ${size}`);
+			size += ability.isNotTrueAbility ? 1 : 2.2; // keywords, distance, etc
+			size += ability.qualifiers?.length ? 0.8 : 0;
+			// console.log(`-- Keywords/Distance/etc.: ${size}`);
 			if (ability.trigger) {
 				size += 1 + this.countLines(ability.trigger, lineWidth);
 			}
-			if (ability.effect) {
-				if (ability.hasPowerRoll) {
-					size += 0.5; // extra padding when effect follows power roll
+			// console.log(`-- Trigger: ${size}`);
+
+			ability.sections.forEach((s, n) => {
+				if (typeof s === 'string') {
+					const effectSize = this.countLines(s, lineWidth, 1);
+					// size += (ability.isNotTrueAbility ? 0 : 1.5) + effectSize;
+					size += effectSize;
+				} else {
+					size += 1.5; // 'Power Roll + ...'
+					size += 0.15 + this.countLines(s.rollT1Effect, rollLineLen);
+					size += 0.15 + this.countLines(s.rollT2Effect, rollLineLen);
+					size += 0.15 + this.countLines(s.rollT3Effect, rollLineLen);
 				}
-				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				size += (ability.isNotTrueAbility ? 0 : 1.5) + effectSize;
-			}
+
+				if (n > 0) {
+					size += 0.4;
+				}
+				// console.log(`-- Section [${n + 1}]: ${size}`);
+			});
+
+			size += 0.5; // bottom padding
+			// console.log(`-- Full: ${size}`);
+			// console.log('============================');
 		}
 		return size;
 	};
@@ -828,7 +896,12 @@ export class SheetFormatter {
 		const result = text?.trim().replaceAll(/(!\[.+\])\(data:image.+\)/g, '$1(<img>)').split('\n').reduce((n, l) => {
 			let len = emptyLineSize;
 			if (l.length) {
-				len = Math.ceil(l.length / lineWidth) * lineFactor;
+				let calcLength = l.length;
+				// Add 10% to long text blocks to account for wrapping inconsistencies
+				if (l.length > (3 * lineWidth)) {
+					calcLength *= 1.1;
+				}
+				len = Math.ceil(calcLength / lineWidth) * lineFactor;
 				len += 0.2;// additional spacing
 			}
 			if (l.startsWith('|:---')) { // table divider
@@ -848,6 +921,8 @@ export class SheetFormatter {
 				len += 0.5;
 			} else if (l.startsWith('* ')) { // list item, will be indented
 				len = Math.ceil(l.length / (lineWidth - 3));
+			} else if (l.startsWith('>')) { // blockquote - don't include extra spacing from line 860
+				len -= 0.2;
 			}
 
 			return n + len;

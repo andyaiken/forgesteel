@@ -529,6 +529,12 @@ ${encounter.objective.victories}`
 					}
 				});
 				break;
+			case FeatureType.SummonFormation:
+				if (feature.data.minionFeatures === undefined) {
+					feature.data.minionFeatures = [];
+				}
+				feature.data.minionFeatures.forEach(UpdateLogic.updateFeature);
+				break;
 		}
 	};
 

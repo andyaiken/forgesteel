@@ -977,7 +977,9 @@ export class FeatureLogic {
 				return data;
 			}
 			case FeatureType.SummonFormation: {
-				const data: FeatureSummonFormationData = {};
+				const data: FeatureSummonFormationData = {
+					minionFeatures: []
+				};
 				return data;
 			}
 			case FeatureType.SwitchOptions: {

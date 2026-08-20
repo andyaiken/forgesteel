@@ -681,13 +681,15 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSummonFormation = (data: { id: string, name?: string, description?: string }): FeatureSummonFormation => {
+	createSummonFormation = (data: { id: string, name?: string, description?: string, minionFeatures?: Feature[] }): FeatureSummonFormation => {
 		return {
 			id: data.id,
 			name: data.name || 'Summon Formation',
 			description: data.description || '',
 			type: FeatureType.SummonFormation,
-			data: {}
+			data: {
+				minionFeatures: data.minionFeatures || []
+			}
 		};
 	};
 

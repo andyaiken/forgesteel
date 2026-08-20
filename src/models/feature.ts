@@ -309,8 +309,9 @@ export interface FeatureSummonChoiceData extends _FeatureData {
 };
 export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FeatureSummonFormationData extends _FeatureData {};
+export interface FeatureSummonFormationData extends _FeatureData {
+	minionFeatures: Feature[];
+};
 export type FeatureSummonFormation = FeatureOf<FeatureType.SummonFormation, FeatureSummonFormationData>;
 
 export interface FeatureSwitchOptionsData extends _FeatureData {

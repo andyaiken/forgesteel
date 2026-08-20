@@ -64,6 +64,12 @@ export class HeroSheetBuilder {
 		const packageContents = allFeatures.filter(f => f.feature.type == FeatureType.PackageContent);
 		coveredFeatureIds.push(...packageContents.map(p => p.feature.id));
 
+		// Threshold benefits are rendered as part of their threshold
+		coveredFeatureIds.push(...allFeatures
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResourceThreshold)
+			.map(f => f.data.feature.id));
+
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = HeroLogic.getWealth(hero);
 		sheet.renown = HeroLogic.getRenown(hero);

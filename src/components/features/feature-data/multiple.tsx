@@ -23,7 +23,7 @@ export const InfoMultiple = (props: InfoProps) => {
 	if (props.feature.description) {
 		return (
 			<Expander title='Features'>
-				{props.data.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+				{props.data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 			</Expander>
 		);
 	}
@@ -33,7 +33,7 @@ export const InfoMultiple = (props: InfoProps) => {
 			{
 				props.data.features.map(f => (
 					<div key={f.id} className='container'>
-						<FeaturePanel feature={f} mode={PanelMode.Full} />
+						<FeaturePanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</div>
 				))
 			}

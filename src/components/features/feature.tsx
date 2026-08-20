@@ -32,6 +32,7 @@ import { EditFixture, InfoFixture } from '@/components/features/feature-data/fix
 import { EditForController, InfoForController } from '@/components/features/feature-data/for-controller';
 import { EditHeroicResource, InfoHeroicResource } from '@/components/features/feature-data/heroic-resource';
 import { EditHeroicResourceGain, InfoHeroicResourceGain } from '@/components/features/feature-data/heroic-resource-gain';
+import { EditHeroicResourceThreshold, InfoHeroicResourceThreshold } from '@/components/features/feature-data/heroic-resource-threshold';
 import { EditLanguage, InfoLanguage } from '@/components/features/feature-data/language';
 import { EditMalice, InfoMalice } from '@/components/features/feature-data/malice';
 import { EditMovementMode, InfoMovementMode } from '@/components/features/feature-data/movement-mode';
@@ -97,6 +98,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResourceGain:
 			return <InfoHeroicResourceGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.HeroicResourceThreshold:
+			return <InfoHeroicResourceThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ItemChoice:
 			return <InfoItemChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Kit:
@@ -196,6 +199,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditHeroicResource data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResourceGain:
 			return <EditHeroicResourceGain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.HeroicResourceThreshold:
+			return <EditHeroicResourceThreshold data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ItemChoice:
 			return <EditItemChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Kit:

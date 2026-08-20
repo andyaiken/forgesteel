@@ -451,6 +451,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.feature.createHeroicResource({
 					id: 'troubadour-48',
 					name: 'Applause',
+					type: 'epic',
 					gains: [
 						{
 							tag: 'respite',

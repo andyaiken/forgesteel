@@ -449,6 +449,9 @@ export class SourcebookLogic {
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
 					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
@@ -470,6 +473,9 @@ export class SourcebookLogic {
 					break;
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
@@ -493,6 +499,9 @@ export class SourcebookLogic {
 					break;
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
@@ -526,6 +535,9 @@ export class SourcebookLogic {
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
 					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
@@ -555,6 +567,9 @@ export class SourcebookLogic {
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
 					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
@@ -576,6 +591,9 @@ export class SourcebookLogic {
 					break;
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
@@ -599,6 +617,9 @@ export class SourcebookLogic {
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
 					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
@@ -620,6 +641,9 @@ export class SourcebookLogic {
 					break;
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
@@ -643,6 +667,9 @@ export class SourcebookLogic {
 					break;
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);

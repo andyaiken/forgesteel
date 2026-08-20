@@ -32,8 +32,20 @@ export const FeaturesPanel = (props: Props) => {
 	const [ featureAll, setFeatureAll ] = useState<boolean>(false);
 	const options = useOptions();
 
-	const features = HeroLogic.getFeatures(props.hero)
+	const heroFeatures = HeroLogic.getFeatures(props.hero);
+
+	// Unlocked threshold benefits are listed under their heroic resource, so don't show them separately as well
+	const thresholdFeatureIDs = heroFeatures
+		.map(f => f.feature)
+		.filter(f => f.type === FeatureType.HeroicResourceThreshold)
+		.map(f => f.data.feature.id);
+
+	const features = heroFeatures
 		.filter(f => {
+			if (thresholdFeatureIDs.includes(f.feature.id)) {
+				return false;
+			}
+
 			if (featureAll) {
 				const featureTypes = [ FeatureType.Ability, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.Follower, FeatureType.Retainer ];
 				return !featureTypes.includes(f.feature.type);

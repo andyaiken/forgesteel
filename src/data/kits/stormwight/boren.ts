@@ -62,16 +62,75 @@ export const boren: Kit = {
 			name: 'Primordial Storm: Blizzard',
 			description: 'Your primordial damage type is cold.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'kit-boren-feature-4',
 			name: 'Growing Ferocity',
-			description: `
-* **Ferocity 2**: You can have up to two creatures grabbed at time. Additionally, whenever you make a strike against a creature you have grabbed, you gain 1 surge.
-* **Ferocity 4**: The first time you grab a creature on a turn, you gain 1 surge.
-* **Ferocity 6**: You gain an edge on the Grab and Knockback maneuvers.
-* **Ferocity 8 (4th level)**: The first time you grab a creature on a turn, you gain 2 surges instead of 1.
-* **Ferocity 10 (7th level)**: You have a double edge on the Grab and Knockback maneuvers.
-* **Ferocity 12 (10th level)**: Whnever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you have a creature grabbed, any ability roll made against that creature gains a bonus to its potency equal to your Might score.`
+			description: 'As your ferocity grows, you gain benefits as noted on the Growing Ferocity table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-2',
+					resource: 'Ferocity',
+					value: 2,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-2a',
+						name: 'Growing Ferocity (Ferocity 2)',
+						description: 'You can have up to two creatures grabbed at time. Additionally, whenever you make a strike against a creature you have grabbed, you gain 1 surge.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-4',
+					resource: 'Ferocity',
+					value: 4,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-4a',
+						name: 'Growing Ferocity (Ferocity 4)',
+						description: 'The first time you grab a creature on a turn, you gain 1 surge.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-6',
+					resource: 'Ferocity',
+					value: 6,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-6a',
+						name: 'Growing Ferocity (Ferocity 6)',
+						description: 'You gain an edge on the Grab and Knockback maneuvers.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-8',
+					resource: 'Ferocity',
+					value: 8,
+					level: 4,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-8a',
+						name: 'Growing Ferocity (Ferocity 8)',
+						description: 'The first time you grab a creature on a turn, you gain 2 surges instead of 1.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-10',
+					resource: 'Ferocity',
+					value: 10,
+					level: 7,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-10a',
+						name: 'Growing Ferocity (Ferocity 10)',
+						description: 'You have a double edge on the Grab and Knockback maneuvers.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-12',
+					resource: 'Ferocity',
+					value: 12,
+					level: 10,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-12a',
+						name: 'Growing Ferocity (Ferocity 12)',
+						description: 'Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you have a creature grabbed, any ability roll made against that creature gains a bonus to its potency equal to your Might score.'
+					})
+				})
+			]
 		})
 	]
 };

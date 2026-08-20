@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -580,6 +580,17 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = [ ...oFeature.data.selected ];
+					break;
+				}
+				case FeatureType.HeroicResourceThreshold: {
+					const oFeature = originalFeature as FeatureHeroicResourceThreshold;
+					if (oFeature.type !== FeatureType.HeroicResourceThreshold) {
+						break;
+					}
+
+					if (oFeature.data.feature.id === feature.data.feature.id) {
+						HeroUpdateLogic.updateHeroFeatureData(feature.data.feature, oFeature.data.feature, hero, sourcebooks);
+					}
 					break;
 				}
 				case FeatureType.Multiple: {

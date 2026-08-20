@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureClassAbility, FeatureForController, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureClassAbility, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
 import { Hero, HeroOverview } from '@/models/hero';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
@@ -166,6 +166,49 @@ export class HeroLogic {
 				}
 			});
 		}
+
+		// Handle heroic resource thresholds
+		const thresholdsHandled: string[] = [];
+		let unlockedFeatures: { feature: Feature, source: string, level: number | undefined }[] = [];
+		do {
+			const resources = features
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.map(f => f as FeatureHeroicResource);
+
+			unlockedFeatures = [];
+
+			features
+				.filter(f => f.feature.type === FeatureType.HeroicResourceThreshold)
+				.filter(f => !thresholdsHandled.includes(f.feature.id))
+				.forEach(f => {
+					thresholdsHandled.push(f.feature.id);
+
+					try {
+						const threshold = f.feature as FeatureHeroicResourceThreshold;
+
+						if (heroLevel < threshold.data.level) {
+							return;
+						}
+
+						// An empty resource name means 'the hero's heroic resource'
+						const resource = threshold.data.resource ?
+							resources.find(r => r.name === threshold.data.resource)
+							: resources.find(r => r.data.type === 'heroic');
+						if (!resource || (resource.data.value < threshold.data.value)) {
+							return;
+						}
+
+						const simplified = FeatureLogic.simplifyFeatures([ { feature: threshold.data.feature, source: f.source, level: f.level } ], heroLevel, hero.state.tutorialMode);
+						unlockedFeatures.push(...simplified);
+					} catch (ex) {
+						console.error(`Error in heroic resource threshold feature: ${f.feature.name}`);
+						console.error(ex);
+					}
+				});
+
+			features.push(...unlockedFeatures);
+		} while (unlockedFeatures.length > 0);
 
 		// Get any 'for controller' features from monsters we control
 		const featuresFromControlledMonsters: { feature: Feature, source: string, level: number | undefined }[] = [];
@@ -1052,17 +1095,21 @@ export class HeroLogic {
 	};
 
 	static getHeroicResources = (hero: Hero) => {
-		return HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.HeroicResource)
+		const features = HeroLogic.getFeatures(hero).map(f => f.feature);
+		const resourceFeatures = features.filter(f => f.type === FeatureType.HeroicResource);
+		const thresholdFeatures = features.filter(f => f.type === FeatureType.HeroicResourceThreshold);
+
+		// A threshold that doesn't name a resource keys off the hero's heroic resource
+		const defaultResourceName = resourceFeatures.find(f => f.data.type === 'heroic')?.name;
+
+		return resourceFeatures
 			.map(f => {
 				let gains = [];
 				switch (f.data.type) {
 					case 'heroic': {
-						const gainsFromFeatures = HeroLogic.getFeatures(hero)
-							.map(f => f.feature)
-							.filter(f => f.type === FeatureType.HeroicResourceGain)
-							.map(f => f.data);
+						const gainsFromFeatures = features
+							.filter(g => g.type === FeatureType.HeroicResourceGain)
+							.map(g => g.data);
 
 						const gainsFromDomains = HeroLogic.getDomains(hero)
 							.flatMap(d => d.resourceGains)
@@ -1083,11 +1130,17 @@ export class HeroLogic {
 					}
 				}
 
+				const thresholds = thresholdFeatures
+					.filter(t => (t.data.resource || defaultResourceName) === f.name)
+					.map(t => t.data)
+					.sort((a, b) => a.value - b.value);
+
 				return {
 					id: f.id,
 					name: f.name,
 					type: f.data.type,
 					gains: gains,
+					thresholds: thresholds,
 					details: f.data.details,
 					canBeNegative: f.data.canBeNegative,
 					value: f.data.value

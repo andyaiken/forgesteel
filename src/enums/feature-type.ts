@@ -22,6 +22,7 @@ export enum FeatureType {
 	ForController = 'For Controller',
 	HeroicResource = 'Heroic Resource',
 	HeroicResourceGain = 'Heroic Resource Gain',
+	HeroicResourceThreshold = 'Heroic Resource Threshold',
 	ItemChoice = 'Item Choice',
 	Kit = 'Kit',
 	Language = 'Language',

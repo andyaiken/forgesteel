@@ -577,6 +577,9 @@ export class SheetFormatter {
 			size += bottomMargin + 0.3;
 		} else if (f.type === FeatureType.HeroicResource) {
 			size = headerSize + (2 * this.countLines(f.data.details, lineWidth));
+		} else if (f.type === FeatureType.HeroicResourceThreshold) {
+			size = headerSize + this.countLines(f.data.feature.description.trim(), lineWidth, 0, 0.88);
+			size += bottomMargin;
 		} else if ([ FeatureType.Choice,
 			FeatureType.ItemChoice,
 			FeatureType.SkillChoice,

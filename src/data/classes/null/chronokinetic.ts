@@ -20,21 +20,37 @@ export const chronokinetic: SubClass = {
 				FactoryLogic.feature.createMultiple({
 					id: 'null-sub-1-1-2',
 					name: 'Chronokinetic Mastery',
+					description: 'As your discipline grows, your psionic mastery of your body intensifies, granting benefits from the Chronokinetic Mastery table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
 					features: [
-						FactoryLogic.feature.create({
-							id: 'null-sub-1-1-2a',
-							name: 'Chronokinetic Mastery',
-							description: `
-As your discipline grows, your psionic mastery of your body intensifies, granting benefits from the Chronokinetic Mastery table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.
-
-| Discipline     | Benefit                                                                                                                                                                                    |
-|:---------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2              | Whenever you use the Knockback maneuver, you can use the Disengage move action as a free triggered action either before or after the maneuver.                                             |
-| 4              | The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 1 surge.                                                                                |
-| 6              | You gain an edge on the Grab and Knockback maneuvers.                                                                                                                                      |
-| 8 (4th level)  | The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 2 surges.                                                                               |
-| 10 (7th level) | You have a double edge on the Grab and Knockback maneuvers.                                                                                                                                |
-| 12 (10th level)| Whenever you force move a target, the forced movement distance gains a bonus equal to your Intuition score. Additionally, whenever you use a heroic ability, you gain 10 temporary Stamina.|`
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-1-1-2-2',
+							resource: 'Discipline',
+							value: 2,
+							feature: FactoryLogic.feature.create({
+								id: 'null-sub-1-1-2-2a',
+								name: 'Chronokinetic Mastery (Discipline 2)',
+								description: 'Whenever you use the Knockback maneuver, you can use the Disengage move action as a free triggered action either before or after the maneuver.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-1-1-2-4',
+							resource: 'Discipline',
+							value: 4,
+							feature: FactoryLogic.feature.create({
+								id: 'null-sub-1-1-2-4a',
+								name: 'Chronokinetic Mastery (Discipline 4)',
+								description: 'The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 1 surge.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-1-1-2-6',
+							resource: 'Discipline',
+							value: 6,
+							feature: FactoryLogic.feature.create({
+								id: 'null-sub-1-1-2-6a',
+								name: 'Chronokinetic Mastery (Discipline 6)',
+								description: 'You gain an edge on the Grab and Knockback maneuvers.'
+							})
 						}),
 						FactoryLogic.feature.createPackageContent({
 							id: 'null-sub-1-1-2b',
@@ -109,7 +125,19 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 		},
 		{
 			level: 4,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-1-4-1',
+					name: 'Chronokinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 8,
+					feature: FactoryLogic.feature.create({
+						id: 'null-sub-1-4-1a',
+						name: 'Chronokinetic Mastery (Discipline 8)',
+						description: 'The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 2 surges.'
+					})
+				})
+			]
 		},
 		{
 			level: 5,
@@ -176,7 +204,19 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 		},
 		{
 			level: 7,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-1-7-1',
+					name: 'Chronokinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 10,
+					feature: FactoryLogic.feature.create({
+						id: 'null-sub-1-7-1a',
+						name: 'Chronokinetic Mastery (Discipline 10)',
+						description: 'You have a double edge on the Grab and Knockback maneuvers.'
+					})
+				})
+			]
 		},
 		{
 			level: 8,
@@ -243,7 +283,19 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 		},
 		{
 			level: 10,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-1-10-1',
+					name: 'Chronokinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 12,
+					feature: FactoryLogic.feature.create({
+						id: 'null-sub-1-10-1a',
+						name: 'Chronokinetic Mastery (Discipline 12)',
+						description: 'Whenever you force move a target, the forced movement distance gains a bonus equal to your Intuition score. Additionally, whenever you use a heroic ability, you gain 10 temporary Stamina.'
+					})
+				})
+			]
 		}
 	],
 	abilities: [],

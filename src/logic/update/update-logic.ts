@@ -427,6 +427,9 @@ ${encounter.objective.victories}`
 				if (feature.data.type === undefined) {
 					feature.data.type = 'heroic';
 				}
+				if (feature.data.gains === undefined) {
+					feature.data.gains = [];
+				}
 				feature.data.gains.forEach(g => {
 					if (g.tag === undefined) {
 						g.tag = '';
@@ -438,6 +441,9 @@ ${encounter.objective.victories}`
 						g.used = false;
 					}
 				});
+				if (feature.data.thresholds === undefined) {
+					feature.data.thresholds = [];
+				}
 				break;
 			case FeatureType.HeroicResourceGain:
 				if (feature.data.tag === undefined) {
@@ -452,6 +458,12 @@ ${encounter.objective.victories}`
 				if (feature.data.replacesTags === undefined) {
 					feature.data.replacesTags = [];
 				}
+				break;
+			case FeatureType.HeroicResourceThreshold:
+				if (feature.data.resource === undefined) {
+					feature.data.resource = '';
+				}
+				UpdateLogic.updateFeature(feature.data.feature);
 				break;
 			case FeatureType.ItemChoice:
 				feature.data.selected.forEach(UpdateLogic.updateItem);

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -507,6 +507,9 @@ export class FeatureLogic {
 				[ ...feature.data.options.map(f => f.feature), ...feature.data.selected ]
 					.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
 				break;
+			case FeatureType.HeroicResourceThreshold:
+				FeatureLogic.switchFeatureCharacteristic(feature.data.feature, fromCharacteristic, toCharacteristic);
+				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
 				break;
@@ -539,6 +542,7 @@ export class FeatureLogic {
 			FeatureType.ForController,
 			FeatureType.HeroicResource,
 			FeatureType.HeroicResourceGain,
+			FeatureType.HeroicResourceThreshold,
 			FeatureType.ItemChoice,
 			FeatureType.Kit,
 			FeatureType.Language,
@@ -794,6 +798,7 @@ export class FeatureLogic {
 				const data: FeatureHeroicResourceData = {
 					type: 'heroic',
 					gains: [],
+					thresholds: [],
 					details: '',
 					canBeNegative: false,
 					value: 0
@@ -808,6 +813,19 @@ export class FeatureLogic {
 					frequency: ResourceGainFrequency.OncePerRound,
 					used: false,
 					replacesTags: []
+				};
+				return data;
+			}
+			case FeatureType.HeroicResourceThreshold: {
+				const data: FeatureHeroicResourceThresholdData = {
+					resource: '',
+					value: 1,
+					level: 1,
+					feature: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
 				};
 				return data;
 			}
@@ -1040,6 +1058,9 @@ export class FeatureLogic {
 			case FeatureType.Follower:
 				feature.data.follower.id = Utils.guid();
 				break;
+			case FeatureType.HeroicResourceThreshold:
+				feature.data.feature.id = Utils.guid();
+				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(FeatureLogic.changeFeatureIDs);
 				break;
@@ -1223,6 +1244,8 @@ export class FeatureLogic {
 				return 'This feature grants you a heroic (or epic) resource.';
 			case FeatureType.HeroicResourceGain:
 				return 'This feature grants you a way to gain your heroic resource.';
+			case FeatureType.HeroicResourceThreshold:
+				return 'This feature grants you another feature once your heroic resource reaches a given value.';
 			case FeatureType.ItemChoice:
 				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:

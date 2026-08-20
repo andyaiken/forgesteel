@@ -2,6 +2,7 @@ import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureHeroicResourceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -10,7 +11,6 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Pill } from '@/components/controls/pill/pill';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -50,6 +50,27 @@ export const InfoHeroicResource = (props: InfoProps) => {
 				}
 			</ul>
 			<Markdown text={data.details} />
+			{data.thresholds.length > 0 ? <Divider size='small' /> : null}
+			{
+				data.thresholds.map(t => {
+					const heroLevel = props.hero?.class?.level || 1;
+					const unlocked = (data.value >= t.value) && (heroLevel >= t.level);
+
+					let value = `${t.value}+`;
+					if (t.level > 1) {
+						value += ` (level ${t.level}+)`;
+					}
+
+					return (
+						<div key={t.feature.id}>
+							<Flex align='center' gap={10}>
+								<ResourcePill value={value} units='' satisfied={unlocked} />
+								<div className='ds-text compact-text'>{t.feature.description}</div>
+							</Flex>
+						</div>
+					);
+				})
+			}
 		</>
 	);
 };

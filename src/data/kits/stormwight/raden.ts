@@ -63,16 +63,75 @@ export const raden: Kit = {
 			name: 'Primordial Storm: Rat Flood',
 			description: 'Your primordial damage type is corruption.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'kit-raden-feature-4',
 			name: 'Growing Ferocity',
-			description: `
-* **Ferocity 2**: Whenever you use the Disengage move action, the distance you can shift gains a bonus equal to your Agility score.
-* **Ferocity 4**: The first time you shift on a turn, you gain 1 surge.
-* **Ferocity 6**: You gain an edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.
-* **Ferocity 8 (4th level)**: The first time you shift on a turn, you gain 2 surges instead of 1.
-* **Ferocity 10 (7th level)**: You have a double edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.
-* **Ferocity 12 (10th level)**: Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, the potency of any effects targeting you is reduced by 2 for you.`
+			description: 'As your ferocity grows, you gain benefits as noted on the Growing Ferocity table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-2',
+					resource: 'Ferocity',
+					value: 2,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-2a',
+						name: 'Growing Ferocity (Ferocity 2)',
+						description: 'Whenever you use the Disengage move action, the distance you can shift gains a bonus equal to your Agility score.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-4',
+					resource: 'Ferocity',
+					value: 4,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-4a',
+						name: 'Growing Ferocity (Ferocity 4)',
+						description: 'The first time you shift on a turn, you gain 1 surge.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-6',
+					resource: 'Ferocity',
+					value: 6,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-6a',
+						name: 'Growing Ferocity (Ferocity 6)',
+						description: 'You gain an edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-8',
+					resource: 'Ferocity',
+					value: 8,
+					level: 4,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-8a',
+						name: 'Growing Ferocity (Ferocity 8)',
+						description: 'The first time you shift on a turn, you gain 2 surges instead of 1.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-10',
+					resource: 'Ferocity',
+					value: 10,
+					level: 7,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-10a',
+						name: 'Growing Ferocity (Ferocity 10)',
+						description: 'You have a double edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-raden-feature-4-12',
+					resource: 'Ferocity',
+					value: 12,
+					level: 10,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-raden-feature-4-12a',
+						name: 'Growing Ferocity (Ferocity 12)',
+						description: 'Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, the potency of any effects targeting you is reduced by 2 for you.'
+					})
+				})
+			]
 		})
 	]
 };

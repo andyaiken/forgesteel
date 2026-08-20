@@ -235,6 +235,15 @@ export const SidebarPanel = (props: Props) => {
 													</div>
 												))
 											}
+											{
+												hr.thresholds
+													.filter(t => (hr.value >= t.value) && ((props.hero.class?.level || 1) >= t.level))
+													.map(t => (
+														<div key={t.feature.id} className='ds-text'>
+															{t.feature.description}
+														</div>
+													))
+											}
 										</div>
 								)
 							}

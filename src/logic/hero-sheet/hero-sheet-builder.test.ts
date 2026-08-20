@@ -17,8 +17,10 @@ import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
+import { berserker } from '@/data/classes/fury/berserker';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { core } from '@/data/sourcebooks/official/core';
+import { fury } from '@/data/classes/fury/fury';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { retainer } from '@/data/monsters/retainer';
 
@@ -218,5 +220,24 @@ describe('buildHeroSheet', () => {
 		expect(result).not.toBeNullable();
 		expect(result.followers.length).toBe(4);
 		expect(result.summons.length).toBe(2);
+	});
+
+	test('it should not report unlocked heroic resource threshold benefits as missed features', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 10;
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+		// At 12 ferocity every Growing Ferocity rung is unlocked, so its benefit is collated onto the hero
+		hero.class.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = 12);
+
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [], {} as Options);
+
+		expect(warn.mock.calls.filter(c => String(c[0]).includes('Missed features'))).toEqual([]);
+		expect((result.featuresReferenceOther || []).map(f => f.feature.name)).not.toContain('Growing Ferocity (Ferocity 2)');
 	});
 });

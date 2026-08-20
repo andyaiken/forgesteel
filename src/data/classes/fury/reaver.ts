@@ -23,14 +23,7 @@ export const reaver: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'fury-sub-2-1-3',
 					name: 'Primordial Cunning',
-					description: `
-You are never surprised. Additionally, whenever you would push a target with forced movement, you can slide them instead.
-
-As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocity table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.
-
-* **Ferocity 2**: Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Agility score.
-* **Ferocity 4**: The first time you slide a creature on a turn, you gain 1 surge.
-* **Ferocity 6**: You gain an edge on Agility tests and the Knockback maneuver.`
+					description: 'You are never surprised. Additionally, whenever you would push a target with forced movement, you can slide them instead.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -47,6 +40,43 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 							})
 						]
 					})
+				}),
+				FactoryLogic.feature.createMultiple({
+					id: 'fury-sub-2-1-5',
+					name: 'Growing Ferocity',
+					description: 'As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocity table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
+					features: [
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'fury-sub-2-1-5-2',
+							resource: 'Ferocity',
+							value: 2,
+							feature: FactoryLogic.feature.create({
+								id: 'fury-sub-2-1-5-2a',
+								name: 'Growing Ferocity (Ferocity 2)',
+								description: 'Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Agility score.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'fury-sub-2-1-5-4',
+							resource: 'Ferocity',
+							value: 4,
+							feature: FactoryLogic.feature.create({
+								id: 'fury-sub-2-1-5-4a',
+								name: 'Growing Ferocity (Ferocity 4)',
+								description: 'The first time you slide a creature on a turn, you gain 1 surge.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'fury-sub-2-1-5-6',
+							resource: 'Ferocity',
+							value: 6,
+							feature: FactoryLogic.feature.create({
+								id: 'fury-sub-2-1-5-6a',
+								name: 'Growing Ferocity (Ferocity 6)',
+								description: 'You gain an edge on Agility tests and the Knockback maneuver.'
+							})
+						})
+					]
 				})
 			]
 		},
@@ -139,10 +169,16 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 		{
 			level: 4,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceThreshold({
 					id: 'fury-sub-2-4-1',
 					name: 'Growing Ferocity Improvement',
-					description: '**8 Ferocity:** The first time you slide a creature on a turn, you gain 2 surges.'
+					resource: 'Ferocity',
+					value: 8,
+					feature: FactoryLogic.feature.create({
+						id: 'fury-sub-2-4-1a',
+						name: 'Growing Ferocity (Ferocity 8)',
+						description: 'The first time you slide a creature on a turn, you gain 2 surges.'
+					})
 				})
 			]
 		},
@@ -215,10 +251,16 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 		{
 			level: 7,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceThreshold({
 					id: 'fury-sub-2-7-1',
 					name: 'Growing Ferocity Improvement',
-					description: '**10 Ferocity:** You have a double edge on Agility tests and the Knockback maneuver.'
+					resource: 'Ferocity',
+					value: 10,
+					feature: FactoryLogic.feature.create({
+						id: 'fury-sub-2-7-1a',
+						name: 'Growing Ferocity (Ferocity 10)',
+						description: 'You have a double edge on Agility tests and the Knockback maneuver.'
+					})
 				})
 			]
 		},
@@ -298,10 +340,16 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 		{
 			level: 10,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceThreshold({
 					id: 'fury-sub-2-10-1',
 					name: 'Growing Ferocity Improvement',
-					description: '**12 Ferocity:** Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you make a power roll that imposes forced movement on a target, the forced movement distance gains a bonus equal to your Agility score.'
+					resource: 'Ferocity',
+					value: 12,
+					feature: FactoryLogic.feature.create({
+						id: 'fury-sub-2-10-1a',
+						name: 'Growing Ferocity (Ferocity 12)',
+						description: 'Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you make a power roll that imposes forced movement on a target, the forced movement distance gains a bonus equal to your Agility score.'
+					})
 				})
 			]
 		}

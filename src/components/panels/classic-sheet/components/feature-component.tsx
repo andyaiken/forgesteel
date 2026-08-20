@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
 
 import { Ability } from '@/models/ability';
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
@@ -331,6 +331,19 @@ const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
 	);
 };
 
+const HeroicResourceThresholdComponent = (feature: FeatureHeroicResourceThreshold) => {
+	const requirement = `${feature.data.resource || 'Resource'} ${feature.data.value}+`
+		+ (feature.data.level > 1 ? ` (level ${feature.data.level}+)` : '');
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${requirement}: `}</strong>{feature.data.feature.name}</div>
+			{feature.data.feature.description ?
+				<div className='feature-description'>{feature.data.feature.description}</div>
+				: undefined}
+		</>
+	);
+};
+
 const KitFeatureComponent = (feature: FeatureKit) => {
 	let displayName = feature.name;
 	if (!feature.description.length) {
@@ -499,6 +512,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.HeroicResource:
 			content = HeroicResourceComponent(feature);
+			break;
+		case FeatureType.HeroicResourceThreshold:
+			content = HeroicResourceThresholdComponent(feature);
 			break;
 		case FeatureType.Kit:
 			content = KitFeatureComponent(feature);

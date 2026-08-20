@@ -172,6 +172,7 @@ export type FeatureForController = FeatureOf<FeatureType.ForController, FeatureF
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
 	gains: ResourceGain[];
+	thresholds: FeatureHeroicResourceThresholdData[];
 	details: string;
 	canBeNegative: boolean;
 	value: number;
@@ -182,6 +183,14 @@ export interface FeatureHeroicResourceGainData extends _FeatureData, ResourceGai
 	replacesTags: string[];
 };
 export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;
+
+export interface FeatureHeroicResourceThresholdData extends _FeatureData {
+	resource: string;
+	value: number;
+	level: number;
+	feature: Feature;
+};
+export type FeatureHeroicResourceThreshold = FeatureOf<FeatureType.HeroicResourceThreshold, FeatureHeroicResourceThresholdData>;
 
 export interface FeatureItemChoiceData extends _FeatureData {
 	types: ItemType[];
@@ -370,6 +379,7 @@ export type Feature =
 	| FeatureForController
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain
+	| FeatureHeroicResourceThreshold
 	| FeatureItemChoice
 	| FeatureKit
 	| FeatureLanguage

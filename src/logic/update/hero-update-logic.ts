@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -542,6 +542,15 @@ export class HeroUpdateLogic {
 					});
 					break;
 				}
+				case FeatureType.HeroicResource: {
+					const oFeature = originalFeature as FeatureHeroicResource;
+					if (oFeature.type !== FeatureType.HeroicResource) {
+						break;
+					}
+
+					feature.data.value = oFeature.data.value;
+					break;
+				}
 				case FeatureType.ItemChoice: {
 					const oFeature = originalFeature as FeatureItemChoice;
 					if (oFeature.type !== FeatureType.ItemChoice) {
@@ -692,6 +701,15 @@ export class HeroUpdateLogic {
 
 						return oTitle;
 					});
+					break;
+				}
+				case FeatureType.Toggle: {
+					const oFeature = originalFeature as FeatureToggle;
+					if (oFeature.type !== FeatureType.Toggle) {
+						break;
+					}
+
+					feature.data.checked = oFeature.data.checked;
 					break;
 				}
 			};

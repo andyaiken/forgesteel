@@ -73,6 +73,8 @@ export class HeroUpdateLogic {
 			if (hero.culture.type === undefined) {
 				hero.culture.type = CultureType.Ancestral;
 			}
+
+			UpdateLogic.updateCulture(hero.culture);
 		}
 
 		if (hero.career) {

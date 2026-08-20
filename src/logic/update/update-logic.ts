@@ -93,6 +93,10 @@ export class UpdateLogic {
 			ancestry.ancestryPoints = 0;
 		}
 		ancestry.features.forEach(UpdateLogic.updateFeature);
+
+		if (ancestry.culture) {
+			UpdateLogic.updateCulture(ancestry.culture);
+		}
 	};
 
 	static updateCareer = (career: Career) => {

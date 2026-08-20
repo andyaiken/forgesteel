@@ -276,6 +276,15 @@ export const shots = [
 		prepare: openAddSection('Generate a random encounter')
 	},
 	{
+		name: 'library-share-code',
+		route: '/library/item/item-color-cloak-blue',
+		prepare: async (page, settle) => {
+			await page.getByRole('button', { name: 'Export' }).click();
+			await settle();
+		},
+		highlight: 'button:has-text("Copy Share Code")'
+	},
+	{
 		name: 'library-adventure',
 		route: state => `/library/adventure/${state.homebrew.adventure}`
 	},

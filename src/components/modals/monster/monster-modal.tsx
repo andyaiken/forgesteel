@@ -1,5 +1,5 @@
 import { Button, Divider, Flex, Segmented, Space } from 'antd';
-import { EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { CopyOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { ControlledMonsterCustomizePanel } from '@/components/panels/controlled-monster-customize/controlled-monster-customize-panel';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
@@ -16,6 +16,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
 import { PanelMode } from '@/enums/panel-mode';
+import { SharedElementKind } from '@/logic/sharing-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -36,6 +37,7 @@ interface Props {
 	updateMonster?: (monster: Monster) => void;
 	updateEncounter?: (encounter: Encounter) => void;
 	exportElementData?: (category: string, element: Element) => void;
+	copyElementCode?: (kind: SharedElementKind, element: Element) => void;
 }
 
 export const MonsterModal = (props: Props) => {
@@ -57,6 +59,14 @@ export const MonsterModal = (props: Props) => {
 		}
 	};
 
+	const copyMonsterCode = () => {
+		if (props.copyElementCode) {
+			// Whatever is on screen, rather than what arrived in props - a retainer which has been
+			// customised should go to the recipient in the state its owner is looking at
+			props.copyElementCode('monster', monster);
+		}
+	};
+
 	const getToolbar = () => {
 		if (props.updateMonster) {
 			return (
@@ -71,11 +81,24 @@ export const MonsterModal = (props: Props) => {
 			);
 		}
 
-		if (props.exportElementData) {
+		if (props.exportElementData || props.copyElementCode) {
 			return (
-				<Button icon={<UploadOutlined />} onClick={exportMonster}>
-					Export
-				</Button>
+				<>
+					{
+						props.copyElementCode ?
+							<Button icon={<CopyOutlined />} onClick={copyMonsterCode}>
+								Copy Code
+							</Button>
+							: null
+					}
+					{
+						props.exportElementData ?
+							<Button icon={<UploadOutlined />} onClick={exportMonster}>
+								Export
+							</Button>
+							: null
+					}
+				</>
 			);
 		}
 

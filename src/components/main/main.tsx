@@ -1,5 +1,6 @@
 import { Encounter, EncounterSlot } from '@/models/encounter';
 import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
+import { MAX_CHAT_CODE_LENGTH, SharedElementKind, SharingLogic } from '@/logic/sharing-logic';
 import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
@@ -430,6 +431,7 @@ export const Main = (props: Props) => {
 					persistHero(copy);
 				}}
 				exportElementData={exportLibraryElementData}
+				copyElementCode={copyLibraryElementCode}
 			/>
 		);
 	};
@@ -660,6 +662,14 @@ export const Main = (props: Props) => {
 				}
 				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureLogic.changeFeatureIDs);
 				item.featuresByLevel.flatMap(lvl => lvl.features).forEach(UpdateLogic.updateFeature);
+				item.imbuements.forEach(imbuement => {
+					imbuement.id = Utils.guid();
+					if (imbuement.crafting) {
+						imbuement.crafting.id = Utils.guid();
+					}
+					FeatureLogic.changeFeatureIDs(imbuement.feature);
+					UpdateLogic.updateFeature(imbuement.feature);
+				});
 			} else {
 				item = FactoryLogic.createItem({
 					id: Utils.guid(),
@@ -1346,6 +1356,46 @@ export const Main = (props: Props) => {
 			.then(() => navigation.goToLibrary(kind));
 	};
 
+	const copyLibraryElementCode = async (kind: SharedElementKind, element: Element) => {
+		let code: string;
+		try {
+			code = await SharingLogic.encode(kind, element);
+		} catch {
+			notify.error({
+				title: 'Not Copied',
+				description: `Forge Steel could not create a code for this ${kind}.`,
+				placement: 'top'
+			});
+			return;
+		}
+
+		try {
+			await window.navigator.clipboard.writeText(code);
+		} catch {
+			notify.error({
+				title: 'Not Copied',
+				description: 'Forge Steel could not use your clipboard; you can use Export as Data instead.',
+				placement: 'top'
+			});
+			return;
+		}
+
+		if (code.length > MAX_CHAT_CODE_LENGTH) {
+			notify.warning({
+				title: `${element.name || Format.capitalize(kind)} Copied`,
+				description: `The code is in your clipboard, but at ${code.length} characters it is too long for one message in most chat apps. Send it in two parts for the recipient to paste one after the other, or use Export as Data instead.`,
+				placement: 'top'
+			});
+			return;
+		}
+
+		notify.info({
+			title: `${element.name || Format.capitalize(kind)} Copied`,
+			description: `A code for this ${kind} is now in your clipboard; anyone you send it to can paste it into their hero.`,
+			placement: 'top'
+		});
+	};
+
 	const exportLibraryElementData = (category: string, element: Element) => {
 		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
@@ -1604,6 +1654,7 @@ export const Main = (props: Props) => {
 				}
 				onClose={() => setDrawer(null)}
 				exportElementData={exportLibraryElementData}
+				copyElementCode={copyLibraryElementCode}
 			/>
 		);
 	};
@@ -1999,6 +2050,7 @@ export const Main = (props: Props) => {
 										moveElement={moveLibraryElement}
 										deleteElement={deleteLibraryElement}
 										exportElementData={exportLibraryElementData}
+										copyElementCode={copyLibraryElementCode}
 										exportElementImage={exportLibraryElementImage}
 										exportElementPdf={exportLibraryElementPdf}
 										startEncounter={startEncounter}

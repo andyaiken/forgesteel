@@ -1,14 +1,17 @@
 import { Button, Drawer, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ImportCodeModal } from '@/components/modals/import-code/import-code-modal';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
@@ -31,6 +34,7 @@ interface Props {
 export const HeroTitlesModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ titlesVisible, setTitlesVisible ] = useState<boolean>(false);
+	const [ importVisible, setImportVisible ] = useState<boolean>(false);
 
 	useEffect(() => {
 		setHero(Utils.copy(props.hero));
@@ -42,6 +46,16 @@ export const HeroTitlesModal = (props: Props) => {
 		setHero(copy);
 		setTitlesVisible(false);
 		props.onChange(copy);
+	};
+
+	const importTitle = (title: Title) => {
+		const copy = Utils.copy(title);
+		copy.id = Utils.guid();
+		copy.features.forEach(FeatureLogic.changeFeatureIDs);
+		copy.selectedFeatureID = '';
+
+		addTitle(copy);
+		setImportVisible(false);
 	};
 
 	const changeTitle = (title: Title) => {
@@ -76,7 +90,12 @@ export const HeroTitlesModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 						<HeaderText
 							extra={
-								<Button type='text' icon={<PlusOutlined />} onClick={() => setTitlesVisible(true)} />
+								<ButtonGroup
+									buttons={[
+										{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add a title', onClick: () => setTitlesVisible(true) },
+										{ type: 'button', icon: <DownloadOutlined />, tooltip: 'Import a code', onClick: () => setImportVisible(true) }
+									]}
+								/>
 							}
 						>
 							Titles
@@ -151,6 +170,19 @@ export const HeroTitlesModal = (props: Props) => {
 									onSelect={addTitle}
 									onCustomize={props.onCustomize}
 									onClose={() => setTitlesVisible(false)}
+								/>
+								: null
+						}
+					</Drawer>
+					<Drawer open={importVisible} onClose={() => setImportVisible(false)} closeIcon={null} size={500}>
+						{
+							importVisible ?
+								<ImportCodeModal
+									kind='title'
+									hero={hero}
+									sourcebooks={props.sourcebooks}
+									onImport={element => importTitle(element as Title)}
+									onClose={() => setImportVisible(false)}
 								/>
 								: null
 						}

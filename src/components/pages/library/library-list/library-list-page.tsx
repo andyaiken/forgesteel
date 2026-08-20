@@ -59,6 +59,7 @@ import { Project } from '@/models/project';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
+import { SharedElementKind } from '@/logic/sharing-logic';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
@@ -91,6 +92,7 @@ interface Props {
 	moveElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	exportElementData: (category: string, element: Element) => void;
+	copyElementCode: (kind: SharedElementKind, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
 	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
 	startEncounter: (encounter: Encounter) => void;
@@ -785,6 +787,13 @@ export const LibraryListPage = (props: Props) => {
 						<Button onClick={() => props.exportElementData(cat, element)}>
 							Export as Data
 						</Button>
+						{
+							[ 'item', 'monster', 'title' ].includes(cat) ?
+								<Button onClick={() => props.copyElementCode(cat as SharedElementKind, element)}>
+									Copy Share Code
+								</Button>
+								: null
+						}
 					</div>
 				)
 			} as DropdownConfig;

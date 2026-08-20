@@ -34,6 +34,7 @@ import libraryMontageClassic from '@/assets/screenshots/library-montage-classic.
 import libraryNegotiation from '@/assets/screenshots/library-negotiation.png';
 import libraryNegotiationBuilder from '@/assets/screenshots/library-negotiation-builder.png';
 import libraryNegotiationClassic from '@/assets/screenshots/library-negotiation-classic.png';
+import libraryShareCode from '@/assets/screenshots/library-share-code.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 import librarySummoner from '@/assets/screenshots/library-summoner.png';
 import libraryThirdParty from '@/assets/screenshots/third-party.png';
@@ -145,6 +146,11 @@ export class TipData {
 			FactoryLogic.createTip({
 				image: librarySummoner,
 				content: 'Forge Steel now includes the Summoner class.',
+				isNew: true
+			}),
+			FactoryLogic.createTip({
+				image: libraryShareCode,
+				content: 'You can share an item, a title or a retainer as a short code - use **Copy Share Code**, and paste it into your chat. Whoever you send it to can bring it into their hero with the **Import Code** button.',
 				isNew: true
 			}),
 			// #endregion

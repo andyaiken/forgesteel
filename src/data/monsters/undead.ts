@@ -882,7 +882,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
+								bonus: 3,
 								tier1: 'P<1 the target is levitated (EoT)',
 								tier2: 'P<2 the target is levitated (EoT)',
 								tier3: 'P<3 the target is levitated until the end of the encounter'

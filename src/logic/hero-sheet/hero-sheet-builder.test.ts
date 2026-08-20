@@ -83,6 +83,21 @@ describe('buildSummonSheet', () => {
 		expect(ability).toBeDefined();
 		expect(ability?.abilityType).toBe('1 Essence');
 	});
+
+	test('minion power rolls use the summoner\'s characteristic', () => {
+		const minions = circleOfGraves.featuresByLevel.flatMap(fbl => fbl.features)
+			.find(f => f.id === 'summoner-4-1-5') as FeatureSummonChoice;
+		const graveKnight = minions.data.options.find(o => o.id === 'summoner-4-1-5a') as Summon;
+		const summoner = FactoryLogic.createHero();
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
+
+		// Knight Strike rolls Reason - the grave knight's own Reason is 0, the summoner's is 3
+		const sheet = HeroSheetBuilder.buildSummonSheet(graveKnight, summoner);
+		const ability = sheet.abilities?.find(a => a.name === 'Knight Strike');
+		const powerRoll = ability?.sections?.find(s => typeof s !== 'string' && 'rollPower' in s);
+		expect(powerRoll).toBeDefined();
+		expect(powerRoll).toHaveProperty('rollPower', '3');
+	});
 });
 
 // #region Mock data

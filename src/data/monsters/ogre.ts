@@ -152,7 +152,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 							FactoryLogic.createAbilitySectionText('The goon must have a size 1 creature or object grabbed, which they hurl across the area, ending the grab. The hurled creature or object is targeted by the ability, and lands in the last square of the line or the nearest unoccupied square of the goon’s choice.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
-									bonus: 3,
+									bonus: 2,
 									tier1: '5 damage',
 									tier2: '9 damage',
 									tier3: '12 damage; prone'

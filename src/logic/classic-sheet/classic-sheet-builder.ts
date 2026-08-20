@@ -72,7 +72,7 @@ export class ClassicSheetBuilder {
 	};
 
 	// #region Monster Sheet
-	static buildMonsterSheet = (monster: Monster, costResource: string = 'Malice'): MonsterSheet => {
+	static buildMonsterSheet = (monster: Monster, summoning?: { summon: Summon, summoner: Hero }): MonsterSheet => {
 		const level = MonsterLogic.getMonsterLevel(monster);
 		let monsterType = `Lvl ${level} ${monster.role.organization}`;
 		if (monster.role.type !== MonsterRoleType.NoRole) {
@@ -110,26 +110,27 @@ export class ClassicSheetBuilder {
 		const abilities = MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
-		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster, undefined, undefined, costResource));
+		// A summoned creature's abilities belong to the summoner: they're paid for and powered by them
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, summoning?.summon ?? monster, summoning?.summoner));
 
 		if (monster.retainer) {
 			const advancement = [];
 			if (monster.retainer.level4?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 4,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level4.data.ability, monster, undefined, undefined, costResource)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level4.data.ability, monster)
 				});
 			}
 			if (monster.retainer.level7?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 7,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level7.data.ability, monster, undefined, undefined, costResource)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level7.data.ability, monster)
 				});
 			}
 			if (monster.retainer.level10?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 10,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level10.data.ability, monster, undefined, undefined, costResource)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level10.data.ability, monster)
 				});
 			}
 			sheet.advancement = advancement;
@@ -278,7 +279,7 @@ export class ClassicSheetBuilder {
 	// #endregion
 
 	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero, options?: Options, costResource: string = 'Malice'): AbilitySheet => {
+	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero, options?: Options): AbilitySheet => {
 		const isMonster = CreatureLogic.isMonster(creature);
 		const isHero = CreatureLogic.isHero(creature);
 		const isSummon = CreatureLogic.isSummon(creature);
@@ -333,7 +334,7 @@ export class ClassicSheetBuilder {
 			if (ability.cost === 'signature') {
 				sheet.abilityType = 'Signature Ability';
 			} else if (ability.cost > 0) {
-				sheet.abilityType = `${ability.cost} ${costResource}`;
+				sheet.abilityType = `${ability.cost} ${isSummon ? 'Essence' : 'Malice'}`;
 			} else if (isMonster && creature.retainer?.level) {
 				sheet.abilityType = 'Encounter';
 			} else if (ability.type.usage === AbilityUsage.VillainAction) {
@@ -346,7 +347,7 @@ export class ClassicSheetBuilder {
 
 		if (creature === undefined) {
 			if (ability.cost !== 'signature' && ability.cost > 0) {
-				sheet.abilityType = `${ability.cost} ${costResource}`;
+				sheet.abilityType = `${ability.cost} Malice`;
 			} else {
 				sheet.abilityType = '';
 			}
@@ -379,7 +380,11 @@ export class ClassicSheetBuilder {
 					rollBonuses: undefined
 				} as PowerRollSection;
 
-				const rollAutoCalc = options?.showPowerRollCalculation ?? true;
+				// Only a hero - or a summoner, through their minions - rolls off their own characteristics.
+				// When any other creature's ability names characteristics it's the target who makes the
+				// test, so show what they'll be rolling instead of a number taken from the wrong creature
+				const rolledByTarget = !isHero && !isSummon && AbilityLogic.getPowerRollCharacteristics(ability, refCreature).length > 0;
+				const rollAutoCalc = (options?.showPowerRollCalculation ?? true) && !rolledByTarget;
 
 				if (rollAutoCalc) {
 					if (isSummon) {

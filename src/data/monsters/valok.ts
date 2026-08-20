@@ -359,6 +359,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 							FactoryLogic.createAbilitySectionText('The area is covered in wet concrete and is difficult terrain. Any enemy who starts their turn in the concrete makes a **Might test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Might,
 									tier1: 'Restrained (EoT)',
 									tier2: 'Slowed (EoT)',
 									tier3: 'No effect'
@@ -392,6 +393,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
+									bonus: 4,
 									tier1: 'A < 2 restrained (save ends)',
 									tier2: 'A < 3 restrained (save ends)',
 									tier3: 'A < 4 restrained (save ends)'

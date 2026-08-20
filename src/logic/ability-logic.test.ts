@@ -257,3 +257,81 @@ describe('getTierEffectRetainer', () => {
 		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(text);
 	});
 });
+
+describe('getPowerRollBonusValue', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	const createAbility = (roll: { characteristic?: Characteristic, bonus?: number, tier1: string }) => {
+		return FactoryLogic.createAbility({
+			id: 'test-ability',
+			name: 'Test Ability',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: roll.characteristic,
+					bonus: roll.bonus,
+					tier1: roll.tier1,
+					tier2: '',
+					tier3: ''
+				}))
+			]
+		});
+	};
+
+	const monster = {} as Monster;
+
+	const mockMonster = (characteristics: Partial<Record<Characteristic, number>>) => {
+		// @ts-expect-error doesn't like me mocking a typeguard
+		CreatureLogic.isMonster = vi.fn().mockReturnValue(true);
+		CreatureLogic.getCharacteristic = vi.fn().mockImplementation((_creature, ch: Characteristic) => characteristics[ch] ?? 0);
+	};
+
+	beforeEach(() => {
+		// @ts-expect-error doesn't like me mocking a typeguard
+		CreatureLogic.isHero = vi.fn().mockReturnValue(false);
+		// @ts-expect-error doesn't like me mocking a typeguard
+		CreatureLogic.isMonster = vi.fn().mockReturnValue(false);
+	});
+
+	it('should use the stated bonus when the roll has no characteristic', () => {
+		const ability = createAbility({ bonus: 5, tier1: '16 damage; M < 4 the target loses 1d3 recoveries' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, monster)).toBe(5);
+	});
+
+	it('should use a monster\'s highest characteristic when no bonus is stated', () => {
+		mockMonster({ [Characteristic.Might]: 2, [Characteristic.Agility]: 1, [Characteristic.Reason]: 4, [Characteristic.Intuition]: 4, [Characteristic.Presence]: 2 });
+
+		const ability = createAbility({ tier1: '3 damage; M < 2 push (see effect)' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, monster)).toBe(4);
+	});
+
+	it('should prefer a stated bonus to a monster\'s highest characteristic', () => {
+		mockMonster({ [Characteristic.Might]: 5 });
+
+		const ability = createAbility({ bonus: 4, tier1: '3 damage' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, monster)).toBe(4);
+	});
+
+	it('should infer the bonus from the potency when there is no creature to read it from', () => {
+		const ability = createAbility({ tier1: '7 cold damage; P<3 slowed (save ends)' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, undefined)).toBe(3);
+	});
+
+	it('should infer the bonus from a potency written with spaces around the comparator', () => {
+		const ability = createAbility({ tier1: '7 cold damage; P < 3 slowed (save ends)' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, undefined)).toBe(3);
+	});
+
+	it('should fall back to the echelon 1 minimum with no bonus, no creature and no potency', () => {
+		const ability = createAbility({ tier1: '6 damage; vertical push 3' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, undefined)).toBe(2);
+	});
+
+	it('should use the creature characteristic in preference to a stated bonus', () => {
+		CreatureLogic.getCharacteristic = vi.fn().mockReturnValue(3);
+
+		const ability = createAbility({ characteristic: Characteristic.Reason, bonus: 5, tier1: '5 corruption damage' });
+		expect(AbilityLogic.getPowerRollBonusValue(ability, monster)).toBe(3);
+	});
+});

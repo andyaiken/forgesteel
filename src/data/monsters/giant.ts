@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -611,6 +612,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target makes a **Might test**. A target with fire immunity automatically obtains a tier 3 outcome.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Might,
 								tier1: 'Weakened and slowed (save ends)',
 								tier2: 'Weakened (EoT)',
 								tier3: 'No effect'
@@ -695,6 +697,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('The storm hurler throws three size 1L ice javelins into unoccupied squares within distance. Each javelin has 30 Stamina and fire weakness 5. At the start of the storm hurler’s next turn, all javelins not destroyed explode in a shower of icicles. Each enemy and object within 3 squares of an exploding javelin makes an **Agility test**.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
 								tier1: '14 cold damage; push 4; bleeding (save ends)',
 								tier2: '11 cold damage; push 2; slowed (save ends)',
 								tier3: '7 cold damage'
@@ -1012,6 +1015,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target must make either a **Might** or **Agility** test.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
 								tier1: '6 damage; vertical push 3',
 								tier2: '2 damage; vertical push 4',
 								tier3: 'Push 2'
@@ -1033,6 +1037,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target makes an **Agility** test.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
 								tier1: 'Grabbed, and the target takes a bane on the Escape Grab maneuver',
 								tier2: 'Grabbed',
 								tier3: 'No effect'
@@ -1193,6 +1198,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target makes either an **Agility test** or an **Intuition test**.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
 								tier1: '18 fire damage; prone; weakened (save ends)',
 								tier2: '14 fire damage; prone (EoT)',
 								tier3: '9 fire damage'
@@ -1295,6 +1301,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target unleashes a wave of fire, and each enemy within 2 squares of any target makes an **Agility test**. An enemy affected by two targets takes a bane on the test, while an enemy affected by three or more targets has a double bane.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
 								tier1: '18 fire damage',
 								tier2: '14 fire damage',
 								tier3: '9 fire damage'

@@ -682,7 +682,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

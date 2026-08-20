@@ -1336,6 +1336,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('The equivite moves up to their speed and ignores difficult terrain. Any mundane size 1 object whose space they move through is destroyed. The equivite makes one power roll against each enemy whose space they move through for the first time.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
 								tier1: '2 damage; push 1',
 								tier2: '4 damage; push 2',
 								tier3: '5 damage; push 3; M < 3 prone'
@@ -1748,6 +1749,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('The tetrarch can jump up to 7 squares before using this ability.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: 'Push 2; I < 2 frightened (save ends)',
 								tier2: 'Push 4; I < 3 frightened (save ends)',
 								tier3: 'Push 5; I < 4 frightened (save ends)'
@@ -1765,6 +1767,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '7 fire damage; A < 2 slowed (EoT)',
 								tier2: '13 fire damage; A < 3 slowed (save ends)',
 								tier3: '16 fire damage; A < 4 slowed (save ends)'
@@ -2206,6 +2209,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('This ability targets each enemy within 2 squares of any seared creature within distance.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '2 fire damage',
 								tier2: '4 fire damage; A < 3 the target is seared (save ends)',
 								tier3: '6 fire damage; A < 4 the target is seared (save ends)'
@@ -2251,6 +2255,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 damage; M < 2 push (see effect)',
 								tier2: '6 damage; M < 3 push',
 								tier3: '8 damage; M < 4 push, prone'
@@ -2313,6 +2318,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 damage',
 								tier2: '6 damage; P < 3 bleeding (save ends)',
 								tier3: '8 damage; P < 4 the target loses 1 Recovery and is bleeding (save ends)'
@@ -2371,6 +2377,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 psychic damage',
 								tier2: '6 psychic damage; R < 3 grabbed, pull 2',
 								tier3: '8 psychic damage; R < 4 grabbed and the target takes a bane on the Escape Grab maneuver, pull 2'
@@ -2928,6 +2935,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 5,
 								tier1: 'A < 4 pull 3 toward the center of the area',
 								tier2: 'A < 5 pull 3 toward the center of the area',
 								tier3: 'Pull 3 toward the center of the area'

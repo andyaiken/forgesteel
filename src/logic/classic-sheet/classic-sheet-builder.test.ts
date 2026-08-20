@@ -9,10 +9,12 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureAbility } from '@/models/feature';
 import { HeroLogic } from '@/logic/hero-logic';
+import { Monster } from '@/models/monster';
 import { Options } from '@/models/options';
 import { PowerRollSection } from '@/models/classic-sheets/ability-sheet';
 import { ajax } from '@/data/monsters/ajax';
 import { creation } from '@/data/domains/creation';
+import { giant } from '@/data/monsters/giant';
 import { goblin } from '@/data/monsters/goblin';
 
 describe('buildCharacteristicsSheet', () => {
@@ -206,6 +208,28 @@ describe('buildMonsterSheet', () => {
 	])('sets type correctly', (monster, expectedType) => {
 		const result = ClassicSheetBuilder.buildMonsterSheet(monster);
 		expect(result.type).toBe(expectedType);
+	});
+
+	const getRollPower = (monster: Monster, abilityName: string) => {
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
+		const ability = sheet.abilities?.find(a => a.name === abilityName);
+		const section = ability?.sections?.find(s => typeof s !== 'string' && 'rollPower' in s) as PowerRollSection;
+		return section?.rollPower;
+	};
+
+	test('uses the stated bonus for a power roll the monster makes', () => {
+		const ajaxTheInvincible = ajax.monsters.find(m => m.name === 'Ajax the Invincible') as Monster;
+		expect(getRollPower(ajaxTheInvincible, 'Blade of the Gol King')).toBe('5');
+	});
+
+	test.each([
+		[ 'Fire Giant Red Fist', 'Heat and Pressure', 'M' ],
+		[ 'Hill Giant Clobberer', 'Hill Quake', 'M or A' ],
+		[ 'Fire Giant Chief', 'Roiling Fist', 'A or I' ]
+	])('shows what the target rolls when the power roll names characteristics (%s)', (monsterName, abilityName, expected) => {
+		// These abilities are tests made by the target, so there's no monster bonus to show
+		const monster = giant.monsters.find(m => m.name === monsterName) as Monster;
+		expect(getRollPower(monster, abilityName)).toBe(expected);
 	});
 });
 

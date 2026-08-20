@@ -177,6 +177,8 @@ export const Main = (props: Props) => {
 	useEffect(() => {
 		return () => {
 			// Flush any hero saves still debouncing so a last-second edit isn't lost on unmount.
+			// Reading the ref at unmount is the point here - we want whatever is still pending then
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 			pendingHeroSavesRef.current.forEach((_, heroId) => flushHeroSaveRef.current(heroId));
 		};
 	}, []);

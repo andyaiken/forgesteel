@@ -42,8 +42,11 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 	const [ value, setValue ] = useState(props.value);
 	const debouncedValue = useDebounce(value);
 
+	// Only report upwards when the debounced value settles - depending on the callback too would
+	// re-notify the parent every time it re-renders with a fresh inline handler
 	useEffect(
 		() => props.onChange(debouncedValue),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ debouncedValue ]
 	);
 

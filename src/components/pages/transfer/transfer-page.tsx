@@ -52,6 +52,9 @@ export const TransferPage = (props: Props) => {
 			});
 		});
 		return ds;
+		// Built once - notify is only used to report a failure, and rebuilding the service on a
+		// notification config change would reconnect storage for no reason
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	const warehouseDs = useMemo(() => {
 		const storage = StorageServiceFactory.fromConnectionSettings(props.connectionSettings);
@@ -64,6 +67,8 @@ export const TransferPage = (props: Props) => {
 			});
 		});
 		return ds;
+		// Rebuilt only when the connection settings change - see above
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ props.connectionSettings ]);
 
 	const mergeToWarehouse = async () => {

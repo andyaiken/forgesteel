@@ -41,6 +41,7 @@ interface Props {
 };
 
 export const ImportCodeModal = (props: Props) => {
+	const { kind, validate } = props;
 	const [ code, setCode ] = useState<string>('');
 	const [ decoded, setDecoded ] = useState<SharedElement | null>(null);
 	const [ error, setError ] = useState<string | null>(null);
@@ -60,13 +61,13 @@ export const ImportCodeModal = (props: Props) => {
 					return;
 				}
 
-				if (result.kind !== props.kind) {
+				if (result.kind !== kind) {
 					setDecoded(null);
-					setError(`That is a code for ${describe(result.kind)}, not for ${describe(props.kind)}.`);
+					setError(`That is a code for ${describe(result.kind)}, not for ${describe(kind)}.`);
 					return;
 				}
 
-				const reason = props.validate ? props.validate(result) : null;
+				const reason = validate ? validate(result) : null;
 				if (reason) {
 					setDecoded(null);
 					setError(reason);
@@ -88,7 +89,7 @@ export const ImportCodeModal = (props: Props) => {
 		return () => {
 			current = false;
 		};
-	}, [ code, props.kind, props.validate ]);
+	}, [ code, kind, validate ]);
 
 	const getPreview = () => {
 		if (error) {

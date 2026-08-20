@@ -294,6 +294,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			card.addEventListener('mouseleave', cardLeave);
 			card.addEventListener('click', cardClick);
 		});
+		// Wired up once against the rendered pages; the handlers only touch the DOM node they're given
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

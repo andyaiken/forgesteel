@@ -146,8 +146,8 @@ A meteor dragon’s body is infused with crystalline starlight, which they can c
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 5,
 								tier1: '15 holy damage; A<4 weakened (save ends)',
-								tier2: '21 holy damage; A<4 weakened (save ends)',
-								tier3: '25 holy damage; A<4 weakened (save ends)'
+								tier2: '21 holy damage; A<5 weakened (save ends)',
+								tier3: '25 holy damage; A<6 weakened (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('If a target made weakened this way is already weakened, they are instead dazed until the end of their next turn.')
 						]

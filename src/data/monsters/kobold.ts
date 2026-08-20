@@ -812,8 +812,8 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '6 damage; push 1; A<0 prone',
-								tier2: '8 damage; push 3; A<0 prone',
-								tier3: '11 damage; push 5; A<0 prone'
+								tier2: '8 damage; push 3; A<1 prone',
+								tier3: '11 damage; push 5; A<2 prone'
 							}))
 						]
 					})

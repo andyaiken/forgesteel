@@ -380,10 +380,11 @@ export class ClassicSheetBuilder {
 					rollBonuses: undefined
 				} as PowerRollSection;
 
-				// Only a hero - or a summoner, through their minions - rolls off their own characteristics.
-				// When any other creature's ability names characteristics it's the target who makes the
-				// test, so show what they'll be rolling instead of a number taken from the wrong creature
-				const rolledByTarget = !isHero && !isSummon && AbilityLogic.getPowerRollCharacteristics(ability, refCreature).length > 0;
+				// Heroes, retainers, and a summoner's minions all roll off characteristics we know. When any
+				// other creature's ability names characteristics it's the target who makes the test, so show
+				// what they'll be rolling instead of a number taken from the wrong creature
+				const rollsOwnCharacteristics = isHero || isSummon || (isMonster && !!creature.retainer);
+				const rolledByTarget = !rollsOwnCharacteristics && AbilityLogic.getPowerRollCharacteristics(ability, refCreature).length > 0;
 				const rollAutoCalc = (options?.showPowerRollCalculation ?? true) && !rolledByTarget;
 
 				if (rollAutoCalc) {

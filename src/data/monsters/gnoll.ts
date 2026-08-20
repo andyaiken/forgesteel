@@ -435,7 +435,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'gnoll-8-feature-3',
+					id: 'gnoll-7-feature-3',
 					name: 'Death Frenzy',
 					description: ' Whenever a non-minion ally within 5 squares of the bonesplitter is reduced to 0 Stamina, the bonesplitter moves up to their speed and can make a melee free strike.'
 				})

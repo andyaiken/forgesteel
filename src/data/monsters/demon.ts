@@ -882,7 +882,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 					description: 'Any creature within 2 squares of the orliq can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-2nd-2-feature-3',
+					id: 'demon-2nd-2-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
@@ -2086,7 +2086,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 					description: 'Any creature within 2 squares of the tyburaki can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-4th-2-feature-3',
+					id: 'demon-4th-2-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]

@@ -416,8 +416,8 @@ In many shadow elf societies, all people are given basic combat training and are
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '8 corruption damage',
-								tier2: '7 corruption damage; R<2 taunted (EoT)',
-								tier3: '9 corruption damage; R<3 taunted (EoT)'
+								tier2: '12 corruption damage; R<2 taunted (EoT)',
+								tier3: '15 corruption damage; R<3 taunted (EoT)'
 							}))
 						]
 					})

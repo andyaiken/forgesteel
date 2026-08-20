@@ -152,7 +152,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								bonus: 3,
 								tier1: 'The target regains 10 Stamina',
 								tier2: '12 corruption damage; A<2 weakened (save ends)',
-								tier3: '12 lightning damage; A<2 bleeding (save ends)'
+								tier3: '12 lightning damage; A<3 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The first time in an encounter that Aeolyxria makes a power roll for this ability, she can subsequently use the outcome of that roll instead of rolling whenever she uses this ability until the end of the encounter.'),
 							FactoryLogic.createAbilitySectionSpend({

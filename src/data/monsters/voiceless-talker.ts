@@ -212,7 +212,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'voiceless-talker-1-feature-5',
+					id: 'voiceless-talker-2-feature-4',
 					name: 'Psionic Conductor',
 					description: 'Whenever a non-minion voiceless talker within 5 squares of the whelp uses a psionic ability, they can do so as if they were in the whelp’s space.'
 				})

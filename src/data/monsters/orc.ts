@@ -466,7 +466,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'orc-8-feature-3',
-						name: 'Elemental Discharge',
+						name: 'Power Burst',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
@@ -476,7 +476,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								bonus: 2,
 								tier1: '3 damage; push 2',
 								tier2: '5 damage; push 3',
-								tier3: '3 damage; push 4, prone'
+								tier3: '8 damage; push 4, prone'
 							})),
 							FactoryLogic.createAbilitySectionText('This ability deals cold, fire, or lightning damage, and any enemy targeted by the ability has damage weakness 3 to the same damage type (save ends). ')
 						]

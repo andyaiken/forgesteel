@@ -1158,7 +1158,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 					description: 'Whenever an enemy obtains a tier 1 outcome on a melee ability used against the marble stone giant, they take a bane on that ability until the end of the encounter.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'giant-12-feature-6',
+					id: 'giant-12-feature-7',
 					name: 'Stone Swim',
 					description: 'The marble stone giant can burrow through stone, but can’t drag other creatures underground when they do so.'
 				})

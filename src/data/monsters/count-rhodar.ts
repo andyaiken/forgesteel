@@ -170,7 +170,7 @@ How his return might be possible is not clear, but it would surely involve the R
 							FactoryLogic.createAbilitySectionText('Each target makes an **Intuition test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
-									bonus: 5,
+									characteristic: Characteristic.Intuition,
 									tier1: '16 corruption damage; frightened (save ends)',
 									tier2: '13 corruption damage; frightened (EoT)',
 									tier3: '8 corruption damage'

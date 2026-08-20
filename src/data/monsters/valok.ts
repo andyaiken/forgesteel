@@ -383,7 +383,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'valok-3-feature-4',
+						id: 'valok-3-feature-8',
 						name: 'Sputter',
 						type: FactoryLogic.type.createTrigger('A creature or object within distance deals damage to the builder.', { free: true }),
 						keywords: [ AbilityKeyword.Melee ],

@@ -408,8 +408,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '5 damage; M<2 slowed (save ends)',
-								tier2: '7 damage; M<2 slowed (save ends)',
+								tier1: '5 damage; M<0 slowed (save ends)',
+								tier2: '7 damage; M<1 slowed (save ends)',
 								tier3: '9 damage; M<2 slowed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The target is pulled up to 5 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')

@@ -16,6 +16,7 @@ import { ajax } from '@/data/monsters/ajax';
 import { creation } from '@/data/domains/creation';
 import { giant } from '@/data/monsters/giant';
 import { goblin } from '@/data/monsters/goblin';
+import { retainer } from '@/data/monsters/retainer';
 
 describe('buildCharacteristicsSheet', () => {
 	test('builds sheet when nothing is passed in', () => {
@@ -230,6 +231,12 @@ describe('buildMonsterSheet', () => {
 		// These abilities are tests made by the target, so there's no monster bonus to show
 		const monster = giant.monsters.find(m => m.name === monsterName) as Monster;
 		expect(getRollPower(monster, abilityName)).toBe(expected);
+	});
+
+	test('works out the bonus for a retainer, which rolls its own characteristics', () => {
+		const commando = retainer.monsters.find(m => m.name === 'Bugbear Commando') as Monster;
+		expect(commando.retainer).toBeDefined();
+		expect(getRollPower(commando, 'Bear Hug')).toBe('2');
 	});
 });
 

@@ -41,7 +41,7 @@ export const AbilitySelectModal = (props: Props) => {
 			], searchTerm))
 			.filter(a => (abilityType === null) || (a.type.usage === abilityType))
 			.filter(a => (abilityCost === null) || (a.cost === abilityCost));
-	}, [ props.abilities, abilityType, abilityCost ]);
+	}, [ props.abilities, searchTerm, abilityType, abilityCost ]);
 
 	return (
 		<Modal

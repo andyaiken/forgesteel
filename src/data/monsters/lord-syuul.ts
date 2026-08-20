@@ -150,8 +150,8 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: '11 damage; A<2 grabbed',
-								tier2: '17 damage; A<2 grabbed',
-								tier3: '20 damage; A<2 grabbed'
+								tier2: '17 damage; A<3 grabbed',
+								tier3: '20 damage; A<4 grabbed'
 							})),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 2,

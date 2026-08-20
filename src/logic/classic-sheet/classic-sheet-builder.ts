@@ -72,7 +72,7 @@ export class ClassicSheetBuilder {
 	};
 
 	// #region Monster Sheet
-	static buildMonsterSheet = (monster: Monster): MonsterSheet => {
+	static buildMonsterSheet = (monster: Monster, costResource: string = 'Malice'): MonsterSheet => {
 		const level = MonsterLogic.getMonsterLevel(monster);
 		let monsterType = `Lvl ${level} ${monster.role.organization}`;
 		if (monster.role.type !== MonsterRoleType.NoRole) {
@@ -110,26 +110,26 @@ export class ClassicSheetBuilder {
 		const abilities = MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
-		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster, undefined, undefined, costResource));
 
 		if (monster.retainer) {
 			const advancement = [];
 			if (monster.retainer.level4?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 4,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level4.data.ability, monster)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level4.data.ability, monster, undefined, undefined, costResource)
 				});
 			}
 			if (monster.retainer.level7?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 7,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level7.data.ability, monster)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level7.data.ability, monster, undefined, undefined, costResource)
 				});
 			}
 			if (monster.retainer.level10?.type === FeatureType.Ability) {
 				advancement.push({
 					level: 10,
-					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level10.data.ability, monster)
+					ability: ClassicSheetBuilder.buildAbilitySheet(monster.retainer.level10.data.ability, monster, undefined, undefined, costResource)
 				});
 			}
 			sheet.advancement = advancement;
@@ -278,7 +278,7 @@ export class ClassicSheetBuilder {
 	// #endregion
 
 	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero, options?: Options): AbilitySheet => {
+	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero, options?: Options, costResource: string = 'Malice'): AbilitySheet => {
 		const isMonster = CreatureLogic.isMonster(creature);
 		const isHero = CreatureLogic.isHero(creature);
 		const isSummon = CreatureLogic.isSummon(creature);
@@ -333,7 +333,7 @@ export class ClassicSheetBuilder {
 			if (ability.cost === 'signature') {
 				sheet.abilityType = 'Signature Ability';
 			} else if (ability.cost > 0) {
-				sheet.abilityType = `${ability.cost} Malice`;
+				sheet.abilityType = `${ability.cost} ${costResource}`;
 			} else if (isMonster && creature.retainer?.level) {
 				sheet.abilityType = 'Encounter';
 			} else if (ability.type.usage === AbilityUsage.VillainAction) {
@@ -346,7 +346,7 @@ export class ClassicSheetBuilder {
 
 		if (creature === undefined) {
 			if (ability.cost !== 'signature' && ability.cost > 0) {
-				sheet.abilityType = `${ability.cost} Malice`;
+				sheet.abilityType = `${ability.cost} ${costResource}`;
 			} else {
 				sheet.abilityType = '';
 			}

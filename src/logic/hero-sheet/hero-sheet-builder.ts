@@ -682,7 +682,8 @@ export class HeroSheetBuilder {
 	static buildSummonSheet = (summon: Summon, hero: Hero): MonsterSheet => {
 		const monster = summon.monster;
 
-		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
+		// Summoned creatures' abilities cost the summoner essence rather than malice
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster, 'Essence');
 
 		const signature = summon.info.isSignature ? 'Signature ' : '';
 		const summonType = `${signature}Minion ${monster.role.type}`;

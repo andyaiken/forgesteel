@@ -19,6 +19,7 @@ import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
+import { circleofStorms } from '@/data/classes/summoner/storms';
 import { core } from '@/data/sourcebooks/official/core';
 import { fury } from '@/data/classes/fury/fury';
 import { orden } from '@/data/sourcebooks/official/orden';
@@ -68,6 +69,19 @@ describe('buildSummonSheet', () => {
 		expect(sheet.weakness).toBe('');
 		expect(sheet.movement).toBe('');
 		expect(sheet.freeStrikeDamageType).toBe('');
+	});
+
+	test('minion abilities cost essence, not malice', () => {
+		const minions = circleofStorms.featuresByLevel.flatMap(fbl => fbl.features)
+			.find(f => f.id === 'summoner-2-1-6') as FeatureSummonChoice;
+		const crux = minions.data.options.find(o => o.id === 'summoner-2-1-6a') as Summon;
+		const summoner = FactoryLogic.createHero();
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(2);
+
+		const sheet = HeroSheetBuilder.buildSummonSheet(crux, summoner);
+		const ability = sheet.abilities?.find(a => a.name === 'Ashen Cloud');
+		expect(ability).toBeDefined();
+		expect(ability?.abilityType).toBe('1 Essence');
 	});
 });
 

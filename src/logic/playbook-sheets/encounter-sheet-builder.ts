@@ -60,7 +60,7 @@ export class EncounterSheetBuilder {
 		const encounterMonsters = EncounterLogic.getMonsterData(encounter)
 			.map(data => EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, sourcebooks))
 			.filter(m => !!m);
-		sheet.monsters = encounterMonsters.map(ClassicSheetBuilder.buildMonsterSheet);
+		sheet.monsters = encounterMonsters.map(m => ClassicSheetBuilder.buildMonsterSheet(m));
 
 		const seenMalice = new Set<string>();
 		const possibleMalice = EncounterLogic.getAllMaliceFeatures(encounter, sourcebooks);

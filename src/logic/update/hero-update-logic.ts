@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -7,6 +7,7 @@ import { CultureType } from '@/enums/culture-type';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -252,6 +253,34 @@ export class HeroUpdateLogic {
 		});
 	};
 
+	// When a hero's class is rebuilt from the (possibly updated) sourcebook template,
+	// carry forward the bits of feature state that belong to the hero, not the template:
+	// the heroic resource's current value, and any toggle's on/off state.
+	static preserveClassFeatureState = (previous: HeroClass, current: HeroClass) => {
+		const collectFeatures = (heroClass: HeroClass) => [
+			...heroClass.featuresByLevel.flatMap(lvl => lvl.features),
+			...heroClass.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features))
+		];
+
+		const previousFeatures = collectFeatures(previous);
+
+		collectFeatures(current).forEach(feature => {
+			const match = previousFeatures.find(f => (f.id === feature.id) && (f.type === feature.type));
+			if (!match) {
+				return;
+			}
+
+			switch (feature.type) {
+				case FeatureType.HeroicResource:
+					feature.data.value = (match as FeatureHeroicResource).data.value;
+					break;
+				case FeatureType.Toggle:
+					feature.data.checked = (match as FeatureToggle).data.checked;
+					break;
+			}
+		});
+	};
+
 	static updateHeroData = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const original = Utils.copy(hero);
 
@@ -303,6 +332,11 @@ export class HeroUpdateLogic {
 				const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
 				if (heroClass) {
 					hero.class = Utils.copy(heroClass);
+
+					// Re-syncing from the sourcebook replaces the whole class object, which would
+					// otherwise silently reset per-hero state (e.g. current heroic resource, toggles)
+					// living inside its features back to template defaults.
+					HeroUpdateLogic.preserveClassFeatureState(original.class, hero.class);
 
 					// Level
 					hero.class.level = original.class.level;

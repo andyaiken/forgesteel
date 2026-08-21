@@ -375,7 +375,7 @@ You can change this weapon’s shape and form, granting one of the following ben
 		level: 9,
 		feature: FactoryLogic.feature.create({
 			id: 'imbuement-imprisioning',
-			name: 'Imprisioning',
+			name: 'Imprisoning',
 			description: 'Whenever you damage a creature with an ability using this weapon and obtain a tier 3 outcome, that creature is also restrained (save ends). While restrained in this way, the creature can’t use magic or psionic abilities.'
 		})
 	});

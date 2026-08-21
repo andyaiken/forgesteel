@@ -297,7 +297,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-2-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The compulsion eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The compulsion eye has damage immunity 15. When the compulsion eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		}),
@@ -337,7 +337,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-3-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The demolition eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The demolition eye has damage immunity 15. When the demolition eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		}),
@@ -377,7 +377,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-4-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The mover eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The mover eye has damage immunity 15. When the mover eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		}),
@@ -418,7 +418,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-5-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The necrotic eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The necrotic eye has damage immunity 15. When the necrotic eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		}),
@@ -458,7 +458,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-6-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The toxic eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The toxic eye has damage immunity 15. When the toxic eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		}),
@@ -499,7 +499,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.create({
 					id: 'xorannox-7-feature-2',
 					name: 'Psionic Barrier',
-					description: 'The zapper eye has damage immunity 15. When the compusion eye uses an action, this immunity disappears until the end of the round.'
+					description: 'The zapper eye has damage immunity 15. When the zapper eye uses an action, this immunity disappears until the end of the round.'
 				})
 			]
 		})

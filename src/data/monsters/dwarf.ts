@@ -32,7 +32,7 @@ The dwarves have yet to crack all the secrets of the valok, the autonomous machi
 
 Operators now span the world and come from all walks of life, but the first among them were dwarves who built powered suits from excavated valok parts. These suits were initially used for construction and utility purposes, but can be repurposed and refitted for warfare when the need arises.
 
-Word of these wonderous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where artisans, craftspeople, and smiths from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
+Word of these wondrous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where artisans, craftspeople, and smiths from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
 		},
 		{
 			id: 'dwarf-info-3',
@@ -470,7 +470,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 square to remain adjacent to the target. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
-								effect: 'This ablitiy targets one additional target.'
+								effect: 'This ability targets one additional target.'
 							})
 						]
 					})

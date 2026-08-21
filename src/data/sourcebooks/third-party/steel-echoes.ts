@@ -761,7 +761,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 The area remains until the end of the encounter or you are dying. Choose one of the following effects to apply to the area:
 
 * **Writ of Flame**: Each enemy who enters the area for the first time in a combat round or starts their turn there takes damage equal to triple your Reason score.
-* **Writ of Sanctuary**: Each ally, or youreslf, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
+* **Writ of Sanctuary**: Each ally, or yourself, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
 											]
 										})
 									}),

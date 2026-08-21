@@ -375,7 +375,7 @@ export const lava: Terrain = {
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 2,
-									tier1: '5 fire damage; M < 1 the tareget is burning (save ends)',
+									tier1: '5 fire damage; M < 1 the target is burning (save ends)',
 									tier2: '9 fire damage; M < 2 the target is burning (save ends)',
 									tier3: '12 fire damage; M < 3 the target is burning (save ends)'
 								})

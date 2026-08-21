@@ -230,7 +230,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: libraryNegotiationBuilder,
-				content: 'Forge Steel makes it easy to build negotiations by adding motivatons and pitfalls.'
+				content: 'Forge Steel makes it easy to build negotiations by adding motivations and pitfalls.'
 			}),
 			// #endregion
 

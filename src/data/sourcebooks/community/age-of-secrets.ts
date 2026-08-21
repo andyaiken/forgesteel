@@ -1653,9 +1653,9 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Reason,
-							tier1: 'R<w dominated (EoT)',
-							tier2: 'R<v dominated (save ends)',
-							tier3: 'R<s dominated (save ends), and immediately on taking control you compel the target to use a signature abilitie against a creature of your choice.'
+							tier1: 'R<[weak] dominated (EoT)',
+							tier2: 'R<[average] dominated (save ends)',
+							tier3: 'R<[strong] dominated (save ends), and immediately on taking control you compel the target to use a signature ability against a creature of your choice.'
 						})),
 						FactoryLogic.createAbilitySectionText('While the target is dominated, you spend its actions as your own. You cannot direct it to spend Malice. A leader, elite, or solo gains a +2 bonus to saving throws to end this effect.')
 					]
@@ -4237,7 +4237,7 @@ The area becomes burning terrain until the end of your next turn. Creatures that
 				characteristic: [ Characteristic.Reason, Characteristic.Presence ],
 				goal: 300
 			}),
-			effect: 'You can use the following ability; once you have used it, you cannot use it again until you have gained a Victory. Crowd Control Power Roll + Reason or Presence Area, magicMain action o 2 burstx Each enemy in the area ! 3 sonic damage; push 2 @ 5 sonic damage; push 3 # 7 sonic damage; push 4 If a target ends this forced movement adjacent to a wall, vehicle, or similarly solid obstacle, they fall prone.'
+			effect: 'You can use the following ability; once you have used it, you cannot use it again until you have gained a Victory. Crowd Control Power Roll + Reason or Presence; Keywords: Area, magic; Main action; Range: 2 burst; Target: Each enemy in the area; Tier 1: 3 sonic damage; push 2; Tier 2: 5 sonic damage; push 3; Tier 3: 7 sonic damage; push 4; Effect: If a target ends this forced movement adjacent to a wall, vehicle, or similarly solid obstacle, they fall prone.'
 		}),
 		FactoryLogic.createItem({
 			id: 'item-aos-falseface-collar',

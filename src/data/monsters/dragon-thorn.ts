@@ -128,7 +128,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: Characteristic.Might,
 								tier1: '12 poison damage; the target is dragonsealed (save ends)',
-								tier2: '9 poison damage; the target is dragonsealedd (save ends)',
+								tier2: '9 poison damage; the target is dragonsealed (save ends)',
 								tier3: '5 poison damage'
 							})),
 							FactoryLogic.createAbilitySectionText('A dragonsealed creature has their wounds bound by nettles and thorns, causing them to take an extra 1d3 damage whenever they take damage rolled as a d6 or a d3.')

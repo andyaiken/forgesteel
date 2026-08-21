@@ -141,7 +141,7 @@ export class LeveledItemData {
 	static lightningTreads: Item = FactoryLogic.createItem({
 		id: 'item-lightning-treads',
 		name: 'Lightning Treads',
-		description: 'Sparks strike from these boots whenever they touch the ground,increasing in number as the wearer gathers speed.',
+		description: 'Sparks strike from these boots whenever they touch the ground, increasing in number as the wearer gathers speed.',
 		type: ItemType.Leveled,
 		keywords: [ AbilityKeyword.Feet, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({

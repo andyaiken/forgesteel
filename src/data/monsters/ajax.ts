@@ -292,9 +292,9 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 5,
-									tier1: '11 fire damage; A < 4 weakended (save ends)',
-									tier2: '17 fire damage; A < 5 weakended (save ends)',
-									tier3: '21 fire damage; A < 6 weakended (save ends)'
+									tier1: '11 fire damage; A < 4 weakened (save ends)',
+									tier2: '17 fire damage; A < 5 weakened (save ends)',
+									tier3: '21 fire damage; A < 6 weakened (save ends)'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')
@@ -496,9 +496,9 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 5,
-									tier1: '11 fire damage; A < 4 weakended (save ends)',
-									tier2: '17 fire damage; A < 5 weakended (save ends)',
-									tier3: '21 fire damage; A < 6 weakended (save ends)'
+									tier1: '11 fire damage; A < 4 weakened (save ends)',
+									tier2: '17 fire damage; A < 5 weakened (save ends)',
+									tier3: '21 fire damage; A < 6 weakened (save ends)'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')

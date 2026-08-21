@@ -64,7 +64,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 
 • **Remasches** (REE-mash-iz) have physical forms blended with the nature of the wastes where they dwell. A remasch teleports around the battlefield, inflicting chaos on their enemies directly or through the minions they control. These demons are rumored to be the initial source of the teachings of all shadows through the College of Black Ash.
 
-• **Ruinants** (rew-in-ANSE) are possessed of glowing eyes and tendrilringed maws, their bodies covered in inflamed scars and their breath coming as a sickening wheeze. A ruinant can inflict fresh wounds and burns on their victims in a pattern mirroring those on the demon’s own body.
+• **Ruinants** (rew-in-ANSE) are possessed of glowing eyes and tendril-ringed maws, their bodies covered in inflamed scars and their breath coming as a sickening wheeze. A ruinant can inflict fresh wounds and burns on their victims in a pattern mirroring those on the demon’s own body.
 
 • **Torlases** (TORR-lahs-iz) are piecemeal abominations whose physical forms don’t obey the mundane laws of geometry. They control the battlefield by using living flesh and whipping allies and enemies alike into advantageous position.
 
@@ -233,7 +233,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								tier2: '4 damage; pull 2',
 								tier3: '5 damage; pull 3'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent to the ensarer, the ensnarer makes a free strike against them.')
+							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent to the ensnarer, the ensnarer makes a free strike against them.')
 						]
 					})
 				}),

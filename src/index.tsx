@@ -38,6 +38,7 @@ root.render(
 												initialSession={data.session}
 												initialHeroes={data.heroes}
 												initialHomebrewSourcebooks={data.homebrewSourcebooks}
+												initialBuiltInSourcebooks={data.builtInSourcebooks}
 												initialHiddenSourcebookIDs={data.hiddenSourcebookIDs}
 											>
 												<Main

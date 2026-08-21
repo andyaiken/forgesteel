@@ -313,7 +313,7 @@ If you want to jump even longer or higher than your baseline jump allows, make a
 |:------|:---------|
 | ≤ 11  | You don’t jump any farther than your baseline jump allows.		 |
 | 12–16 | You jump 1 square longer and higher than your baseline jump allows.|
-| 17+   | You jump 2 squares longer and higher than your baselinejump allows.|
+| 17+   | You jump 2 squares longer and higher than your baseline jump allows.|
 
 You can’t jump farther or higher than the distance of the effect that allows you to move. You can’t jump out of difficult terrain or damaging terrain.`
 	};
@@ -412,7 +412,7 @@ If you force move a creature downward into an object that doesn’t break (inclu
 
 * It costs 1 remaining square of forced movement to destroy 1 square of glass. The creature moved takes 3 damage.
 * It costs 3 remaining squares of forced movement to destroy 1 square of wood. The creature moved takes 5 damage.
-* It costs 6 remaining squares of forced movement to destroy 1 squareof stone. The creature moved takes 8 damage.
+* It costs 6 remaining squares of forced movement to destroy 1 square of stone. The creature moved takes 8 damage.
 * It costs 9 remaining squares of forced movement to destroy 1 square of metal. The creature moved takes 11 damage.
 
 If any forced movement remains after the object is destroyed, you can continue to move the creature who destroyed the object.`

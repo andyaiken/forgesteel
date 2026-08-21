@@ -1449,7 +1449,7 @@ export const retainer: MonsterGroup = {
 								tier2: '18 damage',
 								tier3: '24 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reducetd in any way.')
+							FactoryLogic.createAbilitySectionText('The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reduced in any way.')
 						]
 					})
 				})

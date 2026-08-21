@@ -29,6 +29,7 @@ export interface LoadedData {
 	service: DataService;
 	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
+	builtInSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	session: Session;
 	options: Options;
@@ -181,8 +182,7 @@ export const DataLoader = (props: Props) => {
 
 				const promises = [
 					updateLoadingStatus(
-						Promise.all([ SourcebookData.loadAll(), dataService.getHomebrew() ])
-							.then(([ , homebrew ]) => homebrew),
+						Promise.all([ SourcebookData.loadAll(), dataService.getHomebrew() ]),
 						setSourcebookState
 					),
 					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
@@ -192,7 +192,7 @@ export const DataLoader = (props: Props) => {
 				];
 
 				Promise.all(promises).then(results => {
-					const sourcebooks = results[0] as Sourcebook[];
+					const [ builtInSourcebooks, sourcebooks ] = results[0] as [ Sourcebook[], Sourcebook[] ];
 					sourcebooks.forEach(sourcebook => {
 						try {
 							UpdateLogic.updateSourcebook(sourcebook);
@@ -201,10 +201,12 @@ export const DataLoader = (props: Props) => {
 						}
 					});
 
+					const allSourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks, sourcebooks);
+
 					const heroes = results[1] as Hero[];
 					heroes.forEach(hero => {
 						try {
-							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+							HeroUpdateLogic.updateHero(hero, allSourcebooks);
 						} catch (error) {
 							console.error(`Error while updating hero [${hero.name} - ${hero.id}]`, error);
 						}
@@ -228,6 +230,7 @@ export const DataLoader = (props: Props) => {
 						service: dataService,
 						heroes: heroes,
 						homebrewSourcebooks: sourcebooks,
+						builtInSourcebooks: builtInSourcebooks,
 						hiddenSourcebookIDs: hiddenSourcebookIDs,
 						session: session,
 						options: options

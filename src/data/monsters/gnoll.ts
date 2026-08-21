@@ -725,7 +725,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each winded enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all explosed blood within distance glow bright red. Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all exposed blood within distance glow bright red. Each target makes a **Presence test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Presence,

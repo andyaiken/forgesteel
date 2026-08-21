@@ -1903,7 +1903,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								bonus: 4,
 								tier1: '4 damage',
 								tier2: '7 damage',
-								tier3: '8 damage; I < 3 the target is frightened of all shrikestroops (EoT)'
+								tier3: '8 damage; I < 3 the target is frightened of all shriketroops (EoT)'
 							})),
 							FactoryLogic.createAbilitySectionText('The target must move their speed in a straight line away from the shriketroop.')
 						]
@@ -2498,7 +2498,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 5, and if the the target has M < 4, they fall prone.')
+							FactoryLogic.createAbilitySectionText('Slide 5, and if the target has M < 4, they fall prone.')
 						]
 					})
 				}),
@@ -3196,7 +3196,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.')
+							FactoryLogic.createAbilitySectionText('For each war dog reduced to 0 Stamina in the encounter, a war dog shriketroop appears in an unoccupied space within distance.')
 						]
 					})
 				}),

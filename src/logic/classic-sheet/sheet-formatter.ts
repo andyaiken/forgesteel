@@ -234,7 +234,7 @@ export class SheetFormatter {
 					}
 					fSize += 1;
 				}
-				// double-count the longest feature to acocunt for worst-case column balancing
+				// double-count the longest feature to account for worst-case column balancing
 				if (size + fSize + (longest * (columns - 1)) <= availableSpace) {
 					display = true;
 				}
@@ -847,7 +847,7 @@ export class SheetFormatter {
 		let size = 2.7;
 		size += Math.max(20, this.countLines(notes, lineWidth));
 		const numHeadings = (notes.match(/###/g) || []).length;
-		size += numHeadings * 0.8; // extra spage per heading
+		size += numHeadings * 0.8; // extra space per heading
 		const numParagraphs = (notes.match(/\n\n/g) || []).length;
 		size += numParagraphs * 0.3; // extra space per paragraph
 		return size;

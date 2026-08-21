@@ -136,7 +136,7 @@ export const FeaturePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('feaure', props.feature.id) : undefined} style={props.style}>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('feature', props.feature.id) : undefined} style={props.style}>
 				<HeaderText
 					ribbon={
 						props.cost === 'signature' ?

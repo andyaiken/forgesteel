@@ -223,7 +223,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 							FactoryLogic.createAbilitySectionText('This ability can pull targets restrained by Petrifying Eye Beams, and ignores stability if it does so.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
-								effect: 'The toungesnapper targets two additional creatures or objects.'
+								effect: 'The tonguesnapper targets two additional creatures or objects.'
 							})
 						]
 					})

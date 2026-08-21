@@ -331,7 +331,7 @@ export class RetainerLogic {
 									tier2: '8 poison damage; M < [average] prone',
 									tier3: '11 poison damage; M < [strong] prone'
 								})),
-								FactoryLogic.createAbilitySectionText('The area is difficult terrain for eenemies. Any enemy has fire weakness 5 while in the area, and any enemy who ends their turn in the area and has no movement remaining falls prone.')
+								FactoryLogic.createAbilitySectionText('The area is difficult terrain for enemies. Any enemy has fire weakness 5 while in the area, and any enemy who ends their turn in the area and has no movement remaining falls prone.')
 							]
 						})
 					}),

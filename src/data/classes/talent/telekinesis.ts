@@ -205,7 +205,7 @@ export const telekinesis: SubClass = {
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: Characteristic.Presence,
-												tier1: 'Slide 4 + R; M < [weak], the forced movement is vertic',
+												tier1: 'Slide 4 + R; M < [weak], the forced movement is vertical',
 												tier2: 'Slide 8 + R; M < [average], the forced movement is vertical',
 												tier3: 'Slide 12 + R; prone; M < [strong], the forced movement is vertical'
 											})

@@ -68,7 +68,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
 					tier1: 'The target is taunted by the nearest creature or object (save ends). While the target is taunted this way, power rolls against them have a double edge.',
-					tier2: 'The target is taunded by the nearest creature or object (save ends).',
+					tier2: 'The target is taunted by the nearest creature or object (save ends).',
 					tier3: 'No effect.'
 				})
 			]
@@ -164,7 +164,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 				FactoryLogic.feature.create({
 					id: 'wyvern-1-feature-5',
 					name: 'Ruthless Rage',
-					description: 'While within 10 squares of another wyvren, the lurker deals an additional 3 damage with strikes.'
+					description: 'While within 10 squares of another wyvern, the lurker deals an additional 3 damage with strikes.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'wyvern-1-feature-6',
@@ -257,7 +257,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 						id: 'wyvern-2-feature-4',
 						name: 'Deterring Sting',
 						cost: 1,
-						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the prdator with a melee ability.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the predator with a melee ability.'),
 						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Triggering creature',

@@ -78,7 +78,7 @@ export const archersStakes: Terrain = {
 			id: 'sticky',
 			label: 'Sticky',
 			cost: 3,
-			text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. Any creature who enters an area or stakes triggers the **Sticky Stakes** ability in addtion to suffering the stake\'s other effects.',
+			text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. Any creature who enters an area or stakes triggers the **Sticky Stakes** ability in addition to suffering the stake\'s other effects.',
 			sections: [
 				{
 					id: 'sticky',
@@ -426,7 +426,7 @@ export const paviseShield: Terrain = {
 					id: 'effect',
 					name: 'Effect',
 					description:
-            'While a creature has the pavise grabbed they have cover and take half damage from from abilities whose line of effect extends through the shield. The pavise takes the other half of the damage.'
+            'While a creature has the pavise grabbed they have cover and take half damage from abilities whose line of effect extends through the shield. The pavise takes the other half of the damage.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'movement',

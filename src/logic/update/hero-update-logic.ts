@@ -43,7 +43,7 @@ export class HeroUpdateLogic {
 		}
 
 		if (hero.sourcebookIDs === undefined) {
-			hero.sourcebookIDs = SourcebookLogic.getSourcebooks()
+			hero.sourcebookIDs = sourcebooks
 				.filter(sb => sb.type === SourcebookType.Official)
 				.map(sb => sb.id);
 		}

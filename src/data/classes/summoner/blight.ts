@@ -536,7 +536,7 @@ When you finish a respite, you can always perceive the soul trails of each creat
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2c-3',
 										name: 'Mimicry',
-										description: 'The violent uses the Hide maneuver at the start of their turn as a free maneuver, disguising themselves as a a size 1M or smaller object.'
+										description: 'The violent uses the Hide maneuver at the start of their turn as a free maneuver, disguising themselves as a size 1M or smaller object.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-1-2-2c-4',

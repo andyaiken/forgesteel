@@ -608,7 +608,7 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3a-4',
 										name: 'Minuscule',
-										description: 'The coralia has cover while occupying a larger creature’s space.'
+										description: 'The corallia has cover while occupying a larger creature’s space.'
 									})
 								]
 							}),
@@ -708,7 +708,7 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 									FactoryLogic.feature.create({
 										id: 'summoner-3-5-3c-4',
 										name: 'Minuscule',
-										description: 'The oleyander has cover while occupying a larger creature’s space.'
+										description: 'The olyender has cover while occupying a larger creature’s space.'
 									})
 								]
 							}),
@@ -797,7 +797,7 @@ The celestial Attendant wants to swarm the map with pixies while limiting their 
 														tier3: '14 damage; slide 6'
 													})
 												),
-												FactoryLogic.createAbilitySectionText('An ally targeted by this ability can, instead, spend  Recovery and shift the slide amount.')
+												FactoryLogic.createAbilitySectionText('An ally targeted by this ability can, instead, spend a Recovery and shift the slide amount.')
 											]
 										})
 									}),

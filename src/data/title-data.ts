@@ -770,7 +770,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 					name: 'Telepathy',
 					type: FactoryLogic.type.createManeuver(),
 					distance: [ FactoryLogic.distance.createRanged(10) ],
-					target: 'One creature who understands a langauge you know',
+					target: 'One creature who understands a language you know',
 					sections: [
 						FactoryLogic.createAbilitySectionText('You communicate telepathically with the target. The targer can respond telepathically as part of the same maneuver.')
 					]
@@ -2046,7 +2046,7 @@ Additionally, you can summon up to two of your signature minion while outside of
 								feature: FactoryLogic.feature.create({
 									id: 'title-ringleader-1b-1',
 									name: 'For the Boss',
-									description: 'Your followers gain a +3 bonus to project rolls thatthey make.'
+									description: 'Your followers gain a +3 bonus to project rolls that they make.'
 								}),
 								value: 1
 							},

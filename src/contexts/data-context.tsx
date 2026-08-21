@@ -1,4 +1,4 @@
-import { ActionDispatch, PropsWithChildren, createContext, useContext, useReducer } from 'react';
+import { ActionDispatch, PropsWithChildren, createContext, useContext, useMemo, useReducer } from 'react';
 import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { DataService } from '@/services/data-service';
@@ -6,6 +6,7 @@ import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 interface DataManagerDispatchers {
@@ -121,6 +122,7 @@ interface DataManagerProps {
 	initialHiddenSourcebookIDs: string[];
 	initialHeroes: Hero[];
 	initialHomebrewSourcebooks: Sourcebook[];
+	initialBuiltInSourcebooks: Sourcebook[];
 }
 
 export const OptionsContext = createContext<Options | null>(null);
@@ -128,6 +130,8 @@ export const HiddenSourcebookIDsContext = createContext<string[] | null>(null);
 export const SessionContext = createContext<Session | null>(null);
 export const HeroesContext = createContext<Hero[] | null>(null);
 export const HomebrewSourcebooksContext = createContext<Sourcebook[] | null>(null);
+export const BuiltInSourcebooksContext = createContext<Sourcebook[] | null>(null);
+export const SourcebooksContext = createContext<Sourcebook[] | null>(null);
 
 export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) {
 	const dataService = props.dataService;
@@ -137,6 +141,14 @@ export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) 
 	const [ hiddenSourcebookIDs, hiddenSourcebookIDsDispatch ] = useReducer(UpdateOnlyReducer<string[]>, props.initialHiddenSourcebookIDs);
 	const [ heroes, heroDispatch ] = useReducer(HeroesReducer, props.initialHeroes);
 	const [ sourcebooks, sourcebookDispatch ] = useReducer(SourcebooksReducer, props.initialHomebrewSourcebooks);
+
+	// The built-in sourcebooks are loaded once, at boot, and never change after that;
+	// combining them with homebrew is the list almost everything wants to read.
+	const builtInSourcebooks = props.initialBuiltInSourcebooks;
+	const allSourcebooks = useMemo(
+		() => SourcebookLogic.getSourcebooks(builtInSourcebooks, sourcebooks),
+		[ builtInSourcebooks, sourcebooks ]
+	);
 
 	const dataManager = new DataManager(dataService, {
 		options: optionsDispatch,
@@ -221,9 +233,13 @@ export function DataManagerProvider(props: PropsWithChildren<DataManagerProps>) 
 				<SessionContext value={session}>
 					<HiddenSourcebookIDsContext value={hiddenSourcebookIDs}>
 						<HomebrewSourcebooksContext value={sourcebooks}>
-							<HeroesContext value={heroes}>
-								{props.children}
-							</HeroesContext>
+							<BuiltInSourcebooksContext value={builtInSourcebooks}>
+								<SourcebooksContext value={allSourcebooks}>
+									<HeroesContext value={heroes}>
+										{props.children}
+									</HeroesContext>
+								</SourcebooksContext>
+							</BuiltInSourcebooksContext>
 						</HomebrewSourcebooksContext>
 					</HiddenSourcebookIDsContext>
 				</SessionContext>
@@ -278,6 +294,24 @@ export function useHomebrewSourcebooks() {
 	const context = useContext(HomebrewSourcebooksContext);
 	if (!context) {
 		throw new Error('useHomebrewSourcebooks may only be used within <HomebrewSourcebooksContext>');
+	}
+	return context;
+}
+
+// The built-in sourcebooks only - for the few places that deliberately exclude homebrew.
+export function useBuiltInSourcebooks() {
+	const context = useContext(BuiltInSourcebooksContext);
+	if (!context) {
+		throw new Error('useBuiltInSourcebooks may only be used within <BuiltInSourcebooksContext>');
+	}
+	return context;
+}
+
+// Every sourcebook the app knows about: built-in plus homebrew.
+export function useSourcebooks() {
+	const context = useContext(SourcebooksContext);
+	if (!context) {
+		throw new Error('useSourcebooks may only be used within <SourcebooksContext>');
 	}
 	return context;
 }

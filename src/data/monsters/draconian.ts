@@ -442,9 +442,9 @@ Six individual draconians are presented in this section—not an adventuring par
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '7 courruption damage; M<1 the target has corruption weakness 3 (save ends)',
-								tier2: '12 courruption damage; M<2 the target has corruption weakness 3 (save ends)',
-								tier3: '15 courruption damage; the target has corruption weakness 3 (save ends)'
+								tier1: '7 corruption damage; M<1 the target has corruption weakness 3 (save ends)',
+								tier2: '12 corruption damage; M<2 the target has corruption weakness 3 (save ends)',
+								tier3: '15 corruption damage; the target has corruption weakness 3 (save ends)'
 							}))
 						]
 					})

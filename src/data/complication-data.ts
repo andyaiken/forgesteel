@@ -63,7 +63,7 @@ export class ComplicationData {
 			FactoryLogic.feature.create({
 				id: 'comp-animal-form-b',
 				name: 'Animal Form Benefit',
-				description: 'As a manuever, you take the form of a specific 1T animal. You retain all your other statistics aside from your size, but you can’t talk or use actions, and the only maneuvers you can use are Escape Grab, Hide, and Stand Up. Based on the animal you can turn into, you might be able to burrow or fly, or to automatically climb or swim at full speed while moving. If your animal form doesn’t provide such additional movement, you have a +2 bonus to speed. Unless you use this benefit again, you return to your true form at the start of your next turn.'
+				description: 'As a maneuver, you take the form of a specific 1T animal. You retain all your other statistics aside from your size, but you can’t talk or use actions, and the only maneuvers you can use are Escape Grab, Hide, and Stand Up. Based on the animal you can turn into, you might be able to burrow or fly, or to automatically climb or swim at full speed while moving. If your animal form doesn’t provide such additional movement, you have a +2 bonus to speed. Unless you use this benefit again, you return to your true form at the start of your next turn.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-animal-form-d',
@@ -156,7 +156,7 @@ export class ComplicationData {
 	static chaosTouched: Complication = {
 		id: 'comp-chaosTouched',
 		name: 'Chaos Touched',
-		description: 'You came into contact with a mote of pure chaos energy, or were subjected to a supernatural effect or object that fused chaos into your very being. Now you can sprout and retract limbs in a way that horifies unprepared onlookers.',
+		description: 'You came into contact with a mote of pure chaos energy, or were subjected to a supernatural effect or object that fused chaos into your very being. Now you can sprout and retract limbs in a way that horrifies unprepared onlookers.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-chaosTouched-b',
@@ -282,7 +282,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-b',
 				name: 'Crash Landed Benefit',
-				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic.  Until you deactivate the power pack, your damage-dealing abilities deal that damage type'
+				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic. Until you deactivate the power pack, your damage-dealing abilities deal that damage type'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-d',
@@ -519,7 +519,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static exile: Complication = {
 		id: 'comp-exile',
 		name: 'Exile',
-		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or a peron who made one too many enemies, you’ve been cast forth from your homeland, never to return. At least not until you’re strong enough to set things right.',
+		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or a person who made one too many enemies, you’ve been cast forth from your homeland, never to return. At least not until you’re strong enough to set things right.',
 		features: [
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-exile-lang',
@@ -779,7 +779,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-guiltyConscience-d',
 				name: 'Guilty Conscience Drawback',
-				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can understand their point of view. You take a bane on any test made to interact with those who know what you did, and on strikes made against such creaturess.'
+				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can understand their point of view. You take a bane on any test made to interact with those who know what you did, and on strikes made against such creatures.'
 			})
 		]
 	};
@@ -993,7 +993,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lightningSoul: Complication = {
 		id: 'comp-lightningSoul',
 		name: 'Lightning Soul',
-		description: 'You were caught in a storm and stuck by lightning - but somthing saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
+		description: 'You were caught in a storm and stuck by lightning - but something saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-b',

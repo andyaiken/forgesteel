@@ -28,7 +28,6 @@ import { Project } from '@/models/project';
 import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
@@ -36,8 +35,10 @@ import { Title } from '@/models/title';
 import { UpdateLogic } from './update/update-logic';
 
 export class SourcebookLogic {
-	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
-		const list = [ ...SourcebookData.getCached() ];
+	// The built-in sourcebooks are loaded once at boot and then held in React state,
+	// so they have to be handed in - see useSourcebooks() for the app-wide list.
+	static getSourcebooks = (builtIn: Sourcebook[], homebrew: Sourcebook[] = []) => {
+		const list = [ ...builtIn ];
 
 		list.forEach(UpdateLogic.updateSourcebook);
 

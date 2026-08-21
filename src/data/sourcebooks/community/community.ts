@@ -31,7 +31,7 @@ const aranox: Ancestry = {
 	description: `
 *By Marc Aranha*
 
-The Aranox are direct decendents of Minotaurs. After the rebellion against the Beast Lords of Kham, most Minotaurs scattered, driven by a bestial urge to hunt and settle on labyrinthine terrain. Wandering alone or in small tribes, the Minotaurs were slowly consumed by the beast within, until little remained but a constant hunger and rage, turning them into the monstrous creatures many know today.
+The Aranox are direct descendants of Minotaurs. After the rebellion against the Beast Lords of Kham, most Minotaurs scattered, driven by a bestial urge to hunt and settle on labyrinthine terrain. Wandering alone or in small tribes, the Minotaurs were slowly consumed by the beast within, until little remained but a constant hunger and rage, turning them into the monstrous creatures many know today.
 
 However, some Minotaur resisted this hunger, seeking to find balance with their inner beast in order to retain their sense of self and their human origins. Bonded by purpose and community, these Minotaur formed larger clans, far from the eyes of civilization, and became the Aranox.
 
@@ -768,7 +768,7 @@ If you have a kit, you can’t take this upgrade.`,
 							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'magewright-upgrades-choice-2',
 								name: 'Power Capacitors',
-								description: 'You have modified your weapons with auxillary batteries. You gain a +1 rolled damage bonus with magic abilities.',
+								description: 'You have modified your weapons with auxiliary batteries. You gain a +1 rolled damage bonus with magic abilities.',
 								keywords: [ AbilityKeyword.Magic ],
 								value: 1
 							}),
@@ -865,7 +865,7 @@ If you have a kit, you can’t take this upgrade.`,
 									id: 'magewright-ward-choice-3',
 									name: 'Ward of Calculated Negation',
 									description: 'Your ward helps you compensate for hostile advantage.',
-									type: FactoryLogic.type.createTrigger('A creature targets you with an ability that requires a power roll and and has an edge.'),
+									type: FactoryLogic.type.createTrigger('A creature targets you with an ability that requires a power roll and has an edge.'),
 									sections: [
 										FactoryLogic.createAbilitySectionText('You inflict a bane on triggering power roll.')
 									]
@@ -1754,7 +1754,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													FactoryLogic.feature.create({
 														id: 'magewright-remote-link-3',
 														name: 'Attuned',
-														description: 'When you gain this servitor, choose a damage type from acid, cold, fire, lightning, poison, or sonic. The servitor is attunedto that damage type, and gains damage immunity equal to 1 + your Reason score against that type. Attuned also affects their other features.'
+														description: 'When you gain this servitor, choose a damage type from acid, cold, fire, lightning, poison, or sonic. The servitor is attuned to that damage type, and gains damage immunity equal to 1 + your Reason score against that type. Attuned also affects their other features.'
 													}),
 													FactoryLogic.feature.create({
 														id: 'magewright-skill-7',

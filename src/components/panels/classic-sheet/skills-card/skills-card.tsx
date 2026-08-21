@@ -21,11 +21,13 @@ export const SkillsCard = (props: Props) => {
 						<div className='skill-group'>
 							{skills.map(s => {
 								const key = s.replaceAll(' ', '-');
+								const cancelled = character.cancelledSkills?.includes(s);
 								return (
 									<LabeledBooleanField
 										key={`skill-list-${list}-item-${key}`}
 										value={character.skills?.includes(s)}
 										label={SheetFormatter.getSkillAbbreviation(s)}
+										additionalClasses={cancelled ? [ 'cancelled' ] : undefined}
 									/>
 								);
 							})}

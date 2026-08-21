@@ -582,6 +582,7 @@ export class SheetFormatter {
 			size += bottomMargin;
 		} else if ([ FeatureType.Choice,
 			FeatureType.ItemChoice,
+			FeatureType.SkillCancelChoice,
 			FeatureType.SkillChoice,
 			FeatureType.LanguageChoice,
 			FeatureType.Perk,

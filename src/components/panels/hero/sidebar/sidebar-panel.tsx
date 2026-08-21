@@ -126,11 +126,18 @@ export const SidebarPanel = (props: Props) => {
 			);
 		};
 
-		const getSkills = (label: string, skills: Skill[]) => {
-			return skills.length > 0 ?
+		const getSkills = (label: string, skills: Skill[], cancelledSkills: Skill[] = []) => {
+			return (skills.length + cancelledSkills.length) > 0 ?
 				useRows ?
 					<div className='selectable-row clickable' onClick={onShowSkills}>
-						<div>{label}: <b>{skills.map(s => s.name).join(', ')}</b></div>
+						<div>
+							{label}: <b>{skills.map(s => s.name).join(', ')}</b>
+							{
+								cancelledSkills.length > 0 ?
+									<> <b><s>{cancelledSkills.map(s => s.name).join(', ')}</s></b></>
+									: null
+							}
+						</div>
 					</div>
 					:
 					<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
@@ -139,6 +146,13 @@ export const SidebarPanel = (props: Props) => {
 							skills.map(s => (
 								<div key={s.name} className='ds-text'>
 									{s.name} {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
+								</div>
+							))
+						}
+						{
+							cancelledSkills.map(s => (
+								<div key={s.name} className='ds-text dimmed-text'>
+									<s>{s.name}</s> {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
 								</div>
 							))
 						}
@@ -155,6 +169,8 @@ export const SidebarPanel = (props: Props) => {
 		const heroicResources = HeroLogic.getHeroicResources(props.hero);
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
+		const skills = HeroLogic.getSkills(props.hero, props.sourcebooks);
+		const cancelledSkills = HeroLogic.getCancelledSkills(props.hero, props.sourcebooks);
 
 		return (
 			<>
@@ -323,9 +339,9 @@ export const SidebarPanel = (props: Props) => {
 				{
 					(options.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, skills.filter(s => s.list === list), cancelledSkills.filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
+						getSkills('Skills', skills, cancelledSkills)
 				}
 			</>
 		);

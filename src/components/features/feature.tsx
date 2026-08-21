@@ -15,6 +15,7 @@ import { ConfigKit, EditKit, InfoKit } from '@/components/features/feature-data/
 import { ConfigLanguageChoice, EditLanguageChoice, InfoLanguageChoice } from '@/components/features/feature-data/language-choice';
 import { ConfigPerk, EditPerk, InfoPerk } from '@/components/features/feature-data/perk';
 import { ConfigRetainer, InfoRetainer } from '@/components/features/feature-data/retainer';
+import { ConfigSkillCancelChoice, EditSkillCancelChoice, InfoSkillCancelChoice } from '@/components/features/feature-data/skill-cancel-choice';
 import { ConfigSkillChoice, EditSkillChoice, InfoSkillChoice } from '@/components/features/feature-data/skill-choice';
 import { ConfigSummonChoice, EditSummonChoice, InfoSummonChoice } from '@/components/features/feature-data/summon-choice';
 import { ConfigTaggedFeatureChoice, EditTaggedFeatureChoice, InfoTaggedFeatureChoice } from '@/components/features/feature-data/tagged-feature-choice';
@@ -126,6 +127,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoSaveThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Size:
 			return <InfoSize data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.SkillCancelChoice:
+			return <InfoSkillCancelChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SkillChoice:
 			return <InfoSkillChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Speed:
@@ -229,6 +232,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditSaveThreshold data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Size:
 			return <EditSize data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SkillCancelChoice:
+			return <EditSkillCancelChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
 			return <EditSkillChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Speed:
@@ -289,6 +294,8 @@ export const ConfigFeature = (props: ConfigProps) => {
 			return <ConfigPerk data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Retainer:
 			return <ConfigRetainer data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SkillCancelChoice:
+			return <ConfigSkillCancelChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
 			return <ConfigSkillChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonChoice:

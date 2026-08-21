@@ -173,6 +173,8 @@ export class PregenLogic {
 				return [ ...feature.data.selected.map(o => o.id) ];
 			case FeatureType.Retainer:
 				return feature.data.selected ? [ feature.data.selected.id ] : [];
+			case FeatureType.SkillCancelChoice:
+				return [ ...feature.data.selected ];
 			case FeatureType.SkillChoice:
 				return [ ...feature.data.selected ];
 			case FeatureType.SummonChoice:
@@ -259,6 +261,9 @@ export class PregenLogic {
 						feature.data.selected = Utils.copy(monster);
 					}
 				}
+				break;
+			case FeatureType.SkillCancelChoice:
+				feature.data.selected = selections;
 				break;
 			case FeatureType.SkillChoice:
 				feature.data.selected = selections;

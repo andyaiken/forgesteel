@@ -283,6 +283,13 @@ export interface FeatureSizeData extends _FeatureData {
 };
 export type FeatureSize = FeatureOf<FeatureType.Size, FeatureSizeData>;
 
+export interface FeatureSkillCancelChoiceData extends _FeatureData {
+	knownSkillsOnly: boolean;
+	count: number;
+	selected: string[];
+};
+export type FeatureSkillCancelChoice = FeatureOf<FeatureType.SkillCancelChoice, FeatureSkillCancelChoiceData>;
+
 export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
 	listOptions: SkillList[];
@@ -396,6 +403,7 @@ export type Feature =
 	| FeatureRetainer
 	| FeatureSaveThreshold
 	| FeatureSize
+	| FeatureSkillCancelChoice
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon

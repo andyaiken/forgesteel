@@ -17,6 +17,8 @@ import './skill-select-modal.scss';
 interface Props {
 	skills: Skill[];
 	sourcebooks: Sourcebook[];
+	restrictToSkills?: boolean;
+	excludeSkills?: string[];
 	onClose: () => void;
 	onSelect: (skill: Skill) => void;
 }
@@ -25,14 +27,18 @@ export const SkillSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ customSkill, setCustomSkill ] = useState<string>('');
 
+	const excluded = props.excludeSkills || [];
+
 	const skills = props.skills
+		.filter(s => !excluded.includes(s.name))
 		.filter(s => Utils.textMatches([
 			s.name,
 			s.description
 		], searchTerm));
 
-	const otherSkills = SourcebookLogic.getSkills(props.sourcebooks)
+	const otherSkills = (props.restrictToSkills ? [] : SourcebookLogic.getSkills(props.sourcebooks))
 		.filter(os => !props.skills.map(s => s.name).includes(os.name))
+		.filter(os => !excluded.includes(os.name))
 		.filter(os => Utils.textMatches([
 			os.name,
 			os.description
@@ -46,7 +52,7 @@ export const SkillSelectModal = (props: Props) => {
 			content={
 				<div className='skill-select-modal'>
 					{
-						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(list => {
+						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ].map(list => {
 							const subset = skills.filter(s => s.list === list);
 							if (subset.length === 0) {
 								return null;
@@ -86,19 +92,26 @@ export const SkillSelectModal = (props: Props) => {
 							</>
 							: null
 					}
-					<Divider />
-					<Expander title='Add a custom skill'>
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							<HeaderText>Custom Skill</HeaderText>
-							<TextInput
-								placeholder='Custom Skill Name'
-								allowClear={true}
-								value={customSkill}
-								onChange={setCustomSkill}
-							/>
-							<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
-						</Space>
-					</Expander>
+					{
+						props.restrictToSkills ?
+							null
+							:
+							<>
+								<Divider />
+								<Expander title='Add a custom skill'>
+									<Space orientation='vertical' style={{ width: '100%' }}>
+										<HeaderText>Custom Skill</HeaderText>
+										<TextInput
+											placeholder='Custom Skill Name'
+											allowClear={true}
+											value={customSkill}
+											onChange={setCustomSkill}
+										/>
+										<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
+									</Space>
+								</Expander>
+							</>
+					}
 				</div>
 			}
 			onClose={props.onClose}

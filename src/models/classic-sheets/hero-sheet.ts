@@ -109,6 +109,7 @@ export interface HeroSheet {
 	// Skills
 	allSkills?: Map<string, string[]>;
 	skills?: string[];
+	cancelledSkills?: string[];
 
 	// Culture
 	culture?: Culture;

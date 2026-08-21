@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -642,6 +642,15 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = oFeature.data.selected;
+					break;
+				}
+				case FeatureType.SkillCancelChoice: {
+					const oFeature = originalFeature as FeatureSkillCancelChoice;
+					if (oFeature.type !== FeatureType.SkillCancelChoice) {
+						break;
+					}
+
+					feature.data.selected = [ ...oFeature.data.selected ];
 					break;
 				}
 				case FeatureType.SkillChoice: {

@@ -315,11 +315,14 @@ export class HeroSheetBuilder {
 		sheet.allSkills = new Map([ ...allSkills.entries() ].sort());
 
 		const heroSkills = HeroLogic.getSkills(hero, sourcebooks);
-		const customSkills = heroSkills.filter(s => s.list === SkillList.Custom);
+		const heroCancelledSkills = HeroLogic.getCancelledSkills(hero, sourcebooks);
+		const customSkills = [ ...heroSkills, ...heroCancelledSkills ].filter(s => s.list === SkillList.Custom);
 		if (customSkills.length) {
-			sheet.allSkills.set(SkillList.Custom, customSkills.map(s => s.name));
+			sheet.allSkills.set(SkillList.Custom, Collections.distinct(customSkills.map(s => s.name), s => s).sort());
 		}
 		sheet.skills = heroSkills.map(s => s.name);
+		sheet.cancelledSkills = heroCancelledSkills.map(s => s.name);
+		// Skill cancel choices are NOT covered here - their description carries rules text (eg the bane) that the skills card doesn't show
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => f.feature.type === FeatureType.SkillChoice)
 			.map(f => f.feature.id));

@@ -148,7 +148,11 @@ export const HeroEditPage = (props: Props) => {
 	const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
 		const sourcebooks = props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
 		const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
-		const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
+		// Cancelled skills can never be learned again, so they count as 'known' for this purpose
+		const knownSkills = [
+			...HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name),
+			...HeroLogic.getCancelledSkillNames(hero)
+		];
 		features.forEach(feature => {
 			switch (feature.type) {
 				case FeatureType.LanguageChoice:

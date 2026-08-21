@@ -40,6 +40,13 @@
                 font-weight: 400;
             }
         }
+
+        .labeled-boolean.cancelled {
+            label {
+                text-decoration: line-through double;
+            }
+        }
+
         .spacer {
             height: round(2rem, 1px);
         }

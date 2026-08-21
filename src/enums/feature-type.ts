@@ -38,6 +38,7 @@ export enum FeatureType {
 	Retainer = 'Retainer',
 	SaveThreshold = 'Save Threshold',
 	Size = 'Size',
+	SkillCancelChoice = 'Skill Cancel Choice',
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',
 	Summon = 'Summon',

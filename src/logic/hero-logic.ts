@@ -622,17 +622,7 @@ export class HeroLogic {
 		return Collections.sort(languages, l => l.name);
 	};
 
-	static getSkills = (hero: Hero, sourcebooks: Sourcebook[]) => {
-		const skillNames: string[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.SkillChoice)
-			.forEach(f => {
-				skillNames.push(...f.data.selected);
-			});
-
+	static resolveSkills = (skillNames: string[], sourcebooks: Sourcebook[]) => {
 		const skills: Skill[] = [];
 		Collections.distinct(skillNames, s => s)
 			.forEach(name => {
@@ -645,6 +635,40 @@ export class HeroLogic {
 			});
 
 		return Collections.sort(skills, s => s.name);
+	};
+
+	static getSkills = (hero: Hero, sourcebooks: Sourcebook[]) => {
+		const skillNames: string[] = [];
+
+		// Collate from features
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SkillChoice)
+			.forEach(f => {
+				skillNames.push(...f.data.selected);
+			});
+
+		// Skills which have been cancelled are lost
+		const cancelled = HeroLogic.getCancelledSkillNames(hero);
+
+		return HeroLogic.resolveSkills(skillNames.filter(name => !cancelled.includes(name)), sourcebooks);
+	};
+
+	static getCancelledSkillNames = (hero: Hero) => {
+		const skillNames: string[] = [];
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SkillCancelChoice)
+			.forEach(f => {
+				skillNames.push(...f.data.selected);
+			});
+
+		return Collections.distinct(skillNames, s => s);
+	};
+
+	static getCancelledSkills = (hero: Hero, sourcebooks: Sourcebook[]) => {
+		return HeroLogic.resolveSkills(HeroLogic.getCancelledSkillNames(hero), sourcebooks);
 	};
 
 	static getConditionImmunities = (hero: Hero) => {
@@ -1379,9 +1403,15 @@ export class HeroLogic {
 			Collections.draw(options).selected = true;
 		}
 
-		HeroLogic.getFeatures(hero)
+		const choices = HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(feature => FeatureLogic.isChoice(feature))
+			.filter(feature => FeatureLogic.isChoice(feature));
+
+		[
+			// Skills can only be cancelled once they've all been chosen
+			...choices.filter(f => f.type !== FeatureType.SkillCancelChoice),
+			...choices.filter(f => f.type === FeatureType.SkillCancelChoice)
+		]
 			.forEach(feature => {
 				switch (feature.type) {
 					case FeatureType.AncestryChoice: {
@@ -1539,9 +1569,27 @@ export class HeroLogic {
 						}
 						break;
 					}
+					case FeatureType.SkillCancelChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const allOptions = feature.data.knownSkillsOnly ?
+								HeroLogic.getSkills(hero, sourcebooks).map(s => s.name)
+								:
+								SourcebookLogic.getSkills(sourcebooks).map(s => s.name);
+							const options = allOptions
+								.filter(s => !feature.data.selected.includes(s));
+							if (options.length === 0) {
+								break;
+							}
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
 					case FeatureType.SkillChoice: {
 						while (feature.data.selected.length < feature.data.count) {
-							const current = HeroLogic.getSkills(hero, sourcebooks).map(s => s.name);
+							const current = [
+								...HeroLogic.getSkills(hero, sourcebooks).map(s => s.name),
+								...HeroLogic.getCancelledSkillNames(hero)
+							];
 							const allOptions = [ ...feature.data.options ];
 							feature.data.listOptions.forEach(list => {
 								SourcebookLogic

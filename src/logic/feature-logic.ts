@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -556,6 +556,7 @@ export class FeatureLogic {
 			FeatureType.Retainer,
 			FeatureType.SaveThreshold,
 			FeatureType.Size,
+			FeatureType.SkillCancelChoice,
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
 			FeatureType.Summon,
@@ -946,6 +947,14 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.SkillCancelChoice: {
+				const data: FeatureSkillCancelChoiceData = {
+					knownSkillsOnly: true,
+					count: 1,
+					selected: []
+				};
+				return data;
+			}
 			case FeatureType.SkillChoice: {
 				const data: FeatureSkillChoiceData = {
 					options: [],
@@ -1098,6 +1107,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.Retainer:
+			case FeatureType.SkillCancelChoice:
 			case FeatureType.SkillChoice:
 			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
@@ -1146,6 +1156,8 @@ export class FeatureLogic {
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.Retainer:
 				return feature.data.selected !== null;
+			case FeatureType.SkillCancelChoice:
+				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SkillChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SummonChoice:
@@ -1278,6 +1290,8 @@ export class FeatureLogic {
 				return 'This feature modifies your threshold for saves.';
 			case FeatureType.Size:
 				return 'This feature sets your size.';
+			case FeatureType.SkillCancelChoice:
+				return 'This feature allows you to lose a skill.';
 			case FeatureType.SkillChoice:
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Speed:

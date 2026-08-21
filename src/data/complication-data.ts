@@ -963,10 +963,11 @@ You can’t take this complication if you can’t be made dazed.`,
 				options: [ LanguageType.Dead ],
 				description: 'You know one dead language of your choice.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillCancelChoice({
 				id: 'comp-ivoryTower-d',
 				name: 'Ivory Tower Drawback',
-				description: 'The Director chooses one of the skills you learned from this complication. You lose that skill and can’t ever learn it again. Additionall, you take a bane on any test to which that skill would apply.'
+				description: 'The Director chooses one of the skills you learned from this complication. You lose that skill and can’t ever learn it again. Additionally, you take a bane on any test to which that skill would apply.',
+				knownSkillsOnly: true
 			})
 		]
 	};

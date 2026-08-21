@@ -1,4 +1,4 @@
-import { FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
+import { FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -321,5 +321,68 @@ describe('getHeroicResources', () => {
 		const ferocity = HeroLogic.getHeroicResources(hero).find(r => r.name === 'Ferocity');
 
 		expect(ferocity?.thresholds.map(t => t.value)).toEqual([ 2, 4, 6, 8, 10, 12 ]);
+	});
+});
+
+describe('getSkills / getCancelledSkills', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	const skillChoice = (selected: string[]) => ({
+		id: 'test-skill-choice',
+		name: 'Skill',
+		description: '',
+		type: FeatureType.SkillChoice,
+		data: {
+			options: [],
+			listOptions: [],
+			count: selected.length,
+			selectAt: 'build',
+			selected: selected
+		}
+	} as FeatureSkillChoice);
+
+	const skillCancelChoice = (selected: string[], knownSkillsOnly = true) => ({
+		id: 'test-skill-cancel-choice',
+		name: 'Lost Skill',
+		description: '',
+		type: FeatureType.SkillCancelChoice,
+		data: {
+			knownSkillsOnly: knownSkillsOnly,
+			count: selected.length,
+			selected: selected
+		}
+	} as FeatureSkillCancelChoice);
+
+	const mockFeatures = (features: (FeatureSkillChoice | FeatureSkillCancelChoice)[]) => {
+		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue(features.map(feature => ({ feature: feature, source: 'test', level: 1 })));
+	};
+
+	it('removes a cancelled skill from the hero\'s skills', () => {
+		mockFeatures([ skillChoice([ 'Alchemy', 'Architecture', 'Blacksmithing' ]), skillCancelChoice([ 'Architecture' ]) ]);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getSkills(hero, []).map(s => s.name)).toEqual([ 'Alchemy', 'Blacksmithing' ]);
+		expect(HeroLogic.getCancelledSkills(hero, []).map(s => s.name)).toEqual([ 'Architecture' ]);
+	});
+
+	it('reports a cancelled skill the hero never had', () => {
+		mockFeatures([ skillChoice([ 'Alchemy' ]), skillCancelChoice([ 'Sabotage' ], false) ]);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getSkills(hero, []).map(s => s.name)).toEqual([ 'Alchemy' ]);
+		expect(HeroLogic.getCancelledSkills(hero, []).map(s => s.name)).toEqual([ 'Sabotage' ]);
+	});
+
+	it('leaves skills untouched when nothing is cancelled', () => {
+		mockFeatures([ skillChoice([ 'Alchemy', 'Blacksmithing' ]) ]);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getSkills(hero, []).map(s => s.name)).toEqual([ 'Alchemy', 'Blacksmithing' ]);
+		expect(HeroLogic.getCancelledSkills(hero, [])).toEqual([]);
 	});
 });

@@ -266,6 +266,34 @@ export const HeroCustomizeModal = (props: Props) => {
 								Companion / Mount
 							</Button>
 						</div>
+						<HeaderText level={3}>Skills</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createSkillChoice({
+										id: Utils.guid(),
+										count: -1
+									}));
+								}}
+							>
+								Gain Skill
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createSkillCancelChoice({
+										id: Utils.guid(),
+										knownSkillsOnly: false,
+										count: -1
+									}));
+								}}
+							>
+								Lose Skill
+							</Button>
+						</div>
 						<HeaderText level={3}>Miscellaneous</HeaderText>
 						<div className='customize-option-section'>
 							<Button
@@ -315,18 +343,6 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Size
-							</Button>
-							<Button
-								block={true}
-								onClick={() => {
-									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createSkillChoice({
-										id: Utils.guid(),
-										count: -1
-									}));
-								}}
-							>
-								Skills
 							</Button>
 						</div>
 					</Space>
@@ -758,7 +774,7 @@ export const HeroCustomizeModal = (props: Props) => {
 										{getEditSection(f)}
 										<ConfigFeature
 											feature={f}
-											hero={props.hero}
+											hero={hero}
 											sourcebooks={props.sourcebooks}
 											setData={data => setFeatureData(f.id, data)}
 										/>

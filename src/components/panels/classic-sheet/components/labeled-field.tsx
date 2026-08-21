@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Utils } from '@/utils/utils';
 import './labeled-field.scss';
 
@@ -25,6 +26,7 @@ interface BoolProps {
 	value: boolean | undefined;
 	label: string;
 	additionalClasses?: string[];
+	marker?: ReactNode;
 }
 
 export const LabeledBooleanField = (props: BoolProps) => {
@@ -32,7 +34,7 @@ export const LabeledBooleanField = (props: BoolProps) => {
 	const box = props.value || false ? '◆' : '◇';
 	return (
 		<div className={classes}>
-			<label>{props.label}</label>
+			<label>{props.label}{props.marker}</label>
 			<div className='labeled-boolean-content'><span>{box}</span></div>
 		</div>
 	);

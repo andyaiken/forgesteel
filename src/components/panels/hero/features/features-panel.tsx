@@ -3,6 +3,7 @@ import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { Feature } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -34,11 +35,17 @@ export const FeaturesPanel = (props: Props) => {
 
 	const heroFeatures = HeroLogic.getFeatures(props.hero);
 
-	// Unlocked threshold benefits are listed under their heroic resource, so don't show them separately as well
+	// Unlocked threshold benefits are listed under their heroic resource, so don't show them separately as
+	// well. A threshold's benefit can be a Multiple, so its children have to be excluded too.
 	const thresholdFeatureIDs = heroFeatures
 		.map(f => f.feature)
 		.filter(f => f.type === FeatureType.HeroicResourceThreshold)
-		.map(f => f.data.feature.id);
+		.flatMap(f => FeatureLogic.simplifyFeatures(
+			[ { feature: f.data.feature, source: '', level: undefined } ],
+			props.hero.class?.level || 1,
+			props.hero.state.tutorialMode
+		))
+		.map(f => f.feature.id);
 
 	const features = heroFeatures
 		.filter(f => {

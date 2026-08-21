@@ -9,6 +9,7 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 import { circleOfBlight } from '@/data/classes/summoner/blight';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
@@ -780,10 +781,11 @@ Your champion gains additional features at 10th level. This includes a special C
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'summoner-9-1c',
 					name: 'Kit Improvement',
-					description: 'You have a double edge on tests made to dissuade or scare enemy minions or lackeys.'
+					modifier: RollModifierType.DoubleEdge,
+					condition: 'When dissuading or scaring enemy minions or lackeys'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-9-2',

@@ -1,8 +1,3 @@
-import { Feature, FeatureData } from '@/models/feature';
-import { FeatureType } from '@/enums/feature-type';
-import { Hero } from '@/models/hero';
-import { Sourcebook } from '@/models/sourcebook';
-
 import { ConfigAncestryChoice, InfoAncestryChoice } from '@/components/features/feature-data/ancestry-choice';
 import { ConfigAncestryFeatureChoice, EditAncestryFeatureChoice, InfoAncestryFeatureChoice } from '@/components/features/feature-data/ancestry-feature-choice';
 import { ConfigChoice, EditChoice, InfoChoice } from '@/components/features/feature-data/choice';
@@ -40,6 +35,7 @@ import { EditMovementMode, InfoMovementMode } from '@/components/features/featur
 import { EditMultiple, InfoMultiple } from '@/components/features/feature-data/multiple';
 import { EditPackage, InfoPackage } from '@/components/features/feature-data/package';
 import { EditProficiency, InfoProficiency } from '@/components/features/feature-data/proficiency';
+import { EditRollModifier, InfoRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { EditSaveThreshold, InfoSaveThreshold } from '@/components/features/feature-data/save-threshold';
 import { EditSize, InfoSize } from '@/components/features/feature-data/size';
 import { EditSpeed, InfoSpeed } from '@/components/features/feature-data/speed';
@@ -48,10 +44,14 @@ import { EditSummonFormation, InfoSummonFormation } from './feature-data/summon-
 import { EditSwitchOptions, InfoSwitchOptions } from '@/components/features/feature-data//switch-options';
 import { EditSwitchValue, InfoSwitchValue } from '@/components/features/feature-data//switch-value';
 import { EditTaggedFeature, InfoTaggedFeature } from '@/components/features/feature-data/tagged-feature';
+import { Feature, FeatureData } from '@/models/feature';
 import { EditAbilityData } from '@/components/features/feature-data/ability';
 import { EditAddOn } from '@/components/features/feature-data/addon';
 import { EditMaliceAbility } from '@/components/features/feature-data/malice-ability';
 import { EditPackageContent } from '@/components/features/feature-data/package-content';
+import { FeatureType } from '@/enums/feature-type';
+import { Hero } from '@/models/hero';
+import { Sourcebook } from '@/models/sourcebook';
 
 interface InfoProps {
 	feature: Feature;
@@ -147,6 +147,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoTaggedFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TaggedFeatureChoice:
 			return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.RollModifier:
+			return <InfoRollModifier data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TitleChoice:
 			return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Toggle:
@@ -252,6 +254,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditTaggedFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TaggedFeatureChoice:
 			return <EditTaggedFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.RollModifier:
+			return <EditRollModifier data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TitleChoice:
 			return <EditTitleChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Toggle:

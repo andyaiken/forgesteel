@@ -1,6 +1,8 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
@@ -46,10 +48,23 @@ export const metakinetic: SubClass = {
 							id: 'null-sub-3-1-2-6',
 							resource: 'Discipline',
 							value: 6,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'null-sub-3-1-2-6a',
 								name: 'Metakinetic Mastery (Discipline 6)',
-								description: 'You gain an edge on the Grab and Knockback maneuvers.'
+								features: [
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-3-1-2-6a-grab',
+										name: 'Metakinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Grab
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-3-1-2-6a-knockback',
+										name: 'Metakinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Knockback
+									})
+								]
 							})
 						}),
 						FactoryLogic.feature.createPackageContent({
@@ -219,10 +234,23 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 					name: 'Metakinetic Mastery Improvement',
 					resource: 'Discipline',
 					value: 10,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'null-sub-3-7-1a',
 						name: 'Metakinetic Mastery (Discipline 10)',
-						description: 'You have a double edge on the Grab and Knockback maneuvers.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-3-7-1a-grab',
+								name: 'Metakinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-3-7-1a-knockback',
+								name: 'Metakinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				})
 			]

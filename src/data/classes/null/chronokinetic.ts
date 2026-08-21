@@ -1,6 +1,8 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
@@ -46,10 +48,23 @@ export const chronokinetic: SubClass = {
 							id: 'null-sub-1-1-2-6',
 							resource: 'Discipline',
 							value: 6,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'null-sub-1-1-2-6a',
 								name: 'Chronokinetic Mastery (Discipline 6)',
-								description: 'You gain an edge on the Grab and Knockback maneuvers.'
+								features: [
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-1-1-2-6a-grab',
+										name: 'Chronokinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Grab
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-1-1-2-6a-knockback',
+										name: 'Chronokinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Knockback
+									})
+								]
 							})
 						}),
 						FactoryLogic.feature.createPackageContent({
@@ -210,10 +225,23 @@ export const chronokinetic: SubClass = {
 					name: 'Chronokinetic Mastery Improvement',
 					resource: 'Discipline',
 					value: 10,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'null-sub-1-7-1a',
 						name: 'Chronokinetic Mastery (Discipline 10)',
-						description: 'You have a double edge on the Grab and Knockback maneuvers.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-1-7-1a-grab',
+								name: 'Chronokinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-1-7-1a-knockback',
+								name: 'Chronokinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				})
 			]

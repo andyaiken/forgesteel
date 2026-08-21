@@ -16,6 +16,7 @@ import { Project } from '@/models/project';
 import { ProjectLogic } from '@/logic/project-logic';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { ProjectSelectModal } from '@/components/modals/select/project-select/project-select-modal';
+import { RollModifierPanel } from '@/components/panels/roll-modifier-panel/roll-modifier-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -83,6 +84,8 @@ export const HeroProjectsModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const rollModifiers = HeroLogic.getRollModifiersForProject(hero);
+
 	return (
 		<Modal
 			content={
@@ -102,6 +105,14 @@ export const HeroProjectsModal = (props: Props) => {
 							format={() => HeroLogic.getProjectPoints(hero).toString()}
 							onChange={setProjectPoints}
 						/>
+						{
+							rollModifiers.length > 0 ?
+								<div>
+									<HeaderText>Project Roll Modifiers</HeaderText>
+									{rollModifiers.map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+								</div>
+								: null
+						}
 						<Divider />
 						{
 							hero.state.projects.map(project => (

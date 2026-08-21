@@ -3,6 +3,7 @@ import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const memonek: Ancestry = {
 	id: 'ancestry-memonek',
@@ -32,10 +33,22 @@ export const memonek: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'memonek-feature-3-2',
 						name: 'Systematic Mind',
-						description: 'You gain an edge on tests made to parse schematics, maps, and other systematic documents that aren’t inherently chaotic. In addition, you treat any language you don’t know as if you know a related language.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'memonek-feature-3-2a',
+								name: 'Systematic Mind',
+								description: 'You treat any language you don’t know as if you know a related language.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'memonek-feature-3-2b',
+								name: 'Systematic Mind',
+								modifier: RollModifierType.Edge,
+								condition: 'When parsing schematics, maps, and other systematic documents that aren’t inherently chaotic'
+							})
+						]
 					}),
 					value: 1
 				},

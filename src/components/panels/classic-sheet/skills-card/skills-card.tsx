@@ -1,6 +1,9 @@
+import { Flex } from 'antd';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { RollModifierMarker } from '@/components/controls/roll-modifier-marker/roll-modifier-marker';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+
 import './skills-card.scss';
 
 interface Props {
@@ -19,18 +22,23 @@ export const SkillsCard = (props: Props) => {
 					<div className='skill-list' key={`skill-list-${list}`}>
 						<h3>{list}</h3>
 						<div className='skill-group'>
-							{skills.map(s => {
-								const key = s.replaceAll(' ', '-');
-								const cancelled = character.cancelledSkills?.includes(s);
-								return (
-									<LabeledBooleanField
-										key={`skill-list-${list}-item-${key}`}
-										value={character.skills?.includes(s)}
-										label={SheetFormatter.getSkillAbbreviation(s)}
-										additionalClasses={cancelled ? [ 'cancelled' ] : undefined}
-									/>
-								);
-							})}
+							{
+								skills.map(s => {
+									const key = s.replaceAll(' ', '-');
+									const cancelled = character.cancelledSkills?.includes(s);
+									const rollModifiers = character.skillRollModifiers?.get(s) || [];
+									return (
+										<Flex key={`skill-list-${list}-item-${key}`}>
+											<LabeledBooleanField
+												value={character.skills?.includes(s)}
+												label={SheetFormatter.getSkillAbbreviation(s)}
+												additionalClasses={cancelled ? [ 'cancelled' ] : undefined}
+											/>
+											{rollModifiers.length > 0 ? <RollModifierMarker modifier={rollModifiers[0]} multiple={rollModifiers.length > 1} /> : null}
+										</Flex>
+									);
+								})
+							}
 							{
 								skills.length % 2 !== 0 ?
 									<div className='spacer'>&nbsp;</div>

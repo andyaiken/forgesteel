@@ -8,6 +8,8 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { ItemType } from '@/enums/item-type';
 import { LanguageType } from '@/enums/language-type';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 
 export class ComplicationData {
@@ -47,10 +49,11 @@ export class ComplicationData {
 				description: 'You have a supernatural possession - a 1st echelon trinket. It might have some connection with your former life.',
 				types: [ ItemType.Trinket1st ]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-amnesia-d',
 				name: 'Amnesia Drawback',
-				description: 'You have a bane on tests made to recall lore.'
+				modifier: RollModifierType.Bane,
+				condition: 'When recalling lore'
 			})
 		]
 	};
@@ -84,9 +87,15 @@ export class ComplicationData {
 				description: 'You have 3 antihero tokens. Whenever you use an ability or effect that costs your Heroic Resource, you can spend 1 antihero token to in place of 1 Heroic Resource. While you have fewer than 3 antihero tokens and you would earn a hero token for your party through your deeds, you instead regain 1 antihero token.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-antihero-d',
+				id: 'comp-antihero-da',
 				name: 'Antihero Drawback',
-				description: 'While you have fewer than 3 antihero tokens, you exude a villainous aspect. You and each ally within 5 squares of you takes a bane on all tests made to interact with other creatures.'
+				description: 'While you have fewer than 3 antihero tokens, you exude a villainous aspect. Each ally within 5 squares of you also takes a bane on all tests made to interact with other creatures.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-antihero-db',
+				name: 'Antihero Drawback',
+				modifier: RollModifierType.Bane,
+				condition: 'While you have fewer than 3 antihero tokens, when interacting with other creatures'
 			})
 		]
 	};
@@ -158,15 +167,35 @@ export class ComplicationData {
 		name: 'Chaos Touched',
 		description: 'You came into contact with a mote of pure chaos energy, or were subjected to a supernatural effect or object that fused chaos into your very being. Now you can sprout and retract limbs in a way that horrifies unprepared onlookers.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-chaosTouched-b',
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-chaosTouched-ba-escape',
 				name: 'Chaos Touched Benefit',
-				description: 'You gain an edge on the Escape Grab, Grab, and Knockback maneuvers. Additionally, you can hold an additional item even when your hands are full.'
+				modifier: RollModifierType.Edge,
+				rollType: RollType.EscapeGrab
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-chaosTouched-ba-grab',
+				name: 'Chaos Touched Benefit',
+				modifier: RollModifierType.Edge,
+				rollType: RollType.Grab
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-chaosTouched-ba-knockback',
+				name: 'Chaos Touched Benefit',
+				modifier: RollModifierType.Edge,
+				rollType: RollType.Knockback
 			}),
 			FactoryLogic.feature.create({
+				id: 'comp-chaosTouched-bb',
+				name: 'Chaos Touched Benefit',
+				description: 'You can hold an additional item even when your hands are full.'
+			}),
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-chaosTouched-d',
 				name: 'Chaos Touched Drawback',
-				description: 'While dying, you grow and retract uncoordinated limbs, imposing a bane on your power rolls.'
+				modifier: RollModifierType.Bane,
+				rollType: RollType.Ability,
+				condition: 'While dying'
 			})
 		]
 	};
@@ -284,10 +313,11 @@ Each time you complete this project, your knowledge of your chosen field expands
 				name: 'Crash Landed Benefit',
 				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic. Until you deactivate the power pack, your damage-dealing abilities deal that damage type'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-crashLanded-d',
 				name: 'Crash Landed Drawback',
-				description: 'You take a bane on tests made to know about anything related to the world where you crash landed.'
+				modifier: RollModifierType.Bane,
+				condition: 'When recalling anything related to the world where you crash landed'
 			})
 		]
 	};
@@ -339,10 +369,11 @@ Each time you complete this project, your knowledge of your chosen field expands
 				name: 'Curse of Immortality Benefit',
 				description: 'You don’t age. Additionally, whenever you would die, you instead enter a state of suspended animation indistinguishable from death. If your body isn’t destroyed by dying or while you remain in this state, you come back to life after 12 hours and regain Stamina equal to your recovery value.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-curseOfImmortality-d',
 				name: 'Curse of Immortality Drawback',
-				description: 'You take a bane on any test made to recall lore.'
+				modifier: RollModifierType.Bane,
+				condition: 'When recalling lore'
 			})
 		]
 	};
@@ -776,10 +807,18 @@ You can’t take this complication if you can’t be made dazed.`,
 				name: 'Guilty Conscience Benefit',
 				description: 'You’re determined to stay alive so you can set things right. When your Stamina reaches the negative of your winded value, you can use a free triggered action to spend a Recovery.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'comp-guiltyConscience-d',
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-guiltyConscience-db',
 				name: 'Guilty Conscience Drawback',
-				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can understand their point of view. You take a bane on any test made to interact with those who know what you did, and on strikes made against such creatures.'
+				modifier: RollModifierType.Bane,
+				condition: 'When interacting with those who know what you did'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-guiltyConscience-dc',
+				name: 'Guilty Conscience Drawback',
+				modifier: RollModifierType.Bane,
+				rollType: RollType.Strike,
+				condition: 'When striking those who know what you did'
 			})
 		]
 	};
@@ -795,9 +834,15 @@ You can’t take this complication if you can’t be made dazed.`,
 				description: 'As long as you are not in a building or other structure, you can spend 1 uninterrupted minute to summon your giant hawk, which acts as your mount. You can dismiss the hawk at any time (no action required). The hawk won’t go inside buildings, dungeons, or other structures, and it won’t accept anyone but you as a rider. If the hawk takes damage or dies, you can restore them to full Stamina as a respite activity.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-hawkRider-d',
+				id: 'comp-hawkRider-da',
 				name: 'Hawk Rider Drawback',
-				description: 'People aware of the origin of your mount are afraid to interact with you, since they worry the Hawklords will come after them by association. You have a bane on tests made to influence anyone who knows of the Hawklords and who has observed you with your giant hawk. Such people might report you to the Hawklords, who can come looking for you at the Director’s discretion.'
+				description: 'People aware of the origin of your mount are afraid to interact with you, since they worry the Hawklords will come after them by association. Such people might report you to the Hawklords, who can come looking for you at the Director’s discretion.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-hawkRider-db',
+				name: 'Hawk Rider Drawback',
+				modifier: RollModifierType.Bane,
+				condition: 'When influencing anyone who knows of the Hawklords and who has observed you with your giant hawk'
 			})
 		]
 	};
@@ -812,10 +857,12 @@ You can’t take this complication if you can’t be made dazed.`,
 				name: 'Host Body Benefit',
 				description: 'You are a fungus that inhabits a humanoid body. Your host body follows all the usual rules for a character and is considered to be alive. At any time while your host body is alive, or for 24 hours after it dies, you can use a main action to move to a dead humanoid within 10 squares of the body and use it as your new host body, provided the body belongs to a playable ancestry. When you do so, your original host body dies if it was alive. Your new host body gains all your statistics except for size, ancestry traits, and other statistics related to your former host body’s ancestry, which you instead gain from your new host body. When you inhabit a new host body, you start with 1 Stamina and can immediately spend a Recovery.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-hostBody-d',
 				name: 'Host Body Drawback',
-				description: 'You have a bane on tests made to read a humanoid creature’s emotions or body language.'
+				modifier: RollModifierType.Bane,
+				skills: [ 'Read Person' ],
+				condition: 'When reading a humanoid creature'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-hostBody-mods',
@@ -857,15 +904,18 @@ You can’t take this complication if you can’t be made dazed.`,
 				id: 'comp-hunter-b1',
 				options: [ 'Alertness', 'Criminal Underworld', 'Eavesdrop', 'Interrogate', 'Rumors', 'Search', 'Track', 'Society' ]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-hunter-b2',
 				name: 'Hunter Benefit',
-				description: 'You have an edge on tests made to find or learn clues about your quarry.'
+				modifier: RollModifierType.Edge,
+				condition: 'When finding or learning clues about your quarry'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-hunter-d',
 				name: 'Hunter Drawback',
-				description: 'You are so obsessed with finding your quarry that you have a bane on tests made to track other creatures.'
+				modifier: RollModifierType.Bane,
+				skills: [ 'Track' ],
+				condition: 'When tracking a creature other than your quarry'
 			})
 		]
 	};
@@ -941,9 +991,15 @@ You can’t take this complication if you can’t be made dazed.`,
 				]
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-infernalContractButLikeBad-d',
+				id: 'comp-infernalContractButLikeBad-da',
 				name: 'Infernal Contract … But, Like, Bad Drawback',
-				description: 'Your body bears a fiendish mark. Anyone who understands religion notes the mark can tell that your soul belongs to Hell, imposing a bane on tests made to interact with those creatures (unless they’re into that). Additionally, when you die, your soul goes to Hell and you can’t be restored to life.'
+				description: 'Your body bears a fiendish mark. Anyone who understands religion who notes the mark can tell that your soul belongs to Hell. Additionally, when you die, your soul goes to Hell and you can’t be restored to life.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-infernalContractButLikeBad-db',
+				name: 'Infernal Contract … But, Like, Bad Drawback',
+				modifier: RollModifierType.Bane,
+				condition: 'When interacting with creatures who can tell your soul belongs to Hell (unless they’re into that)'
 			})
 		]
 	};
@@ -1081,10 +1137,11 @@ You can’t take this complication if you can’t be made dazed.`,
 				name: 'Lucky Benefit',
 				description: 'When you spend a hero token to succeed on a saving throw or reroll a test, roll a d10. On a 6 or higher, you gain the benefit but don’t spend the hero token.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-lucky-d',
 				name: 'Lucky Drawback',
-				description: 'Whenever you obtain a tier 1 result on a test and don’t spend a hero token to reroll, you take a bane on the next test you make.'
+				modifier: RollModifierType.Bane,
+				condition: 'On your next test after you obtain a tier 1 outcome and don’t spend a hero token to reroll'
 			})
 		]
 	};
@@ -1201,10 +1258,19 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Misunderstood',
 		description: 'Your appearance marks you as part of a group that is universally feared. You might be a gentle soul, but you’re not often given a chance to prove it. It’s no wonder that you usually wear a hood.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-misunderstood-b',
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-misunderstood-ba',
 				name: 'Misunderstood',
-				description: 'When you reveal your appearance to creatures who don’t know you personally, you gain an edge on tests where the Brag or Intimidate skill could be applied, but you take a bane on tests where the Flirt, Lead, or Persuade skills could be applied.'
+				modifier: RollModifierType.Edge,
+				skills: [ 'Brag', 'Intimidate' ],
+				condition: 'When you reveal your appearance to creatures who don’t know you personally'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-misunderstood-bb',
+				name: 'Misunderstood',
+				modifier: RollModifierType.Bane,
+				skills: [ 'Flirt', 'Lead', 'Persuade' ],
+				condition: 'When you reveal your appearance to creatures who don’t know you personally'
 			})
 		]
 	};
@@ -1222,10 +1288,12 @@ You can’t take this complication if you can’t be made dazed.`,
 					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 				]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-mundane-d',
 				name: 'Mundane Drawback',
-				description: 'While you are carry more than three magic treasures, you take a bane on power rolls.'
+				modifier: RollModifierType.Bane,
+				rollType: RollType.Ability,
+				condition: 'While you carry more than three magic treasures'
 			})
 		]
 	};
@@ -1332,15 +1400,17 @@ You can’t take this complication if you can’t be made dazed.`,
 				id: 'comp-promisingApprentice-skill',
 				listOptions: [ SkillList.Crafting ]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-promisingApprentice-b',
 				name: 'Promising Apprentice Benefit',
-				description: 'Choose one of your skills from the crafting skill group. You gain an edge on any test that uses that skill.'
+				modifier: RollModifierType.Edge,
+				condition: 'On tests using the crafting skill you chose for this complication'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'comp-promisingApprentice-d',
 				name: 'Promising Apprentice Drawback',
-				description: 'Whoever killed your mentor cursed you. You take a bane on any test that doesn’t use one of your skills.'
+				modifier: RollModifierType.Bane,
+				condition: 'When the test doesn’t use one of your skills'
 			})
 		]
 	};
@@ -1390,9 +1460,16 @@ You can’t take this complication if you can’t be made dazed.`,
 				selected: [ 'Handle Animals' ]
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-raisedByBeasts-b',
+				id: 'comp-raisedByBeasts-ba',
 				name: 'Raised by Beasts Benefit',
-				description: 'Choose an animal type related to the animals who helped you, such as wolf. You gain an edge on tests that use the Handle Animals skill when interacting with animals of this type. You can also communicate with animals of this type as if you shared a language, and animals of this type aren’t initially hostile to you unless they’re supernaturally compelled to be.'
+				description: 'Choose an animal type related to the animals who helped you, such as wolf. You can communicate with animals of this type as if you shared a language, and animals of this type aren’t initially hostile to you unless they’re supernaturally compelled to be.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-raisedByBeasts-bb',
+				name: 'Raised by Beasts Benefit',
+				modifier: RollModifierType.Edge,
+				skills: [ 'Handle Animals' ],
+				condition: 'When interacting with animals of your chosen type'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-d',
@@ -1431,9 +1508,15 @@ You can’t take this complication if you can’t be made dazed.`,
 				description: 'Choose one of your skills. That skill grants a +3 bonus to tests instead of +2.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-rival-d',
+				id: 'comp-rival-da',
 				name: 'Rival Drawback',
-				description: 'Your rival has similar statistics to yours, but always had one skill they excelled at, as determined by the Director. Intimidated by their prowess, you take a bane on tests using that skill.'
+				description: 'Your rival has similar statistics to yours, but always had one skill they excelled at, as determined by the Director.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-rival-db',
+				name: 'Rival Drawback',
+				modifier: RollModifierType.Bane,
+				condition: 'On tests using the skill your rival excels at'
 			})
 		]
 	};
@@ -1741,9 +1824,16 @@ Note: Stormwight furies can’t take this complication.`,
 		description: 'An evil fairy cursed you, leaving you with a blank visage instead of a face. Although you’re able to imitate other peoples’ features, you’d like to have your own back.',
 		features: [
 			FactoryLogic.feature.create({
-				id: 'comp-stolenFace-b',
+				id: 'comp-stolenFace-ba',
 				name: 'Stolen Face Benefit',
-				description: 'You can spend 5 uninterrupted minutes to rearrange your face to resemble the face of another creature of your ancestry who you’ve observed before. You have a double edge on tests made to impersonate that creature or to disguise your identity. You are unable to change your hair or other non-facial features.'
+				description: 'You can spend 5 uninterrupted minutes to rearrange your face to resemble the face of another creature of your ancestry who you’ve observed before. You are unable to change your hair or other non-facial features.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-stolenFace-bb',
+				name: 'Stolen Face Benefit',
+				modifier: RollModifierType.DoubleEdge,
+				skills: [ 'Disguise' ],
+				condition: 'When impersonating that creature or disguising your identity'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-stolenFace-d',
@@ -1828,9 +1918,16 @@ Note: Stormwight furies can’t take this complication.`,
 				description: 'Whenever you make a melee free strike against an adjacent creature, you can do so by biting the creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-vampireSire-d',
+				id: 'comp-vampireSire-da',
 				name: 'Vampire Sire Drawback',
-				description: 'While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.'
+				description: 'While you have temporary Stamina from this complication, you grow visible fangs, and your vampire progenitor can sense your location.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-vampireSire-db',
+				name: 'Vampire Sire Drawback',
+				modifier: RollModifierType.Bane,
+				characteristics: [ Characteristic.Presence ],
+				condition: 'While you have temporary Stamina from this complication, when interacting with humanoids'
 			})
 		]
 	};
@@ -1877,14 +1974,28 @@ Note: Stormwight furies can’t take this complication.`,
 		description: 'You were brought up to a strict standard of behavior. You cannot tell a lie.',
 		features: [
 			FactoryLogic.feature.create({
-				id: 'comp-vowOfHonesty-b',
+				id: 'comp-vowOfHonesty-ba',
 				name: 'Vow of Honesty Benefit',
-				description: 'If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you have a double edge on any test made to persuade a creature of some specific fact.'
+				description: 'If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-vowOfHonesty-bb',
+				name: 'Vow of Honesty Benefit',
+				modifier: RollModifierType.DoubleEdge,
+				skills: [ 'Persuade' ],
+				condition: 'When persuading a creature of some specific fact'
 			}),
 			FactoryLogic.feature.create({
-				id: 'comp-vowOfHonesty-d',
+				id: 'comp-vowOfHonesty-da',
 				name: 'Vow of Honesty Drawback',
-				description: 'When you lie, your honor is stained and you lose this complication’s benefit. Additionally, you take a bane on any test that uses a skill from the interpersonal skill group. You can lose the bane and regain this complication’s benefit only by doing penance, such as gaining the forgiveness of the creature you lied to.'
+				description: 'When you lie, your honor is stained and you lose this complication’s benefit. You can lose the bane and regain this complication’s benefit only by doing penance, such as gaining the forgiveness of the creature you lied to.'
+			}),
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-vowOfHonesty-db',
+				name: 'Vow of Honesty Drawback',
+				modifier: RollModifierType.Bane,
+				skillLists: [ SkillList.Interpersonal ],
+				condition: 'After you lie, until you do penance'
 			})
 		]
 	};
@@ -1987,9 +2098,13 @@ Note: Stormwight furies can’t take this complication.`,
 		description: 'You nearly lost your life at sea, but then you heard the voice. Someone - or something - in the water called out to you, telling you to swim. The ocean was suddenly no longer your doom but your parent, granting you a fragment of its power. But for what purpose, you can’t be sure',
 		features: [
 			FactoryLogic.feature.create({
-				id: 'comp-waterborn-b',
+				id: 'comp-waterborn-ba',
 				name: 'Waterborn Benefit',
 				description: 'You can automatically swim at full speed while moving, and you can breathe underwater.'
+			}),
+			FactoryLogic.feature.createMovementMode({
+				id: 'comp-waterborn-bb',
+				mode: 'Swim'
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -2051,10 +2166,17 @@ Note: Stormwight furies can’t take this complication.`,
 		name: 'Wrathful Spirit',
 		description: 'You’re quick to anger, never letting an insult go without slinging one right back. In combat, you fight as if possessed by a literal spirit of wrath. No matter the tactical circumstances, when someone injures you, you feel compelled to answer blood with blood.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-wrathfulSpirit-b',
+			FactoryLogic.feature.createRollModifier({
+				id: 'comp-wrathfulSpirit-ba',
 				name: 'Wrathful Spirit Benefit',
-				description: 'While you are taunted by a creature, you gain an edge on strikes against that creature. Aditionally, you can spend 1 Heroic Resource to have a double edge instead.'
+				modifier: RollModifierType.Edge,
+				rollType: RollType.Strike,
+				condition: 'While you are taunted by the creature you strike'
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-wrathfulSpirit-bb',
+				name: 'Wrathful Spirit Benefit',
+				description: 'You can spend 1 Heroic Resource to have a double edge instead.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-wrathfulSpirit-d',

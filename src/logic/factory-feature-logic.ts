@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -21,6 +21,8 @@ import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
 import { ResourceGain } from '@/models/resource-gain';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { Summon } from '@/models/summon';
@@ -327,7 +329,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: ResourceGain[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains?: ResourceGain[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -335,7 +337,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.HeroicResource,
 			data: {
 				type: data.type || 'heroic',
-				gains: data.gains,
+				gains: data.gains || [],
 				thresholds: [],
 				details: data.details || '',
 				canBeNegative: data.canBeNegative ?? false,
@@ -766,6 +768,23 @@ export class FactoryFeatureLogic {
 				tag: data.tag,
 				count: data.count || 1,
 				selected: []
+			}
+		};
+	};
+
+	createRollModifier = (data: { id: string, name?: string, description?: string, modifier: RollModifierType, rollType?: RollType, skills?: string[], skillLists?: SkillList[], characteristics?: Characteristic[], condition?: string }): FeatureRollModifier => {
+		return {
+			id: data.id,
+			name: data.name || 'Roll Modifier',
+			description: data.description || '',
+			type: FeatureType.RollModifier,
+			data: {
+				modifier: data.modifier,
+				rollType: data.rollType || RollType.Test,
+				skills: data.skills || [],
+				skillLists: data.skillLists || [],
+				characteristics: data.characteristics || [],
+				condition: data.condition || ''
 			}
 		};
 	};

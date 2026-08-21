@@ -1,0 +1,33 @@
+.roll-modifier-marker {
+    display: flex;
+    align-items: center;
+    height: 12px;
+
+    .edge,
+    .bane {
+        display: flex;
+        align-items: center;
+        height: 12px;
+
+        svg {
+            height: 12px;
+            width: 12px;
+        }
+    }
+
+    .edge {
+        color: #1a7f37;
+
+        svg {
+            fill: #1a7f37;
+        }
+    }
+
+    .bane {
+        color: #b32d2e;
+
+        svg {
+            fill: #b32d2e;
+        }
+    }
+}

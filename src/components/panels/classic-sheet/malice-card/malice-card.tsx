@@ -22,7 +22,7 @@ export const MaliceCard = (props: MaliceCardProps) => {
 			<div className='malice-features features-container three-column'>
 				{encounter.malice?.map(m => {
 					return (
-						<MaliceGroupComponent monster={m.monster} malice={m.malice} />
+						<MaliceGroupComponent key={m.monster} monster={m.monster} malice={m.malice} />
 					);
 				})}
 			</div>

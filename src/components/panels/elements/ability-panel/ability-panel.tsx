@@ -22,6 +22,7 @@ import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
+import { RollModifierPanel } from '@/components/panels/roll-modifier-panel/roll-modifier-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { useOptions } from '@/contexts/data-context';
@@ -287,6 +288,8 @@ export const AbilityPanel = (props: Props) => {
 		);
 	}
 
+	const rollModifiers = props.hero ? HeroLogic.getRollModifiersForAbility(props.hero, props.ability) : [];
+
 	return (
 		<ErrorBoundary>
 			<div className='ability-panel' id={SheetFormatter.getPageId('ability', props.ability.id)} style={props.style}>
@@ -333,6 +336,14 @@ export const AbilityPanel = (props: Props) => {
 				}
 				<AbilityInfoPanel ability={props.ability} hero={props.hero} />
 				{(props.ability.sections || []).map(getSection)}
+				{
+					rollModifiers.length > 0 ?
+						<div>
+							<HeaderText>Roll Modifiers</HeaderText>
+							{rollModifiers.map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+						</div>
+						: null
+				}
 				{
 					keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
 						<Alert

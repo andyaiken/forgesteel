@@ -8,6 +8,7 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 
 export const conduit: HeroClass = {
@@ -548,10 +549,24 @@ You are infused with the power your deity reserves for their most worthy instrum
 					name: 'Faith’s Sword',
 					description: 'Each time you finish a respite, you can choose a willing hero ally who finished the respite with you. That ally gains the benefits of your Burgeoning Saint feature until you finish another respite. Additionally, you can spend piety as a free maneuver to give the hero 1 of their Heroic Resource for every 2 piety spent.'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'conduit-9-2',
 					name: 'Ordained',
-					description: 'Your god elevates the power flowing through you. Your characteristic scores are treated as 1 higher for the purpose of resisting potencies. Additionally, while you have 5 or more Victories, you speak with the voice of your deity. You have a double edge on Presence tests made to influence other creatures.'
+					description: 'Your god elevates the power flowing through you.',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'conduit-9-2a',
+							name: 'Ordained',
+							description: 'Your characteristic scores are treated as 1 higher for the purpose of resisting potencies.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'conduit-9-2b',
+							name: 'Ordained',
+							modifier: RollModifierType.DoubleEdge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'While you have 5 or more Victories, when influencing other creatures'
+						})
+					]
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-9-3',

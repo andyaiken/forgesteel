@@ -6,6 +6,9 @@ import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { ItemType } from '@/enums/item-type';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
+import { SkillList } from '@/enums/skill-list';
 import { Title } from '@/models/title';
 
 export class TitleData {
@@ -26,10 +29,30 @@ export class TitleData {
 				name: 'Rare Books',
 				description: 'You add rare, ancient books to your collection. Whenever you undertake a research project, roll 1d6 for each dead language you know and add the total to the project roll.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-ancient-loremaster-3',
 				name: 'Susurrus Codex',
-				description: 'You find a sinister book that whispers advice in a voice no one else can hear. As long as you follow the book’s advice, you gain an edge on Reason tests and take a bane on Presence tests. You can stop following the book’s advice at any time, but the book won’t speak to you for the rest of the day.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-ancient-loremaster-3a',
+						name: 'Susurrus Codex',
+						description: 'You find a sinister book that whispers advice in a voice no one else can hear. You can stop following the book’s advice at any time, but the book won’t speak to you for the rest of the day.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-ancient-loremaster-3b',
+						name: 'Susurrus Codex',
+						modifier: RollModifierType.Edge,
+						characteristics: [ Characteristic.Reason ],
+						condition: 'You are following the book’s advice'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-ancient-loremaster-3c',
+						name: 'Susurrus Codex',
+						modifier: RollModifierType.Bane,
+						characteristics: [ Characteristic.Presence ],
+						condition: 'You are following the book’s advice'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -42,10 +65,12 @@ export class TitleData {
 		echelon: 1,
 		prerequisites: '120 project points spent on the Tackle table while Fishing.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-angler-1',
 				name: 'Angler',
-				description: 'You gain an edge on all Fishing project rolls.'
+				modifier: RollModifierType.Edge,
+				rollType: RollType.Project,
+				condition: 'Fishing rolls'
 			})
 		],
 		selectedFeatureID: ''
@@ -63,15 +88,18 @@ export class TitleData {
 				name: 'Iron Hand in Velvet Glove',
 				description: 'The first time during a negotiation that you make a test using the Intimidate skill and don’t make an argument that appeals to an NPC’s motivation, you don’t lower the NPC’s patience or interest no matter the outcome of the roll.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-battleaxe-diplomat-2',
 				name: 'Truce!',
-				description: 'You have a double edge on tests made to stop combat and start a negotiation.'
+				modifier: RollModifierType.DoubleEdge,
+				condition: 'Stopping combat and starting a negotiation'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-battleaxe-diplomat-3',
 				name: 'Warriors’ Understanding',
-				description: 'You gain an edge on Presence tests made to interact with creatures you have fought against in combat encounters.'
+				modifier: RollModifierType.Edge,
+				characteristics: [ Characteristic.Presence ],
+				condition: 'Interacting with creatures you have fought against in combat encounters'
 			})
 		],
 		selectedFeatureID: ''
@@ -106,10 +134,11 @@ export class TitleData {
 				name: 'Headbutter',
 				description: 'While you are grabbed or restrained, your free strikes don’t take a bane when those conditions would impose one.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-brawler-4',
 				name: 'If I Wanted You Dead, You’d Be Dead',
-				description: 'Whenever you defeat foes without killing any of them (including the foes you defeat to meet the prerequisite for this title), you gain an edge on tests during negotiations with those foes.'
+				modifier: RollModifierType.Edge,
+				condition: 'Negotiating with foes you defeated without killing any of them'
 			})
 		],
 		selectedFeatureID: ''
@@ -127,10 +156,12 @@ export class TitleData {
 				name: 'Discerning Shopper',
 				description: 'When looking for an item prerequisite for a crafting project, you can remember meeting someone who might have the item—or at least information about it.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-city-rat-2',
 				name: 'One with the Crowd',
-				description: 'While you’re using one or more creatures as cover, you gain an edge on tests made to hide and sneak.'
+				modifier: RollModifierType.Edge,
+				skills: [ 'Hide', 'Sneak' ],
+				condition: 'You are using one or more creatures as cover'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-city-rat-3',
@@ -164,10 +195,17 @@ export class TitleData {
 		echelon: 1,
 		prerequisites: 'You fight alongside three or more dwarves.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createToggle({
 				id: 'title-dwarf-legionnaire-1',
 				name: 'Close Formation',
-				description: 'While adjacent to two or more allies, you gain a +2 bonus to stability.'
+				condition: 'You are adjacent to two or more allies',
+				checked: false,
+				featureChecked: FactoryLogic.feature.createBonus({
+					id: 'title-dwarf-legionnaire-1a',
+					name: 'Close Formation',
+					field: FeatureField.Stability,
+					value: 2
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-dwarf-legionnaire-2',
@@ -295,10 +333,12 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'A New Dawn',
 				description: 'Each time you finish a respite while in a community you have saved, the party gains a hero token. This hero token disappears at the end of your next respite if it hasn’t been used.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-local-hero-2',
 				name: 'Easy Marks',
-				description: 'You gain an edge on tests made using skills from the interpersonal and intrigue skill groups when influencing members of a community that you have saved.'
+				modifier: RollModifierType.Edge,
+				skillLists: [ SkillList.Interpersonal, SkillList.Intrigue ],
+				condition: 'When influencing members of a community that you have saved'
 			}),
 			FactoryLogic.feature.createBonus({
 				id: 'title-local-hero-3',
@@ -393,10 +433,12 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Silver Shield',
 				description: 'You have a badge granted to you by your organization. While you wear it, you gain the My Life for Yours feature from the censor class. When you use that ability, you can’t spend wrath unless you have the Wrath class feature.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-marshal-4',
 				name: 'Trained Tracker',
-				description: 'You gain an edge on tests made to track criminals.'
+				modifier: RollModifierType.Edge,
+				skills: [ 'Track' ],
+				condition: 'Tracking criminals'
 			})
 		],
 		selectedFeatureID: ''
@@ -430,15 +472,18 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Beast Bane',
 				description: 'Creatures with the Animal keyword take a bane on strikes made against you.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-monster-bane-2',
 				name: 'Monster Soother',
-				description: 'You gain an edge on tests made to calm or tame nonsapient creatures.'
+				modifier: RollModifierType.Edge,
+				condition: 'Calming or taming nonsapient creatures'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-monster-bane-3',
 				name: 'Monster Trophy',
-				description: 'You decorate your equipment with a trophy from a creature you defeated. While the trophy is visible, you gain an edge on tests made to intimidate sapient creatures.'
+				modifier: RollModifierType.Edge,
+				skills: [ 'Intimidate' ],
+				condition: 'When a trophy from a creature you defeated is visible, and the target is sapient'
 			})
 		],
 		selectedFeatureID: ''
@@ -556,10 +601,20 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		echelon: 1,
 		prerequisites: 'You acquire a ship, airship, or similar vessel.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-ship-captain-1',
 				name: 'Deep Sea Diver',
-				description: 'You can automatically swim at full speed while moving.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-ship-captain-1a',
+						name: 'Deep Sea Diver',
+						description: 'You can automatically swim at full speed while moving.'
+					}),
+					FactoryLogic.feature.createMovementMode({
+						id: 'title-ship-captain-1b',
+						mode: 'Swim'
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-ship-captain-2',
@@ -571,10 +626,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Signal Flags',
 				description: 'While aboard a ship, you can communicate with and conduct negotiations with another ship up to 5 miles away, as long as you and creatures on the other ship have line of effect to each other. You gain an edge on Presence tests made while negotiating in this way.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-ship-captain-4',
 				name: 'Trained Crewmember',
-				description: 'You gain an edge on tests made to handle air or sea vessels.'
+				modifier: RollModifierType.Edge,
+				condition: 'Handling air or sea vessels'
 			})
 		],
 		selectedFeatureID: ''
@@ -604,15 +660,19 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Spotlight',
 				description: 'You magically cause a creature within 10 squares to shed light for 5 squares. This light lasts for 1 minute, until the creature is more than 10 squares away from you, or until you dismiss the effect (no action required). While illuminated, a creature can’t sneak or hide, they take a bane on tests made to perform any action secretly, and they gain an edge on tests made using the Lead, Music, or Perform skills.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-troupe-tactics-3',
 				name: 'Supporting Player',
-				description: 'You gain an edge on group tests using Presence and on tests made to assist another creature with a Presence test.'
+				modifier: RollModifierType.Edge,
+				characteristics: [ Characteristic.Presence ],
+				condition: 'Group tests, and tests made to assist another creature'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-troupe-tactics-4',
 				name: 'Work the Crowd',
-				description: 'While any of your allies is playing music or performing, you gain an edge on tests made to conceal objects, hide, pick pockets, or sneak.'
+				modifier: RollModifierType.Edge,
+				skills: [ 'Conceal Object', 'Hide', 'Pick Pocket', 'Sneak' ],
+				condition: 'An ally is playing music or performing'
 			})
 		],
 		selectedFeatureID: ''
@@ -635,10 +695,22 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Minion Mower',
 				description: 'When you make a melee strike that targets a minion and at least one more minion is within distance of the strike, the strike gains a +3 damage bonus.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-wanted-dead-or-alive-3',
 				name: 'No, You’re Under Arrest!',
-				description: 'You gain an edge on the Escape Grab maneuver. Additionally, when you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.'
+				features: [
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-wanted-dead-or-alive-3a',
+						name: 'No, You’re Under Arrest!',
+						modifier: RollModifierType.Edge,
+						rollType: RollType.EscapeGrab
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-wanted-dead-or-alive-3b',
+						name: 'No, You’re Under Arrest!',
+						description: 'When you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -893,10 +965,22 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Requisition',
 				description: 'When you gain this title, you gain a 1st- or 2nd-echelon magic trinket of your choice from your faction. Whenever you gain a level, you can swap the trinket out for another one.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-faction-officer-2',
 				name: 'You\'re the Boss',
-				description: 'Lower-ranking members of your faction follow your routine orders. In nonroutine matters, you gain an edge on tests made to influence those characters’ behavior.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-faction-officer-2a',
+						name: 'You\'re the Boss',
+						description: 'Lower-ranking members of your faction follow your routine orders.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-faction-officer-2b',
+						name: 'You\'re the Boss',
+						modifier: RollModifierType.Edge,
+						condition: 'When influencing the behaviour of lower-ranking members of your faction in nonroutine matters'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -950,10 +1034,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 						name: 'Gift of Knowledge',
 						selected: [ 'Khelt' ]
 					}),
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'title-fey-friend-3-2',
 						name: 'Gift of Knowledge',
-						description: 'You gain an edge on tests you make that use any skill from the lore skill group.'
+						modifier: RollModifierType.Edge,
+						skillLists: [ SkillList.Lore ]
 					})
 				]
 			})
@@ -1326,10 +1411,15 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 		echelon: 3,
 		prerequisites: 'You defeat a leader or solo creature with the Demon keyword, such as a soulraker hivequeen, or you are possessed by a demon.',
 		features: [
+			FactoryLogic.feature.createLanguage({
+				id: 'title-demon-slayer-1a',
+				name: 'Demonic Lore',
+				language: 'Proto-Ctholl'
+			}),
 			FactoryLogic.feature.create({
 				id: 'title-demon-slayer-1',
 				name: 'Demonic Lore',
-				description: 'You know the Proto-Ctholl language. Additionally, when you deal damage using a magic ability, you can change the ability’s damage type to holy.'
+				description: 'When you deal damage using a magic ability, you can change the ability’s damage type to holy.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-demon-slayer-2',
@@ -1362,10 +1452,15 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 		echelon: 3,
 		prerequisites: 'You defeat a leader or solo creature with the Devil keyword, such as an archdevil, or you make a deal with a devil.',
 		features: [
+			FactoryLogic.feature.createLanguage({
+				id: 'title-diabolist-1a',
+				name: 'Devil Lore',
+				language: 'Anjali'
+			}),
 			FactoryLogic.feature.create({
 				id: 'title-diabolist-1',
 				name: 'Devil Lore',
-				description: 'You know the Anjali language, and your understanding of this language helps you create irresistible supernatural effects. The potencies of your magic or psionic abilities that target Reason, Intuition, or Presence increase by 1.'
+				description: 'Your understanding of the Anjali language helps you create irresistible supernatural effects. The potencies of your magic or psionic abilities that target Reason, Intuition, or Presence increase by 1.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-diabolist-2',
@@ -1419,15 +1514,26 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 				name: 'First Mate',
 				description: 'You have a pirate retainer, such as a human warrior, chosen by the Director. This retainer’s level increases to your level.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-fleet-admiral-2',
 				name: 'Swashbuckler',
-				description: 'You can automatically climb at full speed while moving.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-fleet-admiral-2a',
+						name: 'Swashbuckler',
+						description: 'You can automatically climb at full speed while moving.'
+					}),
+					FactoryLogic.feature.createMovementMode({
+						id: 'title-fleet-admiral-2b',
+						mode: 'Climb'
+					})
+				]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-fleet-admiral-3',
 				name: 'Treasure Keeper',
-				description: 'You earn 1 Wealth.'
+				field: FeatureField.Wealth,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-fleet-admiral-4',
@@ -1527,15 +1633,30 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 		echelon: 3,
 		prerequisites: 'A monarch or important noble grants you a noble rank.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createRollModifier({
 				id: 'title-noble-1',
 				name: 'I Know How to Talk to These People',
-				description: 'You gain an edge on Presence tests made to interact with royals, nobles, and their feudal followers, provided they are aware of your noble rank.'
+				modifier: RollModifierType.Edge,
+				characteristics: [ Characteristic.Presence ],
+				condition: 'Interacting with royals, nobles, and their feudal followers who are aware of your noble rank'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-noble-2',
 				name: 'Noble Splendor',
-				description: 'You earn 1 Renown and 1 Wealth.'
+				features: [
+					FactoryLogic.feature.createBonus({
+						id: 'title-noble-2a',
+						name: 'Noble Splendor',
+						field: FeatureField.Renown,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-noble-2b',
+						name: 'Noble Splendor',
+						field: FeatureField.Wealth,
+						value: 1
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-noble-3',
@@ -1584,15 +1705,27 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 		echelon: 3,
 		prerequisites: 'An enemy leader or solo creature reduces you to 0 Stamina.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-scarred-1',
 				name: 'Effect',
-				description: 'You gain a visible scar in a location of your choice. Additionally, your Stamina maximum increases by 20, and the creature who scarred you takes a bane on abilities against you.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-scarred-1a',
+						name: 'Effect',
+						description: 'You gain a visible scar in a location of your choice. The creature who scarred you takes a bane on abilities against you.'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-scarred-1b',
+						name: 'Effect',
+						field: FeatureField.Stamina,
+						value: 20
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-scarred-2',
 				name: 'Special',
-				description: 'You can gain this title multiple times. The second and each subsequent time that you gain it, your Stamima maximum doesn’t increase.'
+				description: 'You can gain this title multiple times. The second and each subsequent time that you gain it, your Stamina maximum doesn’t increase.'
 			})
 		],
 		selectedFeatureID: ''
@@ -1610,10 +1743,18 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				name: 'Death From Above',
 				description: 'When you gain an edge on an ability due to high ground, the ability gains a +8 damage bonus.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createToggle({
 				id: 'title-siege-breaker-2',
 				name: 'Hold the Line',
-				description: 'While you’re within 5 squares of an ally, you and each ally within 5 squares of you gains a +3 bonus to stability.'
+				description: 'While you’re within 5 squares of an ally, you and each ally within 5 squares of you gains a +3 bonus to stability.',
+				condition: 'You are within 5 squares of an ally',
+				checked: false,
+				featureChecked: FactoryLogic.feature.createBonus({
+					id: 'title-siege-breaker-2a',
+					name: 'Hold the Line',
+					field: FeatureField.Stability,
+					value: 3
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-siege-breaker-3',
@@ -1652,10 +1793,28 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				name: 'Best of the Best',
 				description: 'A characteristic used during the competition increases by 1 (to a maximum of 6). Choose a skill you used during the competition. You gain a +4 bonus to tests made using that skill instead of a +2 bonus.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-champion-competitor-2',
 				name: 'Glory and Riches',
-				description: 'A characteristic used during the competition increases by 1 (to a maximum of 6). You earn 2 Renown and 1 Wealth.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-champion-competitor-2a',
+						name: 'Glory and Riches',
+						description: 'A characteristic used during the competition increases by 1 (to a maximum of 6).'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-champion-competitor-2b',
+						name: 'Glory and Riches',
+						field: FeatureField.Renown,
+						value: 2
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-champion-competitor-2c',
+						name: 'Glory and Riches',
+						field: FeatureField.Wealth,
+						value: 1
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-champion-competitor-3',
@@ -1713,10 +1872,11 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 								value: 1
 							},
 							{
-								feature: FactoryLogic.feature.create({
+								feature: FactoryLogic.feature.createBonus({
 									id: 'title-demigod-1dc',
 									name: 'Missionaries',
-									description: 'You earn 2 Renown.'
+									field: FeatureField.Renown,
+									value: 2
 								}),
 								value: 1
 							}
@@ -1792,20 +1952,44 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				name: 'Crown Jewels',
 				description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6). You gain one of your nation’s treasures—a trinket of the Director’s choice.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-monarch-2',
 				name: 'Royal Fame',
-				description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6). You earn 2 Renown.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-monarch-2a',
+						name: 'Royal Fame',
+						description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6).'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-monarch-2b',
+						name: 'Royal Fame',
+						field: FeatureField.Renown,
+						value: 2
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-monarch-3',
 				name: 'Royal Retinue',
 				description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6). The number of followers you can recruit increases by 2.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-monarch-4',
 				name: 'Royal Wealth',
-				description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6). You earn 2 Wealth.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-monarch-4a',
+						name: 'Royal Wealth',
+						description: 'Inhabitants of your nation must obey your lawful orders or suffer the consequences. Your choice of your Might or Presence increases by 1 (to a maximum of 6).'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'title-monarch-4b',
+						name: 'Royal Wealth',
+						field: FeatureField.Wealth,
+						value: 2
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -1996,10 +2180,22 @@ You start combat encounters with a squad of three minions from the specific mons
 				name: 'Ritual Circle',
 				description: 'As a respite activity, you can draw a minor summoning circle to temporarily call forth a creature you’ve contacted previously, regardless of manifold. If the creature is willing and able to answer your call, they appear to you for the remainder of the respite. You can ask the creature for information or a service in exchange for ending the respite with two fewer Recoveries or a demand of their choosing. If the creature doesn’t appear, you can choose to take a different respite activity.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-sigilwright-3',
 				name: 'Sigil Eye',
-				description: 'You have an edge on tests made to identify summoning circles and who or where they’re connected to. You also have an edge on strikes made against creatures not native to the manifold in which you’re currently located.'
+				features: [
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-sigilwright-3a',
+						name: 'Sigil Eye',
+						modifier: RollModifierType.Edge,
+						condition: 'Identifying summoning circles and who or where they’re connected to'
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-sigilwright-3b',
+						name: 'Sigil Eye',
+						description: 'You have an edge on strikes made against creatures not native to the manifold in which you’re currently located.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''

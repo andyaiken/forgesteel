@@ -1334,7 +1334,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 							const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === itemID);
 							if (item) {
 								return (
-									<Flex align='center'>
+									<Flex key={itemID} align='center'>
 										<Field label={item.name} value={item.description} />
 										<DangerButton mode='icon' onConfirm={() => removeItem(itemID)} />
 									</Flex>

@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SubClass } from '@/models/subclass';
 
 export const paragon: SubClass = {
@@ -33,10 +34,12 @@ export const paragon: SubClass = {
 					name: 'Lead by Example',
 					description: 'Your devotion to your deity allows you to take command of the battlefield, letting your allies benefit from your wisdom. While you are adjacent to a creature, your allies gain the benefits of flanking against that creature. Additionally, your allies gain an edge on tests made to aid other creatures with their tests.'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'censor-sub-3-2-2',
 					name: 'Stalwart Example',
-					description: 'You exhibit a small spark of your deity’s power, causing creatures to trust or fear you, depending on what you need. You gain an edge on tests made to intimidate or persuade others.'
+					description: 'You exhibit a small spark of your deity’s power, causing creatures to trust or fear you, depending on what you need.',
+					modifier: RollModifierType.Edge,
+					skills: [ 'Intimidate', 'Persuade' ]
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-3-2-3',

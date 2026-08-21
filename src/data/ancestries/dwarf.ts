@@ -1,9 +1,11 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const dwarf: Ancestry = {
 	id: 'ancestry-dwarf',
@@ -60,10 +62,24 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'dwarf-feature-2-2',
 						name: 'Stand Tough',
-						description: 'Your body is made to withstand the blows of your enemies. Your Might score is treated as 1 higher for resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'Your body is made to withstand the blows of your enemies.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'dwarf-feature-2-2a',
+								name: 'Stand Tough',
+								description: 'Your Might score is treated as 1 higher for resisting potencies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'dwarf-feature-2-2b',
+								name: 'Stand Tough',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},

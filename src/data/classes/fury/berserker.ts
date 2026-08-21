@@ -3,6 +3,8 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SubClass } from '@/models/subclass';
 
 export const berserker: SubClass = {
@@ -72,10 +74,23 @@ export const berserker: SubClass = {
 							id: 'fury-sub-1-1-5-6',
 							resource: 'Ferocity',
 							value: 6,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'fury-sub-1-1-5-6a',
 								name: 'Growing Ferocity (Ferocity 6)',
-								description: 'You gain an edge on Might tests and the Knockback maneuver.'
+								features: [
+									FactoryLogic.feature.createRollModifier({
+										id: 'fury-sub-1-1-5-6a-tests',
+										name: 'Growing Ferocity (Ferocity 6)',
+										modifier: RollModifierType.Edge,
+										characteristics: [ Characteristic.Might ]
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'fury-sub-1-1-5-6a-maneuvers',
+										name: 'Growing Ferocity (Ferocity 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Knockback
+									})
+								]
 							})
 						})
 					]
@@ -257,10 +272,23 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 					name: 'Growing Ferocity Improvement',
 					resource: 'Ferocity',
 					value: 10,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'fury-sub-1-7-1a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on Might tests and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'fury-sub-1-7-1a-tests',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'fury-sub-1-7-1a-maneuvers',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				})
 			]

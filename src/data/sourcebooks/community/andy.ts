@@ -12,6 +12,8 @@ import { FeatureField } from '@/enums/feature-field';
 import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const beastfolk: Ancestry = {
 	id: 'ancestry-beastfolk',
@@ -29,39 +31,52 @@ Across the world - and across many worlds - humanoid cultures sometimes arise th
 			description: 'The animal spirit within you emerges in moments of danger.',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'beastfolk-1-1',
 						name: 'Pack Instinct',
-						description: `
-*You fight best beside your allies.*
-
-You gain an edge on melee strikes against enemies who are  adjacent to at least two of your allies.`
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Strike,
+						condition: 'Against enemies who are adjacent to at least two of your allies (melee strikes)'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-2',
 						name: 'Predator Instinct',
-						description: `
-*You know how to finish the hunt.*
-
-You gain a bonus to strike damage equal to your echelon against winded enemies. 
-
-You gain an edge on Track tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-2a',
+								name: 'Predator Instinct',
+								description: 'You gain a bonus to strike damage equal to your echelon against winded enemies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-2b',
+								name: 'Predator Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Track' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-3',
 						name: 'Rampager Instinct',
-						description: `
-*You overwhelm enemies through sheer force.*
-
-When you force move a creature, you deal damage to it equal to the distance moved.
-
-You gain an edge on Intimidate tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-3a',
+								name: 'Rampager Instinct',
+								description: 'When you force move a creature, you deal damage to it equal to the distance moved.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-3b',
+								name: 'Rampager Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Intimidate' ]
+							})
+						]
 					}),
 					value: 1
 				},
@@ -99,28 +114,42 @@ Your first strike against a creature that hasn’t acted yet this encounter gain
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-6',
 						name: 'Survivor Instinct',
-						description: `
-*You refuse to fall.*
-
-When you become winded, you gain temporary Stamina equal to your level.
-
-You gain an edge on Alertness and Endurance tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-6a',
+								name: 'Survivor Instinct',
+								description: 'When you become winded, you gain temporary Stamina equal to your level.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-6b',
+								name: 'Survivor Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Alertness', 'Endurance' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-7',
 						name: 'Trickster Instinct',
-						description: `
-*You survive through misdirection and cleverness.*
-
-When a creature misses you with a strike, you can use a triggered action to shift up to 2 squares. 
-
-You gain an edge on Lie and Persuade tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-7a',
+								name: 'Trickster Instinct',
+								description: 'When a creature achieves a tier 1 result against you with a strike, you can use a triggered action to shift up to 2 squares.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-7b',
+								name: 'Trickster Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Lie', 'Persuade' ]
+							})
+						]
 					}),
 					value: 1
 				}
@@ -254,13 +283,22 @@ You can detect the location of any creatures touching the ground within 3 square
 								id: 'beastfolk-2-9a',
 								mode: 'Climb'
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createMultiple({
 								id: 'beastfolk-2-9b',
 								name: 'Climber',
-								description: `
-When a creature misses you with a melee strike while you are adjacent to a climbable surface, you can shift 1.
-
-You gain an edge on Climb tests.`
+								features: [
+									FactoryLogic.feature.create({
+										id: 'beastfolk-2-9ba',
+										name: 'Climber',
+										description: 'When a creature achieves a tier 1 result against you with a melee strike while you are adjacent to a climbable surface, you can shift 1.'
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'beastfolk-2-9bb',
+										name: 'Climber',
+										modifier: RollModifierType.Edge,
+										skills: [ 'Climb' ]
+									})
+								]
 							})
 						]
 					}),
@@ -1273,10 +1311,11 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 						id: 'ironbound-1b',
 						name: 'Bulwark Mode',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'ironbound-1b-1',
 								name: 'Bulwark Mode',
-								description: 'You gain an edge on tests to keep your footing on unstable surfaces such as ice, narrow ledges, swaying bridges, or collapsing ground.'
+								modifier: RollModifierType.Edge,
+								condition: 'When keeping your footing on unstable surfaces such as ice, narrow ledges, swaying bridges, or collapsing ground'
 							}),
 							FactoryLogic.feature.createBonus({
 								id: 'ironbound-1b-2',
@@ -1357,13 +1396,11 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'ironbound-3b',
 						name: 'Appraisal Engine',
-						description: `
-Your senses are built to read stress, weakness, and structural failure.
-
-You gain an edge on tests to understand or analyze constructs, mechanisms, vehicles, and damaged objects.`
+						modifier: RollModifierType.Edge,
+						condition: 'When understanding or analyzing constructs, mechanisms, vehicles, or devices'
 					}),
 					value: 1
 				},
@@ -1410,10 +1447,11 @@ The first time in an encounter you become winded, you gain temporary Stamina equ
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'ironbound-3f',
 						name: 'Replay Memory',
-						description: 'You gain an edge on tests made to recall previous events.'
+						modifier: RollModifierType.Edge,
+						condition: 'When recalling previous events'
 					}),
 					value: 1
 				},

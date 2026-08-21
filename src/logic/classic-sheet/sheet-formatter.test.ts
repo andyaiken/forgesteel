@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureChoice, FeatureRollModifierData } from '@/models/feature';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
@@ -8,6 +8,7 @@ import { FeatureType } from '@/enums/feature-type';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { creation } from '@/data/domains/creation';
@@ -524,6 +525,34 @@ describe('calculateProjectsOverviewCardSize', () => {
 
 		const result = SheetFormatter.calculateProjectsOverviewCardSize(sheets, 54);
 		expect(result).toBeCloseTo(48.3, 0.2);
+	});
+});
+
+describe('calculateRollModifiersCardSize', () => {
+	const modifier = (id: string, data: Partial<FeatureRollModifierData>) =>
+		FactoryLogic.feature.createRollModifier({
+			id: id,
+			modifier: RollModifierType.Edge,
+			...data
+		});
+
+	test('grows with the number of modifiers', () => {
+		const one = SheetFormatter.calculateRollModifiersCardSize([ modifier('m1', { skills: [ 'Sneak' ] }) ], 54);
+		const two = SheetFormatter.calculateRollModifiersCardSize([
+			modifier('m1', { skills: [ 'Sneak' ] }),
+			modifier('m2', { skills: [ 'Hide' ] })
+		], 54);
+
+		expect(two).toBeGreaterThan(one);
+	});
+
+	test('allows room for a condition', () => {
+		const bare = SheetFormatter.calculateRollModifiersCardSize([ modifier('m1', { skills: [ 'Track' ] }) ], 54);
+		const conditional = SheetFormatter.calculateRollModifiersCardSize([
+			modifier('m1', { skills: [ 'Track' ], condition: 'Tracking criminals' })
+		], 54);
+
+		expect(conditional).toBeGreaterThan(bare);
 	});
 });
 

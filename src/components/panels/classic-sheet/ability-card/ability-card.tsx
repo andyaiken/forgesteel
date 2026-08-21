@@ -64,20 +64,20 @@ export const AbilityCard = (props: Props) => {
 
 	const getSections = () => {
 		let isFirstText = true;
-		return ability.sections.map(s => {
+		return ability.sections.map((s, n) => {
 			if (typeof s === 'string') {
-				const result = getEffectSection(s, isFirstText);
+				const result = getEffectSection(s, isFirstText, n);
 				isFirstText = false;
 				return result;
 			} else {
-				return getPowerRollSection(s);
+				return getPowerRollSection(s, n);
 			}
 		});
 	};
 
-	const getPowerRollSection = (section: PowerRollSection) => {
+	const getPowerRollSection = (section: PowerRollSection, key: number) => {
 		return (
-			<div className='power-roll'>
+			<div className='power-roll' key={key}>
 				<div className='power'>Power Roll + <DrawSteelSymbolText content={section.rollPower} lookFor='characteristics' /></div>
 				<div className='roll-tiers'>
 					<div className='tier t1'>
@@ -114,13 +114,13 @@ export const AbilityCard = (props: Props) => {
 		);
 	};
 
-	const getEffectSection = (section: string, isFirstText: boolean) => {
+	const getEffectSection = (section: string, isFirstText: boolean, key: number) => {
 		let text = section;
 		if (isFirstText && !(section.startsWith('##') || ability.isNotTrueAbility)) {
 			text = '**Effect:** ' + section;
 		}
 		return (
-			<div className='effect'>
+			<div className='effect' key={key}>
 				<Markdown
 					text={text}
 					className='ability-effect'

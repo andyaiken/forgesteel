@@ -48,6 +48,7 @@ export enum FeatureType {
 	SwitchValue = 'Switch Value',
 	TaggedFeature = 'Tagged Feature',
 	TaggedFeatureChoice = 'Tagged Feature Choice',
+	RollModifier = 'Roll Modifier',
 	TitleChoice = 'Title',
 	Toggle = 'Toggle'
 }

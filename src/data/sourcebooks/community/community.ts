@@ -19,6 +19,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -53,10 +54,33 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 			name: 'Aranox Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'aranox-2a',
 						name: 'Always Angry',
-						description: 'The beast rages within you, and its anger makes you incredibly strong. You gain an edge on tests made to lift and haul heavy objects. In addition, whenever you force move a creature or object, the forced movement distance gains a +1 bonus.'
+						description: 'The beast rages within you, and its anger makes you incredibly strong.',
+						features: [
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-1',
+								field: FeatureField.ForcedMovementPull,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-2',
+								field: FeatureField.ForcedMovementPush,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-3',
+								field: FeatureField.ForcedMovementSlide,
+								value: 1
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'aranox-2a-4',
+								name: 'Always Angry',
+								modifier: RollModifierType.Edge,
+								condition: 'When lifting and hauling heavy objects'
+							})
+						]
 					}),
 					value: 2
 				},
@@ -88,10 +112,24 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'aranox-2e',
 						name: 'That Tickles',
-						description: 'You are able to shrug off the puny blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature\'s traits or abilities.'
+						description: 'You are able to shrug off the puny blows of your enemies.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'aranox-2ea',
+								name: 'That Tickles',
+								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'aranox-2eb',
+								name: 'That Tickles',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -172,10 +210,24 @@ After encountering visitors from outer space, the asomaths came to realize that 
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'asomath-feature-1d',
 						name: 'Stand Tough',
-						description: 'Your body is made to withstand the blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'Your body is made to withstand the blows of your enemies.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'asomath-feature-1da',
+								name: 'Stand Tough',
+								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'asomath-feature-1db',
+								name: 'Stand Tough',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -293,10 +345,25 @@ Some oaklings choose to walk a different path than their kin. Though it often re
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'gall-guardian-1e',
 					name: 'Wode Ward',
-					description: 'You gain an edge on Presence tests made to intimidate, coerce, or bully, but have a bane on Presence tests made to empathize or persuade.'
+					features: [
+						FactoryLogic.feature.createRollModifier({
+							id: 'gall-guardian-1ea',
+							name: 'Wode Ward',
+							modifier: RollModifierType.Edge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When intimidating, coercing, or bullying'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'gall-guardian-1eb',
+							name: 'Wode Ward',
+							modifier: RollModifierType.Bane,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When empathizing or persuading'
+						})
+					]
 				})
 			]
 		})
@@ -361,10 +428,24 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'oakling-2d',
 						name: 'Strength of the White Oak',
-						description: 'The sinew of your wooden body is as strong as iron! Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'The sinew of your wooden body is as strong as iron!',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'oakling-2da',
+								name: 'Strength of the White Oak',
+								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'oakling-2db',
+								name: 'Strength of the White Oak',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -478,10 +559,22 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 								id: 'solar-2-4a',
 								selected: [ 'Navigate' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createMultiple({
 								id: 'solar-2-4b',
 								name: 'Starscape Navigator',
-								description: 'You gain an edge on tests to navigate at night. You always know which way is north and what time of day it is.'
+								features: [
+									FactoryLogic.feature.create({
+										id: 'solar-2-4ba',
+										name: 'Starscape Navigator',
+										description: 'You always know which way is north and what time of day it is.'
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'solar-2-4bb',
+										name: 'Starscape Navigator',
+										modifier: RollModifierType.Edge,
+										condition: 'When navigating at night'
+									})
+								]
 							})
 						]
 					}),
@@ -496,10 +589,11 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'solar-2-6',
 						name: 'Sunlight Saint',
-						description: 'Your divine visage is basked upon by believers. You gain an edge on tests made to interact with priests, acolytes, and other particularly religious individuals.'
+						modifier: RollModifierType.Edge,
+						condition: 'When interacting with priests, acolytes, and other particularly religious individuals'
 					}),
 					value: 1
 				},
@@ -3739,10 +3833,11 @@ Any enemy who moves into the area for the first time in a combat round or starts
 								]
 							})
 						}),
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createRollModifier({
 							id: 'vessel-subclass-1-1-3',
 							name: 'Forked Tongue',
-							description: 'You have an edge on tests made to influence NPCs during negotiations.'
+							modifier: RollModifierType.Edge,
+							condition: 'When influencing NPCs during negotiations'
 						}),
 						FactoryLogic.feature.create({
 							id: 'vessel-subclass-1-1-4',

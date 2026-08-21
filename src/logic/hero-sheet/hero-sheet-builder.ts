@@ -25,6 +25,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { Project } from '@/models/project';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { SkillList } from '@/enums/skill-list';
@@ -65,10 +66,16 @@ export class HeroSheetBuilder {
 		coveredFeatureIds.push(...packageContents.map(p => p.feature.id));
 
 		// Threshold benefits are rendered as part of their threshold
+		// A benefit can be a Multiple, so its children are covered by the threshold too
 		coveredFeatureIds.push(...allFeatures
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.HeroicResourceThreshold)
-			.map(f => f.data.feature.id));
+			.flatMap(f => FeatureLogic.simplifyFeatures(
+				[ { feature: f.data.feature, source: '', level: undefined } ],
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			))
+			.map(f => f.feature.id));
 
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = HeroLogic.getWealth(hero);
@@ -270,6 +277,7 @@ export class HeroSheetBuilder {
 		sheet.immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
 		sheet.weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 		sheet.conditionImmunities = HeroLogic.getConditionImmunities(hero);
+		sheet.rollModifiers = HeroLogic.getRollModifiers(hero);
 
 		// Potencies
 		sheet.potencyStrong = HeroLogic.getPotency(hero, 'strong');
@@ -322,6 +330,13 @@ export class HeroSheetBuilder {
 		}
 		sheet.skills = heroSkills.map(s => s.name);
 		sheet.cancelledSkills = heroCancelledSkills.map(s => s.name);
+		sheet.skillRollModifiers = heroSkills.reduce((map, skill) => {
+			const mods = HeroLogic.getRollModifiersForSkill(hero, skill).map(f => f.data.modifier);
+			if (mods.length > 0) {
+				map.set(skill.name, mods);
+			}
+			return map;
+		}, new Map<string, RollModifierType[]>());
 		// Skill cancel choices are NOT covered here - their description carries rules text (eg the bane) that the skills card doesn't show
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => f.feature.type === FeatureType.SkillChoice)
@@ -386,7 +401,14 @@ export class HeroSheetBuilder {
 
 		const titles = HeroLogic.getTitles(hero);
 		sheet.titles = titles;
-		coveredFeatureIds.push(...titles.flatMap(t => t.features.map(f => f.id)));
+		// A title feature can be a Multiple, so its children are covered by the title too
+		coveredFeatureIds.push(...titles
+			.flatMap(t => FeatureLogic.simplifyFeatures(
+				t.features.map(f => ({ feature: f, source: '', level: undefined })),
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			))
+			.map(f => f.feature.id));
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
 			.map(f => f.feature.id));

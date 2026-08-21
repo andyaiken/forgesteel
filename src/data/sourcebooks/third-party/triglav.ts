@@ -17,6 +17,8 @@ import { KitWeapon } from '@/enums/kit-weapon';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -329,10 +331,25 @@ const vampireAncestry: Ancestry = {
 
 When choosing an ancestry, you can choose to be a vampire. A hero with the vampire ancestry can't use the vampire class.`,
 	features: [
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'vampire-ancestry-1',
 			name: 'Bloodthirst',
-			description: 'You gain an edge on ability rolls made against bleeding, winded, or dying creatures. If there is a bleeding, winded, or dying creature within 10 squares of you, you take a bane on ability rolls against creatures not suffering from any of these conditions. Using the Sanguine Kiss maneuver suppresses the drawback of this feature until the start of your next turn.'
+			features: [
+				FactoryLogic.feature.createRollModifier({
+					id: 'vampire-ancestry-1a',
+					name: 'Bloodthirst',
+					modifier: RollModifierType.Edge,
+					rollType: RollType.Ability,
+					condition: 'Against bleeding, winded, or dying creatures'
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'vampire-ancestry-1b',
+					name: 'Bloodthirst',
+					modifier: RollModifierType.Bane,
+					rollType: RollType.Ability,
+					condition: 'While a bleeding, winded, or dying creature is within 10 squares of you, against creatures suffering none of those conditions (using the Sanguine Kiss maneuver suppresses the drawback of this feature until the start of your next turn)'
+				})
+			]
 		}),
 		FactoryLogic.feature.createAncestry({
 			id: 'vampire-ancestry-2',
@@ -687,10 +704,24 @@ For each condition the target suffers from, treat the thirst spent on this abili
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'vampire-class-3-1',
 					name: 'Predatory Senses',
-					description: 'Your heightened senses of sight, smell, and hearing make you excellent at finding hidden prey. You gain a double edge on tests made to search for hidden creatures. Once on each of your turns, you can Search for Hidden Creatures as a free maneuver. You ignore concealment and creatures that are bleeding, winded, or dying can\'t be hidden from you.'
+					description: 'Your heightened senses of sight, smell, and hearing make you excellent at finding hidden prey.',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'vampire-class-3-1a',
+							name: 'Predatory Senses',
+							description: 'Once on each of your turns, you can Search for Hidden Creatures as a free maneuver. You ignore concealment and creatures that are bleeding, winded, or dying can\'t be hidden from you.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'vampire-class-3-1b',
+							name: 'Predatory Senses',
+							modifier: RollModifierType.DoubleEdge,
+							skills: [ 'Search' ],
+							condition: 'When searching for hidden creatures'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'vampire-class-3-2',

@@ -5,6 +5,7 @@ import './stats-row.scss';
 interface Props {
 	children: ReactNode;
 	caption?: string;
+	captionExtra?: ReactNode;
 	style?: CSSProperties;
 	onClick?: () => void;
 }
@@ -17,7 +18,10 @@ export const StatsRow = (props: Props) => {
 			</div>
 			{
 				props.caption ?
-					<div className='stats-row-caption'>{props.caption}</div>
+					<div className='stats-row-caption'>
+						<div className='stats-row-caption-text'>{props.caption}</div>
+						{props.captionExtra}
+					</div>
 					: null
 			}
 		</div>

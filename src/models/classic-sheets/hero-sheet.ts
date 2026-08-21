@@ -1,14 +1,15 @@
+import { Feature, FeatureRollModifier } from '@/models/feature';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
 import { Element } from '@/models/element';
-import { Feature } from '@/models/feature';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Perk } from '@/models/perk';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 import { Title } from '@/models/title';
 
@@ -82,6 +83,9 @@ export interface HeroSheet {
 	weaknesses: { damageType: string, value: number }[];
 	conditionImmunities?: ConditionType[];
 
+	// Test Modifiers
+	rollModifiers?: FeatureRollModifier[];
+
 	// Potencies
 	potencyStrong?: number;
 	potencyAverage?: number;
@@ -110,6 +114,8 @@ export interface HeroSheet {
 	allSkills?: Map<string, string[]>;
 	skills?: string[];
 	cancelledSkills?: string[];
+	// Keyed by skill name; only skills the hero actually has are marked
+	skillRollModifiers?: Map<string, RollModifierType[]>;
 
 	// Culture
 	culture?: Culture;

@@ -3,6 +3,8 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const raden: Kit = {
 	id: 'kit-raden',
@@ -43,15 +45,50 @@ export const raden: Kit = {
 				]
 			})
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'kit-raden-feature-1',
 			name: 'Aspect Benefits',
-			description: 'You gain an edge on tests made to hide and sneak. Additionally, you ignore difficult terrain.'
+			features: [
+				FactoryLogic.feature.create({
+					id: 'kit-raden-feature-1a',
+					name: 'Aspect Benefits',
+					description: 'You ignore difficult terrain.'
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'kit-raden-feature-1b',
+					name: 'Aspect Benefits',
+					modifier: RollModifierType.Edge,
+					skills: [ 'Hide', 'Sneak' ]
+				})
+			]
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-raden-feature-2a',
 			name: 'Animal Form: Rat',
-			description: 'While you are in your rat form, your size is 1T and you can automatically climb at full speed while moving. You can use the Hide maneuver as a free maneuver, you can use your allies as cover when you hide, and you can stay hidden while you move through squares occupied by any creature. Additionally, you gain an edge on tests made to climb other creatures. You can’t use any abilities while in this form except for Aspect of the Wild.'
+			condition: 'You are in your rat form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-raden-feature-2a-1',
+				name: 'Animal Form: Rat',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-raden-feature-2a-1a',
+						name: 'Animal Form: Rat',
+						sizeValue: 1,
+						sizeMod: 'T'
+					}),
+					FactoryLogic.feature.createMovementMode({
+						id: 'kit-raden-feature-2a-1b',
+						name: 'Animal Form: Rat',
+						mode: 'Climb'
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-raden-feature-2a-1c',
+						name: 'Animal Form: Rat',
+						description: 'You can automatically climb at full speed while moving. You can use the Hide maneuver as a free maneuver, you can use your allies as cover when you hide, and you can stay hidden while you move through squares occupied by any creature. Additionally, you gain an edge on tests made to climb other creatures. You can’t use any abilities while in this form except for Aspect of the Wild.'
+					})
+				]
+			})
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-raden-feature-2b',
@@ -92,10 +129,29 @@ export const raden: Kit = {
 					id: 'kit-raden-feature-4-6',
 					resource: 'Ferocity',
 					value: 6,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-raden-feature-4-6a',
 						name: 'Growing Ferocity (Ferocity 6)',
-						description: 'You gain an edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-6a-tests',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-6a-maneuvers-escape',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.EscapeGrab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-6a-maneuvers-knockback',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -114,10 +170,29 @@ export const raden: Kit = {
 					resource: 'Ferocity',
 					value: 10,
 					level: 7,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-raden-feature-4-10a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-10a-tests',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-10a-maneuvers-escape',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.EscapeGrab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-raden-feature-4-10a-maneuvers-knockback',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

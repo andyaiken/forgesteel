@@ -203,6 +203,7 @@ export const MonsterModal = (props: Props) => {
 							MonsterLogic.getMaliceOptions(monster, props.monsterGroup)
 								.map(malice => (
 									<MalicePanel
+										key={malice.id}
 										malice={malice}
 										currentMalice={encounter ? encounter.malice : undefined}
 										updateCurrentMalice={

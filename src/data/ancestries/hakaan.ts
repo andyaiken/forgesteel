@@ -1,9 +1,11 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const hakaan: Ancestry = {
 	id: 'ancestry-hakaan',
@@ -21,10 +23,11 @@ export const hakaan: Ancestry = {
 			name: 'Hakaan Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'hakaan-feature-2-1',
 						name: 'All Is A Feather',
-						description: 'You are exceptionally strong. You gain an edge on tests made to lift and haul heavy objects.'
+						modifier: RollModifierType.Edge,
+						condition: 'When lifting and hauling heavy objects'
 					}),
 					value: 1
 				},
@@ -54,10 +57,24 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'hakaan-feature-2-3',
 						name: 'Stand Tough',
-						description: 'Your body is made to withstand the blows of your enemies. Your Might score is treated as 1 higher for resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'Your body is made to withstand the blows of your enemies.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'hakaan-feature-2-3a',
+								name: 'Stand Tough',
+								description: 'Your Might score is treated as 1 higher for resisting potencies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'hakaan-feature-2-3b',
+								name: 'Stand Tough',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},

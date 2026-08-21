@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SubClass } from '@/models/subclass';
 
 export const exorcist: SubClass = {
@@ -33,10 +34,24 @@ export const exorcist: SubClass = {
 					name: 'Saint\'s Vigilance',
 					description: 'You have honed your ability to detect sin and can use it to find those who hide from justice. Any creature judged by you can’t use the Hide maneuver. Additionally, you gain an edge when searching for hidden creatures. If you find a hidden creature, you can use your Judgment ability against them as a free triggered action.'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'censor-sub-1-2-2',
 					name: 'A Sense for Truth',
-					description: 'You are trained in secret techniques from your order that allow you to discern the truth with supernatural precision. If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you gain an edge on tests made to detect lies or hidden motives.'
+					description: 'You are trained in secret techniques from your order that allow you to discern the truth with supernatural precision.',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'censor-sub-1-2-2a',
+							name: 'A Sense for Truth',
+							description: 'You automatically know when a creature of a lower level than you is lying, though you don’t necessarily know the actual truth behind their lie.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'censor-sub-1-2-2b',
+							name: 'A Sense for Truth',
+							modifier: RollModifierType.Edge,
+							skills: [ 'Read Person' ],
+							condition: 'When detecting lies or hidden motives'
+						})
+					]
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-1-2-3',

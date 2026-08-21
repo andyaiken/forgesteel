@@ -5,6 +5,8 @@ import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroModalType } from '@/enums/hero-modal-type';
+import { RollModifierMarker } from '@/components/controls/roll-modifier-marker/roll-modifier-marker';
+import { RollType } from '@/enums/roll-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useOptions } from '@/contexts/data-context';
@@ -40,24 +42,32 @@ export const StatsPanel = (props: Props) => {
 	const recoveries = props.hero.state.recoveriesUsed === 0 ? maxRecoveries : maxRecoveries - props.hero.state.recoveriesUsed;
 	const recoveriesSuffix = props.hero.state.recoveriesUsed === 0 ? null : `/ ${maxRecoveries}`;
 
+	const getRollModifiers = (ch: Characteristic) => {
+		return HeroLogic.getRollModifiers(props.hero)
+			.filter(f => f.data.rollType === RollType.Test)
+			.filter(f => f.data.characteristics.includes(ch))
+			.map(m => m.data.modifier);
+	};
+
 	return (
 		<div className='stats-section'>
 			<Flex gap={10}>
-				<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => props.onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
-					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
-				</StatsRow>
-				<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => props.onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
-					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-				</StatsRow>
-				<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => props.onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
-					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-				</StatsRow>
-				<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => props.onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
-					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-				</StatsRow>
-				<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => props.onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
-					<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-				</StatsRow>
+				{
+					[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => {
+						const rollModifiers = getRollModifiers(ch);
+						return (
+							<StatsRow
+								key={ch}
+								caption={isSmall ? ch.substring(0, 1) : ch}
+								captionExtra={rollModifiers.length > 0 ? <RollModifierMarker modifier={rollModifiers[0]} multiple={rollModifiers.length > 1} /> : null}
+								onClick={() => props.onSelectCharacteristic(ch)}
+								style={{ flex: '1 1 0' }}
+							>
+								<Statistic value={HeroLogic.getCharacteristic(props.hero, ch)} />
+							</StatsRow>
+						);
+					})
+				}
 			</Flex>
 			{
 				useRows ?

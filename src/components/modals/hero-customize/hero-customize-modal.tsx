@@ -1,5 +1,5 @@
 import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureSize } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureRollModifier, FeatureSize } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
@@ -8,10 +8,12 @@ import { ConfigFeature } from '@/components/features/feature';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { EditRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
 import { FollowerEditPanel } from '@/components/panels/edit/follower-edit/follower-edit-panel';
@@ -27,6 +29,7 @@ import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -160,6 +163,19 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Damage Immunity / Weakness
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createRollModifier({
+										id: Utils.guid(),
+										name: `${RollModifierType.Edge}: All tests`,
+										modifier: RollModifierType.Edge
+									}));
+								}}
+							>
+								Roll Modifier
 							</Button>
 							<Button
 								block={true}
@@ -725,6 +741,19 @@ export const HeroCustomizeModal = (props: Props) => {
 							onChange={setProficiencyArmor}
 						/>
 					</div>
+				);
+			case FeatureType.RollModifier:
+				return (
+					<EditRollModifier
+						data={feature.data}
+						sourcebooks={props.sourcebooks}
+						setData={data => {
+							const copy = Utils.copy(feature) as FeatureRollModifier;
+							copy.data = data;
+							copy.name = `${data.modifier}: ${FeatureLogic.getRollModifierScope(data)}`;
+							setFeature(feature.id, copy);
+						}}
+					/>
 				);
 			case FeatureType.Size:
 				return (

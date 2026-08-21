@@ -9,6 +9,7 @@ import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -25,6 +26,8 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Pill } from '@/components/controls/pill/pill';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierMarker } from '@/components/controls/roll-modifier-marker/roll-modifier-marker';
+import { RollModifierPanel } from '../../roll-modifier-panel/roll-modifier-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
@@ -127,6 +130,8 @@ export const SidebarPanel = (props: Props) => {
 		};
 
 		const getSkills = (label: string, skills: Skill[], cancelledSkills: Skill[] = []) => {
+			const getSkillModifiers = (skill: Skill) => HeroLogic.getRollModifiersForSkill(props.hero, skill).map(f => f.data.modifier);
+
 			return (skills.length + cancelledSkills.length) > 0 ?
 				useRows ?
 					<div className='selectable-row clickable' onClick={onShowSkills}>
@@ -143,11 +148,16 @@ export const SidebarPanel = (props: Props) => {
 					<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
 						<HeaderText>{label}</HeaderText>
 						{
-							skills.map(s => (
-								<div key={s.name} className='ds-text'>
-									{s.name} {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
-								</div>
-							))
+							skills.map(s => {
+								const rollModifiers = getSkillModifiers(s);
+								return (
+									<div key={s.name} className='ds-text' style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+										{s.name}
+										{rollModifiers.length > 0 ? <RollModifierMarker modifier={rollModifiers[0]} multiple={rollModifiers.length > 1} /> : null}
+										{options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
+									</div>
+								);
+							})
 						}
 						{
 							cancelledSkills.map(s => (
@@ -170,6 +180,7 @@ export const SidebarPanel = (props: Props) => {
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 		const skills = HeroLogic.getSkills(props.hero, props.sourcebooks);
+		const rollModifiers = HeroLogic.getRollModifiers(props.hero);
 		const cancelledSkills = HeroLogic.getCancelledSkills(props.hero, props.sourcebooks);
 
 		return (
@@ -342,6 +353,19 @@ export const SidebarPanel = (props: Props) => {
 							.map(list => getSkills(`${list} Skills`, skills.filter(s => s.list === list), cancelledSkills.filter(s => s.list === list)))
 						:
 						getSkills('Skills', skills, cancelledSkills)
+				}
+				{
+					rollModifiers.length > 0 ?
+						useRows ?
+							<div className='selectable-row'>
+								<div>Roll Modifiers: <b>{rollModifiers.map(f => `${f.data.modifier}: ${FeatureLogic.getRollModifierScope(f.data)}`).join('; ')}</b></div>
+							</div>
+							:
+							<div className='overview-tile'>
+								<HeaderText>Roll Modifiers</HeaderText>
+								{rollModifiers.map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+							</div>
+						: null
 				}
 			</>
 		);

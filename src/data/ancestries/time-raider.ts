@@ -7,6 +7,7 @@ import { CultureType } from '@/enums/culture-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const timeRaider: Ancestry = {
 	id: 'ancestry-time-raider',
@@ -68,10 +69,12 @@ export const timeRaider: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'time-raider-feature-2-3',
+					feature: FactoryLogic.feature.createRollModifier({
+						id: 'time-raider-feature-2-3b',
 						name: 'Four-Armed Athletics',
-						description: 'Your unique physiology enhances your movement. You gain an edge on tests that use the Climb, Gymnastics, or Swim skills when you can use all your arms in the attempt.'
+						modifier: RollModifierType.Edge,
+						skills: [ 'Climb', 'Gymnastics', 'Swim' ],
+						condition: 'When you can use all your arms in the attempt'
 					}),
 					value: 1
 				},

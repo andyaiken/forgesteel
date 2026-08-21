@@ -26,6 +26,7 @@ import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '@/components/panels/classic-sheet/projects-card/projects-card';
 import { ProjectsOverviewCard } from '@/components/panels/classic-sheet/projects-card/project-info-card';
+import { RollModifiersCard } from '@/components/panels/classic-sheet/roll-modifiers-card/roll-modifiers-card';
 import { RulesData } from '@/data/rules-data';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
@@ -150,6 +151,15 @@ export const HeroSheetPage = (props: Props) => {
 				element: <ProjectsOverviewCard projects={character.projects} key='projects-overview' />,
 				width: 1,
 				height: h,
+				shown: false
+			});
+		}
+
+		if (character.rollModifiers?.length) {
+			required.push({
+				element: <RollModifiersCard rollModifiers={character.rollModifiers} key='roll-modifiers' />,
+				width: 1,
+				height: SheetFormatter.calculateRollModifiersCardSize(character.rollModifiers, layout.cardLineLen),
 				shown: false
 			});
 		}

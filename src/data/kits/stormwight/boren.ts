@@ -3,6 +3,8 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const boren: Kit = {
 	id: 'kit-boren',
@@ -47,15 +49,56 @@ export const boren: Kit = {
 			name: 'Aspect Benefits',
 			description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < [average], you can use a free triggered action to make that creature grabbed by you.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-boren-feature-2a',
 			name: 'Animal Form: Bear',
-			description: 'While you are in your bear form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities.'
+			condition: 'You are in your bear form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-boren-feature-2a-1',
+				name: 'Animal Form: Bear',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-boren-feature-2a-1a',
+						name: 'Animal Form: Bear',
+						sizeValue: 2
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'kit-boren-feature-2a-1b',
+						name: 'Animal Form: Bear',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						value: 1
+					})
+				]
+			})
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-boren-feature-2b',
 			name: 'Hybrid Form: Bear',
-			description: 'While you are in your hybrid form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities. At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+			condition: 'You are in your hybrid form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-boren-feature-2b-1',
+				name: 'Hybrid Form: Bear',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-boren-feature-2b-1a',
+						name: 'Hybrid Form: Bear',
+						sizeValue: 2
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'kit-boren-feature-2b-1b',
+						name: 'Hybrid Form: Bear',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-boren-feature-2b-1c',
+						name: 'Hybrid Form: Bear',
+						description: 'At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+					})
+				]
+			})
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-3',
@@ -91,10 +134,23 @@ export const boren: Kit = {
 					id: 'kit-boren-feature-4-6',
 					resource: 'Ferocity',
 					value: 6,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-boren-feature-4-6a',
 						name: 'Growing Ferocity (Ferocity 6)',
-						description: 'You gain an edge on the Grab and Knockback maneuvers.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-6a-grab',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-6a-knockback',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -113,10 +169,23 @@ export const boren: Kit = {
 					resource: 'Ferocity',
 					value: 10,
 					level: 7,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-boren-feature-4-10a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on the Grab and Knockback maneuvers.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-10a-grab',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-10a-knockback',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

@@ -3,6 +3,7 @@ import { Ancestry } from '@/models/ancestry';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const human: Ancestry = {
 	id: 'ancestry-human',
@@ -33,10 +34,22 @@ export const human: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'human-feature-2-2',
 						name: 'Perseverence',
-						description: 'Giving up is for other people. You gain an edge on tests made using the Endurance skill. Additionally, when you are slowed, your speed is reduced to 3 instead of 2.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'human-feature-2-2a',
+								name: 'Perseverence',
+								description: 'When you are slowed, your speed is reduced to 3 instead of 2.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'human-feature-2-2b',
+								name: 'Perseverence',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Endurance' ]
+							})
+						]
 					}),
 					value: 1
 				},

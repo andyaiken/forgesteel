@@ -2,6 +2,8 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SubClass } from '@/models/subclass';
 
 export const reaver: SubClass = {
@@ -70,10 +72,23 @@ export const reaver: SubClass = {
 							id: 'fury-sub-2-1-5-6',
 							resource: 'Ferocity',
 							value: 6,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'fury-sub-2-1-5-6a',
 								name: 'Growing Ferocity (Ferocity 6)',
-								description: 'You gain an edge on Agility tests and the Knockback maneuver.'
+								features: [
+									FactoryLogic.feature.createRollModifier({
+										id: 'fury-sub-2-1-5-6a-tests',
+										name: 'Growing Ferocity (Ferocity 6)',
+										modifier: RollModifierType.Edge,
+										characteristics: [ Characteristic.Agility ]
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'fury-sub-2-1-5-6a-maneuvers',
+										name: 'Growing Ferocity (Ferocity 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Knockback
+									})
+								]
 							})
 						})
 					]
@@ -159,10 +174,24 @@ export const reaver: SubClass = {
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'fury-sub-2-3-1',
 					name: 'See Through Your Tricks',
-					description: 'You have a double edge on tests made to search for hidden creatures, discern hidden motives, or detect lies. You also have a double edge on tests made to gamble!'
+					features: [
+						FactoryLogic.feature.createRollModifier({
+							id: 'fury-sub-2-3-1a',
+							name: 'See Through Your Tricks',
+							modifier: RollModifierType.DoubleEdge,
+							skills: [ 'Search', 'Read Person' ],
+							condition: 'When searching for hidden creatures, discerning hidden motives, or detecting lies'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'fury-sub-2-3-1b',
+							name: 'See Through Your Tricks',
+							modifier: RollModifierType.DoubleEdge,
+							skills: [ 'Gamble' ]
+						})
+					]
 				})
 			]
 		},
@@ -185,10 +214,23 @@ export const reaver: SubClass = {
 		{
 			level: 5,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'fury-sub-2-5-1',
 					name: 'Unfettered',
-					description: 'At the start of your turn, you can end any restrained condition on you. Additionally, you have a double edge on tests made to escape being confined or imprisoned.'
+					features: [
+						FactoryLogic.feature.create({
+							id: 'fury-sub-2-5-1a',
+							name: 'Unfettered',
+							description: 'At the start of your turn, you can end any restrained condition on you.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'fury-sub-2-5-1b',
+							name: 'Unfettered',
+							modifier: RollModifierType.DoubleEdge,
+							skills: [ 'Escape Artist' ],
+							condition: 'When escaping being confined or imprisoned'
+						})
+					]
 				})
 			]
 		},
@@ -256,10 +298,23 @@ export const reaver: SubClass = {
 					name: 'Growing Ferocity Improvement',
 					resource: 'Ferocity',
 					value: 10,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'fury-sub-2-7-1a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on Agility tests and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'fury-sub-2-7-1a-tests',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'fury-sub-2-7-1a-maneuvers',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				})
 			]

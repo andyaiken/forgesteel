@@ -1,8 +1,11 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const vuken: Kit = {
 	id: 'kit-vuken',
@@ -47,15 +50,63 @@ export const vuken: Kit = {
 			name: 'Aspect Benefits',
 			description: 'Whenever you use the Knockback maneuver, you can then use the Aid Attack maneuver as a free triggered action.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-vuken-feature-2a',
 			name: 'Animal Form: Wolf',
-			description: 'While you are in your wolf form, your size is 1L, you have a +2 bonus to speed, and you ignore difficult terrain.'
+			condition: 'You are in your wolf form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-vuken-feature-2a-1',
+				name: 'Animal Form: Wolf',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-vuken-feature-2a-1a',
+						name: 'Animal Form: Wolf',
+						sizeValue: 1,
+						sizeMod: 'L'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'kit-vuken-feature-2a-1b',
+						name: 'Animal Form: Wolf',
+						field: FeatureField.Speed,
+						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-vuken-feature-2a-1c',
+						name: 'Animal Form: Wolf',
+						description: 'You ignore difficult terrain.'
+					})
+				]
+			})
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-vuken-feature-2b',
 			name: 'Hybrid Form: Wolf',
-			description: 'While you are in your hybrid form, your size is 1L, you have a +2 bonus to speed, and you ignore difficult terrain. At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+			condition: 'You are in your hybrid form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-vuken-feature-2b-1',
+				name: 'Hybrid Form: Wolf',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-vuken-feature-2b-1a',
+						name: 'Hybrid Form: Wolf',
+						sizeValue: 1,
+						sizeMod: 'L'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'kit-vuken-feature-2b-1b',
+						name: 'Hybrid Form: Wolf',
+						field: FeatureField.Speed,
+						value: 2
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-vuken-feature-2b-1c',
+						name: 'Hybrid Form: Wolf',
+						description: 'You ignore difficult terrain. At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+					})
+				]
+			})
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-vuken-feature-3',
@@ -91,10 +142,23 @@ export const vuken: Kit = {
 					id: 'kit-vuken-feature-4-6',
 					resource: 'Ferocity',
 					value: 6,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-vuken-feature-4-6a',
 						name: 'Growing Ferocity (Ferocity 6)',
-						description: 'You gain an edge on Agility tests and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-vuken-feature-4-6a-tests',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-vuken-feature-4-6a-maneuvers',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -113,10 +177,23 @@ export const vuken: Kit = {
 					resource: 'Ferocity',
 					value: 10,
 					level: 7,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-vuken-feature-4-10a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on Agility tests and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-vuken-feature-4-10a-tests',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-vuken-feature-4-10a-maneuvers',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

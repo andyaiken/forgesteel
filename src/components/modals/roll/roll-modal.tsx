@@ -7,9 +7,11 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FeatureField } from '@/enums/feature-field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { RollModifierPanel } from '@/components/panels/roll-modifier-panel/roll-modifier-panel';
 import { RollState } from '@/enums/roll-state';
 import { useState } from 'react';
 
@@ -53,6 +55,11 @@ export const RollModal = (props: Props) => {
 		saveBonus = CreatureLogic.getField(props.creature, FeatureField.Save);
 	}
 
+	// Only a hero carries roll modifiers, and only a power roll can be narrowed by characteristic
+	const rollModifiers = (props.creature && ('class' in props.creature) && props.characteristics)
+		? HeroLogic.getRollModifiersForTest(props.creature, props.characteristics)
+		: [];
+
 	const getContent = () => {
 		switch (type) {
 			case 'Power Roll':
@@ -77,6 +84,14 @@ export const RollModal = (props: Props) => {
 							<NumberSpin style={{ width: '150px' }} label='Modifier' value={modifier} onChange={setModifier} />
 						</Flex>
 						<DieRollPanel type='Power Roll' modifiers={[ characteristicBonus, modifier ]} rollState={rollState} creature={props.creature} onRollStateChange={setRollState} />
+						{
+							rollModifiers.length > 0 ?
+								<div>
+									<HeaderText>Modifiers That Might Apply</HeaderText>
+									{rollModifiers.map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+								</div>
+								: null
+						}
 						<Expander title='Rules'>
 							<HeaderText>Test Results</HeaderText>
 							<table>

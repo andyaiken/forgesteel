@@ -1,19 +1,34 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const highElf: Ancestry = {
 	id: 'ancestry-high-elf',
 	name: 'Elf (high)',
 	description: 'Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elf history describes a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty.',
 	features: [
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'high-elf-feature-1',
 			name: 'High Elf Glamor',
-			description: 'A magic glamor makes others perceive you as interesting and engaging, granting you an edge on Presence tests using the Flirt or Persuade skills. This glamor makes you appear and sound slightly different to each creature you meet, since what is engaging to one might be different for another. However, you never appear to be anyone other than yourself.'
+			features: [
+				FactoryLogic.feature.create({
+					id: 'high-elf-feature-1a',
+					name: 'High Elf Glamor',
+					description: 'A magic glamor makes others perceive you as interesting and engaging. This glamor makes you appear and sound slightly different to each creature you meet, since what is engaging differs from creature to creature.'
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'high-elf-feature-1b',
+					name: 'High Elf Glamor',
+					modifier: RollModifierType.Edge,
+					characteristics: [ Characteristic.Presence ],
+					skills: [ 'Flirt', 'Persuade' ]
+				})
+			]
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'high-elf-feature-2',
@@ -44,10 +59,11 @@ export const highElf: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'high-elf-feature-2-2',
 						name: 'High Senses',
-						description: 'Your senses are especially keen and perceptive. You gain an edge on tests made to notice threats.'
+						modifier: RollModifierType.Edge,
+						condition: 'When noticing threats'
 					}),
 					value: 1
 				},
@@ -61,10 +77,11 @@ export const highElf: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'high-elf-feature-2-3',
 						name: 'Revisit Memory',
-						description: 'Accessing memories is as easy as living in the present for you. You gain an edge on tests made to recall lore.'
+						modifier: RollModifierType.Edge,
+						condition: 'When recalling lore'
 					}),
 					value: 1
 				},

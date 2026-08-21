@@ -1,11 +1,12 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Feature, FeatureText } from '@/models/feature';
+import { Feature, FeatureRollModifier, FeatureText } from '@/models/feature';
 import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
@@ -840,6 +841,19 @@ export class SheetFormatter {
 			size += 1.2; // divider
 		});
 		size -= 1.2;// last divider not present
+		return size;
+	};
+
+	static calculateRollModifiersCardSize = (rollModifiers: FeatureRollModifier[], lineWidth: number): number => {
+		let size = 2.7; // card header
+		rollModifiers.forEach(f => {
+			// scope and modifier share a line unless the scope wraps
+			size += this.countLines(FeatureLogic.getRollModifierScope(f.data), lineWidth);
+			if (f.data.condition) {
+				size += this.countLines(f.data.condition, lineWidth);
+			}
+			size += 0.5; // divider
+		});
 		return size;
 	};
 

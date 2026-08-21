@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SubClass } from '@/models/subclass';
 
 export const telepathy: SubClass = {
@@ -49,10 +50,22 @@ export const telepathy: SubClass = {
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'talent-sub-3-2-1',
 					name: 'Ease the Mind',
-					description: 'You gain an edge on tests made to stop combat and start a negotiation. Additionally, if you are present during a negotiation, any NPC who has a hostile or suspicious starting attitude has their patience increased by 1 (to a maximum of 5).'
+					features: [
+						FactoryLogic.feature.create({
+							id: 'talent-sub-3-2-1a',
+							name: 'Ease the Mind',
+							description: 'If you are present during a negotiation, any NPC who has a hostile or suspicious starting attitude has their patience increased by 1 (to a maximum of 5).'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'talent-sub-3-2-1b',
+							name: 'Ease the Mind',
+							modifier: RollModifierType.Edge,
+							condition: 'When stopping combat and starting a negotiation'
+						})
+					]
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-3-2-2',

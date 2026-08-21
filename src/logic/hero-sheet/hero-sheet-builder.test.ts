@@ -13,6 +13,8 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Options } from '@/models/options';
 import { PregenData } from '@/data/pregen-data';
 import { PregenLogic } from '../pregen-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { Summon } from '@/models/summon';
 import { Utils } from '@/utils/utils';
@@ -249,6 +251,30 @@ describe('buildHeroSheet', () => {
 		expect(result).not.toBeNullable();
 		expect(result.followers.length).toBe(4);
 		expect(result.summons.length).toBe(2);
+	});
+
+	test('it marks only the hero\'s own skills with their test modifiers', () => {
+		const hero = FactoryLogic.createHero();
+		const options = { xpPerLevel: 16 } as Options;
+
+		const skillChoice = FactoryLogic.feature.createSkillChoice({ id: 'test-skills', selected: [ 'Sneak' ] });
+		// Scoped to the whole Intrigue group, which also covers skills the hero doesn't have
+		const groupModifier = FactoryLogic.feature.createRollModifier({
+			id: 'roll-modifier',
+			modifier: RollModifierType.Edge,
+			skillLists: [ SkillList.Intrigue ]
+		});
+
+		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue([
+			{ feature: skillChoice, source: 'test', level: 1 },
+			{ feature: groupModifier, source: 'test', level: 1 }
+		]);
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], options);
+
+		expect(result.skillRollModifiers?.get('Sneak')).toEqual([ RollModifierType.Edge ]);
+		// Hide is also an Intrigue skill, but the hero doesn't have it
+		expect(result.skillRollModifiers?.get('Hide')).toBeUndefined();
 	});
 
 	test('it should not report unlocked heroic resource threshold benefits as missed features', () => {

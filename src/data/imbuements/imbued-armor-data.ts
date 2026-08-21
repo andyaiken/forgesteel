@@ -7,6 +7,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { Imbuement } from '@/models/imbuement';
 import { ItemType } from '@/enums/item-type';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export class ImbuedArmorData {
 	static aweCharming: Imbuement = FactoryLogic.createImbuement({
@@ -18,10 +19,12 @@ export class ImbuedArmorData {
 			goal: 150
 		}),
 		level: 1,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createRollModifier({
 			id: 'imbuement-awe-charming',
 			name: 'Awe: Charming',
-			description: 'You gain an edge on Presence tests made to win other creatures over or make a good impression.'
+			modifier: RollModifierType.Edge,
+			characteristics: [ Characteristic.Presence ],
+			condition: 'When winning other creatures over or making a good impression'
 		})
 	});
 
@@ -34,10 +37,12 @@ export class ImbuedArmorData {
 			goal: 150
 		}),
 		level: 1,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createRollModifier({
 			id: 'imbuement-awe-threatening',
 			name: 'Awe: Threatening',
-			description: 'You gain an edge on Presence tests made to intimidate, coerce, or bully.'
+			modifier: RollModifierType.Edge,
+			characteristics: [ Characteristic.Presence ],
+			condition: 'When intimidating, coercing, or bullying'
 		})
 	});
 

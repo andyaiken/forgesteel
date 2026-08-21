@@ -74,10 +74,17 @@ If you are in the same area as a creature using this or a similar feature who ha
 		{
 			level: 4,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createToggle({
 					id: 'domain-storm-4',
 					name: 'Windwalk',
-					description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.'
+					description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.',
+					condition: 'You have 5 or more Victories',
+					checked: false,
+					featureChecked: FactoryLogic.feature.createMovementMode({
+						id: 'domain-storm-4a',
+						name: 'Windwalk',
+						mode: 'Fly'
+					})
 				})
 			]
 		},

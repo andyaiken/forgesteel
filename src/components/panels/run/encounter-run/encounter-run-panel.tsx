@@ -794,6 +794,7 @@ export const EncounterRunPanel = (props: Props) => {
 								.filter(malice => !encounter.hiddenMaliceFeatures.includes(malice.id))
 								.map(malice => (
 									<MalicePanel
+										key={malice.id}
 										malice={malice}
 										currentMalice={encounter.malice}
 										updateCurrentMalice={value => {

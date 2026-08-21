@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -26,6 +26,8 @@ import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterLogic } from './monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Title } from '@/models/title';
@@ -566,6 +568,7 @@ export class FeatureLogic {
 			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,
 			FeatureType.TaggedFeatureChoice,
+			FeatureType.RollModifier,
 			FeatureType.TitleChoice,
 			FeatureType.Toggle
 		];
@@ -1025,6 +1028,17 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.RollModifier: {
+				const data: FeatureRollModifierData = {
+					modifier: RollModifierType.Edge,
+					rollType: RollType.Test,
+					skills: [],
+					skillLists: [],
+					characteristics: [],
+					condition: ''
+				};
+				return data;
+			}
 			case FeatureType.TitleChoice: {
 				const data: FeatureTitleChoiceData = {
 					echelon: 1,
@@ -1212,6 +1226,55 @@ export class FeatureLogic {
 		return MonsterFeatureCategory.Text;
 	};
 
+	static getRollModifierScopes = (rollType: RollType): RollModifierScope[] => {
+		switch (rollType) {
+			case RollType.Test:
+				return [ 'characteristics', 'skills', 'skillLists' ];
+			default:
+				return [];
+		}
+	};
+
+	static clearRollModifierScopes = (data: FeatureRollModifierData): FeatureRollModifierData => {
+		const allowed = FeatureLogic.getRollModifierScopes(data.rollType);
+		return {
+			...data,
+			characteristics: allowed.includes('characteristics') ? data.characteristics : [],
+			skills: allowed.includes('skills') ? data.skills : [],
+			skillLists: allowed.includes('skillLists') ? data.skillLists : []
+		};
+	};
+
+	static getRollModifierScope = (data: FeatureRollModifierData) => {
+		if (data.rollType === RollType.Test) {
+			const characteristics = data.characteristics.join(', ');
+			const skills = [ ...data.skills, ...data.skillLists.map(list => `${list} skills`) ].join(', ');
+
+			if (characteristics && skills) {
+				return `${characteristics} tests using ${skills}`;
+			}
+			if (characteristics) {
+				return `${characteristics} tests`;
+			}
+			if (skills) {
+				return skills;
+			}
+			return 'All tests';
+		}
+
+		const rollTypeScopes: Record<RollType, string> = {
+			[RollType.Test]: 'All tests',
+			[RollType.Ability]: 'Ability rolls',
+			[RollType.Strike]: 'Strikes',
+			[RollType.Grab]: 'the Grab maneuver',
+			[RollType.EscapeGrab]: 'the Escape Grab maneuver',
+			[RollType.Knockback]: 'the Knockback maneuver',
+			[RollType.Project]: 'Project rolls'
+		};
+
+		return rollTypeScopes[data.rollType];
+	};
+
 	static getFeatureTypeDescription = (type: FeatureType) => {
 		switch (type) {
 			case FeatureType.Ability:
@@ -1312,6 +1375,8 @@ export class FeatureLogic {
 				return 'This feature allows you to select a tagged feature.';
 			case FeatureType.Text:
 				return 'This feature has no special properties, just a text description.';
+			case FeatureType.RollModifier:
+				return 'This feature gives you an edge or a bane on certain rolls.';
 			case FeatureType.TitleChoice:
 				return 'This feature allows you to choose a title.';
 			case FeatureType.Toggle:

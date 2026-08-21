@@ -28,6 +28,7 @@ import { Monster } from '@/models/monster';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { RollType } from '@/enums/roll-type';
 import { Size } from '@/models/size';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
@@ -694,6 +695,51 @@ export class HeroLogic {
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.DamageModifier);
 		return ModifierLogic.getDamageModifiers(features, hero);
+	};
+
+	static getRollModifiers = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.RollModifier);
+	};
+
+	static getRollModifiersForSkill = (hero: Hero, skill: Skill) => {
+		return HeroLogic.getRollModifiers(hero)
+			.filter(f => f.data.rollType === RollType.Test)
+			.filter(f => f.data.skills.includes(skill.name) || f.data.skillLists.includes(skill.list));
+	};
+
+	static getRollModifiersForTest = (hero: Hero, characteristics: Characteristic[]) => {
+		return HeroLogic.getRollModifiers(hero)
+			.filter(f => f.data.rollType === RollType.Test)
+			.filter(f => (f.data.characteristics.length === 0)
+				|| f.data.characteristics.some(ch => characteristics.includes(ch)));
+	};
+
+	static getRollModifiersForAbility = (hero: Hero, ability: Ability) => {
+		const maneuverRollTypes: Record<string, RollType> = {
+			'grab': RollType.Grab,
+			'escape-grab': RollType.EscapeGrab,
+			'knockback': RollType.Knockback
+		};
+
+		const maneuver = maneuverRollTypes[ability.id];
+		return HeroLogic.getRollModifiers(hero)
+			.filter(f => {
+				switch (f.data.rollType) {
+					case RollType.Ability:
+						return true;
+					case RollType.Strike:
+						return ability.keywords.includes(AbilityKeyword.Strike);
+					default:
+						return f.data.rollType === maneuver;
+				}
+			});
+	};
+
+	static getRollModifiersForProject = (hero: Hero) => {
+		return HeroLogic.getRollModifiers(hero)
+			.filter(f => f.data.rollType === RollType.Project);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

@@ -32,9 +32,9 @@ export const NamePanel = (props: Props) => {
 							HeroModalType.Projects,
 							HeroModalType.Titles,
 							HeroModalType.Notes,
+							HeroLogic.getConditionalFeatures(props.hero).length > 0 ? HeroModalType.Conditional : null,
 							HeroModalType.Respite,
 							HeroModalType.Customize,
-							HeroLogic.getConditionalFeatures(props.hero).length > 0 ? HeroModalType.Conditional : null,
 							HeroModalType.Settings
 						]
 							.filter(item => item !== null)

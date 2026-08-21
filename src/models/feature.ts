@@ -23,6 +23,8 @@ import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
 import { ResourceGain } from '@/models/resource-gain';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { Size } from '@/models/size';
 import { SkillList } from '@/enums/skill-list';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
@@ -349,6 +351,18 @@ export type FeatureTaggedFeatureChoice = FeatureOf<FeatureType.TaggedFeatureChoi
 
 export type FeatureText = FeatureOf<FeatureType.Text>;
 
+export interface FeatureRollModifierData extends _FeatureData {
+	modifier: RollModifierType;
+	rollType: RollType;
+	skills: string[];
+	skillLists: SkillList[];
+	characteristics: Characteristic[];
+	condition: string;
+};
+export type FeatureRollModifier = FeatureOf<FeatureType.RollModifier, FeatureRollModifierData>;
+
+export type RollModifierScope = 'characteristics' | 'skills' | 'skillLists';
+
 export interface FeatureTitleChoiceData extends _FeatureData {
 	echelon: number;
 	count: number;
@@ -414,6 +428,7 @@ export type Feature =
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice
+	| FeatureRollModifier
 	| FeatureTitleChoice
 	| FeatureToggle;
 

@@ -4,6 +4,8 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const corven: Kit = {
 	id: 'kit-corven',
@@ -44,15 +46,50 @@ export const corven: Kit = {
 				]
 			})
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'kit-corven-feature-1',
 			name: 'Aspect Benefits',
-			description: 'You gain an edge on tests made to hide and sneak. Additionally, whenever you fall, you can use a free triggered action to use your Aspect of the Wild ability.'
+			features: [
+				FactoryLogic.feature.create({
+					id: 'kit-corven-feature-1a',
+					name: 'Aspect Benefits',
+					description: 'Whenever you fall, you can use a free triggered action to use your Aspect of the Wild ability.'
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'kit-corven-feature-1b',
+					name: 'Aspect Benefits',
+					modifier: RollModifierType.Edge,
+					skills: [ 'Hide', 'Sneak' ]
+				})
+			]
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-corven-feature-2a',
 			name: 'Animal Form: Crow',
-			description: 'While you are in your crow form, your size is 1T and you can fly. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide. You can’t use any abilities while in this form except for Aspect of the Wild.'
+			condition: 'You are in your crow form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-corven-feature-2a-1',
+				name: 'Animal Form: Crow',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-corven-feature-2a-1a',
+						name: 'Animal Form: Crow',
+						sizeValue: 1,
+						sizeMod: 'T'
+					}),
+					FactoryLogic.feature.createMovementMode({
+						id: 'kit-corven-feature-2a-1b',
+						name: 'Animal Form: Crow',
+						mode: 'Fly'
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-corven-feature-2a-1c',
+						name: 'Animal Form: Crow',
+						description: 'You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide. You can’t use any abilities while in this form except for Aspect of the Wild.'
+					})
+				]
+			})
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-corven-feature-2b',
@@ -93,10 +130,29 @@ export const corven: Kit = {
 					id: 'kit-corven-feature-4-6',
 					resource: 'Ferocity',
 					value: 6,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-corven-feature-4-6a',
 						name: 'Growing Ferocity (Ferocity 6)',
-						description: 'You gain an edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-6a-tests',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-6a-maneuvers-escape',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.EscapeGrab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-6a-maneuvers-knockback',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -115,10 +171,29 @@ export const corven: Kit = {
 					resource: 'Ferocity',
 					value: 10,
 					level: 7,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-corven-feature-4-10a',
 						name: 'Growing Ferocity (Ferocity 10)',
-						description: 'You have a double edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-10a-tests',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								characteristics: [ Characteristic.Agility ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-10a-maneuvers-escape',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.EscapeGrab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-corven-feature-4-10a-maneuvers-knockback',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

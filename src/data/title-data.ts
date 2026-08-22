@@ -621,10 +621,23 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Ship Speaker',
 				description: 'You magically know the location of any ship controlled by your party even while you aren’t aboard. You can telepathically communicate with anyone on board one of your ships who understands a language, and they can respond, no matter your distance from the ship.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-ship-captain-3',
 				name: 'Signal Flags',
-				description: 'While aboard a ship, you can communicate with and conduct negotiations with another ship up to 5 miles away, as long as you and creatures on the other ship have line of effect to each other. You gain an edge on Presence tests made while negotiating in this way.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-ship-captain-3a',
+						name: 'Signal Flags',
+						description: 'While aboard a ship, you can communicate with and conduct negotiations with another ship up to 5 miles away, as long as you and creatures on the other ship have line of effect to each other.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-ship-captain-3b',
+						name: 'Signal Flags',
+						modifier: RollModifierType.Edge,
+						characteristics: [ Characteristic.Presence ],
+						condition: 'When negotiating with another ship using signal flags'
+					})
+				]
 			}),
 			FactoryLogic.feature.createRollModifier({
 				id: 'title-ship-captain-4',
@@ -944,10 +957,23 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				field: FeatureField.Renown,
 				value: 1
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-corsair-4',
 				name: 'Scoundrel Tactics',
-				description: 'While aboard a ship, you can use the following skills to make a test to influence another ship up to 5 miles away whose crewmembers have line of effect to you, and you gain an edge when you do so. You can use Disguise to hide your ship’s identity or general type, Intimidate to convince another ship’s crew to flee or surrender, or Hide or Sneak to let your ship avoid notice.'
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-corsair-4a',
+						name: 'Scoundrel Tactics',
+						description: 'While aboard a ship, you can use the following skills to make a test to influence another ship up to 5 miles away whose crewmembers have line of effect to you. You can use Disguise to hide your ship’s identity or general type, Intimidate to convince another ship’s crew to flee or surrender, or Hide or Sneak to let your ship avoid notice.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'title-corsair-4b',
+						name: 'Scoundrel Tactics',
+						modifier: RollModifierType.Edge,
+						skills: [ 'Disguise', 'Intimidate', 'Hide', 'Sneak' ],
+						condition: 'When influencing another ship while aboard a ship'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -1002,10 +1028,10 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 						name: 'Gift of Charm',
 						selected: [ 'Khelt' ]
 					}),
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createSkillChoice({
 						id: 'title-fey-friend-1-2',
 						name: 'Gift of Charm',
-						description: 'You have a skill of your choice from the interpersonal skill group.'
+						listOptions: [ SkillList.Interpersonal ]
 					})
 				]
 			}),
@@ -1235,10 +1261,10 @@ I better watch out for that banana peel!`,
 				name: 'I Have Just the Book',
 				description: 'If you start a Discover Lore project in your hero’s stronghold or other a permanent base of operations you immediately gain 60 project points toward the completion of that project. If the project costs 60 or fewer points, you complete it in 10 uninterrupted minutes without needing to use a respite activity.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'title-master-librarian-3',
 				name: 'Picked Up a Few Things',
-				description: 'You know a skill from the lore skill group.'
+				listOptions: [ SkillList.Lore ]
 			}),
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'title-master-librarian-4',
@@ -1252,7 +1278,7 @@ I better watch out for that banana peel!`,
 	static specialAgent: Title = {
 		id: 'title-special-agent',
 		name: 'Special Agent',
-		description: '“And this is interesting … if you twist the third button on your overcoat— no, don’t do it now!”',
+		description: '“And this is interesting … if you twist the third button on your overcoat — no, don’t do it now!”',
 		echelon: 2,
 		prerequisites: 'A spymaster gives you an important secret mission.',
 		features: [
@@ -1260,7 +1286,7 @@ I better watch out for that banana peel!`,
 				id: 'title-special-agent-1',
 				name: 'Boffin',
 				description: `
-You gain a small magic spy device called a boffin. Once per encounter, you can activate a boffin property as a maneuver
+You gain a small magic spy device called a boffin. Once per encounter, you can activate a boffin property as a maneuver.
 
 * Make a test that uses the Disguise skill. You gain an edge on the test.
 * One mundane lock you touch is unlocked.
@@ -1300,10 +1326,10 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'title-sworn-hunter-2',
 				name: 'Particular Set of Skills',
-				description: 'You know a skill from the intrigue skill group.'
+				listOptions: [ SkillList.Intrigue ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-sworn-hunter-3',
@@ -2190,10 +2216,12 @@ You start combat encounters with a squad of three minions from the specific mons
 						modifier: RollModifierType.Edge,
 						condition: 'Identifying summoning circles and who or where they’re connected to'
 					}),
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'title-sigilwright-3b',
 						name: 'Sigil Eye',
-						description: 'You have an edge on strikes made against creatures not native to the manifold in which you’re currently located.'
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Strike,
+						condition: 'Against creatures not native to the manifold in which you’re currently located'
 					})
 				]
 			})

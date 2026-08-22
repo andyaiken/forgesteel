@@ -273,10 +273,12 @@ If you have a kit, you can’t take this blessing.`,
 					name: 'Conduit Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'conduit-1-9a',
 								name: 'Bastion Ward',
-								description: 'Your god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
+								description: 'Your god grants you a holy countenance that protects you at all times.',
+								field: FeatureField.Save,
+								value: 1
 							}),
 							value: 1
 						},

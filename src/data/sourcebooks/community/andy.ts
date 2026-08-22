@@ -91,25 +91,36 @@ Across the world - and across many worlds - humanoid cultures sometimes arise th
 								field: FeatureField.Disengage,
 								value: 1
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-1-4b',
 								name: 'Skirmisher Instinct',
-								description: 'You gain an edge on Gymnastics and Jump tests.'
+								modifier: RollModifierType.Edge,
+								skills: [ 'Gymnastics', 'Jump' ]
 							})
 						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-5',
 						name: 'Stalker Instinct',
-						description: `
-*You are patient and unseen.*
-
-You gain an edge on Hide and Sneak tests.
-
-Your first strike against a creature that hasn’t acted yet this encounter gains an edge.`
+						description: 'You are patient and unseen.',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-5a',
+								name: 'Stalker Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide', 'Sneak' ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-5b',
+								name: 'Stalker Instinct',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Strike,
+								condition: 'Against a creature who hasn’t acted yet this encounter (first strike only)'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -212,15 +223,24 @@ When a creature attempts to grab you, it takes damage equal to your echelon.`
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-5',
 						name: 'Echolocation',
-						description: `
-*You perceive your surroundings through reflected sound.*
-
-You ignore concealment and invisibility against creatures within 3 squares that are not hidden.
-
-You suffer a bane on Alertness and Eavesdrop tests in areas of loud noise.`
+						description: 'You perceive your surroundings through reflected sound.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-5a',
+								name: 'Echolocation',
+								description: 'You ignore concealment and invisibility against creatures within 3 squares that are not hidden.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-2-5b',
+								name: 'Echolocation',
+								modifier: RollModifierType.Bane,
+								skills: [ 'Alertness', 'Eavesdrop' ],
+								condition: 'In areas of loud noise'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -362,23 +382,34 @@ When you take the Disengage move action, you can teleport that distance rather t
 								id: 'beastfolk-2-14a',
 								selected: [ 'Hide' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-2-14b',
 								name: 'Camouflage',
-								description: 'You gain an edge on Hide tests.'
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide' ]
 							})
 						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-15',
 						name: 'Hold Fast',
-						description: `
-*Your body is adapted for seizing prey.*
-
-When you take the Grab maneuver you have an edge on your power roll; when you have a creature grabbed, they take a bane on their roll to escape your grab.`
+						description: 'Your body is adapted for seizing prey.',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-2-15a',
+								name: 'Hold Fast',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-15b',
+								name: 'Hold Fast',
+								description: 'When you have a creature grabbed, they take a bane on their roll to escape your grab.'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -403,10 +434,16 @@ When you use the Knockdown maneuver against an enemy adjacent to one of your all
 								id: 'beastfolk-2-17a',
 								selected: [ 'Lift' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-2-17b',
 								name: 'Powerful Build',
-								description: 'You gain an edge on Might tests, and your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-17c',
+								name: 'Powerful Build',
+								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
 							})
 						]
 					}),
@@ -1335,22 +1372,42 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'ironbound-1d',
 						name: 'Infiltration Mode',
-						description: `
-* You can move at full speed while sneaking
-* You gain an edge on Hide and Sneak tests`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'ironbound-1d-1',
+								name: 'Infiltration Mode',
+								description: 'You can move at full speed while sneaking.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'ironbound-1d-2',
+								name: 'Infiltration Mode',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide', 'Sneak' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'ironbound-1e',
 						name: 'Precision Mode',
-						description: `
-* Your attacks ignore partial cover
-* You gain an edge on Eavesdrop and Track tests`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'ironbound-1e-1',
+								name: 'Precision Mode',
+								description: 'Your attacks ignore partial cover.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'ironbound-1e-2',
+								name: 'Precision Mode',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Eavesdrop', 'Track' ]
+							})
+						]
 					}),
 					value: 1
 				}
@@ -1506,13 +1563,16 @@ Orians hold the Orian Sea the way a backwater clan holds its hollow: subjects of
 					id: 'orian-2a',
 					selected: [ 'Swim' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'orian-2b',
 					name: 'Child of the Deep',
-					description: `
-You have an edge on any tests using the Swim skill.
-
-Deep, cold, or turbulent water never slows or hampers your movement, and you see clearly in murky or lightless water.`
+					modifier: RollModifierType.Edge,
+					skills: [ 'Swim' ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'orian-2c',
+					name: 'Child of the Deep',
+					description: 'Deep, cold, or turbulent water never slows or hampers your movement, and you see clearly in murky or lightless water.'
 				})
 			]
 		}),
@@ -1578,10 +1638,11 @@ Deep, cold, or turbulent water never slows or hampers your movement, and you see
 								id: 'orian-3f-1',
 								selected: [ 'Navigate' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'orian-3f-2',
 								name: 'Mariner\'s Lore',
-								description: 'You gain an edge on tests to pilot a vessel, predict the weather, or find your way at sea.'
+								modifier: RollModifierType.Edge,
+								condition: 'Piloting a vessel, predicting the weather, or finding your way at sea'
 							})
 						]
 					}),

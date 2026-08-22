@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
@@ -70,10 +71,12 @@ const shadowElf: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'shadow-elf-2e',
 						name: 'Revisit Memory',
-						description: 'Accessing memories is as easy as living in the present for you. You have an edge on all tests made to recall lore.'
+						description: 'Accessing memories is as easy as living in the present for you.',
+						modifier: RollModifierType.Edge,
+						condition: 'When recalling lore'
 					}),
 					value: 1
 				},

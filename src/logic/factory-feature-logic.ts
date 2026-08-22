@@ -631,7 +631,7 @@ export class FactoryFeatureLogic {
 			...options,
 			...(listOptions.length === 5) ? [ 'any list' ] : listOptions.map(list => `${list} skills`)
 		].join(', ');
-		const description = data.description || count > 1 ?
+		const description = data.description || (count > 1) ?
 			`Choose ${count} from ${source}.`
 			:
 			`Choose a skill from ${source}.`;

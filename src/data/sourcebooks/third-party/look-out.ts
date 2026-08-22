@@ -11,6 +11,8 @@ import { Kit } from '@/models/kit';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -175,10 +177,23 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 						})
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'kiln-controlled-burn-1',
 					name: 'Controlled Burn',
-					description: 'You gain an edge on Presence tests made to interact with other creatures when you are near a visible flame that is 2 squares or larger. As a maneuver, you can ignite or snuff out any number of at-most size 1 prepared objects (kindling, torches, candles, fuses, and so forth) at any distance as long as you can see and recognize the object.'
+					features: [
+						FactoryLogic.feature.createRollModifier({
+							id: 'kiln-controlled-burn-1a',
+							name: 'Controlled Burn',
+							modifier: RollModifierType.Edge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When interacting with other creatures while near a visible flame that is 2 squares or larger'
+						}),
+						FactoryLogic.feature.create({
+							id: 'kiln-controlled-burn-1b',
+							name: 'Controlled Burn',
+							description: 'As a maneuver, you can ignite or snuff out any number of at-most size 1 prepared objects (kindling, torches, candles, fuses, and so forth) at any distance as long as you can see and recognize the object.'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'kiln-controlled-burn-2',
@@ -509,10 +524,13 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 								})
 							]
 						}),
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createRollModifier({
 							id: 'kiln-st-elmo-1',
 							name: 'St. Elmo\'s Fire',
-							description: 'During and shortly after a thunderstorm, you glow with a faint blue flame and you have an edge on tests that use the Navigate skill.'
+							description: 'During and shortly after a thunderstorm, you glow with a faint blue flame.',
+							modifier: RollModifierType.Edge,
+							skills: [ 'Navigate' ],
+							condition: 'During and shortly after a thunderstorm'
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'kiln-st-elmo-2',
@@ -608,10 +626,22 @@ Changing the color of your flames requires the use of this ability again.`)
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createMultiple({
 							id: 'kiln-backdraft-2',
 							name: 'The Soul is in the Breath',
-							description: 'In combat, you can’t suffocate and you gain an edge on the Escape Grab maneuver. Out of combat, you can hold your breath for a number of minutes equal to twice your Reason score, and while you hold your breath, you can turn your body to dense smoke. While in this form, you move through gaps as if you were size 1T, you can hover, and you don’t take damage from falling.'
+							features: [
+								FactoryLogic.feature.createRollModifier({
+									id: 'kiln-backdraft-2a',
+									name: 'The Soul is in the Breath',
+									modifier: RollModifierType.Edge,
+									rollType: RollType.EscapeGrab
+								}),
+								FactoryLogic.feature.create({
+									id: 'kiln-backdraft-2b',
+									name: 'The Soul is in the Breath',
+									description: 'In combat, you can’t suffocate. Out of combat, you can hold your breath for a number of minutes equal to twice your Reason score, and while you hold your breath, you can turn your body to dense smoke. While in this form, you move through gaps as if you were size 1T, you can hover, and you don’t take damage from falling.'
+								})
+							]
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'kiln-the-soul-is-in-the-breath-1',

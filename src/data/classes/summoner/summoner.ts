@@ -416,10 +416,12 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 					name: 'Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},
@@ -595,10 +597,12 @@ When you take a respite, you teleport to your circle’s source manifold or poin
 					description: 'You can choose one additional ward from your Summoner’s Kit.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},
@@ -748,10 +752,12 @@ Your champion gains additional features at 10th level. This includes a special C
 					description: 'You can choose one additional ward from your Summoner’s Kit.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},

@@ -6,6 +6,8 @@ import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { insurgent } from '@/data/classes/tactician/insurgent';
 import { mastermind } from '@/data/classes/tactician/mastermind';
@@ -204,10 +206,13 @@ You can’t gain more than one benefit from the same trigger.`),
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'tactician-4-3',
 					name: 'Improved Field Arsenal',
-					description: 'Your expertise with weapons has grown. Whenever you use a signature ability from one of your equipped kits or make a free strike using a weapon from one of your equipped kits, you gain an edge.'
+					description: 'Your expertise with weapons has grown.',
+					modifier: RollModifierType.Edge,
+					rollType: RollType.Ability,
+					condition: 'When you use a signature ability from one of your equipped kits, or make a free strike using a weapon from one of your equipped kits'
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'tactician-4-4'

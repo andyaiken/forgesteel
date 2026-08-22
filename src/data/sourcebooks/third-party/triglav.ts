@@ -100,10 +100,23 @@ Your strong, elongated hind legs make you an exceptional jumper. You gain the fo
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'boggit-4c',
 						name: 'Slippery Skin',
-						description: 'Your slippery skin makes you harder to catch. Enemies take a bane on tests and a -1 on potencies made to grab or restrain you. You have an edge on tests made to escape grabs.'
+						description: 'Your slippery skin makes you harder to catch.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'boggit-4c-1',
+								name: 'Slippery Skin',
+								description: 'Enemies take a bane on tests and a -1 on potencies made to grab or restrain you.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'boggit-4c-2',
+								name: 'Slippery Skin',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.EscapeGrab
+							})
+						]
 					}),
 					value: 1
 				},
@@ -300,18 +313,34 @@ Years of traversing swamps have taught you how to deal with terrain obstacles an
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'boggit-4h',
 						name: 'Swarm Tactics',
-						description: 'Your abilities gain an edge when used against creatures that are adjacent to at least one of your non-minion allies, but you don\'t gain another edge when the same ally is also flanking the creature with you.'
+						description: 'You don\'t gain another edge when the same ally is also flanking the creature with you.',
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Ability,
+						condition: 'Against creatures who are adjacent to at least one of your non-minion allies'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'boggit-4i',
 						name: 'Wetland Warrior',
-						description: 'Your abilities gain an edge when used against creatures affected by difficult terrain. Additionally, you have concealment when you are in water or difficult terrain.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'boggit-4i-1',
+								name: 'Wetland Warrior',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Ability,
+								condition: 'Against creatures affected by difficult terrain'
+							}),
+							FactoryLogic.feature.create({
+								id: 'boggit-4i-2',
+								name: 'Wetland Warrior',
+								description: 'You have concealment when you are in water or difficult terrain.'
+							})
+						]
 					}),
 					value: 1
 				}

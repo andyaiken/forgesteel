@@ -69,6 +69,8 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
+	onSetControlledMonsterHidden: (hero: Hero, monster: Monster, value: boolean) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -133,6 +135,8 @@ export const HeroViewPage = (props: Props) => {
 						onAddMonsterToSquad={props.onAddMonsterToSquad}
 						onSelectControlledMonster={props.onSelectControlledMonster}
 						onSelectControlledSquad={props.onSelectControlledSquad}
+						onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}
+						onSetControlledMonsterHidden={props.onSetControlledMonsterHidden}
 					/>
 				);
 			case 'classic':

@@ -1,5 +1,5 @@
-import { Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
-import { HeartFilled, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
+import { EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -33,6 +33,7 @@ import { RulesPage } from '@/enums/rules-page';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
@@ -49,6 +50,8 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
+	onSetControlledMonsterHidden: (hero: Hero, monster: Monster, value: boolean) => void;
 }
 
 export const SidebarPanel = (props: Props) => {
@@ -420,39 +423,93 @@ export const SidebarPanel = (props: Props) => {
 			const isRetainerSlot = slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Retainer);
 			const isCompanionSlot = !isMinionSlot && !isRetainerSlot;
 
-			const getMonster = (m: Monster) => {
-				const tags: string[] = [];
-				if (![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(m))) {
-					tags.push(Format.capitalize(MonsterLogic.getCombatState(m)));
+			const getMinionCountMessage = () => {
+				if (!isMinionSlot) {
+					return null;
 				}
-				if (m.state.hidden) {
-					tags.push('Hidden');
+
+				const minionsExpected = MonsterLogic.getExpectedMinionCount(slot);
+				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
+
+				if (minionsAlive === minionsExpected) {
+					return null;
 				}
-				tags.push(...m.state.conditions.map(c => ConditionLogic.getFullDescription(c)));
 
 				return (
-					<div key={m.id} className='controlled-monster' onClick={() => props.onSelectControlledMonster(props.hero, m)}>
-						<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-							<Flex align='center' justify='space-between' gap={5}>
-								<MonsterInfo monster={m} />
+					<Alert
+						type='warning'
+						showIcon={true}
+						title={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+					/>
+				);
+			};
+
+			const getMonster = (m: Monster) => {
+				const tags: string[] = [];
+				if (m.state.defeated) {
+					tags.push('Defeated');
+				} else {
+					if (![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(m))) {
+						tags.push(Format.capitalize(MonsterLogic.getCombatState(m)));
+					}
+					if (m.state.hidden) {
+						tags.push('Hidden');
+					}
+					tags.push(...m.state.conditions.map(c => ConditionLogic.getFullDescription(c)));
+				}
+
+				return (
+					<Flex key={m.id} align='center' gap={5}>
+						<div
+							style={{ flex: '1 1 0' }}
+							className={m.state.defeated ? 'controlled-monster defeated' : 'controlled-monster'}
+							onClick={() => props.onSelectControlledMonster(props.hero, m)}
+						>
+							<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+								<Flex align='center' justify='space-between' gap={5}>
+									<MonsterInfo monster={m} />
+									{
+										!isMinionSlot ?
+											<Flex gap={5}>
+												{MonsterLogic.getStaminaDescription(m)}
+												<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+											</Flex>
+											: null
+									}
+								</Flex>
 								{
-									!isMinionSlot ?
-										<Flex gap={5}>
-											{MonsterLogic.getStaminaDescription(m)}
-											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+									tags.length > 0 ?
+										<Flex gap={3}>
+											{tags.map((tag, n) => <Tag key={n} variant='outlined'>{tag}</Tag>)}
 										</Flex>
 										: null
 								}
-							</Flex>
-							{
-								tags.length > 0 ?
-									<Flex gap={3}>
-										{tags.map((tag, n) => <Tag key={n} variant='outlined'>{tag}</Tag>)}
-									</Flex>
-									: null
-							}
-						</Space>
-					</div>
+							</Space>
+						</div>
+						{
+							isMinionSlot ?
+								<Popover
+									trigger='click'
+									content={(
+										<div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<Segmented
+												block={true}
+												options={[
+													{ value: true, label: 'Defeated' },
+													{ value: false, label: 'Active' }
+												]}
+												value={m.state.defeated}
+												onChange={value => props.onSetControlledMonsterDefeated(props.hero, m, value)}
+											/>
+											<Toggle label='Hidden' value={m.state.hidden} onChange={value => props.onSetControlledMonsterHidden(props.hero, m, value)} />
+										</div>
+									)}
+								>
+									<Button type='text' icon={<EllipsisOutlined />} />
+								</Popover>
+								: null
+						}
+					</Flex>
 				);
 			};
 
@@ -486,6 +543,7 @@ export const SidebarPanel = (props: Props) => {
 								</div>
 								: null
 						}
+						{getMinionCountMessage()}
 						{slot.monsters.map(getMonster)}
 						{slot.monsters.length === 0 ? <div>Empty</div> : null}
 					</Space>

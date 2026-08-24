@@ -3,7 +3,6 @@ import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { Characteristic } from '@/enums/characteristic';
-import { Collections } from '@/utils/collections';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -417,9 +416,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 			return null;
 		}
 
-		const staminaRemaining = Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)) - props.slot.state.staminaDamage;
-		const staminaPerMinion = Collections.mean(props.slot.monsters, m => MonsterLogic.getStamina(m));
-		const minionsExpected = Math.max(Math.ceil(staminaRemaining / staminaPerMinion), 0);
+		const minionsExpected = MonsterLogic.getExpectedMinionCount(props.slot);
 		const minionsAlive = props.slot.monsters.filter(m => !m.state.defeated).length;
 
 		if (minionsAlive !== minionsExpected) {

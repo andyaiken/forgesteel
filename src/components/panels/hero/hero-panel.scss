@@ -65,6 +65,14 @@
 					border-color: var(--fs-accent);
 					background: var(--fs-accent-wash);
 				}
+
+				&.defeated {
+					opacity: 0.3;
+
+					.combatant-name {
+						text-decoration: line-through;
+					}
+				}
 			}
 		}
 

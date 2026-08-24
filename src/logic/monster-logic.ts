@@ -471,6 +471,16 @@ Your companion gains all the benefits of your kit, with the following exceptions
 		return str;
 	};
 
+	static getExpectedMinionCount = (slot: EncounterSlot) => {
+		const staminaPerMinion = Collections.mean(slot.monsters, m => MonsterLogic.getStamina(m));
+		if (staminaPerMinion <= 0) {
+			return slot.monsters.length;
+		}
+
+		const staminaRemaining = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m)) - slot.state.staminaDamage;
+		return Math.max(Math.ceil(staminaRemaining / staminaPerMinion), 0);
+	};
+
 	static getWindedThreshold = (monster: Monster) => {
 		return Math.floor(MonsterLogic.getStamina(monster) / 2);
 	};

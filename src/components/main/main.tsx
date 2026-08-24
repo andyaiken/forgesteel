@@ -418,6 +418,30 @@ export const Main = (props: Props) => {
 		persistHero(copy);
 	};
 
+	const updateControlledMonster = (hero: Hero, monster: Monster) => {
+		const copy = Utils.copy(hero);
+
+		copy.state.controlledSlots.forEach(s => {
+			s.monsters = s.monsters.map(m => m.id === monster.id ? monster : m);
+		});
+
+		persistHero(copy);
+	};
+
+	const setControlledMonsterDefeated = (hero: Hero, monster: Monster, value: boolean) => {
+		const copy = Utils.copy(monster);
+		copy.state.defeated = value;
+
+		updateControlledMonster(hero, copy);
+	};
+
+	const setControlledMonsterHidden = (hero: Hero, monster: Monster, value: boolean) => {
+		const copy = Utils.copy(monster);
+		copy.state.hidden = value;
+
+		updateControlledMonster(hero, copy);
+	};
+
 	const selectControlledMonster = (hero: Hero, monster: Monster) => {
 		setDrawer(
 			<MonsterModal
@@ -425,15 +449,7 @@ export const Main = (props: Props) => {
 				sourcebooks={sourcebooks}
 				controller={hero}
 				onClose={() => setDrawer(null)}
-				updateMonster={monster => {
-					const copy = Utils.copy(hero);
-
-					copy.state.controlledSlots.forEach(s => {
-						s.monsters = s.monsters.map(m => m.id === monster.id ? monster : m);
-					});
-
-					persistHero(copy);
-				}}
+				updateMonster={monster => updateControlledMonster(hero, monster)}
 				exportElementData={exportLibraryElementData}
 				copyElementCode={copyLibraryElementCode}
 			/>
@@ -1999,6 +2015,8 @@ export const Main = (props: Props) => {
 										onAddMonsterToSquad={addMonsterToSquad}
 										onSelectControlledMonster={selectControlledMonster}
 										onSelectControlledSquad={selectControlledSquad}
+										onSetControlledMonsterDefeated={setControlledMonsterDefeated}
+										onSetControlledMonsterHidden={setControlledMonsterHidden}
 									/>
 								}
 							/>

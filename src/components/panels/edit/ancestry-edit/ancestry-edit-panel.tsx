@@ -25,6 +25,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './ancestry-edit-panel.scss';
@@ -40,6 +41,8 @@ export const AncestryEditPanel = (props: Props) => {
 	const [ ancestry, setAncestry ] = useState<Ancestry>(props.ancestry);
 	const [ featureCost, setFeatureCost ] = useState<number>(0);
 	const [ featureSearch, setFeatureSearch ] = useState<string>('');
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	const visibleSourcebooks = props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id));
 
 	const getNameAndDescriptionSection = () => {
 		const onChange = (name: string, desc: string) => {
@@ -296,8 +299,8 @@ export const AncestryEditPanel = (props: Props) => {
 			...AncestryLogic.getPurchasedFeatures(ancestry).map(f => f.feature.name)
 		];
 
-		const availableSignatureFeatures = SourcebookLogic.getAncestries(props.sourcebooks).flatMap(AncestryLogic.getSignatureFeatures).filter(f => !currentFeatureNames.includes(f.name)).map(f => ({ feature: f, value: 0 }));
-		const availablePurchasedFeatures = SourcebookLogic.getAncestries(props.sourcebooks).flatMap(AncestryLogic.getPurchasedFeatures).filter(f => !currentFeatureNames.includes(f.feature.name));
+		const availableSignatureFeatures = SourcebookLogic.getAncestries(visibleSourcebooks).flatMap(AncestryLogic.getSignatureFeatures).filter(f => !currentFeatureNames.includes(f.name)).map(f => ({ feature: f, value: 0 }));
+		const availablePurchasedFeatures = SourcebookLogic.getAncestries(visibleSourcebooks).flatMap(AncestryLogic.getPurchasedFeatures).filter(f => !currentFeatureNames.includes(f.feature.name));
 
 		const features = Collections.sort(
 			Collections.distinct(

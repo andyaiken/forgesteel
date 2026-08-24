@@ -1,5 +1,5 @@
 import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureRollModifier, FeatureSize } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeaturePotencyResistance, FeaturePotencyResistanceData, FeatureProficiency, FeatureRollModifier, FeatureSize } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
@@ -8,6 +8,7 @@ import { ConfigFeature } from '@/components/features/feature';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { EditPotencyResistance } from '@/components/features/feature-data/potency-resistance';
 import { EditRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
@@ -44,6 +45,11 @@ interface Props {
 	onChange: (hero: Hero) => void;
 	onClose: () => void;
 }
+
+const getPotencyResistanceName = (data: FeaturePotencyResistanceData) => {
+	const characteristics = data.characteristics.length > 0 ? data.characteristics.join(', ') : 'All characteristics';
+	return `Resisting potencies: ${characteristics} +${data.value}`;
+};
 
 export const HeroCustomizeModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
@@ -163,6 +169,19 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Damage Immunity / Weakness
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createPotencyResistance({
+										id: Utils.guid(),
+										name: getPotencyResistanceName({ characteristics: [], value: 1 }),
+										characteristics: []
+									}));
+								}}
+							>
+								Potency Resistance
 							</Button>
 							<Button
 								block={true}
@@ -741,6 +760,19 @@ export const HeroCustomizeModal = (props: Props) => {
 							onChange={setProficiencyArmor}
 						/>
 					</div>
+				);
+			case FeatureType.PotencyResistance:
+				return (
+					<EditPotencyResistance
+						data={feature.data}
+						sourcebooks={props.sourcebooks}
+						setData={data => {
+							const copy = Utils.copy(feature) as FeaturePotencyResistance;
+							copy.data = data;
+							copy.name = getPotencyResistanceName(data);
+							setFeature(feature.id, copy);
+						}}
+					/>
 				);
 			case FeatureType.RollModifier:
 				return (

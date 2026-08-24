@@ -117,10 +117,10 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 						name: 'That Tickles',
 						description: 'You are able to shrug off the puny blows of your enemies.',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'aranox-2ea',
 								name: 'That Tickles',
-								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							}),
 							FactoryLogic.feature.createRollModifier({
 								id: 'aranox-2eb',
@@ -215,10 +215,10 @@ After encountering visitors from outer space, the asomaths came to realize that 
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies.',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'asomath-feature-1da',
 								name: 'Stand Tough',
-								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							}),
 							FactoryLogic.feature.createRollModifier({
 								id: 'asomath-feature-1db',
@@ -433,10 +433,10 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 						name: 'Strength of the White Oak',
 						description: 'The sinew of your wooden body is as strong as iron!',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'oakling-2da',
 								name: 'Strength of the White Oak',
-								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							}),
 							FactoryLogic.feature.createRollModifier({
 								id: 'oakling-2db',
@@ -3166,10 +3166,14 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'vessel-1-7e',
 								name: 'Boon of the Soul',
-								description: 'Your soul burns with rage. When you take damage for the first time in a round, you gain 1 surge.'
+								description: 'Your soul burns with rage.',
+								tag: 'take-damage',
+								trigger: 'You take damage',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							}),
 							value: 1
 						},

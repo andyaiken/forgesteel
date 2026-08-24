@@ -1,5 +1,6 @@
 import { Feature, FeatureRollModifier } from '@/models/feature';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { Characteristic } from '@/enums/characteristic';
 import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
@@ -9,6 +10,7 @@ import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Perk } from '@/models/perk';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 import { Title } from '@/models/title';
@@ -54,6 +56,18 @@ export interface HeroSheet {
 
 	surgeDamageAmount?: string;
 	surgesCurrent?: number;
+	surgeGains?: {
+		tag: string;
+		trigger: string;
+		value: string;
+		frequency: ResourceGainFrequency;
+		// A restriction on the surges themselves, which the table has to say. The feature's own
+		// description is prose about the feature and has no place on a reference card
+		condition: string;
+		// The table lists every gain the hero has, unlocked or not, so a gain behind a heroic
+		// resource threshold has to say which rung it sits on
+		requirement?: string;
+	}[];
 
 	// Modifiers (Kits, Prayers, Wards, etc)
 	modifierTypes: string[];
@@ -90,6 +104,7 @@ export interface HeroSheet {
 	potencyStrong?: number;
 	potencyAverage?: number;
 	potencyWeak?: number;
+	potencyResistances?: { characteristic: Characteristic, value: number }[];
 
 	// Conditions
 	conditions?: Condition[];

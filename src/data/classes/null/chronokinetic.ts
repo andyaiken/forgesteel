@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
@@ -38,10 +39,13 @@ export const chronokinetic: SubClass = {
 							id: 'null-sub-1-1-2-4',
 							resource: 'Discipline',
 							value: 4,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'null-sub-1-1-2-4a',
 								name: 'Chronokinetic Mastery (Discipline 4)',
-								description: 'The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 1 surge.'
+								tag: 'move',
+								trigger: 'You willingly move 1 or more squares as part of an ability',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							})
 						}),
 						FactoryLogic.feature.createHeroicResourceThreshold({
@@ -146,10 +150,14 @@ export const chronokinetic: SubClass = {
 					name: 'Chronokinetic Mastery Improvement',
 					resource: 'Discipline',
 					value: 8,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'null-sub-1-4-1a',
 						name: 'Chronokinetic Mastery (Discipline 8)',
-						description: 'The first time on a turn that you willingly move 1 or more squares as part of an ability, you gain 2 surges.'
+						tag: 'move 2',
+						trigger: 'You willingly move 1 or more squares as part of an ability',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'move' ]
 					})
 				})
 			]

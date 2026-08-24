@@ -1,15 +1,19 @@
-import { Feature, FeatureAbility, FeatureChoice, FeatureRollModifierData } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureChoice, FeatureHeroicResourceThreshold, FeatureRollModifierData } from '@/models/feature';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
+import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { berserker } from '@/data/classes/fury/berserker';
+import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { creation } from '@/data/domains/creation';
 import { demon } from '@/data/monsters/demon';
@@ -623,5 +627,91 @@ describe('calculateMonsterSize()', () => {
 		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
 		const size = SheetFormatter.calculateMonsterSize(sheet, 54);
 		expect(Math.abs(expectedSize - size), `Expected ${expectedSize} but got ${size}`).toBeLessThan(1.1);
+	});
+});
+
+describe('getSurgeGainSummary', () => {
+	const gain = (value: string, frequency: ResourceGainFrequency) => FactoryLogic.feature.createSurgeGain({
+		id: 'g1',
+		name: 'Growing Ferocity (Ferocity 4)',
+		tag: 'push',
+		trigger: 'You push a creature',
+		value: value,
+		frequency: frequency
+	}).data;
+
+	test('it should name the frequency when the gain is limited', () => {
+		expect(SheetFormatter.getSurgeGainSummary(gain('1', ResourceGainFrequency.OncePerRound)))
+			.toBe('+1 surge: You push a creature (Per Round)');
+	});
+
+	test('it should leave the frequency off an at-will gain', () => {
+		expect(SheetFormatter.getSurgeGainSummary(gain('1', ResourceGainFrequency.AtWill)))
+			.toBe('+1 surge: You push a creature');
+	});
+
+	test('it should pluralize a gain worth more than one surge', () => {
+		expect(SheetFormatter.getSurgeGainSummary(gain('2', ResourceGainFrequency.AtWill)))
+			.toBe('+2 surges: You push a creature');
+	});
+});
+
+describe('getPotencyResistanceSummary', () => {
+	test('it should list the characteristics a resistance names', () => {
+		const data = FactoryLogic.feature.createPotencyResistance({ id: 'p1', characteristics: [ Characteristic.Might ] }).data;
+		expect(SheetFormatter.getPotencyResistanceSummary(data)).toBe('Might +1 when resisting potencies');
+	});
+
+	test('it should read an empty characteristic list as every characteristic', () => {
+		const data = FactoryLogic.feature.createPotencyResistance({ id: 'p2', characteristics: [], value: 2 }).data;
+		expect(SheetFormatter.getPotencyResistanceSummary(data)).toBe('All characteristics +2 when resisting potencies');
+	});
+});
+
+describe('getThresholdBenefitText', () => {
+	test('it should describe a benefit that is a surge gain', () => {
+		// The Growing Ferocity rungs are wrapped in a Multiple
+		const threshold = berserker.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.Multiple)
+			.flatMap(f => f.data.features)
+			.find(f => f.id === 'fury-sub-1-1-5-4') as FeatureHeroicResourceThreshold;
+
+		expect(SheetFormatter.getThresholdBenefitText(threshold.data.feature))
+			.toEqual([ '+1 surge: You push a creature (Per Round)' ]);
+	});
+
+	test('it should describe every part of a benefit that is a Multiple', () => {
+		const threshold = boren.features
+			.filter(f => f.type === FeatureType.Multiple)
+			.flatMap(f => f.data.features)
+			.find(f => f.id === 'kit-boren-feature-4-2') as FeatureHeroicResourceThreshold;
+
+		expect(SheetFormatter.getThresholdBenefitText(threshold.data.feature)).toEqual([
+			'You can have up to two creatures grabbed at time.',
+			'+1 surge: You make a strike against a creature you have grabbed'
+		]);
+	});
+
+	test('it should add a gain\'s condition as a line of its own', () => {
+		const gain = FactoryLogic.feature.createSurgeGain({
+			id: 'g2',
+			name: 'Elemental Buffer',
+			tag: 'reduce-damage',
+			trigger: 'You reduce damage with damage immunity',
+			value: '2',
+			frequency: ResourceGainFrequency.AtWill,
+			condition: 'These surges can be used only to increase the damage of your next strike.'
+		});
+
+		expect(SheetFormatter.getThresholdBenefitText(gain)).toEqual([
+			'+2 surges: You reduce damage with damage immunity',
+			'These surges can be used only to increase the damage of your next strike.'
+		]);
+	});
+
+	test('it should still use the description of a plain prose benefit', () => {
+		const feature = FactoryLogic.feature.create({ id: 't1', name: 'Benefit', description: 'You gain an edge.' });
+		expect(SheetFormatter.getThresholdBenefitText(feature)).toEqual([ 'You gain an edge.' ]);
 	});
 });

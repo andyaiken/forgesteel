@@ -7,9 +7,11 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
+import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Kit } from '@/models/kit';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { Skill } from '@/models/skill';
@@ -19,8 +21,11 @@ import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
+import { boren } from '@/data/kits/stormwight/boren';
+import { conduit } from '@/data/classes/conduit/conduit';
 import { corven } from '@/data/kits/stormwight/corven';
 import { fury } from '@/data/classes/fury/fury';
+import { life } from '@/data/domains/life';
 import { stormwight } from '@/data/classes/fury/stormwight';
 import { vuken } from '@/data/kits/stormwight/vuken';
 
@@ -631,5 +636,371 @@ describe('test modifiers', () => {
 		expect(cleaned.characteristics).toEqual([]);
 		// the condition is always available, whatever the roll type
 		expect(cleaned.condition).toBe('While flanking');
+	});
+});
+
+describe('getPotencyResistances', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	const mockFeatures = (features: Feature[]) => {
+		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue(features.map(feature => ({ feature: feature, source: 'test', level: 1 })));
+	};
+
+	it('applies a resistance only to the characteristics it names', () => {
+		mockFeatures([
+			FactoryLogic.feature.createPotencyResistance({ id: 'p1', characteristics: [ Characteristic.Might ] })
+		]);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getPotencyResistances(hero).get(Characteristic.Might) || 0).toBe(1);
+		expect(HeroLogic.getPotencyResistances(hero).get(Characteristic.Agility) || 0).toBe(0);
+	});
+
+	it('treats an empty characteristic list as every characteristic', () => {
+		mockFeatures([
+			FactoryLogic.feature.createPotencyResistance({ id: 'p2', characteristics: [] })
+		]);
+
+		const hero = FactoryLogic.createHero();
+
+		[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+			.forEach(ch => expect(HeroLogic.getPotencyResistances(hero).get(ch) || 0).toBe(1));
+	});
+
+	it('stacks resistances that overlap on a characteristic', () => {
+		mockFeatures([
+			FactoryLogic.feature.createPotencyResistance({ id: 'p3', characteristics: [ Characteristic.Might ] }),
+			FactoryLogic.feature.createPotencyResistance({ id: 'p4', characteristics: [], value: 2 })
+		]);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getPotencyResistances(hero).get(Characteristic.Might) || 0).toBe(3);
+		expect(HeroLogic.getPotencyResistances(hero).get(Characteristic.Reason) || 0).toBe(2);
+	});
+});
+
+describe('getSurgeGains', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	const gain = (id: string, tag: string, value: string, replacesTags?: string[]) =>
+		FactoryLogic.feature.createSurgeGain({
+			id: id,
+			name: id,
+			tag: tag,
+			trigger: 'test trigger',
+			value: value,
+			frequency: ResourceGainFrequency.OncePerRound,
+			replacesTags: replacesTags
+		});
+
+	it('drops a gain that a later gain replaces', () => {
+		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue(
+			[ gain('g1', 'push', '1'), gain('g2', 'push 2', '2', [ 'push' ]) ]
+				.map(feature => ({ feature: feature, source: 'test', level: 1 }))
+		);
+
+		const hero = FactoryLogic.createHero();
+		const gains = HeroLogic.getSurgeGains(hero);
+
+		expect(gains.map(f => f.data.tag)).toEqual([ 'push 2' ]);
+	});
+
+	it('finds a gain nested in a Multiple inside a threshold', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 1;
+		hero.class.subclasses.filter(sc => sc.id === stormwight.id).forEach(sc => sc.selected = true);
+		hero.class.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = 2);
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Kit)
+			.forEach(f => f.data.selected = [ Utils.copy(boren) ]);
+
+		// The boren's Ferocity 2 rung pairs a grab-limit rule with a surge gain, so it is a Multiple
+		expect(HeroLogic.getSurgeGains(hero).map(f => f.data.tag)).toEqual([ 'strike-grabbed' ]);
+	});
+
+	it('reaches gains that are still locked behind a threshold, so resets can clear them', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 4;
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+		hero.class.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = 0);
+
+		// At 0 ferocity no rung is unlocked, so the visible list is empty...
+		expect(HeroLogic.getSurgeGains(hero)).toEqual([]);
+		// ...but a reset still has to be able to clear the flags on those gains
+		expect(HeroLogic.getAllSurgeGains(hero).map(f => f.data.tag).sort()).toEqual([ 'push', 'push 2' ]);
+	});
+
+	it('clears a used flag through the end-of-encounter sequence, which zeroes the resource first', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 4;
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+		const setFerocity = (value: number) => hero.class!.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = value);
+
+		// The hero reaches 4 ferocity and claims the Growing Ferocity surge
+		setFerocity(4);
+		HeroLogic.getSurgeGains(hero).forEach(f => f.data.used = true);
+		expect(HeroLogic.getSurgeGains(hero).map(f => f.data.used)).toEqual([ true ]);
+
+		// End of encounter zeroes the resource before resetting, which hides the gain
+		setFerocity(0);
+		HeroLogic.getAllSurgeGains(hero).forEach(f => f.data.used = false);
+
+		// Back at 4 ferocity the gain is claimable again
+		setFerocity(4);
+		expect(HeroLogic.getSurgeGains(hero).map(f => f.data.used)).toEqual([ false ]);
+	});
+
+	it('links a gain to the ones it replaces, and back again', () => {
+		// A gain that supersedes two rungs names both of them, the way the data does it - see the
+		// 'take-damage', 'take-damage 2' gains. Nothing relies on walking the chain a rung at a time
+		const gains = [
+			{ tag: 'push', replacesTags: [] },
+			{ tag: 'push 2', replacesTags: [ 'push' ] },
+			{ tag: 'push 3', replacesTags: [ 'push', 'push 2' ] },
+			{ tag: 'grab', replacesTags: [] }
+		];
+
+		// from the replacement down...
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'push 3') ].sort()).toEqual([ 'push', 'push 2', 'push 3' ]);
+		// ...and from the replaced gain back up
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'push') ].sort()).toEqual([ 'push', 'push 2', 'push 3' ]);
+		// and from the middle rung, which names one and is named by the other
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'push 2') ].sort()).toEqual([ 'push', 'push 2', 'push 3' ]);
+		// an unrelated gain stays on its own
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'grab') ]).toEqual([ 'grab' ]);
+		// a tag no gain declares is its own group
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'shift') ]).toEqual([ 'shift' ]);
+	});
+
+	it('leaves two gains that upgrade the same rung independent of each other', () => {
+		// Both supersede 'strike', but neither supersedes the other, so claiming one must not spend
+		// the other - walking the chain would link them through the rung they share
+		const gains = [
+			{ tag: 'strike', replacesTags: [] },
+			{ tag: 'strike-fire', replacesTags: [ 'strike' ] },
+			{ tag: 'strike-ice', replacesTags: [ 'strike' ] }
+		];
+
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'strike-fire') ].sort()).toEqual([ 'strike', 'strike-fire' ]);
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'strike-ice') ].sort()).toEqual([ 'strike', 'strike-ice' ]);
+	});
+
+	it('spends every feature that declares the claimed tag', () => {
+		// Two weapons carrying the same imbuement share a tag - the claim has to cover both
+		const gains = [
+			{ tag: 'weaken', replacesTags: [] },
+			{ tag: 'weaken', replacesTags: [] }
+		];
+
+		expect([ ...HeroLogic.getSurgeGainTags(gains, 'weaken') ]).toEqual([ 'weaken' ]);
+	});
+
+	it('spends the whole replacement chain, so crossing a threshold mid-round cannot re-claim it', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 4;
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+		const setFerocity = (value: number) => hero.class!.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = value);
+
+		// The hero claims the Ferocity 4 gain, which also spends the Ferocity 8 gain that replaces it
+		setFerocity(4);
+		const claimed = HeroLogic.getSurgeGains(hero)[ 0 ].data;
+		const allGains = HeroLogic.getAllSurgeGains(hero).map(f => f.data);
+		const tags = HeroLogic.getSurgeGainTags(allGains, claimed.tag);
+		allGains.filter(g => tags.has(g.tag)).forEach(g => g.used = true);
+
+		// Ferocity climbs to 8 in the same round, swapping in the Ferocity 8 gain
+		setFerocity(8);
+		expect(HeroLogic.getSurgeGains(hero).map(f => `${f.data.tag}:${f.data.used}`)).toEqual([ 'push 2:true' ]);
+	});
+
+	it('unlocks a threshold-gated gain only once the hero reaches that threshold, and lists it once', () => {
+		const buildFury = (ferocity: number) => {
+			const hero = FactoryLogic.createHero();
+			hero.class = Utils.copy(fury);
+			hero.class.level = 4;
+			hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+			hero.class.featuresByLevel
+				.flatMap(lvl => lvl.features)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.forEach(f => f.data.value = ferocity);
+			return hero;
+		};
+
+		// Growing Ferocity (Ferocity 4) sits behind a heroic resource threshold
+		expect(HeroLogic.getSurgeGains(buildFury(0)).map(f => f.data.tag)).toEqual([]);
+		expect(HeroLogic.getSurgeGains(buildFury(4)).map(f => f.data.tag)).toEqual([ 'push' ]);
+		// at 8 ferocity the Ferocity 8 rung replaces the Ferocity 4 one rather than stacking with it
+		expect(HeroLogic.getSurgeGains(buildFury(8)).map(f => f.data.tag)).toEqual([ 'push 2' ]);
+	});
+});
+
+describe('getThresholdFeatures', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	it('reaches a gain behind a threshold nested inside another threshold', () => {
+		const inner = FactoryLogic.feature.createHeroicResourceThreshold({
+			id: 'inner',
+			resource: 'Ferocity',
+			value: 8,
+			feature: FactoryLogic.feature.createSurgeGain({
+				id: 'inner-gain',
+				name: 'Inner',
+				tag: 'inner',
+				trigger: 'test trigger',
+				value: '2',
+				frequency: ResourceGainFrequency.OncePerRound
+			})
+		});
+		const outer = FactoryLogic.feature.createHeroicResourceThreshold({
+			id: 'outer',
+			resource: 'Ferocity',
+			value: 4,
+			feature: FactoryLogic.feature.createMultiple({ id: 'outer-parts', features: [ inner ] })
+		});
+
+		const hero = FactoryLogic.createHero();
+
+		// One unwrapping pass would stop at the Multiple and never see the inner rung, and the gain
+		// behind the inner rung answers to that rung rather than the one it is nested in
+		expect(HeroLogic.getThresholdFeatures(hero, [ outer ]).map(t => `${t.feature.id}@${t.requirement}`))
+			.toEqual([ 'outer-parts@Ferocity 4+', 'inner@Ferocity 4+', 'inner-gain@Ferocity 8+' ]);
+	});
+
+	it('returns nothing when no feature is a threshold', () => {
+		const hero = FactoryLogic.createHero();
+		const feature = FactoryLogic.feature.create({ id: 'plain', name: 'Plain', description: 'Prose.' });
+
+		expect(HeroLogic.getThresholdFeatures(hero, [ feature ])).toEqual([]);
+	});
+});
+
+describe('surge gain tags are an identity', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	it('lists two features that declare the same tag only once', () => {
+		// Two weapons imbued with Draining - the claim spends both, so showing both invites a
+		// double claim
+		const draining = (id: string) => FactoryLogic.feature.createSurgeGain({
+			id: id,
+			name: 'Draining',
+			tag: 'weaken',
+			trigger: 'You weaken a creature with this weapon',
+			value: '1',
+			frequency: ResourceGainFrequency.AtWill
+		});
+		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue(
+			[ draining('d1'), draining('d2') ].map(feature => ({ feature: feature, source: 'test', level: 1 }))
+		);
+
+		const hero = FactoryLogic.createHero();
+
+		expect(HeroLogic.getSurgeGains(hero).map(f => f.id)).toEqual([ 'd1' ]);
+	});
+});
+
+describe('resetGains', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	const buildBerserker = (ferocity: number) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = 4;
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+		hero.class.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = ferocity);
+		return hero;
+	};
+
+	const usedTags = (hero: Hero) => HeroLogic.getAllResourceGains(hero).filter(g => g.used).map(g => g.tag).sort();
+
+	// getHeroicResources is the view for claiming a gain, so it drops the ones a hero can't claim.
+	// A reset has to reach those too, or their flags are stranded
+	it('reaches gains the claimable view hides - replaced ones, and ones behind a locked threshold', () => {
+		// At 0 ferocity neither Growing Ferocity rung is unlocked, and 'take-damage 2' replaces
+		// 'take-damage', so the claimable list drops it
+		const hero = buildBerserker(0);
+
+		const claimable = HeroLogic.getHeroicResources(hero).flatMap(hr => hr.gains).map(g => g.tag);
+		expect(claimable).not.toContain('take-damage');
+		expect(claimable).not.toContain('push');
+
+		const all = HeroLogic.getAllResourceGains(hero).map(g => g.tag);
+		expect(all).toContain('take-damage');
+		expect(all).toContain('push');
+	});
+
+	it('clears surge gains and resource gains in one pass', () => {
+		const hero = buildBerserker(4);
+		HeroLogic.getAllResourceGains(hero).forEach(g => g.used = true);
+
+		// 'push' is a surge gain, 'start' is one of the resource's own - both have to be claimed
+		// for this to be testing anything
+		expect(usedTags(hero)).toContain('push');
+		expect(usedTags(hero)).toContain('start');
+
+		HeroLogic.resetGains(hero, ResourceGainFrequency.OncePerRound);
+
+		// 'winded' is once per encounter, so a new round doesn't hand it back
+		expect(usedTags(hero)).toEqual([ 'winded' ]);
+	});
+
+	it('clears every frequency when no frequency is named', () => {
+		const hero = buildBerserker(4);
+		HeroLogic.getAllResourceGains(hero).forEach(g => g.used = true);
+
+		HeroLogic.resetGains(hero);
+
+		expect(usedTags(hero)).toEqual([]);
+	});
+
+	// A domain's gains reach the hero through the domain rather than through a feature of their own,
+	// so they are easy to miss when collecting gains
+	it('clears the gains a domain brings', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(conduit);
+		hero.class.level = 1;
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.forEach(f => f.data.selected = [ Utils.copy(life) ]);
+
+		const domainGains = () => HeroLogic.getDomains(hero).flatMap(d => d.resourceGains);
+		expect(domainGains().length).toBe(1);
+		domainGains().forEach(g => g.used = true);
+
+		HeroLogic.resetGains(hero);
+
+		expect(domainGains().map(g => g.used)).toEqual([ false ]);
 	});
 });

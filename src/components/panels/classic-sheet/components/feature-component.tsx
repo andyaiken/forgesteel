@@ -1,5 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
-
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMultiple, FeaturePackage, FeaturePerk, FeaturePotencyResistance, FeatureSkillChoice, FeatureSurgeGain, FeatureText } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -8,6 +7,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { DamageModifier } from '@/models/damage-modifier';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { Fragment } from 'react';
@@ -143,7 +143,7 @@ const CharacteristicBonusFeatureComponent = (feature: FeatureCharacteristicBonus
 	);
 };
 
-const TextFeatureComponent = (feature: FeatureText) => {
+const TextFeatureComponent = (feature: FeatureText | FeatureMultiple) => {
 	return (
 		<>
 			<div className='feature-title'>{feature.name}</div>
@@ -332,13 +332,39 @@ const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
 };
 
 const HeroicResourceThresholdComponent = (feature: FeatureHeroicResourceThreshold) => {
-	const requirement = `${feature.data.resource || 'Resource'} ${feature.data.value}+`
+	const requirement = FeatureLogic.getThresholdRequirement(feature.data)
 		+ (feature.data.level > 1 ? ` (level ${feature.data.level}+)` : '');
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${requirement}: `}</strong>{feature.data.feature.name}</div>
-			{feature.data.feature.description ?
-				<div className='feature-description'>{feature.data.feature.description}</div>
+			{SheetFormatter.getThresholdBenefitText(feature.data.feature).map((text, n) =>
+				<div className='feature-description' key={n}>{text}</div>
+			)}
+		</>
+	);
+};
+
+const SurgeGainFeatureComponent = (feature: FeatureSurgeGain) => {
+	return (
+		<>
+			<div className='feature-title'>{feature.name}</div>
+			<div className='feature-description'>{SheetFormatter.getSurgeGainSummary(feature.data)}</div>
+			{feature.data.condition ?
+				<div className='feature-description'>{feature.data.condition}</div>
+				: undefined}
+			{feature.description ?
+				<Markdown text={feature.description} className='feature-description' />
+				: undefined}
+		</>
+	);
+};
+
+const PotencyResistanceFeatureComponent = (feature: FeaturePotencyResistance) => {
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${feature.name}: `}</strong>{SheetFormatter.getPotencyResistanceSummary(feature.data)}</div>
+			{feature.description ?
+				<div className='feature-description'>{feature.description}</div>
 				: undefined}
 		</>
 	);
@@ -516,6 +542,12 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.HeroicResourceThreshold:
 			content = HeroicResourceThresholdComponent(feature);
 			break;
+		case FeatureType.SurgeGain:
+			content = SurgeGainFeatureComponent(feature);
+			break;
+		case FeatureType.PotencyResistance:
+			content = PotencyResistanceFeatureComponent(feature);
+			break;
 		case FeatureType.Kit:
 			content = KitFeatureComponent(feature);
 			break;
@@ -531,7 +563,9 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.MaliceAbility:
 			content = MaliceAbilityFeatureComponent(feature);
 			break;
-		case FeatureType.Multiple:// Do nothing for these since the individual sub-features are also iterated over, no need to double up
+		case FeatureType.Multiple:
+			content = feature.description ? TextFeatureComponent(feature) : undefined;
+			break;
 		case FeatureType.PackageContent: // These are brought in as part of the Package
 			break;
 		default:

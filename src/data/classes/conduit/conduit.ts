@@ -556,10 +556,10 @@ You are infused with the power your deity reserves for their most worthy instrum
 					name: 'Ordained',
 					description: 'Your god elevates the power flowing through you.',
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createPotencyResistance({
 							id: 'conduit-9-2a',
 							name: 'Ordained',
-							description: 'Your characteristic scores are treated as 1 higher for the purpose of resisting potencies.'
+							characteristics: []
 						}),
 						FactoryLogic.feature.createRollModifier({
 							id: 'conduit-9-2b',

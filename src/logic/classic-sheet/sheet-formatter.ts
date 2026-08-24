@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Feature, FeatureRollModifier, FeatureText } from '@/models/feature';
+import { Feature, FeaturePotencyResistanceData, FeatureRollModifier, FeatureSurgeGainData, FeatureText } from '@/models/feature';
 import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
@@ -13,6 +13,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RulesItem } from '@/models/rules-item';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
@@ -90,6 +91,33 @@ export class SheetFormatter {
 			});
 		}
 		return result;
+	};
+
+	// Worded the way the Gaining Surges table on the reference card words it
+	static getSurgeGainSummary = (data: FeatureSurgeGainData) => {
+		const unit = data.value === '1' ? 'surge' : 'surges';
+		const frequency = data.frequency === ResourceGainFrequency.AtWill ? '' : ` (${data.frequency})`;
+		return `+${data.value} ${unit}: ${data.trigger}${frequency}`;
+	};
+
+	static getPotencyResistanceSummary = (data: FeaturePotencyResistanceData) => {
+		const characteristics = data.characteristics.length > 0 ? data.characteristics.join(', ') : 'All characteristics';
+		return `${characteristics} ${this.addSign(data.value)} when resisting potencies`;
+	};
+
+	// A threshold's benefit is a feature in its own right - prose, a surge gain, or a Multiple of
+	// both - and its name already sits on the requirement line, so take just the body text
+	static getThresholdBenefitText = (feature: Feature): string[] => {
+		switch (feature.type) {
+			case FeatureType.Multiple:
+				return [ feature.description, ...feature.data.features.flatMap(this.getThresholdBenefitText) ].filter(t => t);
+			case FeatureType.SurgeGain:
+				return [ this.getSurgeGainSummary(feature.data), feature.data.condition ].filter(t => t);
+			case FeatureType.PotencyResistance:
+				return [ this.getPotencyResistanceSummary(feature.data) ];
+			default:
+				return [ feature.description ].filter(t => t);
+		}
 	};
 
 	static enhanceFeatures = (features: Feature[], hero?: Hero): Feature[] => {

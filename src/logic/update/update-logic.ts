@@ -492,9 +492,16 @@ ${encounter.objective.victories}`
 					feature.data.echelon = 1;
 				}
 				break;
-			case FeatureType.Multiple:
+			case FeatureType.Multiple: {
+				const generated = feature.data.features.map(f => f.name || 'Unnamed Feature');
+				const described = feature.description.split(',').map(p => p.trim());
+				const sorted = (names: string[]) => [ ...names ].sort().join('|');
+				if ((described.length === generated.length) && (sorted(described) === sorted(generated))) {
+					feature.description = '';
+				}
 				feature.data.features.forEach(UpdateLogic.updateFeature);
 				break;
+			}
 			case FeatureType.Package:
 				if (feature.data.tag === 'undefined') {
 					feature.data.tag = 'conduit-prayer';

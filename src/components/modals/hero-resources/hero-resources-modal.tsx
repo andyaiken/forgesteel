@@ -26,6 +26,7 @@ import { useState } from 'react';
 import './hero-resources-modal.scss';
 
 interface Expression {
+	kind: 'resource' | 'surge';
 	resourceID: string;
 	resourceName: string;
 	tag: string;
@@ -48,6 +49,59 @@ export const HeroResourcesModal = (props: Props) => {
 	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
 	const [ showRetainers, setShowRetainers ] = useState<boolean>(false);
 	const options = useOptions();
+
+	const gainSurges = (tag: string, value: number) => {
+		const copy = Utils.copy(hero);
+
+		copy.state.surges += value;
+
+		const gains = HeroLogic.getAllSurgeGains(copy).map(f => f.data);
+		const tags = HeroLogic.getSurgeGainTags(gains, tag);
+
+		gains
+			.filter(g => tags.has(g.tag))
+			.filter(g => g.frequency !== ResourceGainFrequency.AtWill)
+			.forEach(g => g.used = true);
+
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const getGainButton = (gain: { tag: string, value: string, used: boolean }, onGain: (tag: string, value: number) => void, onRoll: (exp: Expression) => void, resourceID: string, resourceName: string, kind: 'resource' | 'surge') => {
+		const digits = /^\s*[+-]?\s*\d+\s*$/;
+		if (digits.test(gain.value)) {
+			const v = parseInt(gain.value);
+			return (
+				<Button className='gain-btn' disabled={gain.used} onClick={() => onGain(gain.tag, v)}>
+					<div>+{gain.value}</div>
+				</Button>
+			);
+		}
+
+		const dice = /^(?<throws>\d+)d(?<sides>\d+)(?:\s*)(?:\+(?<constant>\d))?$/;
+		const match = dice.exec(gain.value);
+		if (match) {
+			const exp: Expression = {
+				kind: kind,
+				resourceID: resourceID,
+				resourceName: resourceName,
+				tag: gain.tag,
+				throws: parseInt(match.groups?.throws || '1'),
+				sides: parseInt(match.groups?.sides || '3'),
+				constant: parseInt(match.groups?.constant || '0'),
+				result: null
+			};
+			return (
+				<Button className='gain-btn' disabled={gain.used} onClick={() => onRoll(exp)}>
+					<div>+{gain.value}</div>
+				</Button>
+			);
+		}
+
+		return (
+			<div style={{ padding: '0 8px' }}>+{gain.value}</div>
+		);
+	};
 
 	const getHeroicResourceSection = () => {
 		const setHeroicResource = (featureID: string, value: number) => {
@@ -73,11 +127,9 @@ export const HeroResourcesModal = (props: Props) => {
 				});
 
 			if (tag.toLowerCase().startsWith('start')) {
-				HeroLogic.getHeroicResources(copy)
-					.filter(hr => hr.id === featureID)
-					.flatMap(hr => hr.gains)
-					.filter(g => g.frequency === ResourceGainFrequency.OncePerRound)
-					.forEach(g => g.used = false);
+				// This is the hero's round boundary, so it clears every per-round gain they have -
+				// surge gains and any other resource's gains included, not just this resource's
+				HeroLogic.resetGains(copy, ResourceGainFrequency.OncePerRound);
 			} else {
 				HeroLogic.getHeroicResources(copy)
 					.filter(hr => hr.id === featureID)
@@ -99,9 +151,7 @@ export const HeroResourcesModal = (props: Props) => {
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.forEach(f => f.data.value = copy.state.victories);
 
-			HeroLogic.getHeroicResources(copy)
-				.flatMap(hr => hr.gains)
-				.forEach(g => g.used = false);
+			HeroLogic.resetGains(copy);
 
 			setHero(copy);
 			props.onChange(copy);
@@ -115,9 +165,7 @@ export const HeroResourcesModal = (props: Props) => {
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.forEach(f => f.data.value = 0);
 
-			HeroLogic.getHeroicResources(copy)
-				.flatMap(hr => hr.gains)
-				.forEach(g => g.used = false);
+			HeroLogic.resetGains(copy);
 
 			copy.state.victories += 1;
 			copy.state.surges = 0;
@@ -141,46 +189,13 @@ export const HeroResourcesModal = (props: Props) => {
 									hr.gains.length > 0 ?
 										<>
 											{
-												hr.gains.map((g, n) => {
-													let btn = (
-														<div style={{ padding: '0 8px' }}>+{g.value}</div>
-													);
-													const digits = /^\s*[+-]?\s*\d+\s*$/;
-													if (digits.test(g.value)) {
-														const v = parseInt(g.value);
-														btn = (
-															<Button className='gain-btn' disabled={g.used} onClick={() => gainResource(hr.id, g.tag, v)}>
-																<div>+{g.value}</div>
-															</Button>
-														);
-													}
-													const dice = /^(?<throws>\d+)d(?<sides>\d+)(?:\s*)(?:\+(?<constant>\d))?$/;
-													const match = dice.exec(g.value);
-													if (match) {
-														const exp: Expression = {
-															resourceID: hr.id,
-															resourceName: hr.name,
-															tag: g.tag,
-															throws: parseInt(match.groups?.throws || '1'),
-															sides: parseInt(match.groups?.sides || '3'),
-															constant: parseInt(match.groups?.constant || '0'),
-															result: null
-														};
-														btn = (
-															<Button className='gain-btn' disabled={g.used} onClick={() => setExpression(exp)}>
-																<div>+{g.value}</div>
-															</Button>
-														);
-													}
-
-													return (
-														<div className={g.used ? 'gain used' : 'gain'} key={n}>
-															<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
-															{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
-															{btn}
-														</div>
-													);
-												})
+												hr.gains.map((g, n) => (
+													<div className={g.used ? 'gain used' : 'gain'} key={n}>
+														<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
+														{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
+														{getGainButton(g, (tag, value) => gainResource(hr.id, tag, value), setExpression, hr.id, hr.name, 'resource')}
+													</div>
+												))
 											}
 											{
 												hr.type === 'heroic' ?
@@ -258,7 +273,11 @@ export const HeroResourcesModal = (props: Props) => {
 										disabled={expression.result === null}
 										onClick={() => {
 											if (expression.result !== null) {
-												gainResource(expression.resourceID, expression.tag, expression.result);
+												if (expression.kind === 'surge') {
+													gainSurges(expression.tag, expression.result);
+												} else {
+													gainResource(expression.resourceID, expression.tag, expression.result);
+												}
 												setExpression(null);
 											}
 										}}
@@ -328,6 +347,8 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const surgeGains = HeroLogic.getSurgeGains(hero);
+
 		const maxCharacteristic = Math.max(...[
 			HeroLogic.getCharacteristic(hero, Characteristic.Might),
 			HeroLogic.getCharacteristic(hero, Characteristic.Agility),
@@ -344,6 +365,27 @@ export const HeroResourcesModal = (props: Props) => {
 					min={0}
 					onChange={setSurges}
 				/>
+				{
+					surgeGains.map(f => (
+						<div className={f.data.used ? 'gain used' : 'gain'} key={f.id}>
+							<div style={{ flex: '1 1 0' }}>
+								<div>{f.data.trigger}</div>
+								{
+									f.data.condition ?
+										<div className='gain-condition'>{f.data.condition}</div>
+										: null
+								}
+								{
+									f.description ?
+										<div className='gain-description'>{f.description}</div>
+										: null
+								}
+							</div>
+							{f.data.frequency !== ResourceGainFrequency.AtWill ? <Pill>{f.data.frequency}</Pill> : null}
+							{getGainButton(f.data, gainSurges, setExpression, '', 'Surges', 'surge')}
+						</div>
+					))
+				}
 				{
 					hero.state.surges > 0 ?
 						<Alert

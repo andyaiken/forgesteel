@@ -35,5 +35,15 @@
 		&.used {
 			opacity: 0.3;
 		}
+
+		.gain-condition,
+		.gain-description {
+			color: var(--color-text-lightest);
+			font-size: 12px;
+		}
+
+		.gain-condition {
+			font-style: italic;
+		}
 	}
 }

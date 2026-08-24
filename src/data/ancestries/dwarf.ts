@@ -67,10 +67,10 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies.',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'dwarf-feature-2-2a',
 								name: 'Stand Tough',
-								description: 'Your Might score is treated as 1 higher for resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							}),
 							FactoryLogic.feature.createRollModifier({
 								id: 'dwarf-feature-2-2b',

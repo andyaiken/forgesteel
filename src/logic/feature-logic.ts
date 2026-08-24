@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeaturePotencyResistanceData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSurgeGainData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -554,6 +554,7 @@ export class FeatureLogic {
 			FeatureType.Package,
 			FeatureType.PackageContent,
 			FeatureType.Perk,
+			FeatureType.PotencyResistance,
 			FeatureType.Proficiency,
 			FeatureType.Retainer,
 			FeatureType.SaveThreshold,
@@ -564,6 +565,7 @@ export class FeatureLogic {
 			FeatureType.Summon,
 			FeatureType.SummonChoice,
 			FeatureType.SummonFormation,
+			FeatureType.SurgeGain,
 			FeatureType.SwitchOptions,
 			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,
@@ -922,6 +924,13 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.PotencyResistance: {
+				const data: FeaturePotencyResistanceData = {
+					characteristics: [],
+					value: 1
+				};
+				return data;
+			}
 			case FeatureType.Proficiency: {
 				const data: FeatureProficiencyData = {
 					weapons: [],
@@ -991,6 +1000,18 @@ export class FeatureLogic {
 			case FeatureType.SummonFormation: {
 				const data: FeatureSummonFormationData = {
 					minionFeatures: []
+				};
+				return data;
+			}
+			case FeatureType.SurgeGain: {
+				const data: FeatureSurgeGainData = {
+					tag: '',
+					trigger: '',
+					value: '1',
+					frequency: ResourceGainFrequency.OncePerRound,
+					used: false,
+					replacesTags: [],
+					condition: ''
 				};
 				return data;
 			}
@@ -1245,6 +1266,10 @@ export class FeatureLogic {
 		};
 	};
 
+	static getThresholdRequirement = (data: FeatureHeroicResourceThresholdData) => {
+		return `${data.resource || 'Resource'} ${data.value}+`;
+	};
+
 	static getRollModifierScope = (data: FeatureRollModifierData) => {
 		if (data.rollType === RollType.Test) {
 			const characteristics = data.characteristics.join(', ');
@@ -1345,6 +1370,8 @@ export class FeatureLogic {
 				return 'This feature provides content for a Package feature.';
 			case FeatureType.Perk:
 				return 'This feature allows you to choose a perk.';
+			case FeatureType.PotencyResistance:
+				return 'This feature treats one or more of your characteristic scores as higher when you resist potencies.';
 			case FeatureType.Proficiency:
 				return 'This feature grants you proficiency with weapons or armor.';
 			case FeatureType.Retainer:
@@ -1365,6 +1392,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose monsters you can summon.';
 			case FeatureType.SummonFormation:
 				return 'This feature adds information to your summoned creatures.';
+			case FeatureType.SurgeGain:
+				return 'This feature grants you a way to gain surges.';
 			case FeatureType.SwitchOptions:
 				return 'This feature grants one out of a set of features based on a switch value.';
 			case FeatureType.SwitchValue:

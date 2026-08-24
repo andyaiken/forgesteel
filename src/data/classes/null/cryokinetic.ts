@@ -4,6 +4,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
@@ -41,10 +42,13 @@ export const cryokinetic: SubClass = {
 							id: 'null-sub-2-1-2-4',
 							resource: 'Discipline',
 							value: 4,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'null-sub-2-1-2-4a',
 								name: 'Cryokinetic Mastery (Discipline 4)',
-								description: 'The first time on a turn that you grab a creature or an enemy moves 1 or more squares in the area of your Null Field ability, you gain 1 surge.'
+								tag: 'grab-or-move',
+								trigger: 'You grab a creature or an enemy moves 1 or more squares in the area of your Null Field ability',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							})
 						}),
 						FactoryLogic.feature.createHeroicResourceThreshold({
@@ -155,10 +159,14 @@ export const cryokinetic: SubClass = {
 					name: 'Cryokinetic Mastery Improvement',
 					resource: 'Discipline',
 					value: 8,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'null-sub-2-4-1a',
 						name: 'Cryokinetic Mastery (Discipline 8)',
-						description: 'The first time on a turn that you grab a creature or an enemy moves 1 or more squares in the area of your Null Field ability, you gain 2 surges.'
+						tag: 'grab-or-move 2',
+						trigger: 'You grab a creature or an enemy moves 1 or more squares in the area of your Null Field ability',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'grab-or-move' ]
 					})
 				})
 			]

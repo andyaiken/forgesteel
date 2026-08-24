@@ -3,6 +3,7 @@ import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const memonek: Ancestry = {
@@ -61,10 +62,14 @@ export const memonek: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'memonek-feature-3-4',
 						name: 'Useful Emotion',
-						description: 'Velloparatha - the worldsickness - might hinder, but you know how to turn your pain into something your enemies feel. At the start of any combat, you gain 1 surge.'
+						description: 'Velloparatha - the worldsickness - might hinder, but you know how to turn your pain into something your enemies feel.',
+						tag: 'start-combat',
+						trigger: 'Start of combat',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerEncounter
 					}),
 					value: 1
 				},

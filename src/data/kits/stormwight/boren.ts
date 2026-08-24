@@ -3,6 +3,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 
@@ -114,20 +115,37 @@ export const boren: Kit = {
 					id: 'kit-boren-feature-4-2',
 					resource: 'Ferocity',
 					value: 2,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'kit-boren-feature-4-2a',
 						name: 'Growing Ferocity (Ferocity 2)',
-						description: 'You can have up to two creatures grabbed at time. Additionally, whenever you make a strike against a creature you have grabbed, you gain 1 surge.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'kit-boren-feature-4-2a-1',
+								name: 'Growing Ferocity (Ferocity 2)',
+								description: 'You can have up to two creatures grabbed at time.'
+							}),
+							FactoryLogic.feature.createSurgeGain({
+								id: 'kit-boren-feature-4-2a-2',
+								name: 'Growing Ferocity (Ferocity 2)',
+								tag: 'strike-grabbed',
+								trigger: 'You make a strike against a creature you have grabbed',
+								value: '1',
+								frequency: ResourceGainFrequency.AtWill
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
 					id: 'kit-boren-feature-4-4',
 					resource: 'Ferocity',
 					value: 4,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'kit-boren-feature-4-4a',
 						name: 'Growing Ferocity (Ferocity 4)',
-						description: 'The first time you grab a creature on a turn, you gain 1 surge.'
+						tag: 'grab',
+						trigger: 'You grab a creature',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerRound
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -158,10 +176,14 @@ export const boren: Kit = {
 					resource: 'Ferocity',
 					value: 8,
 					level: 4,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'kit-boren-feature-4-8a',
 						name: 'Growing Ferocity (Ferocity 8)',
-						description: 'The first time you grab a creature on a turn, you gain 2 surges instead of 1.'
+						tag: 'grab 2',
+						trigger: 'You grab a creature',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'grab' ]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

@@ -183,10 +183,13 @@ While your Essence is negative you can't Overchannel; you climb back to positive
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'thaumaturge-ward-veil',
 								name: 'Veil Ward',
-								description: 'The first time each round you take damage, you gain 1 surge.'
+								tag: 'take-damage',
+								trigger: 'You take damage',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							}),
 							value: 1
 						}

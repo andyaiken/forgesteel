@@ -4,6 +4,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 
@@ -120,10 +121,13 @@ export const corven: Kit = {
 					id: 'kit-corven-feature-4-4',
 					resource: 'Ferocity',
 					value: 4,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'kit-corven-feature-4-4a',
 						name: 'Growing Ferocity (Ferocity 4)',
-						description: 'The first time you shift on a turn, you gain 1 surge.'
+						tag: 'shift',
+						trigger: 'You shift',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerRound
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({
@@ -160,10 +164,14 @@ export const corven: Kit = {
 					resource: 'Ferocity',
 					value: 8,
 					level: 4,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'kit-corven-feature-4-8a',
 						name: 'Growing Ferocity (Ferocity 8)',
-						description: 'The first time you shift on a turn, you gain 2 surges instead of 1.'
+						tag: 'shift 2',
+						trigger: 'You shift',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'shift' ]
 					})
 				}),
 				FactoryLogic.feature.createHeroicResourceThreshold({

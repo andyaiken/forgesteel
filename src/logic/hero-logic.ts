@@ -28,6 +28,8 @@ import { Monster } from '@/models/monster';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
+import { ResourceGain } from '@/models/resource-gain';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollType } from '@/enums/roll-type';
 import { Size } from '@/models/size';
 import { Skill } from '@/models/skill';
@@ -943,6 +945,21 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getPotencyResistances = (hero: Hero) => {
+		const values = new Map<Characteristic, number>();
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.PotencyResistance)
+			.map(f => f.data)
+			.forEach(data => {
+				const characteristics = data.characteristics.length > 0 ? data.characteristics : [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ];
+				characteristics.forEach(ch => values.set(ch, (values.get(ch) || 0) + data.value));
+			});
+
+		return values;
+	};
+
 	static getRolledDamageBonus = (hero: Hero) => {
 		let value = 0;
 
@@ -1162,6 +1179,96 @@ export class HeroLogic {
 			.forEach(ac => value += ac.distanceBonus);
 
 		return value;
+	};
+
+	static getThresholdFeatures = (hero: Hero, features: Feature[]) => {
+		const heroLevel = hero.class?.level || 1;
+		const found = new Map<string, { feature: Feature, requirement: string }>();
+
+		let queue: { feature: Feature, requirement: string }[] = features.map(f => ({ feature: f, requirement: '' }));
+		while (queue.length > 0) {
+			const next: { feature: Feature, requirement: string }[] = [];
+
+			queue.forEach(entry => {
+				const threshold = entry.feature;
+				if (threshold.type !== FeatureType.HeroicResourceThreshold) {
+					return;
+				}
+
+				if (heroLevel < threshold.data.level) {
+					return;
+				}
+
+				const requirement = FeatureLogic.getThresholdRequirement(threshold.data);
+
+				FeatureLogic.simplifyFeatures([ { feature: threshold.data.feature, source: '', level: undefined } ], heroLevel, hero.state.tutorialMode)
+					.map(f => f.feature)
+					.filter(f => !found.has(f.id))
+					.forEach(f => {
+						const unlocked = { feature: f, requirement: requirement };
+						found.set(f.id, unlocked);
+						next.push(unlocked);
+					});
+			});
+
+			queue = next;
+		}
+
+		return [ ...found.values() ];
+	};
+
+	static getThresholdRequirements = (hero: Hero) => {
+		const features = HeroLogic.getFeatures(hero, false).map(f => f.feature);
+
+		return new Map(HeroLogic.getThresholdFeatures(hero, features).map(t => [ t.feature.id, t.requirement ]));
+	};
+
+	static getAllSurgeGains = (hero: Hero) => {
+		const features = HeroLogic.getFeatures(hero, false).map(f => f.feature);
+
+		const unlocked = HeroLogic.getThresholdFeatures(hero, features).map(t => t.feature);
+
+		return Collections.distinct([ ...features, ...unlocked ], f => f.id)
+			.filter(f => f.type === FeatureType.SurgeGain);
+	};
+
+	static getAllResourceGains = (hero: Hero): ResourceGain[] => {
+		const features = HeroLogic.getFeatures(hero, false).map(f => f.feature);
+
+		const unlocked = HeroLogic.getThresholdFeatures(hero, features).map(t => t.feature);
+
+		const all = Collections.distinct([ ...features, ...unlocked ], f => f.id);
+
+		return [
+			...all.filter(f => f.type === FeatureType.HeroicResource).flatMap(f => f.data.gains),
+			...all.filter(f => f.type === FeatureType.HeroicResourceGain).map(f => f.data),
+			...all.filter(f => f.type === FeatureType.SurgeGain).map(f => f.data),
+			...all.filter(f => f.type === FeatureType.Domain).flatMap(f => f.data.selected).flatMap(d => d.resourceGains)
+		];
+	};
+
+	static resetGains = (hero: Hero, frequency?: ResourceGainFrequency) => {
+		HeroLogic.getAllResourceGains(hero)
+			.filter(g => !frequency || (g.frequency === frequency))
+			.forEach(g => g.used = false);
+	};
+
+	static getSurgeGainTags = (gains: { tag: string, replacesTags: string[] }[], tag: string) => {
+		return new Set<string>([
+			tag,
+			...gains.filter(g => g.tag === tag).flatMap(g => g.replacesTags),
+			...gains.filter(g => g.replacesTags.includes(tag)).map(g => g.tag)
+		]);
+	};
+
+	static getSurgeGains = (hero: Hero) => {
+		const gains = HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SurgeGain);
+
+		const replacedTags = gains.flatMap(f => f.data.replacesTags);
+
+		return Collections.distinct(gains.filter(f => !replacedTags.includes(f.data.tag)), f => f.data.tag);
 	};
 
 	static getHeroicResources = (hero: Hero) => {

@@ -11,6 +11,7 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { InfoFeature } from '../feature';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -65,7 +66,10 @@ export const InfoHeroicResource = (props: InfoProps) => {
 						<div key={t.feature.id}>
 							<Flex align='center' gap={10}>
 								<ResourcePill value={value} units='' satisfied={unlocked} />
-								<div className='ds-text compact-text'>{t.feature.description}</div>
+								<div style={{ flex: '1 1 0' }}>
+									{t.feature.description ? <div className='ds-text compact-text'>{t.feature.description}</div> : null}
+									<InfoFeature feature={t.feature} hero={props.hero} sourcebooks={props.sourcebooks} />
+								</div>
 							</Flex>
 						</div>
 					);

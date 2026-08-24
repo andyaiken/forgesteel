@@ -21,9 +21,9 @@ export const RollModifierPanel = (props: Props) => {
 						<div className='condition'>{props.modifier.data.condition}</div>
 						: null
 				}
-			</div>
-			<div className='roll-modifier-source'>
-				{props.modifier.name}
+				<div className='roll-modifier-source'>
+					{props.modifier.name}
+				</div>
 			</div>
 		</div>
 	);

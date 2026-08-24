@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureSurgeGain, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -8,6 +8,7 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ResourceGain } from '@/models/resource-gain';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -384,6 +385,15 @@ export class HeroUpdateLogic {
 			});
 	};
 
+	static carryResourceGainState = (gains: ResourceGain[], originalGains: ResourceGain[]) => {
+		gains.forEach((gain, n) => {
+			const oGain = originalGains[n];
+			if (oGain && (oGain.tag === gain.tag)) {
+				gain.used = oGain.used;
+			}
+		});
+	};
+
 	static updateHeroFeatureData = (feature: Feature, originalFeature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
 		try {
 			switch (feature.type) {
@@ -515,6 +525,12 @@ export class HeroUpdateLogic {
 							const copy = Utils.copy(d);
 							copy.featuresByLevel = copy.featuresByLevel.filter(lvl => feature.data.levels.includes(lvl.level));
 							[ ...copy.defaultFeatures, ...copy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, feature.data.characteristic));
+
+							const oDomain = oFeature.data.selected.find(od => od && (od.id === d.id));
+							if (oDomain) {
+								HeroUpdateLogic.carryResourceGainState(copy.resourceGains, oDomain.resourceGains);
+							}
+
 							return copy;
 						});
 					break;
@@ -549,6 +565,7 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.value = oFeature.data.value;
+					HeroUpdateLogic.carryResourceGainState(feature.data.gains, oFeature.data.gains);
 					break;
 				}
 				case FeatureType.ItemChoice: {
@@ -580,6 +597,20 @@ export class HeroUpdateLogic {
 					feature.data.selected = SourcebookLogic.getKits(sourcebooks)
 						.filter(k => selectedIDs.includes(k.id))
 						.map(k => Utils.copy(k));
+
+					feature.data.selected.forEach(kit => {
+						const oKit = oFeature.data.selected.find(k => k && (k.id === kit.id));
+						if (!oKit) {
+							return;
+						}
+
+						kit.features.forEach(child => {
+							const oChild = oKit.features.find(x => x.id === child.id);
+							if (oChild) {
+								HeroUpdateLogic.updateHeroFeatureData(child, oChild, hero, sourcebooks);
+							}
+						});
+					});
 					break;
 				}
 				case FeatureType.LanguageChoice: {
@@ -589,6 +620,15 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = [ ...oFeature.data.selected ];
+					break;
+				}
+				case FeatureType.HeroicResourceGain: {
+					const oFeature = originalFeature as FeatureHeroicResourceGain;
+					if (oFeature.type !== FeatureType.HeroicResourceGain) {
+						break;
+					}
+
+					feature.data.used = oFeature.data.used;
 					break;
 				}
 				case FeatureType.HeroicResourceThreshold: {
@@ -678,6 +718,15 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = oFeature.data.selected;
+					break;
+				}
+				case FeatureType.SurgeGain: {
+					const oFeature = originalFeature as FeatureSurgeGain;
+					if (oFeature.type !== FeatureType.SurgeGain) {
+						break;
+					}
+
+					feature.data.used = oFeature.data.used;
 					break;
 				}
 				case FeatureType.TaggedFeatureChoice: {

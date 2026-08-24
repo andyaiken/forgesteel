@@ -436,10 +436,13 @@ Additionally, when your Stamina reaches the negative of your winded value, you b
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'vampire-ancestry-5b',
 						name: 'Growing Appetite',
-						description: 'Once per round, when you deal damage to a bleeding, winded, or dying creature, you gain 1 surge.'
+						tag: 'damage-hurt-creature',
+						trigger: 'You deal damage to a bleeding, winded, or dying creature',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerRound
 					}),
 					value: 1
 				},

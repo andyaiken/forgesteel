@@ -34,6 +34,7 @@ import { EditMalice, InfoMalice } from '@/components/features/feature-data/malic
 import { EditMovementMode, InfoMovementMode } from '@/components/features/feature-data/movement-mode';
 import { EditMultiple, InfoMultiple } from '@/components/features/feature-data/multiple';
 import { EditPackage, InfoPackage } from '@/components/features/feature-data/package';
+import { EditPotencyResistance, InfoPotencyResistance } from '@/components/features/feature-data/potency-resistance';
 import { EditProficiency, InfoProficiency } from '@/components/features/feature-data/proficiency';
 import { EditRollModifier, InfoRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { EditSaveThreshold, InfoSaveThreshold } from '@/components/features/feature-data/save-threshold';
@@ -41,6 +42,7 @@ import { EditSize, InfoSize } from '@/components/features/feature-data/size';
 import { EditSpeed, InfoSpeed } from '@/components/features/feature-data/speed';
 import { EditSummon, InfoSummon } from '@/components/features/feature-data/summon';
 import { EditSummonFormation, InfoSummonFormation } from './feature-data/summon-formation';
+import { EditSurgeGain, InfoSurgeGain } from '@/components/features/feature-data/surge-gain';
 import { EditSwitchOptions, InfoSwitchOptions } from '@/components/features/feature-data//switch-options';
 import { EditSwitchValue, InfoSwitchValue } from '@/components/features/feature-data//switch-value';
 import { EditTaggedFeature, InfoTaggedFeature } from '@/components/features/feature-data/tagged-feature';
@@ -119,6 +121,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoPackage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Perk:
 			return <InfoPerk data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.PotencyResistance:
+			return <InfoPotencyResistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Proficiency:
 			return <InfoProficiency data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Retainer:
@@ -139,6 +143,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SummonFormation:
 			return <InfoSummonFormation data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.SurgeGain:
+			return <InfoSurgeGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchOptions:
 			return <InfoSwitchOptions data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchValue:
@@ -228,6 +234,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditPackageContent data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Perk:
 			return <EditPerk data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.PotencyResistance:
+			return <EditPotencyResistance data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Proficiency:
 			return <EditProficiency data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SaveThreshold:
@@ -246,6 +254,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditSummonChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonFormation:
 			return <EditSummonFormation data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SurgeGain:
+			return <EditSurgeGain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchOptions:
 			return <EditSwitchOptions data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchValue:

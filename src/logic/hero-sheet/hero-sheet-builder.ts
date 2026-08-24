@@ -33,6 +33,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Summon } from '@/models/summon';
 import { SummonLogic } from '@/logic/summon-logic';
+import { Utils } from '@/utils/utils';
 
 export class HeroSheetBuilder {
 	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
@@ -149,6 +150,10 @@ export class HeroSheetBuilder {
 
 		sheet.surgeDamageAmount = SheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
 		sheet.surgesCurrent = hero.state.surges;
+		const thresholdRequirements = HeroLogic.getThresholdRequirements(hero);
+		sheet.surgeGains = Collections.distinct(HeroLogic.getAllSurgeGains(hero), f => f.data.tag)
+			.map(f => ({ ...f.data, requirement: thresholdRequirements.get(f.id) }))
+			.sort(SheetFormatter.sortHeroicResourceGains);
 
 		// #region Kits / Modifiers
 		const kits = HeroLogic.getKits(hero);
@@ -181,9 +186,15 @@ export class HeroSheetBuilder {
 			sheet.modifierRangedDamageT2 = kitDmg.find(x => x.type === 'ranged')?.tier2;
 			sheet.modifierRangedDamageT3 = kitDmg.find(x => x.type === 'ranged')?.tier3;
 
-			const kitFeatures = kits.flatMap(k => k.features)
-				.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f));
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures, hero);
+			const kitFeatures = FeatureLogic.simplifyFeatures(
+				kits.flatMap(k => k.features
+					.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f))
+					.map(f => ({ feature: f, source: k.name, level: undefined }))),
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			)
+				.map(f => f.feature);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures.filter(ClassicSheetLogic.hasContent), hero);
 
 			coveredFeatureIds.push(...kitFeatures.map(f => f.id));
 		} else if (modifiers) {
@@ -215,7 +226,8 @@ export class HeroSheetBuilder {
 						break;
 				}
 			});
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifiers, hero);
+			const modifierFeatures = ClassicSheetLogic.flattenMultiples(modifiers).filter(ClassicSheetLogic.hasContent);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifierFeatures, hero);
 		}
 		// #endregion
 
@@ -283,6 +295,10 @@ export class HeroSheetBuilder {
 		sheet.potencyStrong = HeroLogic.getPotency(hero, 'strong');
 		sheet.potencyAverage = HeroLogic.getPotency(hero, 'average');
 		sheet.potencyWeak = HeroLogic.getPotency(hero, 'weak');
+		const potencyResistances = HeroLogic.getPotencyResistances(hero);
+		sheet.potencyResistances = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+			.map(ch => ({ characteristic: ch, value: potencyResistances.get(ch) || 0 }))
+			.filter(pr => pr.value > 0);
 
 		// Conditions
 		sheet.saveTarget = HeroLogic.getSaveThreshold(hero);
@@ -303,14 +319,13 @@ export class HeroSheetBuilder {
 		if (hero.career) {
 			sheet.career = this.buildCareerSheet(hero.career);
 
-			coveredFeatureIds.push(...hero.career.features.map(f => f.id));
+			coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(hero.career.features).map(f => f.id));
 		}
 
 		if (hero.complication) {
 			sheet.complication = this.buildComplicationSheet(hero.complication);
 
-			coveredFeatureIds.push(...sheet.complication.benefits.map(f => f.id));
-			coveredFeatureIds.push(...sheet.complication.drawbacks.map(f => f.id));
+			coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(hero.complication.features).map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -491,7 +506,7 @@ export class HeroSheetBuilder {
 			benefits: []
 		};
 
-		const careerFeatures = career.features;
+		const careerFeatures = ClassicSheetLogic.flattenMultiples(career.features).filter(ClassicSheetLogic.hasContent);
 		sheet.benefits = SheetFormatter.convertFeaturesShort(careerFeatures);
 		sheet.incitingIncident = career.incitingIncidents.selected || undefined;
 
@@ -509,7 +524,7 @@ export class HeroSheetBuilder {
 			drawbacks: []
 		};
 
-		const complicationFeatures = complication.features;
+		const complicationFeatures = ClassicSheetLogic.flattenMultiples(complication.features).filter(ClassicSheetLogic.hasContent);
 
 		const drawbacks = complicationFeatures.filter(ClassicSheetLogic.isFeatureDrawback)
 			.map(f => this.stripDuplicateComplicationName(complication.name, f));
@@ -522,12 +537,21 @@ export class HeroSheetBuilder {
 		return sheet;
 	};
 
+	// These features belong to the hero, so rename a copy rather than the hero's own data
 	static stripDuplicateComplicationName = (complicationName: string, f: Feature) => {
-		if (f.type === FeatureType.Text && f.name.startsWith(complicationName)) {
-			f.name = '';
-		} else if (f.type === FeatureType.Ability) {
-			f.name = f.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+		if (f.type === FeatureType.Ability) {
+			const result = Utils.copy(f);
+			result.name = result.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+			return result;
 		}
+
+		const titled = [ FeatureType.Text, FeatureType.Multiple, FeatureType.SurgeGain ];
+		if (titled.includes(f.type) && f.name.startsWith(complicationName)) {
+			const result = Utils.copy(f);
+			result.name = '';
+			return result;
+		}
+
 		return f;
 	};
 	// #endregion

@@ -440,10 +440,10 @@ When you use the Knockdown maneuver against an enemy adjacent to one of your all
 								modifier: RollModifierType.Edge,
 								characteristics: [ Characteristic.Might ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'beastfolk-2-17c',
 								name: 'Powerful Build',
-								description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							})
 						]
 					}),

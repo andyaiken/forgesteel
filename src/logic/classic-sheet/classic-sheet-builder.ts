@@ -494,7 +494,13 @@ export class ClassicSheetBuilder {
 		};
 
 		if (item.imbuements.length) {
-			sheet.effect = item.imbuements.map(imbuement => imbuement.feature)
+			// An imbuement's feature is often a Multiple wrapping the prose, so open it up first
+			sheet.effect = FeatureLogic.simplifyFeatures(
+				item.imbuements.map(imbuement => ({ feature: imbuement.feature, source: item.name, level: undefined })),
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			)
+				.map(f => f.feature)
 				.reduce((effect, feature) => {
 					if (feature.type === FeatureType.Text) {
 						if (feature.description) {

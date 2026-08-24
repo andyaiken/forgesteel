@@ -2,6 +2,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SubClass } from '@/models/subclass';
@@ -62,10 +63,13 @@ export const reaver: SubClass = {
 							id: 'fury-sub-2-1-5-4',
 							resource: 'Ferocity',
 							value: 4,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'fury-sub-2-1-5-4a',
 								name: 'Growing Ferocity (Ferocity 4)',
-								description: 'The first time you slide a creature on a turn, you gain 1 surge.'
+								tag: 'slide',
+								trigger: 'You slide a creature',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							})
 						}),
 						FactoryLogic.feature.createHeroicResourceThreshold({
@@ -203,10 +207,14 @@ export const reaver: SubClass = {
 					name: 'Growing Ferocity Improvement',
 					resource: 'Ferocity',
 					value: 8,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'fury-sub-2-4-1a',
 						name: 'Growing Ferocity (Ferocity 8)',
-						description: 'The first time you slide a creature on a turn, you gain 2 surges.'
+						tag: 'slide 2',
+						trigger: 'You slide a creature',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'slide' ]
 					})
 				})
 			]

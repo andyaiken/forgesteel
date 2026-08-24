@@ -200,10 +200,10 @@ Dryads have forms as varied as the trees they resemble. Smooth skinned or rough,
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createPotencyResistance({
 						id: 'dryad-feature-3e',
 						name: 'Stand Tough',
-						description: 'Your Might score is treated as 1 higher for the purpose of resisting potencies.'
+						characteristics: [ Characteristic.Might ]
 					}),
 					value: 1
 				},

@@ -8,6 +8,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { ItemType } from '@/enums/item-type';
 import { LanguageType } from '@/enums/language-type';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
@@ -1051,10 +1052,24 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Lightning Soul',
 		description: 'You were caught in a storm and stuck by lightning - but something saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'comp-lightningSoul-b',
 				name: 'Lightning Soul Benefit',
-				description: 'When you regain Stamina in combat, you gain 1 surge. Whenever you spend a surge to deal extra damage, you can make that extra damage into lightning damage.'
+				features: [
+					FactoryLogic.feature.createSurgeGain({
+						id: 'comp-lightningSoul-b1',
+						name: 'Lightning Soul Benefit',
+						tag: 'regain-stamina',
+						trigger: 'You regain Stamina in combat',
+						value: '1',
+						frequency: ResourceGainFrequency.AtWill
+					}),
+					FactoryLogic.feature.create({
+						id: 'comp-lightningSoul-b2',
+						name: 'Lightning Soul Benefit',
+						description: 'Whenever you spend a surge to deal extra damage, you can make that extra damage into lightning damage.'
+					})
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-d',
@@ -1669,10 +1684,13 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Shadow Born',
 		description: 'You were born in the dusk land ruled by the Queen of Shadows, and its darkness has seeped into your bones.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSurgeGain({
 				id: 'comp-shadowBorn-b',
 				name: 'Shadow Born Benefit',
-				description: 'Whenever you start your turn with concealment, you gain 1 surge.'
+				tag: 'turn-concealed',
+				trigger: 'You start your turn with concealment',
+				value: '1',
+				frequency: ResourceGainFrequency.OncePerRound
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-shadowBorn-d',
@@ -1800,10 +1818,13 @@ Maybe you were bitten as a child, or maybe it’s a family curse. Either way, yo
 
 Note: Stormwight furies can’t take this complication.`,
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSurgeGain({
 				id: 'comp-slightCaseOfLycanthropy-b',
 				name: 'Slight Case of Lycanthropy Benefit',
-				description: 'Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.'
+				tag: 'winded-or-killed',
+				trigger: 'You make a non-minion creature winded or kill a non-minion creature',
+				value: '1',
+				frequency: ResourceGainFrequency.AtWill
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-slightCaseOfLycanthropy-d',

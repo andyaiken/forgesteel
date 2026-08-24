@@ -264,6 +264,12 @@ export interface FeaturePerkData extends _FeatureData {
 };
 export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData>;
 
+export interface FeaturePotencyResistanceData extends _FeatureData {
+	characteristics: Characteristic[];
+	value: number;
+};
+export type FeaturePotencyResistance = FeatureOf<FeatureType.PotencyResistance, FeaturePotencyResistanceData>;
+
 export interface FeatureProficiencyData extends _FeatureData {
 	weapons: KitWeapon[];
 	armor: KitArmor[];
@@ -322,6 +328,14 @@ export interface FeatureSummonFormationData extends _FeatureData {
 	minionFeatures: Feature[];
 };
 export type FeatureSummonFormation = FeatureOf<FeatureType.SummonFormation, FeatureSummonFormationData>;
+
+export interface FeatureSurgeGainData extends _FeatureData, ResourceGain {
+	replacesTags: string[];
+	// A restriction on the surges themselves - what they can be spent on, or when. The feature's
+	// description is for prose about the feature; anything the rules turn on belongs here
+	condition: string;
+};
+export type FeatureSurgeGain = FeatureOf<FeatureType.SurgeGain, FeatureSurgeGainData>;
 
 export interface FeatureSwitchOptionsData extends _FeatureData {
 	switch: string;
@@ -413,6 +427,7 @@ export type Feature =
 	| FeaturePackage
 	| FeaturePackageContent
 	| FeaturePerk
+	| FeaturePotencyResistance
 	| FeatureProficiency
 	| FeatureRetainer
 	| FeatureSaveThreshold
@@ -423,6 +438,7 @@ export type Feature =
 	| FeatureSummon
 	| FeatureSummonChoice
 	| FeatureSummonFormation
+	| FeatureSurgeGain
 	| FeatureSwitchOptions
 	| FeatureSwitchValue
 	| FeatureText

@@ -62,10 +62,10 @@ export const hakaan: Ancestry = {
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies.',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createPotencyResistance({
 								id: 'hakaan-feature-2-3a',
 								name: 'Stand Tough',
-								description: 'Your Might score is treated as 1 higher for resisting potencies.'
+								characteristics: [ Characteristic.Might ]
 							}),
 							FactoryLogic.feature.createRollModifier({
 								id: 'hakaan-feature-2-3b',

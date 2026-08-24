@@ -9,6 +9,7 @@ import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter';
+import { Feature } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -55,6 +56,8 @@ export const SidebarPanel = (props: Props) => {
 	const options = useOptions();
 
 	const useRows = options.singlePage && options.compactView;
+
+	const thresholdParts = (feature: Feature): Feature[] => feature.type === FeatureType.Multiple ? [ feature, ...feature.data.features ] : [ feature ];
 
 	const companions = HeroLogic.getCompanions(props.hero);
 	const retainers = HeroLogic.getRetainers(props.hero);
@@ -177,6 +180,7 @@ export const SidebarPanel = (props: Props) => {
 
 		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.shownStandardAbilities);
 		const heroicResources = HeroLogic.getHeroicResources(props.hero);
+		const surgeGains = HeroLogic.getSurgeGains(props.hero);
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 		const skills = HeroLogic.getSkills(props.hero, props.sourcebooks);
@@ -265,16 +269,55 @@ export const SidebarPanel = (props: Props) => {
 											{
 												hr.thresholds
 													.filter(t => (hr.value >= t.value) && ((props.hero.class?.level || 1) >= t.level))
-													.map(t => (
-														<div key={t.feature.id} className='ds-text'>
-															{t.feature.description}
+													.flatMap(t => thresholdParts(t.feature))
+													.filter(f => f.type !== FeatureType.SurgeGain)
+													.map(f => f.description ?
+														<div key={f.id} className='ds-text'>
+															{f.description}
 														</div>
-													))
+														: null)
 											}
 										</div>
 								)
 							}
 						</>
+						: null
+				}
+				{
+					surgeGains.length > 0 ?
+						useRows ?
+							<div className='selectable-row clickable' onClick={onShowStats}>
+								<div>Surges</div>
+								<div>{props.hero.state.surges}</div>
+							</div>
+							:
+							<div className='overview-tile clickable' onClick={onShowStats}>
+								<HeaderText
+									extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{props.hero.state.surges}</div>}
+								>
+									Surges
+								</HeaderText>
+								{
+									surgeGains.map(f => (
+										<div className={f.data.used ? 'gain used' : 'gain'} key={f.id}>
+											<div>
+												<div>{f.data.trigger}</div>
+												{
+													f.data.condition ?
+														<div className='gain-condition'>{f.data.condition}</div>
+														: null
+												}
+												{
+													f.description ?
+														<div className='gain-description'>{f.description}</div>
+														: null
+												}
+											</div>
+											<Pill>+{f.data.value} {f.data.frequency !== ResourceGainFrequency.AtWill ? f.data.frequency : null}</Pill>
+										</div>
+									))
+								}
+							</div>
 						: null
 				}
 				{

@@ -7,6 +7,7 @@ import { FeatureField } from '@/enums/feature-field';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
@@ -351,7 +352,16 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-executioners-blade-5',
 						name: '',
-						description: 'The weapon’s extra psychic damage increases to 2 if the target is winded. d. Additionally, whenever you cause an enemy to become winded with an ability using the weapon, you gain 2 surges that you can immediately spend.'
+						description: 'The weapon’s extra psychic damage increases to 2 if the target is winded.'
+					}),
+					FactoryLogic.feature.createSurgeGain({
+						id: 'item-executioners-blade-5b',
+						name: '',
+						tag: 'winded',
+						trigger: 'You cause an enemy to become winded with an ability using the weapon',
+						value: '2',
+						frequency: ResourceGainFrequency.AtWill,
+						condition: 'You can spend these surges immediately.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-executioners-blade-5a',

@@ -23,6 +23,16 @@
 		.gain-btn {
 			min-width: 100px;
 		}
+
+		.gain-condition,
+		.gain-description {
+			color: var(--color-text-lightest);
+			font-size: 12px;
+		}
+
+		.gain-condition {
+			font-style: italic;
+		}
 	}
 
 	.alert-text {

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeaturePotencyResistance, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSurgeGain, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -424,10 +424,10 @@ export class FactoryFeatureLogic {
 		const count = data.count || 1;
 
 		const source = (allowedTypes.length === 4) ? '' : allowedTypes.join(', ');
-		const description = data.description || count > 1 ?
+		const description = data.description || (count > 1 ?
 			`Choose ${count} ${source} languages.`
 			:
-			`Choose a ${source} language.`;
+			`Choose a ${source} language.`);
 
 		return {
 			id: data.id,
@@ -489,7 +489,7 @@ export class FactoryFeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
-			description: data.description || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
+			description: data.description || '',
 			type: FeatureType.Multiple,
 			data: {
 				features: data.features
@@ -536,6 +536,19 @@ export class FactoryFeatureLogic {
 				lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
 				count: count,
 				selected: data.selected || []
+			}
+		};
+	};
+
+	createPotencyResistance = (data: { id: string, name?: string, description?: string, characteristics: Characteristic[], value?: number }): FeaturePotencyResistance => {
+		return {
+			id: data.id,
+			name: data.name || 'Potency Resistance',
+			description: data.description || '',
+			type: FeatureType.PotencyResistance,
+			data: {
+				characteristics: data.characteristics,
+				value: data.value || 1
 			}
 		};
 	};
@@ -631,10 +644,10 @@ export class FactoryFeatureLogic {
 			...options,
 			...(listOptions.length === 5) ? [ 'any list' ] : listOptions.map(list => `${list} skills`)
 		].join(', ');
-		const description = data.description || (count > 1) ?
+		const description = data.description || (count > 1 ?
 			`Choose ${count} from ${source}.`
 			:
-			`Choose a skill from ${source}.`;
+			`Choose a skill from ${source}.`);
 
 		return {
 			id: data.id,
@@ -714,6 +727,24 @@ export class FactoryFeatureLogic {
 			type: FeatureType.SummonFormation,
 			data: {
 				minionFeatures: data.minionFeatures || []
+			}
+		};
+	};
+
+	createSurgeGain = (data: { id: string, name: string, description?: string, tag: string, trigger: string, value: string, frequency: ResourceGainFrequency, replacesTags?: string[], condition?: string }): FeatureSurgeGain => {
+		return {
+			id: data.id,
+			name: data.name,
+			description: data.description || '',
+			type: FeatureType.SurgeGain,
+			data: {
+				tag: data.tag,
+				trigger: data.trigger,
+				value: data.value,
+				frequency: data.frequency,
+				used: false,
+				replacesTags: data.replacesTags || [],
+				condition: data.condition || ''
 			}
 		};
 	};

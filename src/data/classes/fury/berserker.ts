@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SubClass } from '@/models/subclass';
@@ -64,10 +65,13 @@ export const berserker: SubClass = {
 							id: 'fury-sub-1-1-5-4',
 							resource: 'Ferocity',
 							value: 4,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'fury-sub-1-1-5-4a',
 								name: 'Growing Ferocity (Ferocity 4)',
-								description: 'The first time you push a creature on a turn, you gain 1 surge.'
+								tag: 'push',
+								trigger: 'You push a creature',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							})
 						}),
 						FactoryLogic.feature.createHeroicResourceThreshold({
@@ -183,10 +187,14 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 					name: 'Growing Ferocity Improvement',
 					resource: 'Ferocity',
 					value: 8,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'fury-sub-1-4-1a',
 						name: 'Growing Ferocity (Ferocity 8)',
-						description: 'The first time you push a creature on a turn, you gain 2 surges.'
+						tag: 'push 2',
+						trigger: 'You push a creature',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'push' ]
 					})
 				})
 			]

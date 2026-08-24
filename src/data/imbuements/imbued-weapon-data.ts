@@ -4,6 +4,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Imbuement } from '@/models/imbuement';
 import { ItemType } from '@/enums/item-type';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 
 export class ImbuedWeaponData {
 	static bloodBargain: Imbuement = FactoryLogic.createImbuement({
@@ -357,10 +358,24 @@ You can change this weapon’s shape and form, granting one of the following ben
 			goal: 150
 		}),
 		level: 9,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createMultiple({
 			id: 'imbuement-draining',
 			name: 'Draining',
-			description: 'Whenever you damage a creature with an ability using this weapon and obtain a tier 3 outcome, that creature is also weakened (save ends). Each time you weaken a creature with this weapon, you gain 1 surge.'
+			features: [
+				FactoryLogic.feature.create({
+					id: 'imbuement-draining-a',
+					name: 'Draining',
+					description: 'Whenever you damage a creature with an ability using this weapon and obtain a tier 3 outcome, that creature is also weakened (save ends).'
+				}),
+				FactoryLogic.feature.createSurgeGain({
+					id: 'imbuement-draining-b',
+					name: 'Draining',
+					tag: 'weaken',
+					trigger: 'You weaken a creature with this weapon',
+					value: '1',
+					frequency: ResourceGainFrequency.AtWill
+				})
+			]
 		})
 	});
 

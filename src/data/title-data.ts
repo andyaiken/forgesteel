@@ -1044,10 +1044,10 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 						name: 'Gift of Foresight',
 						selected: [ 'Khelt' ]
 					}),
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPotencyResistance({
 						id: 'title-fey-friend-2-2',
 						name: 'Gift of Foresight',
-						description: 'When resisting potencies, your Intuition score is considered to be 1 higher than usual.'
+						characteristics: [ Characteristic.Intuition ]
 					})
 				]
 			}),

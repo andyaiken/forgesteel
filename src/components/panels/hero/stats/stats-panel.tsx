@@ -42,6 +42,8 @@ export const StatsPanel = (props: Props) => {
 	const recoveries = props.hero.state.recoveriesUsed === 0 ? maxRecoveries : maxRecoveries - props.hero.state.recoveriesUsed;
 	const recoveriesSuffix = props.hero.state.recoveriesUsed === 0 ? null : `/ ${maxRecoveries}`;
 
+	const potencyResistances = HeroLogic.getPotencyResistances(props.hero);
+
 	const getRollModifiers = (ch: Characteristic) => {
 		return HeroLogic.getRollModifiers(props.hero)
 			.filter(f => f.data.rollType === RollType.Test)
@@ -55,6 +57,7 @@ export const StatsPanel = (props: Props) => {
 				{
 					[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => {
 						const rollModifiers = getRollModifiers(ch);
+						const potencyResistance = potencyResistances.get(ch) || 0;
 						return (
 							<StatsRow
 								key={ch}
@@ -63,7 +66,10 @@ export const StatsPanel = (props: Props) => {
 								onClick={() => props.onSelectCharacteristic(ch)}
 								style={{ flex: '1 1 0' }}
 							>
-								<Statistic value={HeroLogic.getCharacteristic(props.hero, ch)} />
+								<Statistic
+									value={HeroLogic.getCharacteristic(props.hero, ch)}
+									suffix={potencyResistance ? `+${potencyResistance}` : undefined}
+								/>
 							</StatsRow>
 						);
 					})

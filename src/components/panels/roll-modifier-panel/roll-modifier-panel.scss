@@ -9,18 +9,18 @@
         min-width: 0;
 
         .scope {
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .condition {
+            padding-top: 5px;
             color: var(--color-text-lightest);
         }
-    }
 
-    .roll-modifier-source {
-        flex: 0 0 auto;
-        color: var(--color-text-lightest);
-        font-size: 12px;
-        text-align: right;
+        .roll-modifier-source {
+            padding-top: 5px;
+            color: var(--color-text-lightest);
+            font-size: 12px;
+        }
     }
 }

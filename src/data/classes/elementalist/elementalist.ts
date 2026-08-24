@@ -228,10 +228,14 @@ If you have a kit, you can’t take this enchantment.`,
 					name: 'Elementalist Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'elementalist-1-8a',
 								name: 'Ward of Delightful Consequences',
-								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain 1 surge.'
+								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies.',
+								tag: 'take-damage',
+								trigger: 'You take damage',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							}),
 							value: 1
 						},

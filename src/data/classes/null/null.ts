@@ -322,10 +322,14 @@ This ability remains active even after an encounter ends. It ends only if you ar
 					description: 'Whenever you use your Inertial Shield triggered action, you gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.',
 					tag: 'inertial-shield'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createSurgeGain({
 					id: 'null-6-2',
 					name: 'Elemental Buffer',
-					description: 'Whenever you reduce acid, cold, corruption, fire, lightning, poison, or sonic damage with damage immunity, you gain 2 surges that can be used only to increase the damage of your next strike.'
+					tag: 'reduce-damage',
+					trigger: 'Whenever you reduce acid, cold, corruption, fire, lightning, poison, or sonic damage with damage immunity',
+					value: '2',
+					frequency: ResourceGainFrequency.AtWill,
+					condition: 'These surges can be used only to increase the damage of your next strike.'
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'null-6-3',

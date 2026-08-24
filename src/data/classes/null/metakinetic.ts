@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
@@ -38,10 +39,13 @@ export const metakinetic: SubClass = {
 							id: 'null-sub-3-1-2-4',
 							resource: 'Discipline',
 							value: 4,
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'null-sub-3-1-2-4a',
 								name: 'Metakinetic Mastery (Discipline 4)',
-								description: 'The first time in a combat round that you take damage or are force moved, you gain 1 surge, even if you resist the effect.'
+								tag: 'take-damage',
+								trigger: 'You take damage or are force moved, even if you resist the effect',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							})
 						}),
 						FactoryLogic.feature.createHeroicResourceThreshold({
@@ -155,10 +159,14 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 					name: 'Metakinetic Mastery Improvement',
 					resource: 'Discipline',
 					value: 8,
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'null-sub-3-4-1a',
 						name: 'Metakinetic Mastery (Discipline 8)',
-						description: 'The first time in a combat round that you take damage or are force moved, you gain 2 surges, even if you resist the effect.'
+						tag: 'take-damage 2',
+						trigger: 'You take damage or are force moved, even if you resist the effect',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'take-damage' ]
 					})
 				})
 			]

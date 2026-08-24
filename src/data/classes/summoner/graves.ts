@@ -104,7 +104,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 								size: FactoryLogic.createSize(1, 'M'),
 								speed: FactoryLogic.createSpeed(4),
 								stamina: 1,
-								stability: 1,
+								stability: 0,
 								freeStrikeDamage: 2,
 								freeStrikeType: DamageType.Sonic,
 								characteristics: FactoryLogic.createCharacteristics(-2, -2, 0, 0, 2),
@@ -311,7 +311,7 @@ This ability becomes a free triggered action if the target was a minion (either 
 								speed: FactoryLogic.createSpeed(5),
 								stamina: 8,
 								stability: 0,
-								freeStrikeDamage: 4,
+								freeStrikeDamage: 1,
 								characteristics: FactoryLogic.createCharacteristics(2, -2, 0, 0, 1),
 								features: [
 									FactoryLogic.feature.createBonus({

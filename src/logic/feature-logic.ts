@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeaturePotencyResistanceData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSurgeGainData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureComplicationData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeaturePotencyResistanceData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSurgeGainData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -135,6 +135,9 @@ export class FeatureLogic {
 			switch (f.type) {
 				case FeatureType.TitleChoice:
 					source = f.data.selected.length === 1 ? f.data.selected[0].name : 'Title';
+					break;
+				case FeatureType.Complication:
+					source = f.data.selected ? f.data.selected.name : 'Complication';
 					break;
 				case FeatureType.Companion:
 				case FeatureType.Follower:
@@ -401,6 +404,11 @@ export class FeatureLogic {
 					break;
 				case FeatureType.TaggedFeatureChoice:
 					feature.data.selected.forEach(f => addFeature(f, source, level));
+					break;
+				case FeatureType.Complication:
+					if (feature.data.selected) {
+						feature.data.selected.features.forEach(f => addFeature(f, source, level));
+					}
 					break;
 				case FeatureType.TitleChoice:
 					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => addFeature(f, source, level)));
@@ -706,6 +714,12 @@ export class FeatureLogic {
 			}
 			case FeatureType.Companion: {
 				const data: FeatureCompanionData = {
+					selected: null
+				};
+				return data;
+			}
+			case FeatureType.Complication: {
+				const data: FeatureComplicationData = {
 					selected: null
 				};
 				return data;
@@ -1101,6 +1115,11 @@ export class FeatureLogic {
 					feature.data.selected.id = Utils.guid();
 				}
 				break;
+			case FeatureType.Complication:
+				if (feature.data.selected) {
+					feature.data.selected.features.forEach(FeatureLogic.changeFeatureIDs);
+				}
+				break;
 			case FeatureType.Follower:
 				feature.data.follower.id = Utils.guid();
 				break;
@@ -1135,6 +1154,7 @@ export class FeatureLogic {
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
 			case FeatureType.Companion:
+			case FeatureType.Complication:
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
 			case FeatureType.ItemChoice:
@@ -1176,6 +1196,8 @@ export class FeatureLogic {
 			case FeatureType.ClassAbility:
 				return feature.data.selectedIDs.length >= feature.data.count;
 			case FeatureType.Companion:
+				return feature.data.selected !== null;
+			case FeatureType.Complication:
 				return feature.data.selected !== null;
 			case FeatureType.Domain:
 				return feature.data.selected.length >= feature.data.count;
@@ -1328,6 +1350,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose an ability from your class.';
 			case FeatureType.Companion:
 				return 'This feature grants you a companion or mount.';
+			case FeatureType.Complication:
+				return 'This feature grants you a complication.';
 			case FeatureType.ConditionImmunity:
 				return 'This feature grants you immunity to one or more condition types.';
 			case FeatureType.DamageModifier:

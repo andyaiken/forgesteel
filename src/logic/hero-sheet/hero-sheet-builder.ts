@@ -55,6 +55,7 @@ export class HeroSheetBuilder {
 			fixtures: [],
 			featuresReferenceOther: [],
 			extraReferenceItems: [],
+			extraComplications: [],
 
 			notes: hero.state.notes
 		};
@@ -327,6 +328,22 @@ export class HeroSheetBuilder {
 
 			coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(hero.complication.features).map(f => f.id));
 		}
+
+		// Complications added through Customize get a card each, alongside the builder's one
+		allFeatures
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Complication)
+			.map(f => f.data.selected)
+			.filter(c => c !== null)
+			.forEach(complication => {
+				sheet.extraComplications.push(this.buildComplicationSheet(complication));
+
+				coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(complication.features).map(f => f.id));
+			});
+		// The wrapper feature itself is covered by the card its selection produces
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => f.feature.type === FeatureType.Complication)
+			.map(f => f.feature.id));
 
 		const skillsMap = new Map<string, string[]>();
 		const allSkills = SourcebookLogic.getSkills(sourcebooks).reduce((map, skill) => {

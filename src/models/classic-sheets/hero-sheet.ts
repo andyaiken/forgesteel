@@ -124,6 +124,7 @@ export interface HeroSheet {
 
 	// Complication
 	complication?: ComplicationSheet;
+	extraComplications: ComplicationSheet[];
 
 	// Skills
 	allSkills?: Map<string, string[]>;

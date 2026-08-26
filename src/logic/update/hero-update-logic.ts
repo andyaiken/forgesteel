@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureSurgeGain, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureComplication, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureRetainer, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureSurgeGain, FeatureTaggedFeatureChoice, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
@@ -118,6 +118,8 @@ export class HeroUpdateLogic {
 		if (hero.complication) {
 			hero.complication.features.forEach(UpdateLogic.updateFeature);
 		}
+
+		HeroLogic.getComplications(hero).flatMap(c => c.features).forEach(UpdateLogic.updateFeature);
 
 		if (hero.features === undefined) {
 			hero.features = [];
@@ -510,6 +512,20 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = oFeature.data.selected;
+					break;
+				}
+				case FeatureType.Complication: {
+					const oFeature = originalFeature as FeatureComplication;
+					if (oFeature.type !== FeatureType.Complication) {
+						break;
+					}
+
+					if (oFeature.data.selected) {
+						const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === oFeature.data.selected!.id);
+						feature.data.selected = complication ? Utils.copy(complication) : oFeature.data.selected;
+					} else {
+						feature.data.selected = null;
+					}
 					break;
 				}
 				case FeatureType.Domain: {

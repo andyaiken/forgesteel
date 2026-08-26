@@ -1,6 +1,7 @@
 import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummon, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { AncestryData } from '@/data/ancestry-data';
+import { Complication } from '@/models/complication';
 import { ComplicationData } from '@/data/complication-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
@@ -237,6 +238,11 @@ describe('buildRetainerSheet', () => {
 });
 
 describe('buildHeroSheet', () => {
+	const buildComplicationFeature = (id: string, complication: Complication) => {
+		const feature = FactoryLogic.feature.createComplication({ id: id });
+		feature.data.selected = Utils.copy(complication);
+		return feature;
+	};
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
 		const pregen = PregenData.getPregens()[0];
 		const options = { xpPerLevel: 16 } as Options;
@@ -317,6 +323,66 @@ describe('buildHeroSheet', () => {
 		expect((result.featuresReferenceOther || []).map(f => f.feature.id)).not.toContain('comp-lightningSoul-b');
 		// The wrapper is covered, not printed - its children carry the content
 		expect((result.complication?.benefits || []).map(f => f.id)).toEqual([ 'comp-lightningSoul-b1', 'comp-lightningSoul-b2' ]);
+	});
+
+	// A complication added through Customize gets its own card alongside the builder's one, and its
+	// features must be marked covered or they get duplicated into the 'other features' catch-all
+	test('it should build a card for each complication added through customize', () => {
+		const hero = FactoryLogic.createHero();
+		hero.complication = Utils.copy(ComplicationData.lightningSoul);
+		hero.features.push(buildComplicationFeature('custom-1', ComplicationData.gettingTooOldForThis));
+
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], {} as Options);
+
+		expect(warn.mock.calls.filter(c => String(c[0]).includes('Missed features'))).toEqual([]);
+		expect(result.complication?.id).toEqual('comp-lightningSoul');
+		expect(result.extraComplications.map(c => c.id)).toEqual([ 'comp-gettingTooOldForThis' ]);
+		expect(result.extraComplications[0].benefits.map(f => f.id)).toEqual([ 'comp-gettingTooOldForThis-b' ]);
+		expect(result.extraComplications[0].drawbacks.map(f => f.id)).toEqual([ 'comp-gettingTooOldForThis-d' ]);
+		// Covered by their own card, so they must not also appear in the catch-all
+		expect((result.featuresReferenceOther || []).map(f => f.feature.id))
+			.not.toContain('comp-gettingTooOldForThis-b');
+		// Nor should the wrapper feature the selection hangs off
+		expect((result.featuresReferenceOther || []).map(f => f.feature.id)).not.toContain('custom-1');
+	});
+
+	// The hero can carry several, and none of them is the builder's
+	test('it should build cards for several complications with no builder complication', () => {
+		const hero = FactoryLogic.createHero();
+		hero.features.push(buildComplicationFeature('custom-1', ComplicationData.gettingTooOldForThis));
+		hero.features.push(buildComplicationFeature('custom-2', ComplicationData.lightningSoul));
+
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], {} as Options);
+
+		expect(warn.mock.calls.filter(c => String(c[0]).includes('Missed features'))).toEqual([]);
+		expect(result.complication).toBeUndefined();
+		expect(result.extraComplications.map(c => c.id))
+			.toEqual([ 'comp-gettingTooOldForThis', 'comp-lightningSoul' ]);
+	});
+
+	// An unconfigured complication feature has nothing to show yet
+	test('it should not build a card for a complication feature with nothing selected', () => {
+		const hero = FactoryLogic.createHero();
+		hero.features.push(FactoryLogic.feature.createComplication({ id: 'custom-1' }));
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], {} as Options);
+
+		expect(result.extraComplications).toEqual([]);
+	});
+
+	// The complication's features have to reach the hero the same way the builder's one does
+	test('it should include features from a complication added through customize', () => {
+		const hero = FactoryLogic.createHero();
+		hero.features.push(buildComplicationFeature('custom-1', ComplicationData.gettingTooOldForThis));
+
+		const featureIDs = HeroLogic.getFeatures(hero).map(f => f.feature.id);
+
+		expect(featureIDs).toContain('comp-gettingTooOldForThis-b');
+		expect(featureIDs).toContain('comp-gettingTooOldForThis-d');
 	});
 
 	// isClassFeatureInKit keeps Growing Ferocity with the class features, and it matches on the

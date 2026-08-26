@@ -183,6 +183,8 @@ export class PregenLogic {
 				return [ ...feature.data.selected.map(o => o.id) ];
 			case FeatureType.TitleChoice:
 				return [ ...feature.data.selected.map(o => o.id) ];
+			case FeatureType.Complication:
+				return feature.data.selected ? [ feature.data.selected.id ] : [];
 		};
 
 		return null;
@@ -279,6 +281,11 @@ export class PregenLogic {
 			case FeatureType.TitleChoice:
 				feature.data.selected = selections.map(titleID => SourcebookLogic.getTitles(sourcebooks).find(t => t.id === titleID)).filter(t => !!t).map(Utils.copy);
 				break;
+			case FeatureType.Complication: {
+				const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === selections[0]);
+				feature.data.selected = complication ? Utils.copy(complication) : null;
+				break;
+			}
 		};
 	};
 };

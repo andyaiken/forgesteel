@@ -1,6 +1,6 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
+import { ComplicationSheet, FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { Feature, FeaturePotencyResistanceData, FeatureRollModifier, FeatureSurgeGainData, FeatureText } from '@/models/feature';
-import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { Characteristic } from '@/enums/characteristic';
@@ -668,6 +668,29 @@ export class SheetFormatter {
 			}, 0);
 		}
 		return size;
+	};
+
+	static calculateComplicationSize = (complication: ComplicationSheet, lineWidth: number): number => {
+		const sectionHeader = 1.5;
+		let size = 2.5; // Card header
+		size += 1.5; // Name
+
+		// The card only shows the description when one of the two sections is empty
+		if (!(complication.benefits.length && complication.drawbacks.length)) {
+			size += sectionHeader + this.countLines(complication.description, lineWidth);
+		}
+
+		if (complication.benefits.length) {
+			size += sectionHeader;
+			size += complication.benefits.reduce((s, f) => s + this.calculateFeatureSize(f, null, lineWidth, false), 0);
+		}
+
+		if (complication.drawbacks.length) {
+			size += sectionHeader;
+			size += complication.drawbacks.reduce((s, f) => s + this.calculateFeatureSize(f, null, lineWidth, false), 0);
+		}
+
+		return +size.toFixed(1);
 	};
 
 	static calculateTitlesSize = (titles: Title[] | undefined, lineWidth: number): number => {

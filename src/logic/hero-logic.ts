@@ -10,6 +10,7 @@ import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
+import { Complication } from '@/models/complication';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { CultureData } from '@/data/culture-data';
@@ -432,6 +433,16 @@ export class HeroLogic {
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Kit)
 			.flatMap(f => f.data.selected);
+	};
+
+	static getComplications = (hero: Hero): Complication[] => {
+		return [
+			hero.complication,
+			...HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.Complication)
+				.map(f => f.data.selected)
+		].filter(c => c !== null);
 	};
 
 	static getTitles = (hero: Hero) => {

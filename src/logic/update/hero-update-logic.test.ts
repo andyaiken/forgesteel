@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { Complication } from '@/models/complication';
+import { ComplicationData } from '@/data/complication-data';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureComplication } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
@@ -12,6 +15,56 @@ import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { stormwight } from '@/data/classes/fury/stormwight';
+
+describe('complications added through customize', () => {
+	const buildHeroWithComplication = (complication: Complication) => {
+		const hero = FactoryLogic.createHero();
+		const feature = FactoryLogic.feature.createComplication({ id: 'custom-complication' });
+		feature.data.selected = Utils.copy(complication);
+		hero.features.push(feature);
+		return hero;
+	};
+
+	// The hero's features are re-copied on every load, so the selection is lost unless
+	// updateHeroFeatureData carries it across
+	it('carries the chosen complication across a reload', () => {
+		const hero = buildHeroWithComplication(ComplicationData.gettingTooOldForThis);
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getComplications(hero).map(c => c.id)).toEqual([ 'comp-gettingTooOldForThis' ]);
+	});
+
+	// Taking the sourcebook's copy is what lets a complication pick up rules changes
+	it('refreshes the chosen complication from the sourcebook', () => {
+		const hero = buildHeroWithComplication(ComplicationData.gettingTooOldForThis);
+		(hero.features[hero.features.length - 1] as FeatureComplication).data.selected!.description = 'stale';
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getComplications(hero)[0].description)
+			.toEqual(ComplicationData.gettingTooOldForThis.description);
+	});
+
+	// A homebrew complication whose sourcebook is gone must survive rather than vanish
+	it('keeps a chosen complication that is not in any sourcebook', () => {
+		const hero = buildHeroWithComplication({ id: 'homebrew-complication', name: 'Homebrew', description: 'Mine', features: [] });
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getComplications(hero).map(c => c.name)).toEqual([ 'Homebrew' ]);
+	});
+
+	// An unconfigured complication feature is left alone, not treated as a selection
+	it('leaves an unconfigured complication feature empty', () => {
+		const hero = FactoryLogic.createHero();
+		hero.features.push(FactoryLogic.feature.createComplication({ id: 'custom-complication' }));
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getComplications(hero)).toEqual([]);
+	});
+});
 
 describe('updateHeroData', () => {
 	const buildBerserker = (ferocity: number) => {

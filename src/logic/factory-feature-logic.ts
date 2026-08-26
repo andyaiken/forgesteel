@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeaturePotencyResistance, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSurgeGain, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureComplication, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeaturePotencyResistance, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSurgeGain, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -234,6 +234,18 @@ export class FactoryFeatureLogic {
 			name: data.name || 'Companion / Mount',
 			description: data.description || '',
 			type: FeatureType.Companion,
+			data: {
+				selected: null
+			}
+		};
+	};
+
+	createComplication = (data: { id: string, name?: string, description?: string }): FeatureComplication => {
+		return {
+			id: data.id,
+			name: data.name || 'Complication',
+			description: data.description || 'Choose a complication.',
+			type: FeatureType.Complication,
 			data: {
 				selected: null
 			}

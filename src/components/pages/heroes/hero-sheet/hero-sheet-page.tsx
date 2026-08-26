@@ -92,6 +92,15 @@ export const HeroSheetPage = (props: Props) => {
 			});
 		}
 
+		character.extraComplications.forEach(c => {
+			required.unshift({
+				element: <ComplicationCard complication={c} hero={hero} key={c.id} />,
+				width: 1,
+				height: Math.min(layout.linesY, SheetFormatter.calculateComplicationSize(c, layout.cardLineLen)),
+				shown: false
+			});
+		});
+
 		let lineWidth = layout.cardLineLen;
 
 		// Features / Reference / Other

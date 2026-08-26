@@ -13,6 +13,7 @@ export enum FeatureType {
 	Choice = 'Choice',
 	ClassAbility = 'Class Ability',
 	Companion = 'Companion',
+	Complication = 'Complication',
 	ConditionImmunity = 'Condition Immunity',
 	DamageModifier = 'Damage Modifier',
 	Domain = 'Domain',

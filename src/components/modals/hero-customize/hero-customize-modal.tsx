@@ -232,6 +232,17 @@ export const HeroCustomizeModal = (props: Props) => {
 								block={true}
 								onClick={() => {
 									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createComplication({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Complication
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createKitChoice({
 										id: Utils.guid()
 									}));

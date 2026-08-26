@@ -3,6 +3,7 @@ import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { Complication } from '@/models/complication';
 import { ConditionType } from '@/enums/condition-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
@@ -135,6 +136,11 @@ export interface FeatureCompanionData extends _FeatureData {
 	selected: Monster | null;
 }
 export type FeatureCompanion = FeatureOf<FeatureType.Companion, FeatureCompanionData>;
+
+export interface FeatureComplicationData extends _FeatureData {
+	selected: Complication | null;
+}
+export type FeatureComplication = FeatureOf<FeatureType.Complication, FeatureComplicationData>;
 
 export interface FeatureDamageModifierData extends _FeatureData {
 	modifiers: DamageModifier[];
@@ -406,6 +412,7 @@ export type Feature =
 	| FeatureChoice
 	| FeatureClassAbility
 	| FeatureCompanion
+	| FeatureComplication
 	| FeatureConditionImmunity
 	| FeatureDamageModifier
 	| FeatureDomain

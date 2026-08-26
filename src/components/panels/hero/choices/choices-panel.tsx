@@ -173,18 +173,17 @@ export const ChoicesPanel = (props: Props) => {
 					null
 			}
 			{
-				props.hero.complication ?
+				HeroLogic.getComplications(props.hero).map(complication =>
 					useRows ?
-						<div className='selectable-row clickable' onClick={() => props.onSelectComplication(props.hero.complication!)}>
-							<div>Complication: <b>{props.hero.complication.name}</b></div>
+						<div key={complication.id} className='selectable-row clickable' onClick={() => props.onSelectComplication(complication)}>
+							<div>Complication: <b>{complication.name}</b></div>
 						</div>
 						:
-						<div className='overview-tile clickable' onClick={() => props.onSelectComplication(props.hero.complication!)}>
+						<div key={complication.id} className='overview-tile clickable' onClick={() => props.onSelectComplication(complication)}>
 							<HeaderText>Complication</HeaderText>
-							<Field label='Complication' value={props.hero.complication.name} />
+							<Field label='Complication' value={complication.name} />
 						</div>
-					:
-					null
+				)
 			}
 			{
 				props.hero.state.projects.length > 0 ?

@@ -9,6 +9,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
@@ -39,7 +40,7 @@ export const ClocktowerScriptPanel = (props: Props) => {
 								<div style={{ paddingTop: '10px' }}>
 									<ClocktowerToken character={ch} size={40} />
 								</div>
-								<Field label={ch.role.name} value={ch.role.ability} />
+								<Field label={ch.role.name} value={<Markdown text={ClocktowerLogic.getFormattedAbility(ch)} useSpan={true} />} />
 							</Flex>
 						</SelectablePanel>
 					))

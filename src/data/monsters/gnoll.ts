@@ -696,7 +696,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage summons four **abyssal hyenas** and 5 **abyssal hyenas** into unoccupied spaces within distance.')
+							FactoryLogic.createAbilitySectionText('The carnage summons four **abyssal hyenas** into unoccupied spaces within distance.')
 						]
 					})
 				}),

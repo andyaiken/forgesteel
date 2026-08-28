@@ -26,6 +26,74 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 
+type StaminaTier = 'low' | 'med' | 'high';
+type DamageTier = 'normal' | 'dps';
+
+const STAMINA_LEADER = [ 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280 ];
+const STAMINA_SOLO = [ 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 ];
+
+const SUGGESTED_STAMINA: Partial<Record<MonsterOrganizationType, Record<StaminaTier, number[]>>> = {
+	[MonsterOrganizationType.Minion]: {
+		low: [ 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 14 ],
+		med: [ 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 15 ],
+		high: [ 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18 ]
+	},
+	[MonsterOrganizationType.Horde]: {
+		low: [ 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 55 ],
+		med: [ 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 60 ],
+		high: [ 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70 ]
+	},
+	[MonsterOrganizationType.Platoon]: {
+		low: [ 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 110 ],
+		med: [ 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 120 ],
+		high: [ 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140 ]
+	},
+	[MonsterOrganizationType.Elite]: {
+		low: [ 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 220 ],
+		med: [ 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 240 ],
+		high: [ 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280 ]
+	},
+	[MonsterOrganizationType.Leader]: { low: STAMINA_LEADER, med: STAMINA_LEADER, high: STAMINA_LEADER },
+	[MonsterOrganizationType.Solo]: { low: STAMINA_SOLO, med: STAMINA_SOLO, high: STAMINA_SOLO }
+};
+
+const SUGGESTED_DAMAGE: Record<number, [ number, number, number ]> = {
+	5: [ 3, 5, 7 ],
+	6: [ 4, 7, 10 ],
+	7: [ 5, 8, 11 ],
+	8: [ 5, 9, 12 ],
+	9: [ 6, 10, 13 ],
+	10: [ 6, 11, 14 ],
+	11: [ 7, 12, 15 ],
+	12: [ 7, 13, 16 ],
+	13: [ 8, 13, 17 ],
+	14: [ 9, 14, 18 ],
+	15: [ 10, 15, 19 ],
+	16: [ 10, 16, 20 ],
+	17: [ 11, 17, 21 ]
+};
+
+const SUGGESTED_DAMAGE_MINION: Record<DamageTier, [ number, number, number ][]> = {
+	normal: [ [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 4, 5 ], [ 2, 4, 6 ], [ 3, 5, 6 ], [ 3, 5, 7 ], [ 3, 6, 7 ], [ 3, 6, 8 ], [ 4, 6, 8 ], [ 4, 7, 9 ], [ 5, 7, 9 ] ],
+	dps: [ [ 2, 4, 5 ], [ 3, 4, 6 ], [ 3, 5, 6 ], [ 3, 5, 7 ], [ 3, 6, 7 ], [ 4, 6, 8 ], [ 4, 7, 8 ], [ 4, 7, 9 ], [ 5, 7, 9 ], [ 5, 8, 10 ], [ 5, 8, 10 ] ]
+};
+
+const HITS_TWO_TARGETS = [
+	MonsterOrganizationType.Elite,
+	MonsterOrganizationType.Leader,
+	MonsterOrganizationType.Solo
+];
+
+const STRIKES_ADD_CHARACTERISTIC = [
+	MonsterOrganizationType.Horde,
+	MonsterOrganizationType.Platoon,
+	MonsterOrganizationType.Elite,
+	MonsterOrganizationType.Leader,
+	MonsterOrganizationType.Solo
+];
+
+const MAX_SUGGESTION_LEVEL = 11;
+
 export class MonsterLogic {
 	static getMonsterName = (monster: Monster, group?: MonsterGroup) => {
 		if (monster.name) {
@@ -575,10 +643,10 @@ Your companion gains all the benefits of your kit, with the following exceptions
 
 	static getSuggestedStats = (monster: Monster) => {
 		const characteristics = { m: '0', a: '0', r: '0', i: '0', p: '0' };
-		let roleMod = 0;
+		let staminaTier: StaminaTier = 'low';
+		let damageTier: DamageTier = 'normal';
 		let damageMod = 0;
 		let orgMod = 0;
-		let staminaMod = 0;
 		let characteristicMod = 0;
 		const actions = {
 			main: '0',
@@ -594,7 +662,8 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '0';
 				characteristics.i = '1';
 				characteristics.p = '0';
-				roleMod = 20;
+				staminaTier = 'med';
+				damageTier = 'dps';
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Artillery:
@@ -603,7 +672,8 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '1';
 				characteristics.i = '0';
 				characteristics.p = '0';
-				roleMod = 10;
+				staminaTier = 'low';
+				damageTier = 'dps';
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Brute:
@@ -612,7 +682,8 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '-1';
 				characteristics.i = '0';
 				characteristics.p = '0';
-				roleMod = 30;
+				staminaTier = 'high';
+				damageTier = 'dps';
 				damageMod = 1;
 				break;
 			case MonsterRoleType.Controller:
@@ -621,7 +692,7 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '2';
 				characteristics.i = '2';
 				characteristics.p = '1';
-				roleMod = 10;
+				staminaTier = 'low';
 				break;
 			case MonsterRoleType.Defender:
 				characteristics.m = '2';
@@ -629,7 +700,7 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '0';
 				characteristics.i = '1';
 				characteristics.p = '1';
-				roleMod = 30;
+				staminaTier = 'high';
 				break;
 			case MonsterRoleType.Harrier:
 				characteristics.m = '1';
@@ -637,7 +708,7 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '0';
 				characteristics.i = '0';
 				characteristics.p = '0';
-				roleMod = 20;
+				staminaTier = 'med';
 				break;
 			case MonsterRoleType.Hexer:
 				characteristics.m = '0';
@@ -645,7 +716,7 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '1';
 				characteristics.i = '1';
 				characteristics.p = '2';
-				roleMod = 10;
+				staminaTier = 'low';
 				break;
 			case MonsterRoleType.Mount:
 				characteristics.m = '2';
@@ -653,7 +724,7 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '-1';
 				characteristics.i = '0';
 				characteristics.p = '-1';
-				roleMod = 20;
+				staminaTier = 'med';
 				break;
 			case MonsterRoleType.Support:
 				characteristics.m = '1';
@@ -661,29 +732,25 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.r = '0';
 				characteristics.i = '2';
 				characteristics.p = '1';
-				roleMod = 20;
+				staminaTier = 'med';
 				break;
 		}
 
 		switch (monster.role.organization) {
 			case MonsterOrganizationType.Minion:
-				staminaMod = 0.125;
 				orgMod = 0.5;
 				break;
 			case MonsterOrganizationType.Horde:
-				staminaMod = 0.5;
 				orgMod = 0.5;
 				actions.maneuver = '0 - 1';
 				break;
 			case MonsterOrganizationType.Platoon:
-				staminaMod = 1;
 				orgMod = 1;
 				actions.main = '0 - 1';
 				actions.maneuver = '0 - 1';
 				break;
 			case MonsterOrganizationType.Elite:
 				damageMod += 1; // Add 1, because this one stacks
-				staminaMod = 2;
 				orgMod = 2;
 				actions.main = '1';
 				actions.maneuver = '0 - 1';
@@ -696,8 +763,6 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.i = '2 - 3';
 				characteristics.p = '3 - 5';
 				damageMod = 1;
-				roleMod += 30;
-				staminaMod = 2;
 				orgMod = 2;
 				characteristicMod = 1;
 				actions.maneuver = '1';
@@ -711,8 +776,6 @@ Your companion gains all the benefits of your kit, with the following exceptions
 				characteristics.i = '2 - 3';
 				characteristics.p = '3 - 5';
 				damageMod = 2;
-				roleMod += 30;
-				staminaMod = 5;
 				orgMod = 6;
 				characteristicMod = 1;
 				actions.main = '2';
@@ -723,38 +786,67 @@ Your companion gains all the benefits of your kit, with the following exceptions
 		}
 
 		const ev = ((2 * monster.level) + 4) * orgMod;
-		const stamina = ((10 * monster.level) + roleMod) * staminaMod;
 
-		const dmg1 = (4 + monster.level + damageMod) * 0.6;
-		const dmg2 = (4 + monster.level + damageMod) * 1.1;
-		const dmg3 = (4 + monster.level + damageMod) * 1.4;
+		const level = Math.max(1, Math.min(MAX_SUGGESTION_LEVEL, monster.level));
+		const staminaByLevel = SUGGESTED_STAMINA[monster.role.organization]?.[staminaTier];
+		const stamina = staminaByLevel ? staminaByLevel[level - 1] : 0;
+
+		const staminaTolerance = staminaByLevel ?
+			Math.max(...staminaByLevel.map((value, index) => index > 0 ? Math.abs(value - staminaByLevel[index - 1]) : 0))
+			: 0;
+
+		const isSwarm = [ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde ].includes(monster.role.organization);
+		const [ dmg1, dmg2, dmg3 ] = isSwarm ?
+			SUGGESTED_DAMAGE_MINION[damageTier][level - 1]
+			: SUGGESTED_DAMAGE[4 + level + damageMod];
+
+		const highestCharacteristic = Math.min(5, 1 + CreatureLogic.getEchelon(level) + characteristicMod);
+
+		const strikeBonus = STRIKES_ADD_CHARACTERISTIC.includes(monster.role.organization) ? highestCharacteristic : 0;
+		const [ strike1, strike2, strike3 ] = [ dmg1, dmg2, dmg3 ].map(d => d + strikeBonus);
+
+		const moreTargets = (damage: number) => Math.ceil(damage * 4 / 5);
+		const fewerTargets = (damage: number) => Math.floor(((damage * 12) + 3) / 10);
+		const area = (damage: number) => Math.floor(((damage * 8) + 3) / 10);
 
 		return {
 			characteristics: characteristics,
-			highestCharacteristic: 1 + CreatureLogic.getEchelon(monster.level) + characteristicMod,
+			highestCharacteristic: highestCharacteristic,
 			ev: Math.ceil(ev),
-			stamina: Math.ceil(stamina),
-			freeStrikeDamage: Math.ceil(dmg1),
+			stamina: stamina,
+			staminaTolerance: staminaTolerance,
+			freeStrikeDamage: dmg1,
 			actions: actions,
+			expectedTargets: HITS_TWO_TARGETS.includes(monster.role.organization) ? 2 : 1,
+			potencies: {
+				weak: highestCharacteristic - 2,
+				average: highestCharacteristic - 1,
+				strong: highestCharacteristic
+			},
+			baseDamage: {
+				tier1: dmg1,
+				tier2: dmg2,
+				tier3: dmg3
+			},
 			damage: {
-				tier1: Math.ceil(dmg1),
-				tier2: Math.ceil(dmg2),
-				tier3: Math.ceil(dmg3)
+				tier1: strike1,
+				tier2: strike2,
+				tier3: strike3
 			},
-			damagePlus1: {
-				tier1: Math.ceil(dmg1 * 0.8),
-				tier2: Math.ceil(dmg2 * 0.8),
-				tier3: Math.ceil(dmg3 * 0.8)
+			damageMoreTargets: {
+				tier1: moreTargets(strike1),
+				tier2: moreTargets(strike2),
+				tier3: moreTargets(strike3)
 			},
-			damagePlus2: {
-				tier1: Math.ceil(dmg1 * 0.5),
-				tier2: Math.ceil(dmg2 * 0.5),
-				tier3: Math.ceil(dmg3 * 0.5)
+			damageFewerTargets: {
+				tier1: fewerTargets(strike1),
+				tier2: fewerTargets(strike2),
+				tier3: fewerTargets(strike3)
 			},
-			damageMinus1: {
-				tier1: Math.ceil(dmg1 * 1.2),
-				tier2: Math.ceil(dmg2 * 1.2),
-				tier3: Math.ceil(dmg3 * 1.2)
+			areaDamage: {
+				tier1: area(dmg1),
+				tier2: area(dmg2),
+				tier3: area(dmg3)
 			}
 		};
 	};

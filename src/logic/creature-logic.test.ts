@@ -36,3 +36,22 @@ describe('isCompanion', () => {
 		expect(CreatureLogic.isCompanion(skeleton)).toBe(false);
 	});
 });
+
+describe('getEchelon', () => {
+	test('advances every three levels', () => {
+		expect([ 1, 2, 3 ].map(CreatureLogic.getEchelon)).toEqual([ 1, 1, 1 ]);
+		expect([ 4, 5, 6 ].map(CreatureLogic.getEchelon)).toEqual([ 2, 2, 2 ]);
+		expect([ 7, 8, 9 ].map(CreatureLogic.getEchelon)).toEqual([ 3, 3, 3 ]);
+		expect(CreatureLogic.getEchelon(10)).toBe(4);
+	});
+
+	test('keeps monsters above the hero levels in the fourth echelon', () => {
+		expect(CreatureLogic.getEchelon(11)).toBe(4);
+		expect(CreatureLogic.getEchelon(12)).toBe(4);
+	});
+
+	test('never drops below the first echelon', () => {
+		expect(CreatureLogic.getEchelon(0)).toBe(1);
+		expect(CreatureLogic.getEchelon(-1)).toBe(1);
+	});
+});

@@ -498,7 +498,7 @@ export class HeroSheetBuilder {
 			case FeatureType.Bonus: {
 				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				const field = feature.data.field.toString();
-				HeroSheetBuilder.modifierFieldMapping[field](sheet, value);
+				HeroSheetBuilder.modifierFieldMapping[field]?.(sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:

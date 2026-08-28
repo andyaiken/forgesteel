@@ -277,10 +277,6 @@ export class HeroLogic {
 				feature.name = customization.name || feature.name;
 				feature.description = customization.description || feature.description;
 
-				if (customization.notes) {
-					feature.description += `\n\n${customization.notes}`;
-				}
-
 				return { feature: feature, source: f.source, level: f.level };
 			});
 	};

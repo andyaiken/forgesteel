@@ -61,7 +61,17 @@ export class HeroSheetBuilder {
 		};
 
 		const coveredFeatureIds: string[] = [];
-		const allFeatures = HeroLogic.getFeatures(hero);
+		const allFeatures = HeroLogic.getFeatures(hero).map(f => {
+			const notes = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id)?.notes;
+			if (!notes) {
+				return f;
+			}
+
+			const feature = Utils.copy(f.feature);
+			feature.description += `\n\n${notes}`;
+
+			return { feature: feature, source: f.source, level: f.level };
+		});
 
 		// Package Contents handled within packages
 		const packageContents = allFeatures.filter(f => f.feature.type == FeatureType.PackageContent);

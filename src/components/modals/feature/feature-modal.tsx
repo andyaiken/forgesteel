@@ -35,9 +35,8 @@ export const FeatureModal = (props: Props) => {
 		if (!ac) {
 			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.name = value;
 		}
+		ac.name = value;
 
 		setHero(copy);
 		if (props.updateHero) {
@@ -52,9 +51,8 @@ export const FeatureModal = (props: Props) => {
 		if (!ac) {
 			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.description = value;
 		}
+		ac.description = value;
 
 		setHero(copy);
 		if (props.updateHero) {
@@ -69,9 +67,8 @@ export const FeatureModal = (props: Props) => {
 		if (!ac) {
 			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.notes = value;
 		}
+		ac.notes = value;
 
 		setHero(copy);
 		if (props.updateHero) {

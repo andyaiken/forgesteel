@@ -18,31 +18,34 @@ export const DangerButton = (props: Props) => {
 	const disabled = props.disabled || false;
 	const icon = props.icon || <DeleteOutlined />;
 
+	const showDisabledMessage = disabled && !!props.disabledMessage;
+	const buttonStyle = disabled ? { pointerEvents: 'none' as const } : undefined;
+
 	const getContent = () => {
 		switch (props.mode) {
 			case 'block':
 				return (
-					<Button icon={icon} block={true} disabled={disabled} danger={true}>
+					<Button style={buttonStyle} icon={icon} block={true} disabled={disabled} danger={true}>
 						{props.label || 'Delete'}
 					</Button>
 				);
 			case 'inline':
 				return (
-					<Button type='text' icon={icon} block={true} disabled={disabled} danger={true}>
+					<Button style={buttonStyle} type='text' icon={icon} block={true} disabled={disabled} danger={true}>
 						{props.label || 'Delete'}
 					</Button>
 				);
 			case 'clear':
 				return (
-					<Button type='text' title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
+					<Button style={buttonStyle} type='text' title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
 				);
 			case 'icon':
 				return (
-					<Button title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
+					<Button style={buttonStyle} title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
 				);
 			default:
 				return (
-					<Button icon={icon} disabled={disabled} danger={true}>
+					<Button style={buttonStyle} icon={icon} disabled={disabled} danger={true}>
 						{props.label || 'Delete'}
 					</Button>
 				);
@@ -52,16 +55,18 @@ export const DangerButton = (props: Props) => {
 	return (
 		<Popover
 			className={props.mode === 'icon' ? 'danger-button icon' : 'danger-button'}
-			open={disabled ? false : open}
+			open={disabled && !showDisabledMessage ? false : open}
 			onOpenChange={setOpen}
 			trigger='click'
 			content={(
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 					{
-						props.disabledMessage || props.message || <div className='ds-text'>This can't be undone; are you sure?</div>
+						showDisabledMessage ?
+							props.disabledMessage
+							: props.message || <div className='ds-text'>This can't be undone; are you sure?</div>
 					}
 					{
-						!props.disabledMessage ?
+						!showDisabledMessage ?
 							<Button danger={true} onClick={e => { e.stopPropagation(); setOpen(false); props.onConfirm(e); }}>
 								{props.label || 'Delete'}
 							</Button>
@@ -70,7 +75,7 @@ export const DangerButton = (props: Props) => {
 				</div>
 			)}
 		>
-			<div onClick={e => e.stopPropagation()}>
+			<div style={{ cursor: disabled ? 'not-allowed' : undefined }} onClick={e => e.stopPropagation()}>
 				{getContent()}
 			</div>
 		</Popover>

@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.193.0",
+	"version": "14.194.0",
 	"type": "module",
 	"engines": {
 		"node": ">=24"
@@ -49,7 +49,7 @@
 		"@vitejs/plugin-react": "^6.0.5",
 		"@vitest/coverage-v8": "^4.1.11",
 		"axios-mock-adapter": "^2.1.0",
-		"eslint": "^10.8.1",
+		"eslint": "^10.9.0",
 		"eslint-plugin-react-hooks": "^7.1.1",
 		"globals": "^17.11.0",
 		"playwright": "^1.62.1",

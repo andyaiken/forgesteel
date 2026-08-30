@@ -50,6 +50,7 @@ import { EditTaggedFeature, InfoTaggedFeature } from '@/components/features/feat
 import { Feature, FeatureData } from '@/models/feature';
 import { EditAbilityData } from '@/components/features/feature-data/ability';
 import { EditAddOn } from '@/components/features/feature-data/addon';
+import { EditFollower } from '@/components/features/feature-data/follower';
 import { EditMaliceAbility } from '@/components/features/feature-data/malice-ability';
 import { EditPackageContent } from '@/components/features/feature-data/package-content';
 import { FeatureType } from '@/enums/feature-type';
@@ -207,6 +208,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditDomainFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Fixture:
 			return <EditFixture data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.Follower:
+			return <EditFollower data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ForController:
 			return <EditForController data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResource:

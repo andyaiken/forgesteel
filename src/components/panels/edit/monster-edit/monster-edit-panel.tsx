@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs, Tooltip, Upload } from 'antd';
 import { DownloadOutlined, ImportOutlined, InfoCircleOutlined, ThunderboltOutlined, ToolOutlined } from '@ant-design/icons';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Characteristic } from '@/enums/characteristic';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
@@ -930,73 +931,6 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
-	const getExampleAbilitiesSection = () => {
-		const similar: { feature: Feature, count: number }[] = [];
-		getSimilarMonsters().forEach(m => {
-			m.features
-				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
-				.filter(f => !monster.features.some(mf => mf.name === f.name))
-				.forEach(f => {
-					const current = similar.find(sf => sf.feature.name === f.name);
-					if (current) {
-						current.count += 1;
-					} else {
-						similar.push({
-							feature: f,
-							count: 1
-						});
-					}
-				});
-		});
-		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
-
-		const importFeature = (feature: Feature) => {
-			const featureCopy = Utils.copy(feature);
-			featureCopy.id = Utils.guid();
-
-			const copy = Utils.copy(monster);
-			copy.features.push(featureCopy);
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<Segmented
-					block={true}
-					options={[
-						{ value: MonsterFeatureCategory.Signature, label: 'Signature' },
-						{ value: MonsterFeatureCategory.Action, label: 'Main' },
-						{ value: MonsterFeatureCategory.Maneuver, label: 'Maneuver' },
-						{ value: MonsterFeatureCategory.Trigger, label: 'Triggered' },
-						{ value: MonsterFeatureCategory.Villain, label: 'Villain' }
-					]}
-					value={selectedCategory}
-					onChange={setSelectedCategory}
-				/>
-				{
-					sortedSimilar.map(s => (
-						<Expander
-							key={s.feature.id}
-							title={s.feature.name}
-							tags={[ FeatureLogic.getFeatureTag(s.feature) ]}
-							extra={[
-								<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
-							]}
-						>
-							<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
-						</Expander>
-					))
-				}
-				{
-					sortedSimilar.length === 0 ?
-						<Empty text='None in similar monsters' />
-						: null
-				}
-			</Space>
-		);
-	};
-
 	const getSimilarMonstersSection = () => {
 		const similarMonsters = getSimilarMonsters();
 
@@ -1011,19 +945,21 @@ export const MonsterEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Popover
-							trigger='click'
-							content={
-								<Space orientation='vertical'>
-									<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
-									<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
-									<Divider />
-									<Button block={true} disabled={getSimilarMonsters().length < 2} icon={<ThunderboltOutlined />} onClick={genesplice}>Genesplice</Button>
-								</Space>
-							}
-						>
-							<Button type='text' icon={<ToolOutlined />} />
-						</Popover>
+						<ButtonGroup
+							buttons={[
+								{ type: 'button', icon: <ThunderboltOutlined />, tooltip: 'Genesplice', disabled: getSimilarMonsters().length < 2, onClick: genesplice },
+								{
+									type: 'dropdown',
+									icon: <ToolOutlined />,
+									popover: (
+										<Space orientation='vertical'>
+											<Button type='text' block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
+											<Button type='text' block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
+										</Space>
+									)
+								}
+							]}
+						/>
 					}
 				>
 					Similar Monsters
@@ -1085,6 +1021,77 @@ export const MonsterEditPanel = (props: Props) => {
 						onClose={() => setDrawerOpen(false)}
 					/>
 				</Drawer>
+			</Space>
+		);
+	};
+
+	const getExampleAbilitiesSection = () => {
+		const similar: { feature: Feature, count: number }[] = [];
+		getSimilarMonsters().forEach(m => {
+			m.features
+				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
+				.filter(f => !monster.features.some(mf => mf.name === f.name))
+				.forEach(f => {
+					const current = similar.find(sf => sf.feature.name === f.name);
+					if (current) {
+						current.count += 1;
+					} else {
+						similar.push({
+							feature: f,
+							count: 1
+						});
+					}
+				});
+		});
+		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
+
+		const importFeature = (feature: Feature) => {
+			const featureCopy = Utils.copy(feature);
+			featureCopy.id = Utils.guid();
+
+			const copy = Utils.copy(monster);
+			copy.features.push(featureCopy);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Alert
+					type='info'
+					showIcon={true}
+					title='These abilities come from the list of similar monsters.'
+				/>
+				<Segmented
+					block={true}
+					options={[
+						{ value: MonsterFeatureCategory.Signature, label: 'Signature' },
+						{ value: MonsterFeatureCategory.Action, label: 'Main' },
+						{ value: MonsterFeatureCategory.Maneuver, label: 'Maneuver' },
+						{ value: MonsterFeatureCategory.Trigger, label: 'Triggered' },
+						{ value: MonsterFeatureCategory.Villain, label: 'Villain' }
+					]}
+					value={selectedCategory}
+					onChange={setSelectedCategory}
+				/>
+				{
+					sortedSimilar.map(s => (
+						<Expander
+							key={s.feature.id}
+							title={s.feature.name}
+							extra={[
+								<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
+							]}
+						>
+							<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
+						</Expander>
+					))
+				}
+				{
+					sortedSimilar.length === 0 ?
+						<Empty text='None in similar monsters' />
+						: null
+				}
 			</Space>
 		);
 	};
@@ -1163,13 +1170,13 @@ export const MonsterEditPanel = (props: Props) => {
 								},
 								{
 									key: '3',
-									label: 'Example Abilities',
-									children: getExampleAbilitiesSection()
+									label: 'Similar Monsters',
+									children: getSimilarMonstersSection()
 								},
 								{
 									key: '4',
-									label: 'Similar Monsters',
-									children: getSimilarMonstersSection()
+									label: 'Example Abilities',
+									children: getExampleAbilitiesSection()
 								}
 							]}
 						/>

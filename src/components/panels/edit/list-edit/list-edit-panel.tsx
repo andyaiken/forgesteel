@@ -30,7 +30,7 @@ interface AbilityListEditPanelProps {
 }
 
 export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
-	const [ abilities, setAbilities ] = useState(Utils.copy(props.abilities));
+	const abilities = props.abilities;
 	const [ browserOpen, setBrowserOpen ] = useState<boolean>(false);
 	const options = useOptions();
 	const clipboard = useClipboard();
@@ -50,7 +50,6 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 			target: '',
 			sections: []
 		}));
-		setAbilities(copy);
 		props.onChange(copy);
 	};
 
@@ -60,7 +59,6 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 
 		const copy = Utils.copy(abilities);
 		copy.push(abilityCopy);
-		setAbilities(copy);
 		props.onChange(copy);
 	};
 
@@ -71,7 +69,6 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 
 			const copy = Utils.copy(abilities);
 			copy.push(ability);
-			setAbilities(copy);
 			props.onChange(copy);
 		}
 	};
@@ -82,7 +79,6 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 		if (index !== -1) {
 			copy[index] = ability;
 		}
-		setAbilities(copy);
 		props.onChange(copy);
 	};
 
@@ -90,14 +86,12 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 		let copy = Utils.copy(abilities);
 		const index = copy.findIndex(a => a.id === ability.id);
 		copy = Collections.move(copy, index, direction);
-		setAbilities(copy);
 		props.onChange(copy);
 	};
 
 	const deleteAbility = (ability: Ability) => {
 		let copy = Utils.copy(abilities);
 		copy = copy.filter(a => a.id !== ability.id);
-		setAbilities(copy);
 		props.onChange(copy);
 	};
 
@@ -174,7 +168,7 @@ interface FeatureListEditPanelProps {
 }
 
 export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
-	const [ features, setFeatures ] = useState(Utils.copy(props.features));
+	const features = props.features;
 	const [ typeSelectorVisible, setTypeSelectorVisible ] = useState<boolean>(false);
 	const options = useOptions();
 	const clipboard = useClipboard();
@@ -190,7 +184,6 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 
 		const copy = Utils.copy(features);
 		copy.push(f);
-		setFeatures(copy);
 		props.onChange(copy);
 	};
 
@@ -201,7 +194,6 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 
 			const copy = Utils.copy(features);
 			copy.push(feature);
-			setFeatures(copy);
 			props.onChange(copy);
 		}
 	};
@@ -212,7 +204,6 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 		if (index !== -1) {
 			copy[index] = feature;
 		}
-		setFeatures(copy);
 		props.onChange(copy);
 	};
 
@@ -220,14 +211,12 @@ export const FeatureListEditPanel = (props: FeatureListEditPanelProps) => {
 		let copy = Utils.copy(features);
 		const index = copy.findIndex(f => f.id === feature.id);
 		copy = Collections.move(copy, index, direction);
-		setFeatures(copy);
 		props.onChange(copy);
 	};
 
 	const deleteFeature = (feature: Feature) => {
 		let copy = Utils.copy(features);
 		copy = copy.filter(f => f.id !== feature.id);
-		setFeatures(copy);
 		props.onChange(copy);
 	};
 

@@ -30,6 +30,7 @@ interface Expression {
 	resourceID: string;
 	resourceName: string;
 	tag: string;
+	gainIndex: number;
 	throws: number;
 	sides: number;
 	constant: number;
@@ -67,7 +68,7 @@ export const HeroResourcesModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const getGainButton = (gain: { tag: string, value: string, used: boolean }, onGain: (tag: string, value: number) => void, onRoll: (exp: Expression) => void, resourceID: string, resourceName: string, kind: 'resource' | 'surge') => {
+	const getGainButton = (gain: { tag: string, value: string, used: boolean }, onGain: (tag: string, value: number) => void, onRoll: (exp: Expression) => void, resourceID: string, resourceName: string, kind: 'resource' | 'surge', gainIndex: number = 0) => {
 		const digits = /^\s*[+-]?\s*\d+\s*$/;
 		if (digits.test(gain.value)) {
 			const v = parseInt(gain.value);
@@ -86,6 +87,7 @@ export const HeroResourcesModal = (props: Props) => {
 				resourceID: resourceID,
 				resourceName: resourceName,
 				tag: gain.tag,
+				gainIndex: gainIndex,
 				throws: parseInt(match.groups?.throws || '1'),
 				sides: parseInt(match.groups?.sides || '3'),
 				constant: parseInt(match.groups?.constant || '0'),
@@ -115,7 +117,7 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const gainResource = (featureID: string, tag: string, value: number) => {
+		const gainResource = (featureID: string, tag: string, gainIndex: number, value: number) => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy, false)
@@ -131,10 +133,11 @@ export const HeroResourcesModal = (props: Props) => {
 				// surge gains and any other resource's gains included, not just this resource's
 				HeroLogic.resetGains(copy, ResourceGainFrequency.OncePerRound);
 			} else {
+				// Gains are identified by position rather than by tag; a hero can have several
+				// gains sharing a tag (each domain's gain is untagged) and only one is claimed here
 				HeroLogic.getHeroicResources(copy)
 					.filter(hr => hr.id === featureID)
-					.flatMap(hr => hr.gains)
-					.filter(g => g.tag === tag)
+					.flatMap(hr => hr.gains.filter((_, n) => n === gainIndex))
 					.filter(g => g.frequency !== ResourceGainFrequency.AtWill)
 					.forEach(g => g.used = true);
 			}
@@ -193,7 +196,7 @@ export const HeroResourcesModal = (props: Props) => {
 													<div className={g.used ? 'gain used' : 'gain'} key={n}>
 														<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
 														{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
-														{getGainButton(g, (tag, value) => gainResource(hr.id, tag, value), setExpression, hr.id, hr.name, 'resource')}
+														{getGainButton(g, (tag, value) => gainResource(hr.id, tag, n, value), setExpression, hr.id, hr.name, 'resource', n)}
 													</div>
 												))
 											}
@@ -276,7 +279,7 @@ export const HeroResourcesModal = (props: Props) => {
 												if (expression.kind === 'surge') {
 													gainSurges(expression.tag, expression.result);
 												} else {
-													gainResource(expression.resourceID, expression.tag, expression.result);
+													gainResource(expression.resourceID, expression.tag, expression.gainIndex, expression.result);
 												}
 												setExpression(null);
 											}

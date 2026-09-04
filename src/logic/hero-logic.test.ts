@@ -28,6 +28,7 @@ import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
 import { stormwight } from '@/data/classes/fury/stormwight';
 import { vuken } from '@/data/kits/stormwight/vuken';
+import { war } from '@/data/domains/war';
 
 describe('getAbilities', () => {
 	afterEach(() => {
@@ -343,6 +344,32 @@ describe('getHeroicResources', () => {
 
 		expect(ferocity?.gains.map(g => g.tag)).toEqual([ 'test-gain' ]);
 		expect(rampage?.gains).toEqual([]);
+	});
+
+	// Every domain's gain is untagged, so a conduit with two domains has two gains sharing a tag.
+	// They're separate claims - claiming one can't be allowed to mark the other used
+	it('lists each domain’s gain separately, even though they share a tag', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(conduit);
+		hero.class.level = 1;
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.forEach(f => f.data.selected = [ Utils.copy(life), Utils.copy(war) ]);
+
+		const piety = HeroLogic.getHeroicResources(hero).find(r => r.name === 'Piety');
+		const domainGains = piety!.gains.filter(g => g.trigger.includes('10 squares'));
+
+		expect(domainGains).toHaveLength(2);
+		expect(Collections.distinct(domainGains, g => g.tag)).toHaveLength(1);
+
+		domainGains[0].used = true;
+
+		const claimed = HeroLogic.getHeroicResources(hero)
+			.find(r => r.name === 'Piety')!.gains
+			.filter(g => g.trigger.includes('10 squares'))
+			.map(g => g.used);
+		expect(claimed).toEqual([ true, false ]);
 	});
 
 	it('sorts thresholds by increasing value', () => {

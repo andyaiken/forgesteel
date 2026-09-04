@@ -139,6 +139,14 @@ const buildThresholdHero = (options: { level?: number, ferocity?: number, rampag
 				name: 'Rampage',
 				gains: []
 			}));
+			lvl.features.push(FactoryLogic.feature.createHeroicResourceGain({
+				id: 'test-gain',
+				name: 'Extra Ferocity',
+				tag: 'test-gain',
+				trigger: 'A creature adjacent to your companion takes damage',
+				value: '2',
+				frequency: ResourceGainFrequency.OncePerRound
+			}));
 			lvl.features.push(FactoryLogic.feature.createHeroicResourceThreshold({
 				id: 'test-threshold-2',
 				value: 2,
@@ -325,6 +333,16 @@ describe('getHeroicResources', () => {
 
 		expect(ferocity?.thresholds.map(t => t.feature.name)).toEqual([ 'Ferocity 2 Benefit', 'Ferocity 8 Benefit' ]);
 		expect(rampage?.thresholds.map(t => t.feature.name)).toEqual([ 'Rampage 8 Benefit' ]);
+	});
+
+	it('gives resource gain features only to the hero’s heroic resource', () => {
+		const resources = HeroLogic.getHeroicResources(buildThresholdHero({ level: 10, ferocity: 12, rampage: 12 }));
+
+		const ferocity = resources.find(r => r.name === 'Ferocity');
+		const rampage = resources.find(r => r.name === 'Rampage');
+
+		expect(ferocity?.gains.map(g => g.tag)).toEqual([ 'test-gain' ]);
+		expect(rampage?.gains).toEqual([]);
 	});
 
 	it('sorts thresholds by increasing value', () => {

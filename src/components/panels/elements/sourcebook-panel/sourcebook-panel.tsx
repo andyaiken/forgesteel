@@ -1,6 +1,6 @@
-import { Button, Segmented, Select, Space, Tabs } from 'antd';
-import { ButtonConfig, ButtonGroup, DangerConfig } from '@/components/controls/button-group/button-group';
-import { CaretDownOutlined, CaretUpOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { ButtonConfig, ButtonGroup, ControlConfig, DangerConfig } from '@/components/controls/button-group/button-group';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, SyncOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -20,6 +20,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { useHeroes } from '@/contexts/data-context';
 import { useState } from 'react';
@@ -36,6 +37,7 @@ interface Props {
 	mode?: PanelMode;
 	showEditButtons?: boolean;
 	onChange?: (sourcebook: Sourcebook) => void;
+	onReplace?: (sourcebook: Sourcebook) => void;
 	onDelete?: (sourcebook: Sourcebook) => void;
 }
 
@@ -359,7 +361,7 @@ export const SourcebookPanel = (props: Props) => {
 	};
 
 	const getButtons = () => {
-		const buttons: (ButtonConfig | DangerConfig)[] = [];
+		const buttons: (ButtonConfig | DangerConfig | ControlConfig)[] = [];
 
 		if (props.visibility && !isEditing) {
 			buttons.push(
@@ -399,6 +401,37 @@ export const SourcebookPanel = (props: Props) => {
 						onClick: () => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')
 					}
 				);
+
+				if (props.onReplace) {
+					buttons.push(
+						{
+							type: 'control',
+							control: (
+								<span key='replace' onClick={e => e.stopPropagation()}>
+									<Upload
+										accept='.drawsteel-sourcebook,.ds-sourcebook'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const replacement = JSON.parse(json) as Sourcebook;
+													// Keep this sourcebook's ID, so heroes that use it pick up the new content
+													replacement.id = sourcebook.id;
+													UpdateLogic.updateSourcebook(replacement);
+													setSourcebook(replacement);
+													props.onReplace!(replacement);
+												});
+											return false;
+										}}
+									>
+										<Button type='text' title='Update' icon={<SyncOutlined />} />
+									</Upload>
+								</span>
+							)
+						}
+					);
+				}
 
 				const heroes = allHeroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
 

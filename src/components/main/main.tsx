@@ -233,6 +233,19 @@ export const Main = (props: Props) => {
 			});
 	};
 
+	const replaceHomebrewSourcebook = (homebrew: Sourcebook, allHomebrew: Sourcebook[]) => {
+		return persistHomebrewSourcebook(homebrew)
+			.then(() => {
+				const allSourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks, allHomebrew);
+				Utils.copy(heroes)
+					.filter(hero => hero.sourcebookIDs.includes(homebrew.id))
+					.forEach(hero => {
+						HeroUpdateLogic.updateHero(hero, allSourcebooks);
+						persistHero(hero);
+					});
+			});
+	};
+
 	const deleteHomebrewSourcebook = (homebrew: Sourcebook) => {
 		return dataManager.deleteSourcebook(homebrew)
 			.catch(err => {
@@ -1257,11 +1270,12 @@ export const Main = (props: Props) => {
 
 			persistHomebrewSourcebook(sourcebook)
 				.then(() => {
+					const allSourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks, copy);
 					const heroesCopy = Utils.copy(heroes);
 					heroesCopy
 						.filter(hero => hero.sourcebookIDs.includes(sourcebook.id))
 						.forEach(hero => {
-							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(builtInSourcebooks, copy));
+							HeroUpdateLogic.updateHero(hero, allSourcebooks);
 							persistHero(hero);
 						});
 				})
@@ -1906,6 +1920,7 @@ export const Main = (props: Props) => {
 				homebrewSourcebooks={homebrewSourcebooks}
 				onClose={() => setDrawer(null)}
 				onHomebrewSourcebookChange={persistHomebrewSourcebook}
+				onHomebrewSourcebookReplace={replaceHomebrewSourcebook}
 				onHomebrewSourcebookDelete={deleteHomebrewSourcebook}
 			/>
 		);

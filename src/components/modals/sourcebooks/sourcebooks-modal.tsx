@@ -24,6 +24,7 @@ interface Props {
 	homebrewSourcebooks: Sourcebook[];
 	onClose: () => void;
 	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
+	onHomebrewSourcebookReplace: (sourcebook: Sourcebook, homebrewSourcebooks: Sourcebook[]) => void;
 	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
 }
 
@@ -56,6 +57,16 @@ export const SourcebooksModal = (props: Props) => {
 			setHomebrewSourcebooks(copy);
 		}
 		props.onHomebrewSourcebookChange(sourcebook);
+	};
+
+	const replaceSourcebook = (sourcebook: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks);
+		const index = copy.findIndex(s => s.id === sourcebook.id);
+		if (index !== -1) {
+			copy[index] = sourcebook;
+			setHomebrewSourcebooks(copy);
+		}
+		props.onHomebrewSourcebookReplace(sourcebook, copy);
 	};
 
 	const deleteSourcebook = (sourcebook: Sourcebook) => {
@@ -233,6 +244,7 @@ export const SourcebooksModal = (props: Props) => {
 											}}
 											showEditButtons={true}
 											onChange={changeSourcebook}
+											onReplace={replaceSourcebook}
 											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>

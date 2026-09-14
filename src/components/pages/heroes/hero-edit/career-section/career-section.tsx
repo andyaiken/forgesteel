@@ -17,6 +17,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -53,7 +54,7 @@ export const CareerSection = (props: Props) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.career) {
-		choices = FeatureLogic.getFeaturesFromCareer(props.hero.career, props.hero.class?.level || 1)
+		choices = FeatureLogic.getFeaturesFromCareer(props.hero.career, props.hero.class?.level || 1, TutorialMode.Complete)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (
@@ -75,7 +76,7 @@ export const CareerSection = (props: Props) => {
 									value={<Markdown text={props.hero.career.incitingIncidents.selected.description} useSpan={true} />}
 								/>
 							}
-							onSelect={() => props.selectIncitingIncident(null)}
+							onRemove={() => props.selectIncitingIncident(null)}
 						/>
 						:
 						<Button block={true} className='status-warning' onClick={() => setShowIncitingIncidents(true)}>

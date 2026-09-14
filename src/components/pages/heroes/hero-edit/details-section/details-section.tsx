@@ -1,19 +1,25 @@
-import { Alert, AutoComplete, Button, Flex, Space, Upload } from 'antd';
+import { AutoComplete, Button, Flex, Space, Upload } from 'antd';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DownloadOutlined } from '@ant-design/icons';
+import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { HeroTutorialPanel } from '@/components/panels/hero-tutorial/hero-tutorial-panel';
+import { Info } from '@/components/controls/info/info';
 import { NameSuggestions } from '@/components/panels/name-suggestions/name-suggestions';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useHeroes } from '@/contexts/data-context';
 
@@ -25,6 +31,7 @@ interface DetailsSectionProps {
 	setName: (value: string) => void;
 	setPicture: (value: string | null) => void;
 	setFolder: (value: string) => void;
+	setTutorialMode: (value: TutorialMode) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -34,6 +41,37 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 		.map(h => h.folder)
 		.filter(f => !!f)
 		.sort();
+
+	const languageFeatures = HeroLogic.getFeatures(props.hero)
+		.map(f => f.feature)
+		.filter(f => f.type === FeatureType.LanguageChoice)
+		.map(f => {
+			return FactoryLogic.feature.createLanguageChoice({
+				id: f.id,
+				name: f.name || 'Language',
+				options: [ ...f.data.options ],
+				allowedTypes: [ ...f.data.allowedTypes ],
+				count: f.data.count,
+				selected: [ ...f.data.selected ]
+			});
+		});
+
+	const skillFeatures = HeroLogic.getFeatures(props.hero)
+		.map(f => f.feature)
+		.filter(f => f.type === FeatureType.SkillChoice)
+		.map(f => {
+			return FactoryLogic.feature.createSkillChoice({
+				id: f.id,
+				name: 'Skill',
+				options: [ ...f.data.options ],
+				listOptions: [ ...f.data.listOptions ],
+				count: f.data.count,
+				selected: [ ...f.data.selected ]
+			});
+		});
+
+	const languagesDone = languageFeatures.every(f => FeatureLogic.isChosen(f, props.hero, props.sourcebooks));
+	const skillsDone = skillFeatures.every(f => FeatureLogic.isChosen(f, props.hero, props.sourcebooks));
 
 	return (
 		<div className='hero-edit-content details-section'>
@@ -85,7 +123,11 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 					}
 				</SelectablePanel>
 				<SelectablePanel>
-					<HeaderText>Folder</HeaderText>
+					<HeaderText
+						extra={<Info>You can add your hero to a folder to group it with other heroes.</Info>}
+					>
+						Folder
+					</HeaderText>
 					<AutoComplete
 						options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: option }))}
 						optionRender={o => <div className='ds-text'>{o.data.label}</div>}
@@ -96,69 +138,62 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 						onSelect={props.setFolder}
 						onChange={props.setFolder}
 					/>
-					<div className='ds-text'>
-						<Alert
-							type='info'
-							showIcon={true}
-							title='You can add your hero to a folder to group it with other heroes.'
-						/>
-					</div>
+				</SelectablePanel>
+				<SelectablePanel>
+					<HeroTutorialPanel value={props.hero.state.tutorialMode} onChange={props.setTutorialMode} />
 				</SelectablePanel>
 			</div>
 			<div className='hero-edit-content-column selected'>
-				<Expander title='Language Choices'>
+				<Expander
+					title='Language Choices'
+					expandedByDefault={!languagesDone}
+					extra={[
+						languagesDone ?
+							<CheckIcon key='completed' state='success' />
+							: null
+					]}
+				>
 					{
-						HeroLogic.getFeatures(props.hero)
-							.map(f => f.feature)
-							.filter(f => f.type === FeatureType.LanguageChoice)
-							.map(f => {
-								return FactoryLogic.feature.createLanguageChoice({
-									id: f.id,
-									name: f.name || 'Language',
-									description: `${f.data.options.length > 0 ? `**Skills**: ${f.data.options.join(', ')}` : ''}`,
-									options: [ ...f.data.options ],
-									count: f.data.count,
-									selected: [ ...f.data.selected ]
-								});
-							})
-							.map(f => (
-								<FeatureConfigPanel
-									key={f.id}
-									feature={f}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={props.setFeatureData}
-								/>
-							))
+						languageFeatures.map(f => (
+							<FeatureConfigPanel
+								key={f.id}
+								feature={f}
+								hero={props.hero}
+								sourcebooks={props.sourcebooks}
+								setData={props.setFeatureData}
+							/>
+						))
+					}
+					{
+						languageFeatures.length === 0 ?
+							<Empty />
+							: null
 					}
 				</Expander>
-				<Expander title='Skill Choices'>
+				<Expander
+					title='Skill Choices'
+					expandedByDefault={!skillsDone}
+					extra={[
+						skillsDone ?
+							<CheckIcon key='completed' state='success' />
+							: null
+					]}
+				>
 					{
-						HeroLogic.getFeatures(props.hero)
-							.map(f => f.feature)
-							.filter(f => f.type === FeatureType.SkillChoice)
-							.map(f => {
-								return FactoryLogic.feature.createSkillChoice({
-									id: f.id,
-									name: 'Skill',
-									description: `
-${f.data.options.length > 0 ? `**Skills**: ${f.data.options.join(', ')}` : ''}
-${f.data.listOptions.length > 0 ? `**Lists**: ${f.data.listOptions.map(s => `${s} Skills`).join(', ')}` : ''}`,
-									options: [ ...f.data.options ],
-									listOptions: [ ...f.data.listOptions ],
-									count: f.data.count,
-									selected: [ ...f.data.selected ]
-								});
-							})
-							.map(f => (
-								<FeatureConfigPanel
-									key={f.id}
-									feature={f}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={props.setFeatureData}
-								/>
-							))
+						skillFeatures.map(f => (
+							<FeatureConfigPanel
+								key={f.id}
+								feature={f}
+								hero={props.hero}
+								sourcebooks={props.sourcebooks}
+								setData={props.setFeatureData}
+							/>
+						))
+					}
+					{
+						skillFeatures.length === 0 ?
+							<Empty />
+							: null
 					}
 				</Expander>
 			</div>

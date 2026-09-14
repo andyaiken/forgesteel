@@ -4,19 +4,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(230, 230, 230);
+    background-color: var(--fs-canvas);
     overflow-y: scroll;
 
     .data-loader-container {
         min-width: 250px;
         padding: 20px;
         border-radius: 10px;
-        background-color: rgb(255, 255, 255);
-	    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+        background-color: var(--fs-surface);
+	    box-shadow: var(--fs-shadow-raised);
 
         .overall-state {
             display: flex;
             justify-content: center;
+            margin-bottom: 15px;
 
             svg {
                 width: 75px;
@@ -32,14 +33,4 @@
             margin-bottom: 10px;
         }
     }
-}
-
-html[data-theme="dark"] {
-	.data-loader {
-        background-color: rgb(100, 100, 100);
-
-        .data-loader-container {
-            background-color: rgb(55, 55, 55);
-        }
-	}
 }

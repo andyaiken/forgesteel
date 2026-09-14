@@ -378,10 +378,10 @@ export class ImbuedImplementData {
 					field: FeatureField.Stamina,
 					value: 6
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createPotencyResistance({
 					id: 'warding-ii-b',
 					name: 'Warding II',
-					description: 'Your characteristic scores are considered 1 higher for the purpose of resisting potencies.'
+					characteristics: []
 				})
 			]
 		})

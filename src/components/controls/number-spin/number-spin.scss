@@ -11,7 +11,7 @@
 	}
 
 	&:hover {
-		background-color: rgba(0, 0, 0, 0.06);
+		background-color: var(--fs-hover-fill);
 	}
 
 	.spin-buttons {
@@ -29,7 +29,7 @@
 			}
 
 			&:hover {
-				background-color: rgba(0, 0, 0, 0.06);
+				background-color: var(--fs-hover-fill);
 			}
 		}
 	}
@@ -42,27 +42,5 @@
 html[data-theme="dark"] {
 	.number-spin {
 		color: rgba(255, 255, 255, 0.88);
-
-		&:hover {
-			background-color: rgba(250, 250, 250, 0.3);
-		}
-
-		.spin-buttons {
-			.spin-button {
-				&:hover {
-					background-color: rgba(250, 250, 250, 0.3);
-				}
-			}
-		}
-
-		.spin-middle {
-			.ant-statistic-title {
-				color: rgba(250, 250, 250, 0.45);
-			}
-
-			.ant-statistic-content {
-				color: rgba(250, 250, 250, 0.88);
-			}
-		}
 	}
 }

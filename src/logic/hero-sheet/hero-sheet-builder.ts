@@ -25,12 +25,15 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { Project } from '@/models/project';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Summon } from '@/models/summon';
+import { SummonLogic } from '@/logic/summon-logic';
+import { Utils } from '@/utils/utils';
 
 export class HeroSheetBuilder {
 	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
@@ -49,18 +52,42 @@ export class HeroSheetBuilder {
 			projects: [],
 			followers: [],
 			summons: [],
+			fixtures: [],
 			featuresReferenceOther: [],
 			extraReferenceItems: [],
+			extraComplications: [],
 
 			notes: hero.state.notes
 		};
 
 		const coveredFeatureIds: string[] = [];
-		const allFeatures = HeroLogic.getFeatures(hero);
+		const allFeatures = HeroLogic.getFeatures(hero).map(f => {
+			const notes = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id)?.notes;
+			if (!notes) {
+				return f;
+			}
+
+			const feature = Utils.copy(f.feature);
+			feature.description += `\n\n${notes}`;
+
+			return { feature: feature, source: f.source, level: f.level };
+		});
 
 		// Package Contents handled within packages
 		const packageContents = allFeatures.filter(f => f.feature.type == FeatureType.PackageContent);
 		coveredFeatureIds.push(...packageContents.map(p => p.feature.id));
+
+		// Threshold benefits are rendered as part of their threshold
+		// A benefit can be a Multiple, so its children are covered by the threshold too
+		coveredFeatureIds.push(...allFeatures
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResourceThreshold)
+			.flatMap(f => FeatureLogic.simplifyFeatures(
+				[ { feature: f.data.feature, source: '', level: undefined } ],
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			))
+			.map(f => f.feature.id));
 
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = HeroLogic.getWealth(hero);
@@ -73,7 +100,7 @@ export class HeroSheetBuilder {
 
 		const inventory = hero.state.inventory.concat(featureItems);
 		sheet.inventory = inventory.map(item => ClassicSheetBuilder.buildItemSheet(item, hero, options));
-		coveredFeatureIds.push(...inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero.class?.level || 1).map(f => f.feature).map(f => f.id) || []));
+		coveredFeatureIds.push(...inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero.class?.level || 1, hero.state.tutorialMode).map(f => f.feature).map(f => f.id) || []));
 
 		// #region Class
 		if (hero.class) {
@@ -134,6 +161,10 @@ export class HeroSheetBuilder {
 
 		sheet.surgeDamageAmount = SheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
 		sheet.surgesCurrent = hero.state.surges;
+		const thresholdRequirements = HeroLogic.getThresholdRequirements(hero);
+		sheet.surgeGains = Collections.distinct(HeroLogic.getAllSurgeGains(hero), f => f.data.tag)
+			.map(f => ({ ...f.data, requirement: thresholdRequirements.get(f.id) }))
+			.sort(SheetFormatter.sortHeroicResourceGains);
 
 		// #region Kits / Modifiers
 		const kits = HeroLogic.getKits(hero);
@@ -166,9 +197,15 @@ export class HeroSheetBuilder {
 			sheet.modifierRangedDamageT2 = kitDmg.find(x => x.type === 'ranged')?.tier2;
 			sheet.modifierRangedDamageT3 = kitDmg.find(x => x.type === 'ranged')?.tier3;
 
-			const kitFeatures = kits.flatMap(k => k.features)
-				.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f));
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures);
+			const kitFeatures = FeatureLogic.simplifyFeatures(
+				kits.flatMap(k => k.features
+					.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f))
+					.map(f => ({ feature: f, source: k.name, level: undefined }))),
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			)
+				.map(f => f.feature);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures.filter(ClassicSheetLogic.hasContent), hero);
 
 			coveredFeatureIds.push(...kitFeatures.map(f => f.id));
 		} else if (modifiers) {
@@ -200,14 +237,15 @@ export class HeroSheetBuilder {
 						break;
 				}
 			});
-			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifiers);
+			const modifierFeatures = ClassicSheetLogic.flattenMultiples(modifiers).filter(ClassicSheetLogic.hasContent);
+			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(modifierFeatures, hero);
 		}
 		// #endregion
 
 		// #region Class Features
 		if (hero.class) {
 			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
-			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero.class.level || 1)
+			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero.class.level || 1, hero.state.tutorialMode)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.map(f => {
 					f.feature = SheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
@@ -250,7 +288,7 @@ export class HeroSheetBuilder {
 			classFeatureSpace = classFeatureSpace * numCols;
 			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures, hero, classFeatureSpace, classFeatureLineLen, numCols);
 
-			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed));
+			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed, hero), hero);
 
 			const referenceFeatures = dividedClassFeatures.reference;
 			sheet.featuresReferenceOther.push(...referenceFeatures);
@@ -262,11 +300,16 @@ export class HeroSheetBuilder {
 		sheet.immunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
 		sheet.weaknesses = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Weakness);
 		sheet.conditionImmunities = HeroLogic.getConditionImmunities(hero);
+		sheet.rollModifiers = HeroLogic.getRollModifiers(hero);
 
 		// Potencies
 		sheet.potencyStrong = HeroLogic.getPotency(hero, 'strong');
 		sheet.potencyAverage = HeroLogic.getPotency(hero, 'average');
 		sheet.potencyWeak = HeroLogic.getPotency(hero, 'weak');
+		const potencyResistances = HeroLogic.getPotencyResistances(hero);
+		sheet.potencyResistances = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+			.map(ch => ({ characteristic: ch, value: potencyResistances.get(ch) || 0 }))
+			.filter(pr => pr.value > 0);
 
 		// Conditions
 		sheet.saveTarget = HeroLogic.getSaveThreshold(hero);
@@ -287,15 +330,30 @@ export class HeroSheetBuilder {
 		if (hero.career) {
 			sheet.career = this.buildCareerSheet(hero.career);
 
-			coveredFeatureIds.push(...hero.career.features.map(f => f.id));
+			coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(hero.career.features).map(f => f.id));
 		}
 
 		if (hero.complication) {
 			sheet.complication = this.buildComplicationSheet(hero.complication);
 
-			coveredFeatureIds.push(...sheet.complication.benefits.map(f => f.id));
-			coveredFeatureIds.push(...sheet.complication.drawbacks.map(f => f.id));
+			coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(hero.complication.features).map(f => f.id));
 		}
+
+		// Complications added through Customize get a card each, alongside the builder's one
+		allFeatures
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Complication)
+			.map(f => f.data.selected)
+			.filter(c => c !== null)
+			.forEach(complication => {
+				sheet.extraComplications.push(this.buildComplicationSheet(complication));
+
+				coveredFeatureIds.push(...ClassicSheetLogic.flattenMultiples(complication.features).map(f => f.id));
+			});
+		// The wrapper feature itself is covered by the card its selection produces
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => f.feature.type === FeatureType.Complication)
+			.map(f => f.feature.id));
 
 		const skillsMap = new Map<string, string[]>();
 		const allSkills = SourcebookLogic.getSkills(sourcebooks).reduce((map, skill) => {
@@ -307,18 +365,28 @@ export class HeroSheetBuilder {
 		sheet.allSkills = new Map([ ...allSkills.entries() ].sort());
 
 		const heroSkills = HeroLogic.getSkills(hero, sourcebooks);
-		const customSkills = heroSkills.filter(s => s.list === SkillList.Custom);
+		const heroCancelledSkills = HeroLogic.getCancelledSkills(hero, sourcebooks);
+		const customSkills = [ ...heroSkills, ...heroCancelledSkills ].filter(s => s.list === SkillList.Custom);
 		if (customSkills.length) {
-			sheet.allSkills.set(SkillList.Custom, customSkills.map(s => s.name));
+			sheet.allSkills.set(SkillList.Custom, Collections.distinct(customSkills.map(s => s.name), s => s).sort());
 		}
 		sheet.skills = heroSkills.map(s => s.name);
+		sheet.cancelledSkills = heroCancelledSkills.map(s => s.name);
+		sheet.skillRollModifiers = heroSkills.reduce((map, skill) => {
+			const mods = HeroLogic.getRollModifiersForSkill(hero, skill).map(f => f.data.modifier);
+			if (mods.length > 0) {
+				map.set(skill.name, mods);
+			}
+			return map;
+		}, new Map<string, RollModifierType[]>());
+		// Skill cancel choices are NOT covered here - their description carries rules text (eg the bane) that the skills card doesn't show
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => f.feature.type === FeatureType.SkillChoice)
 			.map(f => f.feature.id));
 
 		// Culture
 		if (hero.culture) {
-			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero.class?.level || 1).map(f => f.feature);
+			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero.class?.level || 1, hero.state.tutorialMode).map(f => f.feature);
 			sheet.culture = hero.culture;
 			coveredFeatureIds.push(...cultureFeatures.map(f => f.id));
 		}
@@ -331,7 +399,7 @@ export class HeroSheetBuilder {
 		// #region Ancestry + Perks (combined)
 		const combinedAncestryPerks: { feature: Feature, source: string }[] = [];
 		if (hero.ancestry) {
-			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero.class?.level || 1);
+			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero.class?.level || 1, hero.state.tutorialMode);
 			combinedAncestryPerks.push(...ancestryFeatures
 				.filter(f => ClassicSheetLogic.includeFeature(f.feature, options))
 				.filter(f => f.feature.type !== FeatureType.Choice)
@@ -365,7 +433,7 @@ export class HeroSheetBuilder {
 			}
 		}
 		const divided = SheetFormatter.divideFeatures(combinedAncestryPerks, hero, perkSpace * 2, perkLineLen, 2);
-		sheet.ancestryTraitsPerksCombined = SheetFormatter.convertFeatures(divided.displayed);
+		sheet.ancestryTraitsPerksCombined = SheetFormatter.convertFeatures(divided.displayed, hero);
 
 		const additional = divided.reference;
 		sheet.featuresReferenceOther.push(...additional);
@@ -375,7 +443,14 @@ export class HeroSheetBuilder {
 
 		const titles = HeroLogic.getTitles(hero);
 		sheet.titles = titles;
-		coveredFeatureIds.push(...titles.flatMap(t => t.features.map(f => f.id)));
+		// A title feature can be a Multiple, so its children are covered by the title too
+		coveredFeatureIds.push(...titles
+			.flatMap(t => FeatureLogic.simplifyFeatures(
+				t.features.map(f => ({ feature: f, source: '', level: undefined })),
+				hero.class?.level || 1,
+				hero.state.tutorialMode
+			))
+			.map(f => f.feature.id));
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
 			.map(f => f.feature.id));
@@ -386,6 +461,7 @@ export class HeroSheetBuilder {
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 
 		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ]
+			.map(a => HeroLogic.applyAbilityCustomization(hero, a))
 			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options));
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options)).concat(freeStrikes);
 
@@ -396,12 +472,14 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 		// #endregion
 
-		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Retainer, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
+		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Retainer, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice, FeatureType.Fixture ].includes(f.feature.type))
 			.map(f => f.feature);
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 
 		sheet.summons = HeroLogic.getSummons(hero).filter(f => CreatureLogic.isSummon(f))
 			.map(f => this.buildSummonSheet(f, hero)).filter(s => !!s);
+
+		sheet.fixtures = HeroLogic.getFixtures(hero).map(f => ClassicSheetBuilder.buildFixtureSheet(f, hero));
 
 		coveredFeatureIds.push(...retinue.map(f => f.id));
 
@@ -430,7 +508,7 @@ export class HeroSheetBuilder {
 			case FeatureType.Bonus: {
 				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				const field = feature.data.field.toString();
-				HeroSheetBuilder.modifierFieldMapping[field](sheet, value);
+				HeroSheetBuilder.modifierFieldMapping[field]?.(sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:
@@ -455,7 +533,7 @@ export class HeroSheetBuilder {
 			benefits: []
 		};
 
-		const careerFeatures = career.features;
+		const careerFeatures = ClassicSheetLogic.flattenMultiples(career.features).filter(ClassicSheetLogic.hasContent);
 		sheet.benefits = SheetFormatter.convertFeaturesShort(careerFeatures);
 		sheet.incitingIncident = career.incitingIncidents.selected || undefined;
 
@@ -473,7 +551,7 @@ export class HeroSheetBuilder {
 			drawbacks: []
 		};
 
-		const complicationFeatures = complication.features;
+		const complicationFeatures = ClassicSheetLogic.flattenMultiples(complication.features).filter(ClassicSheetLogic.hasContent);
 
 		const drawbacks = complicationFeatures.filter(ClassicSheetLogic.isFeatureDrawback)
 			.map(f => this.stripDuplicateComplicationName(complication.name, f));
@@ -486,12 +564,21 @@ export class HeroSheetBuilder {
 		return sheet;
 	};
 
+	// These features belong to the hero, so rename a copy rather than the hero's own data
 	static stripDuplicateComplicationName = (complicationName: string, f: Feature) => {
-		if (f.type === FeatureType.Text && f.name.startsWith(complicationName)) {
-			f.name = '';
-		} else if (f.type === FeatureType.Ability) {
-			f.name = f.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+		if (f.type === FeatureType.Ability) {
+			const result = Utils.copy(f);
+			result.name = result.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+			return result;
 		}
+
+		const titled = [ FeatureType.Text, FeatureType.Multiple, FeatureType.SurgeGain ];
+		if (titled.includes(f.type) && f.name.startsWith(complicationName)) {
+			const result = Utils.copy(f);
+			result.name = '';
+			return result;
+		}
+
 		return f;
 	};
 	// #endregion
@@ -508,7 +595,6 @@ export class HeroSheetBuilder {
 	};
 
 	static buildFollowerSheet = (follower: Follower): FollowerSheet => {
-		// console.log(follower);
 		const followerType = `${follower.type}`;
 		const sheet: FollowerSheet = {
 			id: follower.id,
@@ -577,19 +663,19 @@ export class HeroSheetBuilder {
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, follower));
 
 		const advancement = [];
-		if ((!heroLevel || heroLevel >= 4) && follower.retainer?.level4?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 4) && follower.retainer?.level4?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 4,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level4.data.ability, follower)
 			});
 		}
-		if ((!heroLevel || heroLevel >= 7) && follower.retainer?.level7?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 7) && follower.retainer?.level7?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 7,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level7.data.ability, follower)
 			});
 		}
-		if ((!heroLevel || heroLevel >= 10) && follower.retainer?.level10?.type === FeatureType.Ability) {
+		if ((!heroLevel || heroLevel < 10) && follower.retainer?.level10?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 10,
 				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level10.data.ability, follower)
@@ -601,7 +687,7 @@ export class HeroSheetBuilder {
 	};
 
 	static buildCompanionSheet = (companion: Summon, hero: Hero): FollowerSheet => {
-		const monster = companion.monster;
+		const monster = SummonLogic.getSummonedMonster(companion, hero);
 		const sheet: FollowerSheet = {
 			id: companion.id,
 			name: companion.name,
@@ -672,7 +758,7 @@ export class HeroSheetBuilder {
 	static buildSummonSheet = (summon: Summon, hero: Hero): MonsterSheet => {
 		const monster = summon.monster;
 
-		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster, { summon: summon, summoner: hero });
 
 		const signature = summon.info.isSignature ? 'Signature ' : '';
 		const summonType = `${signature}Minion ${monster.role.type}`;

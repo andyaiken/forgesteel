@@ -214,7 +214,7 @@ The first time any hero fails a test made as part of the montage test while the 
 	static prepareForBattle: Montage = {
 		id: 'montage-prepare-for-battle',
 		name: 'Prepare for Battle',
-		description: 'Whether it’s a village threatened by bandits or a great city preparing for a siege, enemies are on their way and readyu to attack. The heroes have a limited time to fortify the settlement’s defenses and bolster its troops.',
+		description: 'Whether it’s a village threatened by bandits or a great city preparing for a siege, enemies are on their way and ready to attack. The heroes have a limited time to fortify the settlement’s defenses and bolster its troops.',
 		difficulty: EncounterDifficulty.Standard,
 		scene: 'The walls or palisades around the settlement (if any) are in poor shape. Roads or rivers through the area give the invaders free access to the settlement unless barricades, traps, or ambushes can be set up. Supplies of food, weapons, and ammunition are too low to survive a long siege. The area is home to few experienced fighters compared to the numbers of the invaders, and the local militia is poorly equipped and untrained.',
 		sections: [
@@ -280,7 +280,7 @@ The first time any hero fails a test made as part of the montage test while the 
 						skills: 'Conceal Object, Endurance, Mechanics'
 					})
 				],
-				twistInfo: 'At the end of the first round of the montage test, a fast-moving enemy vanguard attack before the settlement’s defenders are ready. The heroes must must engage in an easy combat encounter.',
+				twistInfo: 'At the end of the first round of the montage test, a fast-moving enemy vanguard attack before the settlement’s defenders are ready. The heroes must engage in an easy combat encounter.',
 				twists: []
 			}
 		],

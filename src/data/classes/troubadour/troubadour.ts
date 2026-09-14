@@ -5,13 +5,14 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { auteur } from '@/data/classes/troubadour/auteur';
 import { duelist } from '@/data/classes/troubadour/duelist';
 import { virtuoso } from '@/data/classes/troubadour/virtuoso';
 
 export const troubadour: HeroClass = {
-	id: '9y3Jx3koKZipiPh1',
+	id: 'class-troubadour',
 	name: 'Troubadour',
 	description: `The whole world’s a stage, and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whoever might witness your performance.
 
@@ -31,79 +32,89 @@ Jackson Bootblack`,
 			level: 1,
 			features: [
 				FactoryLogic.feature.createBonus({
-					id: '3G7nEekJVbHgJJNl',
+					id: 'troubadour-1',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 6
 				}),
 				FactoryLogic.feature.createBonus({
-					id: 'drlPj8moDZL1c8D1',
+					id: 'troubadour-2',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'UH5m1URtvSjZqfQb',
+					id: 'troubadour-3',
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'GjD2ZwdbvEIZOKQV',
+					id: 'troubadour-4',
 					listOptions: [ SkillList.Interpersonal ],
 					count: 2
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'WpHiobCwPhxC5q2g',
+					id: 'troubadour-5',
 					listOptions: [ SkillList.Intrigue, SkillList.Lore ]
 				}),
 				FactoryLogic.feature.createHeroicResource({
-					id: 'tS1DEkc8ZWqFRIxE',
+					id: 'troubadour-6',
 					name: 'Drama',
 					gains: [
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'The first time three or more heroes use an ability on the same turn',
-							value: '2'
+							tag: 'hero-ability',
+							trigger: 'Three or more heroes use an ability on the same turn',
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'The first time any hero is made winded during the encounter',
-							value: '2'
+							tag: 'hero-winded',
+							trigger: 'Any hero is made winded',
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'Whenever a creature within your line of effect rolls a natural 19 or 20',
-							value: '3'
+							tag: 'crit',
+							trigger: 'A creature within your line of effect rolls a natural 19 or 20',
+							value: '3',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						},
 						{
-							tag: '',
-							trigger: 'When you or another hero dies',
-							value: '10'
+							tag: 'die',
+							trigger: 'You or another hero dies',
+							value: '10',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					details: 'When you are dead, you continue to gain drama during combat as long as your body is intact. If you have 30 drama during the encounter in which you died, you can come back to life with 1 Stamina and 0 drama (no action required). If you are still dead after the encounter in which you died, you can’t gain drama during future encounters.'
 				}),
 				FactoryLogic.feature.createKitChoice({
-					id: '3rwc3gnUTZ6Ta7a0'
+					id: 'troubadour-7'
 				}),
 				FactoryLogic.feature.create({
-					id: 'q9DC0wXzaL4f1EeU',
+					id: 'troubadour-8',
 					name: 'Scene Partner',
 					description: `Whenever you obtain a success on a test to interact with an NPC using a skill from the interpersonal group, you can form a bond with that NPC. When you enter into a negotiation with a bonded NPC, their patience increases by 1 (to a maximum of 5). Additionally, the first time during a negotiation that you personally make an argument that would increase a bonded NPC’s interest by 1, you instead increase their interest by 2 (to a maximum of 5).
 
 You can have a number of bonds active equal to your level. When you form a bond with a new NPC that would exceed the limit, you must choose which of your active bonds to lose.`
 				}),
 				FactoryLogic.feature.create({
-					id: 'MTcRnLoVfzQkQw7T',
+					id: 'troubadour-9',
 					name: 'Routines',
 					description: 'You enter every battle with a set of performance abilities at the ready. Performances are magical presentations (such as songs, dances, poems, or gymnastic feats) that your allies can participate in. These abilities have the Performance keyword. At the start of each combat round, as long as you are not dazed, dead, or surprised, you can either choose a new performance or maintain your current performance (no action required). Your performance lasts until you are unable to maintain it or until the end of the encounter.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'DY5KgVsjM9G2b1eP',
+						id: 'troubadour-10',
 						name: 'Choreography',
 						description: 'Taps, kicks, steps. It’s all “choreography.”',
 						type: FactoryLogic.type.createNoAction(),
@@ -117,7 +128,7 @@ You can have a number of bonds active equal to your level. When you form a bond 
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'uqp9td9gJ5c4tKKQ',
+						id: 'troubadour-11',
 						name: 'Revitalizing Limerick',
 						description: 'There once was a man from Capital …',
 						type: FactoryLogic.type.createNoAction(),
@@ -130,15 +141,15 @@ You can have a number of bonds active equal to your level. When you form a bond 
 					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'JEPrmTnFwNbi7kWO',
+					id: 'troubadour-12',
 					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'cCfz5o1dUmzOYVPL',
+					id: 'troubadour-13',
 					cost: 3
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'smLIhr6BGJPZscJG',
+					id: 'troubadour-14',
 					cost: 5
 				})
 			]
@@ -147,7 +158,7 @@ You can have a number of bonds active equal to your level. When you form a bond 
 			level: 2,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'TzNcWWXAnI5bvPk9',
+					id: 'troubadour-15',
 					name: 'Appeal to the Muses',
 					description: `You can give a rousing speech, invoke your inspirations, or lift your fellows’ spirits, appealing to the muses to heighten a battle’s drama. However, irony is eager to hand your fortune to the villain to achieve the same end.
 
@@ -157,14 +168,14 @@ Before you roll to gain drama at the start of your turn, you can make your appea
 * If the roll is a 3, you gain 2 of a Heroic Resource, which you can distribute among yourself and any allies within the distance of your active performance.`
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'WagqmAOErEbwOMUA',
+					id: 'troubadour-16',
 					name: 'Invocation',
 					description: 'You have a specific manner that helps define your presence on the battlefield. Choose one of the following features.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'Ojd2syAahwIuMZ7E',
+									id: 'troubadour-17',
 									name: 'Allow Me to Introduce Tonight’s Players',
 									description: '',
 									type: FactoryLogic.type.createMain(),
@@ -179,7 +190,7 @@ Before you roll to gain drama at the start of your turn, you can make your appea
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: '3TpougOk43FTEYlT',
+								id: 'troubadour-18',
 								name: 'Formal Introductions',
 								description: `As a respite activity, you can scribe a notice of your arrival (such as a calling card or a formal letter) addressed to an enemy. You can deliver the notice to the target personally if you are in the same general area, send it by courier, or leave it in a covert location for the target to find. You can have only one notice active at a time.
 
@@ -189,7 +200,7 @@ The Director determines when the target receives your notice. When the target re
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'vAsAdX1lzAwxKC0z',
+								id: 'troubadour-19',
 								name: 'My Reputation Precedes Me',
 								description: `You can invoke your reputation at the start of a social interaction with one or more NPCs who haven’t met you before, automatically creating a bond with one of those NPCs from that group as if using your Scene Partner feature. This bond counts against the limit on active bonds from your Scene Partner feature. While the bond is active, all heroes present treat their Renown as 2 higher than usual for the purpose of entering into a negotiation with the bonded NPC.
 
@@ -200,7 +211,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 					]
 				}),
 				FactoryLogic.feature.createPerk({
-					id: 'tknnoxNMdhRdiF1e',
+					id: 'troubadour-20',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				})
 			]
@@ -209,7 +220,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 			level: 3,
 			features: [
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'yoKyUfQEMwhyC4Ze',
+					id: 'troubadour-21',
 					cost: 7
 				})
 			]
@@ -218,72 +229,77 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 			level: 4,
 			features: [
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'bEgiUgVeMGaONxTn',
+					id: 'troubadour-22',
 					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'N00Uu7tYlbZh5mLR',
+					id: 'troubadour-23',
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'eMWbssNB1OSeIFmj',
+					id: 'troubadour-24',
 					name: 'Melodrama',
 					options: [
 						{
 							feature: FactoryLogic.feature.createHeroicResourceGain({
-								id: 'bPZ0jgAHVi08ZX2X',
+								id: 'troubadour-25',
 								name: 'Melodrama #1',
 								tag: 'crit-fail',
-								trigger: 'Whenever a creature rolls a natural 2 on a power roll.',
-								value: '2'
+								trigger: 'A creature rolls a natural 2 on a power roll.',
+								value: '2',
+								frequency: ResourceGainFrequency.AtWill
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createHeroicResourceGain({
-								id: 'Jlp0a0yANrSIoeXp',
+								id: 'troubadour-26',
 								name: 'Melodrama #2',
 								tag: 'villain-malice',
-								trigger: 'The first time the Director deals damage to a hero using a Villain action or an ability that costs Malice.',
-								value: '2'
+								trigger: 'The Director deals damage to a hero using a Villain action or an ability that costs Malice.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createHeroicResourceGain({
-								id: '05FGfz1LetwQOlGm',
+								id: 'troubadour-27',
 								name: 'Melodrama #3',
 								tag: 'falls',
-								trigger: 'The first time a hero unwillingly falls 5 or more squares.',
-								value: '2'
+								trigger: 'A hero unwillingly falls 5 or more squares.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createHeroicResourceGain({
-								id: 'bnEzQSbTNyay2M51',
+								id: 'troubadour-28',
 								name: 'Melodrama #4',
 								tag: 'surges',
-								trigger: 'The first time a hero deals damage with 3 surges.',
-								value: '2'
+								trigger: 'A hero deals damage with 3 surges.',
+								value: '2',
+								frequency: ResourceGainFrequency.OncePerEncounter
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createHeroicResourceGain({
-								id: 'lbGOgNoNt9SsiBDB',
+								id: 'troubadour-29',
 								name: 'Melodrama #5',
 								tag: 'last-recovery',
-								trigger: 'Whenever a hero spends their last Recovery.',
-								value: '2'
+								trigger: 'A hero spends their last Recovery.',
+								value: '2',
+								frequency: ResourceGainFrequency.AtWill
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'AOgAXA0Z2YZWf0Be',
+								id: 'troubadour-30',
 								name: 'Melodrama Alternative',
 								description: 'You can forgo choosing a new event to choose one event you already have (including an event gained with this feature). Whenever the chosen event grants you drama, you gain 1 additional drama.'
 							}),
@@ -293,14 +309,14 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 					count: 2
 				}),
 				FactoryLogic.feature.createPerk({
-					id: 'c8wilO6exppZ8lk0'
+					id: 'troubadour-31'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'pBD0Fhn5vO1A26aB',
+					id: 'troubadour-32',
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				}),
 				FactoryLogic.feature.create({
-					id: 'faVh7riGGaN0uOHR',
+					id: 'troubadour-33',
 					name: 'Zeitgeist',
 					description: `You always have your ear to the ground, your finger on the pulse. When you start or finish a respite, choose one of the following effects.
 ### Foreshadowing
@@ -327,7 +343,7 @@ You can ask the Director for three rumors regarding the area you’re in or an a
 			level: 5,
 			features: [
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'ExlOitsyzbnBbNA2',
+					id: 'troubadour-34',
 					cost: 9
 				})
 			]
@@ -336,12 +352,12 @@ You can ask the Director for three rumors regarding the area you’re in or an a
 			level: 6,
 			features: [
 				FactoryLogic.feature.createPerk({
-					id: 'ywf7fUdThUpCdF6J',
+					id: 'troubadour-35',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'KFi7rVE3i9lrpXic',
+						id: 'troubadour-36',
 						name: 'Spotlight',
 						description: 'The audience is watching, so you’d better give them a show.',
 						type: FactoryLogic.type.createNoAction(),
@@ -359,47 +375,48 @@ You can ask the Director for three rumors regarding the area you’re in or an a
 			level: 7,
 			features: [
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'grnE5hFyVyLylxC2',
+					id: 'troubadour-37',
 					characteristic: Characteristic.Might,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'LNpO0wUO8Eevov6c',
+					id: 'troubadour-38',
 					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'JszVRV1fs7lyz7yF',
+					id: 'troubadour-39',
 					characteristic: Characteristic.Reason,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'u8XAyI9vpwIPsJXi',
+					id: 'troubadour-40',
 					characteristic: Characteristic.Intuition,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'cuvMsaNuv1KvGvUF',
+					id: 'troubadour-41',
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
 				FactoryLogic.feature.create({
-					id: 'HRzXpQyzYdOU4f3r',
+					id: 'troubadour-42',
 					name: 'Equal Billing',
 					description: `You can use your Scene Partner feature to form a bond with one willing hero instead of an NPC you interact with using a test. If you bond with another hero, you lose your existing bond with a hero.
 
 Additionally, you and creatures you are bonded with gain a +1 bonus to saving throws. Whenever you or a bonded creature succeeds on a saving throw, you and each creature you are bonded with gains temporary Stamina equal to your level.`
 				}),
 				FactoryLogic.feature.createHeroicResourceGain({
-					id: 'JRIAGwr5xwIXZdG5',
+					id: 'troubadour-43',
 					name: 'A Muse’s Muse',
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'A7CsaTimMURrXg0M',
+					id: 'troubadour-44',
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				})
 			]
@@ -408,10 +425,10 @@ Additionally, you and creatures you are bonded with gain a +1 bonus to saving th
 			level: 8,
 			features: [
 				FactoryLogic.feature.createPerk({
-					id: 'rm84D6UDOw6SNSVm'
+					id: 'troubadour-45'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'wAOl8UZ3VTUdA67Z',
+					id: 'troubadour-46',
 					cost: 11
 				})
 			]
@@ -420,7 +437,7 @@ Additionally, you and creatures you are bonded with gain a +1 bonus to saving th
 			level: 9,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'b4oYpDkEydG3CTOD',
+					id: 'troubadour-47',
 					name: 'Roar of the Crowd',
 					description: `You are empowered by your audience, near and far. You can’t be made frightened, and if you are prone, you can stand up as a free maneuver.
 
@@ -432,42 +449,45 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			level: 10,
 			features: [
 				FactoryLogic.feature.createHeroicResource({
-					id: 'GYcwgp374s2e3GiY',
+					id: 'troubadour-48',
 					name: 'Applause',
+					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					]
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'nkOnWwzyFh2QZOnV',
+					id: 'troubadour-49',
 					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
-					id: 'KyTOfWVz1Htc6DAr',
+					id: 'troubadour-50',
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
 				FactoryLogic.feature.create({
-					id: 'SvXvD5JZWWIMcMGv',
+					id: 'troubadour-51',
 					name: 'Dramaturgy',
 					description: 'You gain 1 additional drama or other Heroic Resource whenever you use your Appeal to the Muses feature. Additionally, your performances no longer have a distance, but can affect any target on the encounter map within your line of effect.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'kN2tUhuHAbfRxOM3',
+					id: 'troubadour-52',
 					name: 'Greatest of All Time',
 					description: 'Whenever you obtain a success on a test, each NPC within your line of effect has their Impression score decreased by 4 during a negotiation (to a minimum of 1), and each ally within 3 squares of you gains an edge on their next test. These effects last until you start your next respite.'
 				}),
 				FactoryLogic.feature.createPerk({
-					id: 'MJlch8xy0BmtjEAz',
+					id: 'troubadour-53',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'gIVmDrETVg4F0eTC',
+					id: 'troubadour-54',
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				})
 			]
@@ -475,7 +495,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 	],
 	abilities: [
 		FactoryLogic.createAbility({
-			id: 'gEzZJ1hBo5YTQZVL',
+			id: 'troubadour-55',
 			name: 'Artful Flourish',
 			description: 'And they said practicing fencing was a waste!',
 			type: FactoryLogic.type.createMain(),
@@ -501,7 +521,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'aiH7V95hu1z7bvnJ',
+			id: 'troubadour-56',
 			name: 'Cutting Sarcasm',
 			description: 'There you are, radiating your usual charisma.',
 			type: FactoryLogic.type.createMain(),
@@ -521,7 +541,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Dq8W50f8RkS1gCZR',
+			id: 'troubadour-57',
 			name: 'Instigator',
 			description: 'I didn’t do it! What?',
 			type: FactoryLogic.type.createMain(),
@@ -542,7 +562,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'oklqgAHvGNBYvZ6Y',
+			id: 'troubadour-58',
 			name: 'Witty Banter',
 			description: 'A lyrical (and physical) jab insults an enemy and inspires an ally.',
 			type: FactoryLogic.type.createMain(),
@@ -569,7 +589,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'wuGWNezovUaXNrhz',
+			id: 'troubadour-59',
 			name: 'Harsh Critic',
 			description: 'Just one bad review will ruin their day.',
 			type: FactoryLogic.type.createMain(),
@@ -593,7 +613,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '48Ek5173XbbcaIuv',
+			id: 'troubadour-60',
 			name: 'Hypnotic Overtones',
 			description: 'You produce an entrancing note that twists the senses in a spectacular fashion.',
 			type: FactoryLogic.type.createMain(),
@@ -618,7 +638,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'D27ycyqsuILS0KXt',
+			id: 'troubadour-61',
 			name: 'Quick Rewrite',
 			description: 'You write something unexpected into the scene that hinders your enemy.',
 			type: FactoryLogic.type.createMain(),
@@ -639,7 +659,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'amyFFfmA2oAoiO8P',
+			id: 'troubadour-62',
 			name: 'Upstage',
 			description: 'As you bob and weave through the crowd, you can’t help but leave the audience wanting more.',
 			type: FactoryLogic.type.createManeuver(),
@@ -660,7 +680,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'MKhak5HyGbRZdhWy',
+			id: 'troubadour-63',
 			name: 'Dramatic Reversal',
 			description: 'Give the audience a surprise.',
 			type: FactoryLogic.type.createMain(),
@@ -680,7 +700,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'y4twMNJioffMnTAp',
+			id: 'troubadour-64',
 			name: 'Fake Your Death',
 			description: 'O happy dagger, this is thy sheath!',
 			type: FactoryLogic.type.createManeuver(),
@@ -693,7 +713,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'wkTaIiJ4JOVGjFkE',
+			id: 'troubadour-65',
 			name: 'Flip the Script',
 			description: 'You try a different take on events, justifying the new locations everyone ended up in.',
 			type: FactoryLogic.type.createMain(),
@@ -706,7 +726,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'lHLPt6cUuyXcCdb0',
+			id: 'troubadour-66',
 			name: 'Method Acting',
 			description: 'They’re so hurt by your performance, you start to believe it yourself. ',
 			type: FactoryLogic.type.createMain(),
@@ -727,7 +747,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'BlO52My4D7X4wdVh',
+			id: 'troubadour-67',
 			name: 'Extensive Rewrites',
 			description: 'No, this isn’t right. That foe was over there!',
 			type: FactoryLogic.type.createManeuver(),
@@ -748,7 +768,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '7vm0VdMiqgrZtpcu',
+			id: 'troubadour-68',
 			name: 'Infernal Gavotte',
 			description: 'A spicy performance lights a fire under your allies’ feet',
 			type: FactoryLogic.type.createMain(),
@@ -769,7 +789,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '7vm0VdMiqgrZtpcu2',
+			id: 'troubadour-69',
 			name: 'Star Solo',
 			description: 'Your performance travels and doesn’t stop moving until your audience is completely rocked.',
 			type: FactoryLogic.type.createMain(),
@@ -793,7 +813,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '7vm0VdMiqgrZtpcu3',
+			id: 'troubadour-70',
 			name: 'We Meet at Last',
 			description: 'You magically intertwine your fate with another creature—for better or worse.',
 			type: FactoryLogic.type.createManeuver(),
@@ -809,7 +829,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'fyx732V0Vlq49a1N',
+			id: 'troubadour-71',
 			name: 'Action Hero',
 			description: 'You wield your weapon at blistering speed, leaving everyone around you fighting for their lives.',
 			type: FactoryLogic.type.createMain(),
@@ -830,7 +850,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'HeBr76EpA6RIMDSX',
+			id: 'troubadour-72',
 			name: 'Continuity Error',
 			description: 'Your subject is written into two places at once.',
 			type: FactoryLogic.type.createManeuver(),
@@ -843,7 +863,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Q5GrFFZc8YjRIJjL',
+			id: 'troubadour-73',
 			name: 'Love Song',
 			description: 'You play a small ditty that plants you inside your target’s heart.',
 			type: FactoryLogic.type.createManeuver(),
@@ -856,7 +876,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'ZrTkbAu3EcZ0C6Di',
+			id: 'troubadour-74',
 			name: 'Patter Song',
 			description: 'Dazzle them with your fancy patter and they forget where they were.',
 			type: FactoryLogic.type.createManeuver(),
@@ -876,7 +896,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'SRHmnFY5rDCiCRuR',
+			id: 'troubadour-75',
 			name: 'Dramatic Reveal',
 			description: 'A little stage trickery, and where once stood a foe, now stands a friend!',
 			type: FactoryLogic.type.createManeuver(),
@@ -889,7 +909,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '0rmeKAGMyn9Q6YMf',
+			id: 'troubadour-76',
 			name: 'Power Ballad',
 			description: 'A song for the brokenhearted wraps itself around the target and blossoms into a ward of thorns.',
 			type: FactoryLogic.type.createManeuver(),
@@ -902,7 +922,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '2XIhjJCLHQuNte5I',
+			id: 'troubadour-77',
 			name: 'Saved in the Edit',
 			description: 'You shout a word of power that allows you to rewrite reality to your whims.',
 			type: FactoryLogic.type.createManeuver(),
@@ -919,7 +939,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'zrzbOjJnBZb8eWUQ',
+			id: 'troubadour-78',
 			name: 'The Show Must Go On',
 			description: 'You shine a bright light on the players on the stage and compel them to finish the performance.',
 			type: FactoryLogic.type.createManeuver(),

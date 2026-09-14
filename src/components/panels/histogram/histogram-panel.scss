@@ -18,13 +18,13 @@
 		.bar {
 			margin: 0 3px;
 			background-color: rgb(230, 244, 255);
-			border: 1px solid rgb(64, 150, 255);
+			border: 1px solid var(--fs-accent-light);
 			border-radius: 3px 3px 0 0;
 		}
 
 		.label {
 			margin-top: -1px;
-			border-top: 1px solid rgba(5, 5, 5, 0.06);
+			border-top: 1px solid var(--fs-border);
 			padding-top: 5px;
 			font-size: 10px;
 			text-align: center;
@@ -41,7 +41,7 @@
 			cursor: pointer;
 
 			&:hover {
-				background-color: rgb(230, 244, 255);
+				background-color: var(--fs-accent-wash);
 			}
 		}
 	}
@@ -53,16 +53,6 @@ html[data-theme="dark"] {
 			.label {
 				border-color: rgba(250, 250, 250, 0.6);
 				color: rgba(255, 255, 255, 0.88);
-			}
-		}
-
-		&.clickable {
-			.bar-section {
-				cursor: pointer;
-	
-				&:hover {
-					background-color: rgb(64, 150, 255);
-				}
 			}
 		}
 	}

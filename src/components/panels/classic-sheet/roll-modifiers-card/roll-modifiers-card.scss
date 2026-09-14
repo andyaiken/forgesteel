@@ -1,0 +1,43 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.hero-sheet .roll-modifiers.card {
+    // The icons carry the meaning, and a printed sheet has no tooltips
+    .reference {
+        @include common.font-slab();
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 4px;
+        font-size: round(1.1rem, 1px);
+        color: var(--color-text-lightest);
+
+        .doubled {
+            margin-left: 4px;
+        }
+    }
+
+    .roll-modifier {
+        &:not(:last-of-type) {
+            margin-bottom: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid common.$color-light;
+        }
+
+        .roll-modifier-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 5px;
+
+            .scope {
+                font-weight: 450;
+            }
+        }
+
+        .condition {
+            @include common.font-serif();
+            opacity: 0.9;
+        }
+    }
+}

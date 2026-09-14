@@ -737,6 +737,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
 								tier1: 'A<0 restrained (save ends)',
 								tier2: 'A<1 restrained (save ends)',
 								tier3: 'A<2 restrained (save ends)'

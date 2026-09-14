@@ -36,7 +36,7 @@ export const HeroLevelUpModal = (props: Props) => {
 		const setData = (featureID: string, data: FeatureData) => {
 			const copy = Utils.copy(hero);
 
-			FeatureLogic.getFeaturesFromClass(copy.class!, copy.class!.level)
+			FeatureLogic.getFeaturesFromClass(copy.class!, copy.class!.level, copy.state.tutorialMode)
 				.filter(f => f.level === hero.class!.level)
 				.map(f => f.feature)
 				.filter(f => f.id === featureID)
@@ -57,7 +57,7 @@ export const HeroLevelUpModal = (props: Props) => {
 		);
 	};
 
-	const features = FeatureLogic.getFeaturesFromClass(hero.class!, hero.class!.level)
+	const features = FeatureLogic.getFeaturesFromClass(hero.class!, hero.class!.level, hero.state.tutorialMode)
 		.filter(f => f.level === hero.class!.level)
 		.map(f => f.feature);
 

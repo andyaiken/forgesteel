@@ -3,7 +3,6 @@ import { LoginOutlined, LogoutOutlined, PartitionOutlined } from '@ant-design/ic
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Plot } from '@/models/plot';
 import { ReactNode } from 'react';
@@ -167,34 +166,32 @@ export const PlotGraphPanel = (props: Props) => {
 	const canGoIn = props.onOpen && props.selectedPlot && ((props.selectedPlot.plots.length > 0) || props.onCreate);
 
 	return (
-		<ErrorBoundary>
-			<div className='plot-graph-panel' onClick={() => selectPlotPoint(null)} onDoubleClick={props.onCreate}>
-				<div className='header-row' onClick={e => e.stopPropagation()}>
-					<HeaderText
-						level={1}
-						style={{ margin: '0' }}
-						tags={props.tags}
-						extra={
-							<Flex gap={5}>
-								{canGoOut ? <Button type='text' icon={<LogoutOutlined rotate={210} />} onClick={() => openPlotPoint(parentPlot)} /> : null}
-								{canGoIn ? <Button type='text' icon={<LoginOutlined rotate={30} />} onClick={() => openPlotPoint(props.selectedPlot!)} /> : null}
-							</Flex>
-						}
-					>
-						{props.label}
-					</HeaderText>
-				</div>
-				{
-					props.plot.plots.length > 0 ?
-						<svg className='plot-container' style={{ height: totalHeight }}>
-							{links}
-							{linkLabels}
-							{plots}
-						</svg>
-						:
-						<Empty text={props.onCreate ? 'Double-click to add a plot point.' : 'No plot points'} />
-				}
+		<div className='plot-graph-panel' onClick={() => selectPlotPoint(null)} onDoubleClick={props.onCreate}>
+			<div className='header-row' onClick={e => e.stopPropagation()}>
+				<HeaderText
+					level={1}
+					style={{ margin: '0' }}
+					tags={props.tags}
+					extra={
+						<Flex gap={5}>
+							{canGoOut ? <Button type='text' icon={<LogoutOutlined rotate={210} />} onClick={() => openPlotPoint(parentPlot)} /> : null}
+							{canGoIn ? <Button type='text' icon={<LoginOutlined rotate={30} />} onClick={() => openPlotPoint(props.selectedPlot!)} /> : null}
+						</Flex>
+					}
+				>
+					{props.label}
+				</HeaderText>
 			</div>
-		</ErrorBoundary>
+			{
+				props.plot.plots.length > 0 ?
+					<svg className='plot-container' style={{ height: totalHeight }}>
+						{links}
+						{linkLabels}
+						{plots}
+					</svg>
+					:
+					<Empty text={props.onCreate ? 'Double-click to add a plot point.' : 'No plot points'} />
+			}
+		</div>
 	);
 };

@@ -1,6 +1,9 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
@@ -8,6 +11,7 @@ export const metakinetic: SubClass = {
 	id: 'null-sub-3',
 	name: 'Metakinetic',
 	description: 'You learn to see through the illusions of the universe to more fully understand your body and its psionic potential.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -19,21 +23,53 @@ export const metakinetic: SubClass = {
 				FactoryLogic.feature.createMultiple({
 					id: 'null-sub-3-1-2',
 					name: 'Metakinetic Mastery',
+					description: 'As your discipline grows, your psionic potential is amplified, granting benefits from the Metakinetic Mastery table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
 					features: [
-						FactoryLogic.feature.create({
-							id: 'null-sub-3-1-2a',
-							name: 'Metakinetic Mastery',
-							description: `
-As your discipline grows, your psionic potential is amplified, granting benefits from the Metakinetic Mastery table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.
-
-| Discipline | Benefit                                                                                                                                                                                        |
-|:-----------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2              | Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Intuition score.                                                                         |
-| 4              | The first time in a combat round that you take damage or are force moved, you gain 1 surge, even if you resist the effect.                                                                 |
-| 6              | You gain an edge on the Grab and Knockback maneuvers.                                                                                                                                      |
-| 8 (4th level)  | The first time in a combat round that you take damage or are force moved, you gain 2 surges, even if you resist the effect.                                                                |
-| 10 (7th level) | You have a double edge on the Grab and Knockback maneuvers.                                                                                                                                |
-| 12 (10th level)| Whenever you force move a target, the forced movement distance gains a bonus equal to your Intuition score. Additionally, whenever you use a heroic ability, you gain 10 temporary Stamina.|`
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-3-1-2-2',
+							resource: 'Discipline',
+							value: 2,
+							feature: FactoryLogic.feature.create({
+								id: 'null-sub-3-1-2-2a',
+								name: 'Metakinetic Mastery (Discipline 2)',
+								description: 'Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Intuition score.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-3-1-2-4',
+							resource: 'Discipline',
+							value: 4,
+							feature: FactoryLogic.feature.createSurgeGain({
+								id: 'null-sub-3-1-2-4a',
+								name: 'Metakinetic Mastery (Discipline 4)',
+								tag: 'take-damage',
+								trigger: 'You take damage or are force moved, even if you resist the effect',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'null-sub-3-1-2-6',
+							resource: 'Discipline',
+							value: 6,
+							feature: FactoryLogic.feature.createMultiple({
+								id: 'null-sub-3-1-2-6a',
+								name: 'Metakinetic Mastery (Discipline 6)',
+								features: [
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-3-1-2-6a-grab',
+										name: 'Metakinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Grab
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'null-sub-3-1-2-6a-knockback',
+										name: 'Metakinetic Mastery (Discipline 6)',
+										modifier: RollModifierType.Edge,
+										rollType: RollType.Knockback
+									})
+								]
+							})
 						}),
 						FactoryLogic.feature.createPackageContent({
 							id: 'null-sub-3-1-2b',
@@ -117,7 +153,23 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 		},
 		{
 			level: 4,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-3-4-1',
+					name: 'Metakinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 8,
+					feature: FactoryLogic.feature.createSurgeGain({
+						id: 'null-sub-3-4-1a',
+						name: 'Metakinetic Mastery (Discipline 8)',
+						tag: 'take-damage 2',
+						trigger: 'You take damage or are force moved, even if you resist the effect',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'take-damage' ]
+					})
+				})
+			]
 		},
 		{
 			level: 5,
@@ -184,7 +236,32 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 		},
 		{
 			level: 7,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-3-7-1',
+					name: 'Metakinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 10,
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'null-sub-3-7-1a',
+						name: 'Metakinetic Mastery (Discipline 10)',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-3-7-1a-grab',
+								name: 'Metakinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'null-sub-3-7-1a-knockback',
+								name: 'Metakinetic Mastery (Discipline 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
+					})
+				})
+			]
 		},
 		{
 			level: 8,
@@ -251,7 +328,19 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 		},
 		{
 			level: 10,
-			features: []
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'null-sub-3-10-1',
+					name: 'Metakinetic Mastery Improvement',
+					resource: 'Discipline',
+					value: 12,
+					feature: FactoryLogic.feature.create({
+						id: 'null-sub-3-10-1a',
+						name: 'Metakinetic Mastery (Discipline 12)',
+						description: 'Whenever you force move a target, the forced movement distance gains a bonus equal to your Intuition score. Additionally, whenever you use a heroic ability, you gain 10 temporary Stamina.'
+					})
+				})
+			]
 		}
 	],
 	abilities: [],

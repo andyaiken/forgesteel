@@ -8,6 +8,7 @@ export const punisher: SubClass = {
 	id: 'beastheart-sub-3',
 	name: 'Punisher',
 	description: 'Using brute force, you overwhelm anyone unwise enough to earn your wrath.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -84,7 +85,7 @@ export const punisher: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'beastheart-sub-4-2-2a',
+									id: 'beastheart-sub-3-2-2a',
 									name: 'Foe Bowling',
 									description: 'Your companion sends one enemy tumbling into another, taking them both out.',
 									type: FactoryLogic.type.createMain(),
@@ -110,7 +111,7 @@ export const punisher: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'beastheart-sub-4-2-2b',
+									id: 'beastheart-sub-3-2-2b',
 									name: 'One Roar and We’re Back In the Fight',
 									description: 'Your companion builds up courage with a roar, growl, or aggressive display.',
 									type: FactoryLogic.type.createManeuver(),

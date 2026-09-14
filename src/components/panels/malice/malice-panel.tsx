@@ -1,5 +1,4 @@
 import { Button, Progress } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -27,39 +26,37 @@ export const MalicePanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<SelectablePanel key={props.malice.id}>
-				<div className='malice-panel'>
-					<FeaturePanel
-						feature={props.malice}
-						cost={cost}
-						repeatable={props.malice.type === FeatureType.Malice ? props.malice.data.repeatable : undefined}
-						mode={PanelMode.Full}
-					/>
-					{
-						(props.currentMalice !== undefined) ?
-							props.currentMalice >= cost ?
-								<Button
-									block={true}
-									onClick={() => {
-										if (props.updateCurrentMalice) {
-											const malice = Math.max(props.currentMalice! - cost, 0);
-											props.updateCurrentMalice(malice);
-										}
-									}}
-								>
-									Use
-									<ResourcePill value={cost} />
-								</Button>
-								:
-								<div className='malice-progress'>
-									<Progress percent={100 * props.currentMalice / cost} steps={cost} showInfo={false} />
-									<ResourcePill value={`${props.currentMalice} of ${cost}`} />
-								</div>
-							: null
-					}
-				</div>
-			</SelectablePanel>
-		</ErrorBoundary>
+		<SelectablePanel key={props.malice.id}>
+			<div className='malice-panel'>
+				<FeaturePanel
+					feature={props.malice}
+					cost={cost}
+					repeatable={props.malice.type === FeatureType.Malice ? props.malice.data.repeatable : undefined}
+					mode={PanelMode.Full}
+				/>
+				{
+					(props.currentMalice !== undefined) ?
+						props.currentMalice >= cost ?
+							<Button
+								block={true}
+								onClick={() => {
+									if (props.updateCurrentMalice) {
+										const malice = Math.max(props.currentMalice! - cost, 0);
+										props.updateCurrentMalice(malice);
+									}
+								}}
+							>
+								Use
+								<ResourcePill value={cost} />
+							</Button>
+							:
+							<div className='malice-progress'>
+								<Progress percent={100 * props.currentMalice / cost} steps={cost} showInfo={false} />
+								<ResourcePill value={`${props.currentMalice} of ${cost}`} />
+							</div>
+						: null
+				}
+			</div>
+		</SelectablePanel>
 	);
 };

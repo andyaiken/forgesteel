@@ -38,7 +38,9 @@ export const ProjectSelectModal = (props: Props) => {
 	]
 		.filter(item => Utils.textMatches([
 			item.name,
-			item.description
+			item.description,
+			item.itemPrerequisites,
+			item.source
 		], searchTerm));
 
 	return (

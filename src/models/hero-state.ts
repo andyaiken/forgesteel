@@ -1,10 +1,12 @@
 import { Condition } from '@/models/condition';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { Item } from '@/models/item';
 import { Project } from '@/models/project';
 import { Title } from '@/models/title';
+import { TutorialMode } from '@/enums/tutorial-mode';
 
 export interface HeroState {
+	tutorialMode: TutorialMode
 	staminaDamage: number;
 	staminaTemp: number;
 	recoveriesUsed: number;
@@ -21,6 +23,7 @@ export interface HeroState {
 	titles: Title[];
 	controlledSlots: EncounterSlot[];
 	notes: string;
+	inventoryText: string;
 	hidden: boolean;
 	encounterState: 'ready' | 'current' | 'finished';
 	defeated: boolean;

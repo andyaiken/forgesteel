@@ -5,20 +5,21 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { SubClass } from '@/models/subclass';
 
 export const duelist: SubClass = {
-	id: 'O51GO1EdIggJHj40',
+	id: 'troubadour-duelist',
 	name: 'Duelist',
 	description: 'Drama infuses your every movement done in tandem with another. You perform dances of death, putting trust in your opponent to return your passion in kind.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
-					id: '1NhlI9WCQUCKkX0u',
+					id: 'troubadour-duelist-1',
 					selected: [ 'Gymnastics' ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gTezUhLaizAfbmXy',
+						id: 'troubadour-duelist-2',
 						name: 'Acrobatics',
 						description: 'Folks love a good tumble.',
 						type: FactoryLogic.type.createNoAction(),
@@ -32,7 +33,7 @@ export const duelist: SubClass = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'vS4O8NKJgdBVoVjj',
+						id: 'troubadour-duelist-3',
 						name: 'Star Power',
 						description: 'Your years of practicing fencing and dancing pay off on the battlefield.',
 						type: FactoryLogic.type.createManeuver(),
@@ -49,7 +50,7 @@ export const duelist: SubClass = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'uWQCoI4iBOhFpHgW',
+						id: 'troubadour-duelist-4',
 						name: 'Riposte',
 						description: '“I’d have brought treats had I known I’d be fighting a dog.”',
 						type: FactoryLogic.type.createTrigger('The target takes damage from a melee strike.'),
@@ -67,13 +68,13 @@ export const duelist: SubClass = {
 			level: 2,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'lAPeP3iSpt8PqQJI',
+					id: 'troubadour-duelist-5',
 					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'FViXbLCcsCb1xdHQ',
+									id: 'troubadour-duelist-6',
 									name: 'Classic Chandelier Stunt',
 									description: 'Audiences love this bit.',
 									type: FactoryLogic.type.createMain(),
@@ -91,7 +92,7 @@ export const duelist: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'MRR7Ag6ujfREe9A8',
+									id: 'troubadour-duelist-7',
 									name: 'En Garde!',
 									description: 'Wait, it’s … Guard! Turn! Parry! Dodge! Spin! Thrust! Ha!',
 									type: FactoryLogic.type.createMain(),
@@ -122,7 +123,7 @@ export const duelist: SubClass = {
 			level: 3,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'TkRYPzOk7E7KosGI',
+					id: 'troubadour-duelist-8',
 					name: 'Foil',
 					description: `At the start of an encounter, choose one creature within your line of effect. You have a double edge on power rolls made against or in
 competition with that creature. The chosen creature also has a double edge on power rolls made against or in competition with you. If the chosen creature is reduced to 0 Stamina, you can choose a new foil at the start of the next combat round. `
@@ -137,12 +138,12 @@ competition with that creature. The chosen creature also has a double edge on po
 			level: 5,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'AYG8ODq4Xvn4vWMr',
+					id: 'troubadour-duelist-9',
 					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'EpJ6mBFE2kfCK1IY',
+								id: 'troubadour-duelist-10',
 								name: 'Verbal Duel',
 								description: 'Once on each of your turns while the target of your Foil feature is adjacent to you, you can use a free maneuver to exchange words with them. Make an opposed Presence test with the target. Whoever gets the higher result can make a free strike, which deals psychic damage instead of its usual damage.'
 							}),
@@ -151,7 +152,7 @@ competition with that creature. The chosen creature also has a double edge on po
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'TqxhltwD22GJjGkU',
+									id: 'troubadour-duelist-11',
 									name: 'We Can’t Be Upstaged!',
 									description: 'Swordplay so graceful it looks like you all practiced this.',
 									type: FactoryLogic.type.createNoAction(),
@@ -173,13 +174,13 @@ competition with that creature. The chosen creature also has a double edge on po
 			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'AkvymN5wTwBpvJk6',
+					id: 'troubadour-duelist-12',
 					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'gCxHNxuFdPtoWOSw',
+									id: 'troubadour-duelist-13',
 									name: 'Blood on the Stage',
 									description: 'It’s love and blood or drama and blood. Either way, there’s always blood.',
 									type: FactoryLogic.type.createMain(),
@@ -204,7 +205,7 @@ competition with that creature. The chosen creature also has a double edge on po
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'yzRbbBkrzCSPBh1w',
+									id: 'troubadour-duelist-14',
 									name: 'Fight Choreography',
 									description: 'You and your partner make a flashy show of derring-do, then get back to your corners.',
 									type: FactoryLogic.type.createMain(),
@@ -231,7 +232,7 @@ competition with that creature. The chosen creature also has a double edge on po
 			level: 8,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'FwA0rbxGHrD7Oj2H',
+					id: 'troubadour-duelist-15',
 					name: 'Masterwork',
 					description: `Choose one of your signature abilities and name it after yourself. You always have this ability available, even if it is sourced from a kit you switch out. Whenever you use this ability, you gain an edge and 1 surge that you can use only on this ability.
 
@@ -243,13 +244,13 @@ Additionally, when your named signature ability is the last ability you use in a
 			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'qIMKE6V6R4w2teMf',
+					id: 'troubadour-duelist-16',
 					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: '4LyAtdASe3AEJaon',
+									id: 'troubadour-duelist-17',
 									name: 'Expert Fencer',
 									description: 'If you can land the strike, the crowd goes wild.',
 									type: FactoryLogic.type.createMain(),
@@ -274,7 +275,7 @@ Additionally, when your named signature ability is the last ability you use in a
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'IZCTPQBJer4fFuKi',
+									id: 'troubadour-duelist-18',
 									name: 'Renegotiated Contract',
 									description: 'No, no. You don’t die until the sequel.',
 									type: FactoryLogic.type.createMain(),

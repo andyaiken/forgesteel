@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const love: Domain = {
@@ -145,8 +146,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that you or any ally within 10 squares uses the Aid Attack maneuver or an ability that targets an ally',
-			value: '2'
+			trigger: 'You or any ally within 10 squares uses the Aid Attack maneuver or an ability that targets an ally',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

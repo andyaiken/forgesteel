@@ -1,7 +1,7 @@
-import { Button, Flex, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { ButtonConfig, ButtonGroup, ControlConfig, DangerConfig } from '@/components/controls/button-group/button-group';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, SyncOutlined, UploadOutlined } from '@ant-design/icons';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
-import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Element } from '@/models/element';
@@ -20,8 +20,10 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { useHeroes } from '@/contexts/data-context';
+import { useState } from 'react';
 
 import './sourcebook-panel.scss';
 
@@ -33,7 +35,9 @@ interface Props {
 		onSetVisibility: (value: boolean) => void;
 	};
 	mode?: PanelMode;
+	showEditButtons?: boolean;
 	onChange?: (sourcebook: Sourcebook) => void;
+	onReplace?: (sourcebook: Sourcebook) => void;
 	onDelete?: (sourcebook: Sourcebook) => void;
 }
 
@@ -43,38 +47,6 @@ export const SourcebookPanel = (props: Props) => {
 	const allHeroes = useHeroes();
 
 	const getContent = () => {
-		if (props.mode !== PanelMode.Full) {
-			const elementCount = SourcebookLogic.getElements(sourcebook).length;
-
-			return (
-				<>
-					<Markdown text={sourcebook.description} />
-					{
-						elementCount > 3 ?
-							<div className='ds-text'>
-								{elementCount} elements, including:
-							</div>
-							: null
-					}
-					{
-						elementCount > 0 ?
-							<ul>
-								{
-									SourcebookLogic.getExampleContent(sourcebook)
-										.map(x => (
-											<li key={x.element.id}>
-												{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
-											</li>
-										))
-								}
-							</ul>
-							:
-							<Empty text='No content in this sourcebook' />
-					}
-				</>
-			);
-		}
-
 		if (props.onChange && isEditing) {
 			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
 			const distinctLanguages = Collections.distinct(languages, l => l.name);
@@ -180,7 +152,7 @@ export const SourcebookPanel = (props: Props) => {
 			};
 
 			return (
-				<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }} onClick={e => e.stopPropagation()}>
 					<Tabs
 						items={[
 							{
@@ -314,6 +286,38 @@ export const SourcebookPanel = (props: Props) => {
 			);
 		}
 
+		if (props.mode !== PanelMode.Full) {
+			const elementCount = SourcebookLogic.getElements(sourcebook).length;
+
+			return (
+				<>
+					<Markdown text={sourcebook.description} />
+					{
+						elementCount > 3 ?
+							<div className='ds-text'>
+								{elementCount} elements, including:
+							</div>
+							: null
+					}
+					{
+						elementCount > 0 ?
+							<ul>
+								{
+									SourcebookLogic.getExampleContent(sourcebook)
+										.map(x => (
+											<li key={x.element.id}>
+												{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
+											</li>
+										))
+								}
+							</ul>
+							:
+							<Empty text='No content in this sourcebook' />
+					}
+				</>
+			);
+		}
+
 		return (
 			<div>
 				{
@@ -327,79 +331,107 @@ export const SourcebookPanel = (props: Props) => {
 								<HeaderText>
 									{Format.capitalize(type.split('-').join(' '))}
 								</HeaderText>
-								{
-									elements.map(x => (
-										<div key={x.element.id} className='ds-text'>
-											{x.element.name}
-										</div>
-									))
-								}
+								{Collections.sort(elements, e => e.element.name).map(x => <Field key={x.element.id} label={x.element.name} value={<Markdown text={x.element.description} useSpan={true} />} />)}
 							</div>
 						);
 					})
+				}
+				{
+					sourcebook.languages.length > 0 ?
+						<>
+							<HeaderText>
+								Languages
+							</HeaderText>
+							{Collections.sort(sourcebook.languages, l => l.name).map((l, n) => <Field key={`lang-${n}`} label={l.name} value={<Markdown text={l.description} useSpan={true} />} />)}
+						</>
+						: null
+				}
+				{
+					sourcebook.skills.length > 0 ?
+						<>
+							<HeaderText>
+								Skills
+							</HeaderText>
+							{Collections.sort(sourcebook.skills, s => s.name).map((s, n) => <Field key={`skill-${n}`} label={s.name} value={<Markdown text={s.description} useSpan={true} />} />)}
+						</>
+						: null
 				}
 			</div>
 		);
 	};
 
 	const getButtons = () => {
-		const buttons: ReactNode[] = [];
+		const buttons: (ButtonConfig | DangerConfig | ControlConfig)[] = [];
 
-		if (props.visibility) {
+		if (props.visibility && !isEditing) {
 			buttons.push(
-				<Button
-					key='show-hide'
-					type='text'
-					title='Show / Hide'
-					icon={props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-					onClick={e => {
-						e.stopPropagation();
-						props.visibility!.onSetVisibility(!props.visibility!.visible);
-					}}
-				/>
+				{
+					type: 'button',
+					icon: props.visibility.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />,
+					tooltip: 'Show / Hide',
+					onClick: () => props.visibility!.onSetVisibility(!props.visibility!.visible)
+				}
 			);
 		}
 
-		if ((props.mode === PanelMode.Full) && (sourcebook.type === SourcebookType.Homebrew)) {
+		if (props.showEditButtons && (sourcebook.type === SourcebookType.Homebrew)) {
 			if (isEditing) {
 				buttons.push(
-					<Button
-						key='save'
-						type='text'
-						title='OK'
-						icon={<CheckCircleOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							setIsEditing(false);
-						}}
-					/>
+					{
+						type: 'button',
+						label: 'OK',
+						onClick: () => setIsEditing(false)
+					}
 				);
 			} else {
 				buttons.push(
-					<Button
-						key='edit'
-						type='text'
-						title='Edit'
-						icon={<EditOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							setIsEditing(true);
-						}}
-					/>
+					{
+						type: 'button',
+						icon: <EditOutlined />,
+						tooltip: 'Edit',
+						onClick: () => setIsEditing(true)
+					}
 				);
 
 				buttons.push(
-					<Button
-						key='export'
-						type='text'
-						title='Export'
-						icon={<UploadOutlined />}
-						onClick={e => {
-							e.stopPropagation();
-							Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook');
-						}}
-					/>
+					{
+						type: 'button',
+						icon: <UploadOutlined />,
+						tooltip: 'Export',
+						onClick: () => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')
+					}
 				);
+
+				if (props.onReplace) {
+					buttons.push(
+						{
+							type: 'control',
+							control: (
+								<span key='replace' onClick={e => e.stopPropagation()}>
+									<Upload
+										accept='.drawsteel-sourcebook,.ds-sourcebook'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const replacement = JSON.parse(json) as Sourcebook;
+													// Keep this sourcebook's ID, so heroes that use it pick up the new content
+													replacement.id = sourcebook.id;
+													UpdateLogic.updateSourcebook(replacement);
+													setSourcebook(replacement);
+													props.onReplace!(replacement);
+												});
+											return false;
+										}}
+									>
+										<Button type='text' title='Update' icon={<SyncOutlined />} />
+									</Upload>
+								</span>
+							)
+						}
+					);
+				}
 
 				const heroes = allHeroes.filter(h => h.sourcebookIDs.includes(sourcebook.id));
 
@@ -443,17 +475,19 @@ export const SourcebookPanel = (props: Props) => {
 				}
 
 				buttons.push(
-					<DangerButton
-						key='delete'
-						mode='clear'
-						disabledMessage={msg}
-						onConfirm={() => props.onDelete!(sourcebook)}
-					/>
+					{
+						type: 'danger',
+						disabled: msg !== undefined,
+						disabledMessage: msg,
+						onClick: () => props.onDelete!(sourcebook)
+					}
 				);
 			}
 		}
 
-		return buttons;
+		return (
+			<ButtonGroup buttons={buttons} />
+		);
 	};
 
 	return (
@@ -461,8 +495,9 @@ export const SourcebookPanel = (props: Props) => {
 			<div className='sourcebook-panel' id={sourcebook.id}>
 				<HeaderText
 					level={1}
+					strikethrough={props.visibility && !props.visibility.visible}
 					tags={[ sourcebook.type ]}
-					extra={<Flex>{getButtons()}</Flex>}
+					extra={getButtons()}
 				>
 					{sourcebook.name || 'Unnamed Sourcebook'}
 				</HeaderText>

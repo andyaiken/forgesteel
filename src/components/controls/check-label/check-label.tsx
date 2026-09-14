@@ -1,5 +1,4 @@
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 import './check-label.scss';
@@ -11,11 +10,9 @@ interface Props {
 
 export const CheckLabel = (props: Props) => {
 	return (
-		<ErrorBoundary>
-			<div className='check-label'>
-				<CheckIcon state={props.state} />
-				{props.children}
-			</div>
-		</ErrorBoundary>
+		<div className='check-label'>
+			<CheckIcon state={props.state} />
+			{props.children}
+		</div>
 	);
 };

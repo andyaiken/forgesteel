@@ -2,7 +2,7 @@ import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-foot
 import { Button, Divider, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, TeamOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Hero, HeroOverview } from '@/models/hero';
-import { useHeroes, useOptions } from '@/contexts/data-context';
+import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-context';
 import { useMemo, useState } from 'react';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
@@ -32,6 +32,7 @@ interface Props {
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
+	onActiveChanged: (hero: Hero) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -44,6 +45,7 @@ export const HeroListPage = (props: Props) => {
 	useTitle('Heroes');
 	const options = useOptions();
 	const fullHeroes = useHeroes();
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
 	const heroes = useMemo(() => {
 		return fullHeroes.map(HeroLogic.createOverview);
 	}, [ fullHeroes ]);
@@ -80,11 +82,33 @@ export const HeroListPage = (props: Props) => {
 		return (
 			<div className='hero-section-row'>
 				{
-					list.map(hero => (
-						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroOverviewPanel hero={hero} />
-						</SelectablePanel>
-					))
+					list.map(hero => {
+						const fullHero = fullHeroes.find(h => h.id === hero.id);
+
+						return (
+							<SelectablePanel
+								key={hero.id}
+								watermark={hero.picture || undefined}
+								onSelect={() => navigation.goToHeroView(hero.id)}
+							>
+								<HeroOverviewPanel
+									hero={hero}
+									visibility={
+										fullHero ?
+											{
+												visible: hero.isActive,
+												onSetVisibility: visible => {
+													const copy = Utils.copy(fullHero);
+													copy.isActive = visible;
+													props.onActiveChanged(copy);
+												}
+											}
+											: undefined
+									}
+								/>
+							</SelectablePanel>
+						);
+					})
 				}
 			</div>
 		);
@@ -126,7 +150,7 @@ export const HeroListPage = (props: Props) => {
 												Import a Hero File
 											</Button>
 										</Upload>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id))), currentTab)}>
 											Generate a Random Hero
 										</Button>
 										<Expander title='Use a premade example'>
@@ -151,7 +175,13 @@ export const HeroListPage = (props: Props) => {
 									</Space>
 								)
 							},
-							{ type: 'button', label: isSmall ? undefined : 'Party', icon: <TeamOutlined />, disabled: getHeroes(currentTab).length < 2, onClick: () => props.showParty(currentTab) }
+							{
+								type: 'button',
+								label: isSmall ? undefined : 'Party',
+								icon: <TeamOutlined />,
+								disabled: getHeroes(currentTab).filter(h => h.isActive).length < 2,
+								onClick: () => props.showParty(currentTab)
+							}
 						]}
 					/>
 				</AppHeader>
@@ -163,8 +193,17 @@ export const HeroListPage = (props: Props) => {
 								key: f,
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>{f || 'Heroes'}</div>
-										<div className='section-count'>{getHeroes(f).length}</div>
+										<div className='section-title'>
+											{f || 'Heroes'}
+										</div>
+										<div className='section-count'>
+											{
+												getHeroes(f).every(h => h.isActive) ?
+													`${getHeroes(f).length}`
+													:
+													`${getHeroes(f).filter(h => h.isActive).length} of ${getHeroes(f).length}`
+											}
+										</div>
 									</div>
 								),
 								children: getHeroesSection(getHeroes(f))
@@ -175,6 +214,7 @@ export const HeroListPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
+					hero={null}
 					params={props.params}
 				/>
 			</div>

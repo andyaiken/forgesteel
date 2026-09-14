@@ -11,7 +11,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { Fixture } from '@/models/fixture';
@@ -23,7 +23,7 @@ import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NamePanel } from '@/components/panels/hero/name/name-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
@@ -69,6 +69,8 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
+	onSetControlledMonsterHidden: (hero: Hero, monster: Monster, value: boolean) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -98,6 +100,7 @@ export const HeroViewPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
+					hero={null}
 					params={props.params}
 				/>
 			</div>
@@ -132,27 +135,25 @@ export const HeroViewPage = (props: Props) => {
 						onAddMonsterToSquad={props.onAddMonsterToSquad}
 						onSelectControlledMonster={props.onSelectControlledMonster}
 						onSelectControlledSquad={props.onSelectControlledSquad}
+						onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}
+						onSetControlledMonsterHidden={props.onSetControlledMonsterHidden}
 					/>
 				);
 			case 'classic':
 				return (
-					<HeroSheetPage
-						hero={hero}
-						sourcebooks={props.sourcebooks}
-					/>
+					<>
+						<div style={{ padding: '10px' }}>
+							<NamePanel hero={hero} onShowState={page => props.showHeroState(hero, page)} />
+						</div>
+						<HeroSheetPage
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+						/>
+					</>
 				);
 			case 'abilities':
 				return (
 					<StandardAbilitiesPage hero={hero} />
-				);
-			case 'notes':
-				return (
-					<MultiLine
-						style={{ height: '100%', flex: '1 1 0' }}
-						inputStyle={{ flex: '1 1 0', resize: 'none' }}
-						value={hero.state.notes}
-						onChange={value => props.setNotes(hero, value)}
-					/>
 				);
 		}
 	};
@@ -212,6 +213,7 @@ export const HeroViewPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
+					hero={hero}
 					params={props.params}
 				/>
 			</div>

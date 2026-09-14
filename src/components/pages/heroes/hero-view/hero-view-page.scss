@@ -4,7 +4,7 @@
 	flex-direction: column;
 
 	.hero-view-page-content {
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		flex: 1 1 0;
 		overflow: hidden;
 
@@ -14,14 +14,6 @@
 
 		&.compact {
 			padding: 10px 0;
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.hero-view-page {
-		.hero-view-page-content {
-			background-color: rgb(55, 55, 55);
 		}
 	}
 }

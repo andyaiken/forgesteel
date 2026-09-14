@@ -8,6 +8,7 @@ import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { guardian } from '@/data/classes/beastheart/guardian';
 import { prowler } from '@/data/classes/beastheart/prowler';
@@ -1426,12 +1427,16 @@ As a beastheart, you face the world’s dangers alongside your wild companion. W
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage-adjacent-companion',
-							trigger: 'The first time in a round that a creature adjacent to your companion takes damage',
-							value: '2'
+							trigger: 'A creature adjacent to your companion takes damage',
+							frequency: ResourceGainFrequency.OncePerRound,
+							value: '2',
+							used: false
 						}
 					]
 				}),
@@ -1556,19 +1561,36 @@ Your companion then makes the following power roll:`),
 					id: 'beastheart-1-4',
 					name: 'Rampage',
 					description: 'While your ferocity sharpens your killer instinct, it can also drive your companion into a rampage, causing them to strike friends and foes alike in a blood-soaked battle frenzy. As their rampage builds, they become something more than a mortal companion, embodying a primordial spirit of destruction.',
-					gains: [],
 					details: `
 Your companion has a resource called rampage. Whenever you or your companion spends ferocity, your companion gains rampage equal to the ferocity spent. Your companion loses their rampage and its effects at the end of an encounter.
 
-Your companion doesn’t spend rampage to activate abilities. Instead, when your companion gains 8 rampage, they are rampaging. As your companion’s rampage increases, they gain the listed effects from the Rampage table. Effects are cumulative. Some Rampage effects are applied only if you are a specific level or higher, with the level of these effects noted in the Rampage table.
-
-| Rampage     | Effect |
-|:============|:=======|
-| 8           | At the end of each of your turns, your companion must use their Feral Strike ability as a free maneuver. You can’t willingly decrease the power roll outcome to a lower tier. For each ally damaged this way, you gain 2 surges, which you can use on this strike.    |
-| 12          | Your companion has damage immunity equal to their Intuition score.    |
-| 16 (lvl 4)  | When your companion uses their Feral Strike ability, they deal extra damage equal to their Intuition score to each target. You gain 1 additional surge for each ally damaged this way.    |
-| 20 (lvl 7)  | As a free maneuver, your companion can increase their size up to size 2, or increase their size by 1 if their original size is already 2 or larger. This size increase lasts until your companion’s rampage ends or they use a free maneuver to end it. While your companion’s size is increased, they gain a +2 bonus to speed and stability, the potencies of their abilities increase by 1, and the size of their Feral Strike ability’s burst increases by 1.    |
-| 24 (lvl 10) | When your companion increases their size, they can increase it up to size 3, or increase their size by 1 if their original size is already 3 or larger. Whenever they make a power roll while their size is increased this way, they can roll 3d10 and discard the lowest roll.    |`
+Your companion doesn’t spend rampage to activate abilities. Instead, when your companion gains 8 rampage, they are rampaging.`
+				}),
+				FactoryLogic.feature.createMultiple({
+					id: 'beastheart-1-4a',
+					name: 'Rampage Thresholds',
+					features: [
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'beastheart-1-4a-8',
+							resource: 'Rampage',
+							value: 8,
+							feature: FactoryLogic.feature.create({
+								id: 'beastheart-1-4a-8a',
+								name: 'Rampage 8',
+								description: 'At the end of each of your turns, your companion must use their Feral Strike ability as a free maneuver. You can’t willingly decrease the power roll outcome to a lower tier. For each ally damaged this way, you gain 2 surges, which you can use on this strike.'
+							})
+						}),
+						FactoryLogic.feature.createHeroicResourceThreshold({
+							id: 'beastheart-1-4a-12',
+							resource: 'Rampage',
+							value: 12,
+							feature: FactoryLogic.feature.create({
+								id: 'beastheart-1-4a-12a',
+								name: 'Rampage 12',
+								description: 'Your companion has damage immunity equal to their Intuition score.'
+							})
+						})
+					]
 				}),
 				FactoryLogic.feature.createKitChoice({
 					id: 'beastheart-1-5',
@@ -1651,7 +1673,18 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'deal-damage-companion 2',
 					trigger: 'The first time in a round that a creature adjacent to your companion takes damage',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage-adjacent-companion' ]
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'beastheart-4-5',
+					resource: 'Rampage',
+					value: 16,
+					feature: FactoryLogic.feature.create({
+						id: 'beastheart-4-5a',
+						name: 'Rampage 16',
+						description: 'When your companion uses their Feral Strike ability, they deal extra damage equal to their Intuition score to each target. You gain 1 additional surge for each ally damaged this way.'
+					})
 				})
 			]
 		},
@@ -1708,10 +1741,21 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 +1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-7-3'
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'beastheart-7-4',
+					resource: 'Rampage',
+					value: 20,
+					feature: FactoryLogic.feature.create({
+						id: 'beastheart-7-4a',
+						name: 'Rampage 20',
+						description: 'As a free maneuver, your companion can increase their size up to size 2, or increase their size by 1 if their original size is already 2 or larger. This size increase lasts until your companion’s rampage ends or they use a free maneuver to end it. While your companion’s size is increased, they gain a +2 bonus to speed and stability, the potencies of their abilities increase by 1, and the size of their Feral Strike ability’s burst increases by 1.'
+					})
 				})
 			]
 		},
@@ -1764,6 +1808,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '2d3 +1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -1777,9 +1822,11 @@ You and your companion both gain the benefits of the kit, with the following exc
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: 'You can spend 1 ferox as a free maneuver to allow you and your companion to each to take a main action on your turn, instead of a main action and a maneuver. On that turn, the ferocity cost of your heroic abilities is reduced by 1.'
@@ -1787,6 +1834,16 @@ You and your companion both gain the benefits of the kit, with the following exc
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-10-5',
 					name: 'Skill'
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'beastheart-10-6',
+					resource: 'Rampage',
+					value: 24,
+					feature: FactoryLogic.feature.create({
+						id: 'beastheart-10-6a',
+						name: 'Rampage 24',
+						description: 'When your companion increases their size, they can increase it up to size 3, or increase their size by 1 if their original size is already 3 or larger. Whenever they make a power roll while their size is increased this way, they can roll 3d10 and discard the lowest roll.'
+					})
 				})
 			]
 		}

@@ -35,17 +35,22 @@ export interface Hero {
 	features: Feature[];
 	state: HeroState;
 	abilityCustomizations: AbilityCustomization[];
+	isActive: boolean;
 }
 
 export interface HeroOverview {
 	id: string;
 	name: string;
+
+	picture: string | null;
+	folder: string;
+
 	ancestry: string | null;
 	background: string | null;
 	class: string | null;
 	complication: string | null;
-	picture: string | null;
-	folder: string;
+
+	isActive: boolean;
 }
 
 export type HeroEditTab = 'start' | 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';

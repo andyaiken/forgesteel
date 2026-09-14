@@ -10,6 +10,9 @@ import { HeroClass } from '@/models/class';
 import { Kit } from '@/models/kit';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -35,49 +38,53 @@ As a kiln, you arrive to stoke the flame wherever the spark of opportunity prese
 			level: 1,
 			features: [
 				FactoryLogic.feature.createBonus({
-					id: 'AHShD5RQJEsUMI5D',
+					id: 'kiln-stamina',
 					name: 'Stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 9
 				}),
 				FactoryLogic.feature.createBonus({
-					id: 'fASrDG7UhEX5Blxa',
+					id: 'kiln-recoveries',
 					name: 'Recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: '40EUJLeDYXVn2fjh',
+					id: 'kiln-skill-choice-1',
 					selected: [ AbilityKeyword.Magic ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: '1D5vcoaQjS4bxAfB',
+					id: 'kiln-skill-choice-2',
 					selected: [ 'Carpentry' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'XpH3WAhclAzTtZiv',
+					id: 'kiln-skill-choice-3',
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 2
 				}),
 				FactoryLogic.feature.createHeroicResource({
-					id: 'heroic-resource',
+					id: 'kiln-spark',
 					name: 'Spark',
 					gains: [
 						{
 							trigger: 'Start of your turn',
 							value: '1d3',
-							tag: 'start-turn'
+							tag: 'start-turn',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							trigger: 'You use the Stoke the Flame ability targeting an ally',
 							value: '1',
-							tag: 'stoke-ally'
+							tag: 'stoke-ally',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					]
 				}),
 				FactoryLogic.feature.createPackage({
-					id: 'pVGsG9NfxCcT1pfc',
+					id: 'kiln-enkindle',
 					name: 'Enkindle',
 					description: `
 Whenever you roll to gain spark at the start of your turn, you can kindle (no action required). If you do, your roll gains the following additional effects:
@@ -93,7 +100,7 @@ You lose any remaining spark at the end of the encounter.`,
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: '6AEyy4LFirQe4qST',
+						id: 'kiln-stoke-the-flame',
 						name: 'Stoke the Flame',
 						description: 'As an ally attacks, you harness a bit of arcane energy to grant them a decisive advantage.',
 						type: FactoryLogic.type.createTrigger('The target makes an ability roll for a damage-dealing ability.'),
@@ -110,19 +117,19 @@ You lose any remaining spark at the end of the encounter.`,
 					})
 				}),
 				FactoryLogic.feature.createKitChoice({
-					id: 'dXmTjCwMVwFeU1vV'
+					id: 'kiln-inner-flame-1'
 				}),
 				FactoryLogic.feature.createKitChoice({
-					id: 'dsTOgwyx33aQcquK',
+					id: 'kiln-inner-flame-2',
 					name: 'Tinderbox',
 					types: [ 'Kiln' ]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'QeAzUQduMYs8dMZS',
+					id: 'kiln-tinderbox-1',
 					cost: 3
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'zWI9wDu9dKJVBjaj',
+					id: 'kiln-tinderbox-2',
 					cost: 5
 				})
 			]
@@ -131,7 +138,7 @@ You lose any remaining spark at the end of the encounter.`,
 			level: 2,
 			features: [
 				FactoryLogic.feature.createPerk({
-					id: 'HmIp8TIc3VCF2ZSV',
+					id: 'kiln-perk',
 					name: 'Perk',
 					description: `
 You gain one crafting, lore, or supernatural, or kiln perk of your choice.
@@ -148,7 +155,7 @@ If you choose a kiln perk, you must first complete a task from the Undermind bef
 			level: 3,
 			features: [
 				FactoryLogic.feature.createPackageContent({
-					id: 'sJRlfIIufT36YWjq',
+					id: 'kiln-a-fire-unburdened',
 					name: 'A Fire Unburdened',
 					description: `
 While you are enkindled, as a maneuver, you can choose one of the following:
@@ -160,7 +167,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 					tag: 'Enkindle'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'ss3x5Aky77xMctKf',
+					id: 'kiln-damage-modifier',
 					modifiers: [
 						FactoryLogic.damageModifier.createValuePlusPerLevel({
 							damageType: DamageType.Fire,
@@ -170,13 +177,26 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 						})
 					]
 				}),
-				FactoryLogic.feature.create({
-					id: 'dxLQNl9YTdlHy61x',
+				FactoryLogic.feature.createMultiple({
+					id: 'kiln-controlled-burn-1',
 					name: 'Controlled Burn',
-					description: 'You gain an edge on Presence tests made to interact with other creatures when you are near a visible flame that is 2 squares or larger. As a maneuver, you can ignite or snuff out any number of at-most size 1 prepared objects (kindling, torches, candles, fuses, and so forth) at any distance as long as you can see and recognize the object.'
+					features: [
+						FactoryLogic.feature.createRollModifier({
+							id: 'kiln-controlled-burn-1a',
+							name: 'Controlled Burn',
+							modifier: RollModifierType.Edge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When interacting with other creatures while near a visible flame that is 2 squares or larger'
+						}),
+						FactoryLogic.feature.create({
+							id: 'kiln-controlled-burn-1b',
+							name: 'Controlled Burn',
+							description: 'As a maneuver, you can ignite or snuff out any number of at-most size 1 prepared objects (kindling, torches, candles, fuses, and so forth) at any distance as long as you can see and recognize the object.'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: '2LVjHk8ypQyx6LsO',
+					id: 'kiln-controlled-burn-2',
 					cost: 7
 				})
 			]
@@ -184,7 +204,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 	],
 	abilities: [
 		FactoryLogic.createAbility({
-			id: 'o6o03jRIxEG0NQpx',
+			id: 'kiln-dance-like-embers',
 			name: 'Dance Like Embers',
 			description: 'You dart from skirmish to skirmish leaving an ephemeral doppelganger of fire in your wake.',
 			type: FactoryLogic.type.createManeuver(),
@@ -197,7 +217,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'ghpGUOgj52GuvcYZ',
+			id: 'kiln-heat-wave',
 			name: 'Heat Wave',
 			description: 'Toasty.',
 			type: FactoryLogic.type.createMain(),
@@ -217,7 +237,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '4IphmdVho7h9FoY8',
+			id: 'kiln-smoke-on-the-wind',
 			name: 'Smoke on the Wind',
 			description: 'Your body grows hazy and you briefly fade to an incorporeal state.',
 			type: FactoryLogic.type.createManeuver(),
@@ -230,7 +250,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'sDLIrCOVMuotUg77',
+			id: 'kiln-wavering-flame',
 			name: 'Wavering Flame',
 			description: 'The heat of your movement plays tricks on your foes’ eyes.',
 			type: FactoryLogic.type.createMain(),
@@ -251,7 +271,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'pJu7F0ayOaU0jL8Y',
+			id: 'kiln-grasp-and-immolate',
 			name: 'Grasp and Immolate',
 			description: 'There may be such thing as too warm of an embrace.',
 			type: FactoryLogic.type.createMain(),
@@ -272,7 +292,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Y11uB8aPXNICBB0Z',
+			id: 'kiln-rake-over-the-coals',
 			name: 'Rake Over the Coals',
 			description: 'They drag their feet, but they only kick up more fire.',
 			type: FactoryLogic.type.createManeuver(),
@@ -293,7 +313,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '02UsIBtWuprA6Ti5',
+			id: 'kiln-searing-strike',
 			name: 'Searing Strike',
 			description: 'Memory of your steel radiates oppressive heat.',
 			type: FactoryLogic.type.createMain(),
@@ -314,7 +334,7 @@ As part of the maneuver, you can additionally stand up if you are prone.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'vZHDpe6mKOcP89Xy',
+			id: 'kiln-smoldering-sword',
 			name: 'Smoldering Sword',
 			description: 'Embers and ash rise and coalesce into a solid mass, honed to an edge and ready to command.',
 			type: FactoryLogic.type.createManeuver(),
@@ -332,7 +352,7 @@ At the start of your turn while the sword is summoned, as a free maneuver, you c
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Cb2gcWe4lmscq3mO',
+			id: 'kiln-demoralizing-incense',
 			name: 'Demoralizing Incense',
 			description: 'Your talismans burn with an acrid smell that distracts and sows doubt.',
 			type: FactoryLogic.type.createManeuver(),
@@ -345,7 +365,7 @@ At the start of your turn while the sword is summoned, as a free maneuver, you c
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '68wY6lq8sUxzAeTM',
+			id: 'kiln-focusing-incense',
 			name: 'Focusing Incense',
 			description: 'Your talismans burn with an earthy smell that sharpens your focus.',
 			type: FactoryLogic.type.createManeuver(),
@@ -358,7 +378,7 @@ At the start of your turn while the sword is summoned, as a free maneuver, you c
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'dfxNUT4lp8fTkmDR',
+			id: 'kiln-invigorating-incense',
 			name: 'Invigorating Incense',
 			description: 'Your talismans burn with a sweet smell that affirms and empowers.',
 			type: FactoryLogic.type.createManeuver(),
@@ -371,7 +391,7 @@ At the start of your turn while the sword is summoned, as a free maneuver, you c
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'gzgbDNJYvg7VgOb2',
+			id: 'kiln-revitalizing-incense',
 			name: 'Revitalizing Incense',
 			description: 'Your talismans burn with a floral smell that heals and reinvigorates.',
 			type: FactoryLogic.type.createManeuver(),
@@ -390,19 +410,20 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 	],
 	subclasses: [
 		{
-			id: 'iIRFRndVCP4jQuXo',
+			id: 'kiln-flameweaver-1',
 			name: 'Flameweaver',
 			description: 'You weave through the battlefield from skirmish to skirmish like a thread in the wind. Your power guides you to where you are needed most.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'j0NHyyP7a0NF1TnH',
+							id: 'kiln-flameweaver-2',
 							selected: [ 'Navigate' ]
 						}),
 						FactoryLogic.feature.createPackageContent({
-							id: 'P6VcK01mJc1PkCfH',
+							id: 'kiln-wildfire-1',
 							name: 'Wildfire',
 							description: 'While you are enkindled, whenever you shift or teleport, the distance of the movement is increased by 1 and one ally adjacent to you at the beginning of the movement can teleport to an unoccupied space adjacent to you at the end of the movement.',
 							tag: 'Enkindle'
@@ -413,18 +434,18 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'Gxs8yJ8vd4YOA35Y',
+							id: 'kiln-wildfire-2',
 							name: 'Reflections of Ember',
 							description: 'You can swim, climb, or otherwise move along reflective surfaces, such as the surface of a river or up a wall of metal, at full speed.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'A3HMgrcRcFRfxv1S',
+							id: 'kiln-reflections-of-ember-1',
 							name: '2nd-Level Flameweaver Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'O1TthHv1McjpFexz',
+											id: 'kiln-reflections-of-ember-2',
 											name: 'See the Tapestry of Battle',
 											description: 'This section over here could use a patch.',
 											type: FactoryLogic.type.createMain(),
@@ -442,7 +463,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: '8Wtn6iAKFPJS5VZM',
+											id: 'kiln-thread-the-needle',
 											name: 'Thread the Needle',
 											description: 'Connect the movements, just as you were trained.',
 											type: FactoryLogic.type.createMain(),
@@ -470,19 +491,20 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 			abilities: []
 		},
 		{
-			id: 'ezVKqdKSYQqHhxe0',
+			id: 'kiln-hexblaze-1',
 			name: 'Hexblaze',
 			description: 'You are an eruption, and the battlefield will burn to ash. The explosive force of your power shatters any hope of victory for your enemies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'K2orXNVgQlytsh8Q',
+							id: 'kiln-hexblaze-2',
 							selected: [ 'Endurance' ]
 						}),
 						FactoryLogic.feature.createPackageContent({
-							id: 'QFwqnEtHE9TZFhXd',
+							id: 'kiln-fan-the-flame-1',
 							name: 'Fan the Flame',
 							description: 'While you are enkindled, the first time in a round that you take damage, reduce the damage by your Agility score and gain 1 surge.',
 							tag: 'Enkindle'
@@ -493,7 +515,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 					level: 2,
 					features: [
 						FactoryLogic.feature.createDamageModifier({
-							id: '',
+							id: 'kiln-fan-the-flame-2',
 							modifiers: [
 								FactoryLogic.damageModifier.create({
 									damageType: DamageType.Lightning,
@@ -502,19 +524,22 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 								})
 							]
 						}),
-						FactoryLogic.feature.create({
-							id: 'pFyTE1iMXxhXgVFl',
+						FactoryLogic.feature.createRollModifier({
+							id: 'kiln-st-elmo-1',
 							name: 'St. Elmo\'s Fire',
-							description: 'During and shortly after a thunderstorm, you glow with a faint blue flame and you have an edge on tests that use the Navigate skill.'
+							description: 'During and shortly after a thunderstorm, you glow with a faint blue flame.',
+							modifier: RollModifierType.Edge,
+							skills: [ 'Navigate' ],
+							condition: 'During and shortly after a thunderstorm'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: '7kh47fRjTepke93l',
+							id: 'kiln-st-elmo-2',
 							name: '2nd-Level Hexblaze Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'wCiKLNvVLdmSNcCY',
+											id: 'kiln-st-elmo-3',
 											name: 'Color out of Flame',
 											description: 'The hue of your fire entrances you, to the mortal detriment of the Undermind’s enemies.',
 											type: FactoryLogic.type.createManeuver(),
@@ -538,7 +563,7 @@ Changing the color of your flames requires the use of this ability again.`)
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'Q0ZfOtiA3tO2aiIB',
+											id: 'kiln-fuel-the-engine',
 											name: 'Fuel the Engine',
 											description: 'Your heart burns hotter with each strike.',
 											type: FactoryLogic.type.createMain(),
@@ -578,19 +603,20 @@ Changing the color of your flames requires the use of this ability again.`)
 			abilities: []
 		},
 		{
-			id: 'R7zJXR3bkJBsMMlP',
+			id: 'kiln-smokewight-1',
 			name: 'Smokewight',
 			description: 'You are at once everywhere and nowhere. You slip through the grasp of your foes and you cannot be pinned down.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'Jx8AcVTauHPBKCxS',
+							id: 'kiln-smokewight-2',
 							selected: [ 'Escape Artist' ]
 						}),
 						FactoryLogic.feature.createPackageContent({
-							id: 'ErWk8f3OqP3RYNJn',
+							id: 'kiln-backdraft-1',
 							name: 'Backdraft',
 							description: 'While you are enkindled, when you pull a creature, you ignore their stability, and when you force move a creature, the distance of the move gains a +1 bonus.',
 							tag: 'Enkindle'
@@ -600,19 +626,31 @@ Changing the color of your flames requires the use of this ability again.`)
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
-							id: 'Xyfrt3SQO1Lx52rl',
+						FactoryLogic.feature.createMultiple({
+							id: 'kiln-backdraft-2',
 							name: 'The Soul is in the Breath',
-							description: 'In combat, you can’t suffocate and you gain an edge on the Escape Grab maneuver. Out of combat, you can hold your breath for a number of minutes equal to twice your Reason score, and while you hold your breath, you can turn your body to dense smoke. While in this form, you move through gaps as if you were size 1T, you can hover, and you don’t take damage from falling.'
+							features: [
+								FactoryLogic.feature.createRollModifier({
+									id: 'kiln-backdraft-2a',
+									name: 'The Soul is in the Breath',
+									modifier: RollModifierType.Edge,
+									rollType: RollType.EscapeGrab
+								}),
+								FactoryLogic.feature.create({
+									id: 'kiln-backdraft-2b',
+									name: 'The Soul is in the Breath',
+									description: 'In combat, you can’t suffocate. Out of combat, you can hold your breath for a number of minutes equal to twice your Reason score, and while you hold your breath, you can turn your body to dense smoke. While in this form, you move through gaps as if you were size 1T, you can hover, and you don’t take damage from falling.'
+								})
+							]
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'cS6etUqiiyIoRNd4',
+							id: 'kiln-the-soul-is-in-the-breath-1',
 							name: '2nd-Level Smokewight Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'Oy7AuSc53Nyo0pR2',
+											id: 'kiln-the-soul-is-in-the-breath-2',
 											name: 'Choking Soot',
 											description: 'The blackened sky grants you a vision: your foes reduced to ash.',
 											type: FactoryLogic.type.createMain(),
@@ -630,7 +668,7 @@ Changing the color of your flames requires the use of this ability again.`)
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'Oy7AuSc53Nyo0pRj',
+											id: 'kiln-vortex-in-the-smog',
 											name: 'Vortex in the Smog',
 											description: 'Draw them in, then slip out.',
 											type: FactoryLogic.type.createMain(),
@@ -680,7 +718,7 @@ Changing the color of your flames requires the use of this ability again.`)
 // #region Kits
 
 const hawthorn: Kit = {
-	id: 'b6M3EJI16GGBBOnS',
+	id: 'hawthorn-hawthorn',
 	name: 'Hawthorn',
 	description: 'Your talismans grant you the ability to ensnare, burden, and wrest vitality out of your victims.',
 	type: 'Kiln',
@@ -697,7 +735,7 @@ const hawthorn: Kit = {
 	features: [
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'LfpLq2z0MdHLluQs',
+				id: 'hawthorn-put-down-roots',
 				name: 'Put Down Roots',
 				description: 'Unwavering in the storm.',
 				type: FactoryLogic.type.createManeuver(),
@@ -718,7 +756,7 @@ const hawthorn: Kit = {
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'cYrUy8SoUpCBmQvT',
+				id: 'hawthorn-untame-the-land',
 				name: 'Untame the Land',
 				description: 'Your talismans imbue you with a vivid memory of the wode before war or time.',
 				type: FactoryLogic.type.createMain(),
@@ -743,7 +781,7 @@ const hawthorn: Kit = {
 			})
 		}),
 		FactoryLogic.feature.create({
-			id: 'Rh3THhEfz7wQfVYR',
+			id: 'hawthorn-enkindled',
 			name: 'Hawthorn Stoke the Flame Effects',
 			description: `
 | Talisman | Stoke the Flame Effect |
@@ -756,7 +794,7 @@ const hawthorn: Kit = {
 };
 
 const hazel: Kit = {
-	id: 'MvZbaWiYbk9GfvEI',
+	id: 'hazel-hazel',
 	name: 'Hazel',
 	description: 'Your talismans grant you the ability to anticipate the future and discern illusion from reality.',
 	type: 'Kiln',
@@ -773,7 +811,7 @@ const hazel: Kit = {
 	features: [
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'LfpLq2z0MdHLluQs',
+				id: 'hazel-shiver-with-anticipation',
 				name: 'Shiver with Anticipation',
 				description: 'Remove the cause, but not the symptom.',
 				type: FactoryLogic.type.createManeuver(),
@@ -794,7 +832,7 @@ const hazel: Kit = {
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'cYrUy8SoUpCBmQvT',
+				id: 'hazel-peer-beyond-the-veil',
 				name: 'Peer Beyond the Veil',
 				description: 'The line between what is and what will be has never been clearer.',
 				type: FactoryLogic.type.createMain(),
@@ -820,7 +858,7 @@ const hazel: Kit = {
 			})
 		}),
 		FactoryLogic.feature.create({
-			id: 'Rh3THhEfz7wQfVYR',
+			id: 'hazel-enkindled',
 			name: 'Hazel Stoke the Flame Effects',
 			description: `
 | Talisman | Stoke the Flame Effect |
@@ -833,7 +871,7 @@ const hazel: Kit = {
 };
 
 const rosewood: Kit = {
-	id: 'YUeKPGgxBP5aFXN2',
+	id: 'rosewood-rosewood',
 	name: 'Rosewood',
 	description: 'Your talismans grant you the ability to amplify and echo your allies, and terrify your enemies.',
 	type: 'Kiln',
@@ -850,7 +888,7 @@ const rosewood: Kit = {
 	features: [
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'U8WMZZ8xUUZ9MWSU',
+				id: 'rosewood-speed-of-sound',
 				name: 'Speed of Sound',
 				description: 'In a clap of thunder, you flash across the battlefield, your poised form burned into the eyes of your foes.',
 				type: FactoryLogic.type.createManeuver(),
@@ -871,7 +909,7 @@ const rosewood: Kit = {
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'LLgH22ZsPAiFzzOu',
+				id: 'rosewood-resonate',
 				name: 'Resonate',
 				description: 'Your talismans imbue you with the resonance of a hollow trunk reaching up from the Undermind.',
 				type: FactoryLogic.type.createMain(),
@@ -895,7 +933,7 @@ const rosewood: Kit = {
 			})
 		}),
 		FactoryLogic.feature.create({
-			id: 'vjgm8AHumnc3qfdG',
+			id: 'rosewood-enkindled',
 			name: 'Rosewood Stoke the Flame Effects',
 			description: `
 | Talisman | Stoke the Flame Effect |
@@ -912,7 +950,7 @@ const rosewood: Kit = {
 // #region Perks
 
 const aConversationWithFire: Perk = {
-	id: '5wkxbUTj0F8JUfO2',
+	id: 'a-conversation-with-fire-a-conversation-with-fire',
 	name: 'A Conversation With Fire',
 	description: `
 *Kilns only*
@@ -924,7 +962,7 @@ When you spend 1 uninterrupted minute in front of a fire, you can speak the name
 };
 
 const burntOutArtisan: Perk = {
-	id: 'dHjsVbGZQUGgDJdS',
+	id: 'burnt-out-artisan-burnt-out-artisan',
 	name: 'Burnt Out Artisan',
 	description: `
 *Kilns only*
@@ -936,7 +974,7 @@ When you make a project roll using a skill from the crafting skill group, you ca
 };
 
 const hotBox: Perk = {
-	id: '6IWjRGECdMfbsvFo',
+	id: 'hot-box-hot-box',
 	name: 'Hot Box',
 	description: `
 *Kilns only*
@@ -948,7 +986,7 @@ You can quickly fill a room with the smoke of an incense that dulls the mind and
 };
 
 const ifYouCantStandTheHeat: Perk = {
-	id: 'tmATKmf0NIKZHFKU',
+	id: 'if-you-cant-stand-the-heat-if-you-can-t-stand-the-heat',
 	name: 'If You Can’t Stand the Heat',
 	description: `
 *Kilns only*
@@ -968,7 +1006,7 @@ You gain a +2 bonus to the Perfect New Recipe project roll (see Downtime Activit
 };
 
 const itIsTheSoulWhichHears: Perk = {
-	id: 'Ycnl3YBDuUFg7uar',
+	id: 'it-is-the-soul-which-hears-it-is-the-soul-which-hears',
 	name: 'It Is the Soul Which Hears',
 	description: `
 *Kilns only*
@@ -982,7 +1020,7 @@ Additionally, you can touch a living plant that is not a plant creature to commu
 };
 
 const siftThroughTheAshesOfMemory: Perk = {
-	id: 'kBb2ohe3iTiaQTn0',
+	id: 'sift-through-the-ashes-of-memory-sift-through-the-ashes-of-memory',
 	name: 'Sift Through the Ashes of Memory',
 	description: `
 *Kilns only*
@@ -1024,7 +1062,7 @@ You and an ally you are respiting with both do this downtime activity together. 
 };
 
 const smokemellier: Perk = {
-	id: 'gxz88O3tENyXCkJB',
+	id: 'smokemellier-smokemellier',
 	name: 'Smokemellier',
 	description: `
 *Kilns only*
@@ -1036,7 +1074,7 @@ You can detect smoke from all fires within 1 mile of you, and with some concentr
 };
 
 const soulsworn: Perk = {
-	id: 'pgCtSVhZsjC7I6dE',
+	id: 'soulsworn-soulsworn',
 	name: 'Soulsworn',
 	description: `
 *Kilns only*
@@ -1048,7 +1086,7 @@ Each time you finish a respite, you can choose one ally to be your soulsworn. If
 };
 
 const tendrilsOfTheUndermind: Perk = {
-	id: 'ZM9JhmiD9C2aNJNO',
+	id: 'tendrils-of-the-undermind-tendrils-of-the-undermind-1',
 	name: 'Tendrils of the Undermind',
 	description: `
 *Kilns only*
@@ -1058,13 +1096,13 @@ Your connection with the Undermind lets you share senses with it. You can search
 	data: {
 		features: [
 			FactoryLogic.feature.create({
-				id: '5lGBjTkoXelkOmYd',
+				id: 'tendrils-of-the-undermind-tendrils-of-the-undermind-2',
 				name: 'Tendrils of the Undermind',
 				description: 'Your connection with the Undermind lets you share senses with it. You can search for hidden creatures as a free maneuver once on each of your turns. Creatures within distance of your Stoke the Flame ability are automatically found when you search.'
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'J9Q4GZyz56Qqxw1e',
+					id: 'tendrils-of-the-undermind-tendrils-of-the-undermind-3',
 					name: 'Tendrils of the Undermind',
 					description: '',
 					type: FactoryLogic.type.createMain(),
@@ -1082,7 +1120,7 @@ Your connection with the Undermind lets you share senses with it. You can search
 };
 
 const undermindTask: Perk = {
-	id: 'WKBv7e1HgHgB4Ngc',
+	id: 'undermind-task-undermind-task',
 	name: 'Undermind Task',
 	description: `
 *Kilns only*
@@ -1094,7 +1132,7 @@ You've chosen to take on a task from the Undermind. Once you complete the task, 
 };
 
 const woodenFamiliar: Perk = {
-	id: 'boRZ9rIWGa6h2DNJ',
+	id: 'wooden-familiar-wooden-familiar',
 	name: 'Wooden Familiar',
 	description: `
 *Kilns only*

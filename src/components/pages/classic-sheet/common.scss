@@ -263,7 +263,7 @@ main#classic-sheet {
             }
             .power  {
                 font-weight: 600;
-                margin: 0 10px 5px;
+                margin: 0 10px 5px 0;
                 .symbol-text {
                     display: inline-block;
                     font-size: round(1.2rem, 1px);
@@ -502,6 +502,28 @@ main#classic-sheet {
                     @include color-ability-card($move);
                     h2 {
                         @include dividers.fancy-3($move);
+                    }
+                }
+            }
+
+            &.hero-sheet .follower .ability {
+                &.main-action {
+                    .action-type {
+                        color: $main-action;
+                    }
+                }
+
+                &.maneuver,
+                &.free-maneuver {
+                    .action-type {
+                        color: $maneuver;
+                    }
+                }
+
+                &.triggered-action,
+                &.free-triggered-action {
+                    .action-type {
+                        color: $triggered-action;
                     }
                 }
             }

@@ -78,6 +78,7 @@ export const WelcomePage = (props: Props) => {
 					</ErrorBoundary>
 					<AppFooter
 						page='welcome'
+						hero={null}
 						params={props.params}
 					/>
 				</div>
@@ -139,6 +140,7 @@ export const WelcomePage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
+					hero={null}
 					params={props.params}
 				/>
 			</div>

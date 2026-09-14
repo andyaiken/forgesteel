@@ -264,7 +264,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 							})),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
-								effect: 'Each target who has <code>M < 1</code> is slowed (save ends).'
+								effect: 'Each target who has M < 1 is slowed (save ends).'
 							})
 						]
 					})
@@ -743,7 +743,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 							})),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
-								effect: 'Each target who has <code>M < 2</code> is slowed (save ends).'
+								effect: 'Each target who has M < 2 is slowed (save ends).'
 							})
 						]
 					})
@@ -1222,7 +1222,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 							})),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
-								effect: 'Each target who has <code>M < 3</code> is bleeding and slowed (save ends).'
+								effect: 'Each target who has M < 3 is bleeding and slowed (save ends).'
 							})
 						]
 					})
@@ -1648,7 +1648,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						target: 'Each enemy in the area',
 						cost: 5,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The area becomes overgrown with caustic vines until the end of the encounter. While in the area, any enemy has acid weakness 5 and is slowed. Any enemy who ends their turn in the area and has <code>M < 4</code> is restrained (save ends).')
+							FactoryLogic.createAbilitySectionText('The area becomes overgrown with caustic vines until the end of the encounter. While in the area, any enemy has acid weakness 5 and is slowed. Any enemy who ends their turn in the area and has M < 4 is restrained (save ends).')
 						]
 					})
 				}),
@@ -1704,7 +1704,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 							})),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 4,
-								effect: 'Each target who has <code>M < 3</code> is bleeding and slowed (save ends).'
+								effect: 'Each target who has M < 3 is bleeding and slowed (save ends).'
 							})
 						]
 					})

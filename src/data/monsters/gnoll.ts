@@ -435,7 +435,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'gnoll-8-feature-3',
+					id: 'gnoll-7-feature-3',
 					name: 'Death Frenzy',
 					description: ' Whenever a non-minion ally within 5 squares of the bonesplitter is reduced to 0 Stamina, the bonesplitter moves up to their speed and can make a melee free strike.'
 				})
@@ -696,7 +696,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage summons four **abyssal hyenas** and 5 **abyssal hyenas** into unoccupied spaces within distance.')
+							FactoryLogic.createAbilitySectionText('The carnage summons four **abyssal hyenas** into unoccupied spaces within distance.')
 						]
 					})
 				}),
@@ -725,7 +725,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each winded enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all explosed blood within distance glow bright red. Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all exposed blood within distance glow bright red. Each target makes a **Presence test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Presence,

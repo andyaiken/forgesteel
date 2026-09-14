@@ -2,6 +2,7 @@ import { Encounter, EncounterGroup, TerrainSlot } from '@/models/encounter';
 import { Collections } from '@/utils/collections';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterLogic } from '@/logic/encounter-logic';
+import { FactionType } from '@/enums/faction-type';
 import { Hero } from '@/models/hero';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -17,7 +18,10 @@ export class EncounterDifficultyLogic {
 			return heroCount >= minHeroes;
 		});
 
-		const monsters = Collections.sum(groups, g => EncounterDifficultyLogic.getGroupStrength(g, sourcebooks));
+		const monsters = Collections.sum(groups, g => {
+			const groupStrength = EncounterDifficultyLogic.getGroupStrength(g, sourcebooks);
+			return g.faction === FactionType.Ally ? -groupStrength : groupStrength;
+		});
 		const terrain = Collections.sum(encounter.terrain, t => EncounterDifficultyLogic.getTerrainStrength(t, sourcebooks));
 		return Math.floor(monsters + terrain);
 	};
@@ -27,17 +31,12 @@ export class EncounterDifficultyLogic {
 			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 
 			if (monster) {
-				const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
-				const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
-				const addOnPoints = Collections.sum(addOns, a => a.data.cost);
-				const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
-
 				let count = slot.count;
 				if (monster.role.organization === MonsterOrganizationType.Minion) {
 					count += slot.customization.minionCountAdjustment / MonsterLogic.getRoleMultiplier(monster.role.organization);
 				}
 
-				return (monster.encounterValue + addOnCost) * count;
+				return monster.encounterValue * count;
 			}
 			return 0;
 		});

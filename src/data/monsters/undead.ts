@@ -882,7 +882,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
+								bonus: 3,
 								tier1: 'P<1 the target is levitated (EoT)',
 								tier2: 'P<2 the target is levitated (EoT)',
 								tier3: 'P<3 the target is levitated until the end of the encounter'
@@ -1963,8 +1963,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								FactoryLogic.createPowerRoll({
 									bonus: 4,
 									tier1: 'Pull 3; M<2 5 corruption damage',
-									tier2: 'Pull 5; M<2 5 corruption damage',
-									tier3: 'Pull 7; M<2 5 corruption damage'
+									tier2: 'Pull 5; M<3 5 corruption damage',
+									tier3: 'Pull 7; M<4 5 corruption damage'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('This ability gains an edge against any target grabbed by the koptourok. If one or more targets are pulled adjacent to the koptourok, the koptourok can fly until the end of the encounter.')
@@ -2172,8 +2172,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 								FactoryLogic.createPowerRoll({
 									bonus: 5,
 									tier1: '13 corruption damage; M<3 bleeding (save ends)',
-									tier2: '21 corruption damage; M<3 bleeding (save ends)',
-									tier3: '24 corruption damage; M<3 bleeding (save ends)'
+									tier2: '21 corruption damage; M<4 bleeding (save ends)',
+									tier3: '24 corruption damage; M<5 bleeding (save ends)'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The vampire regains Stamina equal to half the damage dealt, and can end one effect on them that can be ended by a saving throw.'),

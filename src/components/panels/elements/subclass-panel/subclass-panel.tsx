@@ -31,6 +31,8 @@ interface Props {
 export const SubclassPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 
+	const heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === props.subclass.classID);
+
 	const getOverview = () => {
 		return (
 			<Markdown text={props.subclass.description} />
@@ -141,6 +143,9 @@ export const SubclassPanel = (props: Props) => {
 	};
 
 	const tags = [];
+	if (heroClass) {
+		tags.push(heroClass.name);
+	}
 	if (props.sourcebooks.length > 0) {
 		const sourcebookType = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, props.subclass)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {

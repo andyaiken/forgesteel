@@ -1134,6 +1134,7 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-12-retainer-4',
 						name: '‘Scuse Me, Boss',
 						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'Encounter' ] }),
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [
@@ -1448,7 +1449,7 @@ export const retainer: MonsterGroup = {
 								tier2: '18 damage',
 								tier3: '24 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reducetd in any way.')
+							FactoryLogic.createAbilitySectionText('The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reduced in any way.')
 						]
 					})
 				})
@@ -2013,8 +2014,8 @@ export const retainer: MonsterGroup = {
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '5 damage',
-								tier2: '5 damage, 3 corruption damage',
-								tier3: '5 damage, 6 corruption damage; M < [strong] bleeding (save ends)'
+								tier2: '5 damage; 3 corruption damage',
+								tier3: '5 damage; 6 corruption damage; M < [strong] bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The vampire rebel gains temporary Stamina equal to any corruption damage dealt.')
 						]

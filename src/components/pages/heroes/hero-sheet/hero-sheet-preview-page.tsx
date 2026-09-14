@@ -121,7 +121,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	};
 
 	const standardAbilityOptions: SelectProps['options'] = [];
-	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], AbilityData.standardAbilities.map(a => a.id))
+	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero(), [], AbilityData.standardAbilities.map(a => a.id))
 		.map(a => ClassicSheetBuilder.buildAbilitySheet(a.ability, undefined));
 	standardAbilities.sort(SheetFormatter.sortAbilitiesByType);
 	standardAbilities.forEach(a => {
@@ -156,7 +156,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
-	const fakeHero = FactoryLogic.createHero(props.sourcebooks.map(s => s.id));
+	const fakeHero = FactoryLogic.createHero();
+	fakeHero.sourcebookIDs = props.sourcebooks.map(s => s.id);
 	const getPageClasses = () => {
 		return [
 			'hero-sheet',
@@ -293,6 +294,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			card.addEventListener('mouseleave', cardLeave);
 			card.addEventListener('click', cardClick);
 		});
+		// Wired up once against the rendered pages; the handlers only touch the DOM node they're given
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

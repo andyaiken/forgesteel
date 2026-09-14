@@ -10,8 +10,7 @@ import { ChoicesPanel } from '@/components/panels/hero/choices/choices-panel';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
-import { EncounterSlot } from '@/models/encounter-slot';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { EncounterSlot } from '@/models/encounter';
 import { Feature } from '@/models/feature';
 import { FeaturesPanel } from '@/components/panels/hero/features/features-panel';
 import { Fixture } from '@/models/fixture';
@@ -62,6 +61,8 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
+	onSetControlledMonsterHidden: (hero: Hero, monster: Monster, value: boolean) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -167,6 +168,8 @@ export const HeroPanel = (props: Props) => {
 									onAddMonsterToSquad={props.onAddMonsterToSquad}
 									onSelectControlledMonster={props.onSelectControlledMonster}
 									onSelectControlledSquad={props.onSelectControlledSquad}
+									onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}
+									onSetControlledMonsterHidden={props.onSetControlledMonsterHidden}
 								/>
 								: null
 						}
@@ -189,8 +192,8 @@ export const HeroPanel = (props: Props) => {
 						{getAbilitiesSection('Triggered Actions', triggers)}
 						{getAbilitiesSection('Other Abilities', others)}
 						{getAbilitiesSection('Free Strikes', [
-							{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
-							{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined }
+							{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeMelee), source: 'Standard', level: undefined },
+							{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeRanged), source: 'Standard', level: undefined }
 						])}
 					</>
 				);
@@ -206,8 +209,8 @@ export const HeroPanel = (props: Props) => {
 				return getAbilitiesSection('Other Abilities', others);
 			case 'Free Strikes':
 				return getAbilitiesSection('Free Strikes', [
-					{ ability: AbilityData.freeStrikeMelee, source: 'Standard', level: undefined },
-					{ ability: AbilityData.freeStrikeRanged, source: 'Standard', level: undefined },
+					{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeMelee), source: 'Standard', level: undefined },
+					{ ability: HeroLogic.applyAbilityCustomization(props.hero, AbilityData.freeStrikeRanged), source: 'Standard', level: undefined },
 					...abilities.filter(a => a.ability.type.freeStrike)
 				]);
 			case 'Retinue':
@@ -226,88 +229,88 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
-				<NamePanel
-					hero={props.hero}
-					onShowState={props.onShowState}
-				/>
-				<div className='hero-main-section'>
+		<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
+			<NamePanel
+				hero={props.hero}
+				onShowState={props.onShowState}
+			/>
+			<div className='hero-main-section'>
+				{
+					!isSmall && !options.singlePage ?
+						<StatsSidebarPanel
+							hero={props.hero}
+							showStats={tab !== 'Hero'}
+							onSelectCharacteristic={props.onSelectCharacteristic}
+						/>
+						: null
+				}
+				<div className='hero-center-column'>
 					{
-						!isSmall && !options.singlePage ?
-							<StatsSidebarPanel
-								hero={props.hero}
-								showStats={tab !== 'Hero'}
-								onSelectCharacteristic={props.onSelectCharacteristic}
-							/>
-							: null
+						options.singlePage ?
+							null
+							:
+							<div className='center-top'>
+								<Flex align='center' justify='space-between' gap={10}>
+									{
+										isSmall ?
+											<Select
+												style={{ flex: '1 1 0' }}
+												options={
+													getTabs().map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												optionRender={o => <div className='ds-text'>{o.label}</div>}
+												value={tab}
+												onChange={setTab}
+											/>
+											:
+											<Segmented
+												style={{ flex: '1 1 0' }}
+												name='sections'
+												block={true}
+												options={
+													getTabs().map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												value={tab}
+												onChange={setTab}
+											/>
+									}
+								</Flex>
+							</div>
 					}
-					<div className='hero-center-column'>
+					<div className='center-content'>
 						{
 							options.singlePage ?
-								null
+								getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
 								:
-								<div className='center-top'>
-									<Flex align='center' justify='space-between' gap={10}>
-										{
-											isSmall ?
-												<Select
-													style={{ flex: '1 1 0' }}
-													options={
-														getTabs().map(tab => ({
-															value: tab,
-															label: tab
-														}))
-													}
-													optionRender={o => <div className='ds-text'>{o.label}</div>}
-													value={tab}
-													onChange={setTab}
-												/>
-												:
-												<Segmented
-													style={{ flex: '1 1 0' }}
-													name='sections'
-													block={true}
-													options={
-														getTabs().map(tab => ({
-															value: tab,
-															label: tab
-														}))
-													}
-													value={tab}
-													onChange={setTab}
-												/>
-										}
-									</Flex>
-								</div>
+								getContent(tab)
 						}
-						<div className='center-content'>
-							{
-								options.singlePage ?
-									getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
-									:
-									getContent(tab)
-							}
-						</div>
 					</div>
-					{
-						!isSmall && !options.singlePage ?
-							<SidebarPanel
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								setTab={setTab}
-								onShowState={props.onShowState}
-								onShowReference={props.onShowReference}
-								onAddSquad={props.onAddSquad}
-								onRemoveSquad={props.onRemoveSquad}
-								onAddMonsterToSquad={props.onAddMonsterToSquad}
-								onSelectControlledMonster={props.onSelectControlledMonster}
-								onSelectControlledSquad={props.onSelectControlledSquad}
-							/>
-							: null
-					}
 				</div>
+				{
+					!isSmall && !options.singlePage ?
+						<SidebarPanel
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							setTab={setTab}
+							onShowState={props.onShowState}
+							onShowReference={props.onShowReference}
+							onAddSquad={props.onAddSquad}
+							onRemoveSquad={props.onRemoveSquad}
+							onAddMonsterToSquad={props.onAddMonsterToSquad}
+							onSelectControlledMonster={props.onSelectControlledMonster}
+							onSelectControlledSquad={props.onSelectControlledSquad}
+							onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}
+							onSetControlledMonsterHidden={props.onSetControlledMonsterHidden}
+						/>
+						: null
+				}
 			</div>
-		</ErrorBoundary>
+		</div>
 	);
 };

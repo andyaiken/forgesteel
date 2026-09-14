@@ -30,14 +30,14 @@ Fortunately, many humans devote themselves to righting wrongs and reshaping the 
 			id: 'human-info-2',
 			name: 'Risks and Rewards',
 			description: `
-Humans devote as much atten tion to games and gambling as to more serious pursuits. Perhaps this competitive nature explains their renowned knack for seizing the moment—knowing when to risk all on a throw of the dice. Whether in sport or battle, humans quickly spot their opponent’s mistakes and seize the advantage.
+Humans devote as much attention to games and gambling as to more serious pursuits. Perhaps this competitive nature explains their renowned knack for seizing the moment—knowing when to risk all on a throw of the dice. Whether in sport or battle, humans quickly spot their opponent’s mistakes and seize the advantage.
 
-Humans see unrealized potential everywhere, whether envisioning an untamed forest transformed into a prosper ous village, or an ancient dungeon yielding chests filled with coins. Pursuing such ambitions might end in catastrophe, but for these gamblers, it’s a game worth playing.`
+Humans see unrealized potential everywhere, whether envisioning an untamed forest transformed into a prosperous village, or an ancient dungeon yielding chests filled with coins. Pursuing such ambitions might end in catastrophe, but for these gamblers, it’s a game worth playing.`
 		},
 		{
 			id: 'human-info-3',
 			name: 'Swords for Hire',
-			description: 'With an appetite for warfare and gold, human adventurers are well represented in most mer cenary bands. A human mercenary makes a stout ally … if you can afford their price.'
+			description: 'With an appetite for warfare and gold, human adventurers are well represented in most mercenary bands. A human mercenary makes a stout ally … if you can afford their price.'
 		},
 		{
 			id: 'human-info-4',

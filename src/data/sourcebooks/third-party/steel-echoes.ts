@@ -5,6 +5,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { HeroClass } from '@/models/class';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -30,60 +31,66 @@ As a Scion, you are the the quiet before the storm. You move like the wind, and 
 			level: 1,
 			features: [
 				FactoryLogic.feature.createBonus({
-					id: 'scion-O9HoOpa7euJhtYOU',
+					id: 'scion-stamina',
 					name: 'Stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 9
 				}),
 				FactoryLogic.feature.createBonus({
-					id: 'scion-JOGoalJHZrxV29hI',
+					id: 'scion-recoveries',
 					name: 'Recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
 				FactoryLogic.feature.createHeroicResource({
-					id: 'scion-AQVZO67b5ARr837x',
+					id: 'scion-balance',
 					name: 'Balance',
 					gains: [
 						{
 							trigger: 'Start of your turn',
 							value: '2',
-							tag: 'Start 1'
+							tag: 'Start 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a combat round that you or an ally within 10 squares of you uses an ability with a Weapon tag',
+							trigger: 'You or an ally within 10 squares of you uses an ability with a Weapon tag',
 							value: '1',
-							tag: 'Weapon 1'
+							tag: 'Weapon 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a combat round that you or an ally within 10 squares of you uses an ability with a Magic tag',
+							trigger: 'You or an ally within 10 squares of you uses an ability with a Magic tag',
 							value: '1',
-							tag: 'Magic 1'
+							tag: 'Magic 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
 				FactoryLogic.feature.createKitChoice({
-					id: 'scion-DPrp53cyrPmKlK8Q',
+					id: 'scion-kit-choice',
 					name: 'Kit',
 					description: 'You can use and the gain the benefits of a kit.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'scion-k9atwGnHLUisOS3g',
+					id: 'scion-skill-choice-1',
 					selected: [ AbilityKeyword.Magic ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'scion-szzG0j9VXTie1vzU',
+					id: 'scion-skill-choice-2',
 					selected: [ 'Strategy' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'scion-wWXEEpo7fYtbd7H5',
+					id: 'scion-skill-choice-3',
 					listOptions: [ SkillList.Exploration ],
 					count: 2
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'scion-WX9IShLh3LTdbYEZ',
+						id: 'scion-enweave-2',
 						name: 'Enweave',
 						description: 'You weave magic into your weapon, preparing to unleash it with your next strike.',
 						type: FactoryLogic.type.createManeuver(),
@@ -112,15 +119,15 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'scion-kqUeQx0h23EhxxUc',
+					id: 'scion-class-ability-choice-1',
 					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'scion-iRn3qBxVIwTtBoRi',
+					id: 'scion-class-ability-choice-2',
 					cost: 3
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'scion-nl3lpEXmEYpYBZVW',
+					id: 'scion-class-ability-choice-3',
 					cost: 5
 				})
 			]
@@ -129,7 +136,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			level: 2,
 			features: [
 				FactoryLogic.feature.createPerk({
-					id: 'scion-rEyShVuQmHFhyvRt',
+					id: 'scion-perk',
 					lists: [ PerkList.Exploration, PerkList.Lore, PerkList.Supernatural ]
 				})
 			]
@@ -138,12 +145,12 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			level: 3,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'scion-OVUKkhTfFMlLKdd6',
+					id: 'scion-cascading-enweave-1',
 					name: 'Cascading Enweave',
 					description: 'When using Enweave, you may spend 2 balance to make the chosen effect apply to an additional target within range 5 of the target of your next melee weapon ability. You may choose to use this spend effect more than once - if you do, each additional target needs to be within range 5 of the previous affected target.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'scion-nHkXlESMAT6WMexB',
+					id: 'scion-cascading-enweave-2',
 					cost: 7
 				})
 			]
@@ -151,7 +158,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 	],
 	abilities: [
 		FactoryLogic.createAbility({
-			id: 'scion-psE8QwJkMo5FGahf',
+			id: 'scion-aether-lash',
 			name: 'Aether Lash',
 			description: 'With a flick of your blade, you etch a line of invisible force, preparing to strike.',
 			type: FactoryLogic.type.createMain(),
@@ -172,7 +179,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-Kyx8UrFs78d0nDWB',
+			id: 'scion-blade-barrier',
 			name: 'Blade Barrier',
 			description: 'A sphere of shimmering force unfurls around you as you harry your foe.',
 			type: FactoryLogic.type.createMain(),
@@ -184,16 +191,16 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '2 damage, push 1',
-						tier2: '3 damage, push 1',
-						tier3: '5 damage, push 1'
+						tier1: '2 damage; push 1',
+						tier2: '3 damage; push 1',
+						tier3: '5 damage; push 1'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('This ability ignores stability. Gain damage immunity equal to your Reason until the end of your next turn.')
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-K4iussi8iLx5dRET',
+			id: 'scion-crescent-arc',
 			name: 'Crescent Arc',
 			description: 'A precise arc cuts through your foes with the grace of moonlight.',
 			type: FactoryLogic.type.createMain(),
@@ -214,7 +221,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-sa5It8BiU7UVMo3C',
+			id: 'scion-essence-lance',
 			name: 'Essence Lance',
 			description: 'You hurl a lance of force that pierces not flesh, but the core of their being.',
 			type: FactoryLogic.type.createMain(),
@@ -226,16 +233,16 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '5 + R psychic damage, R < [weak], disoriented (save ends)',
-						tier2: '8 + R psychic damage, R < [average], disoriented (save ends)',
-						tier3: '11 + R psychic damage, R < [strong], disoriented (save ends)'
+						tier1: '5 + R psychic damage; R < [weak], disoriented (save ends)',
+						tier2: '8 + R psychic damage; R < [average], disoriented (save ends)',
+						tier3: '11 + R psychic damage; R < [strong], disoriented (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('A disoriented creature has line of effect only within 2 squares.')
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-SeeQb3AuYSt7LJ2u',
+			id: 'scion-still-edge',
 			name: 'Still Edge',
 			description: 'You cut into your foe, leaving potential energy in their form - threatening to snap into explosive motion.',
 			type: FactoryLogic.type.createMain(),
@@ -268,9 +275,9 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '3 + A damage, I < [weak], taunted (save ends)',
-						tier2: '6 + A damage, I < [average], taunted (save ends)',
-						tier3: '9 + A damage, I < [strong], taunted (save ends)'
+						tier1: '3 + A damage; I < [weak], taunted (save ends)',
+						tier2: '6 + A damage; I < [average], taunted (save ends)',
+						tier3: '9 + A damage; I < [strong], taunted (save ends)'
 					})
 				)
 			]
@@ -297,7 +304,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-nEF5J2Lof7zx5C0S',
+			id: 'scion-sever-the-moment',
 			name: 'Sever the Moment',
 			description: 'You read the flaw in their stance and cut deep.',
 			type: FactoryLogic.type.createMain(),
@@ -318,7 +325,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-KvsM9dDuVqzUpIfn',
+			id: 'scion-full-moon-arc',
 			name: 'Full Moon Arc',
 			description: 'Your blade traces a perfect circle in red.',
 			type: FactoryLogic.type.createMain(),
@@ -338,7 +345,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-9LLTrUY85AVyIcHI',
+			id: 'scion-veil-piercer',
 			name: 'Veil Piercer',
 			description: 'You lance through a veil of mist, fading from sight.',
 			type: FactoryLogic.type.createMain(),
@@ -359,7 +366,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-WnkiVZGxk1aSzG4m',
+			id: 'scion-sanguine-thread',
 			name: 'Sanguine Thread',
 			description: 'Your blade draws a line through flesh, and a thread of life follows - woven back into your form.',
 			type: FactoryLogic.type.createMain(),
@@ -380,7 +387,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-XZxWE6QBTKjvPCYM',
+			id: 'scion-lightning-flash',
 			name: 'Lightning Flash',
 			description: 'You become lightning, flashing from one place to another, leaving ruin in your wake.',
 			type: FactoryLogic.type.createMain(),
@@ -401,7 +408,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-D2YGEm6Ic7QrUCwR',
+			id: 'scion-glacial-bloom',
 			name: 'Glacial Bloom',
 			description: 'Fractals of ice bloom outward and shatter across your foes.',
 			type: FactoryLogic.type.createMain(),
@@ -413,15 +420,15 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: Characteristic.Agility,
-						tier1: '5 cold damage, A < [weak], slowed (save ends)',
-						tier2: '8 cold damage, A < [average], slowed (save ends)',
-						tier3: '11 cold damage, A < [strong], restrained (save ends)'
+						tier1: '5 cold damage; A < [weak], slowed (save ends)',
+						tier2: '8 cold damage; A < [average], slowed (save ends)',
+						tier3: '11 cold damage; A < [strong], restrained (save ends)'
 					})
 				)
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-cHb7KRKmqjtzEDNA',
+			id: 'scion-crashing-wave',
 			name: 'Crashing Wave',
 			description: 'Leaping skyward, you crash down with the weight of the ocean.',
 			type: FactoryLogic.type.createMain(),
@@ -442,7 +449,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-eGFSaMDQOv3qpxBX',
+			id: 'scion-spirit-rend',
 			name: 'Spirit Rend',
 			description: 'You carve through your foe’s spirit, leaving their mind reeling.',
 			type: FactoryLogic.type.createMain(),
@@ -463,7 +470,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-8uSVdpHtYzQ49cU2',
+			id: 'scion-cross-slash',
 			name: 'Cross Slash',
 			description: 'You cleave the air in multiple directions, unleashing blades of pure force.',
 			type: FactoryLogic.type.createMain(),
@@ -484,7 +491,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-mejqYrJQuCnj6X12',
+			id: 'scion-godspeed',
 			name: 'Godspeed',
 			description: 'You surge with arcane power, moving with impossible speed.',
 			type: FactoryLogic.type.createManeuver({ free: true }),
@@ -497,7 +504,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-VNtILg0JEcSZMXIw',
+			id: 'scion-reaper',
 			name: 'Reaper\'s Edge',
 			description: 'There is power in death.',
 			type: FactoryLogic.type.createMain(),
@@ -518,7 +525,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'scion-EpYMy07L6kpxn0tk',
+			id: 'scion-spectral-blades',
 			name: 'Spectral Blades',
 			description: 'You summon spectral blades, suspended in poise, released with but a thought.',
 			type: FactoryLogic.type.createManeuver(),
@@ -533,28 +540,29 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 	],
 	subclasses: [
 		{
-			id: 'scion-vGtuuw0cYpAkkPUN',
+			id: 'scion-blinkblade-1',
 			name: 'Blinkblade',
 			description: 'A master of teleportation magic, the Blinkblades weave in and out of reach with uncanny speed - difficult to catch, and harder still to escape.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'scion-R6zmbAYzj5QQnf5r',
+							id: 'scion-blinkblade-2',
 							selected: [ 'Gymnastics' ]
 						}),
 						FactoryLogic.feature.createMultiple({
-							id: 'scion-d7U62IAB3V2YaasD',
+							id: 'scion-phasewalk-1',
 							name: 'Phasewalk',
 							features: [
 								FactoryLogic.feature.create({
-									id: 'scion-d7U62IAB3V2YaasDa',
+									id: 'scion-phasewalk-2',
 									name: 'Phase Step',
 									description: 'Whenever you disengage, you may teleport instead of shifting.'
 								}),
 								FactoryLogic.feature.createBonus({
-									id: 'scion-d7U62IAB3V2YaasDb',
+									id: 'scion-phasewalk-3',
 									field: FeatureField.Disengage,
 									value: 1
 								})
@@ -562,7 +570,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-UZK6xyl5g71nt7t8',
+								id: 'scion-blink',
 								name: 'Blink',
 								description: '... And you miss it.',
 								type: FactoryLogic.type.createManeuver(),
@@ -580,7 +588,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-GN04C4n7iSFme7EB',
+								id: 'scion-flicker-step',
 								name: 'Flicker Step',
 								description: 'You instinctively teleport to avoid danger.',
 								type: FactoryLogic.type.createTrigger('You take damage'),
@@ -602,18 +610,18 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'scion-3cCLubzSJqOAXhTt',
+							id: 'scion-afterimage-1',
 							name: 'Afterimage',
 							description: 'Whenever you teleport by any means, you leave a distracting afterimage in your previous location until the start of your next turn. Power rolls targeting enemies adjacent to one or more afterimages gain an edge. The afterimage does not occupy space and cannot be targeted or destroyed. At the start of any turn when an afterimage fades, you can choose to teleport to its location.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'scion-O1IBnmfpWK2A0Pzm',
+							id: 'scion-afterimage-2',
 							name: '2nd Level Blinkblade Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-iUFlQNI03qMYfk3o',
+											id: 'scion-afterimage-3',
 											name: 'Phase Assault',
 											description: 'You blink between foes, each reappearance marked by a precise, cutting strike.',
 											type: FactoryLogic.type.createMain(),
@@ -639,7 +647,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-LFPajs7vWR1FdtDa',
+											id: 'scion-horizon-step',
 											name: 'Horizon Step',
 											description: 'None can escape your reach.',
 											type: FactoryLogic.type.createMain(),
@@ -675,20 +683,21 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 			selected: false
 		},
 		{
-			id: 'scion-nCi6Ufmfz74H70Pr',
+			id: 'scion-runewright-1',
 			name: 'Runewright',
 			description: 'The Runewright wields the ancient craft of runebranding to sear volatile runes onto living beings and shape the battlefield through groundlaid writs.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'scion-5hK9y3rFtS2uW5d0',
+							id: 'scion-runewright-2',
 							selected: [ 'Mechanics' ]
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-PG0F4c5cIccZlDl4',
+								id: 'scion-runebrand',
 								name: 'Runebrand',
 								description: 'You brand a volatile rune on your target, priming it for detonation.',
 								type: FactoryLogic.type.createManeuver(),
@@ -707,7 +716,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-MnzMxsJZtPA8FrFs',
+								id: 'scion-ensnaring-rune',
 								name: 'Ensnaring Rune',
 								description: 'Your foe steps on one of your many traps.',
 								type: FactoryLogic.type.createTrigger('The target moves'),
@@ -728,18 +737,18 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'scion-KXLNgaULFP7C3Kkx',
+							id: 'scion-liminal-runes-1',
 							name: 'Liminal Runes',
 							description: 'An enemy carrying an undetonated runebrand receives a bane on their power rolls. An ally carrying an undetonated runebrand gains an edge on their power rolls.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'scion-r7jDReOjykBnFpp2',
+							id: 'scion-liminal-runes-2',
 							name: '2nd-Level Art Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-HnQmrJFiyb8LEN1l',
+											id: 'scion-liminal-runes-3',
 											name: 'Writ of Power',
 											description: 'You brand an arcane writ onto the ground, scorching foes, or soothing allies.',
 											type: FactoryLogic.type.createManeuver(),
@@ -752,7 +761,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 The area remains until the end of the encounter or you are dying. Choose one of the following effects to apply to the area:
 
 * **Writ of Flame**: Each enemy who enters the area for the first time in a combat round or starts their turn there takes damage equal to triple your Reason score.
-* **Writ of Sanctuary**: Each ally, or youreslf, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
+* **Writ of Sanctuary**: Each ally, or yourself, who enters the area for the first time in a combat round or starts their turn there may either spend a recovery, or end one effect that is ended by a saving throw or ends at the end of their turn.`)
 											]
 										})
 									}),
@@ -761,7 +770,7 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-amPXemJUIcHPs4Zx',
+											id: 'scion-writ-of-binding',
 											name: 'Writ of Binding',
 											description: 'Arcane chains erupt from the ground, coiling around your foe.',
 											type: FactoryLogic.type.createMain(),
@@ -797,19 +806,20 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 			selected: false
 		},
 		{
-			id: 'scion-HK8oez2ay5ZQNhfp',
+			id: 'scion-soulforged-1',
 			name: 'Soulforged',
 			description: 'The Soulforged binds a fragment of their soul into a chosen weapon, forging a sentient extension of their will - a Soulblade. Through this bond, they shape and empower their blade, adapting its form and function to meet the shifting demands of battle.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
 					features: [
 						FactoryLogic.feature.createSkillChoice({
-							id: 'scion-YMhhEe1upKHfymOH',
+							id: 'scion-soulforged-2',
 							selected: [ 'Empathize' ]
 						}),
 						FactoryLogic.feature.create({
-							id: 'scion-1jXjv5q9Tmlax2TD',
+							id: 'scion-soulbound-1',
 							name: 'Soulbound',
 							description: `
 Your Soulblade is more than a weapon - it's an extension of your soul. Its appearance reflects the innermost truth of who you are. You are never truly separated from it; if it's not in your hands, you can summon it instantly as a free maneuver.
@@ -820,7 +830,7 @@ By default, your Soulblade is sentient and capable of communicating with you, th
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-uajSniPPGVxpq9jX',
+								id: 'scion-soulbound-2',
 								name: 'Soulshape',
 								description: 'By reshaping the bound fragment of your soul, you persuade your Soulblade to take on a new form.',
 								type: FactoryLogic.type.createManeuver(),
@@ -844,7 +854,7 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scion-QfuRewVhDSo3Fcnh',
+								id: 'scion-blade',
 								name: 'Blade\'s Will',
 								description: 'As if moving by its own accord, your Soulblade parries and ripostes.',
 								type: FactoryLogic.type.createTrigger('A creature deals damage to the target.'),
@@ -866,29 +876,29 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 					level: 2,
 					features: [
 						FactoryLogic.feature.createMultiple({
-							id: 'scion-bzETrObsFfukTsKF',
+							id: 'scion-soul-instinct-1',
 							name: 'Soul Instinct',
 							features: [
 								FactoryLogic.feature.create({
-									id: 'scion-bzETrObsFfukTsKFa',
+									id: 'scion-soul-instinct-2',
 									name: 'Soul Instinct',
 									description: 'Once per turn, you can make a melee free strike whenever a creature moves from a square adjacent to you to another square adjacent to you.'
 								}),
 								FactoryLogic.feature.createBonus({
-									id: 'scion-bzETrObsFfukTsKFb',
+									id: 'scion-soul-instinct-3',
 									field: FeatureField.Stability,
 									value: 1
 								})
 							]
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'scion-zMh3T36dRkETvXP5',
+							id: 'scion-2nd-level-soulforged-ability-1',
 							name: '2nd-Level Soulforged Ability',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-cvF4m32z5QKl8fuv',
+											id: 'scion-2nd-level-soulforged-ability-2',
 											name: 'Soul Form',
 											description: 'Your Soulblade takes its true form, flaring with power.',
 											type: FactoryLogic.type.createManeuver(),
@@ -906,7 +916,7 @@ Choose a modified form for your Soulblade, each granting a distinct effect until
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'scion-QKw9odWNUqve0maB',
+											id: 'scion-soul-spiral',
 											name: 'Soul Spiral',
 											description: 'Your Soulblade unfurls in a violent spiral, crashing through foes.',
 											type: FactoryLogic.type.createMain(),

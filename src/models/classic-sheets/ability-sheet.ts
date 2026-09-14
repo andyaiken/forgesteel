@@ -12,9 +12,11 @@ export interface AbilitySheet {
 	target?: string;
 	trigger?: string;
 	qualifiers?: string[];
-	effect?: string;
 
-	hasPowerRoll: boolean;
+	sections: (string | PowerRollSection)[];
+}
+
+export interface PowerRollSection {
 	rollPower?: string;
 	rollT1Effect?: string;
 	rollT2Effect?: string;

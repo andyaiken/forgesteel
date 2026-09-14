@@ -1,5 +1,6 @@
-import { Alert, Button, Drawer, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Drawer, Space } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -8,10 +9,12 @@ import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ImportCodeModal } from '@/components/modals/import-code/import-code-modal';
 import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
@@ -31,13 +34,22 @@ interface Props {
 export const HeroInventoryModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
+	const [ importVisible, setImportVisible ] = useState<boolean>(false);
 
 	const addItem = (item: Item) => {
+		const itemCopy = Utils.copy(item);
+		itemCopy.id = Utils.guid();
+
 		const copy = Utils.copy(hero);
-		copy.state.inventory.push(item);
+		copy.state.inventory.push(itemCopy);
 		setHero(copy);
 		setShopVisible(false);
 		props.onChange(copy);
+	};
+
+	const importItem = (item: Item) => {
+		addItem(item);
+		setImportVisible(false);
 	};
 
 	const changeItem = (item: Item) => {
@@ -59,6 +71,13 @@ export const HeroInventoryModal = (props: Props) => {
 	const deleteItem = (item: Item) => {
 		const copy = Utils.copy(hero);
 		copy.state.inventory = copy.state.inventory.filter(i => i.id !== item.id);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setInventoryText = (value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.inventoryText = value;
 		setHero(copy);
 		props.onChange(copy);
 	};
@@ -90,7 +109,12 @@ export const HeroInventoryModal = (props: Props) => {
 					<Space orientation='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 						<HeaderText
 							extra={
-								<Button type='text' icon={<PlusOutlined />} onClick={() => setShopVisible(true)} />
+								<ButtonGroup
+									buttons={[
+										{ type: 'button', icon: <PlusOutlined />, tooltip: 'Add an item', onClick: () => setShopVisible(true) },
+										{ type: 'button', icon: <DownloadOutlined />, tooltip: 'Import a code', onClick: () => setImportVisible(true) }
+									]}
+								/>
 							}
 						>
 							Inventory
@@ -143,16 +167,52 @@ export const HeroInventoryModal = (props: Props) => {
 								<Empty text='Your inventory is empty.' />
 								: null
 						}
+						<Divider />
+						<MarkdownEditor value={hero.state.inventoryText} onChange={setInventoryText} />
 					</Space>
 					<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} size={500}>
-						<ItemSelectModal
-							types={[ ItemType.Artifact, ItemType.Consumable1st, ItemType.Consumable2nd, ItemType.Consumable3rd, ItemType.Consumable4th, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
-							sourcebooks={props.sourcebooks}
-							hero={hero}
-							onSelect={addItem}
-							onCustomize={props.onCustomize}
-							onClose={() => setShopVisible(false)}
-						/>
+						{
+							shopVisible ?
+								<ItemSelectModal
+									types={[
+										ItemType.Artifact,
+										ItemType.Consumable1st,
+										ItemType.Consumable2nd,
+										ItemType.Consumable3rd,
+										ItemType.Consumable4th,
+										ItemType.ImbuedArmor,
+										ItemType.ImbuedImplement,
+										ItemType.ImbuedWeapon,
+										ItemType.Leveled,
+										ItemType.LeveledArmor,
+										ItemType.LeveledImplement,
+										ItemType.LeveledWeapon,
+										ItemType.Trinket1st,
+										ItemType.Trinket2nd,
+										ItemType.Trinket3rd,
+										ItemType.Trinket4th
+									]}
+									sourcebooks={props.sourcebooks}
+									hero={hero}
+									onSelect={addItem}
+									onCustomize={props.onCustomize}
+									onClose={() => setShopVisible(false)}
+								/>
+								: null
+						}
+					</Drawer>
+					<Drawer open={importVisible} onClose={() => setImportVisible(false)} closeIcon={null} size={500}>
+						{
+							importVisible ?
+								<ImportCodeModal
+									kind='item'
+									hero={hero}
+									sourcebooks={props.sourcebooks}
+									onImport={element => importItem(element as Item)}
+									onClose={() => setImportVisible(false)}
+								/>
+								: null
+						}
 					</Drawer>
 				</div>
 			}

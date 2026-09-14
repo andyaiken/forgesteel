@@ -5,19 +5,11 @@
 
 	.backup-page-content {
 		height: 100%;
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		padding: 50px;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 10px;
 		overflow-y: auto;
-	}
-}
-
-html[data-theme="dark"] {
-	.backup-page {
-		.backup-page-content {
-			background-color: rgb(55, 55, 55);
-		}
 	}
 }

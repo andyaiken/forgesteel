@@ -47,7 +47,7 @@ export const ClocktowerCharacterPanel = (props: Props) => {
 					</div>
 				</div>
 				<Divider />
-				<Field label='Ability' value={props.character.role.ability} />
+				<Field label='Ability' value={<Markdown text={ClocktowerLogic.getFormattedAbility(props.character)} useSpan={true} />} />
 				<Divider />
 				<Markdown text={props.character.details.description} />
 				{jinxes.length > 0 ? <HeaderText>Jinxes</HeaderText> : null}

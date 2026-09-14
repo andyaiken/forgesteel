@@ -4,24 +4,21 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ConnectionSettingsPanel } from '@/components/panels/connection-settings/connection-settings-panel';
-import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/services/data-service';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
-import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Options } from '@/models/options';
-import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
 import { PatreonLogic } from '@/logic/patreon-logic';
 import { PatreonService } from '@/services/patreon-service';
 import { Session } from '@/models/session';
-import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import localforage from 'localforage';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -32,6 +29,7 @@ export interface LoadedData {
 	service: DataService;
 	heroes: Hero[];
 	homebrewSourcebooks: Sourcebook[];
+	builtInSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	session: Session;
 	options: Options;
@@ -62,7 +60,7 @@ export const DataLoader = (props: Props) => {
 		if (!settings) {
 			settings = FactoryLogic.createConnectionSettings();
 		}
-		ConnectionSettingsUpdateLogic.updateSettings(settings);
+		UpdateLogic.updateConnectionSettings(settings);
 
 		let source: FSDataSource = undefined;
 
@@ -183,7 +181,10 @@ export const DataLoader = (props: Props) => {
 				setHiddenSourcebookIDsState('pending');
 
 				const promises = [
-					updateLoadingStatus(dataService.getHomebrew(), setSourcebookState),
+					updateLoadingStatus(
+						Promise.all([ SourcebookData.loadAll(), dataService.getHomebrew() ]),
+						setSourcebookState
+					),
 					updateLoadingStatus(getHeroes(dataService, settings.dataSource), setHeroesState),
 					updateLoadingStatus(dataService.getHiddenSourcebookIDs(), setHiddenSourcebookIDsState),
 					updateLoadingStatus(dataService.getSession(), setSessionState),
@@ -191,19 +192,21 @@ export const DataLoader = (props: Props) => {
 				];
 
 				Promise.all(promises).then(results => {
-					const sourcebooks = results[0] as Sourcebook[];
+					const [ builtInSourcebooks, sourcebooks ] = results[0] as [ Sourcebook[], Sourcebook[] ];
 					sourcebooks.forEach(sourcebook => {
 						try {
-							SourcebookUpdateLogic.updateSourcebook(sourcebook);
+							UpdateLogic.updateSourcebook(sourcebook);
 						} catch (error) {
 							console.error(`Error while updating sourcebook [${sourcebook.name} - ${sourcebook.id}]`, error);
 						}
 					});
 
+					const allSourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks, sourcebooks);
+
 					const heroes = results[1] as Hero[];
 					heroes.forEach(hero => {
 						try {
-							HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+							HeroUpdateLogic.updateHero(hero, allSourcebooks);
 						} catch (error) {
 							console.error(`Error while updating hero [${hero.name} - ${hero.id}]`, error);
 						}
@@ -212,10 +215,10 @@ export const DataLoader = (props: Props) => {
 					const hiddenSourcebookIDs = results[2] as string[];
 
 					const session = results[3] as Session;
-					SessionUpdateLogic.updateSession(session);
+					UpdateLogic.updateSession(session);
 
 					const options = results[4] as Options;
-					OptionsUpdateLogic.updateOptions(options);
+					UpdateLogic.updateOptions(options);
 					if (isSmall) {
 						options.compactView = true;
 					}
@@ -227,6 +230,7 @@ export const DataLoader = (props: Props) => {
 						service: dataService,
 						heroes: heroes,
 						homebrewSourcebooks: sourcebooks,
+						builtInSourcebooks: builtInSourcebooks,
 						hiddenSourcebookIDs: hiddenSourcebookIDs,
 						session: session,
 						options: options
@@ -252,6 +256,7 @@ export const DataLoader = (props: Props) => {
 		loadData,
 		// dependencies here needs to be an empty array so that it only runs once
 		// otherwise, it runs several times as things change.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
@@ -261,9 +266,9 @@ export const DataLoader = (props: Props) => {
 				<div className='overall-state'>
 					<CheckIcon state={overallLoadState} />
 				</div>
-				<HeaderText level={1}>Loading Data</HeaderText>
 				<Flex vertical={true}>
 					<Flex className='load-states' vertical={true}>
+						<Progress percent={heroesProgress} size='small' showInfo={false} />
 						<CheckLabel state={connectionSettingsState}>
 							Connection Settings
 							{
@@ -274,7 +279,6 @@ export const DataLoader = (props: Props) => {
 						</CheckLabel>
 						<CheckLabel state={sourcebookState}>Sourcebooks</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
-						<Progress percent={heroesProgress} size='small' showInfo={false} />
 						<CheckLabel state={sessionState}>Session</CheckLabel>
 						<CheckLabel state={optionsState}>Options</CheckLabel>
 						<CheckLabel state={hiddenSourcebookIDsState}>Manifold</CheckLabel>

@@ -32,6 +32,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StartSection } from '@/components/pages/heroes/hero-edit/start-section/start-section';
 import { SubClass } from '@/models/subclass';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -83,7 +84,9 @@ export const HeroEditPage = (props: Props) => {
 						return PageState.InProgress;
 					}
 					const features: Feature[] = [];
-					features.push(hero.culture.language);
+					if (hero.culture.language) {
+						features.push(hero.culture.language);
+					}
 					if (hero.culture.environment) {
 						features.push(hero.culture.environment);
 					}
@@ -145,7 +148,11 @@ export const HeroEditPage = (props: Props) => {
 	const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
 		const sourcebooks = props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
 		const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
-		const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
+		// Cancelled skills can never be learned again, so they count as 'known' for this purpose
+		const knownSkills = [
+			...HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name),
+			...HeroLogic.getCancelledSkillNames(hero)
+		];
 		features.forEach(feature => {
 			switch (feature.type) {
 				case FeatureType.LanguageChoice:
@@ -377,6 +384,13 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
+	const setTutorialMode = (value: TutorialMode) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.state.tutorialMode = value;
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
 	const setSettingIDs = (settingIDs: string[]) => {
 		const heroCopy = Utils.copy(hero);
 		heroCopy.sourcebookIDs = settingIDs;
@@ -587,6 +601,7 @@ export const HeroEditPage = (props: Props) => {
 						setName={setName}
 						setPicture={setPicture}
 						setFolder={setFolder}
+						setTutorialMode={setTutorialMode}
 						setFeatureData={setFeatureData}
 					/>
 				);
@@ -613,6 +628,7 @@ export const HeroEditPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='heroes'
+					hero={hero}
 					params={props.params}
 				/>
 			</div>

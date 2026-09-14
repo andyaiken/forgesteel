@@ -7,6 +7,10 @@ import { FeatureField } from '@/enums/feature-field';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
+import { SkillList } from '@/enums/skill-list';
 
 export class LeveledWeaponData {
 	static authoritysEnd: Item = FactoryLogic.createItem({
@@ -221,10 +225,10 @@ export class LeveledWeaponData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'item-blade-of-the-luxurious-fop-9',
-						name: '',
-						description: 'You have a double edge on any test you make using a skill you have from the interpersonal skill group.'
+						modifier: RollModifierType.DoubleEdge,
+						skillLists: [ SkillList.Interpersonal ]
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-the-luxurious-fop-9a',
@@ -348,7 +352,16 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-executioners-blade-5',
 						name: '',
-						description: 'The weapon’s extra psychic damage increases to 2 if the target is winded. d. Additionally, whenever you cause an enemy to become winded with an ability using the weapon, you gain 2 surges that you can immediately spend.'
+						description: 'The weapon’s extra psychic damage increases to 2 if the target is winded.'
+					}),
+					FactoryLogic.feature.createSurgeGain({
+						id: 'item-executioners-blade-5b',
+						name: '',
+						tag: 'winded',
+						trigger: 'You cause an enemy to become winded with an ability using the weapon',
+						value: '2',
+						frequency: ResourceGainFrequency.AtWill,
+						condition: 'You can spend these surges immediately.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-executioners-blade-5a',
@@ -365,7 +378,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-executioners-blade-9',
 						name: '',
-						description: 'The weapon’s extra psychic damage increases to 3 if the target is winded. Additionally, you gain an edge on any ability using the weapon against a winded target.'
+						description: 'The weapon’s extra psychic damage increases to 3 if the target is winded.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'item-executioners-blade-9b',
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Ability,
+						condition: 'When using this weapon against a winded target'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-executioners-blade-9a',
@@ -633,7 +652,7 @@ export class LeveledWeaponData {
 						description: 'The damage taken by a grabbed creature attempting to escape increases to 15.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
-						id: 'item-molten-constrictor-5a',
+						id: 'item-molten-constrictor-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
@@ -641,7 +660,7 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
-							id: 'item-molten-constrictor-5b',
+							id: 'item-molten-constrictor-9b',
 							name: 'Weapon Ability',
 							type: FactoryLogic.type.createManeuver(),
 							distance: [ FactoryLogic.distance.createSpecial('') ],
@@ -841,10 +860,11 @@ export class LeveledWeaponData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'item-third-eye-seeker-9',
-						name: '',
-						description: 'You have a double edge on weapon abilities that use the weapon against creatures who have used a psionic ability since the end of your last turn.'
+						modifier: RollModifierType.DoubleEdge,
+						rollType: RollType.Ability,
+						condition: 'When using this weapon against a creature who has used a psionic ability since the end of your last turn'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-third-eye-seeker-9a',
@@ -877,7 +897,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-thunderhead-bident-1',
 						name: '',
-						description: 'When the weapon is used with any ability that pushes a target, you gain a +1 bonus to the forced movement distance. If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
+						description: 'If the weapon is used with a damage-dealing ability that doesn’t impose forced movement, you can push the target 1 square.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-1a',
@@ -885,6 +905,21 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Sonic
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1b',
+						field: FeatureField.ForcedMovementPull,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1c',
+						field: FeatureField.ForcedMovementPush,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-1d',
+						field: FeatureField.ForcedMovementSlide,
+						value: 1
 					})
 				]
 			},
@@ -894,7 +929,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-thunderhead-bident-5',
 						name: '',
-						description: 'The additional distance or distance of a push for abilities using the weapon increases to 2 squares. Additionally, the weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
+						description: 'The weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-thunderhead-bident-5a',
@@ -902,6 +937,21 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Sonic
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5b',
+						field: FeatureField.ForcedMovementPull,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5c',
+						field: FeatureField.ForcedMovementPush,
+						value: 1
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-thunderhead-bident-5d',
+						field: FeatureField.ForcedMovementSlide,
+						value: 1
 					})
 				]
 			},
@@ -989,18 +1039,18 @@ export class LeveledWeaponData {
 						name: '',
 						description: 'The weapon\'s extra sonic damage increases to 3. Additionally, if you kill a creature using the weapon, you can use a maneuver to move up to your speed and make either a signature strike or a melee free strike.'
 					}),
-					FactoryLogic.feature.createPackageContent({
-						id: 'item-wetwork-5',
-						name: '9th',
-						description: 'Or you can move up to you speed and make either a signature ability strike or a melee free strike.',
-						tag: 'item-wetwork-tag'
-					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-wetwork-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Psychic
+					}),
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-wetwork-9b',
+						name: '9th',
+						description: 'Or you can move up to you speed and make either a signature ability strike or a melee free strike.',
+						tag: 'item-wetwork-tag'
 					})
 				]
 			}

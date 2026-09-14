@@ -28,6 +28,7 @@ import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { SubClassSelectModal } from '@/components/modals/select/subclass-select/subclass-select-modal';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useOptions } from '@/contexts/data-context';
@@ -109,7 +110,7 @@ export const ClassSection = (props: Props) => {
 			options.choices.push(
 				<SelectablePanel key='subclass'>
 					<HeaderText>{heroClass.subclassName}</HeaderText>
-					<div className='ds-text'>Choose {heroClass.subclassCount === 1 ? `${Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} ${heroClass.subclassName || 'subclass'}` : `${heroClass.subclassCount} ${heroClass.subclassName || 'subclasse'}s`}.</div>
+					<div className='ds-text'>Choose {heroClass.subclassCount === 1 ? `${Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} ${heroClass.subclassName || 'subclass'}` : `${heroClass.subclassCount} ${Format.pluralize(heroClass.subclassName) || 'subclasses'}`}.</div>
 					{
 						heroClass.subclasses
 							.filter(sc => sc.selected)
@@ -148,8 +149,7 @@ export const ClassSection = (props: Props) => {
 					}
 					<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} size={500}>
 						<SubClassSelectModal
-							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
-							classID={heroClass.id}
+							heroClass={heroClass}
 							sourcebooks={props.sourcebooks}
 							onSelect={sc => {
 								setSubclassSelectorOpen(false);
@@ -177,7 +177,7 @@ export const ClassSection = (props: Props) => {
 	if (props.hero.class) {
 		choicesByLevel.push(getClassOptions(props.hero.class));
 
-		const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero.class?.level || 1);
+		const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero.class?.level || 1, TutorialMode.Complete);
 
 		for (let level = 1; level <= 10; ++level) {
 			const featuresForLevel = features.filter(f => f.level === level).map(f => f.feature);

@@ -8,6 +8,7 @@ export const guardian: SubClass = {
 	id: 'beastheart-sub-1',
 	name: 'Guardian',
 	description: 'You are the fearless defender of your pack - anyone who harms them must go through you.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

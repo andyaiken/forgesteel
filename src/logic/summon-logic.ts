@@ -2,6 +2,7 @@ import { AbilityLogic } from '@/logic/ability-logic';
 import { Characteristic } from '@/enums/characteristic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Modifier } from '@/models/damage-modifier';
 import { ModifierLogic } from '@/logic/modifier-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
@@ -26,6 +27,13 @@ export class SummonLogic {
 		}
 		if (summon.info.level >= 10) {
 			copy.features.push(...summon.info.level10);
+		}
+
+		if (copy.role.organization === MonsterOrganizationType.Minion) {
+			HeroLogic.getFeatures(controller)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.SummonFormation)
+				.forEach(f => copy.features.push(...Utils.copy(f.data.minionFeatures)));
 		}
 
 		MonsterLogic.getFeatures(copy).forEach(f => {

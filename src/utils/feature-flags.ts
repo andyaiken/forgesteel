@@ -23,10 +23,16 @@ export class FeatureFlags {
 		description: 'Access to the (pre-release) Community sourcebook'
 	};
 
+	static ageOfSecrets: FeatureFlag = {
+		code: Utils.hashCode('dickens'),
+		description: 'Access to the Age of Secrets sourcebook'
+	};
+
 	private static all = [
 		FeatureFlags.warehouse,
 		FeatureFlags.playtest,
-		FeatureFlags.communityPreRelease
+		FeatureFlags.communityPreRelease,
+		FeatureFlags.ageOfSecrets
 	];
 
 	// #endregion

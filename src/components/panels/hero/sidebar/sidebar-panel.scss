@@ -24,4 +24,26 @@
 		display: flex;
 		justify-content: space-between;
 	}
+
+	.gain {
+		margin: 5px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+
+		&.used {
+			opacity: 0.3;
+		}
+
+		.gain-condition,
+		.gain-description {
+			color: var(--color-text-lightest);
+			font-size: 12px;
+		}
+
+		.gain-condition {
+			font-style: italic;
+		}
+	}
 }

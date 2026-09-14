@@ -2,6 +2,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const creation: Domain = {
@@ -168,8 +169,10 @@ On subsequent turns, you can use a main action to command the dragon to breathe 
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that a creature within 10 squares of you uses an area ability.',
-			value: '2'
+			trigger: 'A creature within 10 squares of you uses an area ability.',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

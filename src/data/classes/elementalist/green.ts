@@ -6,6 +6,7 @@ export const green: SubClass = {
 	id: 'elementalist-sub-3',
 	name: 'Green',
 	description: 'Green is the element of creation and growth. Green abilities make and manipulate plants, fungi, and other forms of life to hamper foes and nourish your allies.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

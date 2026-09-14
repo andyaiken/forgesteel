@@ -29,5 +29,11 @@ export interface MonsterSheet {
 
 	features?: Feature[];
 	abilities?: AbilitySheet[];
+
+	advancement?: {
+		level: number,
+		ability?: AbilitySheet,
+		features?: Feature[]
+	}[];
 };
 // #endregion

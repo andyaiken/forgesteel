@@ -55,20 +55,19 @@ export const EncounterToolsModal = (props: Props) => {
 							Collections.sort(monsters, data => data.monster.name).map(data => {
 								return (
 									<SelectablePanel key={data.monster.id}>
-										<HeaderText tags={data.monster.keywords}>{data.monster.name}</HeaderText>
-										{
-											data.count > 1 ?
-												<Field
-													label='Count'
-													value={data.count}
-												/>
-												: null
-										}
+										<HeaderText
+											tags={data.monster.keywords}
+											extra={data.count > 1 ? <div style={{ fontSize: '16px', fontWeight: 'bold' }}>x{data.count}</div> : null}
+										>
+											{data.monster.name}
+										</HeaderText>
 										<Field
+											compact={true}
 											label='Size'
 											value={FormatLogic.getSize(data.monster.size)}
 										/>
 										<Field
+											compact={true}
 											label='Weapons'
 											value={
 												data.monster.features

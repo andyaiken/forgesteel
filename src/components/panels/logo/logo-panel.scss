@@ -15,11 +15,3 @@
 		letter-spacing: 2px;
 	}
 }
-
-html[data-theme="dark"] {
-	.logo-panel {
-		.logo-panel-image {
-			filter: invert(1);
-		}		
-	}	
-}

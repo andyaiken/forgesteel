@@ -3,6 +3,9 @@ import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Kit } from '@/models/kit';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const boren: Kit = {
 	id: 'kit-boren',
@@ -47,31 +50,178 @@ export const boren: Kit = {
 			name: 'Aspect Benefits',
 			description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < [average], you can use a free triggered action to make that creature grabbed by you.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-boren-feature-2a',
 			name: 'Animal Form: Bear',
-			description: 'While you are in your bear form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities.'
+			condition: 'You are in your bear form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-boren-feature-2a-1',
+				name: 'Animal Form: Bear',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-boren-feature-2a-1a',
+						name: 'Animal Form: Bear',
+						sizeValue: 2
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'kit-boren-feature-2a-1b',
+						name: 'Animal Form: Bear',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						value: 1
+					})
+				]
+			})
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createToggle({
 			id: 'kit-boren-feature-2b',
 			name: 'Hybrid Form: Bear',
-			description: 'While you are in your hybrid form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities. At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+			condition: 'You are in your hybrid form',
+			checked: false,
+			featureChecked: FactoryLogic.feature.createMultiple({
+				id: 'kit-boren-feature-2b-1',
+				name: 'Hybrid Form: Bear',
+				features: [
+					FactoryLogic.feature.createSize({
+						id: 'kit-boren-feature-2b-1a',
+						name: 'Hybrid Form: Bear',
+						sizeValue: 2
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'kit-boren-feature-2b-1b',
+						name: 'Hybrid Form: Bear',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					FactoryLogic.feature.create({
+						id: 'kit-boren-feature-2b-1c',
+						name: 'Hybrid Form: Bear',
+						description: 'At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
+					})
+				]
+			})
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-3',
 			name: 'Primordial Storm: Blizzard',
 			description: 'Your primordial damage type is cold.'
 		}),
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'kit-boren-feature-4',
 			name: 'Growing Ferocity',
-			description: `
-* **Ferocity 2**: You can have up to two creatures grabbed at time. Additionally, whenever you make a strike against a creature you have grabbed, you gain 1 surge.
-* **Ferocity 4**: The first time you grab a creature on a turn, you gain 1 surge.
-* **Ferocity 6**: You gain an edge on the Grab and Knockback maneuvers.
-* **Ferocity 8 (4th level)**: The first time you grab a creature on a turn, you gain 2 surges instead of 1.
-* **Ferocity 10 (7th level)**: You have a double edge on the Grab and Knockback maneuvers.
-* **Ferocity 12 (10th level)**: Whnever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you have a creature grabbed, any ability roll made against that creature gains a bonus to its potency equal to your Might score.`
+			description: 'As your ferocity grows, you gain benefits as noted on the Growing Ferocity table. Benefits are cumulative except where an improved benefit replaces a lesser benefit.',
+			features: [
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-2',
+					resource: 'Ferocity',
+					value: 2,
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'kit-boren-feature-4-2a',
+						name: 'Growing Ferocity (Ferocity 2)',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'kit-boren-feature-4-2a-1',
+								name: 'Growing Ferocity (Ferocity 2)',
+								description: 'You can have up to two creatures grabbed at time.'
+							}),
+							FactoryLogic.feature.createSurgeGain({
+								id: 'kit-boren-feature-4-2a-2',
+								name: 'Growing Ferocity (Ferocity 2)',
+								tag: 'strike-grabbed',
+								trigger: 'You make a strike against a creature you have grabbed',
+								value: '1',
+								frequency: ResourceGainFrequency.AtWill
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-4',
+					resource: 'Ferocity',
+					value: 4,
+					feature: FactoryLogic.feature.createSurgeGain({
+						id: 'kit-boren-feature-4-4a',
+						name: 'Growing Ferocity (Ferocity 4)',
+						tag: 'grab',
+						trigger: 'You grab a creature',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerRound
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-6',
+					resource: 'Ferocity',
+					value: 6,
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'kit-boren-feature-4-6a',
+						name: 'Growing Ferocity (Ferocity 6)',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-6a-grab',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-6a-knockback',
+								name: 'Growing Ferocity (Ferocity 6)',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Knockback
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-8',
+					resource: 'Ferocity',
+					value: 8,
+					level: 4,
+					feature: FactoryLogic.feature.createSurgeGain({
+						id: 'kit-boren-feature-4-8a',
+						name: 'Growing Ferocity (Ferocity 8)',
+						tag: 'grab 2',
+						trigger: 'You grab a creature',
+						value: '2',
+						frequency: ResourceGainFrequency.OncePerRound,
+						replacesTags: [ 'grab' ]
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-10',
+					resource: 'Ferocity',
+					value: 10,
+					level: 7,
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'kit-boren-feature-4-10a',
+						name: 'Growing Ferocity (Ferocity 10)',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-10a-grab',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'kit-boren-feature-4-10a-knockback',
+								name: 'Growing Ferocity (Ferocity 10)',
+								modifier: RollModifierType.DoubleEdge,
+								rollType: RollType.Knockback
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createHeroicResourceThreshold({
+					id: 'kit-boren-feature-4-12',
+					resource: 'Ferocity',
+					value: 12,
+					level: 10,
+					feature: FactoryLogic.feature.create({
+						id: 'kit-boren-feature-4-12a',
+						name: 'Growing Ferocity (Ferocity 12)',
+						description: 'Whenever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you have a creature grabbed, any ability roll made against that creature gains a bonus to its potency equal to your Might score.'
+					})
+				})
+			]
 		})
 	]
 };

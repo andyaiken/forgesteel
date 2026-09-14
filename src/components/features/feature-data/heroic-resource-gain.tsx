@@ -1,8 +1,9 @@
 import { Feature, FeatureHeroicResourceGainData } from '@/models/feature';
-import { Flex, Select, Space } from 'antd';
+import { Flex, Segmented, Select, Space } from 'antd';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Pill } from '@/components/controls/pill/pill';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Utils } from '@/utils/utils';
@@ -21,7 +22,7 @@ export const InfoHeroicResourceGain = (props: InfoProps) => {
 			<div className='ds-text'></div>
 			<Flex align='center' justify='space-between' gap={10}>
 				<div className='ds-text compact-text'>{props.data.trigger}</div>
-				<Pill>+{props.data.value}</Pill>
+				<Pill>+{props.data.value} {props.data.frequency !== ResourceGainFrequency.AtWill ? props.data.frequency : null}</Pill>
 			</Flex>
 		</>
 	);
@@ -57,6 +58,13 @@ export const EditHeroicResourceGain = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setResourceGainFrequency = (data: FeatureHeroicResourceGainData, value: ResourceGainFrequency) => {
+		const copy = Utils.copy(data);
+		copy.frequency = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
 	const setHeroicResourceGainReplacesTags = (data: FeatureHeroicResourceGainData, value: string[]) => {
 		const copy = Utils.copy(data);
 		copy.replacesTags = value;
@@ -88,6 +96,14 @@ export const EditHeroicResourceGain = (props: EditProps) => {
 				allowClear={true}
 				value={data.value}
 				onChange={value => setHeroicResourceGainValue(data, value)}
+			/>
+			<HeaderText>Frequency</HeaderText>
+			<Segmented
+				name='frequency'
+				block={true}
+				options={[ ResourceGainFrequency.AtWill, ResourceGainFrequency.OncePerRound, ResourceGainFrequency.OncePerEncounter ].map(o => ({ value: o, label: o }))}
+				value={data.frequency}
+				onChange={value => setResourceGainFrequency(data, value as ResourceGainFrequency)}
 			/>
 			<HeaderText>Replaces Tags</HeaderText>
 			<Select

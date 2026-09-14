@@ -75,6 +75,7 @@ export const AuthPage = (props: Props) => {
 	},
 	// dependencies here needs to be an empty array so that it only runs once
 	// otherwise, it runs several times as things change.
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	[]);
 
 	const getTransferButton = () => {
@@ -140,6 +141,7 @@ export const AuthPage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='welcome'
+					hero={null}
 					params={props.params}
 				/>
 			</div>

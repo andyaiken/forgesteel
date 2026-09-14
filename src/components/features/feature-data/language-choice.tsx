@@ -6,10 +6,12 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { LanguageSelectModal } from '@/components/modals/select/language-select/language-select-modal';
+import { LanguageType } from '@/enums/language-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -27,9 +29,7 @@ export const InfoLanguageChoice = (props: InfoProps) => {
 		);
 	}
 
-	return (
-		<div className='ds-text'>Choose {props.data.count > 1 ? props.data.count : 'a'} {props.data.count > 1 ? 'languages' : 'language'}.</div>
-	);
+	return null;
 };
 
 interface EditProps {
@@ -44,6 +44,16 @@ export const EditLanguageChoice = (props: EditProps) => {
 	const setLanguageOptions = (value: string[]) => {
 		const copy = Utils.copy(data);
 		copy.options = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const toggleAllowedType = (value: LanguageType, add: boolean) => {
+		const copy = Utils.copy(data);
+		copy.allowedTypes = copy.allowedTypes.filter(t => t !== value);
+		if (add) {
+			copy.allowedTypes.push(value);
+		}
 		setData(copy);
 		props.setData(copy);
 	};
@@ -78,7 +88,6 @@ export const EditLanguageChoice = (props: EditProps) => {
 			<HeaderText>Options</HeaderText>
 			<Select
 				style={{ width: '100%' }}
-				status={data.options.length === 0 ? 'warning' : ''}
 				placeholder='Options'
 				mode='tags'
 				allowClear={true}
@@ -87,6 +96,12 @@ export const EditLanguageChoice = (props: EditProps) => {
 				value={data.options}
 				onChange={setLanguageOptions}
 			/>
+			<HeaderText>Allowed Types</HeaderText>
+			{
+				[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ].map((t, n) => (
+					<Toggle key={n} label={t} value={data.allowedTypes.includes(t)} onChange={value => toggleAllowedType(t, value)} />
+				))
+			}
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />
 			<HeaderText>Select</HeaderText>
@@ -128,22 +143,13 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 
 	const currentLanguages = HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name);
 	const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
-		.filter(l => !currentLanguages.includes(l.name));
+		.filter(l => !currentLanguages.includes(l.name))
+		.filter(l => props.data.allowedTypes.includes(l.type));
 	const distinctLanguages = Collections.distinct(languages, l => l.name);
 	const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
-	const getAddButton = () => {
-		// We can always add a custom language, so we always show the Add button
-		return (
-			<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
-				Choose a language
-			</Button>
-		);
-	};
-
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
-			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
 				props.data.selected.map((language, n) => {
 					const lang = SourcebookLogic.getLanguage(language, props.sourcebooks!);
@@ -165,7 +171,13 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 					);
 				})
 			}
-			{(props.data.selected.length < props.data.count) || (props.data.count === -1) ? getAddButton() : null}
+			{
+				(props.data.selected.length < props.data.count) || (props.data.count === -1) ?
+					<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
+						Choose a language
+					</Button>
+					: null
+			}
 			<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} size={500}>
 				<LanguageSelectModal
 					languages={sortedLanguages}

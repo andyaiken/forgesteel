@@ -21,11 +21,16 @@ export class SessionLogic {
 		copy.id = Utils.guid();
 		copy.round = 0;
 
+		const activeEncounterHeroes = options.party !== ''
+			? HeroLogic.getPartyHeroes(heroes, options.party)
+			: heroes.filter(h => h.isActive);
+		const activeHeroCount = activeEncounterHeroes.length;
+
 		const monsterInfo: { monsterID: string, monster: Monster, name: string, count: number, added: number }[] = [];
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
@@ -50,28 +55,38 @@ export class SessionLogic {
 
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.flatMap(g => g.slots)
 			.forEach(slot => {
 				const info = monsterInfo.find(info => info.monsterID === slot.monsterID);
 				if (info) {
+					const isMinion = info.monster.role.organization === MonsterOrganizationType.Minion;
 					const count = (slot.count * MonsterLogic.getRoleMultiplier(info.monster.role.organization)) + slot.customization.minionCountAdjustment;
 					for (let n = 1; n <= count; ++n) {
 						const monsterCopy = Utils.copy(info.monster);
 						monsterCopy.id = Utils.guid();
 						monsterCopy.name = info.count === 1 ? info.name : `${info.name} ${info.added + 1}`;
+						if (!isMinion) {
+							monsterCopy.state.staminaDamage = slot.customization.staminaDamage;
+							monsterCopy.state.staminaTemp = slot.customization.staminaTemp;
+							monsterCopy.state.conditions = slot.customization.conditions.map(c => ({ ...c, id: Utils.guid() }));
+						}
 						slot.monsters.push(monsterCopy);
 						info.added += 1;
+					}
+					if (isMinion) {
+						slot.state.staminaDamage = slot.customization.staminaDamage;
+						slot.state.conditions = slot.customization.conditions.map(c => ({ ...c, id: Utils.guid() }));
 					}
 				}
 			});
 
 		copy.groups
 			.filter(g => {
-				const minHeroes = g.minHeroCount || heroes.length;
-				return heroes.length >= minHeroes;
+				const minHeroes = g.minHeroCount || activeHeroCount;
+				return activeHeroCount >= minHeroes;
 			})
 			.forEach(g => {
 				const minions = g.slots.filter(s => {
@@ -88,8 +103,7 @@ export class SessionLogic {
 			});
 
 		if (options.party !== '') {
-			heroes
-				.filter(h => h.folder === options.party)
+			activeEncounterHeroes
 				.forEach(h => {
 					h.state.controlledSlots = [];
 					HeroLogic.getCompanions(h).forEach(monster => {

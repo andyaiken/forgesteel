@@ -1,8 +1,12 @@
+import { Drawer, Space } from 'antd';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
+import { DownloadOutlined } from '@ant-design/icons';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { ImportCodeModal } from '@/components/modals/import-code/import-code-modal';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
@@ -12,7 +16,6 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { Space } from 'antd';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -28,6 +31,7 @@ interface Props {
 export const MonsterSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ filter, setFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
+	const [ importVisible, setImportVisible ] = useState<boolean>(false);
 
 	const monsters = props.monsters
 		.filter(m => MonsterLogic.matches(m, filter))
@@ -42,7 +46,14 @@ export const MonsterSelectModal = (props: Props) => {
 	return (
 		<Modal
 			toolbar={
-				<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+				<>
+					<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+					<ButtonGroup
+						buttons={[
+							{ type: 'button', icon: <DownloadOutlined />, tooltip: 'Import a code', onClick: () => setImportVisible(true) }
+						]}
+					/>
+				</>
 			}
 			content={
 				<div className='monster-select-modal'>
@@ -74,6 +85,17 @@ export const MonsterSelectModal = (props: Props) => {
 								: null
 						}
 					</Space>
+					<Drawer open={importVisible} onClose={() => setImportVisible(false)} closeIcon={null} size={500}>
+						<ImportCodeModal
+							kind='monster'
+							sourcebooks={props.sourcebooks}
+							onImport={element => {
+								setImportVisible(false);
+								props.onSelect(element as Monster);
+							}}
+							onClose={() => setImportVisible(false)}
+						/>
+					</Drawer>
 				</div>
 			}
 			onClose={props.onClose}

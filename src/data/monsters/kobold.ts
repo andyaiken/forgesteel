@@ -235,7 +235,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'kobold-1-feature-1',
+						id: 'kobold-4-feature-1',
 						name: 'Pilium',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -257,7 +257,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'kobold-1-feature-2',
+					id: 'kobold-4-feature-2',
 					name: 'Shield? Shield!',
 					description: 'While adjacent to an ally who also has this trait, the veles has stability 1, has cover, and grants cover to allies.'
 				})
@@ -812,8 +812,8 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '6 damage; push 1; A<0 prone',
-								tier2: '8 damage; push 3; A<0 prone',
-								tier3: '11 damage; push 5; A<0 prone'
+								tier2: '8 damage; push 3; A<1 prone',
+								tier3: '11 damage; push 5; A<2 prone'
 							}))
 						]
 					})

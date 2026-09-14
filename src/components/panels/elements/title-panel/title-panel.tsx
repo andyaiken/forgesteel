@@ -18,6 +18,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { Title } from '@/models/title';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -55,7 +56,7 @@ export const TitlePanel = (props: Props) => {
 
 	const setFeatureData = (featureID: string, value: FeatureData) => {
 		const copy = Utils.copy(title);
-		const features = FeatureLogic.getFeaturesFromTitle(copy, props.hero?.class?.level || 1);
+		const features = FeatureLogic.getFeaturesFromTitle(copy, props.hero?.class?.level || 1, TutorialMode.Complete);
 		features
 			.filter(f => f.feature.id === featureID)
 			.forEach(f => f.feature.data = Utils.copy(value));
@@ -73,7 +74,7 @@ export const TitlePanel = (props: Props) => {
 		}
 	}
 
-	const features = FeatureLogic.getFeaturesFromTitle(title, props.hero?.class?.level || 1);
+	const features = FeatureLogic.getFeaturesFromTitle(title, props.hero?.class?.level || 1, TutorialMode.Complete);
 	const choices = features.filter(f => FeatureLogic.isChoice(f.feature));
 
 	return (

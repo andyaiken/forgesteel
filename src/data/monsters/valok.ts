@@ -156,7 +156,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** This ability targets only metal-clad enemies and metal objects of size 3 or smaller.'),
-							FactoryLogic.createAbilitySectionText('Each target is pulled up to 8 squares, or if they have <code>M < 3</code>, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
+							FactoryLogic.createAbilitySectionText('Each target is pulled up to 8 squares, or if they have M < 3, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
 						]
 					})
 				}),
@@ -359,6 +359,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 							FactoryLogic.createAbilitySectionText('The area is covered in wet concrete and is difficult terrain. Any enemy who starts their turn in the concrete makes a **Might test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Might,
 									tier1: 'Restrained (EoT)',
 									tier2: 'Slowed (EoT)',
 									tier3: 'No effect'
@@ -382,7 +383,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'valok-3-feature-4',
+						id: 'valok-3-feature-8',
 						name: 'Sputter',
 						type: FactoryLogic.type.createTrigger('A creature or object within distance deals damage to the builder.', { free: true }),
 						keywords: [ AbilityKeyword.Melee ],
@@ -392,6 +393,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
+									bonus: 4,
 									tier1: 'A < 2 restrained (save ends)',
 									tier2: 'A < 3 restrained (save ends)',
 									tier3: 'A < 4 restrained (save ends)'

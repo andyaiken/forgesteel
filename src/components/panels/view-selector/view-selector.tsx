@@ -1,6 +1,5 @@
-import { DesktopOutlined, FilePdfOutlined, FileTextOutlined, PrinterOutlined, TableOutlined } from '@ant-design/icons';
+import { DesktopOutlined, FilePdfOutlined, PrinterOutlined, TableOutlined } from '@ant-design/icons';
 import { Popover, Segmented } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -30,7 +29,6 @@ export const ViewSelector = (props: Props) => {
 			case 'hero':
 				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
 				options.push(createOption('abilities', 'Standard Abilities', <TableOutlined />));
-				options.push(createOption('notes', 'Notes', <FileTextOutlined />));
 				break;
 			case 'classic':
 				options.push(createOption('classic', 'Classic View (for exporting)', <FilePdfOutlined />));
@@ -44,13 +42,11 @@ export const ViewSelector = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Segmented
-				block={true}
-				options={getOptions()}
-				value={props.value}
-				onChange={props.onChange}
-			/>
-		</ErrorBoundary>
+		<Segmented
+			block={true}
+			options={getOptions()}
+			value={props.value}
+			onChange={props.onChange}
+		/>
 	);
 };

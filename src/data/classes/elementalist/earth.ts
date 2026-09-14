@@ -7,6 +7,7 @@ export const earth: SubClass = {
 	id: 'elementalist-sub-1',
 	name: 'Earth',
 	description: 'Earth is the element of permanence. Earth abilities bolster your body and grant the power to permanently create and shape physical terrain.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

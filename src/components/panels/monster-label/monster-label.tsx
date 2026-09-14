@@ -1,5 +1,4 @@
 import { Flex, Tag } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Fixture } from '@/models/fixture';
 import { FixtureLogic } from '@/logic/fixture-logic';
 import { Monster } from '@/models/monster';
@@ -23,17 +22,15 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 
 	const type = props.monster.role.type.toLowerCase().replace(' ', '');
 	return (
-		<ErrorBoundary>
-			<div className={`monster-label ${type}`}>
-				<Flex orientation='vertical' gap={8}>
-					<Flex gap={3}>
-						{props.monster.keywords.filter(k => !!k).map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
-					</Flex>
-					<div>{desc}</div>
+		<div className={`monster-label ${type}`}>
+			<Flex orientation='vertical' gap={8}>
+				<Flex gap={3}>
+					{props.monster.keywords.filter(k => !!k).map((k, n) => <Tag key={n} variant='outlined'>{k}</Tag>)}
 				</Flex>
-				{props.extra}
-			</div>
-		</ErrorBoundary>
+				<div>{desc}</div>
+			</Flex>
+			{props.extra}
+		</div>
 	);
 };
 
@@ -50,12 +47,10 @@ export const TerrainLabel = (props: TerrainLabelProps) => {
 
 	const type = props.terrain.role.type.toLowerCase().replace(' ', '');
 	return (
-		<ErrorBoundary>
-			<div className={`terrain-label ${type}`}>
-				<div>{desc}</div>
-				{props.extra}
-			</div>
-		</ErrorBoundary>
+		<div className={`terrain-label ${type}`}>
+			<div>{desc}</div>
+			{props.extra}
+		</div>
 	);
 };
 
@@ -72,11 +67,9 @@ export const FixtureLabel = (props: FixtureLabelProps) => {
 
 	const type = props.fixture.role.type.toLowerCase().replace(' ', '');
 	return (
-		<ErrorBoundary>
-			<div className={`fixture-label ${type}`}>
-				<div>{desc}</div>
-				{props.extra}
-			</div>
-		</ErrorBoundary>
+		<div className={`fixture-label ${type}`}>
+			<div>{desc}</div>
+			{props.extra}
+		</div>
 	);
 };

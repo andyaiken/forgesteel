@@ -3,6 +3,7 @@ import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { Complication } from '@/models/complication';
 import { ConditionType } from '@/enums/condition-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
@@ -17,10 +18,14 @@ import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { LanguageType } from '@/enums/language-type';
 import { Monster } from '@/models/monster';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
+import { ResourceGain } from '@/models/resource-gain';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { Size } from '@/models/size';
 import { SkillList } from '@/enums/skill-list';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
@@ -64,6 +69,7 @@ export type FeatureAbilityKeyword = FeatureOf<FeatureType.AbilityKeyword, Featur
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
+	repeatable: boolean;
 };
 export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>;
 
@@ -131,6 +137,11 @@ export interface FeatureCompanionData extends _FeatureData {
 }
 export type FeatureCompanion = FeatureOf<FeatureType.Companion, FeatureCompanionData>;
 
+export interface FeatureComplicationData extends _FeatureData {
+	selected: Complication | null;
+}
+export type FeatureComplication = FeatureOf<FeatureType.Complication, FeatureComplicationData>;
+
 export interface FeatureDamageModifierData extends _FeatureData {
 	modifiers: DamageModifier[];
 }
@@ -168,20 +179,26 @@ export type FeatureForController = FeatureOf<FeatureType.ForController, FeatureF
 
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
-	gains: { tag: string, trigger: string, value: string }[];
+	gains: ResourceGain[];
+	thresholds: FeatureHeroicResourceThresholdData[];
 	details: string;
 	canBeNegative: boolean;
 	value: number;
 };
 export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
 
-export interface FeatureHeroicResourceGainData extends _FeatureData {
-	tag: string;
-	trigger: string;
-	value: string;
+export interface FeatureHeroicResourceGainData extends _FeatureData, ResourceGain {
 	replacesTags: string[];
 };
 export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;
+
+export interface FeatureHeroicResourceThresholdData extends _FeatureData {
+	resource: string;
+	value: number;
+	level: number;
+	feature: Feature;
+};
+export type FeatureHeroicResourceThreshold = FeatureOf<FeatureType.HeroicResourceThreshold, FeatureHeroicResourceThresholdData>;
 
 export interface FeatureItemChoiceData extends _FeatureData {
 	types: ItemType[];
@@ -204,6 +221,7 @@ export type FeatureLanguage = FeatureOf<FeatureType.Language, FeatureLanguageDat
 
 export interface FeatureLanguageChoiceData extends _FeatureData {
 	options: string[];
+	allowedTypes: LanguageType[];
 	count: number;
 	selectAt: 'build' | 'respite' | 'play';
 	selected: string[];
@@ -252,6 +270,12 @@ export interface FeaturePerkData extends _FeatureData {
 };
 export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData>;
 
+export interface FeaturePotencyResistanceData extends _FeatureData {
+	characteristics: Characteristic[];
+	value: number;
+};
+export type FeaturePotencyResistance = FeatureOf<FeatureType.PotencyResistance, FeaturePotencyResistanceData>;
+
 export interface FeatureProficiencyData extends _FeatureData {
 	weapons: KitWeapon[];
 	armor: KitArmor[];
@@ -272,6 +296,13 @@ export interface FeatureSizeData extends _FeatureData {
 	size: Size;
 };
 export type FeatureSize = FeatureOf<FeatureType.Size, FeatureSizeData>;
+
+export interface FeatureSkillCancelChoiceData extends _FeatureData {
+	knownSkillsOnly: boolean;
+	count: number;
+	selected: string[];
+};
+export type FeatureSkillCancelChoice = FeatureOf<FeatureType.SkillCancelChoice, FeatureSkillCancelChoiceData>;
 
 export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
@@ -299,9 +330,18 @@ export interface FeatureSummonChoiceData extends _FeatureData {
 };
 export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FeatureSummonFormationData extends _FeatureData {};
+export interface FeatureSummonFormationData extends _FeatureData {
+	minionFeatures: Feature[];
+};
 export type FeatureSummonFormation = FeatureOf<FeatureType.SummonFormation, FeatureSummonFormationData>;
+
+export interface FeatureSurgeGainData extends _FeatureData, ResourceGain {
+	replacesTags: string[];
+	// A restriction on the surges themselves - what they can be spent on, or when. The feature's
+	// description is for prose about the feature; anything the rules turn on belongs here
+	condition: string;
+};
+export type FeatureSurgeGain = FeatureOf<FeatureType.SurgeGain, FeatureSurgeGainData>;
 
 export interface FeatureSwitchOptionsData extends _FeatureData {
 	switch: string;
@@ -330,6 +370,18 @@ export interface FeatureTaggedFeatureChoiceData extends _FeatureData {
 export type FeatureTaggedFeatureChoice = FeatureOf<FeatureType.TaggedFeatureChoice, FeatureTaggedFeatureChoiceData>;
 
 export type FeatureText = FeatureOf<FeatureType.Text>;
+
+export interface FeatureRollModifierData extends _FeatureData {
+	modifier: RollModifierType;
+	rollType: RollType;
+	skills: string[];
+	skillLists: SkillList[];
+	characteristics: Characteristic[];
+	condition: string;
+};
+export type FeatureRollModifier = FeatureOf<FeatureType.RollModifier, FeatureRollModifierData>;
+
+export type RollModifierScope = 'characteristics' | 'skills' | 'skillLists';
 
 export interface FeatureTitleChoiceData extends _FeatureData {
 	echelon: number;
@@ -360,6 +412,7 @@ export type Feature =
 	| FeatureChoice
 	| FeatureClassAbility
 	| FeatureCompanion
+	| FeatureComplication
 	| FeatureConditionImmunity
 	| FeatureDamageModifier
 	| FeatureDomain
@@ -369,6 +422,7 @@ export type Feature =
 	| FeatureForController
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain
+	| FeatureHeroicResourceThreshold
 	| FeatureItemChoice
 	| FeatureKit
 	| FeatureLanguage
@@ -380,21 +434,33 @@ export type Feature =
 	| FeaturePackage
 	| FeaturePackageContent
 	| FeaturePerk
+	| FeaturePotencyResistance
 	| FeatureProficiency
 	| FeatureRetainer
 	| FeatureSaveThreshold
 	| FeatureSize
+	| FeatureSkillCancelChoice
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon
 	| FeatureSummonChoice
 	| FeatureSummonFormation
+	| FeatureSurgeGain
 	| FeatureSwitchOptions
 	| FeatureSwitchValue
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice
+	| FeatureRollModifier
 	| FeatureTitleChoice
 	| FeatureToggle;
 
 export type FeatureData = Feature['data'];
+
+export const isFeature = (value: unknown): value is Feature => {
+	return !!value
+		&& (typeof value === 'object')
+		&& ('type' in value)
+		&& (typeof value.type === 'string')
+		&& (Object.values(FeatureType) as string[]).includes(value.type);
+};

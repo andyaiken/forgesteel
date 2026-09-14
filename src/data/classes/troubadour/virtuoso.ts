@@ -5,20 +5,21 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { SubClass } from '@/models/subclass';
 
 export const virtuoso: SubClass = {
-	id: 'tWBfpTKQXZ12jGsU',
+	id: 'troubadour-virtuoso',
 	name: 'Virtuoso',
 	description: 'You find drama in music and song, weaving magic between vibrations and filling the audience with your pathos.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
-					id: 'zVuRuelOOMRXxCgG',
+					id: 'troubadour-virtuoso-1',
 					selected: [ 'Music' ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: '8OR9gvPtJN7cIZhh',
+						id: 'troubadour-virtuoso-2',
 						name: 'Power Chord',
 						description: 'Your instrument rings true and your music blows everyone away.',
 						type: FactoryLogic.type.createManeuver(),
@@ -37,53 +38,45 @@ export const virtuoso: SubClass = {
 						]
 					})
 				}),
-				FactoryLogic.feature.createMultiple({
-					id: 'zVLsFRY0V10dNuaA',
-					name: 'Virtuoso Performances',
-					description: `You have the following performance abilities, which are usable with
-your Routines feature.`,
-					features: [
-						FactoryLogic.feature.createAbility({
-							ability: FactoryLogic.createAbility({
-								id: 'K0mQdfUHeiaVSsMN',
-								name: '“Thunder Mother”',
-								description: 'All for thunder motherrr! ♪ Run and hide for coverrr! ♪',
-								type: FactoryLogic.type.createNoAction(),
-								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Performance, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-								distance: [ FactoryLogic.distance.createRanged(10) ],
-								target: 'One creature',
-								sections: [
-									FactoryLogic.createAbilitySectionText('At the end of each combat round while this performance is active, you can make a power roll against the target that ignores cover. You can’t target the same creature twice with this effect.'),
-									FactoryLogic.createAbilitySectionRoll(
-										FactoryLogic.createPowerRoll({
-											characteristic: [ Characteristic.Presence ],
-											tier1: 'Lightning damage equal to your level',
-											tier2: 'Lightning damage equal to 5 + your level',
-											tier3: 'Lightning damage equal to 10 + your level'
-										})
-									)
-								]
-							})
-						}),
-						FactoryLogic.feature.createAbility({
-							ability: FactoryLogic.createAbility({
-								id: 'T2lumbD5GNggb7kX',
-								name: '“Ballad of the Beast”',
-								description: 'Teeth are bare! ♪ Eyes black! ♪ No escaping the beast! ♪',
-								type: FactoryLogic.type.createNoAction(),
-								keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Performance ],
-								distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
-								target: 'Self and each ally in the area',
-								sections: [
-									FactoryLogic.createAbilitySectionText('While this performance is active, each target who starts their turn in the area gains 1 surge.')
-								]
-							})
-						})
-					]
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troubadour-virtuoso-4',
+						name: '“Thunder Mother”',
+						description: 'All for thunder motherrr! ♪ Run and hide for coverrr! ♪',
+						type: FactoryLogic.type.createNoAction(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Performance, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionText('At the end of each combat round while this performance is active, you can make a power roll against the target that ignores cover. You can’t target the same creature twice with this effect.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Presence ],
+									tier1: 'Lightning damage equal to your level',
+									tier2: 'Lightning damage equal to 5 + your level',
+									tier3: 'Lightning damage equal to 10 + your level'
+								})
+							)
+						]
+					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'WcIsMpwQBuTdLdmv',
+						id: 'troubadour-virtuoso-5',
+						name: '“Ballad of the Beast”',
+						description: 'Teeth are bare! ♪ Eyes black! ♪ No escaping the beast! ♪',
+						type: FactoryLogic.type.createNoAction(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Performance ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
+						target: 'Self and each ally in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionText('While this performance is active, each target who starts their turn in the area gains 1 surge.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troubadour-virtuoso-6',
 						name: 'Harmonize',
 						description: 'Give the chorus a little punch.',
 						type: FactoryLogic.type.createTrigger('The target uses an ability that targets only one enemy and costs 3 or fewer of their Heroic Resource.'),
@@ -106,13 +99,13 @@ your Routines feature.`,
 			level: 2,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'DWhLWnP0bwuHQ2qy',
+					id: 'troubadour-virtuoso-7',
 					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'U3IGzrqBjqxWKD9K',
+									id: 'troubadour-virtuoso-8',
 									name: 'Encore',
 									description: 'Again! Again!',
 									type: FactoryLogic.type.createMain(),
@@ -130,7 +123,7 @@ your Routines feature.`,
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: '3eWhJl6vthKu3RY3',
+									id: 'troubadour-virtuoso-9',
 									name: 'Tough Crowd',
 									description: 'Your fans don’t seem to like the opening act …',
 									type: FactoryLogic.type.createMain(),
@@ -161,13 +154,13 @@ your Routines feature.`,
 			level: 3,
 			features: [
 				FactoryLogic.feature.createMultiple({
-					id: 'gMLn35ehmeBT1RYV',
+					id: 'troubadour-virtuoso-10',
 					name: 'Second Album',
 					description: 'You have the following performance abilities, which are usable with your Routines feature.',
 					features: [
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'mWeNhxpEVJMjKcU8',
+								id: 'troubadour-virtuoso-11',
 								name: '“Fire Up the Night”',
 								description: 'Maybe you and I ♪ We can still bring the light! ♪',
 								type: FactoryLogic.type.createNoAction(),
@@ -181,7 +174,7 @@ your Routines feature.`,
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'lDpZJV6xP89zFb8e',
+								id: 'troubadour-virtuoso-12',
 								name: '“Never-Ending Hero”',
 								description: 'And toniiight we can truly say ♪ They will alllways find a way! ♪',
 								type: FactoryLogic.type.createNoAction(),
@@ -205,12 +198,12 @@ your Routines feature.`,
 			level: 5,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'suMDtEOQggORQzn4',
+					id: 'troubadour-virtuoso-13',
 					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'Qcz0plE7f3m2oMpE',
+								id: 'troubadour-virtuoso-14',
 								name: 'Bolstering Banter',
 								description: 'Once on each of your turns, you can use a free maneuver to exchange words with a target of your current performance, other than yourself. The target can spend a Recovery to gain temporary Stamina equal to their recovery value.'
 							}),
@@ -218,7 +211,7 @@ your Routines feature.`,
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'k1vcKIoLARGr6Lsr',
+								id: 'troubadour-virtuoso-15',
 								name: 'Medley',
 								description: 'You can maintain two performances at a time using your Routines feature.'
 							}),
@@ -232,13 +225,13 @@ your Routines feature.`,
 			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'VD8b06zsDjeJpzlX',
+					id: 'troubadour-virtuoso-16',
 					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'KVEuxjzQu7tvcsxH',
+									id: 'troubadour-virtuoso-17',
 									name: 'Feedback',
 									description: 'Your music pounds the crowd to the beat until their hearts can’t stand it anymore.',
 									type: FactoryLogic.type.createMain(),
@@ -264,7 +257,7 @@ your Routines feature.`,
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'uPEJe3YMCKQ5no95',
+									id: 'troubadour-virtuoso-18',
 									name: 'Legendary Drum Fill',
 									description: 'You start a drumroll that roars like thunder with every impact the heroes make.',
 									type: FactoryLogic.type.createManeuver(),
@@ -291,13 +284,13 @@ your Routines feature.`,
 			level: 8,
 			features: [
 				FactoryLogic.feature.createMultiple({
-					id: '17EPB8FMDm0rbPtb',
+					id: 'troubadour-virtuoso-19',
 					name: 'Crowd Favorites',
 					description: 'You have the following performance abilities, which are usable with your Routines feature.',
 					features: [
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'cCAwy3SGtXi1BAgF',
+								id: 'troubadour-virtuoso-20',
 								name: 'Moonlight Sonata',
 								description: 'Music pours out of your heart, filling the area with the utmost delicacy and without damper.',
 								type: FactoryLogic.type.createNoAction(),
@@ -311,7 +304,7 @@ your Routines feature.`,
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'uPCAVJRpZCks52hw',
+								id: 'troubadour-virtuoso-21',
 								name: 'Radical Fantasia',
 								description: '♪ Viras, my Viras, will you hold their hands as they cryyy-aaaiigh? ♪',
 								type: FactoryLogic.type.createNoAction(),
@@ -331,13 +324,13 @@ your Routines feature.`,
 			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'H8CN7zqO4hRni29m',
+					id: 'troubadour-virtuoso-22',
 					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'ZDIrJmxVMJMwBES0',
+									id: 'troubadour-virtuoso-23',
 									name: 'Jam Session',
 									description: 'Your jam session creates new genres that compel everyone to get up and move.',
 									type: FactoryLogic.type.createMain(),
@@ -363,7 +356,7 @@ your Routines feature.`,
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'eY09PeFg3MJJSua6',
+									id: 'troubadour-virtuoso-24',
 									name: 'Melt Their Faces',
 									description: 'The power of music rips through the reality around the target and blows them away.',
 									type: FactoryLogic.type.createMain(),

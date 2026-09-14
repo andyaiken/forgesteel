@@ -8,6 +8,7 @@ export const chronopathy: SubClass = {
 	id: 'talent-sub-1',
 	name: 'Chronopathy',
 	description: 'Chronopathy abilities allow you to view future and past events, and to manipulate time to aid allies and hinder foes.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

@@ -2,10 +2,9 @@ import { Button, Flex, Select, Space, Tabs } from 'antd';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Item } from '@/models/item';
@@ -197,59 +196,57 @@ export const ItemEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='item-edit-panel'>
-				<div className='item-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Item',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getItemDetailsEditSection()
-							},
-							{
-								key: '3',
-								label: 'Crafting',
-								children: getCraftingEditSection()
-							},
-							{
-								key: '4',
-								label: 'Levels',
-								children: getFeaturesByLevelEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='item-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<ItemPanel
-													key={revision}
-													item={item}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='item-edit-panel'>
+			<div className='item-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Item',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getItemDetailsEditSection()
+						},
+						{
+							key: '3',
+							label: 'Crafting',
+							children: getCraftingEditSection()
+						},
+						{
+							key: '4',
+							label: 'Levels',
+							children: getFeaturesByLevelEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='item-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<ItemPanel
+												key={revision}
+												item={item}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

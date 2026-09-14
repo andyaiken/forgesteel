@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
@@ -9,6 +10,7 @@ export const mastermind: SubClass = {
 	id: 'tactician-sub-2',
 	name: 'Mastermind',
 	description: 'You have an encyclopedic knowledge of warfare, viewing the battlefield as a game board and seeking victory by thinking steps ahead of your opponents.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -151,10 +153,23 @@ You can make this test only once for any encounter or negotiation.`
 					description: 'You have learned to be more preemptive on the battlefield, thinking more steps ahead than your opponents. You can target two creatures with your Mark ability.',
 					tag: 'mark'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'tactician-sub-2-5-2',
 					name: 'I Predicted That',
-					description: 'Your expertise in history and lore allows you and your allies to outthink rivals in the present day. You and any ally within 10 squares of you gain an edge on Reason tests.'
+					description: 'Your expertise in history and lore allows you and your allies to outthink rivals in the present day.',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'tactician-sub-2-5-2a',
+							name: 'I Predicted That',
+							description: 'Any ally within 10 squares of you gains an edge on Reason tests.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'tactician-sub-2-5-2b',
+							name: 'I Predicted That',
+							modifier: RollModifierType.Edge,
+							characteristics: [ Characteristic.Reason ]
+						})
+					]
 				})
 			]
 		},

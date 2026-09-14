@@ -6,12 +6,11 @@ import { DangerButton } from '@/components/controls/danger-button/danger-button'
 import { Element } from '@/models/element';
 import { ElementEditPanel } from '@/components/panels/edit/element-edit/element-edit-panel';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureAddOnType } from '@/enums/feature-addon-type';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Monster } from '@/models/monster';
@@ -402,7 +401,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
+		<>
 			<Select
 				options={[
 					{ label: `Monster Group: ${monsterGroup.name || 'Unnamed Monster Group'}`, value: '' },
@@ -488,6 +487,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 						onSelectMonster={props.onSelectMonster}
 					/>
 			}
-		</ErrorBoundary>
+		</>
 	);
 };

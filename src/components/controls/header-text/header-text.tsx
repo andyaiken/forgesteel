@@ -1,12 +1,12 @@
 import { CSSProperties, ReactNode } from 'react';
 import { Flex, Tag } from 'antd';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './header-text.scss';
 
 interface Props {
 	children: ReactNode;
 	level?: number;
+	strikethrough?: boolean;
 	ribbon?: ReactNode;
 	tags?: string[];
 	extra?: ReactNode;
@@ -19,19 +19,17 @@ export const HeaderText = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
-				<div className='header-text-content'>
-					{props.ribbon}
-					<div className='header-text'>{props.children}</div>
-					{
-						props.tags ?
-							<Flex gap={3}>{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}</Flex>
-							: null
-					}
-				</div>
-				{props.extra}
+		<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
+			<div className='header-text-content'>
+				{props.ribbon}
+				<div className={props.strikethrough ? 'header-text strikethrough' : 'header-text'}>{props.children}</div>
+				{
+					props.tags ?
+						<Flex gap={3}>{props.tags.map((t, n) => <Tag key={n} variant='outlined'>{t}</Tag>)}</Flex>
+						: null
+				}
 			</div>
-		</ErrorBoundary>
+			{props.extra}
+		</div>
 	);
 };

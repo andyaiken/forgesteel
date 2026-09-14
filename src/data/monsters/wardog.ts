@@ -927,7 +927,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 							})),
 							FactoryLogic.createAbilitySectionText('One ally within 10 squares of the ground commander can make a free strike.'),
 							FactoryLogic.createAbilitySectionSpend({
-								effect: 'A target who has <code>I < 2</code> and who is adjacent to the ground commander after this ability is resolved is grabbed (save ends). This grab can’t be escaped using the Escape Grab maneuver. The ground commander can grab up to two creatures at a time.'
+								effect: 'A target who has I < 2 and who is adjacent to the ground commander after this ability is resolved is grabbed (save ends). This grab can’t be escaped using the Escape Grab maneuver. The ground commander can grab up to two creatures at a time.'
 							})
 						]
 					})
@@ -990,7 +990,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each ally within 5 squares of the target moves up to their speed and can make a free strike against the target. If the target has <code>I < 2</code>, they are frightened of the ground commander (save ends).')
+							FactoryLogic.createAbilitySectionText('Each ally within 5 squares of the target moves up to their speed and can make a free strike against the target. If the target has I < 2, they are frightened of the ground commander (save ends).')
 						]
 					})
 				}),
@@ -1336,6 +1336,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('The equivite moves up to their speed and ignores difficult terrain. Any mundane size 1 object whose space they move through is destroyed. The equivite makes one power roll against each enemy whose space they move through for the first time.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
 								tier1: '2 damage; push 1',
 								tier2: '4 damage; push 2',
 								tier3: '5 damage; push 3; M < 3 prone'
@@ -1748,6 +1749,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('The tetrarch can jump up to 7 squares before using this ability.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: 'Push 2; I < 2 frightened (save ends)',
 								tier2: 'Push 4; I < 3 frightened (save ends)',
 								tier3: 'Push 5; I < 4 frightened (save ends)'
@@ -1765,6 +1767,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '7 fire damage; A < 2 slowed (EoT)',
 								tier2: '13 fire damage; A < 3 slowed (save ends)',
 								tier3: '16 fire damage; A < 4 slowed (save ends)'
@@ -1900,7 +1903,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								bonus: 4,
 								tier1: '4 damage',
 								tier2: '7 damage',
-								tier3: '8 damage; I < 3 the target is frightened of all shrikestroops (EoT)'
+								tier3: '8 damage; I < 3 the target is frightened of all shriketroops (EoT)'
 							})),
 							FactoryLogic.createAbilitySectionText('The target must move their speed in a straight line away from the shriketroop.')
 						]
@@ -2011,7 +2014,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '10 damage; push 3',
 								tier3: '11 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('Any target pushed into an obstacle is knocked prone, and if they have <code>M < 3</code> they are restrained (save ends).')
+							FactoryLogic.createAbilitySectionText('Any target pushed into an obstacle is knocked prone, and if they have M < 3 they are restrained (save ends).')
 						]
 					})
 				}),
@@ -2099,7 +2102,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				FactoryLogic.feature.create({
 					id: 'wardog-3rd-6-feature-4',
 					name: 'Duplicating Loyalty Collar',
-					description: 'When the blackcap or any of their ash clones is reduced to 0 Stamina, that creature’s loyalty collar explodes, dealing 3d6 poison damage to each adjacent enemy and object. If any adjacent enemy has <code>A < 3</code> they are also weakened (save ends).'
+					description: 'When the blackcap or any of their ash clones is reduced to 0 Stamina, that creature’s loyalty collar explodes, dealing 3d6 poison damage to each adjacent enemy and object. If any adjacent enemy has A < 3 they are also weakened (save ends).'
 				})
 			]
 		}),
@@ -2206,6 +2209,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						sections: [
 							FactoryLogic.createAbilitySectionText('This ability targets each enemy within 2 squares of any seared creature within distance.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '2 fire damage',
 								tier2: '4 fire damage; A < 3 the target is seared (save ends)',
 								tier3: '6 fire damage; A < 4 the target is seared (save ends)'
@@ -2251,6 +2255,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 damage; M < 2 push (see effect)',
 								tier2: '6 damage; M < 3 push',
 								tier3: '8 damage; M < 4 push, prone'
@@ -2313,6 +2318,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 damage',
 								tier2: '6 damage; P < 3 bleeding (save ends)',
 								tier3: '8 damage; P < 4 the target loses 1 Recovery and is bleeding (save ends)'
@@ -2371,6 +2377,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
 								tier1: '3 psychic damage',
 								tier2: '6 psychic damage; R < 3 grabbed, pull 2',
 								tier3: '8 psychic damage; R < 4 grabbed and the target takes a bane on the Escape Grab maneuver, pull 2'
@@ -2445,7 +2452,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 							FactoryLogic.createAbilitySectionText('The spread is the distance the charge arcs from a target to nearby enemies. Each enemy within spread takes 5 lightning damage.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
-								effect: 'The lighting spread increases by 2 squares. Additionally, any creature who takes lightning damage from this ability and who has <code>M < 4</code> is slowed until the end of their next turn.'
+								effect: 'The lighting spread increases by 2 squares. Additionally, any creature who takes lightning damage from this ability and who has M < 4 is slowed until the end of their next turn.'
 							})
 						]
 					})
@@ -2491,7 +2498,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 5, and if the the target has <code>M < 4</code>, they fall prone.')
+							FactoryLogic.createAbilitySectionText('Slide 5, and if the target has M < 4, they fall prone.')
 						]
 					})
 				}),
@@ -2737,7 +2744,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Hoplon teleports to an unoccupied space adjacent to the enemy and becomes the new target of the ability. He can then make a free strike against the enemy, and if that enemy has <code>R < 4</code> they are taunted until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Hoplon teleports to an unoccupied space adjacent to the enemy and becomes the new target of the ability. He can then make a free strike against the enemy, and if that enemy has R < 4 they are taunted until the end of their next turn.')
 						]
 					})
 				}),
@@ -2928,6 +2935,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 5,
 								tier1: 'A < 4 pull 3 toward the center of the area',
 								tier2: 'A < 5 pull 3 toward the center of the area',
 								tier3: 'Pull 3 toward the center of the area'
@@ -2935,7 +2943,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 							FactoryLogic.createAbilitySectionText('A portal appears at the center of the area. Any creature at the center of the area when this ability is used or who is pulled into the center for the first time in a round takes 10 sonic damage.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 2,
-								effect: 'The area remains active and deals its damage until Vesper is reduced to 0 Stamina or until the end of the encounter. Any creature who enters the area and has <code>A < 4</code> is pulled 3 squares toward the center of the area. Any creature who starts their turn in the area and has <code>M < 4</code> is slowed until the end of their turn.'
+								effect: 'The area remains active and deals its damage until Vesper is reduced to 0 Stamina or until the end of the encounter. Any creature who enters the area and has A < 4 is pulled 3 squares toward the center of the area. Any creature who starts their turn in the area and has M < 4 is slowed until the end of their turn.'
 							})
 						]
 					})
@@ -3031,7 +3039,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each soulbound enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target takes 5 damage from a self-inflicted wound, and if they have <code>M < 4</code> Psyche slides them up to 5 squares.')
+							FactoryLogic.createAbilitySectionText('Each target takes 5 damage from a self-inflicted wound, and if they have M < 4 Psyche slides them up to 5 squares.')
 						]
 					})
 				}),
@@ -3188,7 +3196,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.')
+							FactoryLogic.createAbilitySectionText('For each war dog reduced to 0 Stamina in the encounter, a war dog shriketroop appears in an unoccupied space within distance.')
 						]
 					})
 				}),
@@ -3201,7 +3209,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each creature in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Until the start of the next round, each target enemy who has <code>I < 4</code> is dazed, each target enemy who has <code>M < 4</code> is restrained, and each target enemy who has <code>A < 4</code> can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.')
+							FactoryLogic.createAbilitySectionText('Until the start of the next round, each target enemy who has I < 4 is dazed, each target enemy who has M < 4 is restrained, and each target enemy who has A < 4 can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.')
 						]
 					})
 				})

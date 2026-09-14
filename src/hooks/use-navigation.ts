@@ -11,7 +11,7 @@ export const useNavigation = () => {
 		},
 		goToHeroList: (folder?: string) => {
 			if (folder) {
-				return navigate(`/hero/${folder}`);
+				return navigate(`/hero/${encodeURIComponent(folder)}`);
 			}
 			return navigate('/hero');
 		},

@@ -2,12 +2,14 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SubClass } from '@/models/subclass';
 
 export const stormwight: SubClass = {
 	id: 'fury-sub-3',
 	name: 'Stormwight',
 	description: 'You channel your rage into the form of animals and primordial storms.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -21,10 +23,11 @@ export const stormwight: SubClass = {
 					name: 'Beast Shape',
 					types: [ 'Stormwight' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'fury-sub-3-1-3',
 					name: 'Relentless Hunter',
-					description: 'You gain an edge on tests made using the Track skill.'
+					modifier: RollModifierType.Edge,
+					skills: [ 'Track' ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

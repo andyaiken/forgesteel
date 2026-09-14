@@ -18,7 +18,7 @@ export const NegotiationArgumentsCard = () => {
 				{
 					[ ...Array(6) ].map((_e, i) => {
 						return (
-							<div className='row' key={`negotiaion-arguments-${i}`}>
+							<div className='row' key={`negotiation-arguments-${i}`}>
 								<div className='motivation-indicator'>
 									<LabeledBooleanField value={false} label='' />
 									<div className='space'>&nbsp;</div>

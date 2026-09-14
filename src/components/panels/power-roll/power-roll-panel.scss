@@ -3,7 +3,7 @@
 .power-roll-panel {
 	position: relative;
 	margin: 10px 0;
-	border: 1px solid rgba(5, 5, 5, 0.06);
+	border: 1px solid var(--fs-border);
 	border-radius: 5px;
 	background-color: rgb(240, 240, 240);
 	padding: 10px;
@@ -19,7 +19,8 @@
 
 		&.highlight-row {
 			font-weight: 600;
-			background-color: rgba(64, 150, 255, 0.3);
+			background-color: rgba(64, 150, 255, 0.18);
+			box-shadow: inset 2px 0 0 var(--fs-accent);
 		}
 
 		&.power-roll-header {
@@ -29,12 +30,12 @@
 			justify-content: space-between;
 			font-weight: 600;
 			padding-bottom: 10px;
-			border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+			border-bottom: 1px solid var(--fs-border);
 			border-radius: 0;
 		}
 
 		&.power-roll-footer {
-			border-top: 1px solid rgba(5, 5, 5, 0.06);
+			border-top: 1px solid var(--fs-border);
 			margin-bottom: -10px;
 			border-radius: 0;
 		}
@@ -49,7 +50,7 @@
 		.effect {
 			flex: 1 1 0;
 			padding: 5px;
-			border-left: 1px solid rgba(5, 5, 5, 0.06);
+			border-left: 1px solid var(--fs-border);
 
 			p {
 				margin: 0;
@@ -58,39 +59,18 @@
 
 		.odds {
 			flex: 0 0 50px;
-			border-left: 1px solid rgba(5, 5, 5, 0.06);
+			border-left: 1px solid var(--fs-border);
 			padding: 5px;
 			text-align: right;
+			font-variant-numeric: tabular-nums;
+			opacity: 0.65;
 		}
 	}
 }
 
 html[data-theme="dark"] {
 	.power-roll-panel {
-		border-color: rgba(250, 250, 250, 0.6);
 		background-color: rgb(30, 30, 30);
 		color: rgba(255, 255, 255, 0.88);
-
-		.power-roll-row {
-			&.power-roll-header {
-				border-bottom-color: rgba(250, 250, 250, 0.6);
-
-				.ant-btn-icon {
-					color: rgba(255, 255, 255, 0.88);
-				}
-			}
-
-			&.power-roll-footer {
-				border-top-color: rgba(250, 250, 250, 0.6);
-			}
-
-			.tier {
-				border-right-color: rgba(250, 250, 250, 0.6);
-			}
-
-			.odds {
-				border-left-color: rgba(250, 250, 250, 0.6);
-			}
-		}
 	}
 }

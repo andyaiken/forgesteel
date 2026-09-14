@@ -1,5 +1,5 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { ace, beastfolk, deva, heavyGunner, ironbound, ironsight, pistolier, siabhra } from '@/data/sourcebooks/community/andy';
+import { ace, beastfolk, deva, heavyGunner, ironbound, ironsight, orian, pistolier, siabhra } from '@/data/sourcebooks/community/andy';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
@@ -18,6 +18,8 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -30,7 +32,7 @@ const aranox: Ancestry = {
 	description: `
 *By Marc Aranha*
 
-The Aranox are direct decendents of Minotaurs. After the rebellion against the Beast Lords of Kham, most Minotaurs scattered, driven by a bestial urge to hunt and settle on labyrinthine terrain. Wandering alone or in small tribes, the Minotaurs were slowly consumed by the beast within, until little remained but a constant hunger and rage, turning them into the monstrous creatures many know today.
+The Aranox are direct descendants of Minotaurs. After the rebellion against the Beast Lords of Kham, most Minotaurs scattered, driven by a bestial urge to hunt and settle on labyrinthine terrain. Wandering alone or in small tribes, the Minotaurs were slowly consumed by the beast within, until little remained but a constant hunger and rage, turning them into the monstrous creatures many know today.
 
 However, some Minotaur resisted this hunger, seeking to find balance with their inner beast in order to retain their sense of self and their human origins. Bonded by purpose and community, these Minotaur formed larger clans, far from the eyes of civilization, and became the Aranox.
 
@@ -52,10 +54,33 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 			name: 'Aranox Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'aranox-2a',
 						name: 'Always Angry',
-						description: 'The beast rages within you, and its anger makes you incredibly strong. You gain an edge on tests made to lift and haul heavy objects. In addition, whenever you force move a creature or object, the forced movement distance gains a +1 bonus.'
+						description: 'The beast rages within you, and its anger makes you incredibly strong.',
+						features: [
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-1',
+								field: FeatureField.ForcedMovementPull,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-2',
+								field: FeatureField.ForcedMovementPush,
+								value: 1
+							}),
+							FactoryLogic.feature.createBonus({
+								id: 'aranox-2a-3',
+								field: FeatureField.ForcedMovementSlide,
+								value: 1
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'aranox-2a-4',
+								name: 'Always Angry',
+								modifier: RollModifierType.Edge,
+								condition: 'When lifting and hauling heavy objects'
+							})
+						]
 					}),
 					value: 2
 				},
@@ -87,10 +112,24 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'aranox-2e',
 						name: 'That Tickles',
-						description: 'You are able to shrug off the puny blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature\'s traits or abilities.'
+						description: 'You are able to shrug off the puny blows of your enemies.',
+						features: [
+							FactoryLogic.feature.createPotencyResistance({
+								id: 'aranox-2ea',
+								name: 'That Tickles',
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'aranox-2eb',
+								name: 'That Tickles',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -171,10 +210,24 @@ After encountering visitors from outer space, the asomaths came to realize that 
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'asomath-feature-1d',
 						name: 'Stand Tough',
-						description: 'Your body is made to withstand the blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'Your body is made to withstand the blows of your enemies.',
+						features: [
+							FactoryLogic.feature.createPotencyResistance({
+								id: 'asomath-feature-1da',
+								name: 'Stand Tough',
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'asomath-feature-1db',
+								name: 'Stand Tough',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -292,10 +345,25 @@ Some oaklings choose to walk a different path than their kin. Though it often re
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'gall-guardian-1e',
 					name: 'Wode Ward',
-					description: 'You gain an edge on Presence tests made to intimidate, coerce, or bully, but have a bane on Presence tests made to empathize or persuade.'
+					features: [
+						FactoryLogic.feature.createRollModifier({
+							id: 'gall-guardian-1ea',
+							name: 'Wode Ward',
+							modifier: RollModifierType.Edge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When intimidating, coercing, or bullying'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'gall-guardian-1eb',
+							name: 'Wode Ward',
+							modifier: RollModifierType.Bane,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'When empathizing or persuading'
+						})
+					]
 				})
 			]
 		})
@@ -360,10 +428,24 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'oakling-2d',
 						name: 'Strength of the White Oak',
-						description: 'The sinew of your wooden body is as strong as iron! Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature’s traits or abilities.'
+						description: 'The sinew of your wooden body is as strong as iron!',
+						features: [
+							FactoryLogic.feature.createPotencyResistance({
+								id: 'oakling-2da',
+								name: 'Strength of the White Oak',
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'oakling-2db',
+								name: 'Strength of the White Oak',
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ],
+								condition: 'When resisting environmental effects or a creature’s traits or abilities'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -477,10 +559,22 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 								id: 'solar-2-4a',
 								selected: [ 'Navigate' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createMultiple({
 								id: 'solar-2-4b',
 								name: 'Starscape Navigator',
-								description: 'You gain an edge on tests to navigate at night. You always know which way is north and what time of day it is.'
+								features: [
+									FactoryLogic.feature.create({
+										id: 'solar-2-4ba',
+										name: 'Starscape Navigator',
+										description: 'You always know which way is north and what time of day it is.'
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'solar-2-4bb',
+										name: 'Starscape Navigator',
+										modifier: RollModifierType.Edge,
+										condition: 'When navigating at night'
+									})
+								]
 							})
 						]
 					}),
@@ -495,10 +589,11 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'solar-2-6',
 						name: 'Sunlight Saint',
-						description: 'Your divine visage is basked upon by believers. You gain an edge on tests made to interact with priests, acolytes, and other particularly religious individuals.'
+						modifier: RollModifierType.Edge,
+						condition: 'When interacting with priests, acolytes, and other particularly religious individuals'
 					}),
 					value: 1
 				},
@@ -636,17 +731,23 @@ As a magewright, you are able to utilize the majesty of magic and infuse it into
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'ally-surge-damage',
-							trigger: 'The first time in an encounter you or an ally spends 3 or more surges on a single ability to increase the damage',
-							value: '1d3'
+							trigger: 'You or an ally spends 3 or more surges on a single ability to increase the damage',
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
 							tag: 'ally-surge-potency',
-							trigger: 'The first time in an encounter you or an ally spends 2 surges on a single ability to increase the potency',
-							value: '1d3'
+							trigger: 'You or an ally spends 2 surges on a single ability to increase the potency',
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -714,13 +815,13 @@ For each wonder spent, choose one of the following enhancements:
 					})
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'magewright-1-9',
+					id: 'magewright-upgrades-choice',
 					name: 'Upgrades',
 					description: 'You have taken to making custom modifications to your equipment to enhance your statistics. You can choose one of the following upgrades. You can change your upgrade by tinkering with your equipment as a respite activity.',
 					options: [
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'laR6VpDj9UbeEQIZ',
+								id: 'magewright-upgrades-choice-1',
 								name: 'Battle Frame',
 								description: `
 You have developed a special suit of armor that reinforces your movements and attacks.
@@ -736,19 +837,19 @@ You can use light armor treasures and light weapon treasures.
 If you have a kit, you can’t take this upgrade.`,
 								features: [
 									FactoryLogic.feature.createProficiency({
-										id: 'o87y62ATA2hqxwgJ',
+										id: 'magewright-upgrades-choice-1-1',
 										name: 'Proficiency',
 										weapons: [ KitWeapon.Light ],
 										armor: [ KitArmor.Light ]
 									}),
 									FactoryLogic.feature.createBonus({
-										id: 'aI4MyhZMPJXIP1PI',
+										id: 'magewright-upgrades-choice-1-2',
 										name: 'Light Armor Stamina',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
 									}),
 									FactoryLogic.feature.createAbilityDamage({
-										id: '740D4z9GVRpz4ncf',
+										id: 'magewright-upgrades-choice-1-3',
 										name: 'Light Weapon Damage',
 										keywords: [ AbilityKeyword.Weapon ],
 										value: 1
@@ -759,9 +860,9 @@ If you have a kit, you can’t take this upgrade.`,
 						},
 						{
 							feature: FactoryLogic.feature.createAbilityDamage({
-								id: 'PkI8vmj2Zq6Ey1bB',
+								id: 'magewright-upgrades-choice-2',
 								name: 'Power Capacitors',
-								description: 'You have modified your weapons with auxillary batteries. You gain a +1 rolled damage bonus with magic abilities.',
+								description: 'You have modified your weapons with auxiliary batteries. You gain a +1 rolled damage bonus with magic abilities.',
 								keywords: [ AbilityKeyword.Magic ],
 								value: 1
 							}),
@@ -769,7 +870,7 @@ If you have a kit, you can’t take this upgrade.`,
 						},
 						{
 							feature: FactoryLogic.feature.createAbilityDistance({
-								id: '5VpmYyZste5Mf4fW',
+								id: 'magewright-upgrades-choice-3',
 								name: 'Focusing Lenses',
 								description: 'You have detailed lenses to increase your aim. You gain a +2 bonus to the distance of your ranged magic abilities.',
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -779,18 +880,18 @@ If you have a kit, you can’t take this upgrade.`,
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'yUZ2eeUaTqhkZW6x',
+								id: 'magewright-upgrades-choice-4',
 								name: 'Actuated Joints',
 								description: 'You have imbued your armor with servos. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.',
 								features: [
 									FactoryLogic.feature.createBonus({
-										id: 'viZ60LWZ30lRVtR5',
+										id: 'magewright-upgrades-choice-4-1',
 										name: 'Speed',
 										field: FeatureField.Speed,
 										value: 1
 									}),
 									FactoryLogic.feature.createBonus({
-										id: 'tjERIjbYqUZuFNkO',
+										id: 'magewright-upgrades-choice-4-2',
 										name: 'Disengage',
 										field: FeatureField.Disengage,
 										value: 1
@@ -801,18 +902,18 @@ If you have a kit, you can’t take this upgrade.`,
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'KhmDftQYttVPfi2i',
+								id: 'magewright-upgrades-choice-5',
 								name: 'Reinforced Plating',
 								description: 'Your armor has been modified to increase its center mass and toughness. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.',
 								features: [
 									FactoryLogic.feature.createBonus({
-										id: 'qiJTWUSbPvne14QA',
+										id: 'magewright-upgrades-choice-5-1',
 										name: 'Stamina',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 6
 									}),
 									FactoryLogic.feature.createBonus({
-										id: 'ybD0nwio3ErTlFBo',
+										id: 'magewright-upgrades-choice-5-2',
 										name: 'Stability',
 										field: FeatureField.Stability,
 										value: 1
@@ -824,13 +925,13 @@ If you have a kit, you can’t take this upgrade.`,
 					]
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'magewright-1-10',
+					id: 'magewright-ward-choice',
 					name: 'Magewright Ward',
 					description: 'Your magic allows you to enchant your equipment to provide additional protection. Choose one of the following wards. You can change your ward along with your Upgrade (see Upgrade) by tinkering as a respite activity.',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'DbX3XdscebqQP9KQ',
+								id: 'magewright-ward-choice-1',
 								name: 'Ward of Momentum Transference',
 								description: 'Your ward reacts to harm to help you escape danger. Whenever an adjacent creature deals damage to you, you can slide yourself a number of squares equal to your Reason score after the damage is dealt.'
 							}),
@@ -839,7 +940,7 @@ If you have a kit, you can’t take this upgrade.`,
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: '33BcgUDGQ5rhqNQb',
+									id: 'magewright-ward-choice-2',
 									name: 'Ward of Volatile Absorption',
 									description: 'Your ward converts harmful energy into a protective shield.',
 									type: FactoryLogic.type.createTrigger('The first time each round you take acid, cold, fire, poison, sonic, or lighting damage.'),
@@ -855,10 +956,10 @@ If you have a kit, you can’t take this upgrade.`,
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'dEtPQKOLMwY84q9d',
+									id: 'magewright-ward-choice-3',
 									name: 'Ward of Calculated Negation',
 									description: 'Your ward helps you compensate for hostile advantage.',
-									type: FactoryLogic.type.createTrigger('A creature targets you with an ability that requires a power roll and and has an edge.'),
+									type: FactoryLogic.type.createTrigger('A creature targets you with an ability that requires a power roll and has an edge.'),
 									sections: [
 										FactoryLogic.createAbilitySectionText('You inflict a bane on triggering power roll.')
 									]
@@ -868,7 +969,7 @@ If you have a kit, you can’t take this upgrade.`,
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'oE5wbWKsLfTwEwls',
+								id: 'magewright-ward-choice-4',
 								name: 'Ward of Exigent Defense',
 								description: 'At the start of your turn, you can make a saving throw against one effect that can be ended on a saving throw.'
 							}),
@@ -921,7 +1022,7 @@ If you have a kit, you can’t take this upgrade.`,
 	],
 	abilities: [
 		FactoryLogic.createAbility({
-			id: 'v7J7Z0juYjT52BtB',
+			id: 'magewright-arc-lightning',
 			name: 'Arc Lightning',
 			description: 'You unleash a blast of electricity that leaps from one target to another.',
 			type: FactoryLogic.type.createMain(),
@@ -947,7 +1048,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'QHLE50lg6AuATBT5',
+			id: 'magewright-blowtorch',
 			name: 'Blowtorch',
 			description: 'Eyebrows grow back....right?',
 			type: FactoryLogic.type.createMain(),
@@ -971,7 +1072,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'FO2ZbMACAm9WJg49',
+			id: 'magewright-flash-freeze',
 			name: 'Flash Freeze',
 			description: 'You emit a jet of supercooled mist to halt nearby foes.',
 			type: FactoryLogic.type.createMain(),
@@ -995,7 +1096,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '0pXSkFKy9JaTyHiw',
+			id: 'magewright-heat-seekers',
 			name: 'Heat Seekers',
 			description: 'A bundle of bolts burst into the air, unerringly seeking their targets.',
 			type: FactoryLogic.type.createMain(),
@@ -1025,7 +1126,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'hGcCOVvj8aLcw73v',
+			id: 'magewright-iron-eater',
 			name: 'Iron Eater',
 			description: 'It destroys armor in minutes, and removes stains instantly.',
 			type: FactoryLogic.type.createMain(),
@@ -1050,7 +1151,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'U9cFspkoJ2hUyocG',
+			id: 'magewright-the-prototype',
 			name: 'The Prototype',
 			description: 'It can be a little unreliable, but it can definitely pack a punch.',
 			type: FactoryLogic.type.createMain(),
@@ -1079,7 +1180,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'hedJz4Oqjza6RB4A',
+			id: 'magewright-sonic-hammer',
 			name: 'Sonic Hammer',
 			description: 'This. Is. My. BOOMSTICK.',
 			type: FactoryLogic.type.createMain(),
@@ -1104,7 +1205,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'UM0KfRGkMMdqkhRV',
+			id: 'magewright-volatile-flask',
 			name: 'Volatile Flask',
 			description: 'Ten, nine, eight... or was it on five...?',
 			type: FactoryLogic.type.createMain(),
@@ -1122,7 +1223,7 @@ If you have a kit, you can’t take this upgrade.`,
 						characteristic: Characteristic.Reason,
 						tier1: '2 damage',
 						tier2: '5 damage',
-						tier3: '7 damage: M < [strong], prone'
+						tier3: '7 damage; M < [strong], prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionSpend({
@@ -1131,7 +1232,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'mcpNbpXODJmwtBUf',
+			id: 'magewright-dynamo-overload',
 			name: 'Dynamo Overload',
 			description: 'My hair? Yes, it does normally stand on its end, why do you ask?',
 			type: FactoryLogic.type.createMain(),
@@ -1147,7 +1248,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'HsFZChuhnwfX2cvo',
+			id: 'magewright-flash-and-bang',
 			name: 'Flash and Bang',
 			description: 'They’ll never see what hit them.',
 			type: FactoryLogic.type.createMain(),
@@ -1175,7 +1276,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: '0w9GOvbk49Ihf1kx',
+			id: 'magewright-experimental-compound',
 			name: 'Experimental Compound',
 			description: 'The difference between medicine and poison is in the dosage.',
 			type: FactoryLogic.type.createMain(),
@@ -1200,7 +1301,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'lp5buarBosjM9Nv5',
+			id: 'magewright-mass-accelerator',
 			name: 'Mass Accelerator',
 			description: 'Time to meet your equal and opposite reaction.',
 			type: FactoryLogic.type.createMain(),
@@ -1225,7 +1326,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Cc8k7l2K5GMJnteO',
+			id: 'magewright-cascading-discharge',
 			name: 'Cascading Discharge',
 			description: 'Ever wondered what it feels like to be a kite in a thunderstorm?',
 			type: FactoryLogic.type.createMain(),
@@ -1249,7 +1350,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'YDDeIuJo4aZ4ubpa',
+			id: 'magewright-clockwork-conscript',
 			name: 'Clockwork Conscript',
 			description: 'Many mechanical hands make light work.',
 			type: FactoryLogic.type.createMain(),
@@ -1264,7 +1365,7 @@ If you have a kit, you can’t take this upgrade.`,
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'nLoYX7FACNoGZlD8',
+			id: 'magewright-omni-tool',
 			name: 'Omni-Tool',
 			description: 'Loose belt, open wound, empty quiver... not to worry, I’ve got a fix for you.',
 			type: FactoryLogic.type.createMain(),
@@ -1286,7 +1387,7 @@ You can target yourself instead of one creature with this ability. Each target g
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'tvTnyYFk2PA1kPfp',
+			id: 'magewright-rapid-oxidization',
 			name: 'Rapid Oxidization',
 			description: 'A barrel of this stuff will eat through a stone bridge in under ten minutes.',
 			type: FactoryLogic.type.createMain(),
@@ -1311,7 +1412,7 @@ You can target yourself instead of one creature with this ability. Each target g
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'Y2qzisoSdKIgflBJ',
+			id: 'magewright-ablative-shielding',
 			name: 'Ablative Shielding',
 			description: 'You can never have too many layers.',
 			type: FactoryLogic.type.createManeuver(),
@@ -1327,7 +1428,7 @@ You can target yourself instead of one creature with this ability. Each target g
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'VCRJacpR5z9UQhQF',
+			id: 'magewright-cloaking-matrix',
 			name: 'Cloaking Matrix',
 			description: 'The target disappears for a brief moment, behind a practical application of light.',
 			type: FactoryLogic.type.createManeuver(),
@@ -1343,7 +1444,7 @@ You can target yourself instead of one creature with this ability. Each target g
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'L8zOSv20czWxhK3V',
+			id: 'magewright-hyperdrive',
 			name: 'Hyperdrive',
 			description: 'Your magic rapidly accelerates the infused creature.',
 			type: FactoryLogic.type.createManeuver(),
@@ -1359,7 +1460,7 @@ You can target yourself instead of one creature with this ability. Each target g
 			]
 		}),
 		FactoryLogic.createAbility({
-			id: 'YLrONkax4PwJKLVD',
+			id: 'magewright-magnify',
 			name: 'Magnify',
 			description: 'Bigger IS always better.',
 			type: FactoryLogic.type.createManeuver(),
@@ -1383,9 +1484,10 @@ Until the end of the encounter or you are dying, the target gains the following 
 	],
 	subclasses: [
 		{
-			id: 'iFeBhUgRTKkNj0SR',
+			id: 'magewright-automancer',
 			name: 'Automancer',
 			description: 'Automancers focus on the creation of servitor constructs that serve as shields and weapons for themselves and their allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1395,19 +1497,20 @@ Until the end of the encounter or you are dying, the target gains the following 
 							selected: [ 'Mechanics' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
-							id: 'GJRGJCgzCjqpokR6',
+							id: 'magewright-automancer-wonder-gain-1',
 							name: 'Automancer Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that your servitor takes damage',
+							trigger: 'Your servitor takes damage',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.createMultiple({
-							id: 'uBzUUxbBTVnjlRmA',
+							id: 'magewright-automancer-wonder-gain-2',
 							name: 'Servitor',
 							features: [
 								FactoryLogic.feature.create({
-									id: 'IkiFXtqK3H24cg7b',
+									id: 'magewright-servitor',
 									name: 'Servitor',
 									description: `
 You create a servitor that can join you on your adventure. Your servitor uses one of the statblocks below and the following special rules:
@@ -1457,13 +1560,13 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 **Leveled Items.** When you wield a leveled weapon, armor, implement, or other leveled item, your servitor gains the benefits of the magic treasure as if they were wielding it. As is true with any character, both of you only benefit from a wieldable magic weapon or armor if its keywords match your kit. Your servitor can also wield one leveled treasure independently of you, as long as its keywords match the kit of your servitor.`
 								}),
 								FactoryLogic.feature.createSummonChoice({
-									id: 'Mub7UFTxLmfx4z1p',
+									id: 'magewright-servitor-choice-1',
 									name: 'Servitor Choice',
 									description: 'You gain a servitor to aid you in your adventures.',
 									options: [
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'AdrHTSp6AIsIMsiP',
+												id: 'magewright-servitor-choice-2',
 												name: 'Safeguard Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Defender),
@@ -1478,7 +1581,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-1',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1498,7 +1601,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-security-protocol',
 															name: 'Security Protocol',
 															description: '*Your servitor moves to interdict a foe, and keep its allies safe.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -1518,12 +1621,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-1',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-2',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -1539,17 +1642,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'tTzkH0Ez9g3K7RTT',
+														id: 'magewright-skill-1',
 														name: 'Skill',
 														description: 'Alertness'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-2',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-3',
 														name: 'Protector',
 														description: 'The servitor gains a surge when they deal damage to a creature adjacent to you or an ally.'
 													})
@@ -1560,7 +1663,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: '9egIVkCAzAEIFgI4',
+												id: 'magewright-protector',
 												name: 'Scout Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Harrier),
@@ -1575,7 +1678,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-2',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1595,7 +1698,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-springloaded-leap',
 															name: 'Springloaded Leap',
 															description: '*Powerful tensors allow your servitor to bring a target down.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -1615,12 +1718,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-3',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-4',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -1636,17 +1739,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'dLmCKAUVRUTLMGvN',
+														id: 'magewright-skill-4',
 														name: 'Skill',
 														description: 'Sneak'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-5',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-6',
 														name: 'Lithe',
 														description: 'When the servitor takes the Advance move action or takes the Charge action, as part of the movement they can jump up to their speed in any direction, including vertically.'
 													})
@@ -1657,7 +1760,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'KODZM9DfxOWnJ416',
+												id: 'magewright-lithe',
 												name: 'Screen Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Controller),
@@ -1672,7 +1775,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-3',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1692,7 +1795,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-energy-blast',
 															name: 'Energy Blast',
 															description: '*Your servitor releases a capacitor of stored energy into a focused stream.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -1712,12 +1815,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-5',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-6',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -1733,22 +1836,22 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-remote-link-1',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'lfU5Hla87C26Jq5M',
+														id: 'magewright-remote-link-2',
 														name: 'Skill',
 														description: 'Endurance'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-remote-link-3',
 														name: 'Attuned',
-														description: 'When you gain this servitor, choose a damage type from acid, cold, fire, lightning, poison, or sonic. The servitor is attunedto that damage type, and gains damage immunity equal to 1 + your Reason score against that type. Attuned also affects their other features.'
+														description: 'When you gain this servitor, choose a damage type from acid, cold, fire, lightning, poison, or sonic. The servitor is attuned to that damage type, and gains damage immunity equal to 1 + your Reason score against that type. Attuned also affects their other features.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'EAb6hfXtPMotwewB',
+														id: 'magewright-skill-7',
 														name: 'Radiator',
 														description: 'An enemy that moves adjacent to your servitor, or ends their turn adjacent to them takes M damage of the attuned damage type.'
 													})
@@ -1759,7 +1862,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'Fjhxx8bGOzqwM3VT',
+												id: 'magewright-radiator',
 												name: 'Shock Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Hexer),
@@ -1774,7 +1877,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-4',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1794,7 +1897,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-galvanic-flash',
 															name: 'Galvanic Flash',
 															description: '*Your servitor unleashes a jolt of electricity that disrupts the target’s senses.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -1818,12 +1921,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-special',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-7',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -1839,17 +1942,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'cCRfHzUUs6N3mtKp',
+														id: 'magewright-skill-8',
 														name: 'Skill',
 														description: 'Sabotage'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-9',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-10',
 														name: 'Lightning Rod',
 														description: 'The first time each turn that you or your companion deal lightning damage, you gain a surge.'
 													})
@@ -1860,7 +1963,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'jPbqhH6iygJ5t3vQ',
+												id: 'magewright-lightning-rod',
 												name: 'Signal Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Artillery),
@@ -1875,7 +1978,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-5',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1895,7 +1998,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-firing-solution',
 															name: 'Firing Solution',
 															description: '*Your servitor fires a bolt that exposes a critical weakness in a foe.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -1915,12 +2018,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-8',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-9',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -1936,17 +2039,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'M00ZMEBk1tkj3tlH',
+														id: 'magewright-skill-11',
 														name: 'Skill',
 														description: 'Search'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-12',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-13',
 														name: 'Lock On',
 														description: 'This servitor’s abilities, as well as magewright abilities used using the remote link feature, ignore cover or concealment.'
 													})
@@ -1957,7 +2060,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'slz9NVSTAZlHOfG0',
+												id: 'magewright-lock-on',
 												name: 'Snare Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Support),
@@ -1972,7 +2075,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-6',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -1992,7 +2095,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-grappling-tether',
 															name: 'Grappling Tether',
 															description: '*A hooked grapnel latches onto a target, and reels them in*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -2012,12 +2115,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-10',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-11',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -2033,17 +2136,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'bShMF29uuHT9FOmx',
+														id: 'magewright-skill-14',
 														name: 'Skill',
 														description: 'Climb'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-15',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-16',
 														name: 'Pully System',
 														description: 'The servitor can move at full speed while they have a creature grabbed, no matter the grabbed creature’s size.'
 													})
@@ -2054,7 +2157,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'iQmDMRsLj9jALRCZ',
+												id: 'magewright-pully-system',
 												name: 'Stalwart Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Brute),
@@ -2069,7 +2172,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-7',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -2089,7 +2192,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-battering-ram',
 															name: 'Battering Ram',
 															description: '*Your servitor unleashes stored pressure to eject a foe from their position.*',
 															type: FactoryLogic.type.createManeuver({ freeStrike: true }),
@@ -2109,12 +2212,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-12',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-13',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -2130,17 +2233,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'i6LtE53lDVMwO1it',
+														id: 'magewright-skill-17',
 														name: 'Skill',
 														description: 'Lift'
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-skill-18',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-skill-19',
 														name: 'Durable',
 														description: 'While the servitor is winded, they gain damage immunity equal to their Might score and they ignore damage from the Bleeding condition.'
 													})
@@ -2151,7 +2254,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 										}),
 										FactoryLogic.createSummon({
 											monster: FactoryLogic.createMonster({
-												id: 'FbiA3IzgjAL74U1q',
+												id: 'magewright-durable',
 												name: 'Stealth Servitor',
 												level: 1,
 												role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Ambusher),
@@ -2166,7 +2269,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 												features: [
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'vvZYXLGK6ThQcP1D',
+															id: 'magewright-kit-attack-8',
 															name: 'Kit Attack!',
 															type: FactoryLogic.type.createMain(),
 															keywords: [
@@ -2186,7 +2289,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 													}),
 													FactoryLogic.feature.createAbility({
 														ability: FactoryLogic.createAbility({
-															id: 'bHKRsxpJu8xMExgH',
+															id: 'magewright-insurgent-strike',
 															name: 'Insurgent Strike',
 															description: '*Your servitor slides into a foes blind spot to strike at exposed foes*',
 															type: FactoryLogic.type.createManeuver(),
@@ -2206,12 +2309,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														})
 													}),
 													FactoryLogic.feature.createConditionImmunity({
-														id: 'YSfds9X4IYjgdqsB',
+														id: 'magewright-construct-14',
 														name: 'Construct',
 														conditions: [ ConditionType.Frightened ]
 													}),
 													FactoryLogic.feature.createDamageModifier({
-														id: 'LWe5lnp145fQd3Lf',
+														id: 'magewright-construct-15',
 														name: 'Construct',
 														modifiers: [
 															FactoryLogic.damageModifier.create({
@@ -2227,17 +2330,17 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 														]
 													}),
 													FactoryLogic.feature.create({
-														id: 'NpPjJOouiuITpehO',
+														id: 'magewright-remote-link-4',
 														name: 'Remote Link',
 														description: 'Whenever you use a magewright ability, you can do so as if you were in the servitor’s space. Doing so counts as the servitor’s action or maneuver for the turn.'
 													}),
 													FactoryLogic.feature.create({
-														id: 'n6QXX5WicXiE3G5R',
+														id: 'magewright-remote-link-5',
 														name: 'Ambusher',
 														description: 'If your servitor ends its turn in cover or concealment, it becomes hidden, even if observed.'
 													}),
 													FactoryLogic.feature.create({
-														id: '36D7a7FRWqWNUAuY',
+														id: 'magewright-remote-link-6',
 														name: 'Skill',
 														description: 'Hide'
 													})
@@ -2249,13 +2352,13 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 									]
 								}),
 								FactoryLogic.feature.createBonus({
-									id: 'qvXyTiz9um4G8Gqa',
+									id: 'magewright-magewright-recoveries-1',
 									name: 'Magewright Recoveries',
 									field: FeatureField.Recoveries,
 									value: 4
 								}),
 								FactoryLogic.feature.createKitChoice({
-									id: 'yEz97EFZ6id4meil',
+									id: 'magewright-magewright-recoveries-2',
 									name: 'Kit',
 									description: 'Your servitor can gain the benefits of a kit and use the kit’s signature ability. When your servitor deals damage with an action that doesn’t have a power roll, the damage bonus from its kit is not added to that damage. Your servitor can also equip treasures. Any leveled treasure used by your Servitor counts against the number you can carry safely.'
 								})
@@ -2263,7 +2366,7 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'scHBzRWOCjetrmLG',
+								id: 'magewright-kit',
 								name: 'Inexorable Protector',
 								description: 'Your servitor is an ever faithful guardian.',
 								type: FactoryLogic.type.createTrigger('The target takes damage from a strike.'),
@@ -2288,12 +2391,12 @@ Similarly, the dazed condition limits a creature to using only one of a move, ma
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'vZjc3a3yk84N4NvU',
+							id: 'magewright-autonomous-labor-1',
 							name: 'Autonomous Labor',
 							description: 'Your servitor gains an edge on any test made to assist another creature with a test. Additionally, if your servitor makes a test to assist a test and gets a tier 1 result, they don’t add a bane to the assisted test.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: '78uOg9XOaaQr6cMC',
+							id: 'magewright-autonomous-labor-2',
 							name: 'Selective Function',
 							description: `
 You are able to upgrade your servitor to better suit your particular needs.
@@ -2302,7 +2405,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 							options: [
 								{
 									feature: FactoryLogic.feature.create({
-										id: 'vhWxJoPWfkCKiRlq',
+										id: 'magewright-selective-function',
 										name: 'Steel Defender',
 										description: 'Your servitor always treats a save ends effect as an EoT effect and their characteristic scores increase by 1 for the purpose of resisting potencies. It has an edge on Intuition tests.'
 									}),
@@ -2310,7 +2413,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 								},
 								{
 									feature: FactoryLogic.feature.create({
-										id: 'RLvAe8mGZcvwVJeF',
+										id: 'magewright-steel-defender',
 										name: 'Hunter-Seeker',
 										description: 'Your servitor gains a bonus to its speed and a bonus to the number of squares it can shift when it takes the Disengage move action equal to your Reason score. It gains a +2 bonus to its free strikes and its rolled damage bonus. It has an edge on Agility tests.'
 									}),
@@ -2318,7 +2421,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 								},
 								{
 									feature: FactoryLogic.feature.create({
-										id: 'ind29kdxGMmxPd1i',
+										id: 'magewright-hunter-seeker',
 										name: 'War Frame',
 										description: 'Your servitor replaces its current role with the mount role. Its size and stability increase by 1, with any size 1 target becoming size 2. While mounted on your servitor, abilities that target you have a double bane, and whenever you use your Infusion ability, your servitor can spend a recovery. It has an edge on Might tests.'
 									}),
@@ -2327,14 +2430,14 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 							]
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'Sp1qMj4zQKOUN5dl',
+							id: 'magewright-war-frame',
 							name: '2nd-Level Vocation Ability',
 							description: 'Your magewright vocation grants your choice of one of two abilities.',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'wfygSFnP0DGd9cGV',
+											id: 'magewright-2nd-level-vocation-ability-1',
 											name: 'Re-Ignition',
 											description: 'When in doubt, turn it off and on again.',
 											type: FactoryLogic.type.createTrigger('Your start your turn or your servitor takes damage.'),
@@ -2355,7 +2458,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'ElpNcZM2pprGR5zn',
+											id: 'magewright-mechanical-advantage',
 											name: 'Mechanical Advantage',
 											description: 'Work smarter not harder.',
 											type: FactoryLogic.type.createMain(),
@@ -2396,9 +2499,10 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 			abilities: []
 		},
 		{
-			id: 'vAea8UMYH0yaGxx5',
+			id: 'magewright-catalyst',
 			name: 'Catalyst',
 			description: 'Catalysts are magewrights who focus on the impermanence of creation, and learn to embrace the benefits of the ephemeral.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2408,19 +2512,20 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 							selected: [ 'Alchemy' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
-							id: 'hEvu81mPFu8yEyCW',
+							id: 'magewright-catalyst-wonder-gain-1',
 							name: 'Catalyst Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that a creature uses an elixir or you create an elixir',
+							trigger: 'A creature uses an elixir or you create an elixir',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.createMultiple({
-							id: 'CtGhTfjsRvY2UTRC',
+							id: 'magewright-catalyst-wonder-gain-2',
 							name: 'Elixir',
 							features: [
 								FactoryLogic.feature.create({
-									id: 'ArA9yZX0hUfoEWmG',
+									id: 'magewright-elixir',
 									name: 'Elixir Pool',
 									description: `
 You are able to distill your magic into elixirs and create a shared group resource called an Elixir Pool available to you and any ally that finishes a respite with you. At the start of an encounter, the Elixir Pool gains a number of elixirs equal to twice your Reason score, which retain their potency until the end of the encounter.
@@ -2435,7 +2540,7 @@ Additionally, you can use a maneuver to create an elixir, which can be added to 
 								}),
 								FactoryLogic.feature.createAbility({
 									ability: FactoryLogic.createAbility({
-										id: '25b8inIZ5bITHMOo',
+										id: 'magewright-administer-elixir',
 										name: 'Administer Elixir',
 										description: '',
 										type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Once per turn', 'Free Maneuver if target is Self' ] }),
@@ -2458,7 +2563,7 @@ You choose one of the following benefits:
 								}),
 								FactoryLogic.feature.createAbility({
 									ability: FactoryLogic.createAbility({
-										id: 'wGoZBnoJiFEvtkoW',
+										id: 'magewright-create-elixirs',
 										name: 'Create Elixirs',
 										description: '',
 										type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Once per turn' ] }),
@@ -2473,7 +2578,7 @@ You choose one of the following benefits:
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'qkxM4axuk6bp1UxD',
+								id: 'magewright-catalytic-reaction',
 								name: 'Catalytic Reaction',
 								description: 'Never miss an opportunity to experiment...',
 								type: FactoryLogic.type.createTrigger('The target would take damage from an ability that is not psychic or holy damage.'),
@@ -2497,11 +2602,11 @@ You choose one of the following benefits:
 					level: 2,
 					features: [
 						FactoryLogic.feature.createMultiple({
-							id: 'g4WNC6CGQSQYTu7B',
+							id: 'magewright-philosopher-1',
 							name: 'Philosopher\'s Stone',
 							features: [
 								FactoryLogic.feature.create({
-									id: 'TMRtIskHodYTvsLx',
+									id: 'magewright-philosopher-2',
 									name: 'Philosopher\'s Stone',
 									description: `
 When you make a crafting project roll using the Alchemy skill, you gain an edge and you can store the project points in a special alchemical stone. The stone can store a number of project points equal to 50 times your level. As part of this project roll, you can destroy any consumable in your possession and add an equivalent number of project points to the stone.
@@ -2510,7 +2615,7 @@ As a maneuver, you can expend project points from the stone and craft any consum
 								}),
 								FactoryLogic.feature.createAbility({
 									ability: FactoryLogic.createAbility({
-										id: 'hbXaIeyYrurLtpyE',
+										id: 'magewright-philosopher-3',
 										name: 'Philosopher\'s Stone',
 										description: '',
 										type: FactoryLogic.type.createManeuver(),
@@ -2524,19 +2629,19 @@ As a maneuver, you can expend project points from the stone and craft any consum
 							]
 						}),
 						FactoryLogic.feature.create({
-							id: '2REM9W5mOW1RVjt5',
+							id: 'magewright-fortified-reagents-1',
 							name: 'Fortified Reagents',
 							description: 'Whenever you or an ally drinks an elixir from your elixir pool, that creature gains temporary stamina equal to twice your Reason score.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'Gp0o9JhtGKH6MxR4',
+							id: 'magewright-fortified-reagents-2',
 							name: '2nd-Level Vocation Ability',
 							description: 'Your magewright vocation grants your choice of one of two abilities.',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'JXcn3hBvoqU5nwkK',
+											id: 'magewright-2nd-level-vocation-ability-2',
 											name: 'Instant Cement',
 											description: 'This toxic tar absorbs nearby moisture to reinforce the hardening process.',
 											type: FactoryLogic.type.createMain(),
@@ -2566,7 +2671,7 @@ As a maneuver, you can expend project points from the stone and craft any consum
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'W57spDwcKuBRoGQT',
+											id: 'magewright-elixir-of-regeneration',
 											name: 'Elixir of Regeneration',
 											description: 'Bleeding out is now optional.',
 											type: FactoryLogic.type.createTrigger('The target uses one of your elixirs.'),
@@ -2596,9 +2701,10 @@ As a maneuver, you can expend project points from the stone and craft any consum
 			abilities: []
 		},
 		{
-			id: 'kLkge70odAf2moH5',
+			id: 'magewright-gilder',
 			name: 'Gilder',
 			description: 'Gilders are artisans that fuse magic and metallurgy to inscribe equipment with powerful glyphs.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2608,15 +2714,16 @@ As a maneuver, you can expend project points from the stone and craft any consum
 							selected: [ 'Blacksmithing' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
-							id: 'Ru8Fd3eJPJ9V4MC7',
+							id: 'magewright-gilder-wonder-gain-1',
 							name: 'Gilder Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that an primed creature takes a main action',
+							trigger: 'A primed creature takes a main action',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.create({
-							id: 'IS9kph898TL1Xdbh',
+							id: 'magewright-gilder-wonder-gain-2',
 							name: 'Sygaldry',
 							description: `
 You are able to inscribe arms, armor and implements with arcane glyphs that you can later prime during combat to bolster you or your allies. When you use your Infusion ability, one target of your choice becomes primed until the end of the encounter, you use this feature again, you willingly end this effect (no action required), or another magewright primes the target.
@@ -2632,7 +2739,7 @@ You can choose only one free triggered action option at a time, even if multiple
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'F9AimO6LsxyokcZi',
+								id: 'magewright-warding-glyph',
 								name: 'Warding Glyph',
 								description: 'Defensive wards on your allies\' armor activate, shielding them from harm.',
 								type: FactoryLogic.type.createTrigger('You or an primed ally takes damage.'),
@@ -2655,24 +2762,24 @@ You can choose only one free triggered action option at a time, even if multiple
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'WRKMJ75nlbTjAC2K',
+							id: 'magewright-synergetic-activation-1',
 							name: 'Synergetic Activation',
 							description: 'At the start of an encounter, you can use a free triggered action to use your Infusion ability against one ally you have line of effect to, even if you are surprised. Additionally, whenever you use your free triggered action to activate an effect from your Sygaldry feature, you or another primed ally can spend a recovery.'
 						}),
 						FactoryLogic.feature.create({
-							id: 'FfkIgxGcuTurA4Ku',
+							id: 'magewright-synergetic-activation-2',
 							name: 'Master Maker',
 							description: 'When you make a project roll for a craft project, you may ignore a single bane before the roll. Additionally, you gain a breakthrough on project rolls to craft if you obtain a natural 18 on the project roll.'
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'f7uha6QreNsgyU8j',
+							id: 'magewright-synergetic-activation-3',
 							name: '2nd-Level Vocation Ability',
 							description: 'Your magewright vocation grants your choice of one of two abilities.',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'IjgBsBZK6RvLguMq',
+											id: 'magewright-2nd-level-vocation-ability-3',
 											name: 'Glyph of Protection',
 											description: 'The best offense is an impenetrable defense.',
 											type: FactoryLogic.type.createTrigger('You use your Warding Glyph ability.'),
@@ -2692,7 +2799,7 @@ You can choose only one free triggered action option at a time, even if multiple
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'bIW9ptn7xpHxbVSo',
+											id: 'magewright-glyph-of-synchronicity',
 											name: 'Glyph of Synchronicity',
 											description: 'When these glyphs activate, your allies become able to act as one.',
 											type: FactoryLogic.type.createManeuver(),
@@ -2726,9 +2833,10 @@ You can target yourself instead of one creature with this ability. The targets b
 			abilities: []
 		},
 		{
-			id: '3xdaO0CUKzg21BbO',
+			id: 'magewright-magitecht',
 			name: 'Magitecht',
 			description: 'Magitechts are tinkerers and inventors who develop experimental devices that can aid themselves and their allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -2738,15 +2846,16 @@ You can target yourself instead of one creature with this ability. The targets b
 							selected: [ 'Jewelry' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
-							id: 'COx5givvrbck4khY',
+							id: 'magewright-magitecht-wonder-gain-1',
 							name: 'Magitecht Wonder Gain',
 							tag: 'vocation',
-							trigger: 'The first time each round that a hero activates one of your experimental devices',
+							trigger: 'A hero activates one of your experimental devices',
 							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: []
 						}),
 						FactoryLogic.feature.create({
-							id: 'KQ79MHNTHfyhwZ8S',
+							id: 'magewright-magitecht-wonder-gain-2',
 							name: 'Experimental Device',
 							description: `
 During a respite, you are able to create a number of experimental devices equal to twice your Reason score, from among the list below. These experimental devices count as trinkets, and last until you use this feature again. Once per round, whenever a creature with a device uses a signature or heroic ability, they can activate a device (no action required). Additionally, creatures can use a free maneuver to gift or trade a device with a willing adjacent ally.
@@ -2763,7 +2872,7 @@ During a respite, you are able to create a number of experimental devices equal 
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'rIe1mE932nl2GPGI',
+								id: 'magewright-overclock',
 								name: 'Overclock',
 								description: 'Just need a little...more...POWER!',
 								type: FactoryLogic.type.createTrigger('The target uses an ability.'),
@@ -2787,13 +2896,13 @@ During a respite, you are able to create a number of experimental devices equal 
 					level: 2,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'Hwe0f70pmlT0eFDD',
+							id: 'magewright-experimental-mind-1',
 							name: 'Experimental Mind',
 							description: 'You may apply the benefits of your Devoted Artisan feature to project rolls made to research projects in addition to crafting projects.'
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'vBOB466iQUzKmvVp',
+								id: 'magewright-experimental-mind-2',
 								name: 'Jury Rig',
 								description: '',
 								type: FactoryLogic.type.createManeuver(),
@@ -2808,14 +2917,14 @@ Once you use this feature, you cannot do so again until you gain at least 1 vict
 							})
 						}),
 						FactoryLogic.feature.createChoice({
-							id: 'rbVNVq9X3p0HW5nO',
+							id: 'magewright-2nd-level-vocation-ability-4',
 							name: '2nd-Level Vocation Ability',
 							description: 'Your magewright vocation grants your choice of one of two abilities.',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'm5Z011QirmAq8RtR',
+											id: 'magewright-2nd-level-vocation-ability-5',
 											name: 'Force Projection',
 											description: 'That SHOULD hold them for a bit.',
 											type: FactoryLogic.type.createManeuver(),
@@ -2837,7 +2946,7 @@ Once you use this feature, you cannot do so again until you gain at least 1 vict
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'Z8nomAtixne7USBP',
+											id: 'magewright-local-relativity',
 											name: 'Local Relativity',
 											description: 'You briefly collapse space and time around a foe, redirecting an attack, and shunt them elsewhere.',
 											type: FactoryLogic.type.createTrigger('The target uses a signature ability.'),
@@ -2914,22 +3023,30 @@ As a vessel, you debilitate your enemies and bolster yourself, sacrificing long-
 						{
 							trigger: 'Start of your turn',
 							value: '1d3',
-							tag: 'Start 1'
+							tag: 'Start 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in a round a creature within 10 squares of you uses an ability with an associated potency',
+							trigger: 'A creature within 10 squares of you uses an ability with an associated potency',
 							value: '1',
-							tag: 'Potency 1'
+							tag: 'Potency 1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
-							trigger: 'The first time in an encounter a creature within 10 squares is reduced to 0 Stamina, or the first time in an encounter that a solo creature within 10 squares becomes winded',
+							trigger: 'A creature within 10 squares is reduced to 0 Stamina, or a solo creature within 10 squares becomes winded',
 							value: '2',
-							tag: 'Winded 1'
+							tag: 'Winded 1',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						},
 						{
-							trigger: 'The first time in an encounter an enemy within 10 squares makes a power roll with a bane',
+							trigger: 'An enemy within 10 squares makes a power roll with a bane',
 							value: '2',
-							tag: 'Bane 1'
+							tag: 'Bane 1',
+							frequency: ResourceGainFrequency.OncePerEncounter,
+							used: false
 						}
 					]
 				}),
@@ -2997,7 +3114,7 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'vessel-1-7b',
+								id: 'vessel-1-7b-1',
 								name: 'Boon of the Flesh',
 								description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this boon.',
 								features: [
@@ -3031,7 +3148,7 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'vessel-1-7d',
+								id: 'vessel-1-7d-1',
 								name: 'Boon of Bone',
 								features: [
 									FactoryLogic.feature.createBonus({
@@ -3049,16 +3166,20 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'vessel-1-7e',
 								name: 'Boon of the Soul',
-								description: 'Your soul burns with rage. When you take damage for the first time in a round, you gain 1 surge.'
+								description: 'Your soul burns with rage.',
+								tag: 'take-damage',
+								trigger: 'You take damage',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							}),
 							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'vessel-1-7f',
+								id: 'vessel-1-7f-1',
 								name: 'Boon of Shadow',
 								description: 'Your shadow encompasses your form. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.',
 								features: [
@@ -3151,7 +3272,7 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'vessel-4-1b',
+					id: 'vessel-4-1b-1',
 					name: 'Characteristic Increase',
 					description: 'You can increase one of your characteristic scores by 1, to a maximum of 3.',
 					options: [
@@ -3193,8 +3314,9 @@ You lose 1d6 + your level in Stamina, which ignores temporary Stamina. Choose on
 					id: 'vessel-4-2',
 					name: 'Eternal Fragment',
 					tag: 'Potency 2',
-					trigger: 'The first time in a round a creature within 10 squares of you uses an ability with an associated potency',
+					trigger: 'A creature within 10 squares of you uses an ability with an associated potency',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'Potency 1' ]
 				}),
 				FactoryLogic.feature.create({
@@ -3662,6 +3784,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-1',
 			name: 'The Infernal',
 			description: 'You bartered with a devil from the hells.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -3714,10 +3837,11 @@ Any enemy who moves into the area for the first time in a combat round or starts
 								]
 							})
 						}),
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createRollModifier({
 							id: 'vessel-subclass-1-1-3',
 							name: 'Forked Tongue',
-							description: 'You have an edge on tests made to influence NPCs during negotiations.'
+							modifier: RollModifierType.Edge,
+							condition: 'When influencing NPCs during negotiations'
 						}),
 						FactoryLogic.feature.create({
 							id: 'vessel-subclass-1-1-4',
@@ -3813,6 +3937,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-2',
 			name: 'The Undying',
 			description: 'Your spirit or flesh have been changed by a necromantic being, such as a lich.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -3968,6 +4093,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 			id: 'vessel-subclass-3',
 			name: 'The Aberrant',
 			description: 'Your mind slipped as you witnessed a being far beyond your comprehension.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -4236,6 +4362,7 @@ export const community: Sourcebook = {
 		gallGuardian,
 		ironbound,
 		oakling,
+		orian,
 		siabhra,
 		solar
 	],

@@ -3,16 +3,16 @@ import MockAdapter from 'axios-mock-adapter';
 import { PatreonService } from '@/services/patreon-service';
 import axios from 'axios';
 
+vi.mock('axios', async () => {
+	return {
+		...(await vi.importActual('axios') as object),
+		create: vi.fn().mockReturnValue(await vi.importActual('axios'))
+	};
+});
+
 describe('PatreonService', () => {
 	afterEach(() => {
 		vi.resetAllMocks();
-	});
-
-	vi.mock('axios', async () => {
-		return {
-			...(await vi.importActual('axios') as object),
-			create: vi.fn().mockReturnValue(await vi.importActual('axios'))
-		};
 	});
 
 	const mockAdapter = new MockAdapter(axios);

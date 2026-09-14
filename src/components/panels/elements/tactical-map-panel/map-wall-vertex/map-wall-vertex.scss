@@ -7,12 +7,12 @@
 		cursor: pointer;
 
 		&:hover {
-			border-color: rgb(64, 150, 255);
+			border-color: var(--fs-accent-light);
 		}
 	}
 
 	&.selected {
-		border-color: rgb(64, 150, 255);
+		border-color: var(--fs-accent-light);
 		background-color: rgb(230, 244, 255);
 	}
 }

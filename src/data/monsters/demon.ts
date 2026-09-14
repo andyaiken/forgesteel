@@ -64,7 +64,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 
 • **Remasches** (REE-mash-iz) have physical forms blended with the nature of the wastes where they dwell. A remasch teleports around the battlefield, inflicting chaos on their enemies directly or through the minions they control. These demons are rumored to be the initial source of the teachings of all shadows through the College of Black Ash.
 
-• **Ruinants** (rew-in-ANSE) are possessed of glowing eyes and tendrilringed maws, their bodies covered in inflamed scars and their breath coming as a sickening wheeze. A ruinant can inflict fresh wounds and burns on their victims in a pattern mirroring those on the demon’s own body.
+• **Ruinants** (rew-in-ANSE) are possessed of glowing eyes and tendril-ringed maws, their bodies covered in inflamed scars and their breath coming as a sickening wheeze. A ruinant can inflict fresh wounds and burns on their victims in a pattern mirroring those on the demon’s own body.
 
 • **Torlases** (TORR-lahs-iz) are piecemeal abominations whose physical forms don’t obey the mundane laws of geometry. They control the battlefield by using living flesh and whipping allies and enemies alike into advantageous position.
 
@@ -233,7 +233,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								tier2: '4 damage; pull 2',
 								tier3: '5 damage; pull 3'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent to the ensarer, the ensnarer makes a free strike against them.')
+							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent to the ensnarer, the ensnarer makes a free strike against them.')
 						]
 					})
 				}),
@@ -682,7 +682,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -882,7 +882,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 					description: 'Any creature within 2 squares of the orliq can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-2nd-2-feature-3',
+					id: 'demon-2nd-2-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
@@ -979,9 +979,9 @@ A number of lesser demons have been identified across categories 1 to 3:
 							FactoryLogic.createAbilitySectionText('**Special:** The bale eye must create the cube beneath themself.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '3 psychic damage, A<1 the target is warped (save ends)',
-								tier2: '5 psychic damage, A<2 the target is warped (save ends)',
-								tier3: '6 psychic damage, A<3 the target is warped (save ends)'
+								tier1: '3 psychic damage; A<1 the target is warped (save ends)',
+								tier2: '5 psychic damage; A<2 the target is warped (save ends)',
+								tier3: '6 psychic damage; A<3 the target is warped (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('While warped, a creature has a double bane on power rolls using any characteristic higher than 0, and has a double edge on power rolls using any characteristic lower than 0.')
 						]
@@ -1436,7 +1436,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 								bonus: 4,
 								tier1: '3 poison damage',
 								tier2: '5 poison damage; the scout can shift 1 square',
-								tier3: '7 poison damage: the scout shifts up to 3 square'
+								tier3: '7 poison damage; the scout shifts up to 3 square'
 							}))
 						]
 					})
@@ -2086,7 +2086,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 					description: 'Any creature within 2 squares of the tyburaki can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-4th-2-feature-3',
+					id: 'demon-4th-2-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]

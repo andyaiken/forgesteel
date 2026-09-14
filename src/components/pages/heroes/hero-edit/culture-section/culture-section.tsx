@@ -21,6 +21,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -86,7 +87,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.culture) {
-		choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture, props.hero.class?.level || 1)
+		choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture, props.hero.class?.level || 1, TutorialMode.Complete)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (

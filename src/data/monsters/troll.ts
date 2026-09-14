@@ -498,7 +498,7 @@ export const troll: MonsterGroup = {
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 3,
+								bonus: 4,
 								tier1: '4 damage; the ravager can shift 1 square',
 								tier2: '6 damage; the ravager shifts up to 2 squares',
 								tier3: '8 damage; the ravager shifts up to 3 squares'

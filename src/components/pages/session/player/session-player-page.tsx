@@ -91,6 +91,7 @@ export const SessionPlayerPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='player-view'
+					hero={null}
 					params={props.params}
 				/>
 			</div>

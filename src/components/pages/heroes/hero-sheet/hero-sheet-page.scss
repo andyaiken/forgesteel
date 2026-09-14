@@ -1,5 +1,6 @@
 @use '../../classic-sheet/common.scss';
 @use 'sass:color';
+@use 'sass:map';
 
 .hero-view-page .hero-view-page-content:has(.hero-sheet),
 #pdf-preview {
@@ -42,6 +43,25 @@
 }
 
 #classic-sheet .hero-sheet {
+    // The sheet has its own print-tuned palette, so the markers use that rather than the screen colours
+    .roll-modifier-marker {
+        .edge {
+            color: map.get(common.$color-fs-cs-colors, 'green');
+
+            svg {
+                fill: map.get(common.$color-fs-cs-colors, 'green');
+            }
+        }
+
+        .bane {
+            color: map.get(common.$color-fs-cs-colors, 'red');
+
+            svg {
+                fill: map.get(common.$color-fs-cs-colors, 'red');
+            }
+        }
+    }
+
     .page-1,
     .page-2,
     .page-titles-inventory-projects {

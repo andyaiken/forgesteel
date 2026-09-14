@@ -33,11 +33,27 @@ export class WarehouseService implements StorageService {
 
 		this.api = axios.create({
 			baseURL: this.host,
-			withCredentials: true,
-			withXSRFToken: true,
+			withCredentials: this.useNewAuth,
+			withXSRFToken: this.useNewAuth,
 			xsrfCookieName: 'csrf_access_token',
 			xsrfHeaderName: 'X-CSRF-TOKEN'
 		});
+	};
+
+	private isJwtExpired = (token: string): boolean => {
+		try {
+			const payload = token.split('.')[1];
+			const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+			const decoded = JSON.parse(atob(base64));
+			if (typeof decoded.exp !== 'number') {
+				return false;
+			}
+
+			const bufferSeconds = 5;
+			return (decoded.exp - bufferSeconds) * 1000 <= Date.now();
+		} catch {
+			return false;
+		}
 	};
 
 	private isExpiredTokenError = (err: unknown): boolean => {
@@ -60,8 +76,8 @@ export class WarehouseService implements StorageService {
 		try {
 			const refreshConfig = {
 				headers: {},
-				withCredentials: true,
-				withXSRFToken: true,
+				withCredentials: this.useNewAuth,
+				withXSRFToken: this.useNewAuth,
 				xsrfCookieName: 'csrf_refresh_token',
 				xsrfHeaderName: 'X-CSRF-TOKEN'
 			};
@@ -81,6 +97,12 @@ export class WarehouseService implements StorageService {
 			if (!this.useNewAuth) {
 				if (this.jwt === null) {
 					await this.ensureAuth();
+				} else if (this.isJwtExpired(this.jwt)) {
+					// Refresh before sending rather than after a failed round-trip: a large save
+					// (the full hero payload) that gets rejected can have its response body
+					// truncated by the proxy, which is otherwise indistinguishable from a network error.
+					this.jwt = null;
+					await this.refreshJwt();
 				}
 				config.headers.Authorization = `Bearer ${this.jwt}`;
 			}
@@ -102,6 +124,8 @@ export class WarehouseService implements StorageService {
 
 				return this.api(error.config);
 			}
+
+			return Promise.reject(error);
 		});
 
 		const connected = await this.ensureAuth();

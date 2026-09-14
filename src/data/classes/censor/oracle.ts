@@ -8,6 +8,7 @@ export const oracle: SubClass = {
 	id: 'censor-sub-2',
 	name: 'Oracle',
 	description: 'Corruption has deep tendrils that can be missed, leading you to specialize in uncovering clandestine threats to your order.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

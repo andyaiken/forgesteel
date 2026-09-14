@@ -2,6 +2,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const fate: Domain = {
@@ -141,8 +142,10 @@ You can target yourself instead of one creature with this ability. Choose one of
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that an ally within 10 squares of you obtains a tier 3 outcome on a power roll or an enemy within 10 squares of you obtains a tier 1 outcome on a power roll',
-			value: '2'
+			trigger: 'An ally within 10 squares of you obtains a tier 3 outcome on a power roll or an enemy within 10 squares of you obtains a tier 1 outcome on a power roll',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

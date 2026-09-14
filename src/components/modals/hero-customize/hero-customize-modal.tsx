@@ -1,5 +1,5 @@
 import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureSize } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeaturePotencyResistance, FeaturePotencyResistanceData, FeatureProficiency, FeatureRollModifier, FeatureSize } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
@@ -8,11 +8,13 @@ import { ConfigFeature } from '@/components/features/feature';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { EditPotencyResistance } from '@/components/features/feature-data/potency-resistance';
+import { EditRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
 import { FollowerEditPanel } from '@/components/panels/edit/follower-edit/follower-edit-panel';
@@ -28,6 +30,7 @@ import { ModifierEditor } from '@/components/panels/edit/modifier-edit/modifier-
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TextInput } from '@/components/controls/text-input/text-input';
@@ -42,6 +45,11 @@ interface Props {
 	onChange: (hero: Hero) => void;
 	onClose: () => void;
 }
+
+const getPotencyResistanceName = (data: FeaturePotencyResistanceData) => {
+	const characteristics = data.characteristics.length > 0 ? data.characteristics.join(', ') : 'All characteristics';
+	return `Resisting potencies: ${characteristics} +${data.value}`;
+};
 
 export const HeroCustomizeModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
@@ -166,6 +174,32 @@ export const HeroCustomizeModal = (props: Props) => {
 								block={true}
 								onClick={() => {
 									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createPotencyResistance({
+										id: Utils.guid(),
+										name: getPotencyResistanceName({ characteristics: [], value: 1 }),
+										characteristics: []
+									}));
+								}}
+							>
+								Potency Resistance
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createRollModifier({
+										id: Utils.guid(),
+										name: `${RollModifierType.Edge}: All tests`,
+										modifier: RollModifierType.Edge
+									}));
+								}}
+							>
+								Roll Modifier
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createBonus({
 										id: Utils.guid(),
 										name: `${FeatureField.Stamina} + 6`,
@@ -193,6 +227,17 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Ancestry Feature
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createComplication({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Complication
 							</Button>
 							<Button
 								block={true}
@@ -267,6 +312,34 @@ export const HeroCustomizeModal = (props: Props) => {
 								Companion / Mount
 							</Button>
 						</div>
+						<HeaderText level={3}>Skills</HeaderText>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createSkillChoice({
+										id: Utils.guid(),
+										count: -1
+									}));
+								}}
+							>
+								Gain Skill
+							</Button>
+							<Button
+								block={true}
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createSkillCancelChoice({
+										id: Utils.guid(),
+										knownSkillsOnly: false,
+										count: -1
+									}));
+								}}
+							>
+								Lose Skill
+							</Button>
+						</div>
 						<HeaderText level={3}>Miscellaneous</HeaderText>
 						<div className='customize-option-section'>
 							<Button
@@ -316,18 +389,6 @@ export const HeroCustomizeModal = (props: Props) => {
 								}}
 							>
 								Size
-							</Button>
-							<Button
-								block={true}
-								onClick={() => {
-									setMenuOpen(false);
-									addFeature(FactoryLogic.feature.createSkillChoice({
-										id: Utils.guid(),
-										count: -1
-									}));
-								}}
-							>
-								Skills
 							</Button>
 						</div>
 					</Space>
@@ -547,7 +608,7 @@ export const HeroCustomizeModal = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ForcedMovementPush, FeatureField.ForcedMovementPull, FeatureField.ForcedMovementSlide, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							options={[ FeatureField.AncestryPoints, FeatureField.Disengage, FeatureField.ForcedMovementPush, FeatureField.ForcedMovementPull, FeatureField.ForcedMovementSlide, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.RolledDamage, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							value={feature.data.field}
 							onChange={setValueField}
@@ -711,6 +772,32 @@ export const HeroCustomizeModal = (props: Props) => {
 						/>
 					</div>
 				);
+			case FeatureType.PotencyResistance:
+				return (
+					<EditPotencyResistance
+						data={feature.data}
+						sourcebooks={props.sourcebooks}
+						setData={data => {
+							const copy = Utils.copy(feature) as FeaturePotencyResistance;
+							copy.data = data;
+							copy.name = getPotencyResistanceName(data);
+							setFeature(feature.id, copy);
+						}}
+					/>
+				);
+			case FeatureType.RollModifier:
+				return (
+					<EditRollModifier
+						data={feature.data}
+						sourcebooks={props.sourcebooks}
+						setData={data => {
+							const copy = Utils.copy(feature) as FeatureRollModifier;
+							copy.data = data;
+							copy.name = `${data.modifier}: ${FeatureLogic.getRollModifierScope(data)}`;
+							setFeature(feature.id, copy);
+						}}
+					/>
+				);
 			case FeatureType.Size:
 				return (
 					<div>
@@ -738,45 +825,43 @@ export const HeroCustomizeModal = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<Modal
-				content={
-					<div className='hero-customize-modal'>
-						<HeaderText extra={getMenu()}>
-							Customize
-						</HeaderText>
-						<Space orientation='vertical' style={{ width: '100%' }}>
-							{
-								hero.features
-									.filter(f => f.id !== 'default-language')
-									.map(f => (
-										<Expander
-											key={f.id}
-											title={f.name}
-											extra={[
-												<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
-											]}
-										>
-											{getEditSection(f)}
-											<ConfigFeature
-												feature={f}
-												hero={props.hero}
-												sourcebooks={props.sourcebooks}
-												setData={data => setFeatureData(f.id, data)}
-											/>
-										</Expander>
-									))
-							}
-							{
-								hero.features.filter(f => f.id !== 'default-language').length === 0 ?
-									<Empty text='You have no customizations.' />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		</ErrorBoundary>
+		<Modal
+			content={
+				<div className='hero-customize-modal'>
+					<HeaderText extra={getMenu()}>
+						Customize
+					</HeaderText>
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						{
+							hero.features
+								.filter(f => f.id !== 'default-language')
+								.map(f => (
+									<Expander
+										key={f.id}
+										title={f.name}
+										extra={[
+											<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
+										]}
+									>
+										{getEditSection(f)}
+										<ConfigFeature
+											feature={f}
+											hero={hero}
+											sourcebooks={props.sourcebooks}
+											setData={data => setFeatureData(f.id, data)}
+										/>
+									</Expander>
+								))
+						}
+						{
+							hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+								<Empty text='You have no customizations.' />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
 	);
 };

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAbilityKeywordData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureComplicationData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureHeroicResourceThresholdData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeaturePotencyResistanceData, FeatureProficiencyData, FeatureRetainerData, FeatureRollModifierData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillCancelChoiceData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureSummonFormationData, FeatureSurgeGainData, FeatureSwitchOptionsData, FeatureSwitchValueData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData, FeatureToggleData, RollModifierScope } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -20,25 +20,30 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
+import { LanguageType } from '@/enums/language-type';
 import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterLogic } from './monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Title } from '@/models/title';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 
 export class FeatureLogic {
-	static getFeaturesFromAncestry = (ancestry: Ancestry, heroLevel: number) => {
+	static getFeaturesFromAncestry = (ancestry: Ancestry, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...ancestry.features.map(f => ({ feature: f, source: ancestry.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromCulture = (culture: Culture, heroLevel: number) => {
+	static getFeaturesFromCulture = (culture: Culture, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push({
@@ -67,18 +72,18 @@ export class FeatureLogic {
 			level: undefined
 		});
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromCareer = (career: Career, heroLevel: number) => {
+	static getFeaturesFromCareer = (career: Career, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...career.features.map(f => ({ feature: f, source: career.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromClass = (heroClass: HeroClass, heroLevel: number) => {
+	static getFeaturesFromClass = (heroClass: HeroClass, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const classLevel = heroClass.level;
@@ -99,18 +104,18 @@ export class FeatureLogic {
 				});
 			});
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromComplication = (complication: Complication, heroLevel: number) => {
+	static getFeaturesFromComplication = (complication: Complication, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...complication.features.map(f => ({ feature: f, source: complication.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromTitle = (title: Title, heroLevel: number) => {
+	static getFeaturesFromTitle = (title: Title, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(
@@ -119,10 +124,10 @@ export class FeatureLogic {
 				.map(f => ({ feature: f, source: title.name, level: undefined }))
 		);
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromCustomization = (hero: Hero) => {
+	static getFeaturesFromCustomization = (hero: Hero, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		features.push(...hero.features.map(f => {
@@ -130,6 +135,9 @@ export class FeatureLogic {
 			switch (f.type) {
 				case FeatureType.TitleChoice:
 					source = f.data.selected.length === 1 ? f.data.selected[0].name : 'Title';
+					break;
+				case FeatureType.Complication:
+					source = f.data.selected ? f.data.selected.name : 'Complication';
 					break;
 				case FeatureType.Companion:
 				case FeatureType.Follower:
@@ -140,10 +148,10 @@ export class FeatureLogic {
 		}));
 
 		const heroLevel = hero.class?.level || 1;
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromItem = (item: Item, heroLevel: number) => {
+	static getFeaturesFromItem = (item: Item, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const ft = FactoryLogic.feature.create({
@@ -326,32 +334,32 @@ export class FeatureLogic {
 			}
 		}
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromControlledMonster = (monster: Monster, heroLevel: number) => {
+	static getFeaturesFromControlledMonster = (monster: Monster, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features = MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.ForController)
 			.map(f => {
 				return { feature: f, source: monster.name, level: undefined };
 			});
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static getFeaturesFromKit = (kit: Kit, heroLevel: number) => {
+	static getFeaturesFromKit = (kit: Kit, heroLevel: number, tutorialMode: TutorialMode) => {
 		const features: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		if (!kit) {
-			return FeatureLogic.simplifyFeatures(features, heroLevel);
+			return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 		}
 
 		features.push(...kit.features.map(f => ({ feature: f, source: kit.name, level: undefined })));
 
-		return FeatureLogic.simplifyFeatures(features, heroLevel);
+		return FeatureLogic.simplifyFeatures(features, heroLevel, tutorialMode);
 	};
 
-	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], heroLevel: number) => {
+	static simplifyFeatures = (features: { feature: Feature, source: string, level: number | undefined }[], heroLevel: number, tutorialMode: TutorialMode) => {
 		const list: { feature: Feature, source: string, level: number | undefined }[] = [];
 
 		const addFeature = (feature: Feature, source: string, level: number | undefined) => {
@@ -381,7 +389,7 @@ export class FeatureLogic {
 					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.ItemChoice:
-					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, heroLevel).forEach(f => addFeature(f.feature, f.source, level)));
+					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, heroLevel, tutorialMode).forEach(f => addFeature(f.feature, f.source, level)));
 					break;
 				case FeatureType.Kit:
 					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name, undefined)));
@@ -390,10 +398,17 @@ export class FeatureLogic {
 					feature.data.features.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.Perk:
-					feature.data.selected.forEach(f => addFeature(f, source, level));
+					if (tutorialMode === TutorialMode.Complete) {
+						feature.data.selected.forEach(f => addFeature(f, source, level));
+					}
 					break;
 				case FeatureType.TaggedFeatureChoice:
 					feature.data.selected.forEach(f => addFeature(f, source, level));
+					break;
+				case FeatureType.Complication:
+					if (feature.data.selected) {
+						feature.data.selected.features.forEach(f => addFeature(f, source, level));
+					}
 					break;
 				case FeatureType.TitleChoice:
 					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => addFeature(f, source, level)));
@@ -502,6 +517,9 @@ export class FeatureLogic {
 				[ ...feature.data.options.map(f => f.feature), ...feature.data.selected ]
 					.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
 				break;
+			case FeatureType.HeroicResourceThreshold:
+				FeatureLogic.switchFeatureCharacteristic(feature.data.feature, fromCharacteristic, toCharacteristic);
+				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
 				break;
@@ -534,6 +552,7 @@ export class FeatureLogic {
 			FeatureType.ForController,
 			FeatureType.HeroicResource,
 			FeatureType.HeroicResourceGain,
+			FeatureType.HeroicResourceThreshold,
 			FeatureType.ItemChoice,
 			FeatureType.Kit,
 			FeatureType.Language,
@@ -543,19 +562,23 @@ export class FeatureLogic {
 			FeatureType.Package,
 			FeatureType.PackageContent,
 			FeatureType.Perk,
+			FeatureType.PotencyResistance,
 			FeatureType.Proficiency,
 			FeatureType.Retainer,
 			FeatureType.SaveThreshold,
 			FeatureType.Size,
+			FeatureType.SkillCancelChoice,
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
 			FeatureType.Summon,
 			FeatureType.SummonChoice,
 			FeatureType.SummonFormation,
+			FeatureType.SurgeGain,
 			FeatureType.SwitchOptions,
 			FeatureType.SwitchValue,
 			FeatureType.TaggedFeature,
 			FeatureType.TaggedFeatureChoice,
+			FeatureType.RollModifier,
 			FeatureType.TitleChoice,
 			FeatureType.Toggle
 		];
@@ -620,7 +643,8 @@ export class FeatureLogic {
 			case FeatureType.AddOn: {
 				const data: FeatureAddOnData = {
 					category: FeatureAddOnType.Defensive,
-					cost: 1
+					cost: 1,
+					repeatable: false
 				};
 				return data;
 			}
@@ -690,6 +714,12 @@ export class FeatureLogic {
 			}
 			case FeatureType.Companion: {
 				const data: FeatureCompanionData = {
+					selected: null
+				};
+				return data;
+			}
+			case FeatureType.Complication: {
+				const data: FeatureComplicationData = {
 					selected: null
 				};
 				return data;
@@ -788,6 +818,7 @@ export class FeatureLogic {
 				const data: FeatureHeroicResourceData = {
 					type: 'heroic',
 					gains: [],
+					thresholds: [],
 					details: '',
 					canBeNegative: false,
 					value: 0
@@ -799,7 +830,22 @@ export class FeatureLogic {
 					tag: '',
 					trigger: '',
 					value: '1',
+					frequency: ResourceGainFrequency.OncePerRound,
+					used: false,
 					replacesTags: []
+				};
+				return data;
+			}
+			case FeatureType.HeroicResourceThreshold: {
+				const data: FeatureHeroicResourceThresholdData = {
+					resource: '',
+					value: 1,
+					level: 1,
+					feature: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
 				};
 				return data;
 			}
@@ -828,6 +874,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice: {
 				const data: FeatureLanguageChoiceData = {
 					options: [],
+					allowedTypes: [ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ],
 					count: 1,
 					selectAt: 'build',
 					selected: []
@@ -891,6 +938,13 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.PotencyResistance: {
+				const data: FeaturePotencyResistanceData = {
+					characteristics: [],
+					value: 1
+				};
+				return data;
+			}
 			case FeatureType.Proficiency: {
 				const data: FeatureProficiencyData = {
 					weapons: [],
@@ -916,6 +970,14 @@ export class FeatureLogic {
 						value: 1,
 						mod: 'M'
 					}
+				};
+				return data;
+			}
+			case FeatureType.SkillCancelChoice: {
+				const data: FeatureSkillCancelChoiceData = {
+					knownSkillsOnly: true,
+					count: 1,
+					selected: []
 				};
 				return data;
 			}
@@ -950,7 +1012,21 @@ export class FeatureLogic {
 				return data;
 			}
 			case FeatureType.SummonFormation: {
-				const data: FeatureSummonFormationData = {};
+				const data: FeatureSummonFormationData = {
+					minionFeatures: []
+				};
+				return data;
+			}
+			case FeatureType.SurgeGain: {
+				const data: FeatureSurgeGainData = {
+					tag: '',
+					trigger: '',
+					value: '1',
+					frequency: ResourceGainFrequency.OncePerRound,
+					used: false,
+					replacesTags: [],
+					condition: ''
+				};
 				return data;
 			}
 			case FeatureType.SwitchOptions: {
@@ -984,6 +1060,17 @@ export class FeatureLogic {
 					tag: '',
 					count: 1,
 					selected: []
+				};
+				return data;
+			}
+			case FeatureType.RollModifier: {
+				const data: FeatureRollModifierData = {
+					modifier: RollModifierType.Edge,
+					rollType: RollType.Test,
+					skills: [],
+					skillLists: [],
+					characteristics: [],
+					condition: ''
 				};
 				return data;
 			}
@@ -1028,8 +1115,16 @@ export class FeatureLogic {
 					feature.data.selected.id = Utils.guid();
 				}
 				break;
+			case FeatureType.Complication:
+				if (feature.data.selected) {
+					feature.data.selected.features.forEach(FeatureLogic.changeFeatureIDs);
+				}
+				break;
 			case FeatureType.Follower:
 				feature.data.follower.id = Utils.guid();
+				break;
+			case FeatureType.HeroicResourceThreshold:
+				feature.data.feature.id = Utils.guid();
 				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(FeatureLogic.changeFeatureIDs);
@@ -1059,6 +1154,7 @@ export class FeatureLogic {
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
 			case FeatureType.Companion:
+			case FeatureType.Complication:
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
 			case FeatureType.ItemChoice:
@@ -1066,6 +1162,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.Retainer:
+			case FeatureType.SkillCancelChoice:
 			case FeatureType.SkillChoice:
 			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
@@ -1100,6 +1197,8 @@ export class FeatureLogic {
 				return feature.data.selectedIDs.length >= feature.data.count;
 			case FeatureType.Companion:
 				return feature.data.selected !== null;
+			case FeatureType.Complication:
+				return feature.data.selected !== null;
 			case FeatureType.Domain:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.DomainFeature:
@@ -1114,6 +1213,8 @@ export class FeatureLogic {
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.Retainer:
 				return feature.data.selected !== null;
+			case FeatureType.SkillCancelChoice:
+				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SkillChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SummonChoice:
@@ -1168,6 +1269,59 @@ export class FeatureLogic {
 		return MonsterFeatureCategory.Text;
 	};
 
+	static getRollModifierScopes = (rollType: RollType): RollModifierScope[] => {
+		switch (rollType) {
+			case RollType.Test:
+				return [ 'characteristics', 'skills', 'skillLists' ];
+			default:
+				return [];
+		}
+	};
+
+	static clearRollModifierScopes = (data: FeatureRollModifierData): FeatureRollModifierData => {
+		const allowed = FeatureLogic.getRollModifierScopes(data.rollType);
+		return {
+			...data,
+			characteristics: allowed.includes('characteristics') ? data.characteristics : [],
+			skills: allowed.includes('skills') ? data.skills : [],
+			skillLists: allowed.includes('skillLists') ? data.skillLists : []
+		};
+	};
+
+	static getThresholdRequirement = (data: FeatureHeroicResourceThresholdData) => {
+		return `${data.resource || 'Resource'} ${data.value}+`;
+	};
+
+	static getRollModifierScope = (data: FeatureRollModifierData) => {
+		if (data.rollType === RollType.Test) {
+			const characteristics = data.characteristics.join(', ');
+			const skills = [ ...data.skills, ...data.skillLists.map(list => `${list} skills`) ].join(', ');
+
+			if (characteristics && skills) {
+				return `${characteristics} tests using ${skills}`;
+			}
+			if (characteristics) {
+				return `${characteristics} tests`;
+			}
+			if (skills) {
+				return skills;
+			}
+			return 'All tests';
+		}
+
+		const rollTypeScopes: Record<RollType, string> = {
+			[RollType.Test]: 'All tests',
+			[RollType.Ability]: 'Ability rolls',
+			[RollType.Strike]: 'Strikes',
+			[RollType.Grab]: 'the Grab maneuver',
+			[RollType.EscapeGrab]: 'the Escape Grab maneuver',
+			[RollType.Knockback]: 'the Knockback maneuver',
+			[RollType.Project]: 'Project rolls'
+		};
+
+		return rollTypeScopes[data.rollType];
+	};
+
 	static getFeatureTypeDescription = (type: FeatureType) => {
 		switch (type) {
 			case FeatureType.Ability:
@@ -1196,6 +1350,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose an ability from your class.';
 			case FeatureType.Companion:
 				return 'This feature grants you a companion or mount.';
+			case FeatureType.Complication:
+				return 'This feature grants you a complication.';
 			case FeatureType.ConditionImmunity:
 				return 'This feature grants you immunity to one or more condition types.';
 			case FeatureType.DamageModifier:
@@ -1214,6 +1370,8 @@ export class FeatureLogic {
 				return 'This feature grants you a heroic (or epic) resource.';
 			case FeatureType.HeroicResourceGain:
 				return 'This feature grants you a way to gain your heroic resource.';
+			case FeatureType.HeroicResourceThreshold:
+				return 'This feature grants you another feature once your heroic resource reaches a given value.';
 			case FeatureType.ItemChoice:
 				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:
@@ -1236,6 +1394,8 @@ export class FeatureLogic {
 				return 'This feature provides content for a Package feature.';
 			case FeatureType.Perk:
 				return 'This feature allows you to choose a perk.';
+			case FeatureType.PotencyResistance:
+				return 'This feature treats one or more of your characteristic scores as higher when you resist potencies.';
 			case FeatureType.Proficiency:
 				return 'This feature grants you proficiency with weapons or armor.';
 			case FeatureType.Retainer:
@@ -1244,6 +1404,8 @@ export class FeatureLogic {
 				return 'This feature modifies your threshold for saves.';
 			case FeatureType.Size:
 				return 'This feature sets your size.';
+			case FeatureType.SkillCancelChoice:
+				return 'This feature allows you to lose a skill.';
 			case FeatureType.SkillChoice:
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Speed:
@@ -1254,6 +1416,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose monsters you can summon.';
 			case FeatureType.SummonFormation:
 				return 'This feature adds information to your summoned creatures.';
+			case FeatureType.SurgeGain:
+				return 'This feature grants you a way to gain surges.';
 			case FeatureType.SwitchOptions:
 				return 'This feature grants one out of a set of features based on a switch value.';
 			case FeatureType.SwitchValue:
@@ -1264,6 +1428,8 @@ export class FeatureLogic {
 				return 'This feature allows you to select a tagged feature.';
 			case FeatureType.Text:
 				return 'This feature has no special properties, just a text description.';
+			case FeatureType.RollModifier:
+				return 'This feature gives you an edge or a bane on certain rolls.';
 			case FeatureType.TitleChoice:
 				return 'This feature allows you to choose a title.';
 			case FeatureType.Toggle:

@@ -216,7 +216,7 @@ export const AbilityModal = (props: Props) => {
 											: rollSection.roll.bonus
 									]}
 									rollState={rollState}
-									hero={null}
+									creature={hero || props.monster || null}
 									onRollStateChange={setRollState}
 									onRoll={setTier}
 								/>

@@ -14,6 +14,7 @@ export const circleofStorms: SubClass = {
 	id: 'summoner-sub-2',
 	name: 'Circle of Storms',
 	description: 'You are a storm caster who summons elementals from Quintessence. This portfolio contains forces of nature that leave a big impact on the environment.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -56,7 +57,7 @@ export const circleofStorms: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-1',
 										name: 'Dweomer Burst',
-										description: 'When the mote is reduced to 0 Stamina, each enemy adjacent to  the mote has a bane on their next strike.'
+										description: 'When the mote is reduced to 0 Stamina, each enemy adjacent to the mote has a bane on their next strike.'
 									}),
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-2',
@@ -82,7 +83,7 @@ Alternatively, you can spend 1 essence to transform the mote into any signature 
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-1-5a',
 								name: 'Brisk Gale',
-								description: 'The gales are twisting ribbons of cloud and debris endlessly dancing in  place. They disrupt the air and allow their allies to move freely.',
+								description: 'The gales are twisting ribbons of cloud and debris endlessly dancing in place. They disrupt the air and allow their allies to move freely.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 								keywords: [ 'Elemental (air)' ],

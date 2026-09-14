@@ -103,42 +103,44 @@ export const CompanionCard = (props: Props) => {
 		);
 	};
 
-	const getAdvancement = () => {
-		return (
-			<div className='advancement-abilities'>
-				{companion.advancement?.map(a =>
-					<div className='advancement' key={`${companion.id}-advancement-${a.level}`}>
-						{
-							a.ability ?
-								<>
-									<h4>Level {a.level} Retainer Advancement Ability</h4>
-									{getAbilityIcon(a.ability)}
-									<AbilityComponent
-										ability={a.ability}
-									/>
-								</>
-								: null
-						}
-						{
-							a.features ?
-								<>
-									<h4>Level {a.level} {companion.name} Advancement Feature</h4>
-									<img src={starIcon} className='icon' />
-									{
-										a.features.map(f => {
-											return (
-												<FeatureComponent feature={f} key={`${companion.id}-advancement-${f.id}`} />
-											);
-										})
-									}
-								</>
-								: null
-						}
-					</div>
-				)}
-			</div>
-		);
-	};
+	// const getAdvancement = () => {
+	// 	if (false) { // future options.showRetainerAdvancement ?
+	// 		return (
+	// 			<div className='advancement-abilities'>
+	// 				{companion.advancement?.map(a =>
+	// 					<div className='advancement' key={`${companion.id}-advancement-${a.level}`}>
+	// 						{
+	// 							a.ability ?
+	// 								<>
+	// 									<h4>Level {a.level} Retainer Advancement Ability</h4>
+	// 									{getAbilityIcon(a.ability)}
+	// 									<AbilityComponent
+	// 										ability={a.ability}
+	// 									/>
+	// 								</>
+	// 								: null
+	// 						}
+	// 						{
+	// 							a.features ?
+	// 								<>
+	// 									<h4>Level {a.level} {companion.name} Advancement Feature</h4>
+	// 									<img src={starIcon} className='icon' />
+	// 									{
+	// 										a.features.map(f => {
+	// 											return (
+	// 												<FeatureComponent feature={f} key={`${companion.id}-advancement-${f.id}`} />
+	// 											);
+	// 										})
+	// 									}
+	// 								</>
+	// 								: null
+	// 						}
+	// 					</div>
+	// 				)}
+	// 			</div>
+	// 		);
+	// 	}
+	// };
 
 	const getAbilityIcon = (ability: AbilitySheet) => {
 		const icon = SheetFormatter.getAbilityIcon(ability);
@@ -193,7 +195,7 @@ export const CompanionCard = (props: Props) => {
 					{getAbilities()}
 					{getFeatures()}
 				</div>
-				{getAdvancement()}
+				{/* {getAdvancement()} */}
 			</section>
 		</div>
 	);

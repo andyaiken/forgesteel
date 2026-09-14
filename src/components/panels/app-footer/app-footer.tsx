@@ -3,10 +3,9 @@ import { Button, Divider, Drawer, Flex, Space, Tag } from 'antd';
 import { ButtonConfig, ButtonGroup } from '@/components/controls/button-group/button-group';
 import { useDataManager, useOptions } from '@/contexts/data-context';
 import { ConnectionSettings } from '@/models/connection-settings';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
-import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import shield from '@/assets/shield.png';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -18,7 +17,7 @@ import patreon from '@/assets/icons/patreon.svg';
 
 export interface FooterParams {
 	errorsExist: boolean;
-	showReference: () => void;
+	showReference: (hero: Hero | null) => void;
 	showAbout: () => void;
 	showSettings: () => void;
 	showErrors: () => void;
@@ -27,6 +26,7 @@ export interface FooterParams {
 
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view' | 'clocktower';
+	hero: Hero | null;
 	params: FooterParams;
 }
 
@@ -54,7 +54,7 @@ export const AppFooter = (props: Props) => {
 	};
 
 	const actions: ButtonConfig[] = [
-		{ type: 'button', label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: props.params.showReference },
+		{ type: 'button', label: isSmall ? undefined : 'Reference', icon: <ReadOutlined />, tooltip: 'Reference', onClick: () => props.params.showReference(props.hero) },
 		{ type: 'button', label: isSmall ? undefined : 'Settings', icon: <SettingOutlined />, tooltip: 'Settings', onClick: props.params.showSettings },
 		{ type: 'button', label: isSmall ? undefined : 'About', icon: <InfoCircleOutlined />, tooltip: 'About', onClick: props.params.showAbout },
 		{ type: 'button', label: isSmall ? undefined : 'Patreon', icon: <img className='patreon-logo' src={patreon} style={{ width: '14px', height: '14px' }} />, tooltip: 'Patreon', onClick: onPatreon }
@@ -64,7 +64,7 @@ export const AppFooter = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='app-footer'>
 				{
 					(props.page === 'player-view') ?
@@ -96,7 +96,6 @@ export const AppFooter = (props: Props) => {
 						: null
 				}
 				<Space>
-					<SyncStatus />
 					{
 						options.showDataSource && props.params.connectionSettings.dataSource && !isSmall ?
 							<Tag
@@ -131,6 +130,6 @@ export const AppFooter = (props: Props) => {
 					onClose={() => setShowSidebar(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

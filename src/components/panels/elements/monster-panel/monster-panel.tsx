@@ -1,4 +1,4 @@
-import { Alert, Divider, Drawer } from 'antd';
+import { Alert, Divider, Drawer, Flex } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -24,6 +24,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterToken } from '@/components/panels/token/token';
 import { PanelMode } from '@/enums/panel-mode';
+import { RollModal } from '@/components/modals/roll/roll-modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
@@ -42,10 +43,12 @@ interface Props {
 	mode?: PanelMode;
 	style?: CSSProperties;
 	extra?: ReactNode;
+	onRoll?: (ch: Characteristic) => void;
 }
 
 export const MonsterPanel = (props: Props) => {
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
+	const [ selectedCharacteristic, setSelectedCharacteristic ] = useState<Characteristic | null>(null);
 
 	const speed = MonsterLogic.getSpeed(props.monster);
 	const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
@@ -136,11 +139,11 @@ export const MonsterPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<>
 							<StatsRow>
-								<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
-								<Field orientation='vertical' label='Speed' value={speedStr} />
-								<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
-								<Field orientation='vertical' label='Stability' value={MonsterLogic.getStability(props.monster)} />
-								<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Size' value={FormatLogic.getSize(props.monster.size)} />
+								<Field orientation='vertical' compact={true} label='Speed' value={speedStr} />
+								<Field orientation='vertical' compact={true} label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Stability' value={MonsterLogic.getStability(props.monster)} />
+								<Field orientation='vertical' compact={true} label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 							</StatsRow>
 							{
 								![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(props.monster)) ?
@@ -151,12 +154,16 @@ export const MonsterPanel = (props: Props) => {
 									/>
 									: null
 							}
-							<StatsRow>
+							<Flex gap={5}>
 								{
 									[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
-										.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
+										.map(ch => (
+											<StatsRow key={ch} style={{ flex: '1 1 0' }} onClick={() => setSelectedCharacteristic(ch)}>
+												<Field orientation='vertical' compact={true} label={ch.substring(0, 1)} value={MonsterLogic.getCharacteristic(props.monster, ch)} />
+											</StatsRow>
+										))
 								}
-							</StatsRow>
+							</Flex>
 							{
 								signatureBonus || props.monster.withCaptain || (conditions.length > 0) || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 									<div className='features'>
@@ -292,6 +299,17 @@ export const MonsterPanel = (props: Props) => {
 								ability={selectedAbility}
 								monster={props.monster}
 								onClose={() => setSelectedAbility(null)}
+							/>
+							: null
+					}
+				</Drawer>
+				<Drawer open={selectedCharacteristic !== null} onClose={() => setSelectedCharacteristic(null)} closeIcon={null} size={500}>
+					{
+						selectedCharacteristic ?
+							<RollModal
+								characteristics={[ selectedCharacteristic ]}
+								creature={props.monster}
+								onClose={() => setSelectedCharacteristic(null)}
 							/>
 							: null
 					}

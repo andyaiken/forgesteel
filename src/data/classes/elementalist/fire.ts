@@ -8,6 +8,7 @@ export const fire: SubClass = {
 	id: 'elementalist-sub-2',
 	name: 'Fire',
 	description: 'Fire is the element of destruction. Fire abilities devastate enemies and melt objects to slag.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

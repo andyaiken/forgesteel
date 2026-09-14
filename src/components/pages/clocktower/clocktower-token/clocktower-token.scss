@@ -25,7 +25,7 @@
 			border: 1px solid rgba(0, 0, 0, 0.1);
 			border-radius: 50%;
 			background: linear-gradient(rgb(255, 245, 230), rgb(245, 235, 200));
-			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+			box-shadow: var(--fs-shadow-raised);
 
 			.clocktower-token-content {
 				height: 100%;

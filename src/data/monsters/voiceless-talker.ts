@@ -212,7 +212,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'voiceless-talker-1-feature-5',
+					id: 'voiceless-talker-2-feature-4',
 					name: 'Psionic Conductor',
 					description: 'Whenever a non-minion voiceless talker within 5 squares of the whelp uses a psionic ability, they can do so as if they were in the whelp’s space.'
 				})
@@ -333,13 +333,13 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			characteristics: FactoryLogic.createCharacteristics(-1, 3, 3, 2, 0),
 			features: [
 				FactoryLogic.feature.create({
-					id: 'qqRknE96pIBK9FRK',
+					id: 'voiceless-talker-4-feature-1',
 					name: 'Brain Latch',
 					description: 'The mindkiller can grab creatures who are size 4 or smaller, using their Reason score in place of Might. A creature grabbed by the mindkiller takes a bane on ability rolls made to escape the grab.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'voiceless-talker-4-feature-1',
+						id: 'voiceless-talker-4-feature-2',
 						name: 'Killer Claws',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -360,7 +360,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'voiceless-talker-4-feature-2',
+						id: 'voiceless-talker-4-feature-3',
 						name: 'Concealing Strike',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -381,7 +381,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'voiceless-talker-4-feature-3',
+						id: 'voiceless-talker-4-feature-4',
 						name: 'Mindwipe',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
@@ -394,7 +394,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'voiceless-talker-4-feature-4',
+						id: 'voiceless-talker-4-feature-5',
 						name: 'Meat Shield',
 						type: FactoryLogic.type.createTrigger('The mindkiller takes damage.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
@@ -409,17 +409,17 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'voiceless-talker-4-feature-5',
+					id: 'voiceless-talker-4-feature-6',
 					name: 'Psionic Conductor',
 					description: 'Whenever a non-minion voiceless talker within 5 squares of the mindkiller uses a psionic ability, they can do so as if they were in the mindkiller’s space.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'voiceless-talker-4-feature-6',
+					id: 'voiceless-talker-4-feature-7',
 					name: 'Nimble',
 					description: 'The mindkiller can move through enemies’ spaces at their usual speed.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'voiceless-talker-4-feature-7',
+					id: 'voiceless-talker-4-feature-8',
 					modifiers: [
 						FactoryLogic.damageModifier.create({
 							damageType: DamageType.Psychic,

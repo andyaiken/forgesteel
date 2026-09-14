@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { ReactNode } from 'react';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -14,15 +13,13 @@ export const AppHeader = (props: Props) => {
 	const isSmall = useIsSmall();
 
 	return (
-		<ErrorBoundary>
-			<div className='app-header'>
-				<div className='left-section'>
-					{!isSmall ? <LogoPanel text={props.subheader} /> : null}
-				</div>
-				<div className='right-section'>
-					{props.children}
-				</div>
+		<div className='app-header'>
+			<div className='left-section'>
+				{!isSmall ? <LogoPanel text={props.subheader} /> : null}
 			</div>
-		</ErrorBoundary>
+			<div className='right-section'>
+				{props.children}
+			</div>
+		</div>
 	);
 };

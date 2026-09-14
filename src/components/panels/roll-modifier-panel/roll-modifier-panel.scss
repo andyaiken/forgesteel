@@ -1,0 +1,26 @@
+.roll-modifier-panel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+
+    .roll-modifier-text {
+        flex: 1 1 auto;
+        min-width: 0;
+
+        .scope {
+            font-weight: 600;
+        }
+
+        .condition {
+            padding-top: 5px;
+            color: var(--color-text-lightest);
+        }
+
+        .roll-modifier-source {
+            padding-top: 5px;
+            color: var(--color-text-lightest);
+            font-size: 12px;
+        }
+    }
+}

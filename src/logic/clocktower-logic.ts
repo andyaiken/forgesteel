@@ -17,6 +17,10 @@ export class ClocktowerLogic {
 		return img;
 	};
 
+	static getFormattedAbility = (ch: ClocktowerCharacter) => {
+		return ch.role.ability.replace(/(\[.*?\])/g, '**$1**');
+	};
+
 	static getTeamName = (team: ClocktowerTeam) => {
 		switch (team) {
 			case ClocktowerTeam.Townsfolk:

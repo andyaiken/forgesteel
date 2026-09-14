@@ -4,24 +4,26 @@
 <head>
 	<meta charset="UTF-8" />
 	<link rel="icon" type="image/png" href="/src/assets/shield.png" />
-	<link rel="apple-touch-icon" href="/src/assets/shield.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="robots" content="noarchive" />
 	<meta name="clacks-overhead" content="GNU Terry Pratchett" />
-	<meta property="description" content="Heroes, monsters, encounters ... everything you need for Draw Steel." />
+	<meta name="description" content="Heroes, monsters, encounters ... everything you need for Draw Steel." />
 	<meta property="og:description" content="Heroes, monsters, encounters ... everything you need for Draw Steel." />
 	<meta property="og:title" content="Forge Steel" />
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/src/assets/shield.png" />
+	<meta property="og:site_name" content="Forge Steel" />
+	<meta property="og:image" content="https://forgesteel.net/og-image.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="Forge Steel - heroes, monsters, encounters ... everything you need for Draw Steel." />
 	<meta property="og:url" content="https://forgesteel.net/" />
-	<meta http-equiv="Cache-Control" content="no-store, no-cache" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
-	
-	<!-- PWA Manifest -->
-	<link rel="manifest" href="/manifest.json" />
-	
+
+	<!-- X/Twitter falls back to the og: tags for title, description and image,
+	     but needs this to render the large card rather than a thumbnail. -->
+	<meta name="twitter:card" content="summary_large_image" />
+
 	<!-- PWA Meta Tags -->
 	<meta name="theme-color" content="#1890ff" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />

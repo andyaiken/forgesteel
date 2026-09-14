@@ -1,6 +1,9 @@
 import { Feature, FeatureSummonFormationData } from '@/models/feature';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Hero } from '@/models/hero';
 import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
+import { useState } from 'react';
 
 interface InfoProps {
 	data: FeatureSummonFormationData;
@@ -20,7 +23,22 @@ interface EditProps {
 	setData: (data: FeatureSummonFormationData) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const EditSummonFormation = (_props: EditProps) => {
-	return null;
+export const EditSummonFormation = (props: EditProps) => {
+	const [ data, setData ] = useState<FeatureSummonFormationData>(Utils.copy(props.data));
+
+	const onChange = (features: Feature[]) => {
+		const copy = Utils.copy(data);
+		copy.minionFeatures = Utils.copy(features);
+		setData(copy);
+		props.setData(copy);
+	};
+
+	return (
+		<FeatureListEditPanel
+			title='Minion Features'
+			features={data.minionFeatures}
+			sourcebooks={props.sourcebooks}
+			onChange={onChange}
+		/>
+	);
 };

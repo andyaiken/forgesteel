@@ -3,8 +3,8 @@ import { Segmented, Select, Space, Tabs } from 'antd';
 import { Culture } from '@/models/culture';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
 import { CultureType } from '@/enums/culture-type';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -45,9 +45,10 @@ export const CultureEditPanel = (props: Props) => {
 	const getDetailsEditSection = () => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
+				<HeaderText>Type</HeaderText>
 				<Segmented
 					block={true}
-					options={[ CultureType.Ancestral, CultureType.Professional ]}
+					options={[ CultureType.Ancestral, CultureType.Professional, CultureType.Regional ]}
 					value={culture.type}
 					onChange={value => {
 						const copy = Utils.copy(culture);
@@ -56,6 +57,7 @@ export const CultureEditPanel = (props: Props) => {
 						props.onChange(copy);
 					}}
 				/>
+				<HeaderText>Language</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					allowClear={true}
@@ -70,6 +72,7 @@ export const CultureEditPanel = (props: Props) => {
 						props.onChange(copy);
 					}}
 				/>
+				<HeaderText>Environment</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					status={culture.environment === null ? 'warning' : ''}
@@ -86,6 +89,7 @@ export const CultureEditPanel = (props: Props) => {
 						props.onChange(copy);
 					}}
 				/>
+				<HeaderText>Organization</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					status={culture.organization === null ? 'warning' : ''}
@@ -102,6 +106,7 @@ export const CultureEditPanel = (props: Props) => {
 						props.onChange(copy);
 					}}
 				/>
+				<HeaderText>Upbringing</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					status={culture.upbringing === null ? 'warning' : ''}
@@ -123,48 +128,46 @@ export const CultureEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='culture-edit-panel'>
-				<div className='culture-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Culture',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getDetailsEditSection()
-							}
-						]}
-					/>
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='culture-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<CulturePanel
-													culture={culture}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='culture-edit-panel'>
+			<div className='culture-workspace-column'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Culture',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getDetailsEditSection()
+						}
+					]}
+				/>
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='culture-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<CulturePanel
+												culture={culture}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

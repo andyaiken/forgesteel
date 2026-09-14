@@ -1,11 +1,14 @@
 .pill {
 	margin: -2px 0;
-	border: 1px solid rgb(22, 119, 255);
-	border-radius: 10px;
+	border: 1px solid var(--fs-accent);
+	border-radius: 999px;
 	background-color: rgb(230, 244, 255);
-	padding: 2px 6px;
-	font-size: 10px;
-	font-weight: 600;
+	color: rgb(9, 88, 217);
+	padding: 2px 8px;
+	font-size: 8px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
 	min-width: 38px;
 	text-align: center;
 	overflow: hidden;
@@ -16,18 +19,5 @@
 		border-color: rgb(22, 119, 0);
 		background-color: rgb(230, 244, 230);
 		color: rgb(22, 119, 0);
-	}
-}
-
-html[data-theme="dark"] {
-	.pill {
-		background-color: rgb(230, 244, 255);
-		color: rgba(0, 0, 0, 0.88);
-
-		&.satisfied {
-			border-color: rgb(22, 119, 0);
-			background-color: rgb(230, 244, 230);
-			color: rgb(22, 119, 0);
-		}
 	}
 }

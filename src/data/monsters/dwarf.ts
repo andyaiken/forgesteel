@@ -32,7 +32,7 @@ The dwarves have yet to crack all the secrets of the valok, the autonomous machi
 
 Operators now span the world and come from all walks of life, but the first among them were dwarves who built powered suits from excavated valok parts. These suits were initially used for construction and utility purposes, but can be repurposed and refitted for warfare when the need arises.
 
-Word of these wonderous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where artisans, craftspeople, and smiths from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
+Word of these wondrous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where artisans, craftspeople, and smiths from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
 		},
 		{
 			id: 'dwarf-info-3',
@@ -398,7 +398,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-6-feature-1',
+						id: 'dwarf-7-feature-1',
 						name: 'Snaring Crossbow',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -408,8 +408,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '5 damage; M<2 slowed (save ends)',
-								tier2: '7 damage; M<2 slowed (save ends)',
+								tier1: '5 damage; M<0 slowed (save ends)',
+								tier2: '7 damage; M<1 slowed (save ends)',
 								tier3: '9 damage; M<2 slowed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The target is pulled up to 5 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
@@ -418,7 +418,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-6-feature-2',
+						id: 'dwarf-7-feature-2',
 						name: 'Reel Them In',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -431,7 +431,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-6-feature-3',
+					id: 'dwarf-7-feature-3',
 					name: 'We Have a Quota!',
 					description: 'If a target made slowed by the reel winch is already grabbed or slowed, the grabbed and slowed conditions end and the target is restrained (save ends).'
 				})
@@ -470,7 +470,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 square to remain adjacent to the target. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionSpend({
 								value: 3,
-								effect: 'This ablitiy targets one additional target.'
+								effect: 'This ability targets one additional target.'
 							})
 						]
 					})

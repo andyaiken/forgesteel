@@ -8,6 +8,7 @@ export const harlequinMask: SubClass = {
 	id: 'shadow-sub-3',
 	name: 'College of the Harlequin Mask',
 	description: 'Graduates of the College of the Harlequin Mask learn illusion magic, which they use to infiltrate enemy strongholds and create orchestrated chaos in combat.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

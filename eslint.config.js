@@ -3,6 +3,7 @@ import { defineConfig } from 'eslint/config';
 import js from '@eslint/js'
 import globals from 'globals'
 import stylistic from '@stylistic/eslint-plugin'
+import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig({
@@ -28,9 +29,12 @@ export default defineConfig({
 		}
 	},
 	plugins: {
+		'react-hooks': reactHooks
 	},
 	rules: {
 		// Errors
+		'react-hooks/rules-of-hooks': 'error',
+		'react-hooks/exhaustive-deps': 'error',
 		'array-bracket-newline': [
 			'error',
 			'consistent'

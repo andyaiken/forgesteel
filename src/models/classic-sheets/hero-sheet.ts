@@ -1,14 +1,18 @@
+import { Feature, FeatureRollModifier } from '@/models/feature';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { Characteristic } from '@/enums/characteristic';
 import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
 import { Element } from '@/models/element';
-import { Feature } from '@/models/feature';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Perk } from '@/models/perk';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { TerrainSheet } from '@/models/classic-sheets/terrain-sheet';
 import { Title } from '@/models/title';
 
 // #region Character
@@ -52,6 +56,18 @@ export interface HeroSheet {
 
 	surgeDamageAmount?: string;
 	surgesCurrent?: number;
+	surgeGains?: {
+		tag: string;
+		trigger: string;
+		value: string;
+		frequency: ResourceGainFrequency;
+		// A restriction on the surges themselves, which the table has to say. The feature's own
+		// description is prose about the feature and has no place on a reference card
+		condition: string;
+		// The table lists every gain the hero has, unlocked or not, so a gain behind a heroic
+		// resource threshold has to say which rung it sits on
+		requirement?: string;
+	}[];
 
 	// Modifiers (Kits, Prayers, Wards, etc)
 	modifierTypes: string[];
@@ -81,10 +97,14 @@ export interface HeroSheet {
 	weaknesses: { damageType: string, value: number }[];
 	conditionImmunities?: ConditionType[];
 
+	// Test Modifiers
+	rollModifiers?: FeatureRollModifier[];
+
 	// Potencies
 	potencyStrong?: number;
 	potencyAverage?: number;
 	potencyWeak?: number;
+	potencyResistances?: { characteristic: Characteristic, value: number }[];
 
 	// Conditions
 	conditions?: Condition[];
@@ -104,10 +124,14 @@ export interface HeroSheet {
 
 	// Complication
 	complication?: ComplicationSheet;
+	extraComplications: ComplicationSheet[];
 
 	// Skills
 	allSkills?: Map<string, string[]>;
 	skills?: string[];
+	cancelledSkills?: string[];
+	// Keyed by skill name; only skills the hero actually has are marked
+	skillRollModifiers?: Map<string, RollModifierType[]>;
 
 	// Culture
 	culture?: Culture;
@@ -132,6 +156,7 @@ export interface HeroSheet {
 	followers: FollowerSheet[];
 	// companions: FollowerSheet[];
 	summons: MonsterSheet[];
+	fixtures: TerrainSheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther: {

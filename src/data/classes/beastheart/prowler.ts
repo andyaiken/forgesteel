@@ -8,6 +8,7 @@ export const prowler: SubClass = {
 	id: 'beastheart-sub-2',
 	name: 'Prowler',
 	description: 'You are an unseen ambusher that strikes from the shadows. Your prey is dead before they even know you’re there.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

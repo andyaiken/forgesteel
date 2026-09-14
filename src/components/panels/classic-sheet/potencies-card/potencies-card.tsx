@@ -8,6 +8,12 @@ interface Props {
 
 export const PotenciesCard = (props: Props) => {
 	const character = props.character;
+	const resistances = character.potencyResistances || [];
+	const allSame = (resistances.length === 5) && resistances.every(r => r.value === resistances[0].value);
+	const resistanceText = allSame ?
+		`All characteristics +${resistances[0].value}`
+		:
+		resistances.map(r => `${r.characteristic} +${r.value}`).join(', ');
 	return (
 		<div className='potencies card'>
 			<h3>Potency</h3>
@@ -26,6 +32,13 @@ export const PotenciesCard = (props: Props) => {
 				content={character.potencyStrong}
 				additionalClasses={[ 'label-above', 'box-both' ]}
 			/>
+			{
+				resistances.length > 0 ?
+					<div className='potency-resistance'>
+						Resisting potencies: <span className='data'>{resistanceText}</span>
+					</div>
+					: null
+			}
 		</div>
 	);
 };

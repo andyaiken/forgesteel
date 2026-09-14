@@ -2,12 +2,12 @@ import { Alert, Button, Drawer, Flex, Segmented, Slider, Statistic } from 'antd'
 import { ReactNode, useState } from 'react';
 import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { CreatureLogic } from '@/logic/creature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from '@/logic/hero-logic';
 import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
 import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
 import { Random } from '@/utils/random';
 import { RollLogic } from '@/logic/roll-logic';
 import { RollState } from '@/enums/roll-state';
@@ -18,7 +18,7 @@ interface Props {
 	type: 'Power Roll' | 'Saving Throw';
 	modifiers: number[];
 	rollState: RollState;
-	hero: Hero | null;
+	creature: Hero | Monster | null;
 	onRollStateChange: (value: RollState) => void;
 	onRoll?: (tier: number) => void;
 }
@@ -102,13 +102,13 @@ export const DieRollPanel = (props: Props) => {
 		case 'Saving Throw':
 			max = 10;
 			marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
-			marks[(props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) - 0.5] = <div className='ds-text dimmed-text small-text'>-</div>;
+			marks[(props.creature ? CreatureLogic.getSaveThreshold(props.creature) : 6) - 0.5] = <div className='ds-text dimmed-text small-text'>-</div>;
 			marks[10] = <div className='ds-text dimmed-text small-text'>10</div>;
 			break;
 	}
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='die-roll-panel'>
 				{
 					props.type === 'Power Roll' ?
@@ -187,7 +187,7 @@ export const DieRollPanel = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							title={`This roll would usually indicate a ${total >= (props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) ? 'success' : 'failure'}.`}
+							title={`This roll would usually indicate a ${total >= (props.creature ? CreatureLogic.getSaveThreshold(props.creature) : 6) ? 'success' : 'failure'}.`}
 						/>
 						: null
 				}
@@ -226,6 +226,6 @@ export const DieRollPanel = (props: Props) => {
 					onClose={() => setShowOdds(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

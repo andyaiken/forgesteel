@@ -1,5 +1,6 @@
 import { Fragment, useMemo } from 'react';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { useOptions } from '@/contexts/data-context';
 
@@ -16,11 +17,13 @@ export const PrimaryReferenceCard = (props: Props) => {
 	);
 	const options = useOptions();
 
+	const gainRows = (props.character.heroicResourceGains || []).length + (props.character.surgeGains || []).length;
+
 	const showTriggerHelp = options.classicSheetPageSize === SheetPageSize.A4 &&
 		options.pageOrientation === 'portrait' &&
-		(props.character.heroicResourceGains || []).length < 3;
+		gainRows < 3;
 
-	const showActionsManeuversReference = (props.character.heroicResourceGains || []).length <= 3;
+	const showActionsManeuversReference = gainRows <= 3;
 
 	const getResourceSection = () => {
 		if (character.heroicResourceGains) {
@@ -42,9 +45,45 @@ export const PrimaryReferenceCard = (props: Props) => {
 		};
 	};
 
+	const getSurgeSection = () => {
+		if (character.surgeGains && (character.surgeGains.length > 0)) {
+			return (
+				<div className='surge-gains'>
+					<h3>Gaining Surges</h3>
+					<div className='heroic-resource-gain'>
+						<div className='header value'>Gain</div>
+						<div className='header trigger'>When</div>
+						{character.surgeGains.map((g, n) => {
+							const qualifiers = [ g.requirement, g.frequency === ResourceGainFrequency.AtWill ? '' : g.frequency ].filter(q => q);
+							return (
+								<Fragment key={n}>
+									<div className='value'>{g.value}</div>
+									<div className='trigger'>
+										{g.trigger}
+										{
+											qualifiers.length > 0 ?
+												<span className='qualifiers'> ({qualifiers.join(', ')})</span>
+												: null
+										}
+										{
+											g.condition ?
+												<div className='condition'>{g.condition}</div>
+												: null
+										}
+									</div>
+								</Fragment>
+							);
+						})}
+					</div>
+				</div>
+			);
+		};
+	};
+
 	return (
 		<div className='primary-reference card'>
 			{getResourceSection()}
+			{getSurgeSection()}
 			<div className='hero-tokens'>
 				<h3>Spending Hero Tokens</h3>
 				<p><strong>1 Token:</strong> Gain 2 Surges.</p>

@@ -6,6 +6,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export class LeveledImplementData {
 	static abjurersBastion: Item = FactoryLogic.createItem({
@@ -697,7 +698,13 @@ This long, ornate rod with a silver bulb head is braided with 33 green cords. A 
 					FactoryLogic.feature.create({
 						id: 'item-words-become-wonders-1',
 						name: '',
-						description: 'You can open or close the tome as a maneuver while speaking or thinking its full name. While the tome is open, it floats in an adjacent space and flips to specific pages at your command, and you gain an edge on Reason tests made to recall lore.'
+						description: 'You can open or close the tome as a maneuver while speaking or thinking its full name. While the tome is open, it floats in an adjacent space and flips to specific pages at your command.'
+					}),
+					FactoryLogic.feature.createRollModifier({
+						id: 'item-words-become-wonders-1c',
+						modifier: RollModifierType.Edge,
+						characteristics: [ Characteristic.Reason ],
+						condition: 'When recalling lore while the tome is open'
 					}),
 					FactoryLogic.feature.createAbilityDistance({
 						id: 'item-words-become-wonders-1a',

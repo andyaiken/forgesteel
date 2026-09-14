@@ -1,5 +1,5 @@
-import { Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
-import { HeartFilled, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
+import { EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -8,8 +8,9 @@ import { ConditionLogic } from '@/logic/condition-logic';
 import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
-import { EncounterSlot } from '@/models/encounter-slot';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { EncounterSlot } from '@/models/encounter';
+import { Feature } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -25,10 +26,14 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Pill } from '@/components/controls/pill/pill';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierMarker } from '@/components/controls/roll-modifier-marker/roll-modifier-marker';
+import { RollModifierPanel } from '../../roll-modifier-panel/roll-modifier-panel';
 import { RulesPage } from '@/enums/rules-page';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
@@ -45,6 +50,8 @@ interface Props {
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
+	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
+	onSetControlledMonsterHidden: (hero: Hero, monster: Monster, value: boolean) => void;
 }
 
 export const SidebarPanel = (props: Props) => {
@@ -52,6 +59,8 @@ export const SidebarPanel = (props: Props) => {
 	const options = useOptions();
 
 	const useRows = options.singlePage && options.compactView;
+
+	const thresholdParts = (feature: Feature): Feature[] => feature.type === FeatureType.Multiple ? [ feature, ...feature.data.features ] : [ feature ];
 
 	const companions = HeroLogic.getCompanions(props.hero);
 	const retainers = HeroLogic.getRetainers(props.hero);
@@ -126,19 +135,40 @@ export const SidebarPanel = (props: Props) => {
 			);
 		};
 
-		const getSkills = (label: string, skills: Skill[]) => {
-			return skills.length > 0 ?
+		const getSkills = (label: string, skills: Skill[], cancelledSkills: Skill[] = []) => {
+			const getSkillModifiers = (skill: Skill) => HeroLogic.getRollModifiersForSkill(props.hero, skill).map(f => f.data.modifier);
+
+			return (skills.length + cancelledSkills.length) > 0 ?
 				useRows ?
 					<div className='selectable-row clickable' onClick={onShowSkills}>
-						<div>{label}: <b>{skills.map(s => s.name).join(', ')}</b></div>
+						<div>
+							{label}: <b>{skills.map(s => s.name).join(', ')}</b>
+							{
+								cancelledSkills.length > 0 ?
+									<> <b><s>{cancelledSkills.map(s => s.name).join(', ')}</s></b></>
+									: null
+							}
+						</div>
 					</div>
 					:
 					<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
 						<HeaderText>{label}</HeaderText>
 						{
-							skills.map(s => (
-								<div key={s.name} className='ds-text'>
-									{s.name} {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
+							skills.map(s => {
+								const rollModifiers = getSkillModifiers(s);
+								return (
+									<div key={s.name} className='ds-text' style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+										{s.name}
+										{rollModifiers.length > 0 ? <RollModifierMarker modifier={rollModifiers[0]} multiple={rollModifiers.length > 1} /> : null}
+										{options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
+									</div>
+								);
+							})
+						}
+						{
+							cancelledSkills.map(s => (
+								<div key={s.name} className='ds-text dimmed-text'>
+									<s>{s.name}</s> {options.showSkillsInGroups ? null : <Tag variant='outlined'>{s.list}</Tag>}
 								</div>
 							))
 						}
@@ -153,8 +183,12 @@ export const SidebarPanel = (props: Props) => {
 
 		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.shownStandardAbilities);
 		const heroicResources = HeroLogic.getHeroicResources(props.hero);
+		const surgeGains = HeroLogic.getSurgeGains(props.hero);
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
+		const skills = HeroLogic.getSkills(props.hero, props.sourcebooks);
+		const rollModifiers = HeroLogic.getRollModifiers(props.hero);
+		const cancelledSkills = HeroLogic.getCancelledSkills(props.hero, props.sourcebooks);
 
 		return (
 			<>
@@ -229,16 +263,64 @@ export const SidebarPanel = (props: Props) => {
 											</HeaderText>
 											{
 												hr.gains.map((g, n) => (
-													<Flex key={n} align='center' justify='space-between' gap={10}>
-														<div className='ds-text compact-text'>{g.trigger}</div>
-														<Pill>+{g.value}</Pill>
-													</Flex>
+													<div className={g.used ? 'gain used' : 'gain'} key={n}>
+														<div>{g.trigger}</div>
+														<Pill>+{g.value} {g.frequency !== ResourceGainFrequency.AtWill ? g.frequency : null}</Pill>
+													</div>
 												))
+											}
+											{
+												hr.thresholds
+													.filter(t => (hr.value >= t.value) && ((props.hero.class?.level || 1) >= t.level))
+													.flatMap(t => thresholdParts(t.feature))
+													.filter(f => f.type !== FeatureType.SurgeGain)
+													.map(f => f.description ?
+														<div key={f.id} className='ds-text'>
+															{f.description}
+														</div>
+														: null)
 											}
 										</div>
 								)
 							}
 						</>
+						: null
+				}
+				{
+					surgeGains.length > 0 ?
+						useRows ?
+							<div className='selectable-row clickable' onClick={onShowStats}>
+								<div>Surges</div>
+								<div>{props.hero.state.surges}</div>
+							</div>
+							:
+							<div className='overview-tile clickable' onClick={onShowStats}>
+								<HeaderText
+									extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{props.hero.state.surges}</div>}
+								>
+									Surges
+								</HeaderText>
+								{
+									surgeGains.map(f => (
+										<div className={f.data.used ? 'gain used' : 'gain'} key={f.id}>
+											<div>
+												<div>{f.data.trigger}</div>
+												{
+													f.data.condition ?
+														<div className='gain-condition'>{f.data.condition}</div>
+														: null
+												}
+												{
+													f.description ?
+														<div className='gain-description'>{f.description}</div>
+														: null
+												}
+											</div>
+											<Pill>+{f.data.value} {f.data.frequency !== ResourceGainFrequency.AtWill ? f.data.frequency : null}</Pill>
+										</div>
+									))
+								}
+							</div>
 						: null
 				}
 				{
@@ -314,9 +396,22 @@ export const SidebarPanel = (props: Props) => {
 				{
 					(options.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, skills.filter(s => s.list === list), cancelledSkills.filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
+						getSkills('Skills', skills, cancelledSkills)
+				}
+				{
+					rollModifiers.length > 0 ?
+						useRows ?
+							<div className='selectable-row'>
+								<div>Roll Modifiers: <b>{rollModifiers.map(f => `${f.data.modifier}: ${FeatureLogic.getRollModifierScope(f.data)}`).join('; ')}</b></div>
+							</div>
+							:
+							<div className='overview-tile'>
+								<HeaderText>Roll Modifiers</HeaderText>
+								{rollModifiers.map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+							</div>
+						: null
 				}
 			</>
 		);
@@ -328,39 +423,93 @@ export const SidebarPanel = (props: Props) => {
 			const isRetainerSlot = slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Retainer);
 			const isCompanionSlot = !isMinionSlot && !isRetainerSlot;
 
-			const getMonster = (m: Monster) => {
-				const tags: string[] = [];
-				if (![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(m))) {
-					tags.push(Format.capitalize(MonsterLogic.getCombatState(m)));
+			const getMinionCountMessage = () => {
+				if (!isMinionSlot) {
+					return null;
 				}
-				if (m.state.hidden) {
-					tags.push('Hidden');
+
+				const minionsExpected = MonsterLogic.getExpectedMinionCount(slot);
+				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
+
+				if (minionsAlive === minionsExpected) {
+					return null;
 				}
-				tags.push(...m.state.conditions.map(c => ConditionLogic.getFullDescription(c)));
 
 				return (
-					<div key={m.id} className='controlled-monster' onClick={() => props.onSelectControlledMonster(props.hero, m)}>
-						<Space orientation='vertical' style={{ flex: '1 1 0' }}>
-							<Flex align='center' justify='space-between' gap={5}>
-								<MonsterInfo monster={m} />
+					<Alert
+						type='warning'
+						showIcon={true}
+						title={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+					/>
+				);
+			};
+
+			const getMonster = (m: Monster) => {
+				const tags: string[] = [];
+				if (m.state.defeated) {
+					tags.push('Defeated');
+				} else {
+					if (![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(m))) {
+						tags.push(Format.capitalize(MonsterLogic.getCombatState(m)));
+					}
+					if (m.state.hidden) {
+						tags.push('Hidden');
+					}
+					tags.push(...m.state.conditions.map(c => ConditionLogic.getFullDescription(c)));
+				}
+
+				return (
+					<Flex key={m.id} align='center' gap={5}>
+						<div
+							style={{ flex: '1 1 0' }}
+							className={m.state.defeated ? 'controlled-monster defeated' : 'controlled-monster'}
+							onClick={() => props.onSelectControlledMonster(props.hero, m)}
+						>
+							<Space orientation='vertical' style={{ flex: '1 1 0' }}>
+								<Flex align='center' justify='space-between' gap={5}>
+									<MonsterInfo monster={m} />
+									{
+										!isMinionSlot ?
+											<Flex gap={5}>
+												{MonsterLogic.getStaminaDescription(m)}
+												<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+											</Flex>
+											: null
+									}
+								</Flex>
 								{
-									!isMinionSlot ?
-										<Flex gap={5}>
-											{MonsterLogic.getStaminaDescription(m)}
-											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+									tags.length > 0 ?
+										<Flex gap={3}>
+											{tags.map((tag, n) => <Tag key={n} variant='outlined'>{tag}</Tag>)}
 										</Flex>
 										: null
 								}
-							</Flex>
-							{
-								tags.length > 0 ?
-									<Flex gap={3}>
-										{tags.map((tag, n) => <Tag key={n} variant='outlined'>{tag}</Tag>)}
-									</Flex>
-									: null
-							}
-						</Space>
-					</div>
+							</Space>
+						</div>
+						{
+							isMinionSlot ?
+								<Popover
+									trigger='click'
+									content={(
+										<div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<Segmented
+												block={true}
+												options={[
+													{ value: true, label: 'Defeated' },
+													{ value: false, label: 'Active' }
+												]}
+												value={m.state.defeated}
+												onChange={value => props.onSetControlledMonsterDefeated(props.hero, m, value)}
+											/>
+											<Toggle label='Hidden' value={m.state.hidden} onChange={value => props.onSetControlledMonsterHidden(props.hero, m, value)} />
+										</div>
+									)}
+								>
+									<Button type='text' icon={<EllipsisOutlined />} />
+								</Popover>
+								: null
+						}
+					</Flex>
 				);
 			};
 
@@ -394,6 +543,7 @@ export const SidebarPanel = (props: Props) => {
 								</div>
 								: null
 						}
+						{getMinionCountMessage()}
 						{slot.monsters.map(getMonster)}
 						{slot.monsters.length === 0 ? <div>Empty</div> : null}
 					</Space>
@@ -481,24 +631,22 @@ export const SidebarPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className={`hero-sidebar ${display}`}>
-				{
-					showRetinue ?
-						<Segmented
-							block={true}
-							options={[
-								{ label: 'You', value: 'hero' },
-								{ label: 'Retinue', value: 'retinue' }
-							]}
-							value={page}
-							onChange={setPage}
-						/>
-						: null
-				}
-				{page === 'hero' ? getHeroPage() : null}
-				{page === 'retinue' ? getRetinuePage() : null}
-			</div>
-		</ErrorBoundary>
+		<div className={`hero-sidebar ${display}`}>
+			{
+				showRetinue ?
+					<Segmented
+						block={true}
+						options={[
+							{ label: 'You', value: 'hero' },
+							{ label: 'Retinue', value: 'retinue' }
+						]}
+						value={page}
+						onChange={setPage}
+					/>
+					: null
+			}
+			{page === 'hero' ? getHeroPage() : null}
+			{page === 'retinue' ? getRetinuePage() : null}
+		</div>
 	);
 };

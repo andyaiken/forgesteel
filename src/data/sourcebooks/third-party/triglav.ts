@@ -16,6 +16,9 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -97,10 +100,23 @@ Your strong, elongated hind legs make you an exceptional jumper. You gain the fo
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'boggit-4c',
 						name: 'Slippery Skin',
-						description: 'Your slippery skin makes you harder to catch. Enemies take a bane on tests and a -1 on potencies made to grab or restrain you. You have an edge on tests made to escape grabs.'
+						description: 'Your slippery skin makes you harder to catch.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'boggit-4c-1',
+								name: 'Slippery Skin',
+								description: 'Enemies take a bane on tests and a -1 on potencies made to grab or restrain you.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'boggit-4c-2',
+								name: 'Slippery Skin',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.EscapeGrab
+							})
+						]
 					}),
 					value: 1
 				},
@@ -297,18 +313,34 @@ Years of traversing swamps have taught you how to deal with terrain obstacles an
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'boggit-4h',
 						name: 'Swarm Tactics',
-						description: 'Your abilities gain an edge when used against creatures that are adjacent to at least one of your non-minion allies, but you don\'t gain another edge when the same ally is also flanking the creature with you.'
+						description: 'You don\'t gain another edge when the same ally is also flanking the creature with you.',
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Ability,
+						condition: 'Against creatures who are adjacent to at least one of your non-minion allies'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'boggit-4i',
 						name: 'Wetland Warrior',
-						description: 'Your abilities gain an edge when used against creatures affected by difficult terrain. Additionally, you have concealment when you are in water or difficult terrain.'
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'boggit-4i-1',
+								name: 'Wetland Warrior',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Ability,
+								condition: 'Against creatures affected by difficult terrain'
+							}),
+							FactoryLogic.feature.create({
+								id: 'boggit-4i-2',
+								name: 'Wetland Warrior',
+								description: 'You have concealment when you are in water or difficult terrain.'
+							})
+						]
 					}),
 					value: 1
 				}
@@ -328,10 +360,25 @@ const vampireAncestry: Ancestry = {
 
 When choosing an ancestry, you can choose to be a vampire. A hero with the vampire ancestry can't use the vampire class.`,
 	features: [
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'vampire-ancestry-1',
 			name: 'Bloodthirst',
-			description: 'You gain an edge on ability rolls made against bleeding, winded, or dying creatures. If there is a bleeding, winded, or dying creature within 10 squares of you, you take a bane on ability rolls against creatures not suffering from any of these conditions. Using the Sanguine Kiss maneuver suppresses the drawback of this feature until the start of your next turn.'
+			features: [
+				FactoryLogic.feature.createRollModifier({
+					id: 'vampire-ancestry-1a',
+					name: 'Bloodthirst',
+					modifier: RollModifierType.Edge,
+					rollType: RollType.Ability,
+					condition: 'Against bleeding, winded, or dying creatures'
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'vampire-ancestry-1b',
+					name: 'Bloodthirst',
+					modifier: RollModifierType.Bane,
+					rollType: RollType.Ability,
+					condition: 'While a bleeding, winded, or dying creature is within 10 squares of you, against creatures suffering none of those conditions (using the Sanguine Kiss maneuver suppresses the drawback of this feature until the start of your next turn)'
+				})
+			]
 		}),
 		FactoryLogic.feature.createAncestry({
 			id: 'vampire-ancestry-2',
@@ -389,10 +436,13 @@ Additionally, when your Stamina reaches the negative of your winded value, you b
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSurgeGain({
 						id: 'vampire-ancestry-5b',
 						name: 'Growing Appetite',
-						description: 'Once per round, when you deal damage to a bleeding, winded, or dying creature, you gain 1 surge.'
+						tag: 'damage-hurt-creature',
+						trigger: 'You deal damage to a bleeding, winded, or dying creature',
+						value: '1',
+						frequency: ResourceGainFrequency.OncePerRound
 					}),
 					value: 1
 				},
@@ -543,17 +593,23 @@ As a vampire, you possess supernatural abilities that make you an excellent hunt
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'bleeding',
-							trigger: 'The first time each round that a non-minion creature within 10 squares of you is made bleeding, winded, or dying, or reduced to 0 Stamina',
-							value: '1'
+							trigger: 'A non-minion creature within 10 squares of you is made bleeding, winded, or dying, or reduced to 0 Stamina',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'deal-damage-self',
-							trigger: 'The first time each round that you deal damage to a bleeding, winded, or dying creature',
-							value: '1'
+							trigger: 'You deal damage to a bleeding, winded, or dying creature',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -680,10 +736,24 @@ For each condition the target suffers from, treat the thirst spent on this abili
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.create({
-					id: 'vampire-class-3-',
+				FactoryLogic.feature.createMultiple({
+					id: 'vampire-class-3-1',
 					name: 'Predatory Senses',
-					description: 'Your heightened senses of sight, smell, and hearing make you excellent at finding hidden prey. You gain a double edge on tests made to search for hidden creatures. Once on each of your turns, you can Search for Hidden Creatures as a free maneuver. You ignore concealment and creatures that are bleeding, winded, or dying can\'t be hidden from you.'
+					description: 'Your heightened senses of sight, smell, and hearing make you excellent at finding hidden prey.',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'vampire-class-3-1a',
+							name: 'Predatory Senses',
+							description: 'Once on each of your turns, you can Search for Hidden Creatures as a free maneuver. You ignore concealment and creatures that are bleeding, winded, or dying can\'t be hidden from you.'
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'vampire-class-3-1b',
+							name: 'Predatory Senses',
+							modifier: RollModifierType.DoubleEdge,
+							skills: [ 'Search' ],
+							condition: 'When searching for hidden creatures'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'vampire-class-3-2',
@@ -920,6 +990,7 @@ For each condition the target suffers from, treat the thirst spent on this abili
 			id: 'vampire-subclass-1',
 			name: 'Shrouded Lurker',
 			description: 'You are a master of darkness and shadows do your bidding. You use your dark tools to bind and wound your victims, as well as to escape their retaliation, hide, and patiently wait for the best moment to strike.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,
@@ -1168,6 +1239,7 @@ Some of your abilities have a shroud effect entry. Whenever you use a shroud abi
 			id: 'vampire-subclass-2',
 			name: 'Spore Bearer',
 			description: 'You are a host to innumerable parasites that prey upon both the dead and the living. Infectious spores swirl around you, poisoning and wearing down your victims as well as nourishing and bolstering your allies.',
+			classID: '',
 			featuresByLevel: [
 				{
 					level: 1,

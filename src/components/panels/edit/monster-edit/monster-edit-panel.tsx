@@ -1,16 +1,18 @@
-import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs, Tooltip, Upload } from 'antd';
 import { DownloadOutlined, ImportOutlined, InfoCircleOutlined, ThunderboltOutlined, ToolOutlined } from '@ant-design/icons';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Characteristic } from '@/enums/characteristic';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
 import { DamageType } from '@/enums/damage-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -187,17 +189,18 @@ export const MonsterEditPanel = (props: Props) => {
 			const copy = Utils.copy(monster);
 			copy.level = value;
 			if (copy.retainer) {
+				copy.retainer.level = copy.level;
 				if (copy.level >= 4) {
 					copy.retainer.level4 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 7) {
 					copy.retainer.level7 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 10) {
 					copy.retainer.level10 = undefined;
-					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 			}
 			setMonster(copy);
@@ -208,7 +211,7 @@ export const MonsterEditPanel = (props: Props) => {
 			const copy = Utils.copy(monster);
 			copy.role.type = value || MonsterRoleType.NoRole;
 			if (copy.retainer) {
-				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 			}
 			setMonster(copy);
 			props.onChange(copy);
@@ -256,7 +259,7 @@ export const MonsterEditPanel = (props: Props) => {
 					level4: lvl4,
 					level7: lvl7,
 					level10: lvl10,
-					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, lvl4, lvl7, lvl10)
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, lvl4, lvl7, lvl10)
 				};
 			} else {
 				copy.retainer = null;
@@ -452,7 +455,7 @@ export const MonsterEditPanel = (props: Props) => {
 					copy.retainer!.level10 = feature;
 					break;
 			}
-			copy.retainer!.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
+			copy.retainer!.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.characteristics, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -524,6 +527,44 @@ export const MonsterEditPanel = (props: Props) => {
 		const similarMonsters = getSimilarMonsters();
 		const stats = MonsterLogic.getSuggestedStats(monster);
 
+		const abilities = MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.Ability)
+			.map(f => f.data.ability);
+		const abilityCount = {
+			signature: abilities.filter(a => (a.cost === 'signature') && (a.type.usage === AbilityUsage.MainAction)).length,
+			main: abilities.filter(a => (a.cost !== 'signature') && (a.type.usage === AbilityUsage.MainAction)).length,
+			maneuver: abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).length,
+			triggered: abilities.filter(a => a.type.usage === AbilityUsage.Trigger).length,
+			villain: abilities.filter(a => a.type.usage === AbilityUsage.VillainAction).length
+		};
+
+		const getSuggestion = (suggested: number | string, actual: number, tolerance: number = 0) => {
+			const bounds = `${suggested}`.split(' - ').map(x => parseInt(x, 10));
+			const min = bounds[0];
+			const max = bounds[bounds.length - 1];
+
+			let state: 'success' | 'warning' | 'failure' = 'failure';
+			let title = `This monster has ${actual}`;
+			if ((actual >= min) && (actual <= max)) {
+				state = 'success';
+				title = `This monster matches, with ${actual}`;
+			} else if ((actual >= min - tolerance) && (actual <= max + tolerance)) {
+				state = 'warning';
+				title = `This monster has ${actual}, which is close`;
+			}
+
+			return (
+				<Space size={5}>
+					{suggested}
+					<Tooltip title={title}>
+						<span>
+							<CheckIcon state={state} />
+						</span>
+					</Tooltip>
+				</Space>
+			);
+		};
+
 		const getChart = (title: string, getValue: (m: Monster) => number, onChange: (value: number) => void) => {
 			const values = similarMonsters.map(getValue);
 			const selected = getValue(monster);
@@ -558,6 +599,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<>
 							<div>This page shows typical values for a <b>{MonsterLogic.getMonsterDescription(monster)}</b> monster.</div>
 							<div>Click on any <InfoCircleOutlined /> to see explanations and actual values from similar monsters.</div>
+							<div>Where this monster can be compared to the suggestion, an icon shows whether it matches.</div>
 						</>
 					}
 				/>
@@ -576,7 +618,7 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value={stats.ev}
+						value={getSuggestion(stats.ev, monster.encounterValue)}
 					/>
 					<Field
 						orientation='vertical'
@@ -591,7 +633,7 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value='5 - 6'
+						value={getSuggestion('5 - 6', monster.speed.value)}
 					/>
 					<Field
 						orientation='vertical'
@@ -606,7 +648,7 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value={stats.stamina}
+						value={getSuggestion(stats.stamina, monster.stamina, stats.staminaTolerance)}
 					/>
 					<Field
 						orientation='vertical'
@@ -621,7 +663,7 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value='0 - 1'
+						value={getSuggestion('0 - 1', monster.stability)}
 					/>
 					<Field
 						orientation='vertical'
@@ -636,7 +678,7 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value={stats.freeStrikeDamage}
+						value={getSuggestion(stats.freeStrikeDamage, monster.freeStrikeDamage)}
 					/>
 				</Flex>
 				<HeaderText>Characteristics</HeaderText>
@@ -644,7 +686,22 @@ export const MonsterEditPanel = (props: Props) => {
 					<Field
 						orientation='vertical'
 						label='Highest'
-						value={stats.highestCharacteristic}
+						value={getSuggestion(stats.highestCharacteristic, Math.max(...[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(c => MonsterLogic.getCharacteristic(monster, c))))}
+					/>
+					<Field
+						orientation='vertical'
+						label={
+							<Space>
+								Potency
+								<Popover
+									trigger='click'
+									content={<div>The weak, average and strong potency values for this monster&apos;s abilities</div>}
+								>
+									<InfoCircleOutlined />
+								</Popover>
+							</Space>
+						}
+						value={`${stats.potencies.weak} / ${stats.potencies.average} / ${stats.potencies.strong}`}
 					/>
 					<Divider orientation='vertical' />
 					<Field
@@ -728,41 +785,60 @@ export const MonsterEditPanel = (props: Props) => {
 					<Field
 						orientation='vertical'
 						label='Main (sig.)'
-						value={1}
+						value={getSuggestion(1, abilityCount.signature)}
 					/>
 					<Field
 						orientation='vertical'
 						label='Main (other)'
-						value={stats.actions.main}
+						value={getSuggestion(stats.actions.main, abilityCount.main)}
 					/>
 					<Field
 						orientation='vertical'
 						label='Maneuver'
-						value={stats.actions.maneuver}
+						value={getSuggestion(stats.actions.maneuver, abilityCount.maneuver)}
 					/>
 					<Field
 						orientation='vertical'
 						label='Triggered'
-						value={stats.actions.triggered}
+						value={getSuggestion(stats.actions.triggered, abilityCount.triggered)}
 					/>
 					<Field
 						orientation='vertical'
 						label='Villain'
-						value={stats.actions.villain}
+						value={getSuggestion(stats.actions.villain, abilityCount.villain)}
 					/>
 				</Flex>
-				<HeaderText>Ability Damage</HeaderText>
+				<HeaderText tags={[ stats.expectedTargets === 1 ? '1 target' : `${stats.expectedTargets} targets` ]}>Ability Damage</HeaderText>
 				<Flex align='center' justify='space-between'>
 					<Field
 						orientation='vertical'
 						label={
 							<Space>
-								Typical
+								Base
 								<Popover
 									trigger='click'
 									content={
 										<div>
-											<p>Ability affects one target (two targets for elite / leader / solo)</p>
+											<p>The damage before the monster&apos;s characteristic is added. Villain actions, dragon breath, abilities with a reactive test, and areas smaller than 3 use this instead of a strike value.</p>
+										</div>
+									}
+								>
+									<InfoCircleOutlined />
+								</Popover>
+							</Space>
+						}
+						value={`${stats.baseDamage.tier1} / ${stats.baseDamage.tier2} / ${stats.baseDamage.tier3}`}
+					/>
+					<Field
+						orientation='vertical'
+						label={
+							<Space>
+								Strike
+								<Popover
+									trigger='click'
+									content={
+										<div>
+											<p>A strike against the expected number of targets for this monster.</p>
 											<Divider />
 											<p>Common riders:</p>
 											<ul>
@@ -783,42 +859,17 @@ export const MonsterEditPanel = (props: Props) => {
 						orientation='vertical'
 						label={
 							<Space>
-								Light
+								More targets
 								<Popover
 									trigger='click'
 									content={
 										<div>
-											<p>Ability affects multiple extra targets / has an area effect / has a heavy rider</p>
-											<Divider />
-											<p>Common riders:</p>
-											<ul>
-												<div>Dazed / frightened / restrained</div>
-												<div>Forced movement, plus another rider</div>
-											</ul>
-										</div>
-									}
-								>
-									<InfoCircleOutlined />
-								</Popover>
-							</Space>
-						}
-						value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`}
-					/>
-					<Field
-						orientation='vertical'
-						label={
-							<Space>
-								Moderate
-								<Popover
-									trigger='click'
-									content={
-										<div>
-											<p>Ability affects one extra target / has a typical rider</p>
+											<p>A strike against one more target than expected, or one carrying a heavier rider.</p>
 											<Divider />
 											<p>Common riders:</p>
 											<ul>
 												<li>Slowed / weakened (save ends)</li>
-												<li>Dazed on tier 3</li>
+												<li>Dazed / frightened / restrained</li>
 												<li>Grabbed / restrained at tier 2 and 3</li>
 												<li>Forced movement, plus a condition</li>
 											</ul>
@@ -829,22 +880,22 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`}
+						value={`${stats.damageMoreTargets.tier1} / ${stats.damageMoreTargets.tier2} / ${stats.damageMoreTargets.tier3}`}
 					/>
 					<Field
 						orientation='vertical'
 						label={
 							<Space>
-								Heavy
+								Fewer targets
 								<Popover
 									trigger='click'
 									content={
 										<div>
-											<p>Ability affects fewer targets / has a light (or no) rider</p>
+											<p>A strike against one fewer target than expected, or one with a light rider or none at all.</p>
 											<Divider />
 											<p>Common riders:</p>
 											<ul>
-												<li>Forced movement: push/pull/slide 1</li>
+												<li>Forced movement: push / pull / slide 1</li>
 												<li>Prone at tier 3</li>
 											</ul>
 										</div>
@@ -854,77 +905,29 @@ export const MonsterEditPanel = (props: Props) => {
 								</Popover>
 							</Space>
 						}
-						value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`}
+						value={`${stats.damageFewerTargets.tier1} / ${stats.damageFewerTargets.tier2} / ${stats.damageFewerTargets.tier3}`}
+					/>
+					<Field
+						orientation='vertical'
+						label={
+							<Space>
+								Area
+								<Popover
+									trigger='click'
+									content={
+										<div>
+											<p>An ability with an area of 3 or more. Smaller areas use the base damage instead.</p>
+										</div>
+									}
+								>
+									<InfoCircleOutlined />
+								</Popover>
+							</Space>
+						}
+						value={`${stats.areaDamage.tier1} / ${stats.areaDamage.tier2} / ${stats.areaDamage.tier3}`}
 					/>
 				</Flex>
 			</div>
-		);
-	};
-
-	const getExampleAbilitiesSection = () => {
-		const similar: { feature: Feature, count: number }[] = [];
-		getSimilarMonsters().forEach(m => {
-			m.features
-				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
-				.filter(f => !monster.features.some(mf => mf.name === f.name))
-				.forEach(f => {
-					const current = similar.find(sf => sf.feature.name === f.name);
-					if (current) {
-						current.count += 1;
-					} else {
-						similar.push({
-							feature: f,
-							count: 1
-						});
-					}
-				});
-		});
-		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
-
-		const importFeature = (feature: Feature) => {
-			const featureCopy = Utils.copy(feature);
-			featureCopy.id = Utils.guid();
-
-			const copy = Utils.copy(monster);
-			copy.features.push(featureCopy);
-			setMonster(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<Space orientation='vertical' style={{ width: '100%' }}>
-				<Segmented
-					block={true}
-					options={[
-						{ value: MonsterFeatureCategory.Signature, label: 'Signature' },
-						{ value: MonsterFeatureCategory.Action, label: 'Main' },
-						{ value: MonsterFeatureCategory.Maneuver, label: 'Maneuver' },
-						{ value: MonsterFeatureCategory.Trigger, label: 'Triggered' },
-						{ value: MonsterFeatureCategory.Villain, label: 'Villain' }
-					]}
-					value={selectedCategory}
-					onChange={setSelectedCategory}
-				/>
-				{
-					sortedSimilar.map(s => (
-						<Expander
-							key={s.feature.id}
-							title={s.feature.name}
-							tags={[ FeatureLogic.getFeatureTag(s.feature) ]}
-							extra={[
-								<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
-							]}
-						>
-							<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
-						</Expander>
-					))
-				}
-				{
-					sortedSimilar.length === 0 ?
-						<Empty text='None in similar monsters' />
-						: null
-				}
-			</Space>
 		);
 	};
 
@@ -942,19 +945,21 @@ export const MonsterEditPanel = (props: Props) => {
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Popover
-							trigger='click'
-							content={
-								<Space orientation='vertical'>
-									<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
-									<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
-									<Divider />
-									<Button block={true} disabled={getSimilarMonsters().length < 2} icon={<ThunderboltOutlined />} onClick={genesplice}>Genesplice</Button>
-								</Space>
-							}
-						>
-							<Button type='text' icon={<ToolOutlined />} />
-						</Popover>
+						<ButtonGroup
+							buttons={[
+								{ type: 'button', icon: <ThunderboltOutlined />, tooltip: 'Genesplice', disabled: getSimilarMonsters().length < 2, onClick: genesplice },
+								{
+									type: 'dropdown',
+									icon: <ToolOutlined />,
+									popover: (
+										<Space orientation='vertical'>
+											<Button type='text' block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
+											<Button type='text' block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
+										</Space>
+									)
+								}
+							]}
+						/>
 					}
 				>
 					Similar Monsters
@@ -1020,6 +1025,77 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
+	const getExampleAbilitiesSection = () => {
+		const similar: { feature: Feature, count: number }[] = [];
+		getSimilarMonsters().forEach(m => {
+			m.features
+				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
+				.filter(f => !monster.features.some(mf => mf.name === f.name))
+				.forEach(f => {
+					const current = similar.find(sf => sf.feature.name === f.name);
+					if (current) {
+						current.count += 1;
+					} else {
+						similar.push({
+							feature: f,
+							count: 1
+						});
+					}
+				});
+		});
+		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
+
+		const importFeature = (feature: Feature) => {
+			const featureCopy = Utils.copy(feature);
+			featureCopy.id = Utils.guid();
+
+			const copy = Utils.copy(monster);
+			copy.features.push(featureCopy);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Alert
+					type='info'
+					showIcon={true}
+					title='These abilities come from the list of similar monsters.'
+				/>
+				<Segmented
+					block={true}
+					options={[
+						{ value: MonsterFeatureCategory.Signature, label: 'Signature' },
+						{ value: MonsterFeatureCategory.Action, label: 'Main' },
+						{ value: MonsterFeatureCategory.Maneuver, label: 'Maneuver' },
+						{ value: MonsterFeatureCategory.Trigger, label: 'Triggered' },
+						{ value: MonsterFeatureCategory.Villain, label: 'Villain' }
+					]}
+					value={selectedCategory}
+					onChange={setSelectedCategory}
+				/>
+				{
+					sortedSimilar.map(s => (
+						<Expander
+							key={s.feature.id}
+							title={s.feature.name}
+							extra={[
+								<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
+							]}
+						>
+							<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
+						</Expander>
+					))
+				}
+				{
+					sortedSimilar.length === 0 ?
+						<Empty text='None in similar monsters' />
+						: null
+				}
+			</Space>
+		);
+	};
+
 	const tabs = [
 		{
 			key: 'monster',
@@ -1065,50 +1141,48 @@ export const MonsterEditPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className='monster-edit-panel'>
-				<div className='monster-workspace-column'>
-					<Tabs items={tabs} />
-				</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div className='monster-preview-column'>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<MonsterPanel
-													monster={monster}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Suggested Statistics',
-										children: getMonsterStatsSection()
-									},
-									{
-										key: '3',
-										label: 'Example Abilities',
-										children: getExampleAbilitiesSection()
-									},
-									{
-										key: '4',
-										label: 'Similar Monsters',
-										children: getSimilarMonstersSection()
-									}
-								]}
-							/>
-						</div>
-						: null
-				}
+		<div className='monster-edit-panel'>
+			<div className='monster-workspace-column'>
+				<Tabs items={tabs} />
 			</div>
-		</ErrorBoundary>
+			{
+				props.mode === PanelMode.Full ?
+					<div className='monster-preview-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterPanel
+												monster={monster}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Suggested Statistics',
+									children: getMonsterStatsSection()
+								},
+								{
+									key: '3',
+									label: 'Similar Monsters',
+									children: getSimilarMonstersSection()
+								},
+								{
+									key: '4',
+									label: 'Example Abilities',
+									children: getExampleAbilitiesSection()
+								}
+							]}
+						/>
+					</div>
+					: null
+			}
+		</div>
 	);
 };

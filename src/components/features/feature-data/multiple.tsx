@@ -1,6 +1,6 @@
 import { Feature, FeatureMultipleData } from '@/models/feature';
 import { Expander } from '@/components/controls/expander/expander';
-import { FeatureListEditPanel } from '@/components/panels/edit/feature-list-edit/feature-list-edit-panel';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { PanelMode } from '@/enums/panel-mode';
@@ -23,7 +23,7 @@ export const InfoMultiple = (props: InfoProps) => {
 	if (props.feature.description) {
 		return (
 			<Expander title='Features'>
-				{props.data.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+				{props.data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 			</Expander>
 		);
 	}
@@ -33,7 +33,7 @@ export const InfoMultiple = (props: InfoProps) => {
 			{
 				props.data.features.map(f => (
 					<div key={f.id} className='container'>
-						<FeaturePanel feature={f} mode={PanelMode.Full} />
+						<FeaturePanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</div>
 				))
 			}

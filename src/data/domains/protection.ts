@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const protection: Domain = {
@@ -134,8 +135,10 @@ Additionally, you can place this spell on a building or vehicle (or a similar st
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that you or any ally within 10 squares gains temporary Stamina, or uses a triggered action to reduce incoming damage or impose a bane or double bane on an enemy’s power roll.',
-			value: '2'
+			trigger: 'You or any ally within 10 squares gains temporary Stamina, or uses a triggered action to reduce incoming damage or impose a bane or double bane on an enemy’s power roll.',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

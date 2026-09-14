@@ -9,6 +9,7 @@ export enum FeatureField {
 	Recoveries = 'Recoveries',
 	RecoveryValue = 'Recovery Value',
 	Renown = 'Renown',
+	RolledDamage = 'Rolled Damage',
 	Save = 'Save',
 	Speed = 'Speed',
 	Stability = 'Stability',

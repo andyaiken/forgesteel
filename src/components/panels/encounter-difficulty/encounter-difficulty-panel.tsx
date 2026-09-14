@@ -3,7 +3,6 @@ import { useHeroes, useOptions } from '@/contexts/data-context';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Info } from '@/components/controls/info/info';
@@ -57,38 +56,36 @@ export const EncounterDifficultyPanel = (props: Props) => {
 	}
 
 	return (
-		<ErrorBoundary>
-			<div className='encounter-difficulty-panel'>
-				{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
-				<div className='ds-text'>
-					Difficulty for {OptionsLogic.getPartyDescription(options)}.
-					<Info>
-						<p>You can change the party size and level in Settings.</p>
-					</Info>
-				</div>
-				<div className='encounter-slider'>
-					<Slider
-						range={true}
-						marks={marks}
-						min={0}
-						max={Math.max(budgets.maxHard * 1.1, strength)}
-						value={[ strength ]}
-						styles={{
-							track: {
-								background: 'transparent'
-							}
-						}}
-						tooltip={{ open: false }}
-					/>
-				</div>
-				<StatsRow>
-					<Field orientation='vertical' label='Monsters' value={monsterCount} />
-					<Field orientation='vertical' label='Strength' value={strength} />
-					<Field orientation='vertical' label='Difficulty' value={difficulty} />
-					<Field orientation='vertical' label='Victories' value={victories} />
-				</StatsRow>
-				{warnings}
+		<div className='encounter-difficulty-panel'>
+			{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
+			<div className='ds-text'>
+				Difficulty for {OptionsLogic.getPartyDescription(options)}.
+				<Info>
+					<p>You can change the party size and level in Settings.</p>
+				</Info>
 			</div>
-		</ErrorBoundary>
+			<div className='encounter-slider'>
+				<Slider
+					range={true}
+					marks={marks}
+					min={0}
+					max={Math.max(budgets.maxHard * 1.1, strength)}
+					value={[ strength ]}
+					styles={{
+						track: {
+							background: 'transparent'
+						}
+					}}
+					tooltip={{ open: false }}
+				/>
+			</div>
+			<StatsRow>
+				<Field orientation='vertical' label='Monsters' value={monsterCount} />
+				<Field orientation='vertical' label='Strength' value={strength} />
+				<Field orientation='vertical' label='Difficulty' value={difficulty} />
+				<Field orientation='vertical' label='Victories' value={victories} />
+			</StatsRow>
+			{warnings}
+		</div>
 	);
 };

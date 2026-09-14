@@ -11,7 +11,6 @@ import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
@@ -592,7 +591,7 @@ export const PlotEditPanel = (props: Props) => {
 		.filter(e => Utils.textMatches([ e.element.name, e.element.description ], searchTerm));
 
 	return (
-		<ErrorBoundary>
+		<>
 			<div className='plot-edit-panel'>
 				<Tabs
 					items={[
@@ -677,6 +676,6 @@ export const PlotEditPanel = (props: Props) => {
 					onClose={() => setAddingReference(false)}
 				/>
 			</Drawer>
-		</ErrorBoundary>
+		</>
 	);
 };

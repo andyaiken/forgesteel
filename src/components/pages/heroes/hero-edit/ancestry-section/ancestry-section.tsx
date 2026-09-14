@@ -12,6 +12,7 @@ import { ReactNode } from 'react';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 
@@ -46,7 +47,7 @@ export const AncestrySection = (props: Props) => {
 
 	let choices: ReactNode[] = [];
 	if (props.hero.ancestry) {
-		choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry, props.hero.class?.level || 1)
+		choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry, props.hero.class?.level || 1, TutorialMode.Complete)
 			.map(f => f.feature)
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (

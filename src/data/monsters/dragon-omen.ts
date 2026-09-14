@@ -150,7 +150,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 4,
+								bonus: 5,
 								tier1: '14 damage; M<3 bleeding (save ends)',
 								tier2: '19 damage; M<4 bleeding (save ends)',
 								tier3: '23 damage; M<5 bleeding (save ends)'

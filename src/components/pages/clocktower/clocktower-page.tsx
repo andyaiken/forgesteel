@@ -83,6 +83,7 @@ export const ClocktowerPage = (props: Props) => {
 				</div>
 				<AppFooter
 					page='clocktower'
+					hero={null}
 					params={props.params}
 				/>
 			</div>

@@ -1,5 +1,4 @@
 import { Element } from '@/models/element';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -23,13 +22,11 @@ export const ElementEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='element-edit-panel'>
-				<NameDescEditPanel
-					element={element}
-					onChange={onChange}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='element-edit-panel'>
+			<NameDescEditPanel
+				element={element}
+				onChange={onChange}
+			/>
+		</div>
 	);
 };

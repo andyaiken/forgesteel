@@ -12,4 +12,15 @@
     .labeled-field {
         margin: 3px 0 0;
     }
+
+    .potency-resistance {
+        grid-column-end: span 3;
+        margin-top: 3px;
+        font-size: 8px;
+        text-align: center;
+
+        .data {
+            font-weight: bold;
+        }
+    }
 }

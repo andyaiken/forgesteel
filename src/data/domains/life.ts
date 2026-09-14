@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const life: Domain = {
@@ -134,8 +135,10 @@ export const life: Domain = {
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that a creature within 10 squares regains Stamina',
-			value: '2'
+			trigger: 'A creature within 10 squares regains Stamina',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

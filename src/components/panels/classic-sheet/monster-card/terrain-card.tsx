@@ -152,7 +152,11 @@ export const TerrainCard = (props: Props) => {
 					<h2>
 						<span className='name'>{terrain.name}</span>
 						<span className='type'>{terrain.description}</span>
-						<span className='cost'>EV {terrain.encounterValue}</span>
+						{
+							terrain.encounterValue?.length ?
+								<span className='cost'>EV {terrain.encounterValue}</span>
+								: null
+						}
 					</h2>
 				</div>
 				{getDetails()}

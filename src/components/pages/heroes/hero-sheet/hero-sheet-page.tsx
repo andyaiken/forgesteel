@@ -26,11 +26,13 @@ import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '@/components/panels/classic-sheet/projects-card/projects-card';
 import { ProjectsOverviewCard } from '@/components/panels/classic-sheet/projects-card/project-info-card';
+import { RollModifiersCard } from '@/components/panels/classic-sheet/roll-modifiers-card/roll-modifiers-card';
 import { RulesData } from '@/data/rules-data';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsResourcesCard } from '@/components/panels/classic-sheet/stats-resources-card/stats-resources-card';
+import { TerrainCard } from '@/components/panels/classic-sheet/monster-card/terrain-card';
 import { TitlesCard } from '@/components/panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
 import { useOptions } from '@/contexts/data-context';
@@ -90,6 +92,15 @@ export const HeroSheetPage = (props: Props) => {
 			});
 		}
 
+		character.extraComplications.forEach(c => {
+			required.unshift({
+				element: <ComplicationCard complication={c} hero={hero} key={c.id} />,
+				width: 1,
+				height: Math.min(layout.linesY, SheetFormatter.calculateComplicationSize(c, layout.cardLineLen)),
+				shown: false
+			});
+		});
+
 		let lineWidth = layout.cardLineLen;
 
 		// Features / Reference / Other
@@ -111,7 +122,6 @@ export const HeroSheetPage = (props: Props) => {
 					refH = Math.min(layout.linesY, refH);// Will need a better solution at some point
 				}
 			}
-			// console.log('###### Reference size: ', refH);
 			required.unshift({
 				element: <FeatureReferenceCard character={character} columns={refW - 1} key='feature-reference' />,
 				width: refW,
@@ -150,6 +160,15 @@ export const HeroSheetPage = (props: Props) => {
 				element: <ProjectsOverviewCard projects={character.projects} key='projects-overview' />,
 				width: 1,
 				height: h,
+				shown: false
+			});
+		}
+
+		if (character.rollModifiers?.length) {
+			required.push({
+				element: <RollModifiersCard rollModifiers={character.rollModifiers} key='roll-modifiers' />,
+				width: 1,
+				height: SheetFormatter.calculateRollModifiersCardSize(character.rollModifiers, layout.cardLineLen),
 				shown: false
 			});
 		}
@@ -263,7 +282,6 @@ export const HeroSheetPage = (props: Props) => {
 							refH = Math.min(layoutEnd.linesY, refH);// Will need a better solution at some point
 						}
 					}
-					// console.log('###### RECALC Reference size: ', refH, refW);
 					card.width = refW;
 					card.height = refH;
 
@@ -304,6 +322,14 @@ export const HeroSheetPage = (props: Props) => {
 				element: <MonsterCard monster={fs} key={fs.id} />,
 				width: 1,
 				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateMonsterSize(fs, layoutEnd.cardLineLen)),
+				shown: false
+			});
+		});
+		character.fixtures.forEach(fx => {
+			extraCards.required.unshift({
+				element: <TerrainCard terrain={fx} key={fx.id} />,
+				width: 1,
+				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateTerrainSize(fx, layoutEnd.cardLineLen)),
 				shown: false
 			});
 		});

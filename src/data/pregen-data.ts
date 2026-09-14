@@ -3,7 +3,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Pregen } from '@/models/pregen';
 
 const dwarfFuryPregen: Pregen = {
-	id: 'AkKRH-90Rou-1f2K7-yHZqO-eLUJM-Q1Dll',
+	id: 'dwarf-fury-pregen-keth',
 	name: 'Keth',
 	description: 'Level 1 Dwarf Fury',
 	sourcebookIDs: [ '', 'orden' ],
@@ -100,7 +100,7 @@ const dwarfFuryPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-dwarf-language',
 			selections: [
 				'Zaliac'
 			]
@@ -133,7 +133,7 @@ const dwarfFuryPregen: Pregen = {
 };
 
 const highElfTacticianPregen: Pregen = {
-	id: 's7NJS-H09JA-pUTrY-d9Yni-BhYHn-IQCPL',
+	id: 'high-elf-tactician-pregen-the-earth-cries-the-skies-divide',
 	name: 'The Earth Cries The Skies Divide',
 	description: 'Level 1 Elf (high) Tactician',
 	sourcebookIDs: [ '', 'orden' ],
@@ -218,7 +218,7 @@ const highElfTacticianPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-high-elf-language',
 			selections: [
 				'Hyrallic'
 			]
@@ -253,7 +253,7 @@ const highElfTacticianPregen: Pregen = {
 };
 
 const humanCensorPregen: Pregen = {
-	id: 'xD4WN-g9hyI-avTXz-mALVl-fl4HL-ENpgD',
+	id: 'human-censor-pregen-jennet',
 	name: 'Jennet',
 	description: 'Level 1 Human Censor',
 	sourcebookIDs: [ '', 'orden' ],
@@ -369,7 +369,7 @@ const humanCensorPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-human-language',
 			selections: [
 				'Vaslorian'
 			]
@@ -391,7 +391,7 @@ const humanCensorPregen: Pregen = {
 };
 
 const humanNullPregen: Pregen = {
-	id: 'uZsUf-WAKiH-uoY6z-7TDMk-JTK72-8Pu38',
+	id: 'human-null-pregen-ashley',
 	name: 'Ashley',
 	description: 'Level 1 Human Null',
 	sourcebookIDs: [ '', 'orden' ],
@@ -484,7 +484,7 @@ const humanNullPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Kalliak'
 			]
@@ -517,7 +517,7 @@ const humanNullPregen: Pregen = {
 };
 
 const humanTalentPregen: Pregen = {
-	id: 'wt04z-EkqhA-sY1I9-Dw5wU-bpqHl-aYq9E',
+	id: 'human-talent-pregen-garrick',
 	name: 'Garrick',
 	description: 'Level 1 Human Talent',
 	sourcebookIDs: [ '', 'orden' ],
@@ -615,7 +615,7 @@ const humanTalentPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-monastic-order-language',
 			selections: [
 				'Hyrallic'
 			]
@@ -661,7 +661,7 @@ const humanTalentPregen: Pregen = {
 };
 
 const orcConduitPregen: Pregen = {
-	id: 'PZcgI-IA0LT-qprwH-9FNCX-IhUdq-40QkW',
+	id: 'orc-conduit-pregen-khettovek',
 	name: 'Khettovek',
 	description: 'Level 1 Orc Conduit',
 	sourcebookIDs: [ '', 'orden' ],
@@ -745,7 +745,7 @@ const orcConduitPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Kalliak'
 			]
@@ -798,7 +798,7 @@ const orcConduitPregen: Pregen = {
 };
 
 const polderElementalistPregen: Pregen = {
-	id: 'YDBa2-Y6Kem-6pMRx-cMn3c-DYNI8-S9sOb',
+	id: 'polder-elementalist-pregen-bethell',
 	name: 'Bethell',
 	description: 'Level 1 Polder Elementalist',
 	sourcebookIDs: [ '', 'orden' ],
@@ -872,7 +872,7 @@ const polderElementalistPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-polder-language',
 			selections: [
 				'Khoursirian'
 			]
@@ -926,7 +926,7 @@ const polderElementalistPregen: Pregen = {
 };
 
 const polderShadowPregen: Pregen = {
-	id: 'nZOww-Rv9L6-gzX61-UYLIJ-PlpcB-mTXKs',
+	id: 'polder-shadow-pregen-bellamy',
 	name: 'Bellamy',
 	description: 'Level 1 Polder Shadow',
 	sourcebookIDs: [ '', 'orden' ],
@@ -1005,7 +1005,7 @@ const polderShadowPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-polder-language',
 			selections: [
 				'Khoursirian'
 			]
@@ -1056,38 +1056,38 @@ const polderShadowPregen: Pregen = {
 };
 
 const wodeElfTroubadourPregen: Pregen = {
-	id: 'VSLoV-HXFkr-mMquU-5YLvW-CxLEm-4TIyG',
+	id: 'wode-elf-troubadour-pregen-lliarion',
 	name: 'Lliarion',
 	description: 'Level 1 Elf (wode) Troubadour',
 	sourcebookIDs: [ '', 'orden' ],
 	ancestryID: 'ancestry-wode-elf',
 	cultureID: 'culture-bespoke-culture',
 	careerID: 'career-performer',
-	classID: '9y3Jx3koKZipiPh1',
+	classID: 'class-troubadour',
 	complicationID: null,
 	incitingIncidentID: 'career-performer-ii-6',
 	level: 1,
 	characteristics: FactoryLogic.createCharacteristics(1, 2, 1, -1, 2),
 	selectedSubclassIDs: [
-		'tWBfpTKQXZ12jGsU'
+		'troubadour-virtuoso'
 	],
 	featureSelections: [
 		{
-			featureID: 'JEPrmTnFwNbi7kWO',
+			featureID: 'troubadour-12',
 			selections: [
-				'oklqgAHvGNBYvZ6Y'
+				'troubadour-58'
 			]
 		},
 		{
-			featureID: 'cCfz5o1dUmzOYVPL',
+			featureID: 'troubadour-13',
 			selections: [
-				'48Ek5173XbbcaIuv'
+				'troubadour-60'
 			]
 		},
 		{
-			featureID: 'smLIhr6BGJPZscJG',
+			featureID: 'troubadour-14',
 			selections: [
-				'MKhak5HyGbRZdhWy'
+				'troubadour-63'
 			]
 		},
 		{
@@ -1115,13 +1115,13 @@ const wodeElfTroubadourPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'UH5m1URtvSjZqfQb',
+			featureID: 'troubadour-3',
 			selections: [
 				'Brag'
 			]
 		},
 		{
-			featureID: 'zVuRuelOOMRXxCgG',
+			featureID: 'troubadour-virtuoso-1',
 			selections: [
 				'Read Person'
 			]
@@ -1134,26 +1134,26 @@ const wodeElfTroubadourPregen: Pregen = {
 			]
 		},
 		{
-			featureID: 'GjD2ZwdbvEIZOKQV',
+			featureID: 'troubadour-4',
 			selections: [
 				'Flirt',
 				'Persuade'
 			]
 		},
 		{
-			featureID: 'WpHiobCwPhxC5q2g',
+			featureID: 'troubadour-5',
 			selections: [
 				'Hide'
 			]
 		},
 		{
-			featureID: '3rwc3gnUTZ6Ta7a0',
+			featureID: 'troubadour-7',
 			selections: [
 				'kit-swashbuckler'
 			]
 		},
 		{
-			featureID: 'culture-language',
+			featureID: 'culture-bespoke-culture-language',
 			selections: [
 				'Yllyric'
 			]

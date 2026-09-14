@@ -5,20 +5,21 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { SubClass } from '@/models/subclass';
 
 export const auteur: SubClass = {
-	id: 'u3JAwbvGQEHPi6cY',
+	id: 'troubadour-auteur',
 	name: 'Auteur',
 	description: 'You seek drama from story and recount, using your magic to manipulate the sequence of events unfolding before you.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
-					id: '63GSnAtLidKQThSw',
+					id: 'troubadour-auteur-1',
 					selected: [ 'Brag' ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'VM5qLsp8pXpYt180',
+						id: 'troubadour-auteur-2',
 						name: 'Blocking',
 						description: 'No, no, no, you lose the audience that way. Try it like this …',
 						type: FactoryLogic.type.createNoAction(),
@@ -32,7 +33,7 @@ export const auteur: SubClass = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'WLhzen5TMIS87eap',
+						id: 'troubadour-auteur-3',
 						name: 'Dramatic Monologue',
 						description: 'It doesn’t need to make sense. Just say it with emotion.',
 						type: FactoryLogic.type.createManeuver(),
@@ -52,7 +53,7 @@ export const auteur: SubClass = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'MUMrI7zMhGiDF6an',
+						id: 'troubadour-auteur-4',
 						name: 'Turnabout Is Fair Play',
 						description: 'All’s fair in love and whatever.',
 						type: FactoryLogic.type.createTrigger('The target makes an ability roll that has an edge, a double edge, a bane, or a double bane.'),
@@ -74,13 +75,13 @@ export const auteur: SubClass = {
 			level: 2,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'NR3KiD1HgYdQ5KHv',
+					id: 'troubadour-auteur-5',
 					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'wbcpRLxbH1FXK30r',
+									id: 'troubadour-auteur-6',
 									name: 'Guest Star',
 									description: 'We offered them a percentage of the gross. So they’re working for free!',
 									type: FactoryLogic.type.createMain(),
@@ -98,7 +99,7 @@ export const auteur: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'xun0HqS4EyDtB40D',
+									id: 'troubadour-auteur-7',
 									name: 'Twist at the End',
 									description: 'You didn’t see that coming, did you?!',
 									type: FactoryLogic.type.createMain(),
@@ -121,7 +122,7 @@ export const auteur: SubClass = {
 			level: 3,
 			features: [
 				FactoryLogic.feature.create({
-					id: '8mgJuIOaJ89ei7An',
+					id: 'troubadour-auteur-8',
 					name: 'Missed Cue',
 					description: 'If you aren’t surprised at the start of an encounter, you can choose one enemy within your line of effect who is not a leader or solo creature. The Director temporarily removes the chosen creature from the encounter. The chosen creature enters the encounter at the start of the second combat round. You must earn 3 Victories before you can use this feature again.'
 				})
@@ -135,12 +136,12 @@ export const auteur: SubClass = {
 			level: 5,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'z5ajGRuxCgWGBqkY',
+					id: 'troubadour-auteur-9',
 					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'V532EvelvtngOBm5',
+								id: 'troubadour-auteur-10',
 								name: 'Fix It in Post',
 								description: 'Once on each of your turns, you can use a free maneuver to change one condition affecting a creature within distance of your Dramatic Monologue ability. Choose one of the following conditions on the target: bleeding, frightened, prone, slowed, or taunted. You change that condition to another of those conditions, maintaining the duration and origin of the original condition. A target who is no longer prone can stand up.'
 							}),
@@ -149,7 +150,7 @@ export const auteur: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'blD6AhJ1qRfFDLGB',
+									id: 'troubadour-auteur-11',
 									name: 'Take Two!',
 									description: 'One more, and this time make it interesting.',
 									type: FactoryLogic.type.createNoAction(),
@@ -171,13 +172,13 @@ export const auteur: SubClass = {
 			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'CwUQTsffxHIfqd1R',
+					id: 'troubadour-auteur-12',
 					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: '0Gh84KaW8ivImayH',
+									id: 'troubadour-auteur-13',
 									name: 'Here’s How Your Story Ends',
 									description: 'You give away the ending of this battle, and it’s not great for them.',
 									type: FactoryLogic.type.createMain(),
@@ -202,7 +203,7 @@ export const auteur: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: '756Ynw8Qoy8v7gPo',
+									id: 'troubadour-auteur-14',
 									name: 'You’re All My Understudies',
 									description: 'It’s important for everyone to know each other’s lines, just in case …',
 									type: FactoryLogic.type.createManeuver(),
@@ -229,7 +230,7 @@ export const auteur: SubClass = {
 			level: 8,
 			features: [
 				FactoryLogic.feature.create({
-					id: 'oyvdzACJtFq8WHn7',
+					id: 'troubadour-auteur-15',
 					name: 'Deleted Scene',
 					description: 'Whenever a creature within distance of your Dramatic Monologue ability makes a power roll, you can spend 1 drama as a free triggered action to use Dramatic Monologue, targeting only one creature.'
 				})
@@ -239,13 +240,13 @@ export const auteur: SubClass = {
 			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
-					id: 'gPzNIv7yp4ELiJSz',
+					id: 'troubadour-auteur-16',
 					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'vHIxEUa7yuxQSjDO',
+									id: 'troubadour-auteur-17',
 									name: 'Epic',
 									description: 'Your story tells a tale of the villain’s waning power and how the heroes rose to the occasion to stop them.',
 									type: FactoryLogic.type.createManeuver(),
@@ -274,7 +275,7 @@ export const auteur: SubClass = {
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'nqibjR3wWOCxaYIk',
+									id: 'troubadour-auteur-18',
 									name: 'Rising Tension',
 									description: 'You narrate the tension of the scene and put all hope into your protagonist to turn things around.',
 									type: FactoryLogic.type.createManeuver(),

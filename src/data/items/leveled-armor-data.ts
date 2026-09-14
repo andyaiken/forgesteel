@@ -7,6 +7,8 @@ import { FeatureField } from '@/enums/feature-field';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export class LeveledArmorData {
 	static adaptiveSecondSkin: Item = FactoryLogic.createItem({
@@ -222,10 +224,11 @@ export class LeveledArmorData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'item-grand-scarab-9',
-						name: '',
-						description: 'If you fly any distance before making a strike, that strike gains an edge.'
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Strike,
+						condition: 'When you fly any distance before making the strike'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-grand-scarab-9a',
@@ -482,10 +485,10 @@ export class LeveledArmorData {
 			{
 				level: 1,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createRollModifier({
 						id: 'item-shrouded-memory-1',
-						name: '',
-						description: 'You gain an edge on tests made to lie about or conceal your identity.'
+						modifier: RollModifierType.Edge,
+						condition: 'Lying about or concealing your identity'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-shrouded-memory-1a',

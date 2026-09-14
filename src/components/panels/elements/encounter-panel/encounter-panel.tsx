@@ -9,6 +9,7 @@ import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactionType } from '@/enums/faction-type';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -83,12 +84,9 @@ export const EncounterPanel = (props: Props) => {
 				{
 					groups.map((group, n) => (
 						<SelectablePanel key={group.id} style={{ paddingTop: '0' }}>
-							{
-								groups.length > 1 ?
-									<HeaderText>{group.name || `Group ${n + 1}`}</HeaderText>
-									:
-									<HeaderText>Monsters</HeaderText>
-							}
+							<HeaderText tags={group.faction === FactionType.Ally ? [ 'Ally' ] : []}>
+								{group.name || (groups.length > 1 ? `Group ${n + 1}` : 'Monsters')}
+							</HeaderText>
 							<Space orientation='vertical'>
 								{
 									group.slots.map(slot => {

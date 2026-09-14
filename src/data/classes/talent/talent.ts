@@ -10,6 +10,7 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { chronopathy } from '@/data/classes/talent/chronopathy';
 import { telekinesis } from '@/data/classes/talent/telekinesis';
@@ -51,12 +52,16 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'move',
-							trigger: 'The first time each combat round that a creature is force moved',
-							value: '1'
+							trigger: 'A creature is force moved',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					],
 					details: `
@@ -333,8 +338,9 @@ Any abilities or features you use originate from your mind. Both your mind and y
 							id: 'talent-4-3b',
 							name: 'Mind Recovery',
 							tag: 'move 2',
-							trigger: 'The first time each combat round that a creature is force moved',
+							trigger: 'A creature is force moved',
 							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: [ 'move' ]
 						})
 					]
@@ -432,6 +438,7 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -504,8 +511,9 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					id: 'talent-10-2',
 					name: 'Clear Mind',
 					tag: 'move 3',
-					trigger: 'The first time each combat round that a creature is force moved',
+					trigger: 'A creature is force moved',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'move', 'move 2' ]
 				}),
 				FactoryLogic.feature.createMultiple({
@@ -538,6 +546,7 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 							tag: 'start 3',
 							trigger: 'Start of your turn',
 							value: '1d3 + 2',
+							frequency: ResourceGainFrequency.OncePerRound,
 							replacesTags: [ 'start', 'start 2' ]
 						}),
 						FactoryLogic.feature.create({
@@ -557,9 +566,11 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					details: 'You can spend vision to use one additional psionic ability on your turn, provided you pay the entire cost of the ability in vision. If you choose to use a psionic ability that usually costs no clarity, you must spend 1 vision to use it.'

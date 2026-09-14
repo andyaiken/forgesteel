@@ -616,12 +616,12 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'time-raider-1-feature-2',
+					id: 'time-raider-8-feature-3',
 					name: 'Foresight',
 					description: 'The nemesis doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'time-raider-1-feature-3',
+					id: 'time-raider-8-feature-4',
 					modifiers: [
 						FactoryLogic.damageModifier.create({
 							damageType: DamageType.Psychic,

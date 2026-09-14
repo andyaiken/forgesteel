@@ -19,7 +19,7 @@
 			.terrain-row {
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
-				background-color: rgba(255, 255, 255);
+				background-color: var(--fs-surface);
 				padding: 10px;
 				display: flex;
 				flex-direction: row;
@@ -55,13 +55,13 @@
 				padding: 10px;
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 0 0 10px 10px;
-				background-color: rgba(255, 255, 255);
+				background-color: var(--fs-surface);
 			}
 
 			.group-edit-row {
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
-				background-color: rgba(255, 255, 255);
+				background-color: var(--fs-surface);
 				padding: 10px;
 				display: flex;
 				flex-direction: column;
@@ -93,19 +93,19 @@
 						background: white;
 						padding: 5px 10px;
 						border-radius: 5px;
-						box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+						box-shadow: var(--fs-shadow-raised);
 					}
 				}
 
 				&.drag-highlight {
-					background-color: rgb(230, 244, 255);
+					background-color: var(--fs-accent-wash);
 
 					.ant-space {
 						opacity: 0.2;
 					}
 
 					&.drag-over {
-						border-color: rgb(22, 119, 255);
+						border-color: var(--fs-accent);
 
 						.drop-info-container {
 							.drop-info {
@@ -130,7 +130,7 @@
 .terrain-list-item {
 	border: 1px solid rgb(220, 220, 220);
 	border-radius: 10px;
-	background-color: rgba(255, 255, 255);
+	background-color: var(--fs-surface);
 	padding: 5px 10px;
 	display: flex;
 	flex-direction: row;
@@ -160,16 +160,7 @@ html[data-theme="dark"] {
 				.slot-row,
 				.terrain-row,
 				.customize-panel {
-					background-color: rgba(0, 0, 0);
 					color: rgba(255, 255, 255, 0.88);
-				}
-
-				&.drag-target {
-					background: rgb(80, 80, 80);
-				}
-
-				&.drag-over {
-					border-color: rgb(217, 217, 217);
 				}
 			}
 		}
@@ -182,7 +173,6 @@ html[data-theme="dark"] {
 
 		.monster-list-item,
 		.terrain-list-item {
-			background-color: rgba(0, 0, 0);
 			color: rgba(255, 255, 255, 0.88);
 		}
 	}

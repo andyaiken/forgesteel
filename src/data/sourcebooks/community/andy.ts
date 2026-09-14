@@ -12,6 +12,8 @@ import { FeatureField } from '@/enums/feature-field';
 import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { RollModifierType } from '@/enums/roll-modifier-type';
+import { RollType } from '@/enums/roll-type';
 
 export const beastfolk: Ancestry = {
 	id: 'ancestry-beastfolk',
@@ -29,39 +31,52 @@ Across the world - and across many worlds - humanoid cultures sometimes arise th
 			description: 'The animal spirit within you emerges in moments of danger.',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'beastfolk-1-1',
 						name: 'Pack Instinct',
-						description: `
-*You fight best beside your allies.*
-
-You gain an edge on melee strikes against enemies who are  adjacent to at least two of your allies.`
+						modifier: RollModifierType.Edge,
+						rollType: RollType.Strike,
+						condition: 'Against enemies who are adjacent to at least two of your allies (melee strikes)'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-2',
 						name: 'Predator Instinct',
-						description: `
-*You know how to finish the hunt.*
-
-You gain a bonus to strike damage equal to your echelon against winded enemies. 
-
-You gain an edge on Track tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-2a',
+								name: 'Predator Instinct',
+								description: 'You gain a bonus to strike damage equal to your echelon against winded enemies.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-2b',
+								name: 'Predator Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Track' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-3',
 						name: 'Rampager Instinct',
-						description: `
-*You overwhelm enemies through sheer force.*
-
-When you force move a creature, you deal damage to it equal to the distance moved.
-
-You gain an edge on Intimidate tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-3a',
+								name: 'Rampager Instinct',
+								description: 'When you force move a creature, you deal damage to it equal to the distance moved.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-3b',
+								name: 'Rampager Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Intimidate' ]
+							})
+						]
 					}),
 					value: 1
 				},
@@ -76,51 +91,76 @@ You gain an edge on Intimidate tests.`
 								field: FeatureField.Disengage,
 								value: 1
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-1-4b',
 								name: 'Skirmisher Instinct',
-								description: 'You gain an edge on Gymnastics and Jump tests.'
+								modifier: RollModifierType.Edge,
+								skills: [ 'Gymnastics', 'Jump' ]
 							})
 						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-5',
 						name: 'Stalker Instinct',
-						description: `
-*You are patient and unseen.*
-
-You gain an edge on Hide and Sneak tests.
-
-Your first strike against a creature that hasn’t acted yet this encounter gains an edge.`
+						description: 'You are patient and unseen.',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-5a',
+								name: 'Stalker Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide', 'Sneak' ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-5b',
+								name: 'Stalker Instinct',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Strike,
+								condition: 'Against a creature who hasn’t acted yet this encounter (first strike only)'
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-6',
 						name: 'Survivor Instinct',
-						description: `
-*You refuse to fall.*
-
-When you become winded, you gain temporary Stamina equal to your level.
-
-You gain an edge on Alertness and Endurance tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-6a',
+								name: 'Survivor Instinct',
+								description: 'When you become winded, you gain temporary Stamina equal to your level.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-6b',
+								name: 'Survivor Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Alertness', 'Endurance' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-1-7',
 						name: 'Trickster Instinct',
-						description: `
-*You survive through misdirection and cleverness.*
-
-When a creature misses you with a strike, you can use a triggered action to shift up to 2 squares. 
-
-You gain an edge on Lie and Persuade tests.`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-1-7a',
+								name: 'Trickster Instinct',
+								description: 'When a creature achieves a tier 1 result against you with a strike, you can use a triggered action to shift up to 2 squares.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-1-7b',
+								name: 'Trickster Instinct',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Lie', 'Persuade' ]
+							})
+						]
 					}),
 					value: 1
 				}
@@ -183,15 +223,24 @@ When a creature attempts to grab you, it takes damage equal to your echelon.`
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-5',
 						name: 'Echolocation',
-						description: `
-*You perceive your surroundings through reflected sound.*
-
-You ignore concealment and invisibility against creatures within 3 squares that are not hidden.
-
-You suffer a bane on Alertness and Eavesdrop tests in areas of loud noise.`
+						description: 'You perceive your surroundings through reflected sound.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-5a',
+								name: 'Echolocation',
+								description: 'You ignore concealment and invisibility against creatures within 3 squares that are not hidden.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-2-5b',
+								name: 'Echolocation',
+								modifier: RollModifierType.Bane,
+								skills: [ 'Alertness', 'Eavesdrop' ],
+								condition: 'In areas of loud noise'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -254,13 +303,22 @@ You can detect the location of any creatures touching the ground within 3 square
 								id: 'beastfolk-2-9a',
 								mode: 'Climb'
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createMultiple({
 								id: 'beastfolk-2-9b',
 								name: 'Climber',
-								description: `
-When a creature misses you with a melee strike while you are adjacent to a climbable surface, you can shift 1.
-
-You gain an edge on Climb tests.`
+								features: [
+									FactoryLogic.feature.create({
+										id: 'beastfolk-2-9ba',
+										name: 'Climber',
+										description: 'When a creature achieves a tier 1 result against you with a melee strike while you are adjacent to a climbable surface, you can shift 1.'
+									}),
+									FactoryLogic.feature.createRollModifier({
+										id: 'beastfolk-2-9bb',
+										name: 'Climber',
+										modifier: RollModifierType.Edge,
+										skills: [ 'Climb' ]
+									})
+								]
 							})
 						]
 					}),
@@ -324,23 +382,34 @@ When you take the Disengage move action, you can teleport that distance rather t
 								id: 'beastfolk-2-14a',
 								selected: [ 'Hide' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-2-14b',
 								name: 'Camouflage',
-								description: 'You gain an edge on Hide tests.'
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide' ]
 							})
 						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'beastfolk-2-15',
 						name: 'Hold Fast',
-						description: `
-*Your body is adapted for seizing prey.*
-
-When you take the Grab maneuver you have an edge on your power roll; when you have a creature grabbed, they take a bane on their roll to escape your grab.`
+						description: 'Your body is adapted for seizing prey.',
+						features: [
+							FactoryLogic.feature.createRollModifier({
+								id: 'beastfolk-2-15a',
+								name: 'Hold Fast',
+								modifier: RollModifierType.Edge,
+								rollType: RollType.Grab
+							}),
+							FactoryLogic.feature.create({
+								id: 'beastfolk-2-15b',
+								name: 'Hold Fast',
+								description: 'When you have a creature grabbed, they take a bane on their roll to escape your grab.'
+							})
+						]
 					}),
 					value: 1
 				},
@@ -365,10 +434,16 @@ When you use the Knockdown maneuver against an enemy adjacent to one of your all
 								id: 'beastfolk-2-17a',
 								selected: [ 'Lift' ]
 							}),
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'beastfolk-2-17b',
 								name: 'Powerful Build',
-								description: 'You gain an edge on Might tests, and your Might score is treated as 1 higher for the purpose of resisting potencies.'
+								modifier: RollModifierType.Edge,
+								characteristics: [ Characteristic.Might ]
+							}),
+							FactoryLogic.feature.createPotencyResistance({
+								id: 'beastfolk-2-17c',
+								name: 'Powerful Build',
+								characteristics: [ Characteristic.Might ]
 							})
 						]
 					}),
@@ -1273,10 +1348,11 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 						id: 'ironbound-1b',
 						name: 'Bulwark Mode',
 						features: [
-							FactoryLogic.feature.create({
+							FactoryLogic.feature.createRollModifier({
 								id: 'ironbound-1b-1',
 								name: 'Bulwark Mode',
-								description: 'You gain an edge on tests to keep your footing on unstable surfaces such as ice, narrow ledges, swaying bridges, or collapsing ground.'
+								modifier: RollModifierType.Edge,
+								condition: 'When keeping your footing on unstable surfaces such as ice, narrow ledges, swaying bridges, or collapsing ground'
 							}),
 							FactoryLogic.feature.createBonus({
 								id: 'ironbound-1b-2',
@@ -1296,22 +1372,42 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'ironbound-1d',
 						name: 'Infiltration Mode',
-						description: `
-* You can move at full speed while sneaking
-* You gain an edge on Hide and Sneak tests`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'ironbound-1d-1',
+								name: 'Infiltration Mode',
+								description: 'You can move at full speed while sneaking.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'ironbound-1d-2',
+								name: 'Infiltration Mode',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Hide', 'Sneak' ]
+							})
+						]
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'ironbound-1e',
 						name: 'Precision Mode',
-						description: `
-* Your attacks ignore partial cover
-* You gain an edge on Eavesdrop and Track tests`
+						features: [
+							FactoryLogic.feature.create({
+								id: 'ironbound-1e-1',
+								name: 'Precision Mode',
+								description: 'Your attacks ignore partial cover.'
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'ironbound-1e-2',
+								name: 'Precision Mode',
+								modifier: RollModifierType.Edge,
+								skills: [ 'Eavesdrop', 'Track' ]
+							})
+						]
 					}),
 					value: 1
 				}
@@ -1357,13 +1453,11 @@ The ironbound are living machines: bodies of iron, brass, and rune-etched steel 
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'ironbound-3b',
 						name: 'Appraisal Engine',
-						description: `
-Your senses are built to read stress, weakness, and structural failure.
-
-You gain an edge on tests to understand or analyze constructs, mechanisms, vehicles, and damaged objects.`
+						modifier: RollModifierType.Edge,
+						condition: 'When understanding or analyzing constructs, mechanisms, vehicles, or devices'
 					}),
 					value: 1
 				},
@@ -1410,10 +1504,11 @@ The first time in an encounter you become winded, you gain temporary Stamina equ
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'ironbound-3f',
 						name: 'Replay Memory',
-						description: 'You gain an edge on tests made to recall previous events.'
+						modifier: RollModifierType.Edge,
+						condition: 'When recalling previous events'
 					}),
 					value: 1
 				},
@@ -1434,6 +1529,131 @@ You continue to observe your surroundings, but you can’t speak, take main acti
 	],
 	ancestryPoints: 2,
 	culture: FactoryLogic.createCulture('Ironbound', 'Urban, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.martial, 'Rallarian')
+};
+
+export const orian: Ancestry = {
+	id: 'ancestry-orian',
+	name: 'Orian',
+	description: `
+*By Andy Aiken*
+
+Orians hold the Orian Sea the way a backwater clan holds its hollow: subjects of the crown in Oria City in principle, and in practice as families, each with its own water. Every reef, every trench, every cold green current is claimed and bounded and known, and the boundaries are taught to a pup before it can hunt. Stray across them uninvited and you are not a guest - you are prey that hasn't been dealt with yet.`,
+	features: [
+		FactoryLogic.feature.createMultiple({
+			id: 'orian-1',
+			name: 'Amphibious',
+			description: 'You are at home in the water.',
+			features: [
+				FactoryLogic.feature.createMovementMode({
+					id: 'orian-1a',
+					mode: 'Swim'
+				}),
+				FactoryLogic.feature.create({
+					id: 'orian-1b',
+					name: 'Amphibious',
+					description: 'You can breathe water as easily as air.'
+				})
+			]
+		}),
+		FactoryLogic.feature.createMultiple({
+			id: 'orian-2',
+			name: 'Child of the Deep',
+			features: [
+				FactoryLogic.feature.createSkillChoice({
+					id: 'orian-2a',
+					selected: [ 'Swim' ]
+				}),
+				FactoryLogic.feature.createRollModifier({
+					id: 'orian-2b',
+					name: 'Child of the Deep',
+					modifier: RollModifierType.Edge,
+					skills: [ 'Swim' ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'orian-2c',
+					name: 'Child of the Deep',
+					description: 'Deep, cold, or turbulent water never slows or hampers your movement, and you see clearly in murky or lightless water.'
+				})
+			]
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'orian-3',
+			name: 'Purchased Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'orian-3a',
+						name: 'Abyssal Chill',
+						modifiers: [
+							FactoryLogic.damageModifier.createPerEchelon({
+								damageType: DamageType.Cold,
+								modifierType: DamageModifierType.Immunity,
+								value: 5
+							})
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'orian-3b',
+						name: 'Breaching Leap',
+						description: 'When you move out of water, you can long jump or high jump as though your Speed were doubled, and you don\'t need a running start to do so.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'orian-3c',
+						name: 'Current Sense',
+						description: 'While you are in water, you know the location of any creature in the same body of water within 10 squares, even if it is unseen, and creatures gain no benefit from concealment against you while in the water with you.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createBonus({
+						id: 'orian-3d',
+						name: 'Deep-Pressured Frame',
+						description: 'A lifetime beneath crushing pressure has left you dense and hard to break.',
+						field: FeatureField.Stamina,
+						valuePerEchelon: 3
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'orian-3e',
+						name: 'Drowning Grip',
+						description: 'A creature grabbed by you can\'t breathe, and takes damage equal to your level at the start of each of its turns until the grab ends.'
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.createMultiple({
+						id: 'orian-3f',
+						name: 'Mariner\'s Lore',
+						description: 'No one reads the sea like one born to it.',
+						features: [
+							FactoryLogic.feature.createSkillChoice({
+								id: 'orian-3f-1',
+								selected: [ 'Navigate' ]
+							}),
+							FactoryLogic.feature.createRollModifier({
+								id: 'orian-3f-2',
+								name: 'Mariner\'s Lore',
+								modifier: RollModifierType.Edge,
+								condition: 'Piloting a vessel, predicting the weather, or finding your way at sea'
+							})
+						]
+					}),
+					value: 1
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Orian', 'Urban, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.martial, 'Orian')
 };
 
 export const siabhra: Ancestry = {

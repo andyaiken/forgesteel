@@ -1,4 +1,4 @@
-@use '../../../colors.scss';
+@use '../../../style/colors.scss';
 @use "sass:color";
 
 .monster-label,
@@ -12,7 +12,7 @@
 	justify-content: space-between;
 	color: rgb(0, 0, 0);
 	background-color: colors.$monster-default;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: var(--fs-shadow-raised);
 
 	&.ambusher {
 		background: linear-gradient(color.scale(colors.$monster-ambusher, $lightness: 10%), color.scale(colors.$monster-ambusher, $lightness: -10%));

@@ -41,4 +41,6 @@ export interface Options {
 	// Tactical Map
 	gridSize: number;
 	playerGridSize: number;
+	// Homebrewing
+	showClipboardOptions: boolean;
 }

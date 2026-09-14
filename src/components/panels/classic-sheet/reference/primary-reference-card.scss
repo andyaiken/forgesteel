@@ -26,6 +26,7 @@
         text-wrap: nowrap;
     }
 
+    .surge-gains h3,
     .hero-tokens h3,
     .turn-reference h3 {
         border-top: 2px solid common.$color-light;
@@ -46,6 +47,15 @@
         .trigger {
             margin-bottom: 2px;
             line-height: round(1.4re, 1px);
+
+            .qualifiers {
+                font-style: italic;
+            }
+
+            .condition {
+                font-style: italic;
+                opacity: 0.85;
+            }
         }
 
         .header {

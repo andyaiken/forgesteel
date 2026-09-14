@@ -632,7 +632,7 @@ export const pulley: Terrain = {
 			]
 		},
 		{
-			id: 'Climbable',
+			id: 'climbable',
 			content: [
 				FactoryLogic.feature.create({
 					id: 'climbable',
@@ -782,7 +782,7 @@ export const ram: Terrain = {
 			sections: []
 		},
 		{
-			id: 'multiple-rams ',
+			id: 'multiple-rams',
 			label: 'Multiple Rams ',
 			cost: 3,
 			text: 'Multiple rams can be used to represent a larger mechanism, such as a stack of tumbling logs.',

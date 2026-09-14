@@ -56,7 +56,7 @@ export const EditCharacteristicBonus = (props: EditProps) => {
 				onChange={setCharacteristic}
 			/>
 			<HeaderText>Value</HeaderText>
-			<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
+			<NumberSpin label='Value' value={data.value} onChange={setValue} />
 		</Space>
 	);
 };

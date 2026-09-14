@@ -11,17 +11,17 @@ describe('merge', () => {
 
 	it('should merge items into target', () => {
 		const src: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Foo'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '2',
 			name: 'Bar'
 		} ];
 
 		const dest: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3',
 			name: 'Baz'
 		} ];
@@ -35,17 +35,17 @@ describe('merge', () => {
 
 	it('should skip merging duplicate ids by default', () => {
 		const src: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Foo'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '2',
 			name: 'Bar'
 		} ];
 
 		const dest: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Baz'
 		} ];
@@ -63,17 +63,17 @@ describe('merge', () => {
 
 	it('should allow for replacing items in target with duplicate ids from the source list', () => {
 		const src: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Foo'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '2',
 			name: 'Bar'
 		} ];
 
 		const dest: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Baz'
 		} ];
@@ -88,17 +88,17 @@ describe('merge', () => {
 describe('containsDuplicates', () => {
 	it('should return false when no duplicate ids exist in target', () => {
 		const src: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Foo'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '2',
 			name: 'Bar'
 		} ];
 
 		const dest: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3',
 			name: 'Baz'
 		} ];
@@ -109,17 +109,17 @@ describe('containsDuplicates', () => {
 
 	it('should return true when duplicate ids exist in target', () => {
 		const src: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Foo'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '2',
 			name: 'Bar'
 		} ];
 
 		const dest: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1',
 			name: 'Baz'
 		} ];
@@ -132,15 +132,15 @@ describe('containsDuplicates', () => {
 describe('missingData', () => {
 	it('should return false when check is not missing any entries present in reference', () => {
 		const check: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3'
 		} ];
 
 		const ref: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3'
 		} ];
 
@@ -150,18 +150,18 @@ describe('missingData', () => {
 
 	it('should return true when check IS missing data in reference', () => {
 		const check: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '1'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3'
 		} ];
 
 		const ref: Hero[] = [ {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '3'
 		}, {
-			...FactoryLogic.createHero([]),
+			...FactoryLogic.createHero(),
 			id: '4'
 		} ];
 

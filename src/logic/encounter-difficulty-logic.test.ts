@@ -2,7 +2,8 @@ import { Encounter, EncounterGroup, TerrainSlot } from '@/models/encounter';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { EncounterDifficultyLogic } from './encounter-difficulty-logic';
 import { EncounterLogic } from './encounter-logic';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
+import { FactionType } from '@/enums/faction-type';
 import { FeatureAddOn } from '@/models/feature';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
@@ -242,5 +243,33 @@ describe('getStrength', () => {
 		const result = EncounterDifficultyLogic.getStrength(encounter, [], 0);
 
 		expect(result).toBe(9);
+	});
+
+	test('ally groups subtract from the encounter\'s strength', () => {
+		vi.spyOn(EncounterLogic, 'getCustomizedMonster').mockReturnValue(mockMonster1);
+
+		const enemySlot = {
+			monsterID: 'test-monster1',
+			count: 1
+		} as EncounterSlot;
+		const enemyGroup = {
+			faction: FactionType.Enemy,
+			slots: [ enemySlot ]
+		} as EncounterGroup;
+		const allySlot = {
+			monsterID: 'test-monster1',
+			count: 1
+		} as EncounterSlot;
+		const allyGroup = {
+			faction: FactionType.Ally,
+			slots: [ allySlot ]
+		} as EncounterGroup;
+		const encounter = {
+			groups: [ enemyGroup, allyGroup ] as EncounterGroup[],
+			terrain: [] as TerrainSlot[]
+		} as Encounter;
+		const result = EncounterDifficultyLogic.getStrength(encounter, [], 0);
+
+		expect(result).toBe(0);
 	});
 });

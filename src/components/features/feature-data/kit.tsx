@@ -19,6 +19,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -127,7 +128,7 @@ export const ConfigKit = (props: ConfigProps) => {
 			{props.data.count > 1 ? <div className='ds-text'>Choose {props.data.count}:</div> : null}
 			{
 				props.data.selected.map(kit => {
-					const features = FeatureLogic.getFeaturesFromKit(kit, props.hero.class?.level || 1);
+					const features = FeatureLogic.getFeaturesFromKit(kit, props.hero.class?.level || 1, TutorialMode.Complete);
 					const choiceFeatures = features.map(f => f.feature).filter(f => FeatureLogic.isChoice(f));
 					return (
 						<SelectionBox

@@ -46,14 +46,14 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
-					background-color: rgb(230, 244, 255);
+					border-color: var(--fs-accent);
+					background-color: var(--fs-accent-wash);
 				}
 			}
 
 			.controlled-monster {
 				border-radius: 10px;
-				background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+				background: var(--fs-surface-raised);
 				padding: 10px;
 				display: flex;
 				flex-direction: row;
@@ -62,8 +62,16 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
-					background: rgb(230, 244, 255);
+					border-color: var(--fs-accent);
+					background: var(--fs-accent-wash);
+				}
+
+				&.defeated {
+					opacity: 0.3;
+
+					.combatant-name {
+						text-decoration: line-through;
+					}
 				}
 			}
 		}
@@ -74,11 +82,11 @@
 			flex-direction: row;
 			align-items: center;
 			gap: 10px;
-			border: 1px solid rgba(5, 5, 5, 0.06);
+			border: 1px solid var(--fs-border);
 			border-radius: 5px;
-			background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+			background: var(--fs-surface-raised);
 			padding: 10px;
-			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+			box-shadow: var(--fs-shadow-raised);
 
 			&.danger {
 				border-color: red;
@@ -94,43 +102,42 @@
 				cursor: pointer;
 
 				&:hover {
-					border-color: rgb(22, 119, 255);
-					background: rgb(230, 244, 255);
+					border-color: var(--fs-accent);
+					background: var(--fs-accent-wash);
 				}
 			}
 		}
 	}
-}
 
-html[data-theme="dark"] {
-	.hero-panel {
-		.hero-main-section {
-			.overview-tile {
-				&.clickable {
-					&:hover {
-						background-color: rgba(22, 119, 255, 0.2);
-					}
-				}
+	.ant-menu-horizontal {
+		height: 36px;
+		line-height: unset;
+		min-width: 0;
+		border: none;
+		border-radius: 8px;
+		background-color: var(--fs-control-surface);
+		padding: 2px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 2px;
 
-				.controlled-monster {
-					background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+		.ant-menu-item,
+		.ant-menu-overflow-item {
+			height: 32px;
+			padding: 0 12px;
+			display: flex;
+			align-items: center;
+			border-radius: 6px;
 
-					&:hover {
-						background: rgba(22, 119, 255, 0.2);
-					}
-				}
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.04);
 			}
+		}
 
-			.selectable-row {
-				border-color: rgba(250, 250, 250, 0.6);
-				background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
-
-				&.clickable {
-					&:hover {
-						background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
-					}
-				}
-			}
+		.ant-menu-item::after,
+		.ant-menu-overflow-item::after {
+			border: none !important;
 		}
 	}
 }

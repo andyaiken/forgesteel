@@ -20,7 +20,8 @@ import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { EncounterSlot } from '@/models/encounter-slot';
+import { EncounterSlot } from '@/models/encounter';
+import { FactionType } from '@/enums/faction-type';
 import { FactoryAbilityTypeLogic } from '@/logic/factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from '@/logic/factory-damage-modifier-logic';
 import { FactoryDistanceLogic } from '@/logic/factory-distance-logic';
@@ -38,6 +39,7 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { LanguageType } from '@/enums/language-type';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -52,6 +54,7 @@ import { PerkList } from '@/enums/perk-list';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
 import { Pregen } from '@/models/pregen';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RetainerLogic } from '@/logic/retainer-logic';
 import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -65,6 +68,7 @@ import { TerrainCategory } from '@/enums/terrain-category';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Tip } from '@/models/tip';
 import { Title } from '@/models/title';
+import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 
 export class FactoryLogic {
@@ -76,13 +80,13 @@ export class FactoryLogic {
 		};
 	};
 
-	static createHero = (sourcebookIDs: string[]): Hero => {
+	static createHero = (): Hero => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			picture: null,
 			folder: '',
-			sourcebookIDs: sourcebookIDs,
+			sourcebookIDs: [],
 			ancestry: null,
 			culture: null,
 			class: null,
@@ -92,16 +96,18 @@ export class FactoryLogic {
 				FactoryLogic.feature.createLanguageChoice({
 					id: 'default-language',
 					name: 'Default Language',
-					selected: [ 'Caelian' ]
+					allowedTypes: [ LanguageType.Common ]
 				})
 			],
 			state: FactoryLogic.createHeroState(),
-			abilityCustomizations: []
+			abilityCustomizations: [],
+			isActive: true
 		};
 	};
 
 	static createHeroState = (): HeroState => {
 		return {
+			tutorialMode: TutorialMode.Complete,
 			staminaDamage: 0,
 			staminaTemp: 0,
 			recoveriesUsed: 0,
@@ -118,6 +124,7 @@ export class FactoryLogic {
 			titles: [],
 			controlledSlots: [],
 			notes: '',
+			inventoryText: '',
 			encounterState: 'ready',
 			hidden: false,
 			defeated: false
@@ -271,7 +278,9 @@ export class FactoryLogic {
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}));
@@ -285,6 +294,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			classID: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
 			abilities: [],
 			selected: false
@@ -568,7 +578,7 @@ export class FactoryLogic {
 					level4: data.retainer.level4,
 					level7: data.retainer.level7,
 					level10: data.retainer.level10,
-					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.characteristics, data.retainer.level4, data.retainer.level7, data.retainer.level10)
 				}
 				: null,
 			state: FactoryLogic.createMonsterState()
@@ -674,6 +684,7 @@ export class FactoryLogic {
 		return {
 			id: Utils.guid(),
 			name: '',
+			faction: FactionType.Enemy,
 			slots: [],
 			minHeroCount: undefined,
 			encounterState: 'ready'
@@ -689,8 +700,12 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
-				convertToSolo: false
+				convertToSolo: false,
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: []
 			},
 			monsters: [],
 			state: {
@@ -718,8 +733,12 @@ export class FactoryLogic {
 				addOnIDs: [],
 				itemIDs: [],
 				levelAdjustment: 0,
+				staminaAdjustment: 0,
 				minionCountAdjustment: 0,
-				convertToSolo: false
+				convertToSolo: false,
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: []
 			},
 			monsters: [ m ],
 			state: {
@@ -1079,7 +1098,9 @@ export class FactoryLogic {
 			heroVictories: 0,
 			// Tactical Map
 			gridSize: 50,
-			playerGridSize: 50
+			playerGridSize: 50,
+			// Homebrewing
+			showClipboardOptions: false
 		};
 	};
 

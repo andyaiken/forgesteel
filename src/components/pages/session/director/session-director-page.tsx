@@ -532,6 +532,7 @@ export const SessionDirectorPage = (props: Props) => {
 				</ErrorBoundary>
 				<AppFooter
 					page='session'
+					hero={null}
 					params={props.params}
 				/>
 				{getEncounterRewards()}

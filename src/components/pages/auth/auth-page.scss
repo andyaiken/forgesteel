@@ -5,7 +5,7 @@
 
     .auth-page-content {
 		height: 100%;
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		padding: 50px;
 		display: flex;
 		flex-direction: column;
@@ -21,8 +21,8 @@
 			min-width: 350px;
 			padding: 20px;
 			border-radius: 10px;
-			background-color: rgb(255, 255, 255);
-			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+			background-color: var(--fs-surface);
+			box-shadow: var(--fs-shadow-raised);
 
 			.overall-state {
 				display: flex;
@@ -35,16 +35,4 @@
 			}
 		}
     }
-}
-
-html[data-theme="dark"] {
-	.auth-page {
-		.auth-page-content {
-			background-color: rgb(55, 55, 55);
-
-			.data-loader-container {
-				background-color: rgb(55, 55, 55);
-			}
-		}
-	}
 }

@@ -5,6 +5,7 @@ import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 
 export const revenant: Ancestry = {
 	id: 'ancestry-revenant',
@@ -46,10 +47,12 @@ export const revenant: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createRollModifier({
 						id: 'revenant-feature-4-2',
 						name: 'Undead Influence',
-						description: 'Your supernatural gifts allow you to influence other undead. You gain an edge on Reason, Intuition, and Presence tests made to interact with undead creatures.'
+						modifier: RollModifierType.Edge,
+						characteristics: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						condition: 'When interacting with undead creatures'
 					}),
 					value: 1
 				},

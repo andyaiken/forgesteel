@@ -6,6 +6,7 @@ export const voidSubclass: SubClass = {
 	id: 'elementalist-sub-4',
 	name: 'Void',
 	description: 'Void is the element of the mystery. Void abilities warp space and reality, allowing you to teleport, create illusions, and make things incorporeal.',
+	classID: '',
 	featuresByLevel: [
 		{
 			level: 1,

@@ -1,6 +1,5 @@
 import { Segmented, Select, Space, Tabs } from 'antd';
 import { Characteristic } from '@/enums/characteristic';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Follower } from '@/models/follower';
 import { FollowerLogic } from '@/logic/follower-logic';
@@ -137,23 +136,21 @@ export const FollowerEditPanel = (props: Props) => {
 	};
 
 	return (
-		<ErrorBoundary>
-			<div className='follower-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Follower',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: getDetailsEditSection()
-						}
-					]}
-				/>
-			</div>
-		</ErrorBoundary>
+		<div className='follower-edit-panel'>
+			<Tabs
+				items={[
+					{
+						key: '1',
+						label: 'Follower',
+						children: getNameAndDescriptionSection()
+					},
+					{
+						key: '2',
+						label: 'Details',
+						children: getDetailsEditSection()
+					}
+				]}
+			/>
+		</div>
 	);
 };

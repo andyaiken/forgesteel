@@ -1,7 +1,7 @@
 .app-header {
 	flex: 0 0 50px;
 	padding: 0 12px;
-	background-color: rgb(200, 200, 200);
+	background-color: var(--fs-chrome);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -17,11 +17,5 @@
 		display: flex;
 		align-items: center;
 		gap: 5px;
-	}
-}
-
-html[data-theme="dark"] {
-	.app-header {
-		background-color: rgb(0, 0, 0);
 	}
 }

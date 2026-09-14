@@ -99,7 +99,6 @@ interface RemainingInventoryProps {
 
 export const RemainingInventoryCard = (props: RemainingInventoryProps) => {
 	const items = props.items;
-	// items.forEach(i => console.log(i.item.name, i.features));
 
 	return (
 		<div className='inventory card'>

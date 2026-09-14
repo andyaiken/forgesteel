@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const storm: Domain = {
@@ -73,10 +74,17 @@ If you are in the same area as a creature using this or a similar feature who ha
 		{
 			level: 4,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createToggle({
 					id: 'domain-storm-4',
 					name: 'Windwalk',
-					description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.'
+					description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.',
+					condition: 'You have 5 or more Victories',
+					checked: false,
+					featureChecked: FactoryLogic.feature.createMovementMode({
+						id: 'domain-storm-4a',
+						name: 'Windwalk',
+						mode: 'Fly'
+					})
 				})
 			]
 		},
@@ -168,8 +176,10 @@ Thunderstruck (Conduit): Whenever you use an ability to deal lightning or sonic 
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that an enemy within 10 squares is force moved',
-			value: '2'
+			trigger: 'An enemy within 10 squares is force moved',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

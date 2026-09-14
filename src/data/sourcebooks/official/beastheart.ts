@@ -306,17 +306,17 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 1,
 					features: [
 						FactoryLogic.feature.create({
-							id: '2R4igWPPK0rMD4ar',
+							id: 'cavalry-armor-1-1',
 							name: '1st Level',
 							description: 'The first time on a turn that you or your companion would move into a creature’s space, whoever is moving can push that creature 1 square before continuing their movement. This forced movement ignores stability if the creature’s stability is lower than the pusher’s stability.'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: '5kJE5eWyV5oYvBQt',
+							id: 'cavalry-armor-1-2',
 							field: FeatureField.Stamina,
 							value: 6
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'cB1JfMneGZRNMeJV',
+							id: 'cavalry-armor-1-3',
 							field: FeatureField.Stability,
 							value: 1
 						})
@@ -326,17 +326,17 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 5,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'bmYdcuzw1Q2ZLX0Y',
+							id: 'cavalry-armor-5-1',
 							name: '5th Level',
 							description: 'When a creature is force moved into you or your companion, whoever was collided with takes no damage.'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'ffiJZH8pEExQLtj2',
+							id: 'cavalry-armor-5-2',
 							field: FeatureField.Stamina,
 							value: 6
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'HlLIaFQ4hDQZfIOo',
+							id: 'cavalry-armor-5-3',
 							field: FeatureField.Stability,
 							value: 1
 						})
@@ -346,17 +346,17 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 9,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'E3JvJ8ZXonrifW4p',
+							id: 'cavalry-armor-9-1',
 							name: '9th Level',
 							description: 'When you or your companion pushes a creature using this armor’s feature, the creature takes damage equal to twice the pusher’s Might score and is knocked prone.'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'losIkWDYVI48lsyW',
+							id: 'cavalry-armor-9-2',
 							field: FeatureField.Stamina,
 							value: 9
 						}),
 						FactoryLogic.feature.createBonus({
-							id: '1pabujhaYnt8u1ws',
+							id: 'cavalry-armor-9-3',
 							field: FeatureField.Stability,
 							value: 1
 						})
@@ -395,12 +395,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 1,
 					features: [
 						FactoryLogic.feature.create({
-							id: '2R4igWPPK0rMD4ar',
+							id: 'pack-harness-1-1',
 							name: '1st Level',
 							description: 'You can spend 10 minutes to activate this armor’s power, causing two illusory copies of your companion to appear in their space and move with them. Whenever your companion takes damage from an ability that deals rolled damage while visible, you can banish one copy to decrease the power roll outcome by one tier (to a minimum of tier 1). When you activate this armor’s power again, any old copies vanish.'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: '6RFOW2b7AXKcKIzX',
+							id: 'pack-harness-1-2',
 							field: FeatureField.Stamina,
 							value: 6
 						})
@@ -410,12 +410,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 5,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'bmYdcuzw1Q2ZLX0Y',
+							id: 'pack-harness-2-1',
 							name: '5th Level',
 							description: 'Whenever you activate this armor’s power, your companion gains three illusory copies.'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'bGhbnK99URPnzspV',
+							id: 'pack-harness-2-2',
 							field: FeatureField.Stamina,
 							value: 6
 						})
@@ -425,12 +425,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 9,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'E3JvJ8ZXonrifW4p',
+							id: 'pack-harness-9-1',
 							name: '9th Level',
 							description: 'Whenever you activate this armor’s power, your companion gains four illusory copies. Additionally, while you share your companion’s space, you take on the appearance of one of the pack. When you take damage from an ability that deals rolled damage while in your companion’s space, you can banish one copy to decrease the power roll outcome by one tier (to a minimum of tier 1).'
 						}),
 						FactoryLogic.feature.createBonus({
-							id: 'mzRRLq8y6apIiBnV',
+							id: 'pack-harness-9-2',
 							field: FeatureField.Stamina,
 							value: 9
 						})
@@ -702,12 +702,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 1,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'XSBQw-DSs4v-mNPX3-DWpph-12mD0-5gDkg',
+							id: 'horned-champion-1-1',
 							name: '1st Level',
 							description: 'Your abilities with the Melee and Weapon keywords also gain the Charge keyword.'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'ekCLl-nWNa2-iTQ7d-g8K8l-Zwzj6-0lA1Z',
+							id: 'horned-champion-1-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -720,12 +720,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 5,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'Wi3x9-2baXL-WU3U4-nv330-p99FD-w3sGN',
+							id: 'horned-champion-5-1',
 							name: '5th Level',
 							description: 'Whenever you or your companion uses the Charge main action and obtains a tier 3 outcome with an ability, whoever used the action can either knock the target prone, push them 2 squares or increase the distance of a push made as part of the charge, or deal extra damage equal to their own Might score.'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'pgUi1-Q1Yps-NZfwz-hedfS-AOHVQ-JGCTy',
+							id: 'horned-champion-5-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -738,12 +738,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 9,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'tfEin-gTp4k-g289z-WSJ8D-Ex8yv-67l6R',
+							id: 'horned-champion-9-1',
 							name: '9th Level',
 							description: 'When you or your companion uses the Charge main action, the movement doesn’t provoke opportunity attacks.'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: '5hfiW-KgVm1-4SWMU-IXA0O-GO4N7-yI21T',
+							id: 'horned-champion-9-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -786,12 +786,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 1,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'Ig1Sp-T0Grz-zmmPw-SpKqn-lCS0K-rm7Hf',
+							id: 'longclaw-1-1',
 							name: '1st Level',
 							description: 'You and your companion gain a +1 bonus to melee distance.'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'rvoOL-jOOC8-LzpAd-FNFl1-QHGwj-HoAvG',
+							id: 'longclaw-1-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -804,12 +804,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 5,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'aGsgY-T3GiD-2fHcN-LLQty-9mZA9-BbDIt',
+							id: 'longclaw-5-1',
 							name: '5th Level',
 							description: 'Whenever you or your companion grabs a creature or a creature grabs either of you, the creature is bleeding (save ends).'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'MjhJL-x3qZV-upeWs-lAWBA-X1m6W-Apz4J',
+							id: 'longclaw-5-2',
 							keywords: [
 								AbilityKeyword.Melee,
 								AbilityKeyword.Weapon
@@ -822,12 +822,12 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 9,
 					features: [
 						FactoryLogic.feature.create({
-							id: 'YIaRO-j44K7-kICc4-7clUG-qPFYt-jQXAA',
+							id: 'longclaw-9-1',
 							name: '9th Level',
 							description: 'Whenever you or your companion causes a creature to become bleeding or uses an ability that deals damage to a bleeding creature, you can each spend a Recovery.'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: '9kFjH-fkcqO-rJvvK-IdzvI-bxl35-ytZUG',
+							id: 'longclaw-9-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -871,7 +871,7 @@ export const beastheartSourcebook: Sourcebook = {
 					features: [
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
-								id: 'SwopF-Qac8G-EV0Cw-h71I4-yu3or-2p2Og',
+								id: 'scorpion-tails-1-1',
 								name: 'Scorpion Tail',
 								description: 'Your scorpion tail lashes out.',
 								type: FactoryLogic.type.createManeuver(),
@@ -890,7 +890,7 @@ export const beastheartSourcebook: Sourcebook = {
 							})
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'T7q8s-HY6Sh-dQDge-W7p4b-7HktZ-C6kwh',
+							id: 'scorpion-tails-1-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee
@@ -903,13 +903,13 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 5,
 					features: [
 						FactoryLogic.feature.createPackageContent({
-							id: 'HNqP0-Bnqms-tH8s0-lE8AM-KicUm-QPuhO',
+							id: 'scorpion-tails-5-1',
 							name: '5th Level',
 							description: 'The Scorpion Tail ability’s distance increases to melee 3.',
 							tag: 'scorpion-tails'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'TsHdS-98ED6-DRlYp-RpPwZ-VwlV2-pb1lM',
+							id: 'scorpion-tails-5-2',
 							keywords: [
 								AbilityKeyword.Melee,
 								AbilityKeyword.Weapon
@@ -922,13 +922,13 @@ export const beastheartSourcebook: Sourcebook = {
 					level: 9,
 					features: [
 						FactoryLogic.feature.createPackageContent({
-							id: '8rldT-PE6Px-WMNsk-rLyxS-G6Vkj-EoFvz',
+							id: 'scorpion-tails-9-1',
 							name: '9th Level',
 							description: 'The Scorpion Tail ability’s distance increases to melee 4.',
 							tag: 'scorpion-tails'
 						}),
 						FactoryLogic.feature.createAbilityDamage({
-							id: 'VTq3K-uJ1nQ-g4uZF-yxOWq-1WqO3-ojFlf',
+							id: 'scorpion-tails-9-2',
 							keywords: [
 								AbilityKeyword.Weapon,
 								AbilityKeyword.Melee

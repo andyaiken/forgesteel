@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const death: Domain = {
@@ -141,8 +142,10 @@ Additionally, your abilities deal an extra 5 damage to winded creatures.`
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that a creature within 10 squares who isn’t a minion is reduced to 0 Stamina, or the first time in an encounter that a solo creature within 10 squares becomes winded.',
-			value: '2'
+			trigger: 'A creature within 10 squares who isn’t a minion is reduced to 0 Stamina, or a solo creature within 10 squares becomes winded.',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

@@ -143,6 +143,7 @@ export const ConfigItemChoice = (props: ConfigProps) => {
 						setItemSelectorOpen(false);
 
 						const itemCopy = Utils.copy(item);
+						itemCopy.id = Utils.guid();
 
 						const dataCopy = Utils.copy(props.data);
 						dataCopy.selected.push(itemCopy);

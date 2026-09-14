@@ -123,7 +123,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has <code>M < 1</code> is also knocked prone.')
+							FactoryLogic.createAbilitySectionText('The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has M < 1 is also knocked prone.')
 						]
 					})
 				}),
@@ -466,7 +466,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'orc-8-feature-3',
-						name: 'Elemental Discharge',
+						name: 'Power Burst',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
@@ -476,7 +476,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								bonus: 2,
 								tier1: '3 damage; push 2',
 								tier2: '5 damage; push 3',
-								tier3: '3 damage; push 4, prone'
+								tier3: '8 damage; push 4, prone'
 							})),
 							FactoryLogic.createAbilitySectionText('This ability deals cold, fire, or lightning damage, and any enemy targeted by the ability has damage weakness 3 to the same damage type (save ends). ')
 						]
@@ -997,7 +997,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '11 damage; prone',
 								tier3: '14 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('The scyza roars, and if the target has <code>I < 2</code>, they are frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('The scyza roars, and if the target has I < 2, they are frightened (save ends).')
 						]
 					})
 				}),

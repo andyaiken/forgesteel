@@ -54,7 +54,7 @@ As a maneuver, a creature adjacent to an arrow launcher can make an **Agility te
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
-									bonus: 0,
+									bonus: 2,
 									tier1: '5 damage',
 									tier2: '8 damage',
 									tier3: '11 damage'

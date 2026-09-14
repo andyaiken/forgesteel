@@ -1,13 +1,9 @@
-import { Feature, FeatureData } from '@/models/feature';
-import { FeatureType } from '@/enums/feature-type';
-import { Hero } from '@/models/hero';
-import { Sourcebook } from '@/models/sourcebook';
-
 import { ConfigAncestryChoice, InfoAncestryChoice } from '@/components/features/feature-data/ancestry-choice';
 import { ConfigAncestryFeatureChoice, EditAncestryFeatureChoice, InfoAncestryFeatureChoice } from '@/components/features/feature-data/ancestry-feature-choice';
 import { ConfigChoice, EditChoice, InfoChoice } from '@/components/features/feature-data/choice';
 import { ConfigClassAbility, EditClassAbility, InfoClassAbility } from '@/components/features/feature-data/class-ability';
 import { ConfigCompanion, InfoCompanion } from '@/components/features/feature-data/companion';
+import { ConfigComplication, InfoComplication } from '@/components/features/feature-data/complication';
 import { ConfigDomain, EditDomain, InfoDomain } from '@/components/features/feature-data/domain';
 import { ConfigDomainFeature, EditDomainFeature, InfoDomainFeature } from '@/components/features/feature-data/domain-feature';
 import { ConfigItemChoice, EditItemChoice, InfoItemChoice } from '@/components/features/feature-data/item-choice';
@@ -15,6 +11,7 @@ import { ConfigKit, EditKit, InfoKit } from '@/components/features/feature-data/
 import { ConfigLanguageChoice, EditLanguageChoice, InfoLanguageChoice } from '@/components/features/feature-data/language-choice';
 import { ConfigPerk, EditPerk, InfoPerk } from '@/components/features/feature-data/perk';
 import { ConfigRetainer, InfoRetainer } from '@/components/features/feature-data/retainer';
+import { ConfigSkillCancelChoice, EditSkillCancelChoice, InfoSkillCancelChoice } from '@/components/features/feature-data/skill-cancel-choice';
 import { ConfigSkillChoice, EditSkillChoice, InfoSkillChoice } from '@/components/features/feature-data/skill-choice';
 import { ConfigSummonChoice, EditSummonChoice, InfoSummonChoice } from '@/components/features/feature-data/summon-choice';
 import { ConfigTaggedFeatureChoice, EditTaggedFeatureChoice, InfoTaggedFeatureChoice } from '@/components/features/feature-data/tagged-feature-choice';
@@ -32,24 +29,33 @@ import { EditFixture, InfoFixture } from '@/components/features/feature-data/fix
 import { EditForController, InfoForController } from '@/components/features/feature-data/for-controller';
 import { EditHeroicResource, InfoHeroicResource } from '@/components/features/feature-data/heroic-resource';
 import { EditHeroicResourceGain, InfoHeroicResourceGain } from '@/components/features/feature-data/heroic-resource-gain';
+import { EditHeroicResourceThreshold, InfoHeroicResourceThreshold } from '@/components/features/feature-data/heroic-resource-threshold';
 import { EditLanguage, InfoLanguage } from '@/components/features/feature-data/language';
 import { EditMalice, InfoMalice } from '@/components/features/feature-data/malice';
 import { EditMovementMode, InfoMovementMode } from '@/components/features/feature-data/movement-mode';
 import { EditMultiple, InfoMultiple } from '@/components/features/feature-data/multiple';
 import { EditPackage, InfoPackage } from '@/components/features/feature-data/package';
+import { EditPotencyResistance, InfoPotencyResistance } from '@/components/features/feature-data/potency-resistance';
 import { EditProficiency, InfoProficiency } from '@/components/features/feature-data/proficiency';
+import { EditRollModifier, InfoRollModifier } from '@/components/features/feature-data/roll-modifier';
 import { EditSaveThreshold, InfoSaveThreshold } from '@/components/features/feature-data/save-threshold';
 import { EditSize, InfoSize } from '@/components/features/feature-data/size';
 import { EditSpeed, InfoSpeed } from '@/components/features/feature-data/speed';
 import { EditSummon, InfoSummon } from '@/components/features/feature-data/summon';
 import { EditSummonFormation, InfoSummonFormation } from './feature-data/summon-formation';
+import { EditSurgeGain, InfoSurgeGain } from '@/components/features/feature-data/surge-gain';
 import { EditSwitchOptions, InfoSwitchOptions } from '@/components/features/feature-data//switch-options';
 import { EditSwitchValue, InfoSwitchValue } from '@/components/features/feature-data//switch-value';
 import { EditTaggedFeature, InfoTaggedFeature } from '@/components/features/feature-data/tagged-feature';
+import { Feature, FeatureData } from '@/models/feature';
 import { EditAbilityData } from '@/components/features/feature-data/ability';
 import { EditAddOn } from '@/components/features/feature-data/addon';
+import { EditFollower } from '@/components/features/feature-data/follower';
 import { EditMaliceAbility } from '@/components/features/feature-data/malice-ability';
 import { EditPackageContent } from '@/components/features/feature-data/package-content';
+import { FeatureType } from '@/enums/feature-type';
+import { Hero } from '@/models/hero';
+import { Sourcebook } from '@/models/sourcebook';
 
 interface InfoProps {
 	feature: Feature;
@@ -81,6 +87,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoClassAbility data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Companion:
 			return <InfoCompanion data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.Complication:
+			return <InfoComplication data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ConditionImmunity:
 			return <InfoConditionImmunity data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.DamageModifier:
@@ -97,6 +105,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.HeroicResourceGain:
 			return <InfoHeroicResourceGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.HeroicResourceThreshold:
+			return <InfoHeroicResourceThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.ItemChoice:
 			return <InfoItemChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Kit:
@@ -115,6 +125,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoPackage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Perk:
 			return <InfoPerk data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.PotencyResistance:
+			return <InfoPotencyResistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Proficiency:
 			return <InfoProficiency data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Retainer:
@@ -123,6 +135,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoSaveThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Size:
 			return <InfoSize data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.SkillCancelChoice:
+			return <InfoSkillCancelChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SkillChoice:
 			return <InfoSkillChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Speed:
@@ -133,6 +147,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SummonFormation:
 			return <InfoSummonFormation data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.SurgeGain:
+			return <InfoSurgeGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchOptions:
 			return <InfoSwitchOptions data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.SwitchValue:
@@ -141,6 +157,8 @@ export const InfoFeature = (props: InfoProps) => {
 			return <InfoTaggedFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TaggedFeatureChoice:
 			return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
+		case FeatureType.RollModifier:
+			return <InfoRollModifier data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.TitleChoice:
 			return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} />;
 		case FeatureType.Toggle:
@@ -190,12 +208,16 @@ export const EditFeature = (props: EditProps) => {
 			return <EditDomainFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Fixture:
 			return <EditFixture data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.Follower:
+			return <EditFollower data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ForController:
 			return <EditForController data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResource:
 			return <EditHeroicResource data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.HeroicResourceGain:
 			return <EditHeroicResourceGain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.HeroicResourceThreshold:
+			return <EditHeroicResourceThreshold data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.ItemChoice:
 			return <EditItemChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Kit:
@@ -218,12 +240,16 @@ export const EditFeature = (props: EditProps) => {
 			return <EditPackageContent data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Perk:
 			return <EditPerk data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.PotencyResistance:
+			return <EditPotencyResistance data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Proficiency:
 			return <EditProficiency data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SaveThreshold:
 			return <EditSaveThreshold data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Size:
 			return <EditSize data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SkillCancelChoice:
+			return <EditSkillCancelChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
 			return <EditSkillChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Speed:
@@ -234,6 +260,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditSummonChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonFormation:
 			return <EditSummonFormation data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SurgeGain:
+			return <EditSurgeGain data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchOptions:
 			return <EditSwitchOptions data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SwitchValue:
@@ -242,6 +270,8 @@ export const EditFeature = (props: EditProps) => {
 			return <EditTaggedFeature data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TaggedFeatureChoice:
 			return <EditTaggedFeatureChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.RollModifier:
+			return <EditRollModifier data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.TitleChoice:
 			return <EditTitleChoice data={props.feature.data} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Toggle:
@@ -270,6 +300,8 @@ export const ConfigFeature = (props: ConfigProps) => {
 			return <ConfigClassAbility data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Companion:
 			return <ConfigCompanion data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.Complication:
+			return <ConfigComplication data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Domain:
 			return <ConfigDomain data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.DomainFeature:
@@ -284,6 +316,8 @@ export const ConfigFeature = (props: ConfigProps) => {
 			return <ConfigPerk data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.Retainer:
 			return <ConfigRetainer data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
+		case FeatureType.SkillCancelChoice:
+			return <ConfigSkillCancelChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SkillChoice:
 			return <ConfigSkillChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} setData={props.setData} />;
 		case FeatureType.SummonChoice:

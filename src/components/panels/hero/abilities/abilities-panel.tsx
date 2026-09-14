@@ -4,7 +4,6 @@ import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Empty } from '@/components/controls/empty/empty';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { PanelMode } from '@/enums/panel-mode';
@@ -53,54 +52,52 @@ export const AbilitiesPanel = (props: Props) => {
 	const useRows = options.compactView;
 
 	return (
-		<ErrorBoundary>
-			<div className='abilities-section'>
-				{useRows ? <HeaderText level={options.compactView ? 3 : 1}>{props.title}</HeaderText> : null}
+		<div className='abilities-section'>
+			{useRows ? <HeaderText level={options.compactView ? 3 : 1}>{props.title}</HeaderText> : null}
+			{
+				(nonStandard.length === 0) && (standard.length === 0) ?
+					<Empty />
+					: null
+			}
+			<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 				{
-					(nonStandard.length === 0) && (standard.length === 0) ?
-						<Empty />
-						: null
+					nonStandard.map(a =>
+						useRows ?
+							getRow(a)
+							:
+							<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => props.onSelectAbility(a.ability)}>
+								<AbilityPanel
+									ability={a.ability}
+									hero={props.hero}
+									mode={PanelMode.Full}
+									tags={options.showSources ? [ a.level ? `${a.source} (level ${a.level})` : a.source ] : undefined}
+								/>
+							</SelectablePanel>
+					)
 				}
-				<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-					{
-						nonStandard.map(a =>
-							useRows ?
-								getRow(a)
-								:
-								<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => props.onSelectAbility(a.ability)}>
-									<AbilityPanel
-										ability={a.ability}
-										hero={props.hero}
-										mode={PanelMode.Full}
-										tags={options.showSources ? [ a.level ? `${a.source} (level ${a.level})` : a.source ] : undefined}
-									/>
-								</SelectablePanel>
-						)
-					}
-				</div>
-				{
-					(nonStandard.length > 0) && (standard.length > 0) ?
-						<Divider />
-						: null
-				}
-				<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-					{
-						standard.map(a =>
-							useRows ?
-								getRow(a)
-								:
-								<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => props.onSelectAbility(a.ability)}>
-									<AbilityPanel
-										ability={a.ability}
-										hero={props.hero}
-										mode={PanelMode.Full}
-										tags={options.showSources ? [ a.source ] : undefined}
-									/>
-								</SelectablePanel>
-						)
-					}
-				</div>
 			</div>
-		</ErrorBoundary>
+			{
+				(nonStandard.length > 0) && (standard.length > 0) ?
+					<Divider />
+					: null
+			}
+			<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+				{
+					standard.map(a =>
+						useRows ?
+							getRow(a)
+							:
+							<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => props.onSelectAbility(a.ability)}>
+								<AbilityPanel
+									ability={a.ability}
+									hero={props.hero}
+									mode={PanelMode.Full}
+									tags={options.showSources ? [ a.source ] : undefined}
+								/>
+							</SelectablePanel>
+					)
+				}
+			</div>
+		</div>
 	);
 };

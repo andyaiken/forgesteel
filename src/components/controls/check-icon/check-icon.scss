@@ -11,6 +11,10 @@
         color: rgb(0, 120, 0);
     }
 
+    &.warning .anticon {
+        color: rgb(190, 120, 0);
+    }
+
     &.failure .anticon {
         color: rgb(200, 0, 0);
     }

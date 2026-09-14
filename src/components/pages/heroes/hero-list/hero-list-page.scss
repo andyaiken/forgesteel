@@ -4,7 +4,7 @@
 	flex-direction: column;
 
 	.hero-list-page-content {
-		background-color: rgb(230, 230, 230);
+		background-color: var(--fs-canvas);
 		flex: 1 1 0;
 		display: flex;
 		flex-direction: column;
@@ -26,14 +26,6 @@
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 			gap: 10px;
-		}
-	}
-}
-
-html[data-theme="dark"] {
-	.hero-list-page {
-		.hero-list-page-content {
-			background-color: rgb(55, 55, 55);
 		}
 	}
 }

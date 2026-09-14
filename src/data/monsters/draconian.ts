@@ -61,7 +61,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			cost: 3,
 			icon: StatBlockIcon.Self,
 			sections: [
-				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have <code>M < 2</code>, they are knocked prone.'
+				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have M < 2, they are knocked prone.'
 			]
 		}),
 		FactoryLogic.feature.createMaliceAbility({
@@ -152,7 +152,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								bonus: 3,
 								tier1: 'The target regains 10 Stamina',
 								tier2: '12 corruption damage; A<2 weakened (save ends)',
-								tier3: '12 lightning damage; A<2 bleeding (save ends)'
+								tier3: '12 lightning damage; A<3 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The first time in an encounter that Aeolyxria makes a power roll for this ability, she can subsequently use the outcome of that roll instead of rolling whenever she uses this ability until the end of the encounter.'),
 							FactoryLogic.createAbilitySectionSpend({
@@ -442,9 +442,9 @@ Six individual draconians are presented in this section—not an adventuring par
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '7 courruption damage; M<1 the target has corruption weakness 3 (save ends)',
-								tier2: '12 courruption damage; M<2 the target has corruption weakness 3 (save ends)',
-								tier3: '15 courruption damage; the target has corruption weakness 3 (save ends)'
+								tier1: '7 corruption damage; M<1 the target has corruption weakness 3 (save ends)',
+								tier2: '12 corruption damage; M<2 the target has corruption weakness 3 (save ends)',
+								tier3: '15 corruption damage; the target has corruption weakness 3 (save ends)'
 							}))
 						]
 					})

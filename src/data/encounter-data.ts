@@ -1,5 +1,6 @@
 import { Encounter } from '@/models/encounter';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
+import { FactionType } from '@/enums/faction-type';
 import { MonsterData } from '@/data/monster-data';
 import { TerrainData } from '@/data/terrain-data';
 
@@ -12,6 +13,7 @@ export class EncounterData {
 			{
 				id: 'group-1',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-1-slot-1',
@@ -21,8 +23,12 @@ export class EncounterData {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							staminaAdjustment: 0,
 							minionCountAdjustment: 0,
-							convertToSolo: false
+							convertToSolo: false,
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: []
 						},
 						monsters: [],
 						state: {
@@ -43,6 +49,7 @@ export class EncounterData {
 			{
 				id: 'group-2',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-2-slot-1',
@@ -52,8 +59,12 @@ export class EncounterData {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							staminaAdjustment: 0,
 							minionCountAdjustment: 0,
-							convertToSolo: false
+							convertToSolo: false,
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: []
 						},
 						monsters: [],
 						state: {
@@ -74,6 +85,7 @@ export class EncounterData {
 			{
 				id: 'group-3',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-3-slot-1',
@@ -83,8 +95,12 @@ export class EncounterData {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							staminaAdjustment: 0,
 							minionCountAdjustment: 0,
-							convertToSolo: false
+							convertToSolo: false,
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: []
 						},
 						monsters: [],
 						state: {
@@ -105,6 +121,7 @@ export class EncounterData {
 			{
 				id: 'group-4',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-4-slot-1',
@@ -114,8 +131,12 @@ export class EncounterData {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							staminaAdjustment: 0,
 							minionCountAdjustment: 0,
-							convertToSolo: false
+							convertToSolo: false,
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: []
 						},
 						monsters: [],
 						state: {
@@ -168,6 +189,7 @@ export class EncounterData {
 			{
 				id: 'group-1',
 				name: '',
+				faction: FactionType.Enemy,
 				slots: [
 					{
 						id: 'group-1-slot-1',
@@ -177,8 +199,12 @@ export class EncounterData {
 							addOnIDs: [],
 							itemIDs: [],
 							levelAdjustment: 0,
+							staminaAdjustment: 0,
 							minionCountAdjustment: 0,
-							convertToSolo: false
+							convertToSolo: false,
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: []
 						},
 						monsters: [],
 						state: {

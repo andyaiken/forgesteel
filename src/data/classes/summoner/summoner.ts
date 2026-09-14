@@ -8,6 +8,8 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 import { circleOfBlight } from '@/data/classes/summoner/blight';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
@@ -52,12 +54,16 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'minion-death',
-							trigger: 'The first time each round that any minion dies unwillingly within your Summoner’s Range',
-							value: '1'
+							trigger: 'Any minion dies unwillingly within your Summoner’s Range',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					],
 					details: 'Whenever you use a heroic ability or call forth a minion that costs essence, you can willingly sacrifice one or more of your minions within your Summoner’s Range to reduce the cost by 1. You can’t kill minions this way if they used a main action or maneuver during the turn. You can sacrifice more minions than you would reduce the cost by.'
@@ -246,7 +252,19 @@ You can shift into squares that contain one of your minions, even if they occupy
 							feature: FactoryLogic.feature.createSummonFormation({
 								id: 'summoner-1-7c',
 								name: 'Elite Formation',
-								description: 'Each of your minions have their Stamina increased by 3 and their stability increased by 1.'
+								description: 'Each of your minions have their Stamina increased by 3 and their stability increased by 1.',
+								minionFeatures: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-1-7c-1',
+										field: FeatureField.Stamina,
+										value: 3
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-1-7c-2',
+										field: FeatureField.Stability,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						},
@@ -398,10 +416,12 @@ You conjure a kit for yourself. This kit includes an implement, such as a rod or
 					name: 'Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},
@@ -498,10 +518,14 @@ You can increase each of your minions’ Stamina as shown on the table. Addition
 | 5-Essence Minion | Stamina +2.      |`,
 					tag: 'minions'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'summoner-4-4',
 					name: 'Essence Salvage',
-					description: 'The first time each combat round that any minion unwillingly dies within your Summoner’s Range, you gain 2 essence instead of 1. '
+					tag: 'minion-death 2',
+					trigger: 'Any minion dies unwillingly within your Summoner’s Range',
+					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
+					replacesTags: [ 'minion-death' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-4-5',
@@ -573,10 +597,12 @@ When you take a respite, you teleport to your circle’s source manifold or poin
 					description: 'You can choose one additional ward from your Summoner’s Kit.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},
@@ -668,6 +694,7 @@ Additionally, you can increase each of your minions’ Stamina as shown on the 7
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.create({
@@ -725,10 +752,12 @@ Your champion gains additional features at 10th level. This includes a special C
 					description: 'You can choose one additional ward from your Summoner’s Kit.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'summoner-3-2a',
 								name: 'Conjured Ward',
-								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh).',
+								field: FeatureField.Stamina,
+								valuePerEchelon: 3
 							}),
 							value: 1
 						},
@@ -758,10 +787,11 @@ Your champion gains additional features at 10th level. This includes a special C
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createRollModifier({
 					id: 'summoner-9-1c',
 					name: 'Kit Improvement',
-					description: 'You have a double edge on tests made to dissuade or scare enemy minions or lackeys.'
+					modifier: RollModifierType.DoubleEdge,
+					condition: 'When dissuading or scaring enemy minions or lackeys'
 				}),
 				FactoryLogic.feature.create({
 					id: 'summoner-9-2',
@@ -841,9 +871,11 @@ Each of your minions’ Stamina improves as shown in the table. Additionally, ea
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

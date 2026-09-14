@@ -7,6 +7,8 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
+import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SkillList } from '@/enums/skill-list';
 
 export const conduit: HeroClass = {
@@ -45,7 +47,9 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '1d3',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -269,10 +273,12 @@ If you have a kit, you can’t take this blessing.`,
 					name: 'Conduit Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createBonus({
 								id: 'conduit-1-9a',
 								name: 'Bastion Ward',
-								description: 'Your god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
+								description: 'Your god grants you a holy countenance that protects you at all times.',
+								field: FeatureField.Save,
+								value: 1
 							}),
 							value: 1
 						},
@@ -368,6 +374,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					name: 'Blessed Domain',
 					tag: 'domain',
 					trigger: 'You gain piety from a domain effect.',
+					frequency: ResourceGainFrequency.AtWill,
 					value: '1'
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
@@ -504,7 +511,8 @@ You are infused with the power your deity reserves for their most worthy instrum
 					name: 'Faithful’s Reward',
 					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '1d3 + 1'
+					value: '1d3 + 1',
+					frequency: ResourceGainFrequency.OncePerRound
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-7-3',
@@ -543,10 +551,24 @@ You are infused with the power your deity reserves for their most worthy instrum
 					name: 'Faith’s Sword',
 					description: 'Each time you finish a respite, you can choose a willing hero ally who finished the respite with you. That ally gains the benefits of your Burgeoning Saint feature until you finish another respite. Additionally, you can spend piety as a free maneuver to give the hero 1 of their Heroic Resource for every 2 piety spent.'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'conduit-9-2',
 					name: 'Ordained',
-					description: 'Your god elevates the power flowing through you. Your characteristic scores are treated as 1 higher for the purpose of resisting potencies. Additionally, while you have 5 or more Victories, you speak with the voice of your deity. You have a double edge on Presence tests made to influence other creatures.'
+					description: 'Your god elevates the power flowing through you.',
+					features: [
+						FactoryLogic.feature.createPotencyResistance({
+							id: 'conduit-9-2a',
+							name: 'Ordained',
+							characteristics: []
+						}),
+						FactoryLogic.feature.createRollModifier({
+							id: 'conduit-9-2b',
+							name: 'Ordained',
+							modifier: RollModifierType.DoubleEdge,
+							characteristics: [ Characteristic.Presence ],
+							condition: 'While you have 5 or more Victories, when influencing other creatures'
+						})
+					]
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-9-3',
@@ -618,9 +640,11 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `

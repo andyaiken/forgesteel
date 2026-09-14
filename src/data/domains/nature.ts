@@ -3,6 +3,7 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Domain } from '@/models/domain';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 
 export const nature: Domain = {
@@ -171,8 +172,10 @@ Each benefit lasts until the creature who gains it finishes another respite.`
 		{
 			resource: 'Piety',
 			tag: '',
-			trigger: 'The first time in an encounter that you or a creature within 10 squares takes acid, cold, fire, lightning, poison, or sonic damage',
-			value: '2'
+			trigger: 'You or a creature within 10 squares takes acid, cold, fire, lightning, poison, or sonic damage',
+			value: '2',
+			frequency: ResourceGainFrequency.OncePerEncounter,
+			used: false
 		}
 	],
 	defaultFeatures: [

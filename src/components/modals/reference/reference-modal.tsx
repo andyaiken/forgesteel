@@ -13,10 +13,13 @@ import { LanguageType } from '@/enums/language-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { PanelMode } from '@/enums/panel-mode';
+import { RollModifierPanel } from '@/components/panels/roll-modifier-panel/roll-modifier-panel';
+import { RollType } from '@/enums/roll-type';
 import { RulesData } from '@/data/rules-data';
 import { RulesPage } from '@/enums/rules-page';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -36,6 +39,8 @@ export const ReferenceModal = (props: Props) => {
 	const [ page, setPage ] = useState<string>(props.startPage || RulesPage.Rules);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ selectedRule, setSelectedRule ] = useState<string>('');
+
+	const sourcebooks = props.hero ? props.sourcebooks.filter(sb => props.hero!.sourcebookIDs.includes(sb.id)) : props.sourcebooks;
 
 	const getRulesSection = () => {
 		const rules = [
@@ -145,9 +150,14 @@ export const ReferenceModal = (props: Props) => {
 	};
 
 	const getSkillsSection = () => {
-		const sourcebooks = props.hero ? props.hero.sourcebookIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
 		const allSkills = SourcebookLogic.getSkills(sourcebooks);
 		const skillNames = props.hero ? HeroLogic.getSkills(props.hero, sourcebooks).map(s => s.name) : [];
+		// Collected once; this page renders every skill in the game, and getFeatures walks the whole hero
+		const rollModifiers = props.hero
+			? HeroLogic.getRollModifiers(props.hero).filter(f => f.data.rollType === RollType.Test)
+			: [];
+		const modifiersFor = (skill: Skill) => rollModifiers
+			.filter(f => f.data.skills.includes(skill.name) || f.data.skillLists.includes(skill.list));
 
 		return (
 			<div>
@@ -166,12 +176,14 @@ export const ReferenceModal = (props: Props) => {
 									allSkills
 										.filter(s => s.list === sl)
 										.map((s, n2) => (
-											<Field
-												key={n2}
-												highlight={skillNames.includes(s.name)}
-												label={s.name}
-												value={s.description}
-											/>
+											<div key={n2}>
+												<Field
+													highlight={skillNames.includes(s.name)}
+													label={s.name}
+													value={s.description}
+												/>
+												{modifiersFor(s).map(f => <RollModifierPanel key={f.id} modifier={f} />)}
+											</div>
 										))
 								}
 							</Space>
@@ -183,7 +195,6 @@ export const ReferenceModal = (props: Props) => {
 	};
 
 	const getLanguagesSection = () => {
-		const sourcebooks = props.hero ? props.hero.sourcebookIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s) : props.sourcebooks;
 		const allLanguages = SourcebookLogic.getLanguages(sourcebooks);
 		const languageNames = props.hero ? HeroLogic.getLanguages(props.hero, sourcebooks).map(l => l.name) : [];
 
@@ -203,9 +214,8 @@ export const ReferenceModal = (props: Props) => {
 									allLanguages
 										.filter(l => l.type === type)
 										.map((l, n2) => (
-											<div>
+											<div key={n2}>
 												<Field
-													key={n2}
 													highlight={languageNames.includes(l.name)}
 													label={l.name}
 													value={l.description}

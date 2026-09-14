@@ -2,6 +2,7 @@ import { Button, Divider, Flex, Segmented, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureHeroicResourceData } from '@/models/feature';
 import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
+import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -10,7 +11,8 @@ import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Pill } from '@/components/controls/pill/pill';
+import { InfoFeature } from '../feature';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { Sourcebook } from '@/models/sourcebook';
 import { TextInput } from '@/components/controls/text-input/text-input';
 import { Toggle } from '@/components/controls/toggle/toggle';
@@ -42,13 +44,37 @@ export const InfoHeroicResource = (props: InfoProps) => {
 						<li key={n}>
 							<Flex align='center' justify='space-between' gap={10}>
 								<div className='ds-text compact-text'>{g.trigger}</div>
-								<Pill>+{g.value}</Pill>
+								<Pill>+{g.value} {g.frequency !== ResourceGainFrequency.AtWill ? g.frequency : null}</Pill>
 							</Flex>
 						</li>
 					))
 				}
 			</ul>
 			<Markdown text={data.details} />
+			{data.thresholds.length > 0 ? <Divider size='small' /> : null}
+			{
+				data.thresholds.map(t => {
+					const heroLevel = props.hero?.class?.level || 1;
+					const unlocked = (data.value >= t.value) && (heroLevel >= t.level);
+
+					let value = `${t.value}+`;
+					if (t.level > 1) {
+						value += ` (level ${t.level}+)`;
+					}
+
+					return (
+						<div key={t.feature.id}>
+							<Flex align='center' gap={10}>
+								<ResourcePill value={value} units='' satisfied={unlocked} />
+								<div style={{ flex: '1 1 0' }}>
+									{t.feature.description ? <div className='ds-text compact-text'>{t.feature.description}</div> : null}
+									<InfoFeature feature={t.feature} hero={props.hero} sourcebooks={props.sourcebooks} />
+								</div>
+							</Flex>
+						</div>
+					);
+				})
+			}
 		</>
 	);
 };
@@ -74,7 +100,9 @@ export const EditHeroicResource = (props: EditProps) => {
 		copy.gains.push({
 			tag: '',
 			trigger: '',
-			value: '1'
+			value: '1',
+			frequency: ResourceGainFrequency.AtWill,
+			used: false
 		});
 		setData(copy);
 		props.setData(copy);
@@ -111,6 +139,13 @@ export const EditHeroicResource = (props: EditProps) => {
 	const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
 		const copy = Utils.copy(data);
 		copy.gains[index].value = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
+	const setResourceGainFrequency = (data: FeatureHeroicResourceData, index: number, value: ResourceGainFrequency) => {
+		const copy = Utils.copy(data);
+		copy.gains[index].frequency = value;
 		setData(copy);
 		props.setData(copy);
 	};
@@ -180,6 +215,14 @@ export const EditHeroicResource = (props: EditProps) => {
 								allowClear={true}
 								value={gain.value}
 								onChange={value => setResourceGainValue(data, n, value)}
+							/>
+							<HeaderText>Frequency</HeaderText>
+							<Segmented
+								name={`frequency-${n}`}
+								block={true}
+								options={[ ResourceGainFrequency.AtWill, ResourceGainFrequency.OncePerRound, ResourceGainFrequency.OncePerEncounter ].map(o => ({ value: o, label: o }))}
+								value={gain.frequency}
+								onChange={value => setResourceGainFrequency(data, n, value as ResourceGainFrequency)}
 							/>
 						</Space>
 					</Expander>

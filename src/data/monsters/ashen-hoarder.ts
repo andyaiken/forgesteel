@@ -173,7 +173,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Effect: The ashen hoarder moves up to twice their speed in a straight line. Each creature or object in the path of this movement is either pushed into the nearest unoccupied space outside the path, or if they have <code>M < 3</code> is pushed forward until the movement ends. Any creature who is force moved forward into an obstacle is dazed (save ends).')
+							FactoryLogic.createAbilitySectionText('Effect: The ashen hoarder moves up to twice their speed in a straight line. Each creature or object in the path of this movement is either pushed into the nearest unoccupied space outside the path, or if they have M < 3 is pushed forward until the movement ends. Any creature who is force moved forward into an obstacle is dazed (save ends).')
 						]
 					})
 				}),
@@ -198,7 +198,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 				FactoryLogic.feature.create({
 					id: 'ashen-hoarder-feature-9',
 					name: 'Soul Singularity',
-					description: 'When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has <code>M < 3</code> takes 11 corruption damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can’t be brought back to life until their soul is recovered.'
+					description: 'When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has M < 3 takes 11 corruption damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can’t be brought back to life until their soul is recovered.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -212,9 +212,9 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '6 damage, vertical push 2',
-								tier2: '11 damage, vertical push 3',
-								tier3: '14 damage, vertical push 4'
+								tier1: '6 damage; vertical push 2',
+								tier2: '11 damage; vertical push 3',
+								tier3: '14 damage; vertical push 4'
 							})),
 							FactoryLogic.createAbilitySectionText('Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).')
 						]

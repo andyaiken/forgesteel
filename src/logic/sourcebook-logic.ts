@@ -12,7 +12,6 @@ import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Feature } from '@/models/feature';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
@@ -29,41 +28,19 @@ import { Project } from '@/models/project';
 import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
-import { SourcebookData } from '@/data/sourcebook-data';
-import { SourcebookUpdateLogic } from './update/sourcebook-update-logic';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
+import { UpdateLogic } from './update/update-logic';
 
 export class SourcebookLogic {
-	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
-		const list: Sourcebook[] = [
-			// Official
-			SourcebookData.core,
-			SourcebookData.orden,
-			SourcebookData.beastheart,
-			SourcebookData.summoner,
+	// The built-in sourcebooks are loaded once at boot and then held in React state,
+	// so they have to be handed in - see useSourcebooks() for the app-wide list.
+	static getSourcebooks = (builtIn: Sourcebook[], homebrew: Sourcebook[] = []) => {
+		const list = [ ...builtIn ];
 
-			// Third Party
-			SourcebookData.community,
-			SourcebookData.lookOut,
-			SourcebookData.magazineBlacksmith,
-			SourcebookData.magazineRatcatcher,
-			SourcebookData.steelEchoes,
-			SourcebookData.triglav,
-			SourcebookData.weaponsOfLegend
-		];
-
-		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
-			list.push(SourcebookData.patreon);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.communityPreRelease.code)) {
-			list.push(SourcebookData.communityPrerelease);
-		}
-
-		list.forEach(SourcebookUpdateLogic.updateSourcebook);
+		list.forEach(UpdateLogic.updateSourcebook);
 
 		list.push(...homebrew);
 
@@ -451,6 +428,68 @@ export class SourcebookLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getAllAbilities = (sourcebook: Sourcebook) => {
+		return [
+			...sourcebook.ancestries.flatMap(SourcebookLogic.getAbilitiesFromAncestry),
+			...sourcebook.classes.flatMap(c => SourcebookLogic.getAbilitiesFromClass(c, true, true, true, true, true, true)),
+			...sourcebook.subclasses.flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, true, true)),
+			...sourcebook.domains.flatMap(SourcebookLogic.getAbilitiesFromDomain),
+			...sourcebook.items.flatMap(SourcebookLogic.getAbilitiesFromItem),
+			...sourcebook.monsterGroups.flatMap(SourcebookLogic.getAbilitiesFromMonsterGroup)
+		];
+	};
+
+	static getAbilitiesFromAncestry = (ancestry: Ancestry) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		ancestry.features.forEach(addFeature);
+
+		return abilities;
+	};
+
+	static getAbilitiesFromDomain = (domain: Domain) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		domain.defaultFeatures.forEach(addFeature);
+		domain.featuresByLevel.flatMap(fbl => fbl.features).forEach(addFeature);
+
+		return abilities;
+	};
+
 	static getAbilitiesFromClass = (heroClass: HeroClass, classAbilities: boolean, selectedSubclassAbilities: boolean, unselectedSubclassAbilities: boolean, classLevels: boolean, selectedSubclassLevels: boolean, unselectedSubclassLevels: boolean) => {
 		const abilities: Ability[] = [];
 
@@ -462,6 +501,9 @@ export class SourcebookLogic {
 				case FeatureType.Choice:
 					feature.data.options.map(o => o.feature).forEach(addFeature);
 					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
@@ -472,32 +514,171 @@ export class SourcebookLogic {
 			abilities.push(...heroClass.abilities);
 		}
 
-		if (selectedSubclassAbilities) {
-			abilities.push(...heroClass.subclasses.filter(sc => sc.selected).flatMap(sc => sc.abilities));
-		}
-
-		if (unselectedSubclassAbilities) {
-			abilities.push(...heroClass.subclasses.filter(sc => !sc.selected).flatMap(sc => sc.abilities));
-		}
-
 		if (classLevels) {
 			heroClass.featuresByLevel
 				.forEach(lvl => lvl.features.forEach(addFeature));
 		}
 
-		if (selectedSubclassLevels) {
-			heroClass.subclasses
-				.filter(sc => sc.selected)
-				.flatMap(sc => sc.featuresByLevel)
+		abilities.push(...heroClass.subclasses.filter(sc => sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, selectedSubclassAbilities, selectedSubclassLevels)));
+		abilities.push(...heroClass.subclasses.filter(sc => !sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, unselectedSubclassAbilities, unselectedSubclassLevels)));
+
+		return abilities;
+	};
+
+	static getAbilitiesFromSubclass = (subclass: SubClass, subclassAbilities: boolean, subclassLevels: boolean) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		if (subclassAbilities) {
+			abilities.push(...subclass.abilities);
+		}
+
+		if (subclassLevels) {
+			subclass.featuresByLevel
 				.forEach(lvl => lvl.features.forEach(addFeature));
 		}
 
-		if (unselectedSubclassLevels) {
-			heroClass.subclasses
-				.filter(sc => !sc.selected)
-				.flatMap(sc => sc.featuresByLevel)
-				.forEach(lvl => lvl.features.forEach(addFeature));
-		}
+		return abilities;
+	};
+
+	static getAbilitiesFromItem = (item: Item) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		item.featuresByLevel.forEach(lvl => lvl.features.forEach(addFeature));
+
+		return abilities;
+	};
+
+	static getAbilitiesFromKit = (kit: Kit) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		kit.features.forEach(addFeature);
+
+		return abilities;
+	};
+
+	static getAbilitiesFromComplication = (complication: Complication) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		complication.features.forEach(addFeature);
+
+		return abilities;
+	};
+
+	static getAbilitiesFromMonsterGroup = (group: MonsterGroup) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		group.malice.forEach(addFeature);
+		abilities.push(...group.monsters.flatMap(SourcebookLogic.getAbilitiesFromMonster));
+
+		return abilities;
+	};
+
+	static getAbilitiesFromMonster = (monster: Monster) => {
+		const abilities: Ability[] = [];
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.HeroicResourceThreshold:
+					addFeature(feature.data.feature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		monster.features.forEach(addFeature);
 
 		return abilities;
 	};

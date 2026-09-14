@@ -1,9 +1,9 @@
-import { CheckCircleFilled, CloseCircleFilled, EllipsisOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled, EllipsisOutlined, ExclamationCircleFilled, LoadingOutlined } from '@ant-design/icons';
 
 import './check-icon.scss';
 
 interface Props {
-	state?: 'pending' | 'success' | 'failure';
+	state?: 'pending' | 'success' | 'warning' | 'failure';
 }
 
 export const CheckIcon = (props: Props) => {
@@ -18,6 +18,12 @@ export const CheckIcon = (props: Props) => {
 			return (
 				<div className='check-icon success'>
 					<CheckCircleFilled />
+				</div>
+			);
+		case 'warning':
+			return (
+				<div className='check-icon warning'>
+					<ExclamationCircleFilled />
 				</div>
 			);
 		case 'failure':

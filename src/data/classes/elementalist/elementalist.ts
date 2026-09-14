@@ -9,6 +9,7 @@ import { HeroClass } from '@/models/class';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { PerkList } from '@/enums/perk-list';
+import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { SkillList } from '@/enums/skill-list';
 import { earth } from '@/data/classes/elementalist/earth';
 import { fire } from '@/data/classes/elementalist/fire';
@@ -51,12 +52,16 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						{
 							tag: 'start',
 							trigger: 'Start of your turn',
-							value: '2'
+							value: '2',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						},
 						{
 							tag: 'take-damage',
-							trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
-							value: '1'
+							trigger: 'You or a creature within 10 of you takes damage that isn’t untyped or holy',
+							value: '1',
+							frequency: ResourceGainFrequency.OncePerRound,
+							used: false
 						}
 					]
 				}),
@@ -223,10 +228,14 @@ If you have a kit, you can’t take this enchantment.`,
 					name: 'Elementalist Ward',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createSurgeGain({
 								id: 'elementalist-1-8a',
 								name: 'Ward of Delightful Consequences',
-								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain 1 surge.'
+								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies.',
+								tag: 'take-damage',
+								trigger: 'You take damage',
+								value: '1',
+								frequency: ResourceGainFrequency.OncePerRound
 							}),
 							value: 1
 						},
@@ -464,8 +473,9 @@ If you have a kit, you can’t take this enchantment.`,
 					id: 'elementalist-4-2',
 					name: 'Font of Essence',
 					tag: 'take-damage 2',
-					trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
+					trigger: 'You or a creature within 10 of you takes damage that isn’t untyped or holy',
 					value: '2',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -548,6 +558,7 @@ If you have a kit, you can’t take this enchantment.`,
 					tag: 'start 2',
 					trigger: 'Start of your turn',
 					value: '3',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -597,9 +608,11 @@ Additionally, when you have 5 or more Victories, choose one of the following dam
 					type: 'epic',
 					gains: [
 						{
-							tag: '',
+							tag: 'respite',
 							trigger: 'Finish a respite',
-							value: 'XP gained'
+							value: 'XP gained',
+							frequency: ResourceGainFrequency.AtWill,
+							used: false
 						}
 					],
 					description: `
@@ -657,6 +670,7 @@ Breath remains until you convert it to essence.`
 					tag: 'start 3',
 					trigger: 'Start of your turn',
 					value: '4',
+					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
@@ -1454,11 +1468,11 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			cost: 11,
 			minLevel: 9,
 			sections: [
-				FactoryLogic.createAbilitySectionText('You create a fissure in the ground adjacent to you that is a 10 × 2 line and 6 squares deep. Each creature in the area who is prone and size 2 or smaller falls in. Other creatures can enter the fissure or can shift to the nearest unoccupied space of their choice outside it.'),
+				FactoryLogic.createAbilitySectionText('You conjure an elemental shield that protects the target until the end of your next turn. While the shield is active, the target can take the Defend main action as a maneuver on each of their turns. The target gains 30 temporary Stamina that lasts until depleted or until the effect ends. If this temporary Stamina disappears, the effect ends and the shield explodes, dealing 10 damage to each enemy within 5 squares of the target'),
 				FactoryLogic.createAbilitySectionSpend({
 					name: 'Persist',
 					value: 2,
-					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
+					effect: 'The effect lasts until the start of your next turn.'
 				})
 			]
 		}),

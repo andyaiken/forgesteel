@@ -13,7 +13,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { SourcebookType } from '@/enums/sourcebook-type';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { UpdateLogic } from '@/logic/update/update-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -24,6 +24,7 @@ interface Props {
 	homebrewSourcebooks: Sourcebook[];
 	onClose: () => void;
 	onHomebrewSourcebookChange: (sourcebook: Sourcebook) => void;
+	onHomebrewSourcebookReplace: (sourcebook: Sourcebook, homebrewSourcebooks: Sourcebook[]) => void;
 	onHomebrewSourcebookDelete: (sourcebook: Sourcebook) => void;
 }
 
@@ -56,6 +57,16 @@ export const SourcebooksModal = (props: Props) => {
 			setHomebrewSourcebooks(copy);
 		}
 		props.onHomebrewSourcebookChange(sourcebook);
+	};
+
+	const replaceSourcebook = (sourcebook: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks);
+		const index = copy.findIndex(s => s.id === sourcebook.id);
+		if (index !== -1) {
+			copy[index] = sourcebook;
+			setHomebrewSourcebooks(copy);
+		}
+		props.onHomebrewSourcebookReplace(sourcebook, copy);
 	};
 
 	const deleteSourcebook = (sourcebook: Sourcebook) => {
@@ -207,7 +218,7 @@ export const SourcebooksModal = (props: Props) => {
 												.then(json => {
 													const sourcebook = JSON.parse(json) as Sourcebook;
 													sourcebook.id = Utils.guid();
-													SourcebookUpdateLogic.updateSourcebook(sourcebook);
+													UpdateLogic.updateSourcebook(sourcebook);
 													importSourcebook(sourcebook);
 												});
 											return false;
@@ -231,6 +242,10 @@ export const SourcebooksModal = (props: Props) => {
 												visible: !hiddenSourcebookIDs.includes(s.id),
 												onSetVisibility: (value: boolean) => setVisibility(s, value)
 											}}
+											showEditButtons={true}
+											onChange={changeSourcebook}
+											onReplace={replaceSourcebook}
+											onDelete={deleteSourcebook}
 										/>
 									</SelectablePanel>
 								))
@@ -275,8 +290,6 @@ export const SourcebooksModal = (props: Props) => {
 											sourcebook={selectedSourcebook}
 											sourcebooks={[ ...props.officialSourcebooks, ...props.homebrewSourcebooks ]}
 											mode={PanelMode.Full}
-											onChange={changeSourcebook}
-											onDelete={deleteSourcebook}
 										/>
 									</div>
 									: null

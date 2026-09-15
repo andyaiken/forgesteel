@@ -402,7 +402,8 @@ const troubadour: ClocktowerCharacter = {
 		flavor: 'Every hero worries they’ll be forgotten, but each one has a name, and I will sing them all.',
 		ability: 'Each night, you learn two roles and are told how many of them are in play. [+1 Outsider]',
 		firstNightReminder: 'Learn 2 roles, and how many of them are in play.',
-		otherNightReminder: 'Learn 2 roles, and how many of them are in play.'
+		otherNightReminder: 'Learn 2 roles, and how many of them are in play.',
+		setup: true
 	},
 	details: {
 		description: `
@@ -582,8 +583,7 @@ const angulotl: ClocktowerCharacter = {
 		otherNightReminder: 'Choose a player; they are poisoned.',
 		reminders: [
 			'Poisoned'
-		],
-		setup: true
+		]
 	},
 	details: {
 		description: `

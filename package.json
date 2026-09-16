@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "14.198.0",
+	"version": "14.199.0",
 	"type": "module",
 	"engines": {
 		"node": ">=24"
@@ -25,14 +25,14 @@
 		"@ant-design/icons": "^6.3.4",
 		"@dnd-kit/core": "^6.3.1",
 		"@mdxeditor/editor": "^4.2.3",
-		"antd": "^6.6.2",
+		"antd": "^6.6.3",
 		"axios": "^1.20.0",
-		"dompurify": "^3.4.14",
+		"dompurify": "^3.4.15",
 		"fflate": "^0.8.3",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^4.2.1",
 		"localforage": "^1.10.0",
-		"marked": "^18.0.11",
+		"marked": "^18.0.12",
 		"modern-screenshot": "^4.7.0",
 		"rc-overflow": "^1.5.0",
 		"react": "^19.2.8",
@@ -47,7 +47,7 @@
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.7",
 		"@vitejs/plugin-react": "^6.0.5",
-		"@vitest/coverage-v8": "^4.1.11",
+		"@vitest/coverage-v8": "^5.0.0",
 		"axios-mock-adapter": "^2.1.0",
 		"eslint": "^10.10.0",
 		"eslint-plugin-react-hooks": "^7.1.1",
@@ -57,7 +57,7 @@
 		"typescript-eslint": "^8.68.0",
 		"vite": "^8.2.2",
 		"vite-plugin-pwa": "^1.3.0",
-		"vitest": "^4.1.11",
+		"vitest": "^5.0.0",
 		"workbox-build": "^7.4.1",
 		"workbox-window": "^7.4.1"
 	}

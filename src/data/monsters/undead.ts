@@ -2109,7 +2109,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									bonus: 4,
 									tier1: '7 damage; A<2 slowed (save ends)',
 									tier2: '10 damage; A<3 slowed (save ends)',
-									tier3: '117 damage; A<4 slowed (save ends)'
+									tier3: '11 damage; A<4 slowed (save ends)'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('If the target is bleeding, the vampire shifts up to their speed before using this ability.')

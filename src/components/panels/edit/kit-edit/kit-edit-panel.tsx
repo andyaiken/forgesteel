@@ -1,4 +1,5 @@
 import { Alert, Select, Slider, Space, Tabs } from 'antd';
+import { Kit, KitDamageBonus } from '@/models/kit';
 import { ReactNode, useState } from 'react';
 import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { Collections } from '@/utils/collections';
@@ -6,7 +7,6 @@ import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Kit } from '@/models/kit';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '@/enums/kit-weapon';
@@ -318,12 +318,11 @@ export const KitEditPanel = (props: Props) => {
 
 		powerB.push({ name: 'Melee Distance', value: 2 * kit.meleeDistance });
 
+		// Tier 3 is weighted double, so that +1/+1/+1 = 1, +2/+2/+2 = 2, and +0/+0/+4 = 2
+		const getDamagePower = (dmg: KitDamageBonus | null) => dmg ? (dmg.tier1 + dmg.tier2 + (2 * dmg.tier3)) / 4 : 0;
+
 		const minMeleeDamage = kit.meleeDamage ? Math.min(kit.meleeDamage.tier1, kit.meleeDamage.tier2, kit.meleeDamage.tier3) : 0;
-		let powerMeleeDamage = minMeleeDamage;
-		if (kit.meleeDamage && (kit.meleeDamage.tier3 - minMeleeDamage >= 4)) {
-			powerMeleeDamage += 2;
-		}
-		powerB.push({ name: 'Melee Damage', value: powerMeleeDamage });
+		powerB.push({ name: 'Melee Damage', value: getDamagePower(kit.meleeDamage) });
 
 		let powerRange = 0;
 		if (kit.rangedDistance >= 5) {
@@ -338,11 +337,7 @@ export const KitEditPanel = (props: Props) => {
 		powerB.push({ name: 'Ranged Distance', value: powerRange });
 
 		const minRangedDamage = kit.rangedDamage ? Math.min(kit.rangedDamage.tier1, kit.rangedDamage.tier2, kit.rangedDamage.tier3) : 0;
-		let powerRangedDamage = minRangedDamage;
-		if (kit.rangedDamage && (kit.rangedDamage.tier3 - minRangedDamage >= 4)) {
-			powerRangedDamage += 2;
-		}
-		powerB.push({ name: 'Ranged Damage', value: powerRangedDamage });
+		powerB.push({ name: 'Ranged Damage', value: getDamagePower(kit.rangedDamage) });
 
 		const power = Collections.sum([ ...powerA, ...powerB ], p => p.value);
 
@@ -380,7 +375,7 @@ export const KitEditPanel = (props: Props) => {
 					range={true}
 					marks={marks}
 					min={0}
-					max={16}
+					max={Math.max(16, power)}
 					value={[ power ]}
 					styles={{
 						track: {

@@ -1,6 +1,9 @@
+import { Ability, AbilityDistance } from '@/models/ability';
 import { Feature, FeatureBonus, FeatureMovementMode, FeatureRollModifierData, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSummonChoice, FeatureSummonChoiceData, FeatureToggle } from '@/models/feature';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AbilityData } from '@/data/ability-data';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -9,7 +12,12 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ImbuedWeaponData } from '@/data/imbuements/imbued-weapon-data';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
 import { Kit } from '@/models/kit';
+import { KitData } from '@/data/kit-data';
+import { LeveledWeaponData } from '@/data/items/leveled-weapon-data';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
@@ -1047,5 +1055,70 @@ describe('resetGains', () => {
 		HeroLogic.resetGains(hero);
 
 		expect(domainGains().map(g => g.used)).toEqual([ false ]);
+	});
+});
+
+describe('getFeatureDamageBonuses - wielded treasures', () => {
+	const createStrike = (keywords: AbilityKeyword[], distance: AbilityDistance[]) => FactoryLogic.createAbility({
+		id: 'test-strike',
+		name: 'Test Strike',
+		type: FactoryLogic.type.createMain(),
+		keywords: keywords,
+		distance: distance,
+		target: 'One creature',
+		sections: []
+	});
+
+	const meleeStrike = createStrike([ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ], [ FactoryLogic.distance.createMelee() ]);
+	const rangedStrike = createStrike([ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ], [ FactoryLogic.distance.createRanged(5) ]);
+
+	const createImbuedWeapon = (id: string) => {
+		const item = FactoryLogic.createItem({ id: id, name: id, description: '', type: ItemType.ImbuedWeapon });
+		item.imbuements = [ Utils.copy(ImbuedWeaponData.chillingI) ];
+		return item;
+	};
+
+	const createHeroWithKit = (kit: Kit | null, items: Item[]) => {
+		const hero = FactoryLogic.createHero();
+		if (kit) {
+			const kitFeature = FactoryLogic.feature.createKitChoice({ id: 'test-kit' });
+			kitFeature.data.selected = [ Utils.copy(kit) ];
+			hero.features.push(kitFeature);
+		}
+		hero.state.inventory = items.map(i => Utils.copy(i));
+		return hero;
+	};
+
+	const total = (hero: Hero, ability: Ability, distance?: AbilityDistanceType) => {
+		return Collections.sum(HeroLogic.getFeatureDamageBonuses(hero, ability, distance), b => b.value);
+	};
+
+	it('applies only one weapon\'s damage bonus when several are carried', () => {
+		const hero = createHeroWithKit(KitData.dualWielder, [ LeveledWeaponData.bladeOfTheLuxuriousFop, createImbuedWeapon('imbued-a'), createImbuedWeapon('imbued-b') ]);
+		expect(total(hero, meleeStrike)).toBe(1);
+	});
+
+	it('keeps bonuses from non-wielded items alongside the weapon bonus', () => {
+		const hero = createHeroWithKit(KitData.dualWielder, [ createImbuedWeapon('imbued-a') ]);
+		hero.features.push(FactoryLogic.feature.createAbilityDamage({ id: 'test-feature', keywords: [ AbilityKeyword.Weapon ], value: 2 }));
+		expect(total(hero, meleeStrike)).toBe(3);
+	});
+
+	it('does not add a weapon bonus to ranged abilities without a ranged kit bonus', () => {
+		const hero = createHeroWithKit(KitData.dualWielder, [ createImbuedWeapon('imbued-a') ]);
+		expect(total(hero, rangedStrike)).toBe(0);
+		expect(total(hero, meleeStrike)).toBe(1);
+	});
+
+	it('adds a weapon bonus to ranged abilities with a ranged kit bonus', () => {
+		const hero = createHeroWithKit(KitData.arcaneArcher, [ createImbuedWeapon('imbued-a') ]);
+		expect(total(hero, rangedStrike)).toBe(1);
+	});
+
+	it('respects the chosen distance for abilities that can be melee or ranged', () => {
+		const ability = createStrike([ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ], [ FactoryLogic.distance.createMelee(), FactoryLogic.distance.createRanged(5) ]);
+		const hero = createHeroWithKit(KitData.dualWielder, [ createImbuedWeapon('imbued-a') ]);
+		expect(total(hero, ability, AbilityDistanceType.Melee)).toBe(1);
+		expect(total(hero, ability, AbilityDistanceType.Ranged)).toBe(0);
 	});
 });

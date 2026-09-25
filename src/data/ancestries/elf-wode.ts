@@ -31,7 +31,7 @@ export const wodeElf: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'wode-elf-feature-2',
-			name: 'Wode Elf Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

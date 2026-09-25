@@ -77,7 +77,7 @@ export const dragonKnight: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-2',
-			name: 'Dragon Knight Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAbility({

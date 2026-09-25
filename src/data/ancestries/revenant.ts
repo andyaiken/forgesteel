@@ -34,7 +34,7 @@ export const revenant: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'revenant-feature-4',
-			name: 'Revenant Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({

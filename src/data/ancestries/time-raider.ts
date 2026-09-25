@@ -22,7 +22,7 @@ export const timeRaider: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'time-raider-feature-2',
-			name: 'Time Raider Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAbility({

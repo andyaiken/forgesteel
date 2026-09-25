@@ -23,7 +23,7 @@ export const memonek: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'memonek-feature-3',
-			name: 'Memonek Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

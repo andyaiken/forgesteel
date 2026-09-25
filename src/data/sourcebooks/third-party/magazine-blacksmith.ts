@@ -66,7 +66,7 @@ In combat, any goblin who is out of range of the Boss (ignoring LoE) can only us
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'goblin-squad-feature-8',
-			name: 'Goblin Squad Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({
@@ -170,7 +170,7 @@ The enhancements are largely hidden with artificial skin and minor illusions alt
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'psi-borg-feature-3',
-			name: 'Psi-Borg Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

@@ -1,6 +1,7 @@
 import { DamageModifier, Modifier } from '@/models/damage-modifier';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
@@ -113,6 +114,7 @@ export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
 export interface FeatureClassAbilityData extends _FeatureData {
 	classID: string | undefined;
 	cost: number | 'signature';
+	type: AbilityUsage | 'Any';
 	source: {
 		fromClassAbilities: boolean;
 		fromSelectedSubclassAbilities: boolean;
@@ -122,6 +124,7 @@ export interface FeatureClassAbilityData extends _FeatureData {
 		fromUnselectedSubclassLevels: boolean;
 	}
 	minLevel: number;
+	maxLevel: number;
 	count: number;
 	selectedIDs: string[];
 }

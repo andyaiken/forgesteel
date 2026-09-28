@@ -1,6 +1,7 @@
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAbilityKeyword, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureComplication, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeaturePotencyResistance, FeatureProficiency, FeatureRetainer, FeatureRollModifier, FeatureSaveThreshold, FeatureSize, FeatureSkillCancelChoice, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureSummonFormation, FeatureSurgeGain, FeatureSwitchOptions, FeatureSwitchValue, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice, FeatureToggle } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityUsage } from '@/enums/ability-usage';
 import { Characteristic } from '@/enums/characteristic';
 import { ConditionType } from '@/enums/condition-type';
 import { DamageModifier } from '@/models/damage-modifier';
@@ -204,24 +205,26 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', fromClass?: boolean, fromSubclass?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
+	createClassAbilityChoice = (data: { id: string, classID?: string, name?: string, description?: string, cost: number | 'signature', type?: AbilityUsage | 'Any', fromClass?: boolean, fromSubclass?: boolean, fromUnselectedSubclass?: boolean, fromClassLevels?: boolean, fromSelectedSubclassLevels?: boolean, fromUnselectedSubclassLevels?: boolean, minLevel?: number, maxLevel?: number, count?: number }): FeatureClassAbility => {
 		return {
 			id: data.id,
 			name: data.name || `${data.cost === 'signature' ? 'Signature' : `${data.cost}pt`} Ability`,
 			description: data.description || '',
 			type: FeatureType.ClassAbility,
 			data: {
-				classID: undefined,
+				classID: data.classID || undefined,
 				cost: data.cost,
+				type: data.type || 'Any',
 				source: {
 					fromClassAbilities: (data.fromClass ?? true) ? true : false,
 					fromSelectedSubclassAbilities: (data.fromSubclass ?? true) ? true : false,
-					fromUnselectedSubclassAbilities: false,
-					fromClassLevels: false,
-					fromSelectedSubclassLevels: false,
-					fromUnselectedSubclassLevels: false
+					fromUnselectedSubclassAbilities: (data.fromUnselectedSubclass ?? true) ? true : false,
+					fromClassLevels: (data.fromClassLevels ?? true) ? true : false,
+					fromSelectedSubclassLevels: (data.fromSelectedSubclassLevels ?? true) ? true : false,
+					fromUnselectedSubclassLevels: (data.fromUnselectedSubclassLevels ?? true) ? true : false
 				},
 				minLevel: data.minLevel || 1,
+				maxLevel: data.maxLevel || 10,
 				count: data.count || 1,
 				selectedIDs: []
 			}

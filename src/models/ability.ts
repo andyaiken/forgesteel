@@ -53,6 +53,7 @@ export interface Ability extends Element {
 	cost: number | 'signature';
 	repeatable: boolean;
 	minLevel: number;
+	maxLevel: number;
 	sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[];
 }
 

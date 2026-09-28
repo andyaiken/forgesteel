@@ -697,6 +697,7 @@ export class FeatureLogic {
 			case FeatureType.ClassAbility: {
 				const data: FeatureClassAbilityData = {
 					classID: undefined,
+					type: 'Any',
 					cost: 1,
 					count: 1,
 					source: {
@@ -708,6 +709,7 @@ export class FeatureLogic {
 						fromUnselectedSubclassLevels: false
 					},
 					minLevel: 1,
+					maxLevel: 10,
 					selectedIDs: []
 				};
 				return data;

@@ -20,7 +20,7 @@ export const hakaan: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'hakaan-feature-2',
-			name: 'Hakaan Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createRollModifier({

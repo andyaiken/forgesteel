@@ -1,4 +1,4 @@
-import { Space, Tabs } from 'antd';
+import { Alert, Space, Tabs } from 'antd';
 import { Feature } from '@/models/feature';
 import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -84,12 +84,19 @@ export const TitleEditPanel = (props: Props) => {
 		};
 
 		return (
-			<FeatureListEditPanel
-				title='Features'
-				features={title.features}
-				sourcebooks={props.sourcebooks}
-				onChange={onChange}
-			/>
+			<Space orientation='vertical' style={{ width: '100%' }}>
+				<Alert
+					type='info'
+					showIcon={true}
+					title='A title grants one of these options; if you add more than one, the hero chooses between them.'
+				/>
+				<FeatureListEditPanel
+					title='Options'
+					features={title.features}
+					sourcebooks={props.sourcebooks}
+					onChange={onChange}
+				/>
+			</Space>
 		);
 	};
 
@@ -110,7 +117,7 @@ export const TitleEditPanel = (props: Props) => {
 						},
 						{
 							key: '3',
-							label: 'Features',
+							label: 'Options',
 							children: getFeaturesEditSection()
 						}
 					]}

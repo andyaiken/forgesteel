@@ -39,7 +39,7 @@ If the surface you are flattened against is destroyed, this ability ends and you
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'polder-feature-3',
-			name: 'Polder Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createDamageModifier({

@@ -17,7 +17,7 @@ export const orc: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'orc-feature-2',
-			name: 'Orc Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

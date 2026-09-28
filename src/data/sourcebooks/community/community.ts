@@ -51,7 +51,7 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'aranox-2',
-			name: 'Aranox Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createMultiple({
@@ -399,7 +399,7 @@ Oaklings are as diverse as the oaks that bear them. Their distinction is evident
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'oakling-2',
-			name: 'Oakling Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({
@@ -507,7 +507,7 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'solar-2',
-			name: 'Solar Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

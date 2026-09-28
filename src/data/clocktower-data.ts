@@ -249,7 +249,7 @@ const radenwight: ClocktowerCharacter = {
 		],
 		team: ClocktowerTeam.Townsfolk,
 		flavor: 'Names are like scraps - pick up enough of them and you’ll find something worth keeping.',
-		ability: 'Each night*, ask the Storyteller a yes/no question; if you were mad about being a new role today (not yours), and that role is in play, they answer truthfully.',
+		ability: 'Each night*, ask the Storyteller a yes/no question; if you were mad about being a new role today (not yours), they answer truthfully.',
 		otherNightReminder: 'Ask a question.',
 		reminders: [
 			'True info',
@@ -262,9 +262,9 @@ The Radenwight uncovers truth by pretending to be someone else.
 
 * Each day, the Radenwight must convince others that they are a specific character. The claimed character cannot be the Radenwight, and must be a character they have not claimed on any previous day.
 * Being "mad" means that you have to make a genuine effort to convince people that you are this character.
-* That night, the Radenwight wakes and may ask the Storyteller any yes/no question. If the character claimed that day is in play, the Storyteller answers truthfully. If it is not in play, the Storyteller may answer however they wish.
-* The Radenwight's daily claim does not need to be accurate - they may claim any character on the script, including evil characters. What matters is whether the Radenwight made an honest effort to persuade others, and whether the claimed character is in play.
-* If the Radenwight is drunk or poisoned, the Storyteller may answer their nightly question falsely regardless of madness or whether the claimed character is in play.`
+* That night, the Radenwight wakes and may ask the Storyteller any yes/no question.
+* The Radenwight may claim any character on the script, including evil characters. What matters is whether the Radenwight made an honest effort to persuade others.
+* If the Radenwight is drunk or poisoned, the Storyteller may answer their nightly question falsely regardless of madness.`
 	}
 };
 
@@ -402,7 +402,8 @@ const troubadour: ClocktowerCharacter = {
 		flavor: 'Every hero worries they’ll be forgotten, but each one has a name, and I will sing them all.',
 		ability: 'Each night, you learn two roles and are told how many of them are in play. [+1 Outsider]',
 		firstNightReminder: 'Learn 2 roles, and how many of them are in play.',
-		otherNightReminder: 'Learn 2 roles, and how many of them are in play.'
+		otherNightReminder: 'Learn 2 roles, and how many of them are in play.',
+		setup: true
 	},
 	details: {
 		description: `
@@ -582,8 +583,7 @@ const angulotl: ClocktowerCharacter = {
 		otherNightReminder: 'Choose a player; they are poisoned.',
 		reminders: [
 			'Poisoned'
-		],
-		setup: true
+		]
 	},
 	details: {
 		description: `

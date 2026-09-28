@@ -261,7 +261,6 @@ export const AbilityModal = (props: Props) => {
 								<NumberSpin
 									disabled={!hasDamage}
 									label='Damage'
-									min={0}
 									value={customization?.damageBonus || 0}
 									onChange={setDamage}
 								/>

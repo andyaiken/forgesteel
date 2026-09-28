@@ -28,7 +28,7 @@ export const devil: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'devil-feature-2',
-			name: 'Devil Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

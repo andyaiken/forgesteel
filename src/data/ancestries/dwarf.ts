@@ -49,7 +49,7 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dwarf-feature-2',
-			name: 'Dwarf Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createBonus({

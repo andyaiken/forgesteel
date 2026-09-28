@@ -37,7 +37,7 @@ export const TitlePanel = (props: Props) => {
 	const [ editing, setEditing ] = useState<boolean>(false);
 
 	const selectedFeature = title.features.find(f => f.id === title.selectedFeatureID);
-	const editable = selectedFeature && (selectedFeature.type === FeatureType.Text);
+	const editable = !!props.onChange && selectedFeature && (selectedFeature.type === FeatureType.Text);
 
 	const setFeatureNameDesc = (name: string, desc: string) => {
 		const copy = Utils.copy(title);
@@ -116,7 +116,7 @@ export const TitlePanel = (props: Props) => {
 										))
 								}
 								{
-									props.hero && (choices.length > 0) ?
+									props.hero && props.onChange && (choices.length > 0) ?
 										<>
 											<Divider />
 											<Expander title='Configure'>

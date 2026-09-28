@@ -55,7 +55,7 @@ Swift to bloom and swift to wither, Anthousai remind others of the fleeting natu
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'anthousai-feature-3',
-			name: 'Anthousai Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({
@@ -163,7 +163,7 @@ Dryads have forms as varied as the trees they resemble. Smooth skinned or rough,
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'dryad-feature-3',
-			name: 'Dryad Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createSize({

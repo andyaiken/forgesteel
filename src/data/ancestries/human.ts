@@ -23,7 +23,7 @@ export const human: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'human-feature-2',
-			name: 'Human Traits',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({

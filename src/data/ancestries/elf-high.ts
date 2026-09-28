@@ -32,7 +32,7 @@ export const highElf: Ancestry = {
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'high-elf-feature-2',
-			name: 'High Elf Features',
+			name: 'Purchased Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAbility({

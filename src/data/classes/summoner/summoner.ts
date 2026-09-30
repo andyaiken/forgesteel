@@ -341,6 +341,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 									type: FactoryLogic.type.createTrigger('The target receives enough damage to die or be destroyed.'),
 									distance: [ FactoryLogic.distance.createSummoner() ],
 									target: 'One ally',
+									cost: 3,
 									sections: [
 										FactoryLogic.createAbilitySectionField({
 											name: 'Special',

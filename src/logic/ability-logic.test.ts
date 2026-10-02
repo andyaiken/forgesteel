@@ -224,6 +224,11 @@ describe('getTierEffect', () => {
 		const text = '3 fire damage; if burning, an extra 2 fire damage';
 		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(text);
 	});
+
+	it('should NOT treat prose that merely ends in "damage" as a damage expression', () => {
+		const text = 'The jurist halves the triggering damage';
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(text);
+	});
 });
 
 describe('getTierEffectRetainer', () => {
@@ -255,6 +260,28 @@ describe('getTierEffectRetainer', () => {
 	it('should NOT combine a later conditional damage section even if it repeats the primary type', () => {
 		const text = '3 fire damage; if burning, an extra 2 fire damage';
 		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(text);
+	});
+
+	it('should NOT treat prose that merely ends in "damage" as a damage expression', () => {
+		const text = 'The jurist halves the triggering damage';
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(text);
+	});
+});
+
+describe('isDamageSection', () => {
+	test.each([
+		[ '5 + 2M damage', true ],
+		[ '+4 corruption damage', true ],
+		[ '2d6 + 7 + A damage', true ],
+		[ 'R damage', true ],
+		[ '3 + M, R, I, or P damage', true ],
+		[ 'A < 2 3 acid damage', true ],
+		[ 'The jurist halves the triggering damage', false ],
+		[ 'A creature takes damage', false ],
+		[ 'if the target is prone, an extra 2 damage', false ],
+		[ '5 + M damage and push 2', false ]
+	])('%s', (text, expected) => {
+		expect(AbilityLogic.isDamageSection(text)).toBe(expected);
 	});
 });
 

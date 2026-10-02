@@ -289,10 +289,17 @@ export class AbilityLogic {
 		};
 	};
 
+	static isDamageSection = (section: string) => {
+		const text = section.trim().toLowerCase();
+		if (!/(damage|dmg)$/.test(text)) {
+			return false;
+		}
+
+		return /^([+-]|\d|(might|agility|reason|intuition|presence|m|a|r|i|p)\s*([<>,+]|or\b|damage$|dmg$))/.test(text);
+	};
+
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		const keywords = AbilityLogic.getKeywords(ability, hero);
-
-		const isDamageSection = (section: string) => [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s));
 
 		// Tokenizes a single 'damage'-ending section into its value / dice / damage type(s), without any
 		// kit or feature bonus (that's only ever applied once, to the primary damage section - see below)
@@ -344,7 +351,7 @@ export class AbilityLogic {
 		const mergedIndices = new Set<number>();
 
 		const results = sections.map((section, n) => {
-			if (hero && (n === 0) && isDamageSection(section)) {
+			if (hero && (n === 0) && AbilityLogic.isDamageSection(section)) {
 				let isMelee = keywords.includes(AbilityKeyword.Melee) && keywords.includes(AbilityKeyword.Weapon);
 				let isRanged = keywords.includes(AbilityKeyword.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 				if (distance) {
@@ -391,7 +398,7 @@ export class AbilityLogic {
 				const types = [ ...primary.types ];
 
 				for (let m = n + 1; m < sections.length; m++) {
-					if (isDamageSection(sections[m])) {
+					if (AbilityLogic.isDamageSection(sections[m])) {
 						const extra = parseDamageTokens(sections[m]);
 						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
 						if (mergeable) {
@@ -423,8 +430,6 @@ export class AbilityLogic {
 	};
 
 	static getTierEffectRetainer = (value: string, tier: number, ability: Ability, retainer: Monster | undefined) => {
-		const isDamageSection = (section: string) => [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s));
-
 		// Tokenizes a single 'damage'-ending section into its flat value and damage type(s), without any
 		// signature bonus (that's only ever applied once, to the primary damage section - see below)
 		const parseDamageTokens = (section: string) => {
@@ -454,7 +459,7 @@ export class AbilityLogic {
 		const mergedIndices = new Set<number>();
 
 		const results = sections.map((section, n) => {
-			if (retainer && (n === 0) && isDamageSection(section)) {
+			if (retainer && (n === 0) && AbilityLogic.isDamageSection(section)) {
 				let value = 0;
 
 				const isSignature = (ability.cost === 'signature');
@@ -479,7 +484,7 @@ export class AbilityLogic {
 				const types = [ ...primary.types ];
 
 				for (let m = n + 1; m < sections.length; m++) {
-					if (isDamageSection(sections[m])) {
+					if (AbilityLogic.isDamageSection(sections[m])) {
 						const extra = parseDamageTokens(sections[m]);
 						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
 						if (mergeable) {

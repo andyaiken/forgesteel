@@ -102,7 +102,7 @@ If you are in the same area as a creature using this or a similar feature who ha
 						description: 'Lightning bursts forth from your body in several directions.',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1 }) ],
+						distance: [ FactoryLogic.distance.createSpecial('Three 10x1 lines within 1') ],
 						target: 'Each enemy in the area',
 						cost: 9,
 						sections: [

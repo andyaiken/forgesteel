@@ -3,6 +3,7 @@ import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { Characteristic } from '@/enums/characteristic';
+import { Condition } from '@/models/condition';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -11,6 +12,7 @@ import { FactionType } from '@/enums/faction-type';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
@@ -29,6 +31,15 @@ const widthBase = 500;
 const widthStaminaColumn = 90;
 const widthCharacteristicsColumn = 80;
 const widthStatsColumn = 75;
+
+const getConditionTag = (condition: Condition) => {
+	const text = ConditionLogic.getText(condition);
+	return (
+		<Tooltip key={condition.id} classNames={{ root: 'condition-rules-tooltip' }} title={text ? <Markdown text={text} /> : null}>
+			<Tag variant='outlined'>{ConditionLogic.getFullDescription(condition)}</Tag>
+		</Tooltip>
+	);
+};
 
 interface EncounterGroupHeroProps {
 	hero: Hero;
@@ -173,7 +184,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								<Flex gap={3}>
 									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag variant='outlined'>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
 									{props.hero.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-									{props.hero.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+									{props.hero.state.conditions.map(getConditionTag)}
 								</Flex>
 							</div>
 						</div>
@@ -528,7 +539,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 							<div className='conditions-column'>
 								<Flex gap={3}>
 									{getMinionCaptainTag()}
-									{props.slot.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+									{props.slot.state.conditions.map(getConditionTag)}
 								</Flex>
 							</div>
 						</div>
@@ -617,7 +628,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									<Flex gap={3}>
 										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag variant='outlined'>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
 										{monster.state.hidden ? <Tag variant='outlined'>Hidden</Tag> : null}
-										{monster.state.conditions.map(c => <Tooltip key={c.id} title={ConditionLogic.getDescription(c.type)}><Tag variant='outlined'>{ConditionLogic.getFullDescription(c)}</Tag></Tooltip>)}
+										{monster.state.conditions.map(getConditionTag)}
 									</Flex>
 								</div>
 							</div>

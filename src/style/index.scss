@@ -147,6 +147,28 @@ p,
 	}
 }
 
+// Tooltips have a dark background, so markdown inside them keeps the tooltip's text colour
+.ant-tooltip {
+	p,
+	.ds-text {
+		color: inherit;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	// Some condition rules (such as Judgment's) run to several paragraphs
+	&.condition-rules-tooltip .ant-tooltip-container {
+		max-height: 300px;
+		overflow-y: auto;
+	}
+}
+
 code {
 	padding: 1px 5px;
 	font-size: 85%;

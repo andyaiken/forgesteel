@@ -1,4 +1,5 @@
 import { Encounter, EncounterSlot } from '@/models/encounter';
+import { ExtractedCondition } from '@/logic/condition-extraction-logic';
 import { MinionGroupHealthPanel } from '@/components/panels/health/health-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Utils } from '@/utils/utils';
@@ -9,6 +10,7 @@ import './minion-slot-modal.scss';
 interface Props {
 	slot: EncounterSlot;
 	encounter?: Encounter;
+	encounterConditions?: ExtractedCondition[];
 	onClose: () => void;
 	updateSlot: (slot: EncounterSlot) => void;
 }
@@ -28,6 +30,7 @@ export const MinionSlotModal = (props: Props) => {
 					<MinionGroupHealthPanel
 						slot={slot}
 						encounter={props.encounter}
+						encounterConditions={props.encounterConditions}
 						onChange={updateSlot}
 					/>
 				</div>

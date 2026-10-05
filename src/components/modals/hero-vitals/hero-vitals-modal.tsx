@@ -1,3 +1,4 @@
+import { ExtractedCondition } from '@/logic/condition-extraction-logic';
 import { Hero } from '@/models/hero';
 import { HeroHealthPanel } from '@/components/panels/health/health-panel';
 import { Modal } from '@/components/modals/modal/modal';
@@ -9,6 +10,7 @@ import './hero-vitals-modal.scss';
 interface Props {
 	hero: Hero;
 	showEncounterControls: boolean;
+	encounterConditions?: ExtractedCondition[];
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 }
@@ -28,6 +30,7 @@ export const HeroVitalsModal = (props: Props) => {
 					<HeroHealthPanel
 						hero={hero}
 						showEncounterControls={props.showEncounterControls}
+						encounterConditions={props.encounterConditions}
 						onChange={onChange}
 					/>
 				</div>

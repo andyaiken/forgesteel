@@ -3,6 +3,7 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo } from '@/components/panels/token/token';
 import { Condition } from '@/models/condition';
+import { ConditionLogic } from '@/logic/condition-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { FactionType } from '@/enums/faction-type';
 import { Field } from '@/components/controls/field/field';
@@ -52,7 +53,7 @@ export const EncounterTurnModal = (props: Props) => {
 						conditions.map(c => (
 							<div key={c.id}>
 								<Flex key={c.id} align='center' justify='space-between' gap={10}>
-									<Field label={c.type === ConditionType.Quick ? c.text : c.type} value={c.ends} />
+									<Field label={ConditionLogic.getName(c)} value={c.ends} />
 									<Button
 										type={c.ends === ConditionEndType.EndOfTurn ? 'primary' : 'default'}
 										onClick={() => removeCondition(c.id)}
@@ -60,7 +61,7 @@ export const EncounterTurnModal = (props: Props) => {
 										Remove
 									</Button>
 								</Flex>
-								{c.type === ConditionType.Custom ? <Markdown text={c.text} /> : null}
+								{(c.type === ConditionType.Custom) && ConditionLogic.getText(c) ? <Markdown text={ConditionLogic.getText(c)} /> : null}
 								{
 									c.ends === ConditionEndType.SaveEnds ?
 										<SimpleRollPanel

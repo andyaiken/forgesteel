@@ -6,6 +6,7 @@ import { ReactNode, useState } from 'react';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
+import { ConditionExtractionLogic } from '@/logic/condition-extraction-logic';
 import { Element } from '@/models/element';
 import { ElementEditPanel } from '../../edit/element-edit/element-edit-panel';
 import { Empty } from '@/components/controls/empty/empty';
@@ -74,6 +75,10 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
 	const [ selectedMinionSlot, setSelectedMinionSlot ] = useState<EncounterSlot | null>(null);
+
+	const getEncounterConditions = () => {
+		return ConditionExtractionLogic.getConditionsForEncounter(encounter, props.sourcebooks);
+	};
 
 	const setRound = (value: number) => {
 		const copy = Utils.copy(encounter);
@@ -929,6 +934,7 @@ export const EncounterRunPanel = (props: Props) => {
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.isFriendly ? undefined : encounter}
+							encounterConditions={getEncounterConditions()}
 							sourcebooks={props.sourcebooks}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
@@ -976,6 +982,7 @@ export const EncounterRunPanel = (props: Props) => {
 						<HeroVitalsModal
 							hero={selectedHero}
 							showEncounterControls={true}
+							encounterConditions={getEncounterConditions()}
 							onClose={() => setSelectedHero(null)}
 							onChange={hero => {
 								const copy = Utils.copy(encounter);
@@ -1019,6 +1026,7 @@ export const EncounterRunPanel = (props: Props) => {
 						<MinionSlotModal
 							slot={selectedMinionSlot}
 							encounter={encounter}
+							encounterConditions={getEncounterConditions()}
 							updateSlot={slot => {
 								const copy = Utils.copy(encounter);
 

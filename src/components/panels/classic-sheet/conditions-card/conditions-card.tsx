@@ -1,5 +1,6 @@
 import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
+import { ConditionLogic } from '@/logic/condition-logic';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { useOptions } from '@/contexts/data-context';
@@ -76,7 +77,7 @@ export const ConditionsCard = (props: Props) => {
 				})}
 				{otherConditions.map(c =>
 					<div className='condition' key={c.id}>
-						<div>{c.text}</div>
+						<div>{c.text ? ConditionLogic.getName(c) : null}</div>
 						<LabeledBooleanField
 							value={showState && c.ends === ConditionEndType.EndOfTurn}
 							label=''

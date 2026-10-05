@@ -1,6 +1,5 @@
 import { Alert, Button, Divider, Drawer, Flex, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined, CopyOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ToolFilled, ToolOutlined } from '@ant-design/icons';
-import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, EncounterSlotCustomization, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
@@ -10,6 +9,8 @@ import { useHeroes, useHiddenSourcebookIDs, useOptions } from '@/contexts/data-c
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
 import { Collections } from '@/utils/collections';
 import { Condition } from '@/models/condition';
+import { ConditionAddMenu } from '@/components/panels/condition-add-menu/condition-add-menu';
+import { ConditionExtractionLogic } from '@/logic/condition-extraction-logic';
 import { ConditionPanel } from '@/components/panels/condition/condition-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -292,6 +293,16 @@ export const EncounterEditPanel = (props: Props) => {
 				/>
 			);
 		}
+		ConditionExtractionLogic.getStaleConditions(encounter, props.sourcebooks).forEach((stale, n) => {
+			warnings.push(
+				<Alert
+					key={`stale-condition-${n}`}
+					type='warning'
+					showIcon={true}
+					title={`${stale.condition} on ${stale.monster} comes from ${stale.owner}, which is no longer in this encounter.`}
+				/>
+			);
+		});
 
 		return (
 			<Space orientation='vertical' style={{ width: '100%', padding: '0 5px' }}>
@@ -1119,25 +1130,9 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
 
-			const addCondition = (type: ConditionType) => {
+			const addCondition = (condition: Condition) => {
 				const copy = Utils.copy(props.slot.customization);
-				copy.conditions.push({
-					id: Utils.guid(),
-					type: type,
-					text: '',
-					ends: ConditionEndType.UntilRemoved
-				});
-				props.setCustomization(props.groupID, props.slot.id, copy);
-			};
-
-			const addSpecial = (text: string) => {
-				const copy = Utils.copy(props.slot.customization);
-				copy.conditions.push({
-					id: Utils.guid(),
-					type: ConditionType.Quick,
-					text: text,
-					ends: ConditionEndType.UntilRemoved
-				});
+				copy.conditions.push(condition);
 				props.setCustomization(props.groupID, props.slot.id, copy);
 			};
 
@@ -1175,36 +1170,12 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					/>
 					<HeaderText
 						extra={
-							<Popover
-								trigger='click'
-								content={
-									<Space orientation='vertical'>
-										<div className='conditions-grid'>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Bleeding)}>{ConditionType.Bleeding}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Dazed)}>{ConditionType.Dazed}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Frightened)}>{ConditionType.Frightened}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Grabbed)}>{ConditionType.Grabbed}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Prone)}>{ConditionType.Prone}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Restrained)}>{ConditionType.Restrained}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Slowed)}>{ConditionType.Slowed}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Taunted)}>{ConditionType.Taunted}</Button>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Weakened)}>{ConditionType.Weakened}</Button>
-										</div>
-										<Divider />
-										<div className='conditions-grid'>
-											<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
-											<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
-											<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
-										</div>
-										<Divider />
-										<div className='conditions-grid'>
-											<Button block={true} type='text' onClick={() => addCondition(ConditionType.Custom)}>{ConditionType.Custom}</Button>
-										</div>
-									</Space>
-								}
+							<ConditionAddMenu
+								encounterConditions={ConditionExtractionLogic.getConditionsForEncounter(props.encounter, props.sourcebooks)}
+								onAdd={addCondition}
 							>
 								<Button type='text' icon={<PlusOutlined />} />
-							</Popover>
+							</ConditionAddMenu>
 						}
 					>
 						Conditions

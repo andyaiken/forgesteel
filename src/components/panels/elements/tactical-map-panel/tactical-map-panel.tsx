@@ -4,6 +4,7 @@ import { HeroToken, MonsterToken } from '@/components/panels/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '@/models/tactical-map';
 import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
+import { ConditionExtractionLogic } from '@/logic/condition-extraction-logic';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
@@ -371,6 +372,12 @@ export const TacticalMapPanel = (props: Props) => {
 		}
 
 		return null;
+	};
+
+	const getSelectedHeroEncounterConditions = () => {
+		const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
+		const encounter = (mini && mini.content && props.encounters) ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
+		return encounter ? ConditionExtractionLogic.getConditionsForEncounter(encounter, props.sourcebooks) : [];
 	};
 
 	const getMapItemStyle = (x: number, y: number, width: number, height: number, style: 'square' | 'rounded' | 'circle' | 'vertex' | 'wall' | null, dim: MapBoundaries): MapItemStyle => {
@@ -1542,6 +1549,7 @@ export const TacticalMapPanel = (props: Props) => {
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.encounter}
+							encounterConditions={selectedMonster.encounter ? ConditionExtractionLogic.getConditionsForEncounter(selectedMonster.encounter, props.sourcebooks) : []}
 							sourcebooks={props.sourcebooks}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
@@ -1591,6 +1599,7 @@ export const TacticalMapPanel = (props: Props) => {
 						<HeroVitalsModal
 							hero={selectedHero}
 							showEncounterControls={true}
+							encounterConditions={getSelectedHeroEncounterConditions()}
 							onClose={() => setSelectedHero(null)}
 							onChange={hero => {
 								const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);

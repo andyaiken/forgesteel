@@ -4,11 +4,13 @@ import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { ButtonGroup } from '@/components/controls/button-group/button-group';
+import { Collections } from '@/utils/collections';
+import { ConditionExtractionLogic } from '@/logic/condition-extraction-logic';
 import { ConditionLogic } from '@/logic/condition-logic';
-import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter';
+import { Expander } from '@/components/controls/expander/expander';
 import { Feature } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
@@ -176,6 +178,8 @@ export const SidebarPanel = (props: Props) => {
 				: null;
 		};
 
+		const inflictedConditions = ConditionExtractionLogic.getConditionsForHero(props.hero, props.sourcebooks);
+		const retinueNames = [ ...companions, ...retainers, ...summons.map(s => s.monster) ].map(m => m.name);
 		const conditionImmunities = HeroLogic.getConditionImmunities(props.hero);
 		const damageModifiers = HeroLogic.getDamageModifiers(props.hero);
 		const damageImmunities = damageModifiers.filter(dm => dm.modifierType === DamageModifierType.Immunity);
@@ -214,12 +218,12 @@ export const SidebarPanel = (props: Props) => {
 					props.hero.state.conditions.map(c =>
 						useRows ?
 							<div key={c.id} className='selectable-row warning clickable' onClick={onShowVitals}>
-								<div>Condition: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
+								<div>Condition: <b>{ConditionLogic.getName(c)}</b></div>
 							</div>
 							:
 							<div key={c.id} className='overview-tile warning clickable' onClick={onShowVitals}>
-								<HeaderText tags={[ c.ends ]}>{c.type}</HeaderText>
-								<Markdown text={c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)} />
+								<HeaderText tags={[ c.ends ]}>{ConditionLogic.getName(c)}</HeaderText>
+								{ConditionLogic.getText(c) ? <Markdown text={ConditionLogic.getText(c)} /> : null}
 							</div>
 					)
 				}
@@ -334,6 +338,35 @@ export const SidebarPanel = (props: Props) => {
 								<HeaderText>Triggered Actions</HeaderText>
 								<Space orientation='vertical'>
 									{triggers.map(t => getTrigger(t.ability))}
+								</Space>
+							</div>
+						: null
+				}
+				{
+					inflictedConditions.length > 0 ?
+						useRows ?
+							<div className='selectable-row'>
+								<div>Inflicts: <b>{Collections.distinct(inflictedConditions.map(c => c.name), name => name).join(', ')}</b></div>
+							</div>
+							:
+							<div className='overview-tile'>
+								<HeaderText>Conditions You Inflict</HeaderText>
+								<Space orientation='vertical' style={{ width: '100%' }}>
+									{
+										inflictedConditions.map((c, n) => (
+											<Expander key={n} title={c.name} tags={[ c.ends ]}>
+												<div className='ds-text dimmed-text'>
+													From {c.abilities.join(', ')}{retinueNames.includes(c.owner) ? ` (${c.owner})` : null}
+												</div>
+												<Markdown text={c.rules} />
+												{
+													c.related.length > 0 ?
+														<div className='ds-text dimmed-text'>Related: {c.related.join(', ')}</div>
+														: null
+												}
+											</Expander>
+										))
+									}
 								</Space>
 							</div>
 						: null

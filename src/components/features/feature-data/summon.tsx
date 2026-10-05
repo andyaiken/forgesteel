@@ -6,6 +6,8 @@ import { DangerButton } from '@/components/controls/danger-button/danger-button'
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureListEditPanel } from '@/components/panels/edit/list-edit/list-edit-panel';
+import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Monster } from '@/models/monster';
@@ -113,6 +115,13 @@ export const EditSummon = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setSummonLevelFeatures = (data: FeatureSummonData, index: number, level: 'level3' | 'level6' | 'level10', value: Feature[]) => {
+		const copy = Utils.copy(data);
+		copy.summons[index].info[level] = Utils.copy(value);
+		setData(copy);
+		props.setData(copy);
+	};
+
 	const setSummonMonster = (data: FeatureSummonData, index: number, value: Monster) => {
 		const copy = Utils.copy(data);
 		copy.summons[index].monster = value;
@@ -149,6 +158,19 @@ export const EditSummon = (props: EditProps) => {
 							sourcebooks={props.sourcebooks}
 							onChange={m => setSummonMonster(data, n, m)}
 						/>
+						<HeaderText>At Higher Levels</HeaderText>
+						{
+							([ 'level3', 'level6', 'level10' ] as const).map(lvl => (
+								<FeatureListEditPanel
+									key={lvl}
+									title={`Level ${lvl.substring(5)}`}
+									features={summon.info[lvl]}
+									allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.Size ]}
+									sourcebooks={props.sourcebooks}
+									onChange={value => setSummonLevelFeatures(data, n, lvl, value)}
+								/>
+							))
+						}
 					</Expander>
 				))
 			}

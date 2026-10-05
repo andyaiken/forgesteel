@@ -4,6 +4,7 @@ import { ControlledMonsterCustomizePanel } from '@/components/panels/controlled-
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { Expander } from '@/components/controls/expander/expander';
+import { ExtractedCondition } from '@/logic/condition-extraction-logic';
 import { FeatureData } from '@/models/feature';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -29,6 +30,7 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
+	encounterConditions?: ExtractedCondition[];
 	summon?: SummoningInfo;
 	sourcebooks: Sourcebook[];
 	controller?: Hero;
@@ -165,6 +167,7 @@ export const MonsterModal = (props: Props) => {
 						}
 						<MonsterHealthPanel
 							monster={monster}
+							encounterConditions={props.encounterConditions}
 							onChange={updateMonster}
 						/>
 					</div>

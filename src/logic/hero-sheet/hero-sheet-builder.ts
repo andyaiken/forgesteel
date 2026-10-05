@@ -7,6 +7,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { ClassicSheetLogic } from '@/logic/classic-sheet/classic-sheet-logic';
 import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
+import { ConditionLogic } from '@/logic/condition-logic';
 import { ConditionType } from '@/enums/condition-type';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -319,10 +320,10 @@ export class HeroSheetBuilder {
 		conditions.filter(c => [ ConditionType.Custom, ConditionType.Quick ].includes(c.type))
 			.forEach((c, i) => {
 				if (i === 0) {
-					sheet.condition1Name = c.text;
+					sheet.condition1Name = ConditionLogic.getName(c);
 				}
 				if (i === 1) {
-					sheet.condition2Name = c.text;
+					sheet.condition2Name = ConditionLogic.getName(c);
 				}
 			});
 		sheet.conditions = conditions;

@@ -298,6 +298,20 @@ export class AbilityLogic {
 		return /^([+-]|\d|(might|agility|reason|intuition|presence|m|a|r|i|p)\s*([<>,+]|or\b|damage$|dmg$))/.test(text);
 	};
 
+	// Splits a damage section that lists several separate amounts of damage (eg '3 acid damage, 3 lightning damage')
+	// into its individual damage expressions, each with the text that separates it from the next one;
+	// anything else (including a single expression such as '3 + M, R, I, or P damage') is returned as a single part
+	static getDamageParts = (section: string) => {
+		const matches = [ ...section.matchAll(/(.*?\b(?:damage|dmg))(\s*,\s*(?:(?:and|plus)\s+)?|\s+(?:and|plus)\s+|$)/gi) ];
+		const parts = matches.map(m => ({ text: m[1], separator: m[2] }));
+
+		const isList = (parts.length > 1)
+			&& (matches.map(m => m[0]).join('') === section)
+			&& parts.every(p => AbilityLogic.isDamageSection(p.text));
+
+		return isList ? parts : [ { text: section, separator: '' } ];
+	};
+
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		const keywords = AbilityLogic.getKeywords(ability, hero);
 
@@ -316,7 +330,7 @@ export class AbilityLogic {
 				.toLowerCase()
 				.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/g, '$1$2');
 
-			tokenSource.split(' ').forEach(token => {
+			tokenSource.split(/\s+/).forEach(token => {
 				const charRef = AbilityLogic.getCharacteristicReference(token);
 
 				if ((token === 'damage') || (token === 'dmg')) {
@@ -392,31 +406,33 @@ export class AbilityLogic {
 				bonus += Collections.sum(dmgFeatures, x => x.value);
 				bonus += HeroLogic.getRolledDamageBonus(hero);
 
-				const primary = parseDamageTokens(section);
-				let total = bonus + primary.total;
-				let dice = [ ...primary.dice ];
-				const types = [ ...primary.types ];
+				// The section may list several separate amounts of damage (eg '3 acid damage, 3 lightning damage');
+				// the bonus only applies to the first (primary) one
+				const parts = AbilityLogic.getDamageParts(section).map(part => ({ ...parseDamageTokens(part.text), separator: part.separator }));
+				parts[0].total += bonus;
 
 				for (let m = n + 1; m < sections.length; m++) {
 					if (AbilityLogic.isDamageSection(sections[m])) {
 						const extra = parseDamageTokens(sections[m]);
-						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
-						if (mergeable) {
-							total += extra.total;
-							dice = [ ...dice, ...extra.dice ];
+						const target = (extra.types.length === 0) ? parts[0] : parts.find(p => (p.types.length === extra.types.length) && extra.types.every(t => p.types.includes(t)));
+						if (target) {
+							target.total += extra.total;
+							target.dice.push(...extra.dice);
 							mergedIndices.add(m);
 						}
 					}
 				}
 
-				let totalDisplay: number | string = total;
-				if (dice.length > 0) {
-					totalDisplay = `${dice.join(' + ')} + ${total}`;
-				}
+				return parts.map(part => {
+					let totalDisplay: number | string = part.total;
+					if (part.dice.length > 0) {
+						totalDisplay = `${part.dice.join(' + ')} + ${part.total}`;
+					}
 
-				const damage = [ ...types, 'damage' ].join(' ');
+					const damage = [ part.types.join(' or '), 'damage' ].filter(s => s).join(' ');
 
-				return `${totalDisplay} ${damage}`;
+					return `${totalDisplay} ${damage}${part.separator}`;
+				}).join('');
 			}
 
 			if (mergedIndices.has(n)) {
@@ -436,7 +452,7 @@ export class AbilityLogic {
 			let value = 0;
 			const types: string[] = [];
 
-			section.toLowerCase().split(' ').forEach(token => {
+			section.toLowerCase().split(/\s+/).forEach(token => {
 				if ((token === 'damage') || (token === 'dmg')) {
 					// Damage; ignore
 				} else if (token === 'or') {
@@ -460,7 +476,7 @@ export class AbilityLogic {
 
 		const results = sections.map((section, n) => {
 			if (retainer && (n === 0) && AbilityLogic.isDamageSection(section)) {
-				let value = 0;
+				let bonus = 0;
 
 				const isSignature = (ability.cost === 'signature');
 				const signatureBonus = MonsterLogic.getSignatureDamageBonus(retainer);
@@ -468,35 +484,38 @@ export class AbilityLogic {
 				if (isSignature && signatureBonus) {
 					switch (tier) {
 						case 1:
-							value += signatureBonus.tier1;
+							bonus += signatureBonus.tier1;
 							break;
 						case 2:
-							value += signatureBonus.tier2;
+							bonus += signatureBonus.tier2;
 							break;
 						case 3:
-							value += signatureBonus.tier3;
+							bonus += signatureBonus.tier3;
 							break;
 					}
 				}
 
-				const primary = parseDamageTokens(section);
-				value += primary.value;
-				const types = [ ...primary.types ];
+				// The section may list several separate amounts of damage (eg '3 acid damage, 3 lightning damage');
+				// the signature bonus only applies to the first (primary) one
+				const parts = AbilityLogic.getDamageParts(section).map(part => ({ ...parseDamageTokens(part.text), separator: part.separator }));
+				parts[0].value += bonus;
 
 				for (let m = n + 1; m < sections.length; m++) {
 					if (AbilityLogic.isDamageSection(sections[m])) {
 						const extra = parseDamageTokens(sections[m]);
-						const mergeable = (extra.types.length === 0) || ((extra.types.length === types.length) && extra.types.every(t => types.includes(t)));
-						if (mergeable) {
-							value += extra.value;
+						const target = (extra.types.length === 0) ? parts[0] : parts.find(p => (p.types.length === extra.types.length) && extra.types.every(t => p.types.includes(t)));
+						if (target) {
+							target.value += extra.value;
 							mergedIndices.add(m);
 						}
 					}
 				}
 
-				const damage = [ types.sort().join(' or '), 'damage' ].join(' ');
+				return parts.map(part => {
+					const damage = [ part.types.sort().join(' or '), 'damage' ].filter(s => s).join(' ');
 
-				return `${value} ${damage}`;
+					return `${part.value} ${damage}${part.separator}`;
+				}).join('');
 			}
 
 			if (mergedIndices.has(n)) {
@@ -527,25 +546,27 @@ export class AbilityLogic {
 				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'strong')}`);
 		}
 
+		// Adds a characteristic value to N; if N is a die roll (eg '1d10'), the value is appended to it instead
+		const addCharacteristic = (value: string, ch: number) => /d/i.test(value) ? `${value} + ${ch}` : `${Number(value) + ch}`;
+
 		// N + [Characteristic], optionally with a multiplier on the characteristic (eg 'N + 2M' / 'N + 2 x Might')
 		if (hero) {
 			text = text.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/gi, '$1$2');
 
-			const regex = /(\d+)\s*\+\s*(\d*(?:might|agility|reason|intuition|presence|m|a|r|i|p))\b/gi;
+			const regex = /\b(\d*d\d+|\d+)\s*\+\s*(\d*(?:might|agility|reason|intuition|presence|m|a|r|i|p))\b/gi;
 			text = text.replace(regex, (match, value, characteristicToken) => {
 				const charRef = AbilityLogic.getCharacteristicReference(characteristicToken);
 				if (!charRef) {
 					return match;
 				}
 
-				const total = Number(value) + (HeroLogic.getCharacteristic(hero, charRef.characteristic) * charRef.multiplier);
-				return `${total}`;
+				return addCharacteristic(value, HeroLogic.getCharacteristic(hero, charRef.characteristic) * charRef.multiplier);
 			});
 		}
 
 		// N + your [Characteristic] score
 		if (hero) {
-			const regex = /(\d+)\s*(\+|plus)\s*your\s*(Might|Agility|Reason|Intuition|Presence)\s*score/gi;
+			const regex = /\b(\d*d\d+|\d+)\s*(\+|plus)\s*your\s*(Might|Agility|Reason|Intuition|Presence)\s*score/gi;
 			text = text.replace(regex, (_match, value, _plus, characteristic) => {
 				let ch = 0;
 				switch (characteristic.toLowerCase()) {
@@ -565,8 +586,7 @@ export class AbilityLogic {
 						ch = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
 						break;
 				}
-				const total = Number(value) + ch;
-				return `${total}`;
+				return addCharacteristic(value, ch);
 			});
 		}
 

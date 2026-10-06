@@ -139,6 +139,21 @@ describe('getTextEffect', () => {
 	});
 
 	test.each([
+		[ 'add 2 plus your Presence score', 'add 5' ],
+		[ 'add 1d10 plus your Presence score to the roll', 'add 1d10 + 3 to the roll' ],
+		[ 'add 1d10 + your Intuition score', 'add 1d10 + 3' ],
+		[ 'add d10 plus your Presence score', 'add d10 + 3' ],
+		[ 'Regain 2d6 + M', 'Regain 2d6 + 3' ],
+		[ 'Regain 2d6 + 2M', 'Regain 2d6 + 6' ],
+		[ 'Regain 2d6 + 4 + M', 'Regain 2d6 + 7' ]
+	])('should add a characteristic to a die roll rather than to its number of sides (%s)', (text, expected) => {
+		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
 		[ 'A<0 restrained (save ends)', '`A<0` **restrained** (save ends)' ],
 		[ 'the target is dazed and slowed (save ends)', 'the target is **dazed** and **slowed** (save ends)' ],
 		[ 'the target takes 3 fire damage', 'the target takes 3 fire damage' ]
@@ -229,6 +244,27 @@ describe('getTierEffect', () => {
 		const text = 'The jurist halves the triggering damage';
 		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(text);
 	});
+
+	test.each([
+		[ '3 acid damage, 3 lightning damage', '3 acid damage, 3 lightning damage' ],
+		[ '3 acid damage and 3 lightning damage', '3 acid damage and 3 lightning damage' ],
+		[ '3 + M acid damage, 2 + M lightning damage', '6 acid damage, 5 lightning damage' ]
+	])('should keep separate damage amounts in the same section separate (%s)', (text, expected) => {
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(expected);
+	});
+
+	it('should only apply damage bonuses to the first of several damage amounts', () => {
+		HeroLogic.getRolledDamageBonus = vi.fn().mockReturnValue(2);
+		expect(AbilityLogic.getTierEffect('3 acid damage, 3 lightning damage', 1, ability, undefined, hero)).toBe('5 acid damage, 3 lightning damage');
+	});
+
+	it('should combine a later damage section into the damage amount with the same type', () => {
+		expect(AbilityLogic.getTierEffect('3 acid damage, 3 lightning damage; +2 lightning damage', 1, ability, undefined, hero)).toBe('3 acid damage, 5 lightning damage');
+	});
+
+	it('should keep the "or" in a choice of damage types', () => {
+		expect(AbilityLogic.getTierEffect('6 + I fire or lightning damage', 1, ability, undefined, hero)).toBe('9 fire or lightning damage');
+	});
 });
 
 describe('getTierEffectRetainer', () => {
@@ -254,7 +290,7 @@ describe('getTierEffectRetainer', () => {
 
 	it('should NOT combine a later damage section that is conditional', () => {
 		const text = '3 damage; if the target is prone, an extra 2 damage';
-		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe('3  damage; if the target is **prone**, an extra 2 damage');
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe('3 damage; if the target is **prone**, an extra 2 damage');
 	});
 
 	it('should NOT combine a later conditional damage section even if it repeats the primary type', () => {
@@ -265,6 +301,31 @@ describe('getTierEffectRetainer', () => {
 	it('should NOT treat prose that merely ends in "damage" as a damage expression', () => {
 		const text = 'The jurist halves the triggering damage';
 		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(text);
+	});
+
+	test.each([
+		[ '3 acid damage, 3 lightning damage', '3 acid damage, 3 lightning damage' ],
+		[ '3 acid damage and 3 lightning damage', '3 acid damage and 3 lightning damage' ]
+	])('should keep separate damage amounts in the same section separate (%s)', (text, expected) => {
+		expect(AbilityLogic.getTierEffectRetainer(text, 1, ability, retainer)).toBe(expected);
+	});
+
+	it('should combine a later damage section into the damage amount with the same type', () => {
+		expect(AbilityLogic.getTierEffectRetainer('3 acid damage, 3 lightning damage; +2 lightning damage', 1, ability, retainer)).toBe('3 acid damage, 5 lightning damage');
+	});
+});
+
+describe('getDamageParts', () => {
+	test.each([
+		[ '3 acid damage, 3 lightning damage', [ '3 acid damage', '3 lightning damage' ] ],
+		[ '3 acid damage, and 3 lightning damage', [ '3 acid damage', '3 lightning damage' ] ],
+		[ '2d6 fire damage plus 1d6 cold damage', [ '2d6 fire damage', '1d6 cold damage' ] ],
+		[ '3 + M, R, I, or P damage', [ '3 + M, R, I, or P damage' ] ],
+		[ '3 damage + M or A damage', [ '3 damage + M or A damage' ] ],
+		[ '5 fire damage, and the target is burning', [ '5 fire damage, and the target is burning' ] ],
+		[ '5 fire damage, and the target takes damage', [ '5 fire damage, and the target takes damage' ] ]
+	])('%s', (text, expected) => {
+		expect(AbilityLogic.getDamageParts(text).map(p => p.text)).toEqual(expected);
 	});
 });
 

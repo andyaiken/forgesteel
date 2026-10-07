@@ -38,7 +38,7 @@ export const NamePanel = (props: Props) => {
 							HeroModalType.Settings
 						]
 							.filter(item => item !== null)
-							.map(a => ({ key: a, label: a }))
+							.map(a => ({ key: a, label: a === HeroModalType.Settings ? 'Hero Options' : a }))
 					}
 					onClick={item => props.onShowState(item.key as HeroModalType)}
 					selectable={false}

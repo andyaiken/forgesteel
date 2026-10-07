@@ -2,6 +2,7 @@ import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-foot
 import { BookOutlined, BulbFilled, BulbOutlined, DoubleLeftOutlined, DoubleRightOutlined, EllipsisOutlined, PlayCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Divider, Flex, Popover, Segmented, Space } from 'antd';
 import { ButtonGroup, DropdownConfig } from '@/components/controls/button-group/button-group';
+import { useDataManager, useOptions } from '@/contexts/data-context';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -17,7 +18,6 @@ import { TipData } from '@/data/tip-data';
 import { TipPanel } from '@/components/panels/tip/tip-panel';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useNavigation } from '@/hooks/use-navigation';
-import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './welcome-page.scss';
@@ -34,13 +34,22 @@ interface Props {
 
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const options = useOptions();
+	const dataManager = useDataManager();
 	const [ tips ] = useState<Tip[]>([
 		...Collections.shuffle(TipData.getTips().filter(t => t.isNew)),
 		...Collections.shuffle(TipData.getTips().filter(t => !t.isNew))
 	]);
-	const [ showTips, setShowTips ] = useState<boolean>(true);
+	const showTips = options.showTips;
 	const [ tipIndex, setTipIndex ] = useState<number>(0);
 	const navigation = useNavigation();
+
+	const toggleTips = () => {
+		dataManager.saveOptions({
+			...options,
+			showTips: !showTips
+		});
+	};
 
 	const menu: DropdownConfig = {
 		type: 'dropdown',
@@ -92,12 +101,14 @@ export const WelcomePage = (props: Props) => {
 				<AppHeader>
 					<ButtonGroup
 						buttons={[
-							{
-								type: 'button',
-								tooltip: 'Hide Tips',
-								icon: showTips ? <BulbFilled style={{ color: 'rgba(64, 150, 255)' }} /> : <BulbOutlined />,
-								onClick: () => setShowTips(!showTips)
-							},
+							tips.length > 0 ?
+								{
+									type: 'button',
+									tooltip: showTips ? 'Hide Tips' : 'Show Tips',
+									icon: showTips ? <BulbFilled style={{ color: 'rgba(64, 150, 255)' }} /> : <BulbOutlined />,
+									onClick: toggleTips
+								}
+								: null,
 							menu
 						]}
 					/>

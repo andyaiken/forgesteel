@@ -724,6 +724,10 @@ ${encounter.objective.victories}`
 			options.showDataSource = false;
 		}
 
+		if (options.showTips === undefined) {
+			options.showTips = true;
+		}
+
 		if (options.xpPerLevel === undefined) {
 			options.xpPerLevel = 16;
 		}

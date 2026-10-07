@@ -5,6 +5,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modifier } from '@/models/damage-modifier';
 import { ModifierLogic } from '@/logic/modifier-logic';
+import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Summon } from '@/models/summon';
@@ -12,6 +13,19 @@ import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 
 export class SummonLogic {
+	// Copies only the user's customizations from a summoned monster onto the stored monster,
+	// so that controller-derived features and values aren't saved into the hero
+	static applyCustomization = (stored: Monster, customized: Monster) => {
+		stored.name = customized.name;
+		const customizedFeatures = MonsterLogic.getFeatures(customized);
+		MonsterLogic.getFeatures(stored).forEach(f => {
+			const match = customizedFeatures.find(cf => cf.id === f.id);
+			if (match) {
+				f.data = Utils.copy(match.data);
+			}
+		});
+	};
+
 	static getSummonedMonster = (summon: Summon, controller: Hero) => {
 		const copy = Utils.copy(summon.monster);
 
@@ -30,10 +44,14 @@ export class SummonLogic {
 		}
 
 		if (copy.role.organization === MonsterOrganizationType.Minion) {
+			// Skip any already present, in case an older save has them baked into the stored monster
+			const existingIDs = MonsterLogic.getFeatures(copy).map(f => f.id);
 			HeroLogic.getFeatures(controller)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.SummonFormation)
-				.forEach(f => copy.features.push(...Utils.copy(f.data.minionFeatures)));
+				.flatMap(f => Utils.copy(f.data.minionFeatures))
+				.filter(f => !existingIDs.includes(f.id))
+				.forEach(f => copy.features.push(f));
 		}
 
 		MonsterLogic.getFeatures(copy).forEach(f => {

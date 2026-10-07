@@ -81,6 +81,7 @@ import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
 import { StorageServiceFactory } from '@/services/storage/storage-service-factory';
 import { SubClass } from '@/models/subclass';
+import { SummonLogic } from '@/logic/summon-logic';
 import { SummoningInfo } from '@/models/summon';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
@@ -1664,7 +1665,7 @@ export const Main = (props: Props) => {
 								.flatMap(f => f.data.summons)
 								.find(s => s.monster.id === monster.id);
 							if (summon) {
-								summon.monster = Utils.copy(monster);
+								SummonLogic.applyCustomization(summon.monster, monster);
 								persistHero(heroCopy);
 								return;
 							}
@@ -1675,7 +1676,7 @@ export const Main = (props: Props) => {
 								.flatMap(f => f.data.selected)
 								.find(s => s.monster.id === monster.id);
 							if (summonChoice) {
-								summonChoice.monster = Utils.copy(monster);
+								SummonLogic.applyCustomization(summonChoice.monster, monster);
 								persistHero(heroCopy);
 							}
 						}

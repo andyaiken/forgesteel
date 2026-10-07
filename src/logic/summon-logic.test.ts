@@ -5,6 +5,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
 import { summoner } from '@/data/classes/summoner/summoner';
 
@@ -67,5 +68,20 @@ describe('Elite Formation', () => {
 		expect(elite.role.organization).toBe(MonsterOrganizationType.Champion);
 		expect(MonsterLogic.getStamina(elite)).toBe(MonsterLogic.getStamina(base));
 		expect(MonsterLogic.getStability(elite)).toBe(MonsterLogic.getStability(base));
+	});
+
+	it('does not stack when a customized minion is saved back to the hero', () => {
+		const hero = buildSummoner('summoner-1-7c');
+		const processed = getSummon(hero, 'Ensnarer');
+		const choice = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.SummonChoice)
+			.flatMap(f => f.data.selected).find(s => s.name === 'Ensnarer')!;
+
+		processed.name = 'Renamed';
+		SummonLogic.applyCustomization(choice.monster, processed);
+		SummonLogic.applyCustomization(choice.monster, getSummon(hero, 'Renamed'));
+
+		const after = getSummon(hero, 'Renamed');
+		expect(MonsterLogic.getStamina(after)).toBe(MonsterLogic.getStamina(processed));
+		expect(MonsterLogic.getStability(after)).toBe(MonsterLogic.getStability(processed));
 	});
 });

@@ -36,7 +36,14 @@ export const PrimaryReferenceCard = (props: Props) => {
 						{character.heroicResourceGains.map((g, n) =>
 							<Fragment key={n}>
 								<div className='value'>{g.value}</div>
-								<div className='trigger'>{g.trigger}</div>
+								<div className='trigger'>
+									{g.trigger}
+									{
+										g.frequency !== ResourceGainFrequency.AtWill ?
+											<span className='qualifiers'> ({g.frequency})</span>
+											: null
+									}
+								</div>
 							</Fragment>
 						)}
 					</div>

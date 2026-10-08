@@ -1671,7 +1671,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 					id: 'beastheart-4-4b',
 					name: 'Unchained Ferocity',
 					tag: 'deal-damage-companion 2',
-					trigger: 'The first time in a round that a creature adjacent to your companion takes damage',
+					trigger: 'A creature adjacent to your companion takes damage',
 					value: '3',
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage-adjacent-companion' ]

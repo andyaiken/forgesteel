@@ -192,7 +192,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					id: 'censor-4-4',
 					name: 'Wrath Beyond Wrath',
 					tag: 'deal-damage 2',
-					trigger: 'The first time each round that you deal damage to a creature judged by you',
+					trigger: 'You deal damage to a creature judged by you',
 					value: '2',
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'deal-damage' ]

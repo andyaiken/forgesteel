@@ -52,6 +52,7 @@ export interface HeroSheet {
 		tag: string;
 		trigger: string;
 		value: string;
+		frequency: ResourceGainFrequency;
 	}[];
 
 	surgeDamageAmount?: string;

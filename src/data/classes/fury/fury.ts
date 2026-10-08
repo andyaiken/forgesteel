@@ -130,7 +130,7 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 					id: 'fury-4-2',
 					name: 'Damaging Ferocity',
 					tag: 'take-damage 2',
-					trigger: 'The first time each combat round that you take damage',
+					trigger: 'You take damage',
 					value: '2',
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage' ]
@@ -289,7 +289,7 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 					id: 'fury-10-4',
 					name: 'Primordial Ferocity',
 					tag: 'take-damage 3',
-					trigger: 'The first time each combat round that you take damage',
+					trigger: 'You take damage',
 					value: '3',
 					frequency: ResourceGainFrequency.OncePerRound,
 					replacesTags: [ 'take-damage', 'take-damage 2' ]

@@ -1287,7 +1287,7 @@ Until the start of your next turn, the area gains the following effects:
 			description: 'They shine vibrantly, a beautiful diamond in the night sky.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 9,
 			minLevel: 6,

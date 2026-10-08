@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityUsage } from '@/enums/ability-usage';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
@@ -844,10 +845,20 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Foresight',
 				description: 'You don’t take a bane when using abilities against creatures with concealment.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createClassAbilityChoice({
 				id: 'title-awakened-2',
+				classID: 'class-talent',
 				name: 'Rogue Talent',
-				description: 'Choose one triggered action that the talent class has access to at 1st level. You gain that ability regardless of whether your class and subclass allow you to take it. If this ability allows you to gain or spend clarity, you can’t do so unless you have the Clarity class feature.'
+				cost: 0,
+				description: 'Choose one triggered action that the talent class has access to at 1st level. You gain that ability regardless of whether your class and subclass allow you to take it. If this ability allows you to gain or spend clarity, you can’t do so unless you have the Clarity class feature.',
+				type: AbilityUsage.Trigger,
+				maxLevel: 1,
+				fromClass: false,
+				fromSubclass: false,
+				fromUnselectedSubclass: false,
+				fromClassLevels: false,
+				fromSelectedSubclassLevels: true,
+				fromUnselectedSubclassLevels: true
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({

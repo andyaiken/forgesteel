@@ -884,6 +884,7 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
+		maxLevel?: number,
 		sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]
 	}): Ability => {
 		return {
@@ -897,6 +898,7 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
+			maxLevel: data.maxLevel || 10,
 			sections: data.sections
 		};
 	};

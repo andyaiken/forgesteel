@@ -509,19 +509,24 @@ export class SourcebookLogic {
 	static getAbilitiesFromClass = (heroClass: HeroClass, classAbilities: boolean, selectedSubclassAbilities: boolean, unselectedSubclassAbilities: boolean, classLevels: boolean, selectedSubclassLevels: boolean, unselectedSubclassLevels: boolean) => {
 		const abilities: Ability[] = [];
 
-		const addFeature = (feature: Feature) => {
+		const addFeature = (feature: Feature, level?: number) => {
 			switch (feature.type) {
-				case FeatureType.Ability:
-					abilities.push(feature.data.ability);
+				case FeatureType.Ability: {
+					const ability = { ...feature.data.ability };
+					if (level !== undefined) {
+						ability.minLevel = level;
+					}
+					abilities.push(ability);
 					break;
+				}
 				case FeatureType.Choice:
-					feature.data.options.map(o => o.feature).forEach(addFeature);
+					feature.data.options.map(o => o.feature).forEach(f => addFeature(f, level));
 					break;
 				case FeatureType.HeroicResourceThreshold:
-					addFeature(feature.data.feature);
+					addFeature(feature.data.feature, level);
 					break;
 				case FeatureType.Multiple:
-					feature.data.features.forEach(addFeature);
+					feature.data.features.forEach(f => addFeature(f, level));
 					break;
 			}
 		};
@@ -532,7 +537,7 @@ export class SourcebookLogic {
 
 		if (classLevels) {
 			heroClass.featuresByLevel
-				.forEach(lvl => lvl.features.forEach(addFeature));
+				.forEach(lvl => lvl.features.forEach(f => addFeature(f, lvl.level)));
 		}
 
 		abilities.push(...heroClass.subclasses.filter(sc => sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, selectedSubclassAbilities, selectedSubclassLevels)));
@@ -544,19 +549,24 @@ export class SourcebookLogic {
 	static getAbilitiesFromSubclass = (subclass: SubClass, subclassAbilities: boolean, subclassLevels: boolean) => {
 		const abilities: Ability[] = [];
 
-		const addFeature = (feature: Feature) => {
+		const addFeature = (feature: Feature, level?: number) => {
 			switch (feature.type) {
-				case FeatureType.Ability:
-					abilities.push(feature.data.ability);
+				case FeatureType.Ability: {
+					const ability = { ...feature.data.ability };
+					if (level !== undefined) {
+						ability.minLevel = level;
+					}
+					abilities.push(ability);
 					break;
+				}
 				case FeatureType.Choice:
-					feature.data.options.map(o => o.feature).forEach(addFeature);
+					feature.data.options.map(o => o.feature).forEach(f => addFeature(f, level));
 					break;
 				case FeatureType.HeroicResourceThreshold:
-					addFeature(feature.data.feature);
+					addFeature(feature.data.feature, level);
 					break;
 				case FeatureType.Multiple:
-					feature.data.features.forEach(addFeature);
+					feature.data.features.forEach(f => addFeature(f, level));
 					break;
 			}
 		};
@@ -567,7 +577,7 @@ export class SourcebookLogic {
 
 		if (subclassLevels) {
 			subclass.featuresByLevel
-				.forEach(lvl => lvl.features.forEach(addFeature));
+				.forEach(lvl => lvl.features.forEach(f => addFeature(f, lvl.level)));
 		}
 
 		return abilities;

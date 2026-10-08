@@ -1,9 +1,10 @@
 import { Alert, Button, Divider, Flex, Segmented } from 'antd';
 import { AppFooter, FooterParams } from '@/components/panels/app-footer/app-footer';
-import { ArrowRightOutlined, CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, EditOutlined, FilterFilled, FilterOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, EditOutlined, FilterFilled, FilterOutlined, PlayCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { ButtonConfig, ButtonGroup, DangerConfig, DropdownConfig } from '@/components/controls/button-group/button-group';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { useDirectorSourcebooks, useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { AddBtn } from '@/components/pages/library/library-list/controls/add-btn';
 import { Adventure } from '@/models/adventure';
 import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
@@ -27,6 +28,10 @@ import { Encounter } from '@/models/encounter';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { EncounterSheetPage } from '@/components/panels/classic-sheet/encounter-sheet/encounter-sheet-page';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Extension } from '@/models/extension';
+import { ExtensionChangeType } from '@/enums/extension-change-type';
+import { ExtensionLogic } from '@/logic/extension-logic';
+import { ExtensionPanel } from '@/components/panels/elements/extension-panel/extension-panel';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -73,7 +78,6 @@ import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
-import { useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -121,6 +125,9 @@ export const LibraryListPage = (props: Props) => {
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? Collections.sort(props.sourcebooks, sb => sb.name).filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
 	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	// Encounters, maps and adventures are shown with their monster groups as the director's tools will see them;
+	// everything else (monster groups especially) is shown as published
+	const directorSourcebooks = useDirectorSourcebooks();
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -165,6 +172,9 @@ export const LibraryListPage = (props: Props) => {
 				break;
 			case 'encounter':
 				list = LibraryLogic.getEncounters(getSourcebooks(), searchTerm);
+				break;
+			case 'extension':
+				list = LibraryLogic.getExtensions(getSourcebooks(), searchTerm);
 				break;
 			case 'imbuement':
 				list = LibraryLogic.getImbuements(getSourcebooks(), searchTerm);
@@ -260,7 +270,7 @@ export const LibraryListPage = (props: Props) => {
 		} else {
 			switch (category) {
 				case 'adventure':
-					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} sourcebooks={directorSourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'ancestry':
 					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -281,7 +291,10 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'encounter':
-					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} sourcebooks={props.sourcebooks} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} sourcebooks={directorSourcebooks} mode={PanelMode.Full} showTools={tool => props.showEncounterTools(element as Encounter, tool)} />;
+					break;
+				case 'extension':
+					getPanel = (element: Element) => <ExtensionPanel key={element.id} extension={element as Extension} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'imbuement':
 					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -316,7 +329,7 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'tactical-map':
-					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={directorSourcebooks} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 					break;
 				case 'terrain':
 					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -531,6 +544,14 @@ export const LibraryListPage = (props: Props) => {
 			}
 		];
 
+		// Extensions change elements from both lists, so they get a section of their own
+		const homebrewCategories: { kind: SourcebookElementKind, label: string }[] = [
+			{
+				kind: 'extension',
+				label: 'Extensions'
+			}
+		];
+
 		let className = 'selection-sidebar';
 		if (!showSidebar) {
 			className += ' closed';
@@ -550,6 +571,8 @@ export const LibraryListPage = (props: Props) => {
 								{playerCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
 								<HeaderText level={3}>For Directors</HeaderText>
 								{directorCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
+								<HeaderText level={3}>For Homebrewers</HeaderText>
+								{homebrewCategories.map(c => <SelectorRow key={c.kind} selected={category === c.kind} content={c.label} info={getList(c.kind).length} onSelect={() => navigation.goToLibrary(c.kind)} />)}
 							</div>
 							<div className='selection-list'>
 								{getElementListHeader()}
@@ -568,6 +591,42 @@ export const LibraryListPage = (props: Props) => {
 			return [];
 		}
 
+		// Changes to this element can go in an extension, rather than a copy of the whole thing
+		const getNewExtension = () => {
+			const targetKind = ExtensionLogic.getTargetKind(category);
+			if (!targetKind || ((category === 'monster-group') && showMonsters)) {
+				// In the monster view, the element is a monster rather than its group
+				return null;
+			}
+
+			const extension = FactoryLogic.createExtension();
+			extension.name = `${element.name || 'Unnamed Element'} Extension`;
+			extension.targetKind = targetKind;
+			extension.targetID = element.id;
+
+			return extension;
+		};
+
+		const getExtend = () => {
+			const extension = getNewExtension();
+			if (!extension) {
+				return null;
+			}
+
+			return {
+				type: 'dropdown',
+				label: isSmall ? undefined : 'Extend',
+				icon: <PlusOutlined />,
+				popover: (
+					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						<div>Create an extension that {ExtensionLogic.getChangeSummary(extension.targetKind)}, without copying it.</div>
+						<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={sourcebookID} setSourcebookID={setSourcebookID} />
+						<Button type='primary' onClick={() => props.createElement('extension', sourcebookID, extension)}>Create Extension</Button>
+					</div>
+				)
+			} as DropdownConfig;
+		};
+
 		const sourcebook = LibraryLogic.getSourcebook(element, category, props.sourcebooks, showMonsters);
 		if (!sourcebook) {
 			if (category === 'subclass') {
@@ -578,8 +637,9 @@ export const LibraryListPage = (props: Props) => {
 							type: 'button',
 							label: `Open ${c.name}`,
 							onClick: () => navigation.goToLibrary('class', c.id)
-						} as ButtonConfig
-					];
+						} as ButtonConfig,
+						getExtend()
+					].filter(item => !!item);
 				}
 			}
 
@@ -625,7 +685,7 @@ export const LibraryListPage = (props: Props) => {
 			if ((category === 'monster-group') && showMonsters) {
 				return {
 					type: 'dropdown',
-					label: isSmall ? undefined : 'Create Homebrew Version',
+					label: isSmall ? undefined : 'Homebrew',
 					icon: <CopyOutlined />,
 					popover: (
 						<Alert
@@ -639,14 +699,26 @@ export const LibraryListPage = (props: Props) => {
 			}
 
 			if (sourcebook.type !== SourcebookType.Homebrew) {
+				const extension = getNewExtension();
+
 				return {
 					type: 'dropdown',
-					label: isSmall ? undefined : 'Create Homebrew Version',
+					label: isSmall ? undefined : 'Homebrew',
 					icon: <CopyOutlined />,
 					popover: (
-						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px', maxWidth: '400px' }}>
+							{
+								extension ?
+									<div>A homebrew version is a copy of this {ExtensionLogic.getTargetKindName(extension.targetKind).toLowerCase()} that you can change however you like. An extension {ExtensionLogic.getChangeSummary(extension.targetKind)}, without copying it.</div>
+									: null
+							}
 							<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={sourcebookID} setSourcebookID={setSourcebookID} />
-							<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>Create</Button>
+							<Button type='primary' block={true} icon={<CopyOutlined />} onClick={() => props.createElement(category, sourcebookID, element)}>Create Homebrew Version</Button>
+							{
+								extension ?
+									<Button block={true} icon={<PlusOutlined />} onClick={() => props.createElement('extension', sourcebookID, extension)}>Create Extension</Button>
+									: null
+							}
 						</div>
 					)
 				} as DropdownConfig;
@@ -823,6 +895,14 @@ export const LibraryListPage = (props: Props) => {
 					return null;
 				}
 			}
+			if (category === 'extension') {
+				// Encounters can use the monsters an extension adds, just as they can a group's own
+				(element as Extension).changes.forEach(c => {
+					if (c.type === ExtensionChangeType.AddMonster) {
+						elements.push(c.data.monster);
+					}
+				});
+			}
 
 			const used: { element: Element, container: Element }[] = [];
 			elements.forEach(e => {
@@ -862,7 +942,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return [
 			getStart(),
-			getCreateHomebrew(),
+			getCreateHomebrew() || getExtend(),
 			getEdit(),
 			getCopy(),
 			getMove(),
@@ -910,6 +990,43 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getExtendedBy = (element: Element) => {
+		const targetKind = ExtensionLogic.getTargetKind(category);
+		if (!targetKind || (view !== 'modern')) {
+			return null;
+		}
+
+		const extensions = ExtensionLogic.getExtensionsFor([ element.id ], props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id)));
+		if (extensions.length === 0) {
+			return null;
+		}
+
+		return (
+			<Alert
+				style={{ margin: '0 20px 10px 20px' }}
+				type='info'
+				showIcon={true}
+				title={
+					<>
+						<div>This {ExtensionLogic.getTargetKindName(targetKind).toLowerCase()} is extended by:</div>
+						<ul style={{ margin: 0 }}>
+							{
+								extensions.map(e => (
+									<li key={e.extension.id}>
+										<Button type='link' size='small' style={{ padding: 0 }} onClick={() => navigation.goToLibrary('extension', e.extension.id)}>
+											{e.extension.name || 'Unnamed Extension'}
+										</Button>
+										{' '}in {e.sourcebook.name || 'Unnamed Sourcebook'}
+									</li>
+								))
+							}
+						</ul>
+					</>
+				}
+			/>
+		);
+	};
+
 	const selected = getList(category).find(item => item.id == selectedID);
 	const getPanel = getElementPanel();
 
@@ -928,7 +1045,7 @@ export const LibraryListPage = (props: Props) => {
 								control: (
 									<AddBtn
 										category={category}
-										sourcebooks={props.sourcebooks}
+										sourcebooks={directorSourcebooks}
 										showMonsters={showMonsters}
 										sourcebookID={sourcebookID}
 										setShowMonsters={setShowMonsters}
@@ -954,7 +1071,10 @@ export const LibraryListPage = (props: Props) => {
 								<div className='element-selected'>
 									{
 										selected ?
-											getPanel(selected)
+											<>
+												{getExtendedBy(selected)}
+												{getPanel(selected)}
+											</>
 											:
 											<Empty text='Nothing selected' />
 									}

@@ -639,6 +639,18 @@ Your companion gains all the benefits of your kit, with the following exceptions
 		});
 	};
 
+	// The cost shown on a malice feature's panel
+	static getMaliceCost = (malice: Feature) => {
+		switch (malice.type) {
+			case FeatureType.Malice:
+				return malice.data.cost;
+			case FeatureType.MaliceAbility:
+				return malice.data.ability.cost;
+		}
+
+		return undefined;
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getSuggestedStats = (monster: Monster) => {

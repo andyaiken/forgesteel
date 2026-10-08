@@ -321,7 +321,7 @@ export const SourcebookPanel = (props: Props) => {
 		return (
 			<div>
 				{
-					[ 'adventure', 'ancestry', 'career', 'class', 'complication', 'culture', 'domain', 'encounter', 'imbuement', 'item', 'kit', 'monster-group', 'montage', 'negotiation', 'perk', 'project', 'subclass', 'tactical-map', 'terrain', 'title' ].map((type, n) => {
+					[ 'adventure', 'ancestry', 'career', 'class', 'complication', 'culture', 'domain', 'encounter', 'extension', 'imbuement', 'item', 'kit', 'monster-group', 'montage', 'negotiation', 'perk', 'project', 'subclass', 'tactical-map', 'terrain', 'title' ].map((type, n) => {
 						const elements = SourcebookLogic.getElements(sourcebook).filter(e => e.type === type);
 						if (elements.length === 0) {
 							return null;

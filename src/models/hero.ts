@@ -25,6 +25,8 @@ export interface Hero {
 	picture: string | null;
 	folder: string;
 	sourcebookIDs: string[];
+	// The homebrew extensions the player has approved for this hero; others don't apply, even from the hero's sourcebooks
+	extensionIDs: string[];
 
 	ancestry: Ancestry | null;
 	culture: Culture | null;

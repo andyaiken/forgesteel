@@ -19,6 +19,7 @@ import { Kit } from '@/models/kit';
 import { KitData } from '@/data/kit-data';
 import { LeveledWeaponData } from '@/data/items/leveled-weapon-data';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Random } from '@/utils/random';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
@@ -28,12 +29,15 @@ import { Summon } from '@/models/summon';
 import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
+import { beastheartSourcebook } from '@/data/sourcebooks/official/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
+import { core } from '@/data/sourcebooks/official/core';
 import { corven } from '@/data/kits/stormwight/corven';
 import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
+import { orden } from '@/data/sourcebooks/official/orden';
 import { stormwight } from '@/data/classes/fury/stormwight';
 import { vuken } from '@/data/kits/stormwight/vuken';
 import { war } from '@/data/domains/war';
@@ -1120,5 +1124,41 @@ describe('getFeatureDamageBonuses - wielded treasures', () => {
 		const hero = createHeroWithKit(KitData.dualWielder, [ createImbuedWeapon('imbued-a') ]);
 		expect(total(hero, ability, AbilityDistanceType.Melee)).toBe(1);
 		expect(total(hero, ability, AbilityDistanceType.Ranged)).toBe(0);
+	});
+});
+
+describe('createRandomHero', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
+	// The hero's elements have to be copies - the generator makes its choices by writing into them
+	it('leaves the sourcebooks it draws from unchanged', () => {
+		vi.spyOn(Math, 'random').mockImplementation(Random.getSeededRNG('random-hero'));
+		const sourcebooks = Utils.copy([ core, orden, beastheartSourcebook ]);
+		const snapshot = Utils.copy(sourcebooks);
+
+		const heroes: Hero[] = [];
+		for (let n = 0; n < 20; ++n) {
+			heroes.push(HeroLogic.createRandomHero(sourcebooks));
+		}
+		expect(sourcebooks).toEqual(snapshot);
+
+		// Editing the heroes afterwards mustn't reach the sourcebooks either - nothing in a hero may be shared with them
+		const rename = (value: unknown) => {
+			if (Array.isArray(value)) {
+				value.forEach(rename);
+			} else if (value && (typeof value === 'object')) {
+				Object.entries(value).forEach(([ key, child ]) => {
+					if ((key === 'name') && (typeof child === 'string')) {
+						(value as Record<string, unknown>)[key] = `${child} (edited)`;
+					} else {
+						rename(child);
+					}
+				});
+			}
+		};
+		heroes.forEach(rename);
+		expect(sourcebooks).toEqual(snapshot);
 	});
 });

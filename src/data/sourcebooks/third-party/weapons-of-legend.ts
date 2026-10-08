@@ -264,6 +264,7 @@ export const weaponsOfLegend: Sourcebook = {
 	classes: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [
 		amzysTrophy,

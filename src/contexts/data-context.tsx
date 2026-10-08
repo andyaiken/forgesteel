@@ -2,6 +2,7 @@ import { ActionDispatch, PropsWithChildren, createContext, useContext, useMemo, 
 import { Analytics } from '@/utils/analytics';
 import { Collections } from '@/utils/collections';
 import { DataService } from '@/services/data-service';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Session } from '@/models/session';
@@ -314,4 +315,12 @@ export function useSourcebooks() {
 		throw new Error('useSourcebooks may only be used within <SourcebooksContext>');
 	}
 	return context;
+}
+
+// Every sourcebook, with the extensions to monster groups from visible sourcebooks applied - for the director's tools.
+// Only for reading: anything that is saved has to come from useSourcebooks, or it would take the extensions with it.
+export function useDirectorSourcebooks() {
+	const sourcebooks = useSourcebooks();
+	const hiddenSourcebookIDs = useHiddenSourcebookIDs();
+	return useMemo(() => ExtensionLogic.getDirectorSourcebooks(sourcebooks, hiddenSourcebookIDs), [ sourcebooks, hiddenSourcebookIDs ]);
 }

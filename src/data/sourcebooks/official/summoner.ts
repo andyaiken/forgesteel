@@ -20,6 +20,7 @@ export const summonerSourcebook: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [
 		// 1st Echelon Trinkets

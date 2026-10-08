@@ -115,6 +115,17 @@ export class PregenLogic {
 			hero.class.subclasses.forEach(sc => {
 				sc.selected = pregen.selectedSubclassIDs.includes(sc.id);
 			});
+			// A subclass from elsewhere (a standalone homebrew subclass, or one from another class) has to be brought in
+			pregen.selectedSubclassIDs
+				.filter(id => !hero.class!.subclasses.some(sc => sc.id === id))
+				.forEach(id => {
+					const subclass = SourcebookLogic.getSubclasses(sourcebooks, true).find(sc => sc.id === id);
+					if (subclass) {
+						const copy = Utils.copy(subclass);
+						copy.selected = true;
+						hero.class!.subclasses.push(copy);
+					}
+				});
 		}
 
 		const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === pregen.complicationID);

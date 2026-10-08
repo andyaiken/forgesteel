@@ -9,6 +9,8 @@ import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterLogic } from '@/logic/encounter-logic';
+import { Extension } from '@/models/extension';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
@@ -121,6 +123,21 @@ export class LibraryLogic {
 					item.name,
 					item.description,
 					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	static getExtensions = (sourcebooks: Sourcebook[], searchTerm: string) => {
+		try {
+			return SourcebookLogic.getExtensions(sourcebooks)
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					ExtensionLogic.getTarget(item, sourcebooks)?.element.name || '',
+					...item.changes.map(ExtensionLogic.getChangeName)
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -346,6 +363,9 @@ export class LibraryLogic {
 			case 'encounter':
 				sourcebook = SourcebookLogic.getEncounterSourcebook(sourcebooks, element as Encounter);
 				break;
+			case 'extension':
+				sourcebook = SourcebookLogic.getExtensionSourcebook(sourcebooks, element as Extension);
+				break;
 			case 'imbuement':
 				sourcebook = SourcebookLogic.getImbuementSourcebook(sourcebooks, element as Imbuement);
 				break;
@@ -402,6 +422,11 @@ export class LibraryLogic {
 		if (category === 'culture') {
 			const culture = element as Culture;
 			return culture.type;
+		}
+
+		if (category === 'extension') {
+			const target = ExtensionLogic.getTarget(element as Extension, sourcebooks);
+			return target ? target.element.name : 'Unknown';
 		}
 
 		if (category === 'item') {

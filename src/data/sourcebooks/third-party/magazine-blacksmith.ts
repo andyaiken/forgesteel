@@ -1141,6 +1141,7 @@ export const blacksmith: Sourcebook = {
 	classes: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [
 		abundanceOfLoveAndReticence,

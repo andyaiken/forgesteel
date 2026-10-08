@@ -211,6 +211,7 @@ export const core: Sourcebook = {
 		DomainData.war
 	],
 	encounters: [],
+	extensions: [],
 	imbuements: [
 		ImbuedArmorData.aweCharming,
 		ImbuedArmorData.aweThreatening,

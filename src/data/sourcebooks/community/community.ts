@@ -4332,6 +4332,7 @@ export const communityPrerelease: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [],
@@ -4375,6 +4376,7 @@ export const community: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [

@@ -1590,10 +1590,11 @@ export class HeroLogic {
 		const hero = FactoryLogic.createHero();
 		hero.name = NameGenerator.generateName();
 		hero.sourcebookIDs = sourcebooks.map(sb => sb.id);
-		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));
-		hero.culture = Collections.draw(SourcebookLogic.getCultures(sourcebooks, true));
-		hero.career = Collections.draw(SourcebookLogic.getCareers(sourcebooks));
-		hero.class = Collections.draw(SourcebookLogic.getClasses(sourcebooks));
+		// Everything taken from the sourcebooks is copied, because the choices below are written into it
+		hero.ancestry = Utils.copy(Collections.draw(SourcebookLogic.getAncestries(sourcebooks)));
+		hero.culture = Utils.copy(Collections.draw(SourcebookLogic.getCultures(sourcebooks, true)));
+		hero.career = Utils.copy(Collections.draw(SourcebookLogic.getCareers(sourcebooks)));
+		hero.class = Utils.copy(Collections.draw(SourcebookLogic.getClasses(sourcebooks)));
 
 		hero.class.primaryCharacteristics = Collections.draw(hero.class.primaryCharacteristicsOptions);
 		const array = Collections.draw(HeroLogic.getCharacteristicArrays(hero.class.primaryCharacteristics.length));
@@ -1617,7 +1618,7 @@ export class HeroLogic {
 				switch (feature.type) {
 					case FeatureType.AncestryChoice: {
 						const options = SourcebookLogic.getAncestries(sourcebooks);
-						feature.data.selected = Collections.draw(options);
+						feature.data.selected = Utils.copy(Collections.draw(options));
 						break;
 					}
 					case FeatureType.AncestryFeatureChoice: {
@@ -1696,7 +1697,7 @@ export class HeroLogic {
 							if (options.length === 0) {
 								break;
 							}
-							feature.data.selected.push(Collections.draw(options));
+							feature.data.selected.push(Utils.copy(Collections.draw(options)));
 						}
 						break;
 					}
@@ -1725,7 +1726,7 @@ export class HeroLogic {
 							if (options.length === 0) {
 								break;
 							}
-							feature.data.selected.push(Collections.draw(options));
+							feature.data.selected.push(Utils.copy(Collections.draw(options)));
 						}
 						break;
 					}
@@ -1739,7 +1740,7 @@ export class HeroLogic {
 							if (options.length === 0) {
 								break;
 							}
-							feature.data.selected.push(Collections.draw(options));
+							feature.data.selected.push(Utils.copy(Collections.draw(options)));
 						}
 						break;
 					}
@@ -1766,7 +1767,7 @@ export class HeroLogic {
 							if (options.length === 0) {
 								break;
 							}
-							feature.data.selected.push(Collections.draw(options));
+							feature.data.selected.push(Utils.copy(Collections.draw(options)));
 						}
 						break;
 					}
@@ -1838,7 +1839,7 @@ export class HeroLogic {
 							if (options.length === 0) {
 								break;
 							}
-							feature.data.selected.push(Collections.draw(options));
+							feature.data.selected.push(Utils.copy(Collections.draw(options)));
 						}
 						break;
 					}

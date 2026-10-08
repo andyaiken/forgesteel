@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
-import { useHomebrewSourcebooks, useSourcebooks } from '@/contexts/data-context';
+import { useDirectorSourcebooks, useHomebrewSourcebooks, useSourcebooks } from '@/contexts/data-context';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { FallbackPage } from '@/components/pages/fallback/fallback-page';
 import { FooterParams } from '@/components/panels/app-footer/app-footer';
@@ -41,6 +41,7 @@ interface Props {
 export const AppRoutes = (props: Props) => {
 	const { footerParams, connectionSettings, drawer, setDrawer } = props;
 	const sourcebooks = useSourcebooks();
+	const directorSourcebooks = useDirectorSourcebooks();
 	const homebrewSourcebooks = useHomebrewSourcebooks();
 
 	const { persistHero, persistHomebrewSourcebook, persistConnectionSettings } = props.persistence;
@@ -256,7 +257,7 @@ export const AppRoutes = (props: Props) => {
 							path='director'
 							element={
 								<SessionDirectorPage
-									sourcebooks={sourcebooks}
+									sourcebooks={directorSourcebooks}
 									params={footerParams}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
@@ -279,7 +280,7 @@ export const AppRoutes = (props: Props) => {
 							path='player'
 							element={
 								<SessionPlayerPage
-									sourcebooks={sourcebooks}
+									sourcebooks={directorSourcebooks}
 									params={footerParams}
 								/>
 							}

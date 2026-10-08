@@ -6,6 +6,7 @@ import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
+import { Extension } from '@/models/extension';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
@@ -34,6 +35,7 @@ export interface Sourcebook extends Element {
 	cultures: Culture[];
 	domains: Domain[];
 	encounters: Encounter[];
+	extensions: Extension[];
 	imbuements: Imbuement[];
 	items: Item[];
 	kits: Kit[];
@@ -51,4 +53,4 @@ export interface Sourcebook extends Element {
 	languages: Language[];
 }
 
-export type SourcebookElementKind = 'adventure' | 'ancestry' | 'career' | 'class' | 'complication' | 'culture' | 'domain' | 'encounter' | 'imbuement' | 'item' | 'kit' | 'monster-group' | 'montage' | 'negotiation' | 'perk' | 'project' | 'subclass' | 'tactical-map' | 'terrain' | 'title';
+export type SourcebookElementKind = 'adventure' | 'ancestry' | 'career' | 'class' | 'complication' | 'culture' | 'domain' | 'encounter' | 'extension' | 'imbuement' | 'item' | 'kit' | 'monster-group' | 'montage' | 'negotiation' | 'perk' | 'project' | 'subclass' | 'tactical-map' | 'terrain' | 'title';

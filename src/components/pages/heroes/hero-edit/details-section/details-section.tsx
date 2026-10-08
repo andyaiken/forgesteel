@@ -12,6 +12,7 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { HeroExtensionsPanel } from '@/components/panels/hero-extensions/hero-extensions-panel';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroTutorialPanel } from '@/components/panels/hero-tutorial/hero-tutorial-panel';
 import { Info } from '@/components/controls/info/info';
@@ -33,6 +34,7 @@ interface DetailsSectionProps {
 	setFolder: (value: string) => void;
 	setTutorialMode: (value: TutorialMode) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
+	setExtensionIDs: (extensionIDs: string[]) => void;
 }
 
 export const DetailsSection = (props: DetailsSectionProps) => {
@@ -142,6 +144,11 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 				<SelectablePanel>
 					<HeroTutorialPanel value={props.hero.state.tutorialMode} onChange={props.setTutorialMode} />
 				</SelectablePanel>
+				<HeroExtensionsPanel
+					hero={props.hero}
+					sourcebooks={props.sourcebooks}
+					setExtensionIDs={props.setExtensionIDs}
+				/>
 			</div>
 			<div className='hero-edit-content-column selected'>
 				<Expander

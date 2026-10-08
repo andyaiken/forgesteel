@@ -1,5 +1,6 @@
 import { Button, Divider, Popover, Space } from 'antd';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { DownOutlined } from '@ant-design/icons';
 import { ReactNode } from 'react';
 
 import './button-group.scss';
@@ -68,6 +69,7 @@ export const ButtonGroup = (props: ButtonGroupProps) => {
 									<Popover className='dropdown' trigger='click' content={item.popover}>
 										<Button type={item.primary ? 'primary' : 'text'} disabled={item.disabled} icon={item.icon} title={item.tooltip}>
 											{item.label}
+											<DownOutlined />
 										</Button>
 									</Popover>
 								);

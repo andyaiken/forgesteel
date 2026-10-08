@@ -1774,6 +1774,7 @@ export const triglav: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [

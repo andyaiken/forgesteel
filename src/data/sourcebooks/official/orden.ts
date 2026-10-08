@@ -22,6 +22,7 @@ export const orden: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [],

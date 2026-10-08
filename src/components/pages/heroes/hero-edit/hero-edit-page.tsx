@@ -22,11 +22,13 @@ import { CultureSection } from '@/components/pages/heroes/hero-edit/culture-sect
 import { DetailsSection } from '@/components/pages/heroes/hero-edit/details-section/details-section';
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
+import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { SearchBox } from '@/components/controls/text-input/text-input';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -67,6 +69,16 @@ export const HeroEditPage = (props: Props) => {
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	useTitle('Hero Builder');
+
+	// The hero's own sourcebooks, with the extensions the hero has approved applied - so every picker offers the extended options.
+	// Keyed on the IDs themselves rather than the arrays, which are new every time the hero is copied
+	const sourcebookKey = hero.sourcebookIDs.join('|');
+	const extensionKey = (hero.extensionIDs || []).join('|');
+	const heroSourcebooks = useMemo(
+		() => ExtensionLogic.getHeroSourcebooks(hero, props.sourcebooks),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[ props.sourcebooks, sourcebookKey, extensionKey ]
+	);
 
 	const getPageState = (page: HeroEditTab) => {
 		switch (page) {
@@ -146,7 +158,7 @@ export const HeroEditPage = (props: Props) => {
 	};
 
 	const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
-		const sourcebooks = props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
+		const sourcebooks = heroSourcebooks;
 		const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
 		// Cancelled skills can never be learned again, so they count as 'known' for this purpose
 		const knownSkills = [
@@ -394,6 +406,17 @@ export const HeroEditPage = (props: Props) => {
 	const setSettingIDs = (settingIDs: string[]) => {
 		const heroCopy = Utils.copy(hero);
 		heroCopy.sourcebookIDs = settingIDs;
+		// Rebuild the hero's elements, so that extensions from these sourcebooks are added or taken away now rather than on the next load
+		HeroUpdateLogic.updateHeroData(heroCopy, props.sourcebooks);
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setExtensionIDs = (extensionIDs: string[]) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.extensionIDs = extensionIDs;
+		// Rebuild the hero's elements, so that the extension is added or taken away now rather than on the next load
+		HeroUpdateLogic.updateHeroData(heroCopy, props.sourcebooks);
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -404,7 +427,7 @@ export const HeroEditPage = (props: Props) => {
 	};
 
 	const selectRandom = () => {
-		const sourcebooks = props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
+		const sourcebooks = heroSourcebooks;
 
 		switch (page) {
 			case 'ancestry':
@@ -538,7 +561,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<AncestrySection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						searchTerm={searchTerm}
 						selectAncestry={setAncestry}
 						setFeatureData={setFeatureData}
@@ -548,7 +571,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<CultureSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						searchTerm={searchTerm}
 						selectCulture={setCulture}
 						selectEnvironment={setEnvironment}
@@ -561,7 +584,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<CareerSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						searchTerm={searchTerm}
 						selectCareer={setCareer}
 						selectIncitingIncident={setIncitingIncident}
@@ -572,7 +595,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<ClassSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						searchTerm={searchTerm}
 						selectClass={setClass}
 						setLevel={setLevel}
@@ -587,7 +610,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<ComplicationSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						searchTerm={searchTerm}
 						selectComplication={setComplication}
 						setFeatureData={setFeatureData}
@@ -597,12 +620,13 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<DetailsSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id))}
+						sourcebooks={heroSourcebooks}
 						setName={setName}
 						setPicture={setPicture}
 						setFolder={setFolder}
 						setTutorialMode={setTutorialMode}
 						setFeatureData={setFeatureData}
+						setExtensionIDs={setExtensionIDs}
 					/>
 				);
 		}

@@ -14,6 +14,8 @@ import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { Extension } from '@/models/extension';
+import { ExtensionChangeType } from '@/enums/extension-change-type';
 import { FactionType } from '@/enums/faction-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -54,6 +56,10 @@ export class UpdateLogic {
 
 		if (ability.type.freeStrike === undefined) {
 			ability.type.freeStrike = false;
+		}
+
+		if (ability.minLevel === undefined) {
+			ability.minLevel = 1;
 		}
 
 		if (ability.sections === undefined) {
@@ -339,6 +345,39 @@ ${encounter.objective.victories}`
 		if (encounter.hiddenMaliceFeatures === undefined) {
 			encounter.hiddenMaliceFeatures = [];
 		}
+	};
+
+	static updateExtension = (extension: Extension) => {
+		if (extension.changes === undefined) {
+			extension.changes = [];
+		}
+
+		extension.changes.forEach(change => {
+			switch (change.type) {
+				case ExtensionChangeType.AddAbility:
+					UpdateLogic.updateAbility(change.data.ability);
+					break;
+				case ExtensionChangeType.AddFeature:
+				case ExtensionChangeType.ReplaceFeature:
+					UpdateLogic.updateFeature(change.data.feature);
+					break;
+				case ExtensionChangeType.AddChoiceOption:
+					UpdateLogic.updateFeature(change.data.option.feature);
+					break;
+				case ExtensionChangeType.AddSummonOption:
+					UpdateLogic.updateMonster(change.data.summon.monster);
+					if (change.data.summon.info.level === undefined) {
+						change.data.summon.info.level = 1;
+					}
+					break;
+				case ExtensionChangeType.AddMalice:
+					UpdateLogic.updateFeature(change.data.malice);
+					break;
+				case ExtensionChangeType.AddMonster:
+					UpdateLogic.updateMonster(change.data.monster);
+					break;
+			}
+		});
 	};
 
 	static updateFeature = (feature: Feature) => {
@@ -904,6 +943,9 @@ ${encounter.objective.victories}`
 		if (sourcebook.encounters === undefined) {
 			sourcebook.encounters = [];
 		}
+		if (sourcebook.extensions === undefined) {
+			sourcebook.extensions = [];
+		}
 		if (sourcebook.imbuements === undefined) {
 			sourcebook.imbuements = [];
 		}
@@ -949,6 +991,7 @@ ${encounter.objective.victories}`
 		sourcebook.cultures.forEach(UpdateLogic.updateCulture);
 		sourcebook.domains.forEach(UpdateLogic.updateDomain);
 		sourcebook.encounters.forEach(UpdateLogic.updateEncounter);
+		sourcebook.extensions.forEach(UpdateLogic.updateExtension);
 		sourcebook.imbuements.forEach(UpdateLogic.updateImbuement);
 		sourcebook.items.forEach(UpdateLogic.updateItem);
 		sourcebook.kits.forEach(UpdateLogic.updateKit);
@@ -971,6 +1014,7 @@ ${encounter.objective.victories}`
 		sourcebook.cultures = Collections.distinct(sourcebook.cultures, a => a.id);
 		sourcebook.domains = Collections.distinct(sourcebook.domains, a => a.id);
 		sourcebook.encounters = Collections.distinct(sourcebook.encounters, a => a.id);
+		sourcebook.extensions = Collections.distinct(sourcebook.extensions, a => a.id);
 		sourcebook.imbuements = Collections.distinct(sourcebook.imbuements, a => a.id);
 		sourcebook.items = Collections.distinct(sourcebook.items, a => a.id);
 		sourcebook.kits = Collections.distinct(sourcebook.kits, a => a.id);

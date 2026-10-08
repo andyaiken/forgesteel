@@ -1,6 +1,7 @@
 import { Hero } from '@/models/hero';
 import { HeroSourcebooksPanel } from '@/components/panels/hero-sourcebooks/hero-sourcebooks-panel';
 import { HeroTutorialPanel } from '@/components/panels/hero-tutorial/hero-tutorial-panel';
+import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { TutorialMode } from '@/enums/tutorial-mode';
@@ -31,6 +32,8 @@ export const HeroSettingsModal = (props: Props) => {
 	const setSourcebookIDs = (sourcebookIDs: string[]) => {
 		const heroCopy = Utils.copy(hero);
 		heroCopy.sourcebookIDs = sourcebookIDs;
+		// Rebuild the hero's elements, so that extensions from these sourcebooks are added or taken away now rather than on the next load
+		HeroUpdateLogic.updateHeroData(heroCopy, props.allSourcebooks);
 		setHero(heroCopy);
 		props.onChange(heroCopy);
 	};

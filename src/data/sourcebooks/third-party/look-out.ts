@@ -1164,6 +1164,7 @@ export const lookOut: Sourcebook = {
 	],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [

@@ -1,4 +1,4 @@
-import { useHeroes, useOptions, useSession, useSourcebooks } from '@/contexts/data-context';
+import { useDirectorSourcebooks, useHeroes, useOptions, useSession } from '@/contexts/data-context';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Counter } from '@/models/counter';
 import { Encounter } from '@/models/encounter';
@@ -20,7 +20,7 @@ export const useSessionActions = (props: Props) => {
 	const options = useOptions();
 	const session = useSession();
 	const heroes = useHeroes();
-	const sourcebooks = useSourcebooks();
+	const sourcebooks = useDirectorSourcebooks();
 
 	const startEncounter = async (encounter: Encounter) => {
 		const copy = SessionLogic.startEncounter(encounter, sourcebooks, heroes, options);

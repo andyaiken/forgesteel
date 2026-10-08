@@ -1,6 +1,6 @@
 import { Feature, FeatureCompanion, FeatureRetainer, FeatureSummon, FeatureSummonChoice } from '@/models/feature';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
-import { useBuiltInSourcebooks, useHeroes, useHomebrewSourcebooks, useOptions, useSourcebooks } from '@/contexts/data-context';
+import { useBuiltInSourcebooks, useDirectorSourcebooks, useHeroes, useHomebrewSourcebooks, useOptions, useSourcebooks } from '@/contexts/data-context';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AboutModal } from '@/components/modals/about/about-modal';
@@ -12,6 +12,7 @@ import { ElementModal } from '@/components/modals/element/element-modal';
 import { Encounter } from '@/models/encounter';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorsModal } from '@/components/modals/errors/errors-modal';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
 import { FeatureType } from '@/enums/feature-type';
 import { Fixture } from '@/models/fixture';
@@ -76,6 +77,7 @@ export const useModals = (props: Props) => {
 	const homebrewSourcebooks = useHomebrewSourcebooks();
 	const builtInSourcebooks = useBuiltInSourcebooks();
 	const sourcebooks = useSourcebooks();
+	const directorSourcebooks = useDirectorSourcebooks();
 
 	const showAbout = () => {
 		setDrawer(
@@ -224,8 +226,7 @@ export const useModals = (props: Props) => {
 	};
 
 	const onSelectFeature = (feature: Feature, hero: Hero) => {
-		const heroSourcebooks = sourcebooks
-			.filter(sb => hero.sourcebookIDs.includes(sb.id));
+		const heroSourcebooks = ExtensionLogic.getHeroSourcebooks(hero, sourcebooks);
 
 		setDrawer(
 			<FeatureModal
@@ -250,8 +251,7 @@ export const useModals = (props: Props) => {
 	};
 
 	const onShowHeroState = (hero: Hero, type: HeroModalType) => {
-		const heroSourcebooks = sourcebooks
-			.filter(sb => hero.sourcebookIDs.includes(sb.id));
+		const heroSourcebooks = ExtensionLogic.getHeroSourcebooks(hero, sourcebooks);
 
 		const takeRespite = (updatedHero: Hero) => {
 			const copy = Utils.copy(updatedHero || hero);
@@ -415,7 +415,7 @@ export const useModals = (props: Props) => {
 				setDrawer(
 					<EncounterToolsModal
 						encounter={encounter}
-						sourcebooks={sourcebooks}
+						sourcebooks={directorSourcebooks}
 						onClose={() => setDrawer(null)}
 					/>
 				);

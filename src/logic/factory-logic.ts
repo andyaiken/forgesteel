@@ -21,6 +21,7 @@ import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterSlot } from '@/models/encounter';
+import { Extension } from '@/models/extension';
 import { FactionType } from '@/enums/faction-type';
 import { FactoryAbilityTypeLogic } from '@/logic/factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from '@/logic/factory-damage-modifier-logic';
@@ -87,6 +88,7 @@ export class FactoryLogic {
 			picture: null,
 			folder: '',
 			sourcebookIDs: [],
+			extensionIDs: [],
 			ancestry: null,
 			culture: null,
 			class: null,
@@ -164,6 +166,7 @@ export class FactoryLogic {
 			cultures: [],
 			domains: [],
 			encounters: [],
+			extensions: [],
 			imbuements: [],
 			items: [],
 			kits: [],
@@ -318,6 +321,17 @@ export class FactoryLogic {
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
 			resourceGains: [],
 			defaultFeatures: []
+		};
+	};
+
+	static createExtension = (): Extension => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			targetKind: 'class',
+			targetID: '',
+			changes: []
 		};
 	};
 

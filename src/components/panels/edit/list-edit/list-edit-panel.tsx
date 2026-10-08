@@ -133,6 +133,7 @@ export const AbilityListEditPanel = (props: AbilityListEditPanelProps) => {
 						>
 							<AbilityEditPanel
 								ability={a}
+								showMinLevel={true}
 								onChange={changeAbility}
 							/>
 						</Expander>

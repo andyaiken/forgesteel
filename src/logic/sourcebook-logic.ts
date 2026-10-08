@@ -11,6 +11,7 @@ import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterLogic } from '@/logic/encounter-logic';
+import { Extension } from '@/models/extension';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroClass } from '@/models/class';
@@ -57,6 +58,7 @@ export class SourcebookLogic {
 			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' as SourcebookElementKind })),
 			...sourcebook.domains.map(x => ({ element: x, type: 'domain' as SourcebookElementKind })),
 			...sourcebook.encounters.map(x => ({ element: x, type: 'encounter' as SourcebookElementKind })),
+			...(sourcebook.extensions || []).map(x => ({ element: x, type: 'extension' as SourcebookElementKind })),
 			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' as SourcebookElementKind })),
 			...sourcebook.items.map(x => ({ element: x, type: 'item' as SourcebookElementKind })),
 			...sourcebook.kits.map(x => ({ element: x, type: 'kit' as SourcebookElementKind })),
@@ -120,6 +122,10 @@ export class SourcebookLogic {
 
 	static getEncounterSourcebook = (sourcebooks: Sourcebook[], encounter: Encounter) => {
 		return sourcebooks.find(s => SourcebookLogic.getEncounters([ s ]).some(e => e.id === encounter.id));
+	};
+
+	static getExtensionSourcebook = (sourcebooks: Sourcebook[], extension: Extension) => {
+		return sourcebooks.find(s => SourcebookLogic.getExtensions([ s ]).some(e => e.id === extension.id));
 	};
 
 	static getImbuementSourcebook = (sourcebooks: Sourcebook[], imbuement: Imbuement) => {
@@ -255,6 +261,16 @@ export class SourcebookLogic {
 
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.encounters);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getExtensions = (sourcebooks: Sourcebook[]) => {
+		const list: Extension[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...(sourcebook.extensions || []));
 		});
 
 		return Collections.sort(list, item => item.name);

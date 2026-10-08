@@ -15,4 +15,6 @@ export interface SummoningInfo {
 export interface Summon extends Element {
 	monster: Monster;
 	info: SummoningInfo;
+	// Set when an extension added this summon to a summon choice, so that a hero's selection of it goes when the extension does
+	extensionID?: string;
 };

@@ -13,6 +13,9 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
+import { Extension } from '@/models/extension';
+import { ExtensionChangeType } from '@/enums/extension-change-type';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -28,6 +31,7 @@ import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { Pill } from '@/components/controls/pill/pill';
@@ -92,6 +96,14 @@ export const PrintSheet = (props: Props) => {
 			content = (
 				<DomainSheet
 					domain={props.element as Domain}
+					sourcebooks={props.sourcebooks}
+				/>
+			);
+			break;
+		case 'extension':
+			content = (
+				<ExtensionSheet
+					extension={props.element as Extension}
 					sourcebooks={props.sourcebooks}
 				/>
 			);
@@ -738,6 +750,118 @@ const SubclassSheet = (props: SubclassProps) => {
 								<AbilityPanel key={a.id} ability={a} mode={PanelMode.Full} />
 							))
 						}
+					</Space>
+					: null
+			}
+		</>
+	);
+};
+
+interface ExtensionProps {
+	extension: Extension;
+	sourcebooks: Sourcebook[];
+};
+
+const ExtensionSheet = (props: ExtensionProps) => {
+	const target = ExtensionLogic.getTarget(props.extension, props.sourcebooks);
+	const changes = props.extension.changes;
+
+	const abilities = changes.filter(c => c.type === ExtensionChangeType.AddAbility);
+	const features = changes.filter(c => c.type === ExtensionChangeType.AddFeature);
+	const options = changes.filter(c => (c.type === ExtensionChangeType.AddChoiceOption) || (c.type === ExtensionChangeType.AddSummonOption));
+	const replacements = changes.filter(c => c.type === ExtensionChangeType.ReplaceFeature);
+	const malice = changes.filter(c => c.type === ExtensionChangeType.AddMalice);
+	const monsters = changes.filter(c => c.type === ExtensionChangeType.AddMonster);
+	const monsterGroup = (target && (target.kind === 'monster-group')) ? target.element : undefined;
+
+	return (
+		<>
+			<HeaderText level={1}>
+				{props.extension.name || 'Unnamed Extension'}
+			</HeaderText>
+			{target ? <Field label='Extends' value={`${target.element.name} (${ExtensionLogic.getTargetKindName(target.kind)})`} /> : null}
+			<Markdown text={props.extension.description} />
+			{
+				abilities.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>New Abilities</HeaderText>
+						{abilities.map(c => <AbilityPanel key={c.id} ability={c.data.ability} mode={PanelMode.Full} />)}
+					</Space>
+					: null
+			}
+			{
+				features.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>New Features</HeaderText>
+						{
+							features.map(c => (
+								<Space key={c.id} orientation='vertical' style={{ width: '100%' }}>
+									{target && (target.kind !== 'ancestry') && (target.kind !== 'kit') ? <HeaderText level={2}>{ExtensionLogic.getLevelName(c.data.level, target.kind)}</HeaderText> : null}
+									<FeaturePanel feature={c.data.feature} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								</Space>
+							))
+						}
+					</Space>
+					: null
+			}
+			{
+				options.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>New Options</HeaderText>
+						{
+							options.map(c => (
+								<Space key={c.id} orientation='vertical' style={{ width: '100%' }}>
+									<HeaderText level={2}>{ExtensionLogic.getTargetFeatureName(target, c.data.featureID)}</HeaderText>
+									{
+										c.type === ExtensionChangeType.AddChoiceOption ?
+											<FeaturePanel feature={c.data.option.feature} cost={c.data.option.value > 1 ? c.data.option.value : undefined} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+											:
+											<MonsterPanel monster={c.data.summon.monster} summon={c.data.summon.info} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+									}
+								</Space>
+							))
+						}
+					</Space>
+					: null
+			}
+			{
+				replacements.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>Replaced Features</HeaderText>
+						{
+							replacements.map(c => (
+								<Space key={c.id} orientation='vertical' style={{ width: '100%' }}>
+									<HeaderText level={2}>{ExtensionLogic.getTargetFeatureName(target, c.data.featureID)}</HeaderText>
+									<FeaturePanel feature={c.data.feature} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								</Space>
+							))
+						}
+					</Space>
+					: null
+			}
+			{
+				malice.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>New Malice</HeaderText>
+						{
+							malice.map(c => (
+								<FeaturePanel
+									key={c.id}
+									feature={c.data.malice}
+									mode={PanelMode.Full}
+									cost={MonsterLogic.getMaliceCost(c.data.malice)}
+									repeatable={c.data.malice.type === FeatureType.Malice ? c.data.malice.data.repeatable : undefined}
+								/>
+							))
+						}
+					</Space>
+					: null
+			}
+			{
+				monsters.length > 0 ?
+					<Space orientation='vertical' style={{ width: '100%' }}>
+						<HeaderText level={1}>New Monsters</HeaderText>
+						{monsters.map(c => <MonsterPanel key={c.id} monster={c.data.monster} monsterGroup={monsterGroup} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 					</Space>
 					: null
 			}

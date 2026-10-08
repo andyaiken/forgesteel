@@ -1,12 +1,19 @@
+import { FeatureClassAbility, FeatureComplication, FeatureSummonChoice } from '@/models/feature';
 import { describe, expect, it } from 'vitest';
 import { Complication } from '@/models/complication';
 import { ComplicationData } from '@/data/complication-data';
+import { ExtensionChangeType } from '@/enums/extension-change-type';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureComplication } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
+import { beastheart } from '@/data/classes/beastheart/beastheart';
+import { beastheartSourcebook } from '@/data/sourcebooks/official/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
@@ -182,5 +189,244 @@ describe('updateHeroData', () => {
 			.filter(f => f.type === FeatureType.HeroicResource)
 			.flatMap(f => f.data.gains);
 		expect(own.map(g => g.used)).toEqual(own.map(() => false));
+	});
+});
+
+describe('extensions and standalone subclasses', () => {
+	const createHomebrew = () => {
+		const sourcebook = FactoryLogic.createSourcebook();
+		sourcebook.id = 'homebrew';
+
+		const extension = FactoryLogic.createExtension();
+		extension.targetKind = 'class';
+		extension.targetID = beastheart.id;
+		extension.changes.push({
+			id: 'change',
+			type: ExtensionChangeType.AddAbility,
+			data: { ability: FactoryLogic.createAbility({ id: 'homebrew-ability', name: 'Homebrew', cost: 'signature', sections: [] }) }
+		});
+		sourcebook.extensions.push(extension);
+
+		const subclass = FactoryLogic.createSubclass();
+		subclass.id = 'homebrew-subclass';
+		subclass.classID = fury.id;
+		sourcebook.subclasses.push(subclass);
+
+		return sourcebook;
+	};
+
+	// Builds the hero the way the hero builder does - from the extended sourcebooks, with the extension approved - and picks the homebrew ability
+	const buildBeastheart = (homebrew: Sourcebook) => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, beastheartSourcebook.id, homebrew.id ];
+		hero.extensionIDs = homebrew.extensions.map(e => e.id);
+		const extended = ExtensionLogic.applyExtensions([ core, beastheartSourcebook, homebrew ], { extensionIDs: hero.extensionIDs });
+		hero.class = Utils.copy(SourcebookLogic.getClasses(extended).find(c => c.id === beastheart.id)!);
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.id === 'beastheart-1-7')
+			.forEach(f => (f as FeatureClassAbility).data.selectedIDs = [ 'homebrew-ability' ]);
+		return hero;
+	};
+
+	const getAbilityIDs = (hero: Hero, sourcebooks: Sourcebook[]) => HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability.id);
+
+	it('keeps a homebrew subclass chosen for an official class across a reload', () => {
+		const homebrew = createHomebrew();
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, homebrew.id ];
+		hero.class = Utils.copy(fury);
+		const subclass = Utils.copy(homebrew.subclasses[0]);
+		subclass.selected = true;
+		hero.class.subclasses.push(subclass);
+
+		HeroUpdateLogic.updateHero(hero, [ core, homebrew ]);
+
+		expect(hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)).toEqual([ 'homebrew-subclass' ]);
+	});
+
+	it('keeps an ability chosen from an extension across a reload', () => {
+		const homebrew = createHomebrew();
+		const hero = buildBeastheart(homebrew);
+		const sourcebooks = [ core, beastheartSourcebook, homebrew ];
+		expect(getAbilityIDs(hero, sourcebooks)).toContain('homebrew-ability');
+
+		HeroUpdateLogic.updateHero(hero, sourcebooks);
+
+		expect(getAbilityIDs(hero, sourcebooks)).toContain('homebrew-ability');
+	});
+
+	it('drops an extension once the hero no longer uses its sourcebook', () => {
+		const homebrew = createHomebrew();
+		const hero = buildBeastheart(homebrew);
+		hero.sourcebookIDs = [ core.id, beastheartSourcebook.id ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook, homebrew ]);
+
+		expect(hero.class!.abilities.map(a => a.id)).not.toContain('homebrew-ability');
+	});
+
+	it('drops an extension once the hero no longer approves it', () => {
+		const homebrew = createHomebrew();
+		const hero = buildBeastheart(homebrew);
+		hero.extensionIDs = [];
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook, homebrew ]);
+
+		expect(hero.class!.abilities.map(a => a.id)).not.toContain('homebrew-ability');
+	});
+
+	it('drops an extension that has been deleted from its sourcebook', () => {
+		const homebrew = createHomebrew();
+		const hero = buildBeastheart(homebrew);
+		homebrew.extensions = [];
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook, homebrew ]);
+
+		expect(hero.class!.abilities.map(a => a.id)).not.toContain('homebrew-ability');
+	});
+
+	// A shared hero, opened by someone without the homebrew, shouldn't lose it
+	it('keeps the hero\'s copy when the extension\'s sourcebook is not loaded', () => {
+		const homebrew = createHomebrew();
+		const hero = buildBeastheart(homebrew);
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook ]);
+
+		expect(hero.class!.abilities.map(a => a.id)).toContain('homebrew-ability');
+		expect(getAbilityIDs(hero, [ core, beastheartSourcebook ])).toContain('homebrew-ability');
+	});
+
+	it('drops a companion added by an extension once the hero no longer approves it', () => {
+		const homebrew = createHomebrew();
+		const companionFeature = beastheart.featuresByLevel[0].features.find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
+		const companion = Utils.copy(companionFeature.data.options[0]);
+		companion.id = 'homebrew-companion';
+		companion.monster.id = 'homebrew-companion';
+		homebrew.extensions[0].changes.push({ id: 'companion', type: ExtensionChangeType.AddSummonOption, data: { featureID: 'beastheart-1-2a', summon: companion } });
+
+		const hero = buildBeastheart(homebrew);
+		const getCompanionIDs = () => HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.id === 'beastheart-1-2a')
+			.flatMap(f => (f as FeatureSummonChoice).data.selected.map(s => s.id));
+		// Selected the way the picker does it - a copy of the option, which the extension has marked as its own
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature as FeatureSummonChoice)
+			.filter(f => f.id === 'beastheart-1-2a')
+			.forEach(f => f.data.selected = [ Utils.copy(f.data.options.find(o => o.id === 'homebrew-companion')!) ]);
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook, homebrew ]);
+		expect(getCompanionIDs()).toEqual([ 'homebrew-companion' ]);
+
+		hero.extensionIDs = [];
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook, homebrew ]);
+		expect(getCompanionIDs()).toEqual([]);
+	});
+
+	// Such as a companion whose ID has since changed in the official data - the hero's customizations are worth more than tidiness
+	it('keeps a selected summon that is no longer an option, if no extension added it', () => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, beastheartSourcebook.id ];
+		hero.class = Utils.copy(beastheart);
+		const feature = HeroLogic.getFeatures(hero).map(f => f.feature).find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
+		const companion = Utils.copy(feature.data.options[0]);
+		companion.id = 'renamed-companion';
+		feature.data.selected = [ companion ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook ]);
+
+		const updated = HeroLogic.getFeatures(hero).map(f => f.feature).find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
+		expect(updated.data.selected.map(s => s.id)).toEqual([ 'renamed-companion' ]);
+	});
+});
+
+describe('extensions to domains and kits', () => {
+	const createHomebrew = (targetKind: 'domain' | 'kit', targetID: string) => {
+		const sourcebook = FactoryLogic.createSourcebook();
+		sourcebook.id = 'homebrew';
+
+		const extension = FactoryLogic.createExtension();
+		extension.targetKind = targetKind;
+		extension.targetID = targetID;
+		extension.changes.push({
+			id: 'change',
+			type: ExtensionChangeType.AddFeature,
+			// Level 0 is a domain's default features; a kit has no levels
+			data: { level: (targetKind === 'domain') ? 0 : 1, feature: FactoryLogic.feature.create({ id: 'homebrew-feature', name: 'Homebrew', description: '' }) }
+		});
+		sourcebook.extensions.push(extension);
+
+		return sourcebook;
+	};
+
+	// Builds the hero the way the hero builder does - choosing from the extended sourcebooks, with the extension approved
+	const buildHero = (homebrew: Sourcebook, kind: 'domain' | 'kit') => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, orden.id, homebrew.id ];
+		hero.extensionIDs = homebrew.extensions.map(e => e.id);
+		const extended = ExtensionLogic.applyExtensions([ core, orden, homebrew ], { extensionIDs: hero.extensionIDs });
+
+		if (kind === 'domain') {
+			hero.class = Utils.copy(conduit);
+			hero.class.level = 1;
+			const domain = SourcebookLogic.getDomains(extended).find(d => d.id === life.id)!;
+			HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.Domain)
+				.forEach(f => f.data.selected = [ Utils.copy(domain) ]);
+		} else {
+			hero.class = Utils.copy(fury);
+			hero.class.level = 1;
+			hero.class.subclasses.filter(sc => sc.id === stormwight.id).forEach(sc => sc.selected = true);
+			const kit = SourcebookLogic.getKits(extended).find(k => k.id === boren.id)!;
+			HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.Kit)
+				.forEach(f => f.data.selected = [ Utils.copy(kit) ]);
+		}
+
+		return hero;
+	};
+
+	const getFeatureIDs = (hero: Hero, kind: 'domain' | 'kit') => (kind === 'domain') ?
+		HeroLogic.getDomains(hero).flatMap(d => d.defaultFeatures).map(f => f.id)
+		:
+		HeroLogic.getKits(hero).flatMap(k => k.features).map(f => f.id);
+
+	describe.each([
+		{ kind: 'domain' as const, targetID: life.id },
+		{ kind: 'kit' as const, targetID: boren.id }
+	])('$kind', ({ kind, targetID }) => {
+		it('keeps the extension while the hero uses its sourcebook', () => {
+			const homebrew = createHomebrew(kind, targetID);
+			const hero = buildHero(homebrew, kind);
+			expect(getFeatureIDs(hero, kind)).toContain('homebrew-feature');
+
+			HeroUpdateLogic.updateHero(hero, [ core, orden, homebrew ]);
+
+			expect(getFeatureIDs(hero, kind)).toContain('homebrew-feature');
+		});
+
+		// The sourcebook is still loaded - the hero just doesn't use it any more
+		it('drops the extension once the hero no longer uses its sourcebook', () => {
+			const homebrew = createHomebrew(kind, targetID);
+			const hero = buildHero(homebrew, kind);
+			hero.sourcebookIDs = [ core.id, orden.id ];
+
+			HeroUpdateLogic.updateHero(hero, [ core, orden, homebrew ]);
+
+			expect(getFeatureIDs(hero, kind)).not.toContain('homebrew-feature');
+		});
+
+		// A shared hero, opened by someone without the homebrew, shouldn't lose it
+		it('keeps the hero\'s copy when the extension\'s sourcebook is not loaded', () => {
+			const homebrew = createHomebrew(kind, targetID);
+			const hero = buildHero(homebrew, kind);
+
+			HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+			expect(getFeatureIDs(hero, kind)).toContain('homebrew-feature');
+		});
 	});
 });

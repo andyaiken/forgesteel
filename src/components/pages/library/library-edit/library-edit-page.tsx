@@ -21,6 +21,8 @@ import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterEditPanel } from '@/components/panels/edit/encounter-edit/encounter-edit-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Extension } from '@/models/extension';
+import { ExtensionEditPanel } from '@/components/panels/edit/extension-edit/extension-edit-panel';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
@@ -51,6 +53,7 @@ import { TerrainEditPanel } from '@/components/panels/edit/terrain-edit/terrain-
 import { Title } from '@/models/title';
 import { TitleEditPanel } from '@/components/panels/edit/title-edit/title-edit-panel';
 import { Utils } from '@/utils/utils';
+import { useDirectorSourcebooks } from '@/contexts/data-context';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -69,6 +72,8 @@ interface Props {
 
 export const LibraryEditPage = (props: Props) => {
 	const isSmall = useIsSmall();
+	// Encounters, maps and adventures are edited with their monster groups as the director's tools will see them
+	const directorSourcebooks = useDirectorSourcebooks();
 	const navigation = useNavigation();
 	const { kind, sourcebookID, elementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string }>();
 
@@ -95,6 +100,8 @@ export const LibraryEditPage = (props: Props) => {
 				return sourcebook.domains.find(e => e.id === elementID);
 			case 'encounter':
 				return sourcebook.encounters.find(e => e.id === elementID);
+			case 'extension':
+				return sourcebook.extensions.find(e => e.id === elementID);
 			case 'item':
 				return sourcebook.items.find(e => e.id === elementID);
 			case 'imbuement':
@@ -161,7 +168,7 @@ export const LibraryEditPage = (props: Props) => {
 						<AdventureEditPanel
 							key={element.id}
 							adventure={element as Adventure}
-							sourcebooks={props.sourcebooks}
+							sourcebooks={directorSourcebooks}
 							onChange={applyChanges}
 						/>
 					</div>
@@ -231,10 +238,20 @@ export const LibraryEditPage = (props: Props) => {
 					<EncounterEditPanel
 						key={element.id}
 						encounter={element as Encounter}
-						sourcebooks={props.sourcebooks}
+						sourcebooks={directorSourcebooks}
 						onChange={applyChanges}
 						showMonster={props.showMonster}
 						showTerrain={props.showTerrain}
+					/>
+				);
+			case 'extension':
+				return (
+					<ExtensionEditPanel
+						key={element.id}
+						extension={element as Extension}
+						sourcebooks={props.sourcebooks}
+						mode={PanelMode.Full}
+						onChange={applyChanges}
 					/>
 				);
 			case 'imbuement':
@@ -336,7 +353,7 @@ export const LibraryEditPage = (props: Props) => {
 							key={element.id}
 							map={element as TacticalMap}
 							display={TacticalMapDisplayType.DirectorEdit}
-							sourcebooks={props.sourcebooks}
+							sourcebooks={directorSourcebooks}
 							mode={PanelMode.Full}
 							updateMap={applyChanges}
 						/>

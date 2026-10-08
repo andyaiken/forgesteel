@@ -12,6 +12,8 @@ import { CultureType } from '@/enums/culture-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
+import { Extension } from '@/models/extension';
+import { ExtensionChangeType } from '@/enums/extension-change-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { Format } from '@/utils/format';
@@ -223,6 +225,46 @@ export const useLibraryActions = (props: Props) => {
 
 			sourcebook.encounters.push(encounter);
 			return encounter.id;
+		};
+
+		const createExtension = (original: Extension | null, sourcebook: Sourcebook) => {
+			let extension: Extension;
+			if (original) {
+				extension = Utils.copy(original);
+				extension.id = Utils.guid();
+				extension.changes.forEach(c => {
+					c.id = Utils.guid();
+					// What the change adds needs new IDs too, or a hero using both extensions would get two of the same thing -
+					// and with both applied to a monster group, encounters (which find monsters by ID) couldn't tell the two apart.
+					// A replacement is left alone - it takes the ID of the feature it replaces
+					switch (c.type) {
+						case ExtensionChangeType.AddAbility:
+							c.data.ability.id = Utils.guid();
+							break;
+						case ExtensionChangeType.AddFeature:
+							FeatureLogic.changeFeatureIDs(c.data.feature);
+							break;
+						case ExtensionChangeType.AddChoiceOption:
+							FeatureLogic.changeFeatureIDs(c.data.option.feature);
+							break;
+						case ExtensionChangeType.AddSummonOption:
+							c.data.summon.monster.id = Utils.guid();
+							c.data.summon.id = c.data.summon.monster.id;
+							break;
+						case ExtensionChangeType.AddMalice:
+							FeatureLogic.changeFeatureIDs(c.data.malice);
+							break;
+						case ExtensionChangeType.AddMonster:
+							c.data.monster.id = Utils.guid();
+							break;
+					}
+				});
+			} else {
+				extension = FactoryLogic.createExtension();
+			}
+
+			sourcebook.extensions.push(extension);
+			return extension.id;
 		};
 
 		const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook) => {
@@ -473,6 +515,9 @@ export const useLibraryActions = (props: Props) => {
 			case 'encounter':
 				id = createEncounter(original as Encounter | null, sourcebook);
 				break;
+			case 'extension':
+				id = createExtension(original as Extension | null, sourcebook);
+				break;
 			case 'imbuement':
 				id = createImbuement(original as Imbuement | null, sourcebook);
 				break;
@@ -543,6 +588,9 @@ export const useLibraryActions = (props: Props) => {
 				break;
 			case 'encounter':
 				sourceSourcebook = SourcebookLogic.getEncounterSourcebook(sourcebooks, element as Encounter);
+				break;
+			case 'extension':
+				sourceSourcebook = SourcebookLogic.getExtensionSourcebook(sourcebooks, element as Extension);
 				break;
 			case 'imbuement':
 				sourceSourcebook = SourcebookLogic.getImbuementSourcebook(sourcebooks, element as Imbuement);
@@ -624,6 +672,10 @@ export const useLibraryActions = (props: Props) => {
 			case 'encounter':
 				destinationSourcebook.encounters.push(element as Encounter);
 				sourceSourcebook.encounters = sourceSourcebook.encounters.filter(x => x.id !== element.id);
+				break;
+			case 'extension':
+				destinationSourcebook.extensions.push(element as Extension);
+				sourceSourcebook.extensions = sourceSourcebook.extensions.filter(x => x.id !== element.id);
 				break;
 			case 'imbuement':
 				destinationSourcebook.imbuements.push(element as Imbuement);
@@ -707,6 +759,9 @@ export const useLibraryActions = (props: Props) => {
 					break;
 				case 'encounter':
 					sourcebook.encounters = sourcebook.encounters.filter(x => x.id !== element.id);
+					break;
+				case 'extension':
+					sourcebook.extensions = sourcebook.extensions.filter(x => x.id !== element.id);
 					break;
 				case 'imbuement':
 					sourcebook.imbuements = sourcebook.imbuements.filter(x => x.id !== element.id);
@@ -796,6 +851,9 @@ export const useLibraryActions = (props: Props) => {
 					break;
 				case 'encounter':
 					sourcebook.encounters = sourcebook.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
+					break;
+				case 'extension':
+					sourcebook.extensions = sourcebook.extensions.map(x => x.id === element.id ? element : x) as Extension[];
 					break;
 				case 'imbuement':
 					sourcebook.imbuements = sourcebook.imbuements.map(x => x.id === element.id ? element : x) as Imbuement[];
@@ -898,6 +956,10 @@ export const useLibraryActions = (props: Props) => {
 			case 'encounter':
 				sourcebook.encounters.push(element as Encounter);
 				sourcebook.encounters = Collections.sort<Element>(sourcebook.encounters, item => item.name) as Encounter[];
+				break;
+			case 'extension':
+				sourcebook.extensions.push(element as Extension);
+				sourcebook.extensions = Collections.sort<Element>(sourcebook.extensions, item => item.name) as Extension[];
 				break;
 			case 'imbuement':
 				sourcebook.imbuements.push(element as Imbuement);

@@ -1,4 +1,5 @@
 import { Element } from '@/models/element';
+import { Extensible } from '@/models/extension';
 import { Feature } from '@/models/feature';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
@@ -9,7 +10,7 @@ export interface KitDamageBonus {
 	tier3: number;
 };
 
-export interface Kit extends Element {
+export interface Kit extends Element, Extensible {
 	type: string;
 	armor: KitArmor[];
 	weapon: KitWeapon[];

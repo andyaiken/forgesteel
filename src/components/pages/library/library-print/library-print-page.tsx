@@ -2,6 +2,7 @@ import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Element } from '@/models/element';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { PrintSheet } from '@/components/panels/print-sheet/print-sheet';
+import { useDirectorSourcebooks } from '@/contexts/data-context';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 import { useTitle } from '@/hooks/use-title';
@@ -14,6 +15,7 @@ interface Props {
 
 export const LibraryPrintPage = (props: Props) => {
 	const { kind, sourcebookID, elementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string }>();
+	const directorSourcebooks = useDirectorSourcebooks();
 	const [ element ] = useState<Element>(() => {
 		const sourcebook = props.sourcebooks.find(s => s.id === sourcebookID)!;
 		switch (kind!) {
@@ -33,6 +35,8 @@ export const LibraryPrintPage = (props: Props) => {
 				return sourcebook.domains.find(e => e.id === elementID)!;
 			case 'encounter':
 				return sourcebook.encounters.find(e => e.id === elementID)!;
+			case 'extension':
+				return sourcebook.extensions.find(e => e.id === elementID)!;
 			case 'item':
 				return sourcebook.items.find(e => e.id === elementID)!;
 			case 'imbuement':
@@ -68,7 +72,8 @@ export const LibraryPrintPage = (props: Props) => {
 				<PrintSheet
 					type={kind!}
 					element={element}
-					sourcebooks={props.sourcebooks}
+					// Encounters, maps and adventures are printed with their monster groups as the director's tools will see them
+					sourcebooks={[ 'adventure', 'encounter', 'tactical-map' ].includes(kind!) ? directorSourcebooks : props.sourcebooks}
 				/>
 			</div>
 		</ErrorBoundary>

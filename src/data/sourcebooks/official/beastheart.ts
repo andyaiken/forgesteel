@@ -26,6 +26,7 @@ export const beastheartSourcebook: Sourcebook = {
 	cultures: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [
 		{

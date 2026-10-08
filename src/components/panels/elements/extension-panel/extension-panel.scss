@@ -1,0 +1,18 @@
+.extension-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 0 20px 20px 20px;
+	overflow: hidden;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+
+	.extension-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+	}
+}

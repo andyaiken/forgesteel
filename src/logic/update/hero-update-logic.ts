@@ -4,6 +4,7 @@ import { AncestryData } from '@/data/ancestry-data';
 import { Characteristic } from '@/enums/characteristic';
 import { CultureData } from '@/data/culture-data';
 import { CultureType } from '@/enums/culture-type';
+import { ExtensionLogic } from '@/logic/extension-logic';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
@@ -50,6 +51,10 @@ export class HeroUpdateLogic {
 		}
 
 		hero.sourcebookIDs = hero.sourcebookIDs.map(id => id === '' ? 'core' : id);
+
+		if (hero.extensionIDs === undefined) {
+			hero.extensionIDs = [];
+		}
 
 		if (hero.ancestry) {
 			hero.ancestry.features.forEach(UpdateLogic.updateFeature);
@@ -255,14 +260,18 @@ export class HeroUpdateLogic {
 		});
 	};
 
-	static updateHeroData = (hero: Hero, sourcebooks: Sourcebook[]) => {
+	static updateHeroData = (hero: Hero, allSourcebooks: Sourcebook[]) => {
 		const original = Utils.copy(hero);
+
+		// Elements are looked up in every sourcebook, but only the extensions the hero has approved
+		// (from the hero's own sourcebooks) get to change them
+		const sourcebooks = ExtensionLogic.applyExtensions(allSourcebooks, { extensionSourcebookIDs: hero.sourcebookIDs, extensionIDs: hero.extensionIDs || [] });
 
 		try {
 			if (original.ancestry) {
 				const id = original.ancestry.id;
 				const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === id);
-				if (ancestry) {
+				if (ancestry && !ExtensionLogic.dependsOnMissingSourcebook(original.ancestry, allSourcebooks)) {
 					hero.ancestry = Utils.copy(ancestry);
 				}
 			}
@@ -304,7 +313,9 @@ export class HeroUpdateLogic {
 			if (original.class) {
 				const id = original.class.id;
 				const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
-				if (heroClass) {
+				const dependsOnMissing = [ original.class, ...original.class.subclasses.filter(sc => sc.selected) ]
+					.some(e => ExtensionLogic.dependsOnMissingSourcebook(e, allSourcebooks));
+				if (heroClass && !dependsOnMissing) {
 					hero.class = Utils.copy(heroClass);
 
 					// Level
@@ -321,6 +332,18 @@ export class HeroUpdateLogic {
 							sc.selected = originalSubClass.selected;
 						}
 					});
+
+					// A subclass chosen from elsewhere (a standalone homebrew subclass, or one from another class)
+					// isn't part of the sourcebook's class, so it has to be brought across separately
+					original.class.subclasses
+						.filter(osc => osc.selected)
+						.filter(osc => !hero.class!.subclasses.some(sc => sc.id === osc.id))
+						.forEach(osc => {
+							const subclass = SourcebookLogic.getSubclasses(sourcebooks, true).find(sc => sc.id === osc.id);
+							const copy = subclass ? Utils.copy(subclass) : osc;
+							copy.selected = true;
+							hero.class!.subclasses.push(copy);
+						});
 				}
 			}
 		} catch (ex) {
@@ -396,6 +419,8 @@ export class HeroUpdateLogic {
 		});
 	};
 
+	// The sourcebooks are every loaded sourcebook (not just the hero's), with the hero's extensions applied -
+	// so they can also tell whether an extension's sourcebook is loaded at all
 	static updateHeroFeatureData = (feature: Feature, originalFeature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
 		try {
 			switch (feature.type) {
@@ -538,11 +563,15 @@ export class HeroUpdateLogic {
 					feature.data.selected = SourcebookLogic.getDomains(sourcebooks)
 						.filter(d => selectedIDs.includes(d.id))
 						.map(d => {
+							const oDomain = oFeature.data.selected.find(od => od && (od.id === d.id));
+							if (oDomain && ExtensionLogic.dependsOnMissingSourcebook(oDomain, sourcebooks)) {
+								return oDomain;
+							}
+
 							const copy = Utils.copy(d);
 							copy.featuresByLevel = copy.featuresByLevel.filter(lvl => feature.data.levels.includes(lvl.level));
 							[ ...copy.defaultFeatures, ...copy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, feature.data.characteristic));
 
-							const oDomain = oFeature.data.selected.find(od => od && (od.id === d.id));
 							if (oDomain) {
 								HeroUpdateLogic.carryResourceGainState(copy.resourceGains, oDomain.resourceGains);
 							}
@@ -612,7 +641,10 @@ export class HeroUpdateLogic {
 					const selectedIDs = oFeature.data.selected.filter(k => !!k).map(k => k.id);
 					feature.data.selected = SourcebookLogic.getKits(sourcebooks)
 						.filter(k => selectedIDs.includes(k.id))
-						.map(k => Utils.copy(k));
+						.map(k => {
+							const oKit = oFeature.data.selected.find(ok => ok && (ok.id === k.id));
+							return (oKit && ExtensionLogic.dependsOnMissingSourcebook(oKit, sourcebooks)) ? oKit : Utils.copy(k);
+						});
 
 					feature.data.selected.forEach(kit => {
 						const oKit = oFeature.data.selected.find(k => k && (k.id === kit.id));
@@ -733,7 +765,10 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					feature.data.selected = oFeature.data.selected;
+					// The hero's copy of each summon holds their customizations, so it is kept - unless an extension added it
+					// and it is no longer one of the options, in which case the hero no longer uses that extension
+					const optionIDs = feature.data.options.map(o => o.id);
+					feature.data.selected = oFeature.data.selected.filter(s => !!s && (!s.extensionID || optionIDs.includes(s.id)));
 					break;
 				}
 				case FeatureType.SurgeGain: {

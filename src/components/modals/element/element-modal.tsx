@@ -10,6 +10,8 @@ import { CulturePanel } from '@/components/panels/elements/culture-panel/culture
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
+import { Extension } from '@/models/extension';
+import { ExtensionPanel } from '@/components/panels/elements/extension-panel/extension-panel';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
@@ -87,6 +89,14 @@ export const ElementModal = (props: Props) => {
 				return (
 					<DomainPanel
 						domain={props.element as Domain}
+						sourcebooks={props.sourcebooks}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'extension':
+				return (
+					<ExtensionPanel
+						extension={props.element as Extension}
 						sourcebooks={props.sourcebooks}
 						mode={PanelMode.Full}
 					/>

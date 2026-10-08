@@ -273,6 +273,7 @@ export const ratcatcher: Sourcebook = {
 	classes: [],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [],

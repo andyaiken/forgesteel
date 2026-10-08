@@ -3581,6 +3581,7 @@ Regardless of your apparent ancestry, you are a síabhra underneath – one who 
 	],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [
 		FactoryLogic.createItem({

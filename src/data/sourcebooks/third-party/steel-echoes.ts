@@ -970,6 +970,7 @@ export const steelEchoes: Sourcebook = {
 	],
 	domains: [],
 	encounters: [],
+	extensions: [],
 	imbuements: [],
 	items: [],
 	kits: [],

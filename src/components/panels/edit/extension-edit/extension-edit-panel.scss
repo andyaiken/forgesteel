@@ -1,0 +1,13 @@
+.extension-edit-panel {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	overflow: hidden;
+
+	.extension-workspace-column,
+	.extension-preview-column {
+		flex: 1 1 0;
+		padding: 0 5px 5px 5px;
+		overflow-y: auto;
+	}
+}

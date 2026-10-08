@@ -14,6 +14,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Info } from '@/components/controls/info/info';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameDescEditPanel } from '@/components/panels/edit/name-desc-edit/name-desc-edit-panel';
@@ -30,6 +31,8 @@ import './ability-edit-panel.scss';
 
 interface Props {
 	ability: Ability;
+	// Only meaningful for an ability in a class or subclass's pool, which class ability choices pick from
+	showMinLevel?: boolean;
 	onChange: (ability: Ability) => void;
 }
 
@@ -123,6 +126,13 @@ export const AbilityEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setMinLevel = (value: number) => {
+			const copy = Utils.copy(ability);
+			copy.minLevel = value;
+			setAbility(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<div>
 				<HeaderText>Ability Type</HeaderText>
@@ -180,6 +190,18 @@ export const AbilityEditPanel = (props: Props) => {
 							<HeaderText>Cost</HeaderText>
 							<NumberSpin min={0} value={ability.cost} suffix={ability.repeatable ? '+' : undefined} onChange={setCost} />
 							<Toggle label='Repeatable' value={ability.repeatable} onChange={setRepeatable} />
+						</Space>
+						: null
+				}
+				{
+					props.showMinLevel ?
+						<Space orientation='vertical' style={{ width: '100%' }}>
+							<HeaderText
+								extra={<Info>A hero can only choose this ability from a class ability choice whose minimum level is at least this - so a value of 2 keeps it out of a level 1 choice.</Info>}
+							>
+								Minimum Level
+							</HeaderText>
+							<NumberSpin min={1} max={10} value={ability.minLevel || 1} onChange={setMinLevel} />
 						</Space>
 						: null
 				}

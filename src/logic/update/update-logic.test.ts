@@ -13,6 +13,17 @@ describe('updateOptions', () => {
 	});
 });
 
+describe('updateSourcebook', () => {
+	it('adds extensions when updating a sourcebook created before extensions existed', () => {
+		const sourcebook = FactoryLogic.createSourcebook();
+		Reflect.deleteProperty(sourcebook, 'extensions');
+
+		UpdateLogic.updateSourcebook(sourcebook);
+
+		expect(sourcebook.extensions).toEqual([]);
+	});
+});
+
 describe('updateFeature', () => {
 	const part = (id: string, name: string) => FactoryLogic.feature.create({ id: id, name: name, description: `${name} description` });
 

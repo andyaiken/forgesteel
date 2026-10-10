@@ -92,24 +92,29 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 		{
 			level: 7,
 			features: [
-				FactoryLogic.feature.create({
-					id: 'domain-love-7-1',
-					name: 'Covenant of the Heart',
-					description: 'You can maintain bonds with up to three willing creatures using your Invocation of the Heart feature.'
-				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'domain-love-7-2',
-						name: 'Guided to Your Side',
-						description: 'You concentrate on a friend and teleport to them.',
-						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Self and each ally',
-						sections: [
-							FactoryLogic.createAbilitySectionText('Each target is teleported to unoccupied spaces within 5 squares of a willing creature who you are bonded to with your Invocation of the Heart feature. You don’t need line of effect to the bonded creature but you must be on the same world.')
-						]
-					})
+				FactoryLogic.feature.createMultiple({
+					id: 'domain-love-7',
+					features: [
+						FactoryLogic.feature.create({
+							id: 'domain-love-7-1',
+							name: 'Covenant of the Heart',
+							description: 'You can maintain bonds with up to three willing creatures using your Invocation of the Heart feature.'
+						}),
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'domain-love-7-2',
+								name: 'Guided to Your Side',
+								description: 'You concentrate on a friend and teleport to them.',
+								type: FactoryLogic.type.createMain(),
+								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+								distance: [ FactoryLogic.distance.createRanged(10) ],
+								target: 'Self and each ally',
+								sections: [
+									FactoryLogic.createAbilitySectionText('Each target is teleported to unoccupied spaces within 5 squares of a willing creature who you are bonded to with your Invocation of the Heart feature. You don’t need line of effect to the bonded creature but you must be on the same world.')
+								]
+							})
+						})
+					]
 				})
 			]
 		},

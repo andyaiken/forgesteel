@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Segmented, Space, Upload } from 'antd';
+import { Button, Drawer, Flex, Segmented, Space, Upload, notification } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDataManager, useHiddenSourcebookIDs } from '@/contexts/data-context';
 import { Collections } from '@/utils/collections';
@@ -20,6 +20,7 @@ import { useState } from 'react';
 import './sourcebooks-modal.scss';
 
 interface Props {
+	notify: ReturnType<typeof notification.useNotification>[0];
 	officialSourcebooks: Sourcebook[];
 	homebrewSourcebooks: Sourcebook[];
 	onClose: () => void;
@@ -216,10 +217,17 @@ export const SourcebooksModal = (props: Props) => {
 											file
 												.text()
 												.then(json => {
-													const sourcebook = JSON.parse(json) as Sourcebook;
+													const sourcebook = JSON.parse(json.replace(/^\uFEFF/, '')) as Sourcebook;
 													sourcebook.id = Utils.guid();
 													UpdateLogic.updateSourcebook(sourcebook);
 													importSourcebook(sourcebook);
+												})
+												.catch(e => {
+													props.notify.error({
+														title: 'Unable to import sourcebook',
+														description: e instanceof Error ? e.message : String(e),
+														placement: 'top'
+													});
 												});
 											return false;
 										}}

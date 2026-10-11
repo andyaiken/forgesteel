@@ -982,6 +982,12 @@ ${encounter.objective.victories}`
 		if (sourcebook.titles === undefined) {
 			sourcebook.titles = [];
 		}
+		if (sourcebook.languages === undefined) {
+			sourcebook.languages = [];
+		}
+		if (sourcebook.skills === undefined) {
+			sourcebook.skills = [];
+		}
 
 		sourcebook.adventures.forEach(UpdateLogic.updateAdventure);
 		sourcebook.ancestries.forEach(UpdateLogic.updateAncestry);

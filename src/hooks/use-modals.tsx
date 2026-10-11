@@ -399,6 +399,7 @@ export const useModals = (props: Props) => {
 	const showSourcebooks = () => {
 		setDrawer(
 			<SourcebooksModal
+				notify={notify}
 				officialSourcebooks={builtInSourcebooks}
 				homebrewSourcebooks={homebrewSourcebooks}
 				onClose={() => setDrawer(null)}

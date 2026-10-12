@@ -232,7 +232,7 @@ export const LibraryListPage = (props: Props) => {
 							<div style={{ padding: '20px', overflow: 'auto' }}>
 								<EncounterSheetPage
 									encounter={element as Encounter}
-									sourcebooks={props.sourcebooks}
+									sourcebooks={directorSourcebooks}
 								/>
 							</div>
 						);

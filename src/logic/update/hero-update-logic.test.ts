@@ -430,3 +430,51 @@ describe('extensions to domains and kits', () => {
 		});
 	});
 });
+
+describe('extensions to ancestries', () => {
+	const target = core.ancestries[0];
+
+	const createHomebrew = (name: string) => {
+		const sourcebook = FactoryLogic.createSourcebook();
+		sourcebook.id = 'homebrew';
+		const extension = FactoryLogic.createExtension();
+		extension.targetKind = 'ancestry';
+		extension.targetID = target.id;
+		extension.changes.push({
+			id: 'change',
+			type: ExtensionChangeType.AddFeature,
+			data: { level: 1, feature: FactoryLogic.feature.create({ id: 'homebrew-feature', name: name, description: '' }) }
+		});
+		sourcebook.extensions.push(extension);
+		return sourcebook;
+	};
+
+	const buildHero = (homebrew: Sourcebook) => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, homebrew.id ];
+		hero.extensionIDs = homebrew.extensions.map(e => e.id);
+		const extended = ExtensionLogic.applyExtensions([ core, homebrew ], { extensionIDs: hero.extensionIDs });
+		hero.ancestry = Utils.copy(SourcebookLogic.getAncestries(extended).find(a => a.id === target.id)!);
+		return hero;
+	};
+
+	it('picks up an edit to the extension', () => {
+		const homebrew = createHomebrew('First');
+		const hero = buildHero(homebrew);
+
+		(homebrew.extensions[0].changes[0].data as { feature: { name: string } }).feature.name = 'Second';
+		HeroUpdateLogic.updateHero(hero, [ core, homebrew ]);
+
+		expect(hero.ancestry!.features.filter(f => f.id === 'homebrew-feature').map(f => f.name)).toEqual([ 'Second' ]);
+	});
+
+	it('drops a deleted extension', () => {
+		const homebrew = createHomebrew('First');
+		const hero = buildHero(homebrew);
+
+		homebrew.extensions = [];
+		HeroUpdateLogic.updateHero(hero, [ core, homebrew ]);
+
+		expect(hero.ancestry!.features.some(f => f.id === 'homebrew-feature')).toBe(false);
+	});
+});

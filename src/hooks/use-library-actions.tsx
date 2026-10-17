@@ -560,6 +560,17 @@ export const useLibraryActions = (props: Props) => {
 			.then(() => navigation.goToLibraryEdit(kind, sourcebook.id, id));
 	};
 
+	// Heroes keep their own copy of the elements they use, so they need refreshing when a sourcebook they use changes
+	const refreshHeroes = (updatedHomebrew: Sourcebook[], sourcebookIDs: string[]) => {
+		const allSourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks, updatedHomebrew);
+		Utils.copy(heroes)
+			.filter(hero => hero.sourcebookIDs.some(id => sourcebookIDs.includes(id)))
+			.forEach(hero => {
+				HeroUpdateLogic.updateHero(hero, allSourcebooks);
+				persistHero(hero);
+			});
+	};
+
 	const moveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
 
@@ -728,7 +739,12 @@ export const useLibraryActions = (props: Props) => {
 		}
 
 		persistHomebrewSourcebook(destinationSourcebook)
-			.then(() => persistHomebrewSourcebook(sourceSourcebook));
+			.then(() => persistHomebrewSourcebook(sourceSourcebook))
+			.then(() => {
+				if (kind === 'extension') {
+					refreshHeroes(sourcebooks, [ destinationSourcebook.id, sourceSourcebook.id ]);
+				}
+			});
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -815,6 +831,11 @@ export const useLibraryActions = (props: Props) => {
 			}
 
 			Promise.all(affected.map(persistHomebrewSourcebook))
+				.then(() => {
+					if (kind === 'extension') {
+						refreshHeroes(copy, [ sourcebook.id ]);
+					}
+				})
 				.then(() => navigation.goToLibrary(kind, element.id));
 		}
 

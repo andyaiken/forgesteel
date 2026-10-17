@@ -295,7 +295,7 @@ export const MonsterEditPanel = (props: Props) => {
 					onChange={setKeywords}
 				/>
 				<HeaderText>Level</HeaderText>
-				<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
+				<NumberSpin min={0} max={10} value={monster.level} onChange={setLevel} />
 				<HeaderText>Role</HeaderText>
 				<RadioGroup
 					options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer, MonsterOrganizationType.NoOrganization ]}
@@ -329,7 +329,7 @@ export const MonsterEditPanel = (props: Props) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Encounter Value</HeaderText>
-				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				<NumberSpin min={0} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 				<HeaderText>Speed</HeaderText>
 				<NumberSpin min={0} value={monster.speed.value} onChange={setSpeedValue} />
 				<TextInput

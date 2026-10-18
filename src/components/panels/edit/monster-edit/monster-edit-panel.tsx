@@ -395,7 +395,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<FeatureListEditPanel
 					title='Features'
 					features={monster.features}
-					allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
+					allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.SkillChoice ]}
 					sourcebooks={props.sourcebooks}
 					onChange={onChange}
 				/>

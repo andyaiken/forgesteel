@@ -765,9 +765,12 @@ export class HeroSheetBuilder {
 		const summonType = `${signature}Minion ${monster.role.type}`;
 		sheet.type = summonType;
 
-		let summonCost = `${summon.info.cost} essence `;
-		summonCost += summon.info.count === 1 ? 'per minion summoned' : `for ${summon.info.count} minions`;
-		sheet.cost = summonCost;
+		if (summon.info.cost > 0) {
+			const summonCost = `${summon.info.cost} essence `;
+			sheet.cost = summonCost + (summon.info.count === 1 ? 'per minion summoned' : `for ${summon.info.count} minions`);
+		} else {
+			sheet.cost = '';
+		}
 		sheet.freeStrikeDamageType = monster.freeStrikeType !== DamageType.Damage ? monster.freeStrikeType : '';
 
 		const immunities = CreatureLogic.getSummonDamageModifiers(summon, hero, DamageModifierType.Immunity);

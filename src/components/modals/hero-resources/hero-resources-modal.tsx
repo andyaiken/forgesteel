@@ -152,6 +152,7 @@ export const HeroResourcesModal = (props: Props) => {
 			HeroLogic.getFeatures(copy, false)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.data.type === 'heroic')
 				.forEach(f => f.data.value = copy.state.victories);
 
 			HeroLogic.resetGains(copy);
@@ -166,6 +167,7 @@ export const HeroResourcesModal = (props: Props) => {
 			HeroLogic.getFeatures(copy, false)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.data.type === 'heroic')
 				.forEach(f => f.data.value = 0);
 
 			HeroLogic.resetGains(copy);

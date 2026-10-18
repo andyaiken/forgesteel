@@ -151,7 +151,7 @@ export const EditSummon = (props: EditProps) => {
 					>
 						<HeaderText>Summoning</HeaderText>
 						<Toggle label='Is signature' value={summon.info.isSignature} onChange={value => setSummonIsSignature(data, n, value)} />
-						<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={value => setSummonCost(data, n, value)} />
+						<NumberSpin min={0} label='Cost' value={summon.info.cost} onChange={value => setSummonCost(data, n, value)} />
 						<NumberSpin min={1} label='Count' value={summon.info.count} onChange={value => setSummonCount(data, n, value)} />
 						<MonsterEditPanel
 							monster={summon.monster}

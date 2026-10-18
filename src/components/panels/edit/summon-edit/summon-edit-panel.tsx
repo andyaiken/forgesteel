@@ -56,7 +56,7 @@ export const SummonEditPanel = (props: Props) => {
 		<>
 			<HeaderText>Summoning</HeaderText>
 			<Toggle label='Is signature' value={summon.info.isSignature} onChange={setIsSignature} />
-			<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={setCost} />
+			<NumberSpin min={0} label='Cost' value={summon.info.cost} onChange={setCost} />
 			<NumberSpin min={1} label='Count' value={summon.info.count} onChange={setCount} />
 			<MonsterEditPanel
 				monster={summon.monster}

@@ -709,6 +709,7 @@ export class FeatureLogic {
 						fromUnselectedSubclassLevels: false
 					},
 					minLevel: 1,
+					maxLevel: 10,
 					selectedIDs: []
 				};
 				return data;

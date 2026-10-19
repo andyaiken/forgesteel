@@ -124,6 +124,7 @@ export interface FeatureClassAbilityData extends _FeatureData {
 		fromUnselectedSubclassLevels: boolean;
 	}
 	minLevel: number;
+	maxLevel: number;
 	count: number;
 	selectedIDs: string[];
 }

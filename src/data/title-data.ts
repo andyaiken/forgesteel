@@ -858,7 +858,8 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				fromClassLevels: false,
 				fromSelectedSubclassLevels: true,
 				fromUnselectedSubclassLevels: true,
-				minLevel: 1
+				minLevel: 1,
+				maxLevel: 1
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({

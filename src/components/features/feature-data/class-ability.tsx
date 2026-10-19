@@ -160,6 +160,13 @@ export const EditClassAbility = (props: EditProps) => {
 		props.setData(copy);
 	};
 
+	const setMaxLevel = (value: number) => {
+		const copy = Utils.copy(data);
+		copy.maxLevel = value;
+		setData(copy);
+		props.setData(copy);
+	};
+
 	return (
 		<Space orientation='vertical' style={{ width: '100%' }}>
 			<HeaderText>Ability Options</HeaderText>
@@ -223,7 +230,9 @@ export const EditClassAbility = (props: EditProps) => {
 			<HeaderText>Count</HeaderText>
 			<NumberSpin min={1} value={data.count} onChange={setCount} />
 			<HeaderText>Minimum Level</HeaderText>
-			<NumberSpin min={1} value={data.minLevel} onChange={setMinLevel} />
+			<NumberSpin min={1} max={10} value={data.minLevel} onChange={setMinLevel} />
+			<HeaderText>Maximum Level</HeaderText>
+			<NumberSpin min={1} max={10} value={data.maxLevel} onChange={setMaxLevel} />
 		</Space>
 	);
 };
@@ -253,7 +262,7 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 
 	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels)
 		.filter(a => a.cost === props.data.cost)
-		.filter(a => a.minLevel <= props.data.minLevel)
+		.filter(a => (a.minLevel >= props.data.minLevel) && (a.minLevel <= props.data.maxLevel))
 		.filter(a => props.data.type === 'Any' || a.type.usage === props.data.type);
 	const distinctAbilities = Collections.distinct(abilities.filter(a => !currentAbilityIDs.includes(a.id)), a => a.name);
 	const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);

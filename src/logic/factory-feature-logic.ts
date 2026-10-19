@@ -205,7 +205,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createClassAbilityChoice = (data: { id: string, classID?: string, name?: string, description?: string, cost: number | 'signature', type?: AbilityUsage | 'Any', fromClass?: boolean, fromSubclass?: boolean, fromUnselectedSubclass?: boolean, fromClassLevels?: boolean, fromSelectedSubclassLevels?: boolean, fromUnselectedSubclassLevels?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
+	createClassAbilityChoice = (data: { id: string, classID?: string, name?: string, description?: string, cost: number | 'signature', type?: AbilityUsage | 'Any', fromClass?: boolean, fromSubclass?: boolean, fromUnselectedSubclass?: boolean, fromClassLevels?: boolean, fromSelectedSubclassLevels?: boolean, fromUnselectedSubclassLevels?: boolean, minLevel?: number, maxLevel?: number, count?: number }): FeatureClassAbility => {
 		return {
 			id: data.id,
 			name: data.name || `${data.cost === 'signature' ? 'Signature' : `${data.cost}pt`} Ability`,
@@ -224,6 +224,7 @@ export class FactoryFeatureLogic {
 					fromUnselectedSubclassLevels: (data.fromUnselectedSubclassLevels ?? false) ? true : false
 				},
 				minLevel: data.minLevel || 1,
+				maxLevel: data.maxLevel || 10,
 				count: data.count || 1,
 				selectedIDs: []
 			}

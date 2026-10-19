@@ -92,4 +92,25 @@ describe('updateFeature', () => {
 
 		expect(feature.data.type).toBe('Any');
 	});
+
+	it('defaults class ability choices to abilities through level 10', () => {
+		const feature = FactoryLogic.feature.createClassAbilityChoice({
+			id: 'class-ability',
+			cost: 0
+		});
+
+		expect(feature.data.maxLevel).toBe(10);
+	});
+
+	it('adds a maximum level to existing class ability choices', () => {
+		const feature = FactoryLogic.feature.createClassAbilityChoice({
+			id: 'class-ability',
+			cost: 0
+		});
+		Reflect.deleteProperty(feature.data, 'maxLevel');
+
+		UpdateLogic.updateFeature(feature);
+
+		expect(feature.data.maxLevel).toBe(10);
+	});
 });

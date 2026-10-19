@@ -566,6 +566,19 @@ describe('getFeatures - Rampage', () => {
 	it('grants every rung to a 10th-level beastheart at 24 rampage', () => {
 		expect(rungs(10, 24)).toHaveLength(5);
 	});
+
+	it('starts each encounter with zero Rampage regardless of victories', () => {
+		const hero = buildBeastheart(1, 8);
+		hero.state.victories = 3;
+
+		HeroLogic.startEncounter(hero);
+
+		const rampage = HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.find(f => f.name === 'Rampage');
+		expect(rampage?.data.value).toBe(0);
+	});
 });
 
 describe('test modifiers', () => {

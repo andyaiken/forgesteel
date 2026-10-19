@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { ExtensionChangeType } from '@/enums/extension-change-type';
 import { ExtensionLogic } from '@/logic/extension-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -105,6 +106,59 @@ describe('applyExtensions', () => {
 
 		const feature = getAncestry(extended, 'ancestry-dwarf').features.find(f => f.id === 'dwarf-feature-2');
 		expect(feature?.type === FeatureType.Choice ? feature.data.options.map(o => o.feature.id) : []).toContain('homebrew-trait');
+	});
+
+	it('counts an extension-added ancestry trait when checking purchased points', () => {
+		const extension = createExtension('ancestry', 'ancestry-dwarf', {
+			id: 'c1',
+			type: ExtensionChangeType.AddChoiceOption,
+			data: {
+				featureID: 'dwarf-feature-2',
+				option: { feature: createText('homebrew-trait'), value: 3 }
+			}
+		});
+		const classChoice = FactoryLogic.feature.createChoice({
+			id: 'class-extension-choice',
+			name: 'Extension Choice',
+			options: [],
+			count: 'ancestry'
+		});
+		const classExtension = createExtension('class', 'class-censor', {
+			id: 'c2',
+			type: ExtensionChangeType.AddFeature,
+			data: { level: 1, feature: classChoice }
+		});
+		const homebrew = createHomebrew(extension, classExtension);
+		const sourcebooks = [ core, homebrew ];
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = sourcebooks.map(sb => sb.id);
+		hero.extensionIDs = [ extension.id, classExtension.id ];
+		const heroSourcebooks = ExtensionLogic.getHeroSourcebooks(hero, sourcebooks);
+		hero.ancestry = getAncestry(heroSourcebooks, 'ancestry-dwarf');
+		hero.class = getClass(heroSourcebooks, 'class-censor');
+
+		const purchased = hero.ancestry.features.find(f => f.id === 'dwarf-feature-2');
+		if (purchased?.type !== FeatureType.Choice) {
+			throw new Error('Expected dwarf Purchased Traits choice');
+		}
+		const option = purchased.data.options.find(o => o.feature.id === 'homebrew-trait');
+		if (!option) {
+			throw new Error('Expected extension-added Purchased Trait option');
+		}
+		purchased.data.selected = [ option.feature ];
+
+		const classFeature = hero.class.featuresByLevel
+			.find(level => level.level === 1)?.features
+			.find(feature => feature.id === 'class-extension-choice');
+		if (classFeature?.type !== FeatureType.Choice) {
+			throw new Error('Expected extension-added class choice');
+		}
+		classFeature.data.selected = [ option.feature ];
+
+		expect(FeatureLogic.isChosen(purchased, hero, sourcebooks)).toBe(false);
+		expect(FeatureLogic.isChosen(purchased, hero, heroSourcebooks)).toBe(true);
+		expect(FeatureLogic.isChosen(classFeature, hero, sourcebooks)).toBe(false);
+		expect(FeatureLogic.isChosen(classFeature, hero, heroSourcebooks)).toBe(true);
 	});
 
 	it('replaces a feature nested inside another', () => {

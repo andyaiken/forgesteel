@@ -1584,6 +1584,16 @@ export class HeroLogic {
 			.forEach(f => f.data.value = 0);
 	};
 
+	static startEncounter = (hero: Hero) => {
+		HeroLogic.getFeatures(hero, false)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.filter(f => f.data.type === 'heroic')
+			.forEach(f => f.data.value = f.name === 'Rampage' ? 0 : hero.state.victories);
+
+		HeroLogic.resetGains(hero);
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static createRandomHero = (sourcebooks: Sourcebook[]) => {

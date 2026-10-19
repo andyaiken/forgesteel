@@ -1650,7 +1650,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static selfTaught: Complication = {
 		id: 'comp-selfTaught',
 		name: 'Self Taught',
-		description: 'While your peers were learning their trades in fancy schools, you whoned your capabilities on the mean streets with nothing but your own instinct as a guide. What you lost in polish and tactical acumen, you now make up for in raw power.',
+		description: 'While your peers were learning their trades in fancy schools, you honed your capabilities on the mean streets with nothing but your own instinct as a guide. What you lost in polish and tactical acumen, you now make up for in raw power.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-selfTaught-b',

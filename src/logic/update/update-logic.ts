@@ -427,6 +427,9 @@ ${encounter.objective.victories}`
 				if (feature.data.minLevel === undefined) {
 					feature.data.minLevel = 1;
 				}
+				if (feature.data.type === undefined) {
+					feature.data.type = 'Any';
+				}
 				break;
 			case FeatureType.Companion:
 				if (feature.data.selected && feature.data.selected.retainer) {

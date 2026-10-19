@@ -80,4 +80,16 @@ describe('updateFeature', () => {
 
 		expect(feature.description).toBe('');
 	});
+
+	it('defaults class ability choices to any ability type', () => {
+		const feature = FactoryLogic.feature.createClassAbilityChoice({
+			id: 'class-ability',
+			cost: 0
+		});
+		Reflect.deleteProperty(feature.data, 'type');
+
+		UpdateLogic.updateFeature(feature);
+
+		expect(feature.data.type).toBe('Any');
+	});
 });

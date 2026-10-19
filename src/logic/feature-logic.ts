@@ -698,6 +698,7 @@ export class FeatureLogic {
 				const data: FeatureClassAbilityData = {
 					classID: undefined,
 					cost: 1,
+					type: 'Any',
 					count: 1,
 					source: {
 						fromClassAbilities: true,

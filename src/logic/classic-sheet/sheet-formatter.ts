@@ -115,6 +115,12 @@ export class SheetFormatter {
 				return [ this.getSurgeGainSummary(feature.data), feature.data.condition ].filter(t => t);
 			case FeatureType.PotencyResistance:
 				return [ this.getPotencyResistanceSummary(feature.data) ];
+			case FeatureType.RollModifier:
+				return [
+					`${feature.data.modifier} on ${FeatureLogic.getRollModifierScope(feature.data)}`,
+					feature.data.condition,
+					feature.description
+				].filter(t => t);
 			default:
 				return [ feature.description ].filter(t => t);
 		}
@@ -607,7 +613,8 @@ export class SheetFormatter {
 		} else if (f.type === FeatureType.HeroicResource) {
 			size = headerSize + (2 * this.countLines(f.data.details, lineWidth));
 		} else if (f.type === FeatureType.HeroicResourceThreshold) {
-			size = headerSize + this.countLines(f.data.feature.description.trim(), lineWidth, 0, 0.88);
+			const benefitText = this.getThresholdBenefitText(f.data.feature).join('\n');
+			size = headerSize + this.countLines(benefitText, lineWidth, 0, 0.88);
 			size += bottomMargin;
 		} else if ([ FeatureType.Choice,
 			FeatureType.ItemChoice,

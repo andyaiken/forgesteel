@@ -16,6 +16,7 @@ import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { creation } from '@/data/domains/creation';
+import { cryokinetic } from '@/data/classes/null/cryokinetic';
 import { demon } from '@/data/monsters/demon';
 import { dragonKnight } from '@/data/ancestries/dragon-knight';
 import { retainer } from '@/data/monsters/retainer';
@@ -691,6 +692,28 @@ describe('getThresholdBenefitText', () => {
 			'You can have up to two creatures grabbed at time.',
 			'+1 surge: You make a strike against a creature you have grabbed'
 		]);
+	});
+
+	test.each([
+		[
+			berserker.featuresByLevel
+				.flatMap(lvl => lvl.features)
+				.filter(f => f.type === FeatureType.Multiple)
+				.flatMap(f => f.data.features)
+				.find(f => f.id === 'fury-sub-1-1-5-6') as FeatureHeroicResourceThreshold,
+			[ 'Edge on Might tests', 'Edge on the Knockback maneuver' ]
+		],
+		[
+			cryokinetic.featuresByLevel
+				.flatMap(lvl => lvl.features)
+				.filter(f => f.type === FeatureType.Multiple)
+				.flatMap(f => f.data.features)
+				.find(f => f.id === 'null-sub-2-1-2-6') as FeatureHeroicResourceThreshold,
+			[ 'Edge on the Grab maneuver', 'Edge on the Knockback maneuver' ]
+		]
+	])('it should describe roll modifiers in a threshold benefit', (threshold, expected) => {
+		expect(SheetFormatter.getThresholdBenefitText(threshold.data.feature)).toEqual(expected);
+		expect(SheetFormatter.calculateFeatureSize(threshold, null, 50)).toBeGreaterThan(3);
 	});
 
 	test('it should add a gain\'s condition as a line of its own', () => {

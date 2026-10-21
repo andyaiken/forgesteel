@@ -79,7 +79,7 @@ export const HeroResourcesModal = (props: Props) => {
 			);
 		}
 
-		const dice = /^(?<throws>\d+)d(?<sides>\d+)(?:\s*)(?:\+(?<constant>\d))?$/;
+		const dice = /^(?<throws>\d+)d(?<sides>\d+)\s*(?:\+\s*(?<constant>\d+))?\s*$/;
 		const match = dice.exec(gain.value);
 		if (match) {
 			const exp: Expression = {

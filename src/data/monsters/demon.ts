@@ -335,7 +335,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				FactoryLogic.feature.create({
 					id: 'demon-1st-3-feature-3',
 					name: 'Soulsight',
-					description: 'Any creature within 2 squares of the ensnarer can’t be hidden from them.'
+					description: 'Any creature within 2 squares of the pitling can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-1st-3-feature-4',

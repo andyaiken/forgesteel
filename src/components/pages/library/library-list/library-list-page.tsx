@@ -332,7 +332,7 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={directorSourcebooks} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 					break;
 				case 'terrain':
-					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} showCustomizations={true} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 					break;
 				case 'title':
 					getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;

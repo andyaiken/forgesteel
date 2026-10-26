@@ -453,10 +453,14 @@ export class AbilityLogic {
 			const types: string[] = [];
 
 			section.toLowerCase().split(/\s+/).forEach(token => {
+				const charRef = AbilityLogic.getCharacteristicReference(token);
+
 				if ((token === 'damage') || (token === 'dmg')) {
 					// Damage; ignore
-				} else if (token === 'or') {
+				} else if (token === 'or' || token === '+') {
 					// Ignore
+				} else if (charRef) {
+					value += retainer ? CreatureLogic.getCharacteristic(retainer, charRef.characteristic) * charRef.multiplier : 0;
 				} else if (!isNaN(parseInt(token))) {
 					value += parseInt(token);
 				} else {

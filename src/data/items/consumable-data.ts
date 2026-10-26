@@ -213,7 +213,7 @@ While you have line of effect to your homunculus, you can use a maneuver to issu
 		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
-			prerequisites: 'Ten ounces of rainwater from a sacred fey grove; one ounce of undead flesh',
+			prerequisites: 'A cup of rainwater from a sacred fey grove, an ounce of undead flesh',
 			source: 'Texts or lore in Caelian',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
 			goal: 45
@@ -231,15 +231,15 @@ Filled with a green or putrid yellow haze, this sphere spreads a choking, foul-s
 		type: ItemType.Consumable1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
-			prerequisites: 'Ten ounces of rainwater from a sacred fey grove, a spool of copper wire',
+			prerequisites: 'A cup of rainwater from a sacred fey grove, a spool of copper wire',
 			source: 'Texts or lore in Caelian',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
 			goal: 45
 		}),
 		effect: `
-As a maneuver, you throw this delicate glass sphere up to 5 squares, breaking it and creating a 4 cube of fog. The fog dissipates after 10 minutes or if a strong gust of wind created by a storm or magic passes through the area.
+As a maneuver, you throw this delicate glass sphere up to 5 squares, breaking it and creating a 4 cube of fog.
 
-Small lightning bolts arc around the black cloud in this sphere, which creates a 3 cube of cloud and lightning when broken. Each creature who enters the cloud for the first time in a combat round or starts their turn there takes 5 lightning damage. Additionally, any creature is slowed while in the cloud`
+Small lightning bolts arc around the black cloud in this sphere, which creates a 3 cube of cloud and lightning when broken. The cloud dissipates after 10 minutes or if a strong gust of wind created by a storm or magic passes through the area. Each creature who enters the cloud for the first time in a combat round or starts their turn there takes 5 lightning damage. Additionally, any creature is slowed while in the cloud.`
 	});
 
 	static veratismo: Item = FactoryLogic.createItem({

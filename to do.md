@@ -2,18 +2,6 @@
 
 ### Bug Reports
 
-* Add a new hero builder step for skills / languages
-
-* Currently, if a hero has multiple kits, and the selected kits each has a melee damage bonus, and there is no strictly better option, the various options are shown beneath each action power roll that uses melee weapons
-  * For example, a damage bonus of +2/+2/+2 is strictly better than +1/+1/+1 but not +0/+0/+4
-  * The same is true for multiple kits with ranged damage bonuses
-* What we want is for the user to select one of the damage bonuses
-* Add fields (to the Kit feature model? to the Hero model?) to specify the selected melee damage bonus / ranged damage bonus
-  * Set whenever a kit is chosen
-  * Used when calculating tier damage
-  * Do not show different kit options below the power roll - the selected damage bonus is the only one that matters
-  * If multiple kits selected, and none is strictly better, the user is given a 'changeable at will' option on the hero sheet (equivalent to a selectAt: 'play' Choice feature)
-
 The Reference screen shows all languages for every sourcebook
 
 ### Plans

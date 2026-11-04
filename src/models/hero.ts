@@ -57,4 +57,4 @@ export interface HeroOverview {
 	isActive: boolean;
 }
 
-export type HeroEditTab = 'start' | 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';
+export type HeroEditTab = 'start' | 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'selections' | 'details';

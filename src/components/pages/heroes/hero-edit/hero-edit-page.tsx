@@ -30,6 +30,7 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { SearchBox } from '@/components/controls/text-input/text-input';
+import { SkillsLanguagesSection } from '@/components/pages/heroes/hero-edit/skills-languages-section/skills-languages-section';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StartSection } from '@/components/pages/heroes/hero-edit/start-section/start-section';
@@ -148,6 +149,16 @@ export const HeroEditPage = (props: Props) => {
 				} else {
 					return PageState.Optional;
 				}
+			case 'selections': {
+				const choices = HeroLogic.getFeatures(hero)
+					.map(f => f.feature)
+					.filter(f => f.type === FeatureType.SkillChoice || f.type === FeatureType.LanguageChoice)
+					.filter(f => f.data.selectAt === 'build');
+				if (choices.length === 0) {
+					return PageState.Optional;
+				}
+				return choices.every(f => FeatureLogic.isChosen(f, hero, heroSourcebooks)) ? PageState.Completed : PageState.InProgress;
+			}
 			case 'details':
 				if (hero.name) {
 					return PageState.Completed;
@@ -375,6 +386,19 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
+	const setFeaturesData = (updates: { featureID: string, data: FeatureData }[]) => {
+		const heroCopy = Utils.copy(hero);
+		const features = HeroLogic.getFeatures(heroCopy).map(f => f.feature);
+		updates.forEach(update => {
+			const feature = features.find(f => f.id === update.featureID);
+			if (feature) {
+				feature.data = update.data;
+			}
+		});
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
 	const setName = (value: string) => {
 		const heroCopy = Utils.copy(hero);
 		heroCopy.name = value;
@@ -448,6 +472,10 @@ export const HeroEditPage = (props: Props) => {
 		}
 	};
 
+	const getTabLabel = (tab: HeroEditTab) => {
+		return Format.capitalize(tab, '-');
+	};
+
 	const getControls = () => {
 		let allowRandom = false;
 		let unselect = undefined;
@@ -487,10 +515,11 @@ export const HeroEditPage = (props: Props) => {
 								'career',
 								'class',
 								'complication',
+								'selections',
 								'details'
 							] as const).map(tab => ({
 								value: tab,
-								label: <div className='ds-text'>{Format.capitalize(tab, '-')}</div>
+								label: <div className='ds-text'>{getTabLabel(tab)}</div>
 							}))}
 							value={page}
 							onChange={value => navigation.goToHeroEdit(heroID!, value)}
@@ -506,12 +535,13 @@ export const HeroEditPage = (props: Props) => {
 								'career',
 								'class',
 								'complication',
+								'selections',
 								'details'
 							] as const).map(tab => ({
 								value: tab,
 								label: (
 									<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
-										<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
+										<div className='page-button-title'>{getTabLabel(tab)}</div>
 										<div className='page-button-subtitle'>{getPageState(tab)}</div>
 									</div>
 								)
@@ -616,6 +646,15 @@ export const HeroEditPage = (props: Props) => {
 						setFeatureData={setFeatureData}
 					/>
 				);
+			case 'selections':
+				return (
+					<SkillsLanguagesSection
+						hero={hero}
+						sourcebooks={heroSourcebooks}
+						setFeaturesData={setFeaturesData}
+						setFeatureData={setFeatureData}
+					/>
+				);
 			case 'details':
 				return (
 					<DetailsSection
@@ -625,7 +664,6 @@ export const HeroEditPage = (props: Props) => {
 						setPicture={setPicture}
 						setFolder={setFolder}
 						setTutorialMode={setTutorialMode}
-						setFeatureData={setFeatureData}
 						setExtensionIDs={setExtensionIDs}
 					/>
 				);

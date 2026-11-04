@@ -32,7 +32,7 @@ export const NamePanel = (props: Props) => {
 							HeroModalType.Projects,
 							HeroModalType.Titles,
 							HeroModalType.Notes,
-							HeroLogic.getConditionalFeatures(props.hero).length > 0 ? HeroModalType.Conditional : null,
+							(HeroLogic.getConditionalFeatures(props.hero).length > 0 || HeroLogic.hasSelectableKitDamageBonuses(props.hero)) ? HeroModalType.Conditional : null,
 							HeroModalType.Respite,
 							HeroModalType.Customize,
 							HeroModalType.Settings

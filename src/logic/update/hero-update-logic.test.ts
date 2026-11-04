@@ -74,6 +74,21 @@ describe('complications added through customize', () => {
 });
 
 describe('updateHeroData', () => {
+	it('initializes selected kit damage bonuses after kit choices are refreshed', () => {
+		const hero = FactoryLogic.createHero();
+		const kit = SourcebookLogic.getKits([ core ]).find(k => k.meleeDamage);
+		if (!kit) {
+			throw new Error('Expected a core kit with a melee damage bonus');
+		}
+		const kitFeature = FactoryLogic.feature.createKitChoice({ id: 'test-kit' });
+		kitFeature.data.selected = [ Utils.copy(kit) ];
+		hero.features.push(kitFeature);
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(hero.selectedMeleeDamageBonus).toBe(kit.id);
+	});
+
 	const buildBerserker = (ferocity: number) => {
 		const hero = FactoryLogic.createHero();
 		hero.class = Utils.copy(fury);

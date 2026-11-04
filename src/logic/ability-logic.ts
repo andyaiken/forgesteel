@@ -373,32 +373,21 @@ export class AbilityLogic {
 					isRanged = (distance === AbilityDistanceType.Ranged) && keywords.includes(AbilityKeyword.Weapon);
 				}
 
-				const dmgKits = HeroLogic
-					.getKitDamageBonuses(hero)
-					.filter(dmg => {
-						switch (dmg.type) {
-							case 'melee':
-								return isMelee;
-							case 'ranged':
-								return isRanged;
-						}
-					});
-
 				let bonus = 0;
-				const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
-				if ((dmgKits.length === 1) && hasMeleeXorRanged) {
-					// There's only one applicable kit bonus, and the ability can only be used in one mode
-					const dmg = dmgKits[0];
-					switch (tier) {
-						case 1:
-							bonus += dmg.tier1;
-							break;
-						case 2:
-							bonus += dmg.tier2;
-							break;
-						case 3:
-							bonus += dmg.tier3;
-							break;
+				if (isMelee !== isRanged) {
+					const kitBonus = HeroLogic.getKitDamageBonus(hero, isMelee ? 'melee' : 'ranged');
+					if (kitBonus) {
+						switch (tier) {
+							case 1:
+								bonus += kitBonus.tier1;
+								break;
+							case 2:
+								bonus += kitBonus.tier2;
+								break;
+							case 3:
+								bonus += kitBonus.tier3;
+								break;
+						}
 					}
 				}
 

@@ -190,13 +190,14 @@ export class HeroSheetBuilder {
 			sheet.modifierStability = HeroLogic.getBonusFromModifier(hero, k => k.stability);
 			sheet.modifierStamina = HeroLogic.getBonusFromModifier(hero, k => k.stamina);
 
-			const kitDmg = HeroLogic.getKitDamageBonuses(hero);
-			sheet.modifierMeleeDamageT1 = kitDmg.find(x => x.type === 'melee')?.tier1;
-			sheet.modifierMeleeDamageT2 = kitDmg.find(x => x.type === 'melee')?.tier2;
-			sheet.modifierMeleeDamageT3 = kitDmg.find(x => x.type === 'melee')?.tier3;
-			sheet.modifierRangedDamageT1 = kitDmg.find(x => x.type === 'ranged')?.tier1;
-			sheet.modifierRangedDamageT2 = kitDmg.find(x => x.type === 'ranged')?.tier2;
-			sheet.modifierRangedDamageT3 = kitDmg.find(x => x.type === 'ranged')?.tier3;
+			const meleeDamage = HeroLogic.getKitDamageBonus(hero, 'melee');
+			sheet.modifierMeleeDamageT1 = meleeDamage?.tier1;
+			sheet.modifierMeleeDamageT2 = meleeDamage?.tier2;
+			sheet.modifierMeleeDamageT3 = meleeDamage?.tier3;
+			const rangedDamage = HeroLogic.getKitDamageBonus(hero, 'ranged');
+			sheet.modifierRangedDamageT1 = rangedDamage?.tier1;
+			sheet.modifierRangedDamageT2 = rangedDamage?.tier2;
+			sheet.modifierRangedDamageT3 = rangedDamage?.tier3;
 
 			const kitFeatures = FeatureLogic.simplifyFeatures(
 				kits.flatMap(k => k.features

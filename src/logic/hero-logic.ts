@@ -1,5 +1,6 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureClassAbility, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
 import { Hero, HeroOverview } from '@/models/hero';
+import { Kit, KitDamageBonus } from '@/models/kit';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
@@ -22,7 +23,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Item } from '@/models/item';
 import { ItemLogic } from '@/logic/item-logic';
 import { ItemType } from '@/enums/item-type';
-import { Kit } from '@/models/kit';
 import { Language } from '@/models/language';
 import { LanguageType } from '@/enums/language-type';
 import { ModifierLogic } from '@/logic/modifier-logic';
@@ -1048,13 +1048,14 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static getKitDamageBonuses = (hero: Hero) => {
-		const kits: { name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
+	static getKitDamageBonusOptions = (hero: Hero) => {
+		const kits: { id: string, name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
 
 		HeroLogic.getKits(hero)
 			.forEach(kit => {
 				if (kit.meleeDamage) {
 					kits.push({
+						id: kit.id,
 						name: kit.name,
 						type: 'melee',
 						tier1: kit.meleeDamage.tier1,
@@ -1064,6 +1065,7 @@ export class HeroLogic {
 				}
 				if (kit.rangedDamage) {
 					kits.push({
+						id: kit.id,
 						name: kit.name,
 						type: 'ranged',
 						tier1: kit.rangedDamage.tier1,
@@ -1073,7 +1075,7 @@ export class HeroLogic {
 				}
 			});
 
-		const kitToString = (info: { name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }) => {
+		const kitToString = (info: { id: string, name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }) => {
 			return `${info.type} ${info.tier1} ${info.tier2} ${info.tier3}`;
 		};
 
@@ -1083,6 +1085,7 @@ export class HeroLogic {
 			.map(str => {
 				const toCombine = kits.filter(k => kitToString(k) === str);
 				return {
+					kitIDs: toCombine.map(k => k.id),
 					name: toCombine.map(k => k.name).join(' / '),
 					type: toCombine[0].type,
 					tier1: toCombine[0].tier1,
@@ -1091,20 +1094,47 @@ export class HeroLogic {
 				};
 			});
 
-		// Remove any kit that's strictly worse than another
-		const worse: { name: string, type: string }[] = [];
-		uniqueKits.forEach(k => {
-			const isWorse = uniqueKits
-				.filter(k2 => k.name !== k2.name)
-				.filter(k2 => k.type === k2.type)
+		return uniqueKits.filter(k => {
+			return !uniqueKits
+				.filter(k2 => k2.type === k.type)
 				.some(k2 => (k.tier1 < k2.tier1) && (k.tier2 < k2.tier2) && (k.tier3 < k2.tier3));
-			if (isWorse) {
-				worse.push({ name: k.name, type: k.type });
-			}
 		});
-		const reducedKits = uniqueKits.filter(k => !worse.some(wk => (k.name === wk.name) && (k.type === wk.type)));
+	};
 
-		return reducedKits;
+	static hasSelectableKitDamageBonuses = (hero: Hero) => {
+		return ([ 'melee', 'ranged' ] as const)
+			.some(type => HeroLogic.getKitDamageBonusOptions(hero).filter(option => option.type === type).length > 1);
+	};
+
+	static getKitDamageBonus = (hero: Hero, type: 'melee' | 'ranged'): (KitDamageBonus & { name: string, type: 'melee' | 'ranged' }) | null => {
+		const selectedKitID = type === 'melee' ?
+			hero.selectedMeleeDamageBonus :
+			hero.selectedRangedDamageBonus;
+		const kits = HeroLogic.getKits(hero);
+		const selectedKit = kits.find(kit => kit.id === selectedKitID) || kits.find(kit => {
+			return type === 'melee' ? !!kit.meleeDamage : !!kit.rangedDamage;
+		});
+		const damage = selectedKit ? (type === 'melee' ? selectedKit.meleeDamage : selectedKit.rangedDamage) : null;
+
+		return damage && selectedKit ?
+			{
+				...damage,
+				name: selectedKit.name,
+				type: type
+			}
+			: null;
+	};
+
+	static updateKitDamageBonusSelections = (hero: Hero) => {
+		const options = HeroLogic.getKitDamageBonusOptions(hero);
+		const getSelection = (type: 'melee' | 'ranged', currentKitID: string | null | undefined) => {
+			const available = options.filter(option => option.type === type);
+			const selected = available.find(option => option.kitIDs.includes(currentKitID || '')) || available[0];
+			return selected?.kitIDs[0] || null;
+		};
+
+		hero.selectedMeleeDamageBonus = getSelection('melee', hero.selectedMeleeDamageBonus);
+		hero.selectedRangedDamageBonus = getSelection('ranged', hero.selectedRangedDamageBonus);
 	};
 
 	static getBonusFromModifier = (hero: Hero, attrFn: (kit: Kit) => number): number => {

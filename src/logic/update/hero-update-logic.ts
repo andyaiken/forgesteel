@@ -408,6 +408,8 @@ export class HeroUpdateLogic {
 					HeroUpdateLogic.updateHeroFeatureData(f, originalFeature, hero, sourcebooks);
 				}
 			});
+
+		HeroLogic.updateKitDamageBonusSelections(hero);
 	};
 
 	static carryResourceGainState = (gains: ResourceGain[], originalGains: ResourceGain[]) => {

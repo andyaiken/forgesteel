@@ -172,6 +172,7 @@ export class EncounterData {
 			}
 		],
 		heroes: [],
+		// eslint-disable-next-line @typescript-eslint/no-deprecated -- Retained for legacy encounter migration.
 		objective: EncounterObjectiveData.diminishNumbers,
 		notes: [],
 		initiative: undefined,
@@ -225,6 +226,7 @@ export class EncounterData {
 		],
 		terrain: [],
 		heroes: [],
+		// eslint-disable-next-line @typescript-eslint/no-deprecated -- Retained for legacy encounter migration.
 		objective: null,
 		notes: [],
 		initiative: undefined,

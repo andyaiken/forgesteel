@@ -1086,6 +1086,56 @@ describe('getFeatureDamageBonuses - wielded treasures', () => {
 		sections: []
 	});
 
+	describe('kit damage bonus selection', () => {
+		it('defaults to the surviving bonus options and retains a valid at-will selection', () => {
+			const hero = FactoryLogic.createHero();
+			const kitFeature = FactoryLogic.feature.createKitChoice({ id: 'test-kit' });
+			const createKit = (name: string, tier1: number, tier2: number, tier3: number) => ({
+				...FactoryLogic.createKit(),
+				id: name,
+				name: name,
+				meleeDamage: { tier1: tier1, tier2: tier2, tier3: tier3 }
+			});
+			kitFeature.data.selected = [
+				createKit('Best', 2, 2, 2),
+				createKit('Dominated', 1, 1, 1),
+				createKit('Different', 0, 0, 4)
+			];
+			hero.features.push(kitFeature);
+
+			const options = HeroLogic.getKitDamageBonusOptions(hero).filter(option => option.type === 'melee');
+			expect(options.map(option => [ option.tier1, option.tier2, option.tier3 ])).toEqual([
+				[ 2, 2, 2 ],
+				[ 0, 0, 4 ]
+			]);
+
+			HeroLogic.updateKitDamageBonusSelections(hero);
+			expect(hero.selectedMeleeDamageBonus).toBe('Best');
+			expect(HeroLogic.getKitDamageBonus(hero, 'melee')).toMatchObject({ tier1: 2, tier2: 2, tier3: 2 });
+
+			hero.selectedMeleeDamageBonus = options[1].kitIDs[0];
+			HeroLogic.updateKitDamageBonusSelections(hero);
+			expect(hero.selectedMeleeDamageBonus).toBe('Different');
+			expect(HeroLogic.getKitDamageBonus(hero, 'melee')).toMatchObject({ tier1: 0, tier2: 0, tier3: 4 });
+
+			kitFeature.data.selected = kitFeature.data.selected.filter(kit => kit.id !== hero.selectedMeleeDamageBonus);
+			HeroLogic.updateKitDamageBonusSelections(hero);
+			expect(hero.selectedMeleeDamageBonus).toBe('Best');
+			expect(HeroLogic.getKitDamageBonus(hero, 'melee')).toMatchObject({ tier1: 2, tier2: 2, tier3: 2 });
+		});
+
+		it('clears selected bonuses when no kits provide them', () => {
+			const hero = FactoryLogic.createHero();
+			hero.selectedMeleeDamageBonus = 'melee-kit';
+			hero.selectedRangedDamageBonus = 'ranged-kit';
+
+			HeroLogic.updateKitDamageBonusSelections(hero);
+
+			expect(hero.selectedMeleeDamageBonus).toBeNull();
+			expect(hero.selectedRangedDamageBonus).toBeNull();
+		});
+	});
+
 	const meleeStrike = createStrike([ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ], [ FactoryLogic.distance.createMelee() ]);
 	const rangedStrike = createStrike([ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ], [ FactoryLogic.distance.createRanged(5) ]);
 

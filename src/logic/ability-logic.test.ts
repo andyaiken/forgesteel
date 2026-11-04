@@ -1,6 +1,8 @@
 import { afterEach, assert, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
+import { AbilityDistanceType } from '@/enums/ability-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { Characteristic } from '@/enums/characteristic';
 import { CreatureLogic } from '@/logic/creature-logic';
@@ -185,7 +187,7 @@ describe('getTierEffect', () => {
 
 	beforeEach(() => {
 		HeroLogic.getFeatures = vi.fn().mockReturnValue([]);
-		HeroLogic.getKitDamageBonuses = vi.fn().mockReturnValue([]);
+		HeroLogic.getKitDamageBonus = vi.fn().mockReturnValue(null);
 		HeroLogic.getFeatureDamageBonuses = vi.fn().mockReturnValue([]);
 		HeroLogic.getRolledDamageBonus = vi.fn().mockReturnValue(0);
 		HeroLogic.getCharacteristic = vi.fn().mockReturnValue(3);
@@ -203,6 +205,33 @@ describe('getTierEffect', () => {
 		[ '5 + 2×Might damage', '11 damage' ]
 	])('should apply a per-tier characteristic multiplier (%s)', (text, expected) => {
 		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(expected);
+	});
+
+	it('applies the selected kit bonus when several kit options are available', () => {
+		HeroLogic.getKitDamageBonus = vi.fn().mockReturnValue({ name: 'Selected', type: 'melee', tier1: 2, tier2: 3, tier3: 4 });
+
+		expect(AbilityLogic.getTierEffect('5 damage', 1, ability, undefined, hero)).toBe('7 damage');
+	});
+
+	it('waits for a melee or ranged mode before applying a kit bonus to a dual-mode ability', () => {
+		const dualAbility = {
+			...ability,
+			keywords: [ ...ability.keywords, AbilityKeyword.Ranged ]
+		};
+		HeroLogic.getKitDamageBonus = vi.fn().mockImplementation((_hero, type) => ({
+			name: type,
+			type: type,
+			tier1: type === 'melee' ? 2 : 4,
+			tier2: 0,
+			tier3: 0
+		}));
+
+		expect(AbilityLogic.getTierEffect('5 damage', 1, dualAbility, undefined, hero)).toBe('5 damage');
+		expect(HeroLogic.getKitDamageBonus).not.toHaveBeenCalled();
+		expect(AbilityLogic.getTierEffect('5 damage', 1, dualAbility, AbilityDistanceType.Melee, hero)).toBe('7 damage');
+		expect(HeroLogic.getKitDamageBonus).toHaveBeenLastCalledWith(hero, 'melee');
+		expect(AbilityLogic.getTierEffect('5 damage', 1, dualAbility, AbilityDistanceType.Ranged, hero)).toBe('9 damage');
+		expect(HeroLogic.getKitDamageBonus).toHaveBeenLastCalledWith(hero, 'ranged');
 	});
 
 	it('should still support a bare, unmultiplied characteristic reference', () => {

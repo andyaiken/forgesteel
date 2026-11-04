@@ -37,6 +37,8 @@ export interface Hero {
 	features: Feature[];
 	state: HeroState;
 	abilityCustomizations: AbilityCustomization[];
+	selectedMeleeDamageBonus: string | null;
+	selectedRangedDamageBonus: string | null;
 	isActive: boolean;
 }
 

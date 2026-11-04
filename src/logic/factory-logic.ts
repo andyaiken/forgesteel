@@ -103,6 +103,8 @@ export class FactoryLogic {
 			],
 			state: FactoryLogic.createHeroState(),
 			abilityCustomizations: [],
+			selectedMeleeDamageBonus: null,
+			selectedRangedDamageBonus: null,
 			isActive: true
 		};
 	};
@@ -681,6 +683,7 @@ export class FactoryLogic {
 			groups: [],
 			terrain: [],
 			heroes: [],
+			// eslint-disable-next-line @typescript-eslint/no-deprecated -- Retained for legacy encounter migration.
 			objective: null,
 			notes: [
 				FactoryLogic.createElement('Tactics'),

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from '@/services/data-service';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
@@ -79,16 +80,19 @@ export const usePersistence = (props: Props) => {
 	const persistHero = (hero: Hero) => {
 		// UI / local state is already updated synchronously by callers before this is invoked;
 		// only the network PUT is delayed and coalesced here, per hero.id.
+		const copy = Utils.copy(hero);
+		HeroLogic.updateKitDamageBonusSelections(copy);
+
 		return new Promise<void>(resolve => {
-			const existing = pendingHeroSavesRef.current.get(hero.id);
+			const existing = pendingHeroSavesRef.current.get(copy.id);
 			if (existing) {
 				clearTimeout(existing.timer);
-				existing.hero = hero;
+				existing.hero = copy;
 				existing.resolvers.push(resolve);
-				existing.timer = setTimeout(() => flushHeroSave(hero.id), HERO_SAVE_DEBOUNCE_MS);
+				existing.timer = setTimeout(() => flushHeroSave(copy.id), HERO_SAVE_DEBOUNCE_MS);
 			} else {
-				const timer = setTimeout(() => flushHeroSave(hero.id), HERO_SAVE_DEBOUNCE_MS);
-				pendingHeroSavesRef.current.set(hero.id, { hero, timer, resolvers: [ resolve ] });
+				const timer = setTimeout(() => flushHeroSave(copy.id), HERO_SAVE_DEBOUNCE_MS);
+				pendingHeroSavesRef.current.set(copy.id, { hero: copy, timer, resolvers: [ resolve ] });
 			}
 		});
 	};

@@ -140,45 +140,38 @@ describe('buildAbilitySheet', () => {
 		expect(powerRoll.rollBonuses).toBeNullable();
 	});
 
-	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
+	test('if a Hero has multiple kit damage options, rollBonuses stays empty', () => {
 		const hero = FactoryLogic.createHero();
+		const kitFeature = FactoryLogic.feature.createKitChoice({ id: 'test-kit' });
+		const firstKit = FactoryLogic.createKit();
+		firstKit.name = 'First';
+		firstKit.meleeDamage = { tier1: 1, tier2: 1, tier3: 1 };
+		const secondKit = FactoryLogic.createKit();
+		secondKit.name = 'Second';
+		secondKit.meleeDamage = { tier1: 0, tier2: 0, tier3: 4 };
+		kitFeature.data.selected = [ firstKit, secondKit ];
+		hero.features.push(kitFeature);
 		const options = {} as Options;
-
-		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
-			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
-			{ name: 'Melee 2', type: 'melee', tier1: 0, tier2: 0, tier3: 4 }
-		]);
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
 		const powerRoll = result.sections[0] as PowerRollSection;
-		expect(powerRoll.rollBonuses?.length).toBe(2);
+		expect(powerRoll.rollBonuses).toBeNullable();
 	});
 
-	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
+	test('if a Hero has multiple ranged kit damage options, rollBonuses stays empty', () => {
 		const hero = FactoryLogic.createHero();
+		const kitFeature = FactoryLogic.feature.createKitChoice({ id: 'test-kit' });
+		const firstKit = FactoryLogic.createKit();
+		firstKit.name = 'First';
+		firstKit.rangedDamage = { tier1: 1, tier2: 1, tier3: 1 };
+		const secondKit = FactoryLogic.createKit();
+		secondKit.name = 'Second';
+		secondKit.rangedDamage = { tier1: 0, tier2: 0, tier3: 4 };
+		kitFeature.data.selected = [ firstKit, secondKit ];
+		hero.features.push(kitFeature);
 		const options = {} as Options;
-
-		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
-			{ name: 'Melee 1', type: 'ranged', tier1: 1, tier2: 1, tier3: 1 },
-			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
-			{ name: 'Melee 2', type: 'ranged', tier1: 0, tier2: 0, tier3: 4 }
-		]);
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeRanged, hero, undefined, options);
-		const powerRoll = result.sections[0] as PowerRollSection;
-		expect(powerRoll.rollBonuses?.length).toBe(2);
-	});
-
-	test('if a Hero has multiple kits but one is always worse, rollBonuses stays empty', () => {
-		const hero = FactoryLogic.createHero();
-		const options = {} as Options;
-
-		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
-			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
-			{ name: 'Melee 2', type: 'melee', tier1: 0, tier2: 0, tier3: 0 }
-		]);
-
-		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
 		const powerRoll = result.sections[0] as PowerRollSection;
 		expect(powerRoll.rollBonuses).toBeNullable();
 	});
@@ -191,9 +184,6 @@ describe('buildAbilitySheet', () => {
 		const hero = FactoryLogic.createHero();
 		const options = {} as Options;
 
-		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
-			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 }
-		]);
 		const result = ClassicSheetBuilder.buildAbilitySheet(divineDragon.data.ability, hero, undefined, options);
 		expect(result).not.toBe(undefined);
 	});

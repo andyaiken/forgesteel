@@ -91,30 +91,22 @@ export const PowerRollPanel = (props: Props) => {
 					isRanged = distance === AbilityDistanceType.Ranged;
 				}
 
-				const dmgKits = HeroLogic
-					.getKitDamageBonuses(props.creature)
-					.filter(dmg => {
-						switch (dmg.type) {
-							case 'melee':
-								return isMelee;
-							case 'ranged':
-								return isRanged;
-						}
-					});
+				const kitBonuses = [
+					isMelee ? HeroLogic.getKitDamageBonus(props.creature, 'melee') : null,
+					isRanged ? HeroLogic.getKitDamageBonus(props.creature, 'ranged') : null
+				].filter(bonus => bonus !== null);
 
-				// Show bonuses from kits if:
-				// * AutoCalc is off
-				// * we have more than 1 bonus
-				// * the ability can be used as melee and ranged
-				// ... because otherwise it should have already been applied
-				const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (isMelee && isRanged);
+				// Auto-calculated rolls already include the selected mode's bonus. If the ability
+				// has no selected mode, keep both applicable bonuses visible as a reference.
+				const showKitBonuses = !props.autoCalc || (isMelee && isRanged);
 				if (showKitBonuses) {
-					dmgKits.forEach((bonus, n) => {
+					kitBonuses.forEach((bonus, n) => {
+						const format = (value: number) => value > 0 ? `+${value}` : `${value}`;
 						sections.push(
 							<Field
 								key={`kit-${n}`}
 								label={`${bonus.name}`}
-								value={`+${bonus.tier1} / +${bonus.tier2} / +${bonus.tier3} ${bonus.type} damage`}
+								value={`${format(bonus.tier1)} / ${format(bonus.tier2)} / ${format(bonus.tier3)} ${bonus.type} damage`}
 							/>
 						);
 					});

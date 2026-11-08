@@ -4,6 +4,7 @@ import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { ClassicSheetLogic } from '@/logic/classic-sheet/classic-sheet-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
@@ -14,11 +15,13 @@ import { RollModifierType } from '@/enums/roll-modifier-type';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
+import { chronokinetic } from '@/data/classes/null/chronokinetic';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { creation } from '@/data/domains/creation';
 import { cryokinetic } from '@/data/classes/null/cryokinetic';
 import { demon } from '@/data/monsters/demon';
 import { dragonKnight } from '@/data/ancestries/dragon-knight';
+import { metakinetic } from '@/data/classes/null/metakinetic';
 import { retainer } from '@/data/monsters/retainer';
 
 afterEach(() => {
@@ -247,6 +250,66 @@ This is some description of the table below.
 });
 
 describe.concurrent('sortFeatures', () => {
+	test.each([ chronokinetic, cryokinetic, metakinetic ])('orders $name Mastery before thresholds and other children last', subclass => {
+		const features = ClassicSheetLogic.flattenMultiples(subclass.featuresByLevel
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.name.startsWith(`${subclass.name} Mastery`)));
+		const prefix = subclass.id;
+		const divided = SheetFormatter.divideFeatures(features.reverse().map(feature => ({ feature: feature, source: subclass.name })), null, 1000);
+		const result = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(divided.displayed));
+
+		expect(result.map(f => f.id)).toEqual([
+			`${prefix}-1-2`,
+			`${prefix}-1-2-2`,
+			`${prefix}-1-2-4`,
+			`${prefix}-1-2-6`,
+			`${prefix}-4-1`,
+			`${prefix}-7-1`,
+			`${prefix}-10-1`,
+			`${prefix}-1-2b`
+		]);
+	});
+
+	test('keeps a non-threshold child last even when it is first in the source data', () => {
+		const extra = FactoryLogic.feature.create({ id: 'extra', name: 'Extra', description: 'Extra benefit.' });
+		const unrelated = FactoryLogic.feature.create({ id: 'unrelated', name: 'Unrelated', description: 'An unrelated feature.' });
+		const threshold = FactoryLogic.feature.createHeroicResourceThreshold({
+			id: 'threshold', resource: 'Discipline', value: 2,
+			feature: FactoryLogic.feature.create({ id: 'threshold-benefit', name: 'Benefit', description: 'Threshold benefit.' })
+		});
+		const group = FactoryLogic.feature.createMultiple({
+			id: 'group', name: 'Mastery', description: 'Mastery introduction.', features: [ extra, threshold ]
+		});
+		const features = ClassicSheetLogic.flattenMultiples([ unrelated, group ]);
+		const result = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeaturesShort(features));
+
+		expect(result.map(f => f.id)).toEqual([ 'unrelated', 'group', 'threshold', 'extra' ]);
+	});
+
+	test.each([ 1, 4, 7, 10 ])('keeps Growing Ferocity before its ascending thresholds at level %i', level => {
+		const features = ClassicSheetLogic.flattenMultiples(berserker.featuresByLevel
+			.filter(lvl => lvl.level <= level)
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.name.startsWith('Growing Ferocity')));
+		const expectedIds = [ 'fury-sub-1-1-5', 'fury-sub-1-1-5-2', 'fury-sub-1-1-5-4', 'fury-sub-1-1-5-6' ];
+		if (level >= 4) {
+			expectedIds.push('fury-sub-1-4-1');
+		}
+		if (level >= 7) {
+			expectedIds.push('fury-sub-1-7-1');
+		}
+		if (level >= 10) {
+			expectedIds.push('fury-sub-1-10-1');
+		}
+
+		// The sheet sorts during space allocation, conversion, and markdown enhancement.
+		const divided = SheetFormatter.divideFeatures(features.reverse().map(feature => ({ feature: feature, source: 'Berserker' })), null, 1000);
+		const result = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(divided.displayed));
+
+		expect(result.map(f => f.id)).toEqual(expectedIds);
+		expect(result[0].description).toBe(features.find(f => f.id === 'fury-sub-1-1-5')?.description);
+	});
+
 	test.each([
 		[ FeatureType.Package, FeatureType.Text, true ],
 		[ FeatureType.Package, FeatureType.PackageContent, false ],

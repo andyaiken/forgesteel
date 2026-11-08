@@ -25,6 +25,7 @@ import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
+import { chronokinetic } from '@/data/classes/null/chronokinetic';
 import { circleOfGraves } from '@/data/classes/summoner/graves';
 import { circleofStorms } from '@/data/classes/summoner/storms';
 import { core } from '@/data/sourcebooks/official/core';
@@ -306,6 +307,39 @@ describe('buildHeroSheet', () => {
 
 		expect(warn.mock.calls.filter(c => String(c[0]).includes('Missed features'))).toEqual([]);
 		expect((result.featuresReferenceOther || []).map(f => f.feature.name)).not.toContain('Growing Ferocity (Ferocity 2)');
+	});
+
+	test('it should list the Growing Ferocity introduction immediately before its ordered bonuses', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.subclasses.filter(sc => sc.id === berserker.id).forEach(sc => sc.selected = true);
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [], { featuresInclude: 'all', pageOrientation: 'portrait' } as Options);
+		const ids = (result.classFeatures || []).map(f => f.id);
+		const introduction = ids.indexOf('fury-sub-1-1-5');
+
+		expect(introduction).toBeGreaterThanOrEqual(0);
+		expect(ids.slice(introduction, introduction + 4)).toEqual([
+			'fury-sub-1-1-5', 'fury-sub-1-1-5-2', 'fury-sub-1-1-5-4', 'fury-sub-1-1-5-6'
+		]);
+	});
+
+	test('it should list Chronokinetic Mastery before its bonuses while keeping package content in Inertial Shield', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(nullClass);
+		hero.class.subclasses.filter(sc => sc.id === chronokinetic.id).forEach(sc => sc.selected = true);
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [], { featuresInclude: 'all', pageOrientation: 'portrait' } as Options);
+		const ids = (result.classFeatures || []).map(f => f.id);
+		const introduction = ids.indexOf('null-sub-1-1-2');
+
+		expect(introduction).toBeGreaterThanOrEqual(0);
+		expect(ids.slice(introduction, introduction + 4)).toEqual([
+			'null-sub-1-1-2', 'null-sub-1-1-2-2', 'null-sub-1-1-2-4', 'null-sub-1-1-2-6'
+		]);
+		expect(ids).not.toContain('null-sub-1-1-2b');
+		const inertialShield = result.abilities?.find(a => a.name === 'Inertial Shield');
+		expect(JSON.stringify(inertialShield?.sections)).toContain('you can then use the Disengage move action');
 	});
 
 	// A Multiple with no prose of its own is dropped from the card - its children say everything it

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureClassAbility, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureClassAbility, FeatureClassAbilityData, FeatureForController, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureLanguageChoice, FeatureSwitchOptions, FeatureSwitchValue } from '@/models/feature';
 import { Hero, HeroOverview } from '@/models/hero';
 import { Kit, KitDamageBonus } from '@/models/kit';
 import { Ability } from '@/models/ability';
@@ -296,6 +296,24 @@ export class HeroLogic {
 						return false;
 				}
 			});
+	};
+
+	static getClassAbilityOptions = (hero: Hero, sourcebooks: Sourcebook[], data: FeatureClassAbilityData) => {
+		let heroClass = hero.class;
+		if (data.classID) {
+			heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === data.classID) || null;
+		}
+		if (!heroClass) {
+			return [];
+		}
+
+		const heroLevel = hero.class?.level ?? 1;
+		const currentAbilityIDs = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability.id);
+		return SourcebookLogic.getAbilitiesFromClass(heroClass, data.source.fromClassAbilities, data.source.fromSelectedSubclassAbilities, data.source.fromUnselectedSubclassAbilities, data.source.fromClassLevels, data.source.fromSelectedSubclassLevels, data.source.fromUnselectedSubclassLevels)
+			.filter(a => a.cost === data.cost)
+			.filter(a => (a.minLevel >= data.minLevel) && (a.minLevel <= data.maxLevel) && (a.minLevel <= heroLevel))
+			.filter(a => data.type === 'Any' || a.type.usage === data.type)
+			.filter(a => !currentAbilityIDs.includes(a.id));
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], standardAbilityIDs: string[]) => {
@@ -1698,18 +1716,13 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.ClassAbility: {
-						if (hero.class) {
-							while (feature.data.selectedIDs.length < feature.data.count) {
-								const currentIDs = feature.data.selectedIDs;
-								const options = hero.class.abilities
-									.filter(a => !currentIDs.includes(a.id))
-									.filter(a => a.cost === feature.data.cost);
-								if (options.length === 0) {
-									break;
-								}
-								const selected = Collections.draw(options);
-								feature.data.selectedIDs.push(selected.id);
+						while (feature.data.selectedIDs.length < feature.data.count) {
+							const options = HeroLogic.getClassAbilityOptions(hero, sourcebooks, feature.data);
+							if (options.length === 0) {
+								break;
 							}
+							const selected = Collections.draw(options);
+							feature.data.selectedIDs.push(selected.id);
 						}
 						break;
 					}

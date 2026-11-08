@@ -1,3 +1,4 @@
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { RecoveriesSheet } from '@/models/classic-sheets/hero-sheet';
 import { useOptions } from '@/contexts/data-context';
@@ -24,12 +25,12 @@ export const RecoveriesComponent = (props: Props) => {
 			<div className='reference'>
 				<LabeledTextField
 					label='Stamina'
-					content={recoveries.value}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.RecoveriesStamina) ? '' : recoveries.value}
 					additionalClasses={[ 'no-box' ]}
 				/>
 				<LabeledTextField
 					label='Max'
-					content={recoveries.max}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.RecoveriesMax) ? '' : recoveries.max}
 					additionalClasses={[ 'no-box' ]}
 				/>
 			</div>

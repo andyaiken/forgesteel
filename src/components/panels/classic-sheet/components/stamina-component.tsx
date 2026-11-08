@@ -1,4 +1,5 @@
 import { LabeledBooleanField, LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { StaminaSheet } from '@/models/classic-sheets/hero-sheet';
 import { useOptions } from '@/contexts/data-context';
 
@@ -32,7 +33,7 @@ export const StaminaComponent = (props: Props) => {
 						value={showState && (stamina.current || 1) <= (stamina.windedAt || 0)}
 						additionalClasses={[ 'label-below' ]}
 					/>
-					<div className='ref'>≤ <span className='data'>{stamina.windedAt}</span></div>
+					<div className='ref'>≤ <span className='data'>{options.hiddenHeroSheetValues.includes(HeroSheetValue.StaminaWinded) ? <>&nbsp;</> : stamina.windedAt}</span></div>
 				</div>
 				<div className='dying'>
 					<LabeledBooleanField
@@ -40,7 +41,7 @@ export const StaminaComponent = (props: Props) => {
 						value={showState && (stamina.current || 1) <= 0}
 						additionalClasses={[ 'label-below' ]}
 					/>
-					<div className='ref'>0 to <span className='data'>{stamina.deadAt}</span></div>
+					<div className='ref'>0 to <span className='data'>{options.hiddenHeroSheetValues.includes(HeroSheetValue.StaminaDying) ? <>&nbsp;</> : stamina.deadAt}</span></div>
 				</div>
 			</div>
 			<div className='reference'>
@@ -51,7 +52,7 @@ export const StaminaComponent = (props: Props) => {
 				/>
 				<LabeledTextField
 					label='Max'
-					content={stamina.max}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.StaminaMax) ? '' : stamina.max}
 					additionalClasses={[ 'no-box' ]}
 				/>
 			</div>

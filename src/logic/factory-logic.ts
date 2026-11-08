@@ -1092,6 +1092,7 @@ export class FactoryLogic {
 			abilityWidth: PanelWidth.Medium,
 			// Hero: Classic Sheet
 			includePlayState: false,
+			hiddenHeroSheetValues: [],
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
 			colorScheme: 'community',

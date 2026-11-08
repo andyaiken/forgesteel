@@ -1,3 +1,4 @@
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { PanelWidth } from '@/enums/panel-width';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 
@@ -17,6 +18,7 @@ export interface Options {
 	abilityWidth: PanelWidth;
 	// Hero: Classic Sheet
 	includePlayState: boolean;
+	hiddenHeroSheetValues: HeroSheetValue[];
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
 	colorScheme: 'community' | 'classic';

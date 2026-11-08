@@ -21,6 +21,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
+import { HeroSheetValueData } from '@/data/hero-sheet-value-data';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
@@ -796,6 +797,12 @@ ${encounter.objective.victories}`
 		// Rather than remove this feature, disable it every session
 		// to minimize confusion for those who don't know it's even there
 		options.includePlayState = false;
+
+		const legacyOptions = options as Options & { hideChangingValues?: boolean };
+		if (options.hiddenHeroSheetValues === undefined) {
+			options.hiddenHeroSheetValues = legacyOptions.hideChangingValues ? [ ...HeroSheetValueData.recommended ] : [];
+		}
+		delete legacyOptions.hideChangingValues;
 
 		if (options.colorSheet === undefined) {
 			options.colorSheet = true;

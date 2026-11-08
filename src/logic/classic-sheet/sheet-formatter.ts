@@ -51,7 +51,8 @@ export class SheetFormatter {
 	};
 
 	static convertFeatures = (features: { feature: Feature, display: 'short' | 'full' }[], hero?: Hero): Feature[] => {
-		features.sort((a, b) => this.sortFeatures(a.feature, b.feature));
+		const siblings = features.map(f => f.feature);
+		features.sort((a, b) => this.sortFeatures(a.feature, b.feature, siblings));
 		const results: Feature[] = [];
 		for (const fd of features) {
 			results.push(this.cleanupFeature(fd.feature, fd.display, hero));
@@ -127,7 +128,7 @@ export class SheetFormatter {
 	};
 
 	static enhanceFeatures = (features: Feature[], hero?: Hero): Feature[] => {
-		features.sort(this.sortFeatures);
+		features.sort((a, b) => this.sortFeatures(a, b, features));
 		const results: Feature[] = [];
 		for (const feature of features) {
 			results.push(this.enhanceFeature(feature, hero));
@@ -222,7 +223,8 @@ export class SheetFormatter {
 		const reference: { feature: Feature, source: string }[] = [];
 		const extraRefItems: { title: string, content: string, wide: boolean, section: string }[] = [];
 
-		sourcedFeatures.sort((a, b) => this.sortFeatures(a.feature, b.feature));
+		const siblings = sourcedFeatures.map(f => f.feature);
+		sourcedFeatures.sort((a, b) => this.sortFeatures(a.feature, b.feature, siblings));
 		let size = 0;
 		let longest = 0;
 		sourcedFeatures.forEach(sf => {
@@ -1029,12 +1031,26 @@ export class SheetFormatter {
 		FeatureType.ConditionImmunity
 	];
 
-	static sortFeatures = (a: Feature, b: Feature): number => {
-		const aSort = this.featureTypeOrder.includes(a.type);
-		const bSort = this.featureTypeOrder.includes(b.type);
+	static sortFeatures = (a: Feature, b: Feature, siblings: Feature[] = []): number => {
+		const aThreshold = this.getThresholdSortOrder(a, siblings);
+		const bThreshold = this.getThresholdSortOrder(b, siblings);
+		const aType = aThreshold ? FeatureType.HeroicResourceThreshold : a.type;
+		const bType = bThreshold ? FeatureType.HeroicResourceThreshold : b.type;
+		const aSort = this.featureTypeOrder.includes(aType);
+		const bSort = this.featureTypeOrder.includes(bType);
+
+		if (aThreshold && bThreshold) {
+			const resourceOrder = aThreshold.resource.localeCompare(bThreshold.resource);
+			if (resourceOrder !== 0) {
+				return resourceOrder;
+			}
+			if (aThreshold.value !== bThreshold.value) {
+				return aThreshold.value - bThreshold.value;
+			}
+		}
 
 		if (aSort && bSort) {
-			const typeOrder = this.featureTypeOrder.indexOf(a.type) - this.featureTypeOrder.indexOf(b.type);
+			const typeOrder = this.featureTypeOrder.indexOf(aType) - this.featureTypeOrder.indexOf(bType);
 			if (typeOrder === 0) {
 				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
 			}
@@ -1044,12 +1060,36 @@ export class SheetFormatter {
 		} else if (bSort) {
 			return 1;
 		} else {
-			const typeOrder = a.type.toString().localeCompare(b.type.toString());
+			const typeOrder = aType.toString().localeCompare(bType.toString());
 			if (typeOrder === 0) {
 				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
 			}
 			return typeOrder;
 		}
+	};
+
+	// Keep a threshold group's introduction first, its bonuses in ascending order, and other children last.
+	static getThresholdSortOrder = (feature: Feature, siblings: Feature[] = []): { resource: string, value: number } | null => {
+		if (feature.type === FeatureType.HeroicResourceThreshold) {
+			return feature.data;
+		}
+		if (feature.type === FeatureType.Multiple) {
+			const thresholds = feature.data.features.filter(f => f.type === FeatureType.HeroicResourceThreshold);
+			const first = thresholds[0];
+			if (first && thresholds.every(f => f.data.resource === first.data.resource)) {
+				return { resource: first.data.resource, value: -Infinity };
+			}
+		}
+		// Flattening puts children alongside their parent; use that parent to find their resource group.
+		for (const sibling of siblings) {
+			if (sibling.type === FeatureType.Multiple && sibling.data.features.some(f => f.id === feature.id)) {
+				const parentOrder = this.getThresholdSortOrder(sibling);
+				if (parentOrder) {
+					return { resource: parentOrder.resource, value: Infinity };
+				}
+			}
+		}
+		return null;
 	};
 
 	static keywordOrder: string[] = [

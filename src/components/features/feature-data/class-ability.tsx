@@ -258,13 +258,10 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 		return null;
 	}
 
-	const currentAbilityIDs = HeroLogic.getAbilities(props.hero, props.sourcebooks, []).map(a => a.ability.id);
-
-	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels)
-		.filter(a => a.cost === props.data.cost)
-		.filter(a => (a.minLevel >= props.data.minLevel) && (a.minLevel <= props.data.maxLevel))
-		.filter(a => props.data.type === 'Any' || a.type.usage === props.data.type);
-	const distinctAbilities = Collections.distinct(abilities.filter(a => !currentAbilityIDs.includes(a.id)), a => a.name);
+	// Keep saved selections visible and removable, even if they are no longer eligible.
+	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels);
+	const options = HeroLogic.getClassAbilityOptions(props.hero, props.sourcebooks, props.data);
+	const distinctAbilities = Collections.distinct(options, a => a.name);
 	const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
 	const getAddButton = () => {

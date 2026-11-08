@@ -400,7 +400,7 @@ If you have a kit, you can’t take this enchantment.`,
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-2-2',
 					cost: 5,
-					minLevel: 2
+					minLevel: 1
 				})
 			]
 		},
@@ -520,7 +520,7 @@ If you have a kit, you can’t take this enchantment.`,
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-6-3',
 					cost: 9,
-					minLevel: 6
+					minLevel: 5
 				})
 			]
 		},
@@ -595,7 +595,7 @@ Additionally, when you have 5 or more Victories, choose one of the following dam
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-9-2',
 					cost: 11,
-					minLevel: 9
+					minLevel: 8
 				})
 			]
 		},

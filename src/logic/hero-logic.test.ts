@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityDistanceType } from '@/enums/ability-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityUsage } from '@/enums/ability-usage';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -26,6 +27,7 @@ import { RollType } from '@/enums/roll-type';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Summon } from '@/models/summon';
+import { TitleData } from '@/data/title-data';
 import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
@@ -35,6 +37,8 @@ import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { core } from '@/data/sourcebooks/official/core';
 import { corven } from '@/data/kits/stormwight/corven';
+import { creation } from '@/data/domains/creation';
+import { elementalist } from '@/data/classes/elementalist/elementalist';
 import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
 import { orden } from '@/data/sourcebooks/official/orden';
@@ -1223,5 +1227,207 @@ describe('createRandomHero', () => {
 		};
 		heroes.forEach(rename);
 		expect(sourcebooks).toEqual(snapshot);
+	});
+
+	it('chooses unlocked elementalist abilities without duplicates across choices', () => {
+		vi.spyOn(Math, 'random').mockImplementation(Random.getSeededRNG('elementalist-ability-levels'));
+		const sourcebook = Utils.copy(core);
+		sourcebook.classes = [ Utils.copy(elementalist) ];
+
+		for (let n = 0; n < 10; ++n) {
+			const hero = HeroLogic.createRandomHero([ sourcebook ]);
+			const choices = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.ClassAbility);
+			const selectedIDs = choices.flatMap(f => f.data.selectedIDs);
+			const abilities = HeroLogic.getAbilities(hero, [ sourcebook ], []).map(a => a.ability).filter(a => selectedIDs.includes(a.id));
+
+			expect(choices.every(f => f.data.selectedIDs.length === f.data.count)).toBe(true);
+			expect(new Set(selectedIDs).size).toBe(selectedIDs.length);
+			expect(abilities).toHaveLength(selectedIDs.length);
+			expect(abilities.every(a => a.minLevel <= 1)).toBe(true);
+		}
+	});
+
+	it('leaves a choice empty when no ability meets its restrictions', () => {
+		vi.spyOn(Math, 'random').mockImplementation(Random.getSeededRNG('no-eligible-ability'));
+		const sourcebook = Utils.copy(core);
+		const heroClass = Utils.copy(elementalist);
+		const choice = FactoryLogic.feature.createClassAbilityChoice({ id: 'test-choice', cost: 5 });
+		choice.data.minLevel = 2;
+		heroClass.featuresByLevel = [ { level: 1, features: [ choice ] } ];
+		sourcebook.classes = [ heroClass ];
+		const hero = HeroLogic.createRandomHero([ sourcebook ]);
+		const selectedChoice = HeroLogic.getFeatures(hero).map(f => f.feature).find(f => f.id === choice.id);
+
+		expect(selectedChoice?.data).toEqual(choice.data);
+	});
+});
+
+describe('getClassAbilityOptions', () => {
+	const createHero = (level: number) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(elementalist);
+		hero.class.level = level;
+		return hero;
+	};
+
+	const createChoice = () => FactoryLogic.feature.createClassAbilityChoice({ id: 'test-choice', cost: 5 });
+
+	it.each([ 1, 2 ])('offers only unlocked 5-point elementalist abilities at level %i', level => {
+		const hero = createHero(level);
+		const options = HeroLogic.getClassAbilityOptions(hero, [], createChoice().data);
+
+		expect(options).toHaveLength(level === 1 ? 4 : 8);
+		expect(options.some(a => a.name === 'O Flower Aid, O Earth Defend')).toBe(level === 2);
+		expect(options.every(a => a.cost === 5 && a.minLevel <= level)).toBe(true);
+	});
+
+	it.each([ [ 2, 1, 5 ], [ 6, 5, 9 ], [ 9, 8, 11 ] ])('includes unchosen earlier abilities in the actual level-%i elementalist choice', (level, previousLevel, cost) => {
+		const hero = createHero(level);
+		const choices = HeroLogic.getFeatures(hero).filter(f => f.feature.type === FeatureType.ClassAbility && f.feature.data.cost === cost);
+		const previousChoice = choices.find(f => f.level === previousLevel)?.feature;
+		const laterChoice = choices.find(f => f.level === level)?.feature;
+		if (previousChoice?.type !== FeatureType.ClassAbility || laterChoice?.type !== FeatureType.ClassAbility) {
+			throw new Error('Missing elementalist ability choices');
+		}
+		const previousOptions = HeroLogic.getClassAbilityOptions(createHero(previousLevel), [], previousChoice.data);
+		expect(previousOptions).toHaveLength(4);
+		if (level === 2) {
+			expect(previousOptions.map(a => a.name)).toEqual([ 'Conflagration', 'Instantaneous Excavation', 'No More than a Breeze', 'Test of Rain' ]);
+		}
+		previousChoice.data.selectedIDs = [ previousOptions[0].id ];
+		const options = HeroLogic.getClassAbilityOptions(hero, [], laterChoice.data);
+
+		expect(options).toHaveLength(7);
+		expect(options.map(a => a.id)).toEqual(expect.arrayContaining(previousOptions.slice(1).map(a => a.id)));
+		expect(options.filter(a => a.minLevel === level)).toHaveLength(4);
+		expect(options.some(a => a.id === previousOptions[0].id)).toBe(false);
+		expect(options.every(a => a.cost === cost && a.minLevel <= level)).toBe(true);
+	});
+
+	it.each([ [ 2, 5 ], [ 6, 9 ], [ 9, 11 ] ])('keeps the level-%i berserker choice restricted to its subclass options', (level, cost) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		hero.class.level = level;
+		hero.class.subclasses.forEach(sc => sc.selected = sc.id === berserker.id);
+		const choice = HeroLogic.getFeatures(hero)
+			.filter(f => f.level === level)
+			.map(f => f.feature)
+			.find(f => f.type === FeatureType.Choice && f.data.options.some(o => o.feature.type === FeatureType.Ability && o.feature.data.ability.cost === cost));
+		if (choice?.type !== FeatureType.Choice) {
+			throw new Error('Missing berserker ability choice');
+		}
+
+		expect(choice.data.options).toHaveLength(2);
+		expect(choice.data.options.every(o => o.feature.type === FeatureType.Ability && o.feature.data.ability.cost === cost)).toBe(true);
+		expect(choice.data.options.some(o => hero.class?.abilities.some(a => a.id === o.feature.id))).toBe(false);
+	});
+
+	it.each([ [ 2, 5 ], [ 6, 9 ], [ 9, 11 ] ])('keeps the level-%i conduit ability tied to a domain at that level', (level, cost) => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(conduit);
+		hero.class.level = level;
+		HeroLogic.getFeatures(hero).map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.forEach(f => f.data.selected = Utils.copy([ creation, life ]));
+		const choice = HeroLogic.getFeatures(hero)
+			.filter(f => f.level === level)
+			.map(f => f.feature)
+			.find(f => f.type === FeatureType.DomainFeature && f.data.level === level);
+		if (choice?.type !== FeatureType.DomainFeature) {
+			throw new Error('Missing conduit domain ability choice');
+		}
+		const domainOptions = HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel)
+			.filter(lvl => lvl.level === choice.data.level).flatMap(lvl => lvl.features);
+
+		expect(domainOptions.map(f => f.id)).toEqual([ `domain-creation-${level}`, `domain-life-${level}` ]);
+		expect(domainOptions.every(f => f.type === FeatureType.Ability && f.data.ability.cost === cost)).toBe(true);
+		choice.data.selected = [ Utils.copy(domainOptions[0]) ];
+		const abilities = HeroLogic.getAbilities(hero, [], []).map(a => a.ability).filter(a => a.cost === cost);
+		expect(abilities.map(a => a.id)).toEqual([ `domain-creation-${level}` ]);
+	});
+
+	it('preserves the choice minimum level when the hero levels up', () => {
+		const choice = createChoice();
+		choice.data.minLevel = 2;
+
+		expect(HeroLogic.getClassAbilityOptions(createHero(1), [], choice.data)).toEqual([]);
+		const options = HeroLogic.getClassAbilityOptions(createHero(3), [], choice.data);
+		expect(options).toHaveLength(4);
+		expect(options.every(a => a.minLevel === 2)).toBe(true);
+	});
+
+	it('preserves the choice maximum level even for a higher-level hero', () => {
+		const choice = createChoice();
+		choice.data.maxLevel = 1;
+		const options = HeroLogic.getClassAbilityOptions(createHero(10), [], choice.data);
+
+		expect(options).toHaveLength(4);
+		expect(options.every(a => a.minLevel === 1)).toBe(true);
+	});
+
+	it('respects the action type restriction', () => {
+		const choice = createChoice();
+		choice.data.type = AbilityUsage.Maneuver;
+		const options = HeroLogic.getClassAbilityOptions(createHero(2), [], choice.data);
+
+		expect(options.map(a => a.name)).toEqual([ 'Instantaneous Excavation', 'No More than a Breeze', 'O Flower Aid, O Earth Defend' ]);
+	});
+
+	it.each([ [ 1, 10 ], [ 2, 1 ] ])('uses hero level %i rather than borrowed class level %i', (heroLevel, sourceLevel) => {
+		const hero = createHero(heroLevel);
+		hero.class = FactoryLogic.createClass();
+		hero.class.level = heroLevel;
+		const sourcebook = FactoryLogic.createSourcebook();
+		const borrowedClass = Utils.copy(elementalist);
+		borrowedClass.level = sourceLevel;
+		sourcebook.classes = [ borrowedClass ];
+		const choice = createChoice();
+		choice.data.classID = elementalist.id;
+		const options = HeroLogic.getClassAbilityOptions(hero, [ sourcebook ], choice.data);
+
+		expect(options).toHaveLength(heroLevel === 1 ? 4 : 8);
+		expect(options.some(a => a.name === 'O Flower Aid, O Earth Defend')).toBe(heroLevel === 2);
+	});
+
+	it('respects subclass sources and levels for borrowed class abilities', () => {
+		const choice = TitleData.awakened.features.find(f => f.type === FeatureType.ClassAbility);
+		if (!choice || choice.type !== FeatureType.ClassAbility) {
+			throw new Error('Missing Rogue Talent choice');
+		}
+		const options = HeroLogic.getClassAbilityOptions(createHero(5), [ core ], choice.data);
+
+		expect(options.map(a => a.name).sort()).toEqual([ 'Again', 'Feedback Loop', 'Repel' ]);
+	});
+
+	it('returns no options when the source class is unavailable', () => {
+		const hero = FactoryLogic.createHero();
+		const choice = createChoice();
+		expect(HeroLogic.getClassAbilityOptions(hero, [], choice.data)).toEqual([]);
+		choice.data.classID = 'missing-class';
+		expect(HeroLogic.getClassAbilityOptions(createHero(1), [ core ], choice.data)).toEqual([]);
+	});
+
+	it('excludes abilities already selected in another choice', () => {
+		const hero = createHero(2);
+		const firstChoice = createChoice();
+		firstChoice.data.selectedIDs = [ 'elementalist-ability-17' ];
+		hero.features.push(firstChoice);
+		const options = HeroLogic.getClassAbilityOptions(hero, [], createChoice().data);
+
+		expect(options).toHaveLength(7);
+		expect(options.some(a => a.id === 'elementalist-ability-17')).toBe(false);
+	});
+
+	it('keeps saved selections intact after the hero level decreases', () => {
+		const hero = createHero(1);
+		const choice = createChoice();
+		choice.data.selectedIDs = [ 'elementalist-ability-17' ];
+		hero.features.push(choice);
+		const snapshot = Utils.copy(hero);
+		const options = HeroLogic.getClassAbilityOptions(hero, [], choice.data);
+
+		expect(options.some(a => a.id === 'elementalist-ability-17')).toBe(false);
+		expect(HeroLogic.getAbilities(hero, [], []).some(a => a.ability.id === 'elementalist-ability-17')).toBe(true);
+		expect(hero).toEqual(snapshot);
 	});
 });

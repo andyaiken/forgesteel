@@ -616,6 +616,11 @@ export class SheetFormatter {
 			const benefitText = this.getThresholdBenefitText(f.data.feature).join('\n');
 			size = headerSize + this.countLines(benefitText, lineWidth, 0, 0.88);
 			size += bottomMargin;
+		} else if (f.type === FeatureType.SummonChoice) {
+			const selections = f.data.selected.map(s => s.monster.name).join(', ') || 'Unselected';
+			size = this.countLines(`${f.data.count} ${this.pluralize(f.name, f.data.count)}: ${selections}`, lineWidth) + 0.5;
+		} else if (f.type === FeatureType.Fixture) {
+			size = this.countLines(`Fixture: ${f.data.fixture.name}`, lineWidth);
 		} else if ([ FeatureType.Choice,
 			FeatureType.ItemChoice,
 			FeatureType.SkillCancelChoice,
@@ -654,6 +659,22 @@ export class SheetFormatter {
 		}
 		const totalSize = headerSize + size;
 		return +totalSize.toFixed(1);
+	};
+
+	static splitFeatureReferences = (features: { feature: Feature, source: string }[], hero: Hero, lineWidth: number, columns: number, maxHeight: number) => {
+		const groups: typeof features[] = [];
+		let group: typeof features = [];
+		features.forEach(feature => {
+			if (group.length && this.calculateFeatureReferenceSize([ ...group, feature ], hero, lineWidth, columns) > maxHeight) {
+				groups.push(group);
+				group = [];
+			}
+			group.push(feature);
+		});
+		if (group.length) {
+			groups.push(group);
+		}
+		return groups;
 	};
 
 	static calculateInventorySize = (items: ItemSheet[], lineWidth: number): number => {

@@ -126,6 +126,16 @@ describe.concurrent('cleanupText', () => {
 });
 
 describe.concurrent('calculateFeatureSize', () => {
+	test('reserves space for the names of selected minions', () => {
+		const choice = FactoryLogic.feature.createSummonChoice({ id: 'minion-choice', name: 'Signature Minion', options: [] });
+		const sizeWithoutSelection = SheetFormatter.calculateFeatureSize(choice, null, 35);
+		choice.data.selected = [ 'Grave Knight', 'Zombie Lumberer', 'Skeleton' ].map(name => FactoryLogic.createSummon({
+			monster: { ...demon.monsters[0], name: name }, cost: 3, count: 2
+		}));
+
+		expect(SheetFormatter.calculateFeatureSize(choice, null, 35)).toBeGreaterThan(sizeWithoutSelection);
+	});
+
 	test('properly calculates size for features with tables', () => {
 		const feature = FactoryLogic.feature.create({
 			id: 'calc-feature-size-tables-1',
@@ -666,6 +676,27 @@ describe('getPotencyResistanceSummary', () => {
 	test('it should read an empty characteristic list as every characteristic', () => {
 		const data = FactoryLogic.feature.createPotencyResistance({ id: 'p2', characteristics: [], value: 2 }).data;
 		expect(SheetFormatter.getPotencyResistanceSummary(data)).toBe('All characteristics +2 when resisting potencies');
+	});
+});
+
+describe('splitFeatureReferences', () => {
+	const hero = FactoryLogic.createHero();
+	const features = Array.from({ length: 8 }, (_, i) => ({
+		feature: FactoryLogic.feature.create({ id: `reference-${i}`, name: `Feature ${i}`, description: 'A paragraph of detailed reference rules. '.repeat(12) }),
+		source: i < 3 ? 'Circle of Graves' : 'Summoner'
+	}));
+
+	test('splits long references without dropping or duplicating features or their sources', () => {
+		const groups = SheetFormatter.splitFeatureReferences(features, hero, 60, 1, 35);
+
+		expect(groups.length).toBeGreaterThan(1);
+		expect(groups.flat()).toEqual(features);
+		groups.forEach(group => expect(SheetFormatter.calculateFeatureReferenceSize(group, hero, 60, 1)).toBeLessThanOrEqual(35));
+	});
+
+	test('keeps a reference together when it fits and omits empty cards', () => {
+		expect(SheetFormatter.splitFeatureReferences(features.slice(0, 2), hero, 100, 1, 88)).toEqual([ features.slice(0, 2) ]);
+		expect(SheetFormatter.splitFeatureReferences([], hero, 100, 1, 88)).toEqual([]);
 	});
 });
 

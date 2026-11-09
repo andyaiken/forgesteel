@@ -11,6 +11,7 @@ export interface FillerCard {
 	width: number;
 	height: number;
 	shown: boolean;
+	featureReferences?: HeroSheet['featuresReferenceOther'];
 };
 
 export interface ExtraCards {
@@ -94,7 +95,7 @@ export class SheetLayout {
 	};
 
 	static getFillerCards = (slotsToFillInRow: number, availableLinesY: number, rowH: number, extraCards: ExtraCards, layout: CardPageLayout): JSX.Element[] => {
-		let refCards = [];
+		const refCards = [];
 		let spaceInRow = (slotsToFillInRow % layout.perRow) || layout.perRow;
 		if (spaceInRow === layout.perRow) {
 			rowH = 0;
@@ -185,23 +186,7 @@ export class SheetLayout {
 				continue nextCard;
 			}
 
-			// no cards found to fill the spot, clean up and break out
-			if (spaceInRow !== layout.perRow) {
-				// Incomplete row, remove partial row
-				const newEnd = refCards.length - (layout.perRow - spaceInRow);
-				refCards.slice(newEnd).forEach(card => {
-					const req = extraCards.required.find(c => c.element === card);
-					if (req) {
-						req.shown = false;
-					} else {
-						const opt = extraCards.optional.find(c => c.element === card);
-						if (opt) {
-							opt.shown = false;
-						}
-					}
-				});
-				refCards = refCards.slice(0, newEnd);
-			}
+			// A partial final row is valid, including when it contains stacked or wide cards.
 			return refCards;
 		}
 		return refCards;
@@ -430,7 +415,29 @@ export class SheetLayout {
 		return pages;
 	};
 
-	static getMonsterCardPages = (monsterCards: FillerCard[], layout: CardPageLayout, idPrefix = 'extra') => {
+	private static getOrderedCards = (cards: FillerCard[], layout: CardPageLayout): JSX.Element[] => {
+		const elements: JSX.Element[] = [];
+		let pageHeight = 0;
+		let rowHeight = 0;
+		let rowWidth = 0;
+		for (const card of cards.filter(card => !card.shown)) {
+			if (rowWidth + card.width > layout.perRow) {
+				pageHeight += rowHeight + 2.5;
+				rowHeight = 0;
+				rowWidth = 0;
+			}
+			if (card.width > layout.perRow || pageHeight + Math.max(rowHeight, card.height) > layout.linesY) {
+				break;
+			}
+			elements.push(card.element);
+			card.shown = true;
+			rowHeight = Math.max(rowHeight, card.height);
+			rowWidth += card.width;
+		}
+		return elements;
+	};
+
+	static getMonsterCardPages = (monsterCards: FillerCard[], layout: CardPageLayout, idPrefix = 'extra', preserveOrder = false) => {
 		const pages: JSX.Element[] = [];
 		let i = 0;
 		const extraCards: ExtraCards = {
@@ -439,12 +446,14 @@ export class SheetLayout {
 		};
 
 		while (extraCards.required.find(c => !c.shown)) {
-			const cards = SheetLayout.getFillerCards(layout.perRow, layout.linesY, 0, extraCards, layout);
+			const cards = preserveOrder
+				? this.getOrderedCards(extraCards.required, layout)
+				: this.getFillerCards(layout.perRow, layout.linesY, 0, extraCards, layout);
 			if (cards.length === 0) {
 				console.warn('No cards added, but required cards still not shown!', extraCards.required);
 				break;
 			}
-			const pageClasses = [ 'extra-cards', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
+			const pageClasses = [ 'extra-cards', 'monster-cards', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
 			pages.push(
 				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />

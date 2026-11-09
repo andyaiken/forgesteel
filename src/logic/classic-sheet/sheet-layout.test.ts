@@ -116,6 +116,64 @@ describe('getFillerCards', () => {
 			</div>
 		`);
 	});
+
+	test('keeps a partially filled final row instead of dropping its required card', () => {
+		const card = makeFillerCard('minion', 30, 1, false);
+		const result = SheetLayout.getFillerCards(2, 88, 0, { required: [ card ], optional: [] }, { perRow: 2 } as CardPageLayout);
+
+		expect(result).toEqual([ 'minion' ]);
+		expect(card.shown).toBe(true);
+	});
+
+	test('keeps wide cards when the final row cannot be filled', () => {
+		const card = makeFillerCard('reference', 30, 2, false);
+		const result = SheetLayout.getFillerCards(3, 88, 0, { required: [ card ], optional: [] }, { perRow: 3 } as CardPageLayout);
+
+		expect(result).toEqual([ 'reference' ]);
+		expect(card.shown).toBe(true);
+	});
+});
+
+describe('getMonsterCardPages', () => {
+	test('preserves the supplied order across pages when card heights differ', () => {
+		const cards = [
+			makeFillerCard('signature-a', 20, 1, false),
+			makeFillerCard('signature-b', 25, 1, false),
+			makeFillerCard('minion-3', 60, 1, false),
+			makeFillerCard('minion-5', 50, 1, false),
+			makeFillerCard('fixture', 10, 1, false)
+		];
+		const layout = { perRow: 2, linesY: 88, orientation: 'portrait' } as CardPageLayout;
+		const pages = SheetLayout.getMonsterCardPages(cards, layout, 'summons', true);
+
+		expect(pages).toHaveLength(2);
+		expect(pages.flatMap(page => page.props.children[1].props.children)).toEqual(cards.map(card => card.element));
+		expect(cards.every(card => card.shown)).toBe(true);
+	});
+
+	test('moves a wide card to the next row without letting later cards pass it', () => {
+		const cards = [
+			makeFillerCard('signature', 30, 1, false),
+			makeFillerCard('wide-minion', 60, 2, false),
+			makeFillerCard('fixture', 10, 1, false)
+		];
+		const layout = { perRow: 2, linesY: 88, orientation: 'portrait' } as CardPageLayout;
+		const pages = SheetLayout.getMonsterCardPages(cards, layout, 'summons', true);
+
+		expect(pages).toHaveLength(2);
+		expect(pages[0].props.children[1].props.children).toEqual([ cards[0].element ]);
+		expect(pages[1].props.children[1].props.children).toEqual([ cards[1].element, cards[2].element ]);
+	});
+
+	test('includes every minion on consecutive pages, including a final unpaired card', () => {
+		const cards = Array.from({ length: 5 }, (_, i) => makeFillerCard(`minion-${i}`, 60, 1, false));
+		const layout = { perRow: 2, linesY: 88, orientation: 'portrait' } as CardPageLayout;
+		const pages = SheetLayout.getMonsterCardPages(cards, layout, 'summons');
+
+		expect(pages).toHaveLength(3);
+		expect(cards.every(card => card.shown)).toBe(true);
+		expect(pages.flatMap(page => page.props.children[1].props.children)).toEqual(cards.map(card => card.element));
+	});
 });
 
 describe('findExtraCard', () => {

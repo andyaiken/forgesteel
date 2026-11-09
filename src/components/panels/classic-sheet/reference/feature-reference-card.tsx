@@ -10,14 +10,20 @@ import './feature-reference-card.scss';
 interface Props {
 	character: HeroSheet;
 	columns?: number;
+	width?: number;
 }
 
 export const FeatureReferenceCard = (props: Props) => {
 	const character = props.character;
 
 	const columns = props.columns || 1;
+	const width = props.width ?? columns + 1;
 
 	const cardClasses = [ 'feature-reference', 'card' ];
+	cardClasses.push(`slots-${width}-wide`);
+	if (width === 1) {
+		cardClasses.push('single');
+	}
 	if (columns > 2) {
 		cardClasses.push('extra-wide');
 	} else if (columns > 1) {

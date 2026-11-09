@@ -621,17 +621,18 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					const selectedIDs = oFeature.data.selected.filter(i => !!i).map(i => i.id);
-					feature.data.selected = SourcebookLogic.getItems(sourcebooks)
-						.filter(i => selectedIDs.includes(i.id))
-						.map(i => {
-							const copiedItem = Utils.copy(i);
-							const origItem = oFeature.data.selected.find(oi => oi && (oi.id === i.id));
-							if (origItem) {
-								copiedItem.count = origItem.count;
-							}
+					const items = SourcebookLogic.getItems(sourcebooks);
+					feature.data.selected = oFeature.data.selected.filter(i => !!i).map(origItem => {
+						const item = items.find(i => i.id === origItem.id);
+						if (item) {
+							const copiedItem = Utils.copy(item);
+							copiedItem.count = origItem.count;
 							return copiedItem;
-						});
+						}
+
+						// Items chosen in the UI have their own IDs, so keep the saved copy when no sourcebook item matches.
+						return origItem;
+					});
 					break;
 				}
 				case FeatureType.Kit: {

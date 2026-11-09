@@ -1,4 +1,4 @@
-import { FeatureClassAbility, FeatureComplication, FeatureSummonChoice } from '@/models/feature';
+import { FeatureClassAbility, FeatureComplication, FeatureItemChoice, FeatureSummonChoice } from '@/models/feature';
 import { describe, expect, it } from 'vitest';
 import { Complication } from '@/models/complication';
 import { ComplicationData } from '@/data/complication-data';
@@ -11,6 +11,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { TrinketData } from '@/data/items/trinket-data';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { beastheartSourcebook } from '@/data/sourcebooks/official/beastheart';
@@ -70,6 +71,42 @@ describe('complications added through customize', () => {
 		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
 
 		expect(HeroLogic.getComplications(hero)).toEqual([]);
+	});
+});
+
+describe('items chosen through a complication', () => {
+	it('keeps an item with its own ID across import and reload', () => {
+		let hero = FactoryLogic.createHero();
+		hero.complication = Utils.copy(ComplicationData.secretTwin);
+		const choice = hero.complication.features.find(f => f.type === FeatureType.ItemChoice) as FeatureItemChoice;
+		const item = Utils.copy(TrinketData.hellchargerHelm);
+		item.id = Utils.guid();
+		item.count = 2;
+		item.effect = 'Customized effect';
+		choice.data.selected = [ item ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getItems(hero)).toEqual([ item ]);
+
+		hero = JSON.parse(JSON.stringify(hero));
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getItems(hero)).toEqual([ item ]);
+	});
+
+	it('refreshes a matching sourcebook item while keeping its count', () => {
+		const hero = FactoryLogic.createHero();
+		hero.complication = Utils.copy(ComplicationData.secretTwin);
+		const choice = hero.complication.features.find(f => f.type === FeatureType.ItemChoice) as FeatureItemChoice;
+		const item = Utils.copy(TrinketData.hellchargerHelm);
+		item.description = 'Outdated description';
+		item.count = 3;
+		choice.data.selected = [ item ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(HeroLogic.getItems(hero)).toEqual([ { ...TrinketData.hellchargerHelm, count: 3 } ]);
 	});
 });
 

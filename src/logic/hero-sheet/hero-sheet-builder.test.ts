@@ -33,6 +33,7 @@ import { nullClass } from '@/data/classes/null/null';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { retainer } from '@/data/monsters/retainer';
 import { stormwight } from '@/data/classes/fury/stormwight';
+import { summoner } from '@/data/classes/summoner/summoner';
 
 vi.mock('@/logic/hero-logic', () => {
 	const HeroLogic = vi.fn();
@@ -238,11 +239,59 @@ describe('buildRetainerSheet', () => {
 });
 
 describe('buildHeroSheet', () => {
+	test('orders signature minions alphabetically, then other minions by numeric essence cost and name', () => {
+		const hero = FactoryLogic.createHero();
+		const makeSummon = (name: string, cost: number, signature = false) => {
+			const summon = Utils.copy(minionSummon1);
+			summon.id = name;
+			summon.monster.id = name;
+			summon.monster.name = name;
+			summon.info.cost = cost;
+			summon.info.isSignature = signature;
+			return summon;
+		};
+		hero.features.push(FactoryLogic.feature.createSummon({ id: 'minions', summons: [
+			makeSummon('Expensive', 10),
+			makeSummon('Signature Z', 0, true),
+			makeSummon('Zombie', 3),
+			makeSummon('Signature A', 1, true),
+			makeSummon('Archer', 3),
+			makeSummon('Free', 0)
+		] }));
+
+		const sheet = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], FactoryLogic.createOptions());
+
+		expect(sheet.summons.map(summon => summon.name)).toEqual([
+			'Signature A', 'Signature Z', 'Free', 'Archer', 'Zombie', 'Expensive'
+		]);
+	});
+
 	const buildComplicationFeature = (id: string, complication: Complication) => {
 		const feature = FactoryLogic.feature.createComplication({ id: id });
 		feature.data.selected = Utils.copy(complication);
 		return feature;
 	};
+
+	test('keeps minion and fixture selections under the class heading while preserving subclass rules', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(summoner);
+		hero.class.level = 3;
+		const subclass = hero.class.subclasses.find(sc => sc.id === circleOfGraves.id)!;
+		subclass.selected = true;
+		subclass.featuresByLevel.flatMap(lvl => lvl.features).forEach(feature => {
+			if (feature.type === FeatureType.SummonChoice) {
+				feature.data.selected = feature.data.options.slice(0, feature.data.count);
+			}
+		});
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [ core, orden ], FactoryLogic.createOptions());
+		const selections = result.featuresReferenceOther.filter(f => [ FeatureType.SummonChoice, FeatureType.Fixture ].includes(f.feature.type));
+
+		expect(selections).toHaveLength(4);
+		expect(selections.every(f => f.source === 'Summoner')).toBe(true);
+		expect(result.featuresReferenceOther.find(f => f.feature.name === 'Dead Men Tell All Tales')?.source).toBe('Circle of Graves');
+		expect(result.fixtures.map(f => f.name)).toEqual([ 'Barrow Gates' ]);
+	});
 	test('it should build follower sheets for all correct types of follower/companion features', () => {
 		const pregen = PregenData.getPregens()[0];
 		const options = { xpPerLevel: 16 } as Options;

@@ -43,6 +43,14 @@
 }
 
 #classic-sheet .hero-sheet {
+    .monster-cards.page {
+        align-content: flex-start;
+
+        .stacked-cards :is(.monster.card, .terrain.card) {
+            flex-grow: 0;
+        }
+    }
+
     // The sheet has its own print-tuned palette, so the markers use that rather than the screen colours
     .roll-modifier-marker {
         .edge {

@@ -246,11 +246,16 @@ export class HeroSheetBuilder {
 
 		// #region Class Features
 		if (hero.class) {
+			const className = hero.class.name;
 			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero.class.level || 1, hero.state.tutorialMode)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.map(f => {
 					f.feature = SheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
+					// Keep the class's minion and fixture selections with its other build choices.
+					if ([ FeatureType.SummonChoice, FeatureType.Fixture ].includes(f.feature.type)) {
+						f.source = className;
+					}
 					return f;
 				});
 
@@ -479,6 +484,15 @@ export class HeroSheetBuilder {
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 
 		sheet.summons = HeroLogic.getSummons(hero).filter(f => CreatureLogic.isSummon(f))
+			.sort((a, b) => {
+				if (a.info.isSignature !== b.info.isSignature) {
+					return a.info.isSignature ? -1 : 1;
+				}
+				if (!a.info.isSignature && a.info.cost !== b.info.cost) {
+					return a.info.cost - b.info.cost;
+				}
+				return a.monster.name.localeCompare(b.monster.name);
+			})
 			.map(f => this.buildSummonSheet(f, hero)).filter(s => !!s);
 
 		sheet.fixtures = HeroLogic.getFixtures(hero).map(f => ClassicSheetBuilder.buildFixtureSheet(f, hero));

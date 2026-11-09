@@ -75,6 +75,7 @@ Whenever you use an ability with a strain effect outside of combat, you can take
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-a',
 					count: 2,
+					options: [ 'Psionics', 'Read Person' ],
 					selected: [ 'Psionics', 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

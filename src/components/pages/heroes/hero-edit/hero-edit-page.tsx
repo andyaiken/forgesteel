@@ -30,6 +30,7 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
 import { SearchBox } from '@/components/controls/text-input/text-input';
+import { SelectionLogic } from '@/logic/selection-logic';
 import { SkillsLanguagesSection } from '@/components/pages/heroes/hero-edit/skills-languages-section/skills-languages-section';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -49,6 +50,7 @@ enum PageState {
 	Optional = 'Optional',
 	NotStarted = 'Not Started',
 	InProgress = 'In Progress',
+	Warning = 'Needs Review',
 	Completed = 'Completed'
 }
 
@@ -80,6 +82,14 @@ export const HeroEditPage = (props: Props) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ props.sourcebooks, sourcebookKey, extensionKey ]
 	);
+
+	const selectionWarnings = useMemo(() => SelectionLogic.getWarnings(hero, heroSourcebooks), [ hero, heroSourcebooks ]);
+	const setAllowAnySelection = (kind: 'skills' | 'languages', value: boolean) => {
+		const copy = Utils.copy(hero);
+		copy.selectionWarningsDismissed = { skills: false, languages: false, ...copy.selectionWarningsDismissed, [kind]: value };
+		setHero(copy);
+		setDirty(true);
+	};
 
 	const getPageState = (page: HeroEditTab) => {
 		switch (page) {
@@ -150,6 +160,9 @@ export const HeroEditPage = (props: Props) => {
 					return PageState.Optional;
 				}
 			case 'selections': {
+				if (SelectionLogic.hasUndismissedWarnings(selectionWarnings, hero.selectionWarningsDismissed)) {
+					return PageState.Warning;
+				}
 				const choices = HeroLogic.getFeatures(hero)
 					.map(f => f.feature)
 					.filter(f => f.type === FeatureType.SkillChoice || f.type === FeatureType.LanguageChoice)
@@ -519,7 +532,7 @@ export const HeroEditPage = (props: Props) => {
 								'details'
 							] as const).map(tab => ({
 								value: tab,
-								label: <div className='ds-text'>{getTabLabel(tab)}</div>
+								label: <div className='ds-text'>{getTabLabel(tab)}{getPageState(tab) === PageState.Warning ? ' — Needs Review' : ''}</div>
 							}))}
 							value={page}
 							onChange={value => navigation.goToHeroEdit(heroID!, value)}
@@ -650,6 +663,11 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<SkillsLanguagesSection
 						hero={hero}
+						warnings={selectionWarnings}
+						allowAnySkills={hero.selectionWarningsDismissed?.skills || false}
+						allowAnyLanguages={hero.selectionWarningsDismissed?.languages || false}
+						setAllowAnySkills={value => setAllowAnySelection('skills', value)}
+						setAllowAnyLanguages={value => setAllowAnySelection('languages', value)}
 						sourcebooks={heroSourcebooks}
 						setFeaturesData={setFeaturesData}
 						setFeatureData={setFeatureData}

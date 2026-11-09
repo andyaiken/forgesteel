@@ -705,6 +705,7 @@ As a magewright, you are able to utilize the majesty of magic and infuse it into
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'magewright-1-3',
+					options: [ 'Magic' ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -1494,6 +1495,7 @@ Until the end of the encounter or you are dying, the target gains the following 
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'magewright-sub-1-1-1',
+							options: [ 'Mechanics' ],
 							selected: [ 'Mechanics' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
@@ -2509,6 +2511,7 @@ When you take a respite activity to change your upgrade or choose a new ward, yo
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'magewright-sub-2-1-1',
+							options: [ 'Alchemy' ],
 							selected: [ 'Alchemy' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
@@ -2711,6 +2714,7 @@ As a maneuver, you can expend project points from the stone and craft any consum
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'magewright-sub-3-1-1',
+							options: [ 'Blacksmithing' ],
 							selected: [ 'Blacksmithing' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
@@ -2843,6 +2847,7 @@ You can target yourself instead of one creature with this ability. The targets b
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'magewright-sub-4-1-1',
+							options: [ 'Jewelry' ],
 							selected: [ 'Jewelry' ]
 						}),
 						FactoryLogic.feature.createHeroicResourceGain({
@@ -3796,6 +3801,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 						}),
 						FactoryLogic.feature.createSkillChoice({
 							id: 'vessel-subclass-1-1-skill',
+							options: [ 'Persuade' ],
 							selected: [ 'Persuade' ]
 						}),
 						FactoryLogic.feature.createAbility({
@@ -3949,6 +3955,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 						}),
 						FactoryLogic.feature.createSkillChoice({
 							id: 'vessel-subclass-2-1-skill',
+							options: [ 'Endurance' ],
 							selected: [ 'Endurance' ]
 						}),
 						FactoryLogic.feature.createAbility({
@@ -4105,6 +4112,7 @@ Any enemy who moves into the area for the first time in a combat round or starts
 						}),
 						FactoryLogic.feature.createSkillChoice({
 							id: 'vessel-subclass-3-1-skill',
+							options: [ 'Psionics' ],
 							selected: [ 'Psionics' ]
 						}),
 						FactoryLogic.feature.createAbility({

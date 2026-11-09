@@ -1,4 +1,4 @@
-import { Button, Divider, Space } from 'antd';
+import { Alert, Button, Divider, Space } from 'antd';
 import { SearchBox, TextInput } from '@/components/controls/text-input/text-input';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -79,6 +79,11 @@ export const SkillSelectModal = (props: Props) => {
 								<Divider />
 								<Expander title='Other skills'>
 									<Space orientation='vertical' style={{ width: '100%' }}>
+										<Alert
+											type='warning'
+											showIcon={true}
+											title='Other skills may be chosen with your Director’s approval.'
+										/>
 										{
 											otherSkills.map((s, n) => (
 												<SelectablePanel key={n} onSelect={() => props.onSelect(s)}>

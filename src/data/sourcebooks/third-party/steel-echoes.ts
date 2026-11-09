@@ -77,10 +77,12 @@ As a Scion, you are the the quiet before the storm. You move like the wind, and 
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'scion-skill-choice-1',
+					options: [ AbilityKeyword.Magic ],
 					selected: [ AbilityKeyword.Magic ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'scion-skill-choice-2',
+					options: [ 'Strategy' ],
 					selected: [ 'Strategy' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -550,6 +552,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'scion-blinkblade-2',
+							options: [ 'Gymnastics' ],
 							selected: [ 'Gymnastics' ]
 						}),
 						FactoryLogic.feature.createMultiple({
@@ -693,6 +696,7 @@ You cannot use Enweave more than twice before applying its effect to an ability.
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'scion-runewright-2',
+							options: [ 'Mechanics' ],
 							selected: [ 'Mechanics' ]
 						}),
 						FactoryLogic.feature.createAbility({
@@ -816,6 +820,7 @@ The area remains until the end of the encounter or you are dying. Choose one of 
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'scion-soulforged-2',
+							options: [ 'Empathize' ],
 							selected: [ 'Empathize' ]
 						}),
 						FactoryLogic.feature.create({

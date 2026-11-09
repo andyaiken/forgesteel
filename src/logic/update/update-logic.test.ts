@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { LanguageType } from '@/enums/language-type';
 import { Options } from '@/models/options';
 import { UpdateLogic } from '@/logic/update/update-logic';
 
@@ -112,5 +113,41 @@ describe('updateFeature', () => {
 		UpdateLogic.updateFeature(feature);
 
 		expect(feature.data.maxLevel).toBe(10);
+	});
+});
+
+describe('legacy language spelling', () => {
+	it('normalizes a granted language and leaves other languages unchanged', () => {
+		const legacy = FactoryLogic.feature.createLanguage({ id: 'legacy', language: 'Kalliac' });
+		const other = FactoryLogic.feature.createLanguage({ id: 'other', language: 'Caelian' });
+
+		UpdateLogic.updateFeature(legacy);
+		UpdateLogic.updateFeature(other);
+
+		expect(legacy.data.language).toBe('Kalliak');
+		expect(other.data.language).toBe('Caelian');
+	});
+
+	it('normalizes every option and selection while restoring missing allowed types', () => {
+		const feature = FactoryLogic.feature.createLanguageChoice({
+			id: 'legacy', options: [ 'Kalliac', 'Caelian' ], selected: [ 'Custom', 'Kalliac' ]
+		});
+		Reflect.deleteProperty(feature.data, 'allowedTypes');
+
+		UpdateLogic.updateFeature(feature);
+		UpdateLogic.updateFeature(feature);
+
+		expect(feature.data.options).toEqual([ 'Kalliak', 'Caelian' ]);
+		expect(feature.data.selected).toEqual([ 'Custom', 'Kalliak' ]);
+		expect(feature.data.allowedTypes).toEqual([ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]);
+	});
+
+	it('preserves explicitly restricted allowed types during migration', () => {
+		const feature = FactoryLogic.feature.createLanguageChoice({ id: 'restricted', options: [ 'Kalliac' ], allowedTypes: [] });
+
+		UpdateLogic.updateFeature(feature);
+
+		expect(feature.data.options).toEqual([ 'Kalliak' ]);
+		expect(feature.data.allowedTypes).toEqual([]);
 	});
 });

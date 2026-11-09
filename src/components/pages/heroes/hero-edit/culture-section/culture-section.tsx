@@ -3,6 +3,7 @@ import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '
 import { FeatureConfigPanel, SelectionBox } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { ReactNode, useState } from 'react';
 import { Culture } from '@/models/culture';
+import { CultureLogic } from '@/logic/culture-logic';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
 import { CultureType } from '@/enums/culture-type';
 import { Element } from '@/models/element';
@@ -92,7 +93,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			.filter(f => FeatureLogic.isChoice(f))
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+					<FeatureConfigPanel feature={CultureLogic.getFeatureDisplay(f, props.hero.culture!)} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 
@@ -120,8 +121,8 @@ export const CultureSection = (props: CultureSectionProps) => {
 									content={
 										<Field
 											style={{ flex: '1 1 0' }}
-											label={props.hero.culture.environment.name}
-											value={<Markdown text={props.hero.culture.environment.description} useSpan={true} />}
+											label={CultureLogic.getAspectDisplay(props.hero.culture.environment, 'environment').name}
+											value={<Markdown text={CultureLogic.getAspectDisplay(props.hero.culture.environment, 'environment').description} useSpan={true} />}
 										/>
 									}
 									onRemove={() => props.selectEnvironment(null)}
@@ -137,8 +138,8 @@ export const CultureSection = (props: CultureSectionProps) => {
 									content={
 										<Field
 											style={{ flex: '1 1 0' }}
-											label={props.hero.culture.organization.name}
-											value={<Markdown text={props.hero.culture.organization.description} useSpan={true} />}
+											label={CultureLogic.getAspectDisplay(props.hero.culture.organization, 'organization').name}
+											value={<Markdown text={CultureLogic.getAspectDisplay(props.hero.culture.organization, 'organization').description} useSpan={true} />}
 										/>
 									}
 									onRemove={() => props.selectOrganization(null)}
@@ -154,8 +155,8 @@ export const CultureSection = (props: CultureSectionProps) => {
 									content={
 										<Field
 											style={{ flex: '1 1 0' }}
-											label={props.hero.culture.upbringing.name}
-											value={<Markdown text={props.hero.culture.upbringing.description} useSpan={true} />}
+											label={CultureLogic.getAspectDisplay(props.hero.culture.upbringing, 'upbringing').name}
+											value={<Markdown text={CultureLogic.getAspectDisplay(props.hero.culture.upbringing, 'upbringing').description} useSpan={true} />}
 										/>
 									}
 									onRemove={() => props.selectUpbringing(null)}
@@ -246,7 +247,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			</div>
 			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
-					features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
+					features={EnvironmentData.getEnvironments().map(f => ({ feature: CultureLogic.getAspectDisplay(f, 'environment'), value: 1 }))}
 					sourcebooks={props.sourcebooks}
 					onSelect={f => {
 						setShowEnvironment(false);
@@ -257,7 +258,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			</Drawer>
 			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
-					features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
+					features={OrganizationData.getOrganizations().map(f => ({ feature: CultureLogic.getAspectDisplay(f, 'organization'), value: 1 }))}
 					sourcebooks={props.sourcebooks}
 					onSelect={f => {
 						setShowOrganization(false);
@@ -268,7 +269,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 			</Drawer>
 			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
-					features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
+					features={UpbringingData.getUpbringings().map(f => ({ feature: CultureLogic.getAspectDisplay(f, 'upbringing'), value: 1 }))}
 					sourcebooks={props.sourcebooks}
 					onSelect={f => {
 						setShowUpbringing(false);

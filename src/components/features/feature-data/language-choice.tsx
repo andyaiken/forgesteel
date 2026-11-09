@@ -5,6 +5,7 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { LanguageLogic } from '@/logic/language-logic';
 import { LanguageSelectModal } from '@/components/modals/select/language-select/language-select-modal';
 import { LanguageType } from '@/enums/language-type';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -142,9 +143,13 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 	const [ languageSelectorOpen, setLanguageSelectorOpen ] = useState<boolean>(false);
 
 	const currentLanguages = HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name);
-	const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
+	const allLanguages = SourcebookLogic.getLanguages(props.sourcebooks);
+	const languages = allLanguages
 		.filter(l => !currentLanguages.includes(l.name))
-		.filter(l => props.data.allowedTypes.includes(l.type));
+		.filter(l => LanguageLogic.isAllowed(l.name, props.data, allLanguages));
+	props.data.options
+		.filter(name => !currentLanguages.includes(name) && !languages.some(l => l.name === name))
+		.forEach(name => languages.push({ name, description: '', type: LanguageType.Custom, related: [] }));
 	const distinctLanguages = Collections.distinct(languages, l => l.name);
 	const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
@@ -181,6 +186,8 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 			<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} size={500}>
 				<LanguageSelectModal
 					languages={sortedLanguages}
+					sourcebooks={props.sourcebooks}
+					excludeLanguages={currentLanguages}
 					onSelect={l => {
 						setLanguageSelectorOpen(false);
 

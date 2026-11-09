@@ -18,6 +18,7 @@ export const reaver: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-sub-2-1-1',
+					options: [ 'Hide' ],
 					selected: [ 'Hide' ]
 				}),
 				FactoryLogic.feature.createKitChoice({

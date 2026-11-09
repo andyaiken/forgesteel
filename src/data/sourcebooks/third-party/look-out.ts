@@ -52,10 +52,12 @@ As a kiln, you arrive to stoke the flame wherever the spark of opportunity prese
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'kiln-skill-choice-1',
+					options: [ AbilityKeyword.Magic ],
 					selected: [ AbilityKeyword.Magic ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'kiln-skill-choice-2',
+					options: [ 'Carpentry' ],
 					selected: [ 'Carpentry' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -420,6 +422,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'kiln-flameweaver-2',
+							options: [ 'Navigate' ],
 							selected: [ 'Navigate' ]
 						}),
 						FactoryLogic.feature.createPackageContent({
@@ -501,6 +504,7 @@ Until the end of the encounter, targets of your Stoke the Flame ability gain a 2
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'kiln-hexblaze-2',
+							options: [ 'Endurance' ],
 							selected: [ 'Endurance' ]
 						}),
 						FactoryLogic.feature.createPackageContent({
@@ -613,6 +617,7 @@ Changing the color of your flames requires the use of this ability again.`)
 					features: [
 						FactoryLogic.feature.createSkillChoice({
 							id: 'kiln-smokewight-2',
+							options: [ 'Escape Artist' ],
 							selected: [ 'Escape Artist' ]
 						}),
 						FactoryLogic.feature.createPackageContent({

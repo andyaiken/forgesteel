@@ -40,6 +40,10 @@ export interface Hero {
 	selectedMeleeDamageBonus: string | null;
 	selectedRangedDamageBonus: string | null;
 	isActive: boolean;
+	selectionWarningsDismissed?: {
+		skills: boolean;
+		languages: boolean;
+	};
 }
 
 export interface HeroOverview {

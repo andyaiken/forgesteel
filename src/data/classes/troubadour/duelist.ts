@@ -15,6 +15,7 @@ export const duelist: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-duelist-1',
+					options: [ 'Gymnastics' ],
 					selected: [ 'Gymnastics' ]
 				}),
 				FactoryLogic.feature.createAbility({

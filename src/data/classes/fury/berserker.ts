@@ -19,6 +19,7 @@ export const berserker: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-sub-1-1-1',
+					options: [ 'Lift' ],
 					selected: [ 'Lift' ]
 				}),
 				FactoryLogic.feature.createKitChoice({

@@ -1,5 +1,6 @@
 import { useDataManager, useHeroes, useOptions, useSourcebooks } from '@/contexts/data-context';
 import { Element } from '@/models/element';
+import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterSlot } from '@/models/encounter';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
@@ -174,6 +175,19 @@ export const useHeroActions = (props: Props) => {
 		persistHero(copy);
 	};
 
+	const removeMonsterFromSquad = (hero: Hero, slotID: string, monsterID: string) => {
+		const copy = Utils.copy(hero);
+
+		copy.state.controlledSlots
+			.filter(s => s.id === slotID)
+			.forEach(slot => EncounterLogic.removeMonsterFromSlot(slot, monsterID));
+
+		// A squad with no monsters left in it goes too
+		copy.state.controlledSlots = copy.state.controlledSlots.filter(s => (s.id !== slotID) || (s.monsters.length > 0));
+
+		persistHero(copy);
+	};
+
 	const updateControlledMonster = (hero: Hero, monster: Monster) => {
 		const copy = Utils.copy(hero);
 
@@ -242,6 +256,7 @@ export const useHeroActions = (props: Props) => {
 		addSquad,
 		removeSquad,
 		addMonsterToSquad,
+		removeMonsterFromSquad,
 		setControlledMonsterDefeated,
 		setControlledMonsterHidden,
 		selectControlledMonster,

@@ -60,8 +60,9 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 		const { ConditionEndType, ConditionType } = await import('/src/enums/condition-type.ts');
 		const { Utils } = await import('/src/utils/utils.ts');
 
-		// Built-in sourcebooks load asynchronously; nothing else here works until they're cached
-		await SourcebookData.loadAll();
+		// Built-in sourcebooks load asynchronously, and are then handed in to everything that needs them,
+		// as the app does - nothing else here works without them
+		const builtInSourcebooks = await SourcebookData.loadAll();
 
 		// cookieConsent suppresses the footer banner, which would otherwise appear in every shot.
 		// The party has to be set - and match the heroes' folder - or encounters start with no
@@ -77,7 +78,7 @@ export const buildSeedState = async (page, keys = StorageKeys, heroes = heroPick
 			// no zoom-to-fit and at 50 even a small dungeon runs off the edge of the shot.
 			gridSize: 15
 		};
-		const sourcebooks = SourcebookLogic.getSourcebooks([]);
+		const sourcebooks = SourcebookLogic.getSourcebooks(builtInSourcebooks);
 		const pregens = PregenData.getPregens();
 
 		const pick = (source, name, label) => {

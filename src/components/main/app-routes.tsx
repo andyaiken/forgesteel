@@ -70,6 +70,7 @@ export const AppRoutes = (props: Props) => {
 		addSquad,
 		removeSquad,
 		addMonsterToSquad,
+		removeMonsterFromSquad,
 		setControlledMonsterDefeated,
 		setControlledMonsterHidden,
 		selectControlledMonster,
@@ -171,6 +172,7 @@ export const AppRoutes = (props: Props) => {
 									onAddSquad={addSquad}
 									onRemoveSquad={removeSquad}
 									onAddMonsterToSquad={addMonsterToSquad}
+									onRemoveMonsterFromSquad={removeMonsterFromSquad}
 									onSelectControlledMonster={selectControlledMonster}
 									onSelectControlledSquad={selectControlledSquad}
 									onSetControlledMonsterDefeated={setControlledMonsterDefeated}

@@ -279,6 +279,22 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const removeMonster = (slot: EncounterSlot, monster: Monster) => {
+				const copy = Utils.copy(encounter);
+				copy.groups
+					.filter(g => g.id === group.id)
+					.forEach(g => {
+						g.slots
+							.filter(s => s.id === slot.id)
+							.forEach(s => EncounterLogic.removeMonsterFromSlot(s, monster.id));
+
+						// A squad with no monsters left in it goes too
+						g.slots = g.slots.filter(s => (s.id !== slot.id) || (s.monsters.length > 0));
+					});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const moveSlot = (slot: EncounterSlot, toGroupID: string) => {
 				const copy = Utils.copy(encounter);
 
@@ -344,6 +360,7 @@ export const EncounterRunPanel = (props: Props) => {
 					onDelete={deleteGroup}
 					onSetDefeated={setDefeated}
 					onSetHidden={setHidden}
+					onRemoveMonster={removeMonster}
 					onMoveSlot={moveSlot}
 					onCopySlot={copySlot}
 				/>
@@ -419,6 +436,22 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const removeMonsterFromSquad = (hero: Hero, slotID: string, monsterID: string) => {
+				const copy = Utils.copy(encounter);
+				copy.heroes
+					.filter(h => h.id === hero.id)
+					.forEach(h => {
+						h.state.controlledSlots
+							.filter(s => s.id === slotID)
+							.forEach(slot => EncounterLogic.removeMonsterFromSlot(slot, monsterID));
+
+						// A squad with no monsters left in it goes too
+						h.state.controlledSlots = h.state.controlledSlots.filter(s => (s.id !== slotID) || (s.monsters.length > 0));
+					});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const setMonsterDefeated = (monster: Monster, value: boolean) => {
 				const copy = Utils.copy(encounter);
 				copy.heroes
@@ -457,6 +490,7 @@ export const EncounterRunPanel = (props: Props) => {
 					onAddSquad={addSquad}
 					onAddMonsterToSquad={addMonsterToSquad}
 					onRemoveSquad={removeSquad}
+					onRemoveMonsterFromSquad={removeMonsterFromSquad}
 					onSetMonsterDefeated={setMonsterDefeated}
 					onSetMonsterHidden={setMonsterHidden}
 					onDelete={deleteHero}

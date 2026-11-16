@@ -52,6 +52,7 @@ interface EncounterGroupHeroProps {
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onRemoveMonsterFromSquad: (hero: Hero, slotID: string, monsterID: string) => void;
 	onSetMonsterDefeated: (monster: Monster, value: boolean) => void;
 	onSetMonsterHidden: (monster: Monster, value: boolean) => void;
 	onDelete: (hero: Hero) => void;
@@ -268,6 +269,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									onSelectMinionSlot={props.onSelectMinionSlot}
 									onSetDefeated={props.onSetMonsterDefeated}
 									onSetHidden={props.onSetMonsterHidden}
+									onRemove={monster => props.onRemoveMonsterFromSquad(props.hero, slot.id, monster.id)}
 								/>
 								{slot.monsters.length === 0 ? <div>Empty</div> : null}
 							</div>
@@ -293,6 +295,7 @@ interface EncounterGroupMonsterProps {
 	onDelete: (group: EncounterGroup) => void;
 	onSetDefeated: (monster: Monster, value: boolean) => void;
 	onSetHidden: (monster: Monster, value: boolean) => void;
+	onRemoveMonster: (slot: EncounterSlot, monster: Monster) => void;
 	onMoveSlot: (slot: EncounterSlot, toGroupID: string) => void;
 	onCopySlot: (slot: EncounterSlot, toGroupID: string) => void;
 }
@@ -392,6 +395,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 							onSelectMinionSlot={props.onSelectMinionSlot}
 							onSetDefeated={props.onSetDefeated}
 							onSetHidden={props.onSetHidden}
+							onRemove={monster => props.onRemoveMonster(slot, monster)}
 						/>
 					))
 				}
@@ -408,6 +412,7 @@ interface MonsterSlotProps {
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 	onSetDefeated: (monster: Monster, value: boolean) => void;
 	onSetHidden: (monster: Monster, value: boolean) => void;
+	onRemove: (monster: Monster) => void;
 }
 
 export const MonsterSlot = (props: MonsterSlotProps) => {
@@ -646,6 +651,11 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 											onChange={value => props.onSetDefeated(monster, value)}
 										/>
 										<Toggle label='Hidden' value={monster.state.hidden} onChange={value => props.onSetHidden(monster, value)} />
+										{
+											isMinionSlot ?
+												<DangerButton mode='block' label='Remove From Squad' onConfirm={() => props.onRemove(monster)} />
+												: null
+										}
 									</div>
 								)}
 							>

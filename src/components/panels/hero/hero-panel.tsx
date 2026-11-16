@@ -59,6 +59,7 @@ interface Props {
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onRemoveMonsterFromSquad: (hero: Hero, slotID: string, monsterID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
 	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
@@ -166,6 +167,7 @@ export const HeroPanel = (props: Props) => {
 									onAddSquad={props.onAddSquad}
 									onRemoveSquad={props.onRemoveSquad}
 									onAddMonsterToSquad={props.onAddMonsterToSquad}
+									onRemoveMonsterFromSquad={props.onRemoveMonsterFromSquad}
 									onSelectControlledMonster={props.onSelectControlledMonster}
 									onSelectControlledSquad={props.onSelectControlledSquad}
 									onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}
@@ -303,6 +305,7 @@ export const HeroPanel = (props: Props) => {
 							onAddSquad={props.onAddSquad}
 							onRemoveSquad={props.onRemoveSquad}
 							onAddMonsterToSquad={props.onAddMonsterToSquad}
+							onRemoveMonsterFromSquad={props.onRemoveMonsterFromSquad}
 							onSelectControlledMonster={props.onSelectControlledMonster}
 							onSelectControlledSquad={props.onSelectControlledSquad}
 							onSetControlledMonsterDefeated={props.onSetControlledMonsterDefeated}

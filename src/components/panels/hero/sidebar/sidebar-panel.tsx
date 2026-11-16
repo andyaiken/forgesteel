@@ -8,6 +8,7 @@ import { Collections } from '@/utils/collections';
 import { ConditionExtractionLogic } from '@/logic/condition-extraction-logic';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterSlot } from '@/models/encounter';
 import { Expander } from '@/components/controls/expander/expander';
@@ -50,6 +51,7 @@ interface Props {
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onRemoveMonsterFromSquad: (hero: Hero, slotID: string, monsterID: string) => void;
 	onSelectControlledMonster: (hero: Hero, monster: Monster) => void;
 	onSelectControlledSquad: (hero: Hero, slot: EncounterSlot) => void;
 	onSetControlledMonsterDefeated: (hero: Hero, monster: Monster, value: boolean) => void;
@@ -535,6 +537,7 @@ export const SidebarPanel = (props: Props) => {
 												onChange={value => props.onSetControlledMonsterDefeated(props.hero, m, value)}
 											/>
 											<Toggle label='Hidden' value={m.state.hidden} onChange={value => props.onSetControlledMonsterHidden(props.hero, m, value)} />
+											<DangerButton mode='block' label='Remove From Squad' onConfirm={() => props.onRemoveMonsterFromSquad(props.hero, slot.id, m.id)} />
 										</div>
 									)}
 								>

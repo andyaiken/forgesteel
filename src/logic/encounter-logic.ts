@@ -275,6 +275,22 @@ export class EncounterLogic {
 		return result;
 	};
 
+	// Removes a monster from a slot
+	// A minion squad's Stamina is the total of its minions' Stamina, so if the monster had been defeated, the damage that
+	// defeated it goes too - otherwise the squad's remaining Stamina would no longer match the minions left standing
+	static removeMonsterFromSlot = (slot: EncounterSlot, monsterID: string) => {
+		const monster = slot.monsters.find(m => m.id === monsterID);
+		if (!monster) {
+			return;
+		}
+
+		if (monster.state.defeated) {
+			slot.state.staminaDamage = Math.max(slot.state.staminaDamage - MonsterLogic.getStamina(monster), 0);
+		}
+
+		slot.monsters = slot.monsters.filter(m => m.id !== monsterID);
+	};
+
 	static isGroupDefeated = (group: EncounterGroup) => {
 		return group.slots.every(s => s.state.defeated) || group.slots.flatMap(s => s.monsters).every(m => m.state.defeated);
 	};

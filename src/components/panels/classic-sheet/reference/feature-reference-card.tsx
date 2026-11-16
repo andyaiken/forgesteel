@@ -42,7 +42,7 @@ export const FeatureReferenceCard = (props: Props) => {
 
 			const sections: JSX.Element[] = [];
 			bySource.forEach((features, source) => {
-				features.sort(SheetFormatter.sortFeatures);
+				features.sort((a, b) => SheetFormatter.sortFeatures(a, b, features));
 				sections.push(
 					<div className='source' key={source}>
 						{features.map((f, i) =>

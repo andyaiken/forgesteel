@@ -144,7 +144,7 @@ export const ConfigLanguageChoice = (props: ConfigProps) => {
 	const currentLanguages = HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name);
 	const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
 		.filter(l => !currentLanguages.includes(l.name))
-		.filter(l => props.data.allowedTypes.includes(l.type));
+		.filter(l => (props.data.options.length > 0) ? props.data.options.includes(l.name) : props.data.allowedTypes.includes(l.type));
 	const distinctLanguages = Collections.distinct(languages, l => l.name);
 	const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 

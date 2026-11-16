@@ -13,6 +13,8 @@ import { ResourceGain } from '@/models/resource-gain';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
+import { Summon } from '@/models/summon';
+import { SummonLogic } from '@/logic/summon-logic';
 import { TutorialMode } from '@/enums/tutorial-mode';
 import { UpdateLogic } from './update-logic';
 import { Utils } from '@/utils/utils';
@@ -412,6 +414,21 @@ export class HeroUpdateLogic {
 		HeroLogic.updateKitDamageBonusSelections(hero);
 	};
 
+	// Rebuilds the hero's copy of a summon from the current version of it, carrying over the hero's customizations
+	// This picks up data fixes, and repairs heroes whose summons had controller-derived values (such as a
+	// beastheart companion's Stamina) saved into them, which stopped those values from changing as the hero levelled up
+	static refreshSummon = (stored: Summon, current: Summon[]) => {
+		const source = current.find(s => s.id === stored.id);
+		if (!source) {
+			return stored;
+		}
+
+		const copy = Utils.copy(source);
+		copy.info.level = stored.info.level;
+		SummonLogic.applyCustomization(copy.monster, stored.monster);
+		return copy;
+	};
+
 	static carryResourceGainState = (gains: ResourceGain[], originalGains: ResourceGain[]) => {
 		gains.forEach((gain, n) => {
 			const oGain = originalGains[n];
@@ -758,7 +775,7 @@ export class HeroUpdateLogic {
 						break;
 					}
 
-					feature.data.summons = oFeature.data.summons;
+					feature.data.summons = oFeature.data.summons.map(s => HeroUpdateLogic.refreshSummon(s, feature.data.summons));
 					break;
 				}
 				case FeatureType.SummonChoice: {
@@ -770,7 +787,9 @@ export class HeroUpdateLogic {
 					// The hero's copy of each summon holds their customizations, so it is kept - unless an extension added it
 					// and it is no longer one of the options, in which case the hero no longer uses that extension
 					const optionIDs = feature.data.options.map(o => o.id);
-					feature.data.selected = oFeature.data.selected.filter(s => !!s && (!s.extensionID || optionIDs.includes(s.id)));
+					feature.data.selected = oFeature.data.selected
+						.filter(s => !!s && (!s.extensionID || optionIDs.includes(s.id)))
+						.map(s => HeroUpdateLogic.refreshSummon(s, feature.data.options));
 					break;
 				}
 				case FeatureType.SurgeGain: {

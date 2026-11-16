@@ -556,7 +556,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-exile-lang',
 				description: 'You know one extant language of your choice.',
-				options: [ LanguageType.Common ]
+				allowedTypes: [ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-exile-d',
@@ -1017,7 +1017,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			}),
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-ivoryTower-lang',
-				options: [ LanguageType.Dead ],
+				allowedTypes: [ LanguageType.Dead ],
 				description: 'You know one dead language of your choice.'
 			}),
 			FactoryLogic.feature.createSkillCancelChoice({

@@ -1,5 +1,6 @@
 import { AbilityLogic } from '@/logic/ability-logic';
 import { Characteristic } from '@/enums/characteristic';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -13,17 +14,21 @@ import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 
 export class SummonLogic {
-	// Copies only the user's customizations from a summoned monster onto the stored monster,
+	// Copies only the user's customizations (the name, and any choices) from a summoned monster onto the stored monster,
 	// so that controller-derived features and values aren't saved into the hero
+	// The summoned monster has its bonuses and ability text resolved against the controller, so copying any other
+	// feature's data would freeze those values (such as a beastheart companion's Stamina) at the controller's current level
 	static applyCustomization = (stored: Monster, customized: Monster) => {
 		stored.name = customized.name;
 		const customizedFeatures = MonsterLogic.getFeatures(customized);
-		MonsterLogic.getFeatures(stored).forEach(f => {
-			const match = customizedFeatures.find(cf => cf.id === f.id);
-			if (match) {
-				f.data = Utils.copy(match.data);
-			}
-		});
+		MonsterLogic.getFeatures(stored)
+			.filter(FeatureLogic.isChoice)
+			.forEach(f => {
+				const match = customizedFeatures.find(cf => cf.id === f.id);
+				if (match && (match.type === f.type)) {
+					f.data = Utils.copy(match.data);
+				}
+			});
 	};
 
 	static getSummonedMonster = (summon: Summon, controller: Hero) => {

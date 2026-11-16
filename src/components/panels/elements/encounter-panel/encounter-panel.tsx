@@ -201,7 +201,7 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
-					monsterGroups.filter(group => group.malice.length > 0).map(group => {
+					monsterGroups.map(group => {
 						let maxEchelon = 1;
 						props.encounter.groups.forEach(g => {
 							g.slots.forEach(s => {
@@ -213,22 +213,28 @@ export const EncounterPanel = (props: Props) => {
 							});
 						});
 
+						const malice = group.malice
+							.filter(m => {
+								let echelon = 1;
+								switch (m.type) {
+									case FeatureType.Malice:
+									case FeatureType.MaliceAbility:
+										echelon = m.data.echelon;
+										break;
+								}
+								return echelon <= maxEchelon;
+							})
+							.filter(m => !props.encounter.hiddenMaliceFeatures.includes(m.id));
+						if (malice.length === 0) {
+							return null;
+						}
+
 						return (
 							<div key={group.id}>
 								<HeaderText level={1}>{group.name} Malice</HeaderText>
 								<div className='encounter-malice'>
 									{
-										group.malice
-											.filter(m => {
-												let echelon = 1;
-												switch (m.type) {
-													case FeatureType.Malice:
-													case FeatureType.MaliceAbility:
-														echelon = m.data.echelon;
-														break;
-												}
-												return echelon <= maxEchelon;
-											})
+										malice
 											.map(m => {
 												let cost = undefined;
 												switch (m.type) {

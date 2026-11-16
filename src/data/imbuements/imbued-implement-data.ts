@@ -11,7 +11,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The tusk of a feral boar',
 			source: 'Texts or lore in Kalliak',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -27,7 +27,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Slime from an ooze',
 			source: 'Texts or lore in Khelt',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -43,7 +43,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ashes or other leavings from a natural disaster',
 			source: 'Texts or lore in The First Language',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -59,7 +59,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A lead slingstone that killed a giant',
 			source: 'Texts or lore in High Kuric',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -87,7 +87,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One hundred rat pelts',
 			source: 'Texts or lore in Khamish',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -108,7 +108,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A singing quartz crystal',
 			source: 'Texts or lore in The First Language',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -124,7 +124,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An inch-long needle carved from a diamond',
 			source: 'Texts or lore in Caelian',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -161,7 +161,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The brain of a psionic creature',
 			source: 'Texts or lore in Variac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -198,7 +198,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Three skulls from the same chimera',
 			source: 'Texts or lore in Variac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
@@ -215,7 +215,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A dire falcon’s beak',
 			source: 'Texts or lore in Khelt',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -231,7 +231,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A still-warm piece of a meteorite',
 			source: 'Texts or lore in Ullorvic',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -252,7 +252,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The wing of a pixie',
 			source: 'Texts or lore in Voll',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -268,7 +268,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Obsidian from an active volcano',
 			source: 'Texts or lore in Vastariax',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -284,7 +284,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A marble stone giant’s fingernail',
 			source: 'Texts or lore in High Kuric',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -312,7 +312,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A night hag’s hairpin',
 			source: 'Texts or lore in Variac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -333,7 +333,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Slow-acting poison refined from rare fungi',
 			source: 'Texts or lore in Szetch',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -349,7 +349,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A still-growing bonsai tree at least 30 years old',
 			source: 'Texts or lore in The First Language',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -365,7 +365,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A metallic dragon’s horn',
 			source: 'Texts or lore in Zaliac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
@@ -392,7 +392,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An olothec tentacle',
 			source: 'Texts or lore in Variac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -408,7 +408,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The keystone from a gate used for crossing between worlds',
 			source: 'Texts or lore in Voll',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -424,7 +424,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A sealed geode containing explosive gas',
 			source: 'Texts or lore in Vastariax',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -440,7 +440,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A scale from the kraken',
 			source: 'Texts or lore in High Kuric',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -456,7 +456,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A venom gland from a mature dragon',
 			source: 'Texts or lore in Szetch',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -472,7 +472,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Black iron harvested from a slain blood elemental',
 			source: 'Texts or lore in Anjali',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -488,7 +488,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The frontal lobe of an overmind',
 			source: 'Texts or lore in Variac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -504,7 +504,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A live flower that blooms only once a decade',
 			source: 'Texts or lore in The First Language',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,
@@ -520,7 +520,7 @@ export class ImbuedImplementData {
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Heartwood from a two-century-old tree',
 			source: 'Texts or lore in Zaliac',
-			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
+			characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 9,

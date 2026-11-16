@@ -7,6 +7,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
+import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { summoner } from '@/data/classes/summoner/summoner';
 
 // A summoner of the Circle of Blight, with the given formation selected (if any)
@@ -83,5 +84,48 @@ describe('Elite Formation', () => {
 		const after = getSummon(hero, 'Renamed');
 		expect(MonsterLogic.getStamina(after)).toBe(MonsterLogic.getStamina(processed));
 		expect(MonsterLogic.getStability(after)).toBe(MonsterLogic.getStability(processed));
+	});
+});
+
+// A beastheart with the basilisk as their companion
+const buildBeastheart = (level = 1): Hero => {
+	const hero = FactoryLogic.createHero();
+
+	hero.class = Utils.copy(beastheart);
+	hero.class.level = level;
+
+	hero.class.featuresByLevel
+		.flatMap(lvl => lvl.features)
+		.filter(f => f.id === 'beastheart-1-2a')
+		.filter(f => f.type === FeatureType.SummonChoice)
+		.forEach(f => f.data.selected = f.data.options.filter(o => o.name === 'Basilisk').map(o => Utils.copy(o)));
+
+	return hero;
+};
+
+const getCompanionChoice = (hero: Hero) => {
+	return HeroLogic.getFeatures(hero)
+		.map(f => f.feature)
+		.filter(f => f.type === FeatureType.SummonChoice)
+		.flatMap(f => f.data.selected)
+		.find(s => s.monster.id === 'beastheart-companion-1')!;
+};
+
+describe('Beastheart companion', () => {
+	it('keeps its Stamina in step with the beastheart after being renamed', () => {
+		const hero = buildBeastheart();
+
+		const companion = HeroLogic.getSummons(hero).find(s => s.monster.id === 'beastheart-companion-1')!.monster;
+		expect(MonsterLogic.getStamina(companion)).toBe(HeroLogic.getStamina(hero));
+
+		companion.name = 'Gorgon';
+		SummonLogic.applyCustomization(getCompanionChoice(hero).monster, companion);
+
+		HeroLogic.setLevel(hero, FactoryLogic.createOptions(), 2);
+
+		const after = HeroLogic.getSummons(hero).find(s => s.monster.id === 'beastheart-companion-1')!.monster;
+		expect(after.name).toBe('Gorgon');
+		expect(HeroLogic.getStamina(hero)).toBeGreaterThan(MonsterLogic.getStamina(companion));
+		expect(MonsterLogic.getStamina(after)).toBe(HeroLogic.getStamina(hero));
 	});
 });

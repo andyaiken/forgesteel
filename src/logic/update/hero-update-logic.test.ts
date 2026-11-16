@@ -9,8 +9,10 @@ import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
+import { MonsterLogic } from '@/logic/monster-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { beastheartSourcebook } from '@/data/sourcebooks/official/beastheart';
@@ -353,6 +355,26 @@ describe('extensions and standalone subclasses', () => {
 
 		const updated = HeroLogic.getFeatures(hero).map(f => f.feature).find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
 		expect(updated.data.selected.map(s => s.id)).toEqual([ 'renamed-companion' ]);
+	});
+
+	// Customizing a companion used to save the whole summoned stat block into the hero, with its Stamina
+	// worked out at the hero's level at the time, so the companion stopped levelling up with the hero
+	it('repairs a companion whose Stamina was saved into the hero', () => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = [ core.id, beastheartSourcebook.id ];
+		hero.class = Utils.copy(beastheart);
+		const feature = HeroLogic.getFeatures(hero).map(f => f.feature).find(f => f.id === 'beastheart-1-2a') as FeatureSummonChoice;
+		const companion = Utils.copy(feature.data.options[0]);
+		companion.monster = SummonLogic.getSummonedMonster(companion, hero);
+		companion.monster.name = 'Gorgon';
+		feature.data.selected = [ companion ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, beastheartSourcebook ]);
+		HeroLogic.setLevel(hero, FactoryLogic.createOptions(), 2);
+
+		const summoned = HeroLogic.getSummons(hero).find(s => s.id === companion.id)!.monster;
+		expect(summoned.name).toBe('Gorgon');
+		expect(MonsterLogic.getStamina(summoned)).toBe(HeroLogic.getStamina(hero));
 	});
 });
 

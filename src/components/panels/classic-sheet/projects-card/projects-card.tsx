@@ -1,9 +1,11 @@
 import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import './projects-card.scss';
 
 interface Props {
 	projects: ProjectSheet[];
+	projectPoints?: number;
 }
 
 export const ProjectsCard = (props: Props) => {
@@ -26,7 +28,14 @@ export const ProjectsCard = (props: Props) => {
 
 	return (
 		<div className='projects card'>
-			<h2>Projects</h2>
+			<div className='projects-header'>
+				<h2>Projects</h2>
+				<LabeledTextField
+					label='Project Points'
+					content={props.projectPoints}
+					additionalClasses={[ 'project-points' ]}
+				/>
+			</div>
 			<div className='projects-table'>
 				<div className='header'>
 					<div>Project Name</div>

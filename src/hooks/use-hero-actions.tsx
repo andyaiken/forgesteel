@@ -84,6 +84,35 @@ export const useHeroActions = (props: Props) => {
 		return hero;
 	};
 
+	// Imports several heroes at once - from a multi-file import, say - and stays on the hero list,
+	// rather than opening each of them in turn; a single hero is opened, just as importHero does
+	const importHeroes = (list: Hero[], folder: string) => {
+		if (list.length === 1) {
+			importHero(list[0], folder);
+			return;
+		}
+
+		// Two of the files might be the same hero, as well as one of them being a hero we already have
+		const ids = heroes.map(h => h.id);
+		list.forEach(hero => {
+			if (ids.includes(hero.id)) {
+				hero.id = Utils.guid();
+			}
+			ids.push(hero.id);
+			hero.folder = folder;
+			HeroUpdateLogic.updateHero(hero, sourcebooks);
+
+			persistHero(hero);
+		});
+
+		setDrawer(null);
+		notify.info({
+			title: 'Heroes Imported',
+			description: `${list.length} heroes have been imported.`,
+			placement: 'top'
+		});
+	};
+
 	const copyHero = (hero: Hero) => {
 		importHero(hero, hero.folder, true);
 	};
@@ -247,6 +276,7 @@ export const useHeroActions = (props: Props) => {
 		deleteHero,
 		saveHero,
 		importHero,
+		importHeroes,
 		copyHero,
 		exportHeroData,
 		exportHeroImage,

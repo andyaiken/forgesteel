@@ -458,6 +458,7 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 
 		sheet.projects = hero.state.projects.map(p => this.buildProjectSheet(p, hero));
+		sheet.projectPoints = HeroLogic.getProjectPoints(hero);
 
 		// #region Abilities
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
@@ -553,15 +554,24 @@ export class HeroSheetBuilder {
 			drawbacks: []
 		};
 
-		const complicationFeatures = ClassicSheetLogic.flattenMultiples(complication.features).filter(ClassicSheetLogic.hasContent);
+		// Multiples are opened up so their contents are listed (see ClassicSheetLogic.flattenMultiples), but a feature
+		// inside a drawback is part of that drawback, whatever it's called - so it's sorted along with its parent,
+		// rather than on its own name
+		const benefits: Feature[] = [];
+		const drawbacks: Feature[] = [];
+		const add = (f: Feature, inDrawback: boolean) => {
+			const isDrawback = inDrawback || ClassicSheetLogic.isFeatureDrawback(f);
+			if (ClassicSheetLogic.hasContent(f)) {
+				(isDrawback ? drawbacks : benefits).push(this.stripDuplicateComplicationName(complication.name, f));
+			}
+			if (f.type === FeatureType.Multiple) {
+				f.data.features.forEach(child => add(child, isDrawback));
+			}
+		};
+		complication.features.forEach(f => add(f, false));
 
-		const drawbacks = complicationFeatures.filter(ClassicSheetLogic.isFeatureDrawback)
-			.map(f => this.stripDuplicateComplicationName(complication.name, f));
-		sheet.drawbacks = drawbacks;
-
-		const benefits = complicationFeatures.filter(f => !ClassicSheetLogic.isFeatureDrawback(f))
-			.map(f => this.stripDuplicateComplicationName(complication.name, f));
-		sheet.benefits = benefits;
+		sheet.benefits = Collections.distinct(benefits, f => f.id);
+		sheet.drawbacks = Collections.distinct(drawbacks, f => f.id);
 
 		return sheet;
 	};

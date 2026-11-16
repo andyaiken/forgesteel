@@ -12,6 +12,11 @@
         height: fit-content;
     }
 
+    // A continuation page with only terrain on it doesn't need the creature columns' headings
+    thead.hidden {
+        display: none;
+    }
+
     .group-id {
         width: round(4rem, 1px);
     }

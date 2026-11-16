@@ -12,6 +12,19 @@ export enum DataStorageKeys {
 	HiddenSourcebookIDs = 'forgesteel-hidden-setting-ids'
 };
 
+// Heroes and sourcebooks are each stored as a single list, so saving or deleting one means reading the list, changing it,
+// and writing it back. Two of those running at once would both start from the same list, and the second write would undo
+// the first - importing several heroes together, for example, would keep only the last one. So they're queued, and run one
+// at a time. The queue is shared by every LocalService, since they all write to the same storage.
+let writeQueue: Promise<unknown> = Promise.resolve();
+
+const queueWrite = <T>(write: () => Promise<T>): Promise<T> => {
+	const result = writeQueue.then(write);
+	// A failed write still has to let the ones queued behind it run
+	writeQueue = result.catch(() => undefined);
+	return result;
+};
+
 export class LocalService implements StorageService {
 	initialize(): Promise<boolean> {
 		return Promise.resolve(true);
@@ -38,29 +51,33 @@ export class LocalService implements StorageService {
 	}
 
 	async putHero(hero: Hero): Promise<Hero> {
-		const heroes = await localforage.getItem<Hero[]>(DataStorageKeys.Heroes);
-		if (heroes) {
-			const copy = Utils.copy(heroes);
-			if (heroes.some(h => h.id === hero.id)) {
-				const list = copy.map(h => h.id === hero.id ? hero : h);
-				localforage.setItem<Hero[]>(DataStorageKeys.Heroes, list);
+		return queueWrite(async () => {
+			const heroes = await localforage.getItem<Hero[]>(DataStorageKeys.Heroes);
+			if (heroes) {
+				const copy = Utils.copy(heroes);
+				if (heroes.some(h => h.id === hero.id)) {
+					const list = copy.map(h => h.id === hero.id ? hero : h);
+					await localforage.setItem<Hero[]>(DataStorageKeys.Heroes, list);
+				} else {
+					copy.push(hero);
+					await localforage.setItem<Hero[]>(DataStorageKeys.Heroes, copy);
+				}
 			} else {
-				copy.push(hero);
-				localforage.setItem<Hero[]>(DataStorageKeys.Heroes, copy);
+				await localforage.setItem<Hero[]>(DataStorageKeys.Heroes, [ hero ]);
 			}
-		} else {
-			localforage.setItem<Hero[]>(DataStorageKeys.Heroes, [ hero ]);
-		}
 
-		return hero;
+			return hero;
+		});
 	}
 
 	async deleteHero(id: string): Promise<void> {
-		const heroes = await localforage.getItem<Hero[]>(DataStorageKeys.Heroes);
-		if (heroes) {
-			const copy = Utils.copy(heroes.filter(h => h.id !== id));
-			localforage.setItem<Hero[]>(DataStorageKeys.Heroes, copy);
-		}
+		return queueWrite(async () => {
+			const heroes = await localforage.getItem<Hero[]>(DataStorageKeys.Heroes);
+			if (heroes) {
+				const copy = Utils.copy(heroes.filter(h => h.id !== id));
+				await localforage.setItem<Hero[]>(DataStorageKeys.Heroes, copy);
+			}
+		});
 	}
 	// #endregion
 
@@ -85,29 +102,33 @@ export class LocalService implements StorageService {
 	}
 
 	async putSourcebook(sourcebook: Sourcebook): Promise<Sourcebook> {
-		const sourcebooks = await localforage.getItem<Sourcebook[]>(DataStorageKeys.Sourcebooks);
-		if (sourcebooks) {
-			const copy = Utils.copy(sourcebooks);
-			if (sourcebooks.some(h => h.id === sourcebook.id)) {
-				const list = copy.map(h => h.id === sourcebook.id ? sourcebook : h);
-				localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, list);
+		return queueWrite(async () => {
+			const sourcebooks = await localforage.getItem<Sourcebook[]>(DataStorageKeys.Sourcebooks);
+			if (sourcebooks) {
+				const copy = Utils.copy(sourcebooks);
+				if (sourcebooks.some(h => h.id === sourcebook.id)) {
+					const list = copy.map(h => h.id === sourcebook.id ? sourcebook : h);
+					await localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, list);
+				} else {
+					copy.push(sourcebook);
+					await localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, copy);
+				}
 			} else {
-				copy.push(sourcebook);
-				localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, copy);
+				await localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, [ sourcebook ]);
 			}
-		} else {
-			localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, [ sourcebook ]);
-		}
 
-		return sourcebook;
+			return sourcebook;
+		});
 	}
 
 	async deleteSourcebook(id: string): Promise<void> {
-		const sourcebooks = await localforage.getItem<Sourcebook[]>(DataStorageKeys.Sourcebooks);
-		if (sourcebooks) {
-			const copy = Utils.copy(sourcebooks.filter(h => h.id !== id));
-			localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, copy);
-		}
+		return queueWrite(async () => {
+			const sourcebooks = await localforage.getItem<Sourcebook[]>(DataStorageKeys.Sourcebooks);
+			if (sourcebooks) {
+				const copy = Utils.copy(sourcebooks.filter(h => h.id !== id));
+				await localforage.setItem<Sourcebook[]>(DataStorageKeys.Sourcebooks, copy);
+			}
+		});
 	}
 	// #endregion
 

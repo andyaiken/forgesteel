@@ -27,6 +27,19 @@ export interface CardPageLayout {
 };
 
 export class SheetLayout {
+	// Where a list of rows printed on a fixed-size page has to break onto the next page, given where each row ends:
+	// the first row that ends below the bottom of the space available, or null if they all fit.
+	// When keepFirstRow is set, a page always keeps its first row, even if it doesn't fit - otherwise a row taller
+	// than a whole page would keep the list breaking onto new pages forever
+	static getRowBreak = (rowBottoms: number[], limit: number, keepFirstRow: boolean): number | null => {
+		const index = rowBottoms.findIndex(bottom => bottom > limit);
+		if ((index === -1) || ((index === 0) && keepFirstRow)) {
+			return null;
+		}
+
+		return index;
+	};
+
 	static getAbilityLayout = (options: Options): CardPageLayout => {
 		// Get root font size (1rem)
 		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);

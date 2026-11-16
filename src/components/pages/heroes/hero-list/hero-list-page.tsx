@@ -31,6 +31,7 @@ interface Props {
 	params: FooterParams;
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
+	importHeroes: (heroes: Hero[], folder: string) => void;
 	showParty: (folder: string) => void;
 	onActiveChanged: (hero: Hero) => void;
 }
@@ -135,19 +136,23 @@ export const HeroListPage = (props: Props) => {
 										<Upload
 											style={{ width: '100%' }}
 											accept='.drawsteel-hero,.ds-hero'
+											multiple={true}
 											showUploadList={false}
-											beforeUpload={file => {
-												file
-													.text()
-													.then(json => {
-														const hero = JSON.parse(json) as Hero;
-														props.importHero(hero, currentTab);
-													});
+											beforeUpload={(file, fileList) => {
+												// This is called once for each file chosen, each time with all of them;
+												// they're imported together, the first time round
+												if (file.uid === fileList[0].uid) {
+													Promise.all(fileList.map(f => f.text()))
+														.then(texts => {
+															const heroes = texts.map(json => JSON.parse(json) as Hero);
+															props.importHeroes(heroes, currentTab);
+														});
+												}
 												return false;
 											}}
 										>
 											<Button block={true} icon={<DownloadOutlined />}>
-												Import a Hero File
+												Import Hero Files
 											</Button>
 										</Upload>
 										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(props.sourcebooks.filter(sb => !hiddenSourcebookIDs.includes(sb.id))), currentTab)}>

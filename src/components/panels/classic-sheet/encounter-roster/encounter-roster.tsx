@@ -11,16 +11,29 @@ import './encounter-roster.scss';
 interface Props {
 	encounter: EncounterSheet;
 	sourcebooks: Sourcebook[];
+	// The roster's rows - its groups, then its terrain, numbered as one list - can be spread over more than one page;
+	// if so, this card shows the rows from 'from' up to (but not including) 'to'
+	from?: number;
+	to?: number;
+	continued?: boolean;
 }
 
 export const EncounterRosterCard = (props: Props) => {
 	const encounter = useMemo(() => props.encounter, [ props.encounter ]);
 
+	const groupCount = encounter.groups?.length ?? 0;
+	const from = props.from ?? 0;
+	const to = props.to ?? (groupCount + (encounter.terrainSlots?.length ?? 0));
+	const isShown = (index: number) => (index >= from) && (index < to);
+
+	const showGroups = (encounter.groups ?? []).some((_, i) => isShown(i));
+	const showTerrain = (encounter.terrainSlots ?? []).some((_, i) => isShown(groupCount + i));
+
 	return (
 		<div className='encounter-roster card'>
-			<h2>Encounter Roster</h2>
+			<h2>{props.continued ? 'Encounter Roster (continued)' : 'Encounter Roster'}</h2>
 			<table>
-				<thead>
+				<thead className={showGroups || !props.continued ? undefined : 'hidden'}>
 					<tr>
 						<th className='group-id'>Group</th>
 						<th>
@@ -34,11 +47,15 @@ export const EncounterRosterCard = (props: Props) => {
 				</thead>
 				<tbody>
 					{encounter.groups?.map((group, i) => {
+						if (!isShown(i)) {
+							return null;
+						}
+
 						const groupMonsters = group.slots.map(slot => slot.monster).filter(m => !!m);
 						const minionSlots = groupMonsters.filter(m => m.role.organization === MonsterOrganizationType.Minion).length;
 						const nonMinionSlots = groupMonsters.filter(m => m.role.organization !== MonsterOrganizationType.Minion).length;
 						return (
-							<tr className='creature-group' key={`group-${i}`}>
+							<tr className='creature-group' key={`group-${i}`} data-roster-item={i}>
 								<td className='encounter-group'>
 									<div className='group-number'>{`${i + 1}`}</div>
 									{group.name ?
@@ -133,7 +150,7 @@ export const EncounterRosterCard = (props: Props) => {
 				</tbody>
 				<tbody>
 					{
-						encounter.terrain?.length ?
+						encounter.terrain?.length && showTerrain ?
 							<tr className='terrain-header'>
 								<th className='terrain' colSpan={2}>Dynamic Terrain Objects</th>
 								<th className='stamina-tracker-header' colSpan={2}>Stamina Tracker</th>
@@ -143,11 +160,15 @@ export const EncounterRosterCard = (props: Props) => {
 
 					}
 					{encounter.terrainSlots?.map((slot, i) => {
+						if (!isShown(groupCount + i)) {
+							return null;
+						}
+
 						const terrain = slot.terrain;
 						const name = slot.count > 1 ? `${terrain.name} (${slot.count})` : terrain.name;
 						const stamina = Array(slot.count).fill(terrain.stamina).join(', ');
 						return (
-							<tr className='terrain-object' key={`roster-terrain-${slot.id}-${i}`}>
+							<tr className='terrain-object' key={`roster-terrain-${slot.id}-${i}`} data-roster-item={groupCount + i}>
 								<td colSpan={2}>
 									<div className='wrapper'>
 										<div className='encounter-slot'>{name}</div>

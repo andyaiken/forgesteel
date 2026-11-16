@@ -148,6 +148,7 @@ export interface HeroSheet {
 
 	// Projects
 	projects: ProjectSheet[];
+	projectPoints?: number;
 
 	// Abilities
 	abilities: AbilitySheet[];

@@ -309,6 +309,16 @@ describe('buildHeroSheet', () => {
 		expect((result.featuresReferenceOther || []).map(f => f.feature.name)).not.toContain('Growing Ferocity (Ferocity 2)');
 	});
 
+	test('it includes the hero\'s project points, with any bonuses to them', () => {
+		const hero = FactoryLogic.createHero();
+		hero.state.projectPoints = 7;
+		hero.features.push(FactoryLogic.feature.createBonus({ id: 'project-point-bonus', field: FeatureField.ProjectPoints, value: 3 }));
+
+		const result = HeroSheetBuilder.buildHeroSheet(hero, [], {} as Options);
+
+		expect(result.projectPoints).toBe(10);
+	});
+
 	test('it should list the Growing Ferocity introduction immediately before its ordered bonuses', () => {
 		const hero = FactoryLogic.createHero();
 		hero.class = Utils.copy(fury);
@@ -476,6 +486,48 @@ describe('buildComplicationSheet', () => {
 		HeroSheetBuilder.buildComplicationSheet(complication);
 
 		expect(complication.features.map(f => f.name)).toEqual([ 'Lightning Soul Benefit', 'Lightning Soul Drawback' ]);
+	});
+
+	test('it should keep the contents of a drawback that is a Multiple in the drawback', () => {
+		// A homebrew complication whose benefit and drawback are each a Multiple, with parts that don't say which they belong to
+		const complication = FactoryLogic.createComplication();
+		complication.name = 'Unbounded Elemental Inside';
+		complication.features = [
+			FactoryLogic.feature.createMultiple({
+				id: 'homebrew-benefit',
+				name: 'Unbounded Elemental Inside Benefit',
+				description: 'This complication grants the following benefits:',
+				features: [
+					FactoryLogic.feature.createBonus({ id: 'homebrew-benefit-bonus', name: 'Stamina', field: FeatureField.Stamina, value: 3 }),
+					FactoryLogic.feature.createChoice({
+						id: 'homebrew-benefit-choice',
+						name: 'Element',
+						options: [ { feature: FactoryLogic.feature.create({ id: 'homebrew-benefit-choice-1', name: 'Fire', description: 'Fire' }), value: 1 } ]
+					})
+				]
+			}),
+			FactoryLogic.feature.createMultiple({
+				id: 'homebrew-drawback',
+				name: 'Unbounded Elemental Inside Drawback',
+				description: 'This complication grants the following drawbacks:',
+				features: [
+					FactoryLogic.feature.create({ id: 'homebrew-drawback-text', name: 'Unstable', description: 'Your element flares up at bad moments.' }),
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'homebrew-drawback-ability',
+							name: 'Elemental Outburst',
+							type: FactoryLogic.type.createManeuver(),
+							sections: [ FactoryLogic.createAbilitySectionText('The element bursts out of you.') ]
+						})
+					})
+				]
+			})
+		];
+
+		const result = HeroSheetBuilder.buildComplicationSheet(complication);
+
+		expect(result.benefits.map(f => f.id)).toEqual([ 'homebrew-benefit', 'homebrew-benefit-bonus', 'homebrew-benefit-choice' ]);
+		expect(result.drawbacks.map(f => f.id)).toEqual([ 'homebrew-drawback', 'homebrew-drawback-text', 'homebrew-drawback-ability' ]);
 	});
 });
 

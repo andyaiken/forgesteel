@@ -8,6 +8,30 @@
         margin-bottom: 0;
     }
 
+    .projects-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        // The hero's unspent project points, beside the heading
+        .labeled-field.project-points {
+            flex-direction: row-reverse;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+
+            label {
+                margin-top: 0;
+            }
+
+            .labeled-field-content {
+                flex-grow: 0;
+                min-width: 3em;
+                padding: 2px 8px;
+            }
+        }
+    }
+
     div,
     .points span {
         @include common.font-slab();

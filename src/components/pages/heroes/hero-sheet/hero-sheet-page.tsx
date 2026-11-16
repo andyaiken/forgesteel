@@ -443,6 +443,7 @@ export const HeroSheetPage = (props: Props) => {
 						/>
 						<ProjectsCard
 							projects={character.projects}
+							projectPoints={character.projectPoints}
 						/>
 					</div>
 					{getRemainingCards(extraCards)}

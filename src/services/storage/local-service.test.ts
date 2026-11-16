@@ -187,6 +187,17 @@ describe('LocalService', () => {
 			expect(getResult).toContainEqual(mockHero2);
 			expect(catchFn).not.toHaveBeenCalled();
 		});
+
+		// Importing several heroes at once saves them all together
+		test('saving several new heroes at once keeps all of them', async () => {
+			const existingData = [ mockHero1 ];
+			localforage.setItem<Hero[]>(DataStorageKeys.Heroes, existingData);
+
+			await Promise.all([ service.putHero(mockHero2), new LocalService().putHero(mockHero3) ]);
+
+			const heroes = await service.getHeroes();
+			expect(heroes.map(h => h.id).sort()).toEqual([ 'test-hero1', 'test-hero2', 'test-hero3' ]);
+		});
 	});
 
 	describe('deleteHero', () => {

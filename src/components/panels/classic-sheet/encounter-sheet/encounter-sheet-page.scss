@@ -8,4 +8,16 @@
     display: grid;
     place-items: stretch;
     grid-template-rows: min-content 1fr min-content;
+
+    // The encounter's description sits between the header and the malice features
+    &.with-description {
+        grid-template-rows: min-content min-content 1fr min-content;
+    }
+}
+
+// Where a long roster carries on, the card sits at the top of the page at its natural height
+#classic-sheet .page.roster-continued {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }

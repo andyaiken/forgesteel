@@ -61,6 +61,7 @@ export const AppRoutes = (props: Props) => {
 		deleteHero,
 		saveHero,
 		importHero,
+		importHeroes,
 		copyHero,
 		exportHeroData,
 		exportHeroImage,
@@ -135,6 +136,7 @@ export const AppRoutes = (props: Props) => {
 									params={footerParams}
 									addHero={newHero}
 									importHero={importHero}
+									importHeroes={importHeroes}
 									showParty={onShowParty}
 									onActiveChanged={persistHero}
 								/>

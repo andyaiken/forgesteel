@@ -151,3 +151,22 @@ describe('findExtraCard', () => {
 		expect(result?.element).toBe(expected);
 	});
 });
+
+describe('getRowBreak', () => {
+	test('returns null when every row fits', () => {
+		expect(SheetLayout.getRowBreak([ 100, 200, 300 ], 300, false)).toBeNull();
+	});
+
+	test('breaks at the first row that runs past the limit', () => {
+		expect(SheetLayout.getRowBreak([ 100, 200, 301, 400 ], 300, false)).toBe(2);
+	});
+
+	test('can give up every row when the page has room for none', () => {
+		expect(SheetLayout.getRowBreak([ 400, 500 ], 300, false)).toBe(0);
+	});
+
+	test('keeps a first row that does not fit when asked to, so a row taller than a page cannot break forever', () => {
+		expect(SheetLayout.getRowBreak([ 400, 500 ], 300, true)).toBeNull();
+		expect(SheetLayout.getRowBreak([ 100, 400 ], 300, true)).toBe(1);
+	});
+});

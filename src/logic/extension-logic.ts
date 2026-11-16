@@ -112,12 +112,16 @@ export class ExtensionLogic {
 	};
 
 	// The hero's own sourcebooks, with only the extensions the player has approved for the hero applied -
-	// so that every picker offers the extended options
+	// so that every picker offers the extended options.
+	// A monster group has nothing for the player to approve, so (as for the director) its extensions apply whenever
+	// their sourcebook is one the hero uses - which lets the retainer and companion pickers offer the monsters they add.
 	static getHeroSourcebooks = (hero: Hero, sourcebooks: Sourcebook[]): Sourcebook[] => {
-		return ExtensionLogic.applyExtensions(
-			sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id)),
-			{ extensionIDs: hero.extensionIDs || [] }
-		);
+		const heroSourcebooks = sourcebooks.filter(sb => hero.sourcebookIDs.includes(sb.id));
+		const approved = ExtensionLogic.applyExtensions(heroSourcebooks, {
+			extensionIDs: hero.extensionIDs || [],
+			targetKinds: [ 'ancestry', 'class', 'domain', 'kit', 'subclass' ]
+		});
+		return ExtensionLogic.applyExtensions(approved, { targetKinds: [ 'monster-group' ] });
 	};
 
 	// Applies the extensions' changes to the target, in place.

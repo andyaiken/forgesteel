@@ -1,4 +1,4 @@
-import { Button, Flex, Space } from 'antd';
+import { Button, Divider, Flex, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo } from '@/components/panels/token/token';
@@ -101,45 +101,72 @@ export const EncounterTurnModal = (props: Props) => {
 			}
 		};
 
-		const endTurnAndStartNext = (currentID: string, nextID: string | null) => {
+		// Everyone becomes ready again, so the next step is choosing who starts the new round
+		const endRound = () => {
 			const copy = Utils.copy(encounter);
 
-			if (nextID) {
-				copy.groups
-					.filter(g => g.id === currentID)
-					.forEach(g => {
-						const isSolo = g.slots.some(slot => slot.monsters.some(m => m.role.organization === MonsterOrganizationType.Solo));
-
-						// Allow for multiple turns
-						if (isSolo && !copy.additionalTurnsTaken.includes(g.id)) {
-							g.encounterState = 'ready';
-							copy.additionalTurnsTaken.push(g.id);
-						} else {
-							g.encounterState = 'finished';
-						}
-					});
-				copy.heroes
-					.filter(h => h.id === currentID)
-					.forEach(h => h.state.encounterState = 'finished');
-				copy.groups
-					.filter(g => g.id === nextID)
-					.forEach(g => g.encounterState = 'current');
-				copy.heroes
-					.filter(h => h.id === nextID)
-					.forEach(h => h.state.encounterState = 'current');
-			} else {
-				copy.groups.forEach(g => {
-					g.encounterState = 'ready';
-				});
-				copy.heroes.forEach(h => h.state.encounterState = 'ready');
-			}
+			copy.groups.forEach(g => {
+				g.encounterState = 'ready';
+			});
+			copy.heroes.forEach(h => h.state.encounterState = 'ready');
 
 			setEncounter(copy);
 			props.updateEncounter(copy);
+		};
 
-			if (nextID) {
-				props.onClose();
+		const endTurnAndStartNext = (currentID: string, nextID: string) => {
+			const copy = Utils.copy(encounter);
+
+			copy.groups
+				.filter(g => g.id === currentID)
+				.forEach(g => {
+					const isSolo = g.slots.some(slot => slot.monsters.some(m => m.role.organization === MonsterOrganizationType.Solo));
+
+					// Allow for multiple turns
+					if (isSolo && !copy.additionalTurnsTaken.includes(g.id)) {
+						g.encounterState = 'ready';
+						copy.additionalTurnsTaken.push(g.id);
+					} else {
+						g.encounterState = 'finished';
+					}
+				});
+			copy.heroes
+				.filter(h => h.id === currentID)
+				.forEach(h => h.state.encounterState = 'finished');
+			copy.groups
+				.filter(g => g.id === nextID)
+				.forEach(g => g.encounterState = 'current');
+			copy.heroes
+				.filter(h => h.id === nextID)
+				.forEach(h => h.state.encounterState = 'current');
+
+			setEncounter(copy);
+			props.updateEncounter(copy);
+			props.onClose();
+		};
+
+		// Shown at the end of every turn: once everyone has gone it is the only way on,
+		// but before then it lets the director skip whatever turns are left
+		const getEndRoundButton = (othersRemain: boolean) => {
+			if (!othersRemain) {
+				return (
+					<Button block={true} onClick={endRound}>
+						Next Round
+					</Button>
+				);
 			}
+
+			return (
+				<>
+					<Divider size='small' />
+					<Button block={true} className='tall-button' onClick={endRound}>
+						<div>
+							<div>End Round</div>
+							<div className='subtext'>Skip the remaining turns this round</div>
+						</div>
+					</Button>
+				</>
+			);
 		};
 
 		const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
@@ -303,6 +330,12 @@ export const EncounterTurnModal = (props: Props) => {
 							}
 						</Space>
 					);
+
+					content.push(
+						<div key='end-round'>
+							{getEndRoundButton(true)}
+						</div>
+					);
 				}
 			}
 
@@ -346,13 +379,7 @@ export const EncounterTurnModal = (props: Props) => {
 									:
 									groupButtons
 							}
-							{
-								(groups.length === 0) && (allies.length === 0) && (heroes.length === 0) ?
-									<Button block={true} onClick={() => endTurnAndStartNext(group.id, null)}>
-										Next Round
-									</Button>
-									: null
-							}
+							{getEndRoundButton((groups.length > 0) || (allies.length > 0) || (heroes.length > 0))}
 						</Space>
 					);
 				});
@@ -388,13 +415,7 @@ export const EncounterTurnModal = (props: Props) => {
 									:
 									heroButtons
 							}
-							{
-								(groups.length === 0) && (allies.length === 0) && (heroes.length === 0) ?
-									<Button block={true} onClick={() => endTurnAndStartNext(hero.id, null)}>
-										Next Round
-									</Button>
-									: null
-							}
+							{getEndRoundButton((groups.length > 0) || (allies.length > 0) || (heroes.length > 0))}
 						</Space>
 					);
 				});

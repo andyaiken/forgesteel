@@ -316,6 +316,48 @@ describe('getDirectorSourcebooks', () => {
 	});
 });
 
+describe('getHeroSourcebooks', () => {
+	const groupExtension = createExtension('monster-group', 'monster-group-retainer', {
+		id: 'c1',
+		type: ExtensionChangeType.AddMonster,
+		data: { monster: createMonster([ core ], 'monster-group-retainer', 'homebrew-retainer') }
+	});
+	const classExtension = createExtension('class', 'class-fury', {
+		id: 'c2',
+		type: ExtensionChangeType.AddAbility,
+		data: { ability: createAbility('homebrew-ability') }
+	});
+
+	const createHero = (sourcebooks: Sourcebook[], extensionIDs: string[]) => {
+		const hero = FactoryLogic.createHero();
+		hero.sourcebookIDs = sourcebooks.map(sb => sb.id);
+		hero.extensionIDs = extensionIDs;
+		return hero;
+	};
+
+	it('applies extensions to monster groups without the hero approving them, so retainer pickers offer their monsters', () => {
+		const sourcebooks = [ core, createHomebrew(groupExtension, classExtension) ];
+		const extended = ExtensionLogic.getHeroSourcebooks(createHero(sourcebooks, []), sourcebooks);
+
+		expect(SourcebookLogic.getMonsters(extended).map(m => m.id)).toContain('homebrew-retainer');
+		expect(getClass(extended, 'class-fury').abilities.map(a => a.id)).not.toContain('homebrew-ability');
+	});
+
+	it('applies a monster group extension once, even if the hero has it approved', () => {
+		const sourcebooks = [ core, createHomebrew(groupExtension) ];
+		const extended = ExtensionLogic.getHeroSourcebooks(createHero(sourcebooks, [ groupExtension.id ]), sourcebooks);
+
+		expect(getMonsterGroup(extended, 'monster-group-retainer').monsters.filter(m => m.id === 'homebrew-retainer')).toHaveLength(1);
+	});
+
+	it('leaves out monster group extensions from sourcebooks the hero does not use', () => {
+		const sourcebooks = [ core, createHomebrew(groupExtension) ];
+		const extended = ExtensionLogic.getHeroSourcebooks(createHero([ core ], []), sourcebooks);
+
+		expect(SourcebookLogic.getMonsters(extended).map(m => m.id)).not.toContain('homebrew-retainer');
+	});
+});
+
 describe('getUnresolvedChanges', () => {
 	it('flags a change whose feature is not in the target', () => {
 		const extension = createExtension('ancestry', 'ancestry-dwarf',

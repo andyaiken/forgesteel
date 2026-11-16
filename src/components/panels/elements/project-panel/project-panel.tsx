@@ -328,7 +328,9 @@ export const ProjectPanel = (props: Props) => {
 					level={1}
 					tags={tags}
 					extra={
-						project.isCustom ?
+						// Any project the hero is working on can be edited - not just custom ones - so that
+						// several of the same project (learning two different skills, say) can be told apart
+						props.onChange ?
 							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
 							: null
 					}

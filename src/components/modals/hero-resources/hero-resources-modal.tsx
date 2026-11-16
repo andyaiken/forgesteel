@@ -117,7 +117,7 @@ export const HeroResourcesModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const gainResource = (featureID: string, tag: string, gainIndex: number, value: number) => {
+		const gainResource = (featureID: string, gainIndex: number, value: number) => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy, false)
@@ -128,19 +128,25 @@ export const HeroResourcesModal = (props: Props) => {
 					f.data.value += value;
 				});
 
-			if (tag.toLowerCase().startsWith('start')) {
-				// This is the hero's round boundary, so it clears every per-round gain they have -
-				// surge gains and any other resource's gains included, not just this resource's
-				HeroLogic.resetGains(copy, ResourceGainFrequency.OncePerRound);
-			} else {
-				// Gains are identified by position rather than by tag; a hero can have several
-				// gains sharing a tag (each domain's gain is untagged) and only one is claimed here
-				HeroLogic.getHeroicResources(copy)
-					.filter(hr => hr.id === featureID)
-					.flatMap(hr => hr.gains.filter((_, n) => n === gainIndex))
-					.filter(g => g.frequency !== ResourceGainFrequency.AtWill)
-					.forEach(g => g.used = true);
-			}
+			// Gains are identified by position rather than by tag; a hero can have several
+			// gains sharing a tag (each domain's gain is untagged) and only one is claimed here.
+			// The start-of-turn gain is claimed like any other: the start of the hero's turn is not
+			// the start of the round, so it doesn't free up the per-round gains - starting a new round does
+			HeroLogic.getHeroicResources(copy)
+				.filter(hr => hr.id === featureID)
+				.flatMap(hr => hr.gains.filter((_, n) => n === gainIndex))
+				.filter(g => g.frequency !== ResourceGainFrequency.AtWill)
+				.forEach(g => g.used = true);
+
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const startRound = () => {
+			const copy = Utils.copy(hero);
+
+			// Clears every per-round gain the hero has - surge gains and every resource's gains included
+			HeroLogic.resetGains(copy, ResourceGainFrequency.OncePerRound);
 
 			setHero(copy);
 			props.onChange(copy);
@@ -192,13 +198,13 @@ export const HeroResourcesModal = (props: Props) => {
 													<div className={g.used ? 'gain used' : 'gain'} key={n}>
 														<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
 														{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
-														{getGainButton(g, (tag, value) => gainResource(hr.id, tag, n, value), setExpression, hr.id, hr.name, 'resource', n)}
+														{getGainButton(g, (_, value) => gainResource(hr.id, n, value), setExpression, hr.id, hr.name, 'resource', n)}
 													</div>
 												))
 											}
 											{
 												hr.type === 'heroic' ?
-													<Flex align='center' justify='space-evenly' gap={10}>
+													<Flex align='center' justify='space-evenly' gap={10} wrap='wrap'>
 														<Button
 															key='start-encounter'
 															style={{ flex: '1 1 0' }}
@@ -209,6 +215,19 @@ export const HeroResourcesModal = (props: Props) => {
 																<div>Start Encounter</div>
 																<div className='subtext'>
 																	Victories to {hr.name || 'Heroic Resource'}
+																</div>
+															</div>
+														</Button>
+														<Button
+															key='start-round'
+															style={{ flex: '1 1 0' }}
+															className='tall-button'
+															onClick={startRound}
+														>
+															<div>
+																<div>New Round</div>
+																<div className='subtext'>
+																	Reset per-round gains
 																</div>
 															</div>
 														</Button>
@@ -275,7 +294,7 @@ export const HeroResourcesModal = (props: Props) => {
 												if (expression.kind === 'surge') {
 													gainSurges(expression.tag, expression.result);
 												} else {
-													gainResource(expression.resourceID, expression.tag, expression.gainIndex, expression.result);
+													gainResource(expression.resourceID, expression.gainIndex, expression.result);
 												}
 												setExpression(null);
 											}

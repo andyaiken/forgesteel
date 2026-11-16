@@ -168,8 +168,17 @@ describe('getTextEffect', () => {
 		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
 	});
 
+	// A hero whose characteristic is low enough has a negative potency, which still has to be shown as a potency
+	test('should format a negative hero potency as a potency', () => {
+		HeroLogic.getPotency = vi.fn().mockReturnValue(-2);
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect('4 damage; A < weak, bleeding (save ends)', hero)).toBe('4 damage; `A < -2` **bleeding** (save ends)');
+	});
+
 	test.each([
 		[ 'A<0 restrained (save ends)', '`A<0` **restrained** (save ends)' ],
+		[ 'A < -2, bleeding (save ends)', '`A < -2` **bleeding** (save ends)' ],
 		[ 'the target is dazed and slowed (save ends)', 'the target is **dazed** and **slowed** (save ends)' ],
 		[ 'the target takes 3 fire damage', 'the target takes 3 fire damage' ]
 	])('should bold known condition names (%s)', (text, expected) => {

@@ -66,7 +66,11 @@ describe.concurrent('Test markdown enhancement', () => {
 
 	test.each([
 		[ 'M < 5', '<span class="potency">m&lt;5]</span>' ],
-		[ 'A<3', '<span class="potency">a&lt;3]</span>' ]
+		[ 'A<3', '<span class="potency">a&lt;3]</span>' ],
+		// A hero's potency can be negative, if their characteristic is low enough
+		[ 'A < -2', '<span class="potency">a&lt;-2]</span>' ],
+		[ 'R<-1', '<span class="potency">r&lt;-1]</span>' ],
+		[ 'I < 10', '<span class="potency">i&lt;10]</span>' ]
 	])('converts potency values to glyph form', (inStr, expected) => {
 		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
 	});

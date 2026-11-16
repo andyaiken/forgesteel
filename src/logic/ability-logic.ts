@@ -685,7 +685,7 @@ export class AbilityLogic {
 		}
 
 		// Potencies
-		const potencyRegex = /[MARIP]\s*<\s*\[?(\d+|weak|average|avg|strong)\]?,?/gi;
+		const potencyRegex = /[MARIP]\s*<\s*\[?(-?\d+|weak|average|avg|strong)\]?,?/gi;
 		text = text.replace(potencyRegex, (match: string, _value: string, offset: number, whole: string) => {
 			if (whole[offset - 1] === '`') {
 				return match;

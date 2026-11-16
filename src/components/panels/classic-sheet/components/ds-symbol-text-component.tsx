@@ -11,7 +11,7 @@ interface Props {
 export const DrawSteelSymbolText = (props: Props) => {
 	const lookFor = props.lookFor || 'both';
 
-	const potencyRegex = '\\`?([MARIP])\\s*<\\s*\\[?(\\d+|weak|average|avg|strong)\\]?\\`?';
+	const potencyRegex = '\\`?([MARIP])\\s*<\\s*\\[?(-?\\d+|weak|average|avg|strong)\\]?\\`?';
 	const characteristicRegex = '\\b([MARIP])\\b';
 	let flags = 'g';
 	let regexString;
@@ -65,6 +65,7 @@ export const DrawSteelSymbolText = (props: Props) => {
 						check = 'w';
 						break;
 					case 'average':
+					case 'avg':
 						check = 'v';
 						break;
 					case 'strong':

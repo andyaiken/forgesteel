@@ -1698,12 +1698,16 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.ClassAbility: {
-						if (hero.class) {
+						// The same options the hero builder offers for this feature
+						let heroClass = hero.class;
+						if (feature.data.classID) {
+							heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === feature.data.classID) || null;
+						}
+						if (heroClass) {
+							const allOptions = SourcebookLogic.getClassAbilityOptions(heroClass, feature.data);
 							while (feature.data.selectedIDs.length < feature.data.count) {
-								const currentIDs = feature.data.selectedIDs;
-								const options = hero.class.abilities
-									.filter(a => !currentIDs.includes(a.id))
-									.filter(a => a.cost === feature.data.cost);
+								const currentIDs = [ ...HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability.id), ...feature.data.selectedIDs ];
+								const options = allOptions.filter(a => !currentIDs.includes(a.id));
 								if (options.length === 0) {
 									break;
 								}

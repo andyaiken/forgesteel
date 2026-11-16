@@ -1,3 +1,4 @@
+import { Feature, FeatureClassAbilityData } from '@/models/feature';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ability } from '@/models/ability';
 import { Adventure } from '@/models/adventure';
@@ -12,7 +13,6 @@ import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { Extension } from '@/models/extension';
-import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
@@ -544,6 +544,19 @@ export class SourcebookLogic {
 		abilities.push(...heroClass.subclasses.filter(sc => !sc.selected).flatMap(sc => SourcebookLogic.getAbilitiesFromSubclass(sc, unselectedSubclassAbilities, unselectedSubclassLevels)));
 
 		return abilities;
+	};
+
+	// All the abilities a class ability feature draws from, before its cost, level and type restrictions are applied
+	static getClassAbilitySource = (heroClass: HeroClass, data: FeatureClassAbilityData) => {
+		return SourcebookLogic.getAbilitiesFromClass(heroClass, data.source.fromClassAbilities, data.source.fromSelectedSubclassAbilities, data.source.fromUnselectedSubclassAbilities, data.source.fromClassLevels, data.source.fromSelectedSubclassLevels, data.source.fromUnselectedSubclassLevels);
+	};
+
+	// The abilities a class ability feature allows: those of the right cost and type, gained at a level within the feature's range
+	static getClassAbilityOptions = (heroClass: HeroClass, data: FeatureClassAbilityData) => {
+		return SourcebookLogic.getClassAbilitySource(heroClass, data)
+			.filter(a => a.cost === data.cost)
+			.filter(a => (a.minLevel >= data.minLevel) && (a.minLevel <= data.maxLevel))
+			.filter(a => data.type === 'Any' || a.type.usage === data.type);
 	};
 
 	static getAbilitiesFromSubclass = (subclass: SubClass, subclassAbilities: boolean, subclassLevels: boolean) => {

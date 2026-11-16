@@ -25,6 +25,8 @@ import { RollModifierType } from '@/enums/roll-modifier-type';
 import { RollType } from '@/enums/roll-type';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Summon } from '@/models/summon';
 import { TutorialMode } from '@/enums/tutorial-mode';
 import { Utils } from '@/utils/utils';
@@ -35,10 +37,12 @@ import { boren } from '@/data/kits/stormwight/boren';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { core } from '@/data/sourcebooks/official/core';
 import { corven } from '@/data/kits/stormwight/corven';
+import { elementalist } from '@/data/classes/elementalist/elementalist';
 import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { stormwight } from '@/data/classes/fury/stormwight';
+import { triglav } from '@/data/sourcebooks/third-party/triglav';
 import { vuken } from '@/data/kits/stormwight/vuken';
 import { war } from '@/data/domains/war';
 
@@ -1223,5 +1227,60 @@ describe('createRandomHero', () => {
 		};
 		heroes.forEach(rename);
 		expect(sourcebooks).toEqual(snapshot);
+	});
+
+	// Random heroes must choose class abilities the same way the hero builder lets the user choose them
+	describe('class abilities', () => {
+		// Sourcebooks offering only the given class, from the given sourcebook
+		const onlyClass = (sourcebook: Sourcebook, classID: string) => {
+			const coreCopy = Utils.copy(core);
+			coreCopy.classes = [];
+			const copy = Utils.copy(sourcebook);
+			copy.classes = copy.classes.filter(c => c.id === classID);
+			return sourcebook.id === core.id ? [ copy ] : [ coreCopy, copy ];
+		};
+
+		const createHeroes = (sourcebooks: Sourcebook[]) => {
+			vi.spyOn(Math, 'random').mockImplementation(Random.getSeededRNG('random-hero-abilities'));
+			const heroes: Hero[] = [];
+			for (let n = 0; n < 40; ++n) {
+				heroes.push(HeroLogic.createRandomHero(sourcebooks));
+			}
+			return heroes;
+		};
+
+		const getSelections = (hero: Hero) => {
+			return HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.ClassAbility)
+				.map(f => ({
+					optionIDs: SourcebookLogic.getClassAbilityOptions(hero.class!, f.data).map(a => a.id),
+					count: f.data.count,
+					selectedIDs: f.data.selectedIDs
+				}));
+		};
+
+		it('only chooses abilities the hero builder would offer', () => {
+			// Elementalists have abilities of the same cost at levels 1 and 2, but a level 1 hero can only take the first
+			createHeroes(onlyClass(core, elementalist.id)).forEach(hero => {
+				getSelections(hero).forEach(s => {
+					expect(s.selectedIDs).toHaveLength(s.count);
+					s.selectedIDs.forEach(id => expect(s.optionIDs).toContain(id));
+				});
+
+				const ids = getSelections(hero).flatMap(s => s.selectedIDs);
+				expect(new Set(ids).size).toBe(ids.length);
+			});
+		});
+
+		it('can choose abilities from the hero\'s subclass', () => {
+			// Each vampire subclass offers abilities of its own alongside the class's
+			const vampire = triglav.classes[0];
+			const subclassAbilityIDs = vampire.subclasses.flatMap(sc => sc.abilities).map(a => a.id);
+			expect(subclassAbilityIDs.length).toBeGreaterThan(0);
+
+			const selectedIDs = createHeroes(onlyClass(triglav, vampire.id)).flatMap(hero => getSelections(hero).flatMap(s => s.selectedIDs));
+			expect(selectedIDs.some(id => subclassAbilityIDs.includes(id))).toBe(true);
+		});
 	});
 });

@@ -260,10 +260,10 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 
 	const currentAbilityIDs = HeroLogic.getAbilities(props.hero, props.sourcebooks, []).map(a => a.ability.id);
 
-	const abilities = SourcebookLogic.getAbilitiesFromClass(heroClass, props.data.source.fromClassAbilities, props.data.source.fromSelectedSubclassAbilities, props.data.source.fromUnselectedSubclassAbilities, props.data.source.fromClassLevels, props.data.source.fromSelectedSubclassLevels, props.data.source.fromUnselectedSubclassLevels)
-		.filter(a => a.cost === props.data.cost)
-		.filter(a => (a.minLevel >= props.data.minLevel) && (a.minLevel <= props.data.maxLevel))
-		.filter(a => props.data.type === 'Any' || a.type.usage === props.data.type);
+	// Selections are looked up among all the abilities this feature draws from, not just the ones it currently allows,
+	// so that a selection made before the feature's restrictions changed can still be seen and removed
+	const sourceAbilities = SourcebookLogic.getClassAbilitySource(heroClass, props.data);
+	const abilities = SourcebookLogic.getClassAbilityOptions(heroClass, props.data);
 	const distinctAbilities = Collections.distinct(abilities.filter(a => !currentAbilityIDs.includes(a.id)), a => a.name);
 	const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
@@ -288,7 +288,7 @@ export const ConfigClassAbility = (props: ConfigProps) => {
 			</div>
 			{
 				props.data.selectedIDs.map(id => {
-					const ability = abilities.find(a => a.id === id) as Ability;
+					const ability = sourceAbilities.find(a => a.id === id) as Ability;
 					if (!ability) {
 						return null;
 					}

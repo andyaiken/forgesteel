@@ -156,6 +156,19 @@ describe('getTextEffect', () => {
 	});
 
 	test.each([
+		[ 'Regain 5 + HC', 'Regain 9' ],
+		[ 'Regain 5 + 2HC', 'Regain 13' ],
+		[ 'Regain 2d6 + HC', 'Regain 2d6 + 4' ]
+	])('should use the highest characteristic for HC (%s)', (text, expected) => {
+		HeroLogic.getCharacteristic = vi.fn().mockImplementation((_hero: Hero, characteristic: Characteristic) => {
+			return characteristic === Characteristic.Reason ? 4 : 1;
+		});
+		const hero = {} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
 		[ 'A<0 restrained (save ends)', '`A<0` **restrained** (save ends)' ],
 		[ 'the target is dazed and slowed (save ends)', 'the target is **dazed** and **slowed** (save ends)' ],
 		[ 'the target takes 3 fire damage', 'the target takes 3 fire damage' ]
@@ -294,6 +307,20 @@ describe('getTierEffect', () => {
 	it('should keep the "or" in a choice of damage types', () => {
 		expect(AbilityLogic.getTierEffect('6 + I fire or lightning damage', 1, ability, undefined, hero)).toBe('9 fire or lightning damage');
 	});
+
+	test.each([
+		[ '5 + HC damage', '10 damage' ],
+		[ '5 + hc damage', '10 damage' ],
+		[ '5 + 2HC damage', '15 damage' ],
+		[ '5 + 2 x HC damage', '15 damage' ],
+		[ '5 + HC fire damage', '10 fire damage' ]
+	])('should use the highest characteristic for HC (%s)', (text, expected) => {
+		HeroLogic.getCharacteristic = vi.fn().mockImplementation((_hero: Hero, characteristic: Characteristic) => {
+			return characteristic === Characteristic.Presence ? 5 : 1;
+		});
+
+		expect(AbilityLogic.getTierEffect(text, 1, ability, undefined, hero)).toBe(expected);
+	});
 });
 
 describe('getTierEffectRetainer', () => {
@@ -342,6 +369,14 @@ describe('getTierEffectRetainer', () => {
 	it('should combine a later damage section into the damage amount with the same type', () => {
 		expect(AbilityLogic.getTierEffectRetainer('3 acid damage, 3 lightning damage; +2 lightning damage', 1, ability, retainer)).toBe('3 acid damage, 5 lightning damage');
 	});
+
+	it('should use the highest characteristic for HC', () => {
+		CreatureLogic.getCharacteristic = vi.fn().mockImplementation((_creature: Monster, characteristic: Characteristic) => {
+			return characteristic === Characteristic.Agility ? 4 : 1;
+		});
+
+		expect(AbilityLogic.getTierEffectRetainer('3 + HC damage', 1, ability, retainer)).toBe('7 damage');
+	});
 });
 
 describe('getDamageParts', () => {
@@ -369,7 +404,9 @@ describe('isDamageSection', () => {
 		[ 'The jurist halves the triggering damage', false ],
 		[ 'A creature takes damage', false ],
 		[ 'if the target is prone, an extra 2 damage', false ],
-		[ '5 + M damage and push 2', false ]
+		[ '5 + M damage and push 2', false ],
+		[ '5 + HC damage', true ],
+		[ 'HC damage', true ]
 	])('%s', (text, expected) => {
 		expect(AbilityLogic.isDamageSection(text)).toBe(expected);
 	});

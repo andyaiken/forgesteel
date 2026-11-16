@@ -1034,10 +1034,11 @@ export class LeveledWeaponData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
-						id: 'item-wetwork-9',
-						name: '',
-						description: 'The weapon\'s extra sonic damage increases to 3. Additionally, if you kill a creature using the weapon, you can use a maneuver to move up to your speed and make either a signature strike or a melee free strike.'
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-wetwork-9b',
+						name: '9th',
+						description: 'You can move up to your speed and make either a signature ability strike or a melee free strike.',
+						tag: 'item-wetwork-tag'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-wetwork-9a',
@@ -1045,12 +1046,6 @@ export class LeveledWeaponData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Psychic
-					}),
-					FactoryLogic.feature.createPackageContent({
-						id: 'item-wetwork-9b',
-						name: '9th',
-						description: 'Or you can move up to you speed and make either a signature ability strike or a melee free strike.',
-						tag: 'item-wetwork-tag'
 					})
 				]
 			}

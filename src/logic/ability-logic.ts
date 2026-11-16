@@ -255,36 +255,43 @@ export class AbilityLogic {
 		return [];
 	};
 
-	// Parses a token such as 'm', 'might,', '2m', or '2might' (an attached multiplier collapsed by the caller)
-	// into a characteristic reference with an optional leading multiplier (defaults to x1)
+	// The ways a characteristic can be written in ability text: in full, abbreviated, or HC for the highest characteristic
+	static characteristicPattern = 'might|agility|reason|intuition|presence|hc|m|a|r|i|p';
+
+	// Parses a token such as 'm', 'might,', '2m', '2might', or 'hc' (an attached multiplier collapsed by the caller)
+	// into the characteristic(s) it refers to, with an optional leading multiplier (defaults to x1);
+	// where a token refers to more than one characteristic (HC), the highest of them is used
 	static getCharacteristicReference = (token: string) => {
-		const match = token.trim().replace(/,$/, '').match(/^(\d+)?(might|agility|reason|intuition|presence|m|a|r|i|p)$/i);
+		const match = token.trim().replace(/,$/, '').match(new RegExp(`^(\\d+)?(${AbilityLogic.characteristicPattern})$`, 'i'));
 		if (!match) {
 			return null;
 		}
 
-		let characteristic = Characteristic.Might;
+		let characteristics = [ Characteristic.Might ];
 		switch (match[2].toLowerCase()) {
 			case 'agility':
 			case 'a':
-				characteristic = Characteristic.Agility;
+				characteristics = [ Characteristic.Agility ];
 				break;
 			case 'reason':
 			case 'r':
-				characteristic = Characteristic.Reason;
+				characteristics = [ Characteristic.Reason ];
 				break;
 			case 'intuition':
 			case 'i':
-				characteristic = Characteristic.Intuition;
+				characteristics = [ Characteristic.Intuition ];
 				break;
 			case 'presence':
 			case 'p':
-				characteristic = Characteristic.Presence;
+				characteristics = [ Characteristic.Presence ];
+				break;
+			case 'hc':
+				characteristics = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ];
 				break;
 		}
 
 		return {
-			characteristic: characteristic,
+			characteristics: characteristics,
 			multiplier: match[1] ? parseInt(match[1]) : 1
 		};
 	};
@@ -295,7 +302,7 @@ export class AbilityLogic {
 			return false;
 		}
 
-		return /^([+-]|\d|(might|agility|reason|intuition|presence|m|a|r|i|p)\s*([<>,+]|or\b|damage$|dmg$))/.test(text);
+		return new RegExp(`^([+-]|\\d|(${AbilityLogic.characteristicPattern})\\s*([<>,+]|or\\b|damage$|dmg$))`).test(text);
 	};
 
 	// Splits a damage section that lists several separate amounts of damage (eg '3 acid damage, 3 lightning damage')
@@ -328,7 +335,7 @@ export class AbilityLogic {
 			// so (for example) '2 x Might' and '2Might' are both recognized as a x2 characteristic multiplier below
 			const tokenSource = section
 				.toLowerCase()
-				.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/g, '$1$2');
+				.replace(new RegExp(`(\\d+)\\s*(?:x|×|\\*)\\s*(${AbilityLogic.characteristicPattern})\\b`, 'g'), '$1$2');
 
 			tokenSource.split(/\s+/).forEach(token => {
 				const charRef = AbilityLogic.getCharacteristicReference(token);
@@ -340,7 +347,7 @@ export class AbilityLogic {
 				} else if (/\d+d\d+/.test(token)) {
 					dice.push(token);
 				} else if (charRef) {
-					characteristics.push(charRef);
+					charRef.characteristics.forEach(ch => characteristics.push({ characteristic: ch, multiplier: charRef.multiplier }));
 				} else if (!isNaN(parseInt(token))) {
 					value += parseInt(token);
 				} else if ((token === '+') || (token === '-')) {
@@ -449,7 +456,7 @@ export class AbilityLogic {
 				} else if (token === 'or' || token === '+') {
 					// Ignore
 				} else if (charRef) {
-					value += retainer ? CreatureLogic.getCharacteristic(retainer, charRef.characteristic) * charRef.multiplier : 0;
+					value += retainer ? Math.max(...charRef.characteristics.map(ch => CreatureLogic.getCharacteristic(retainer, ch))) * charRef.multiplier : 0;
 				} else if (!isNaN(parseInt(token))) {
 					value += parseInt(token);
 				} else {
@@ -544,16 +551,16 @@ export class AbilityLogic {
 
 		// N + [Characteristic], optionally with a multiplier on the characteristic (eg 'N + 2M' / 'N + 2 x Might')
 		if (hero) {
-			text = text.replace(/(\d+)\s*(?:x|×|\*)\s*(might|agility|reason|intuition|presence|m|a|r|i|p)\b/gi, '$1$2');
+			text = text.replace(new RegExp(`(\\d+)\\s*(?:x|×|\\*)\\s*(${AbilityLogic.characteristicPattern})\\b`, 'gi'), '$1$2');
 
-			const regex = /\b(\d*d\d+|\d+)\s*\+\s*(\d*(?:might|agility|reason|intuition|presence|m|a|r|i|p))\b/gi;
+			const regex = new RegExp(`\\b(\\d*d\\d+|\\d+)\\s*\\+\\s*(\\d*(?:${AbilityLogic.characteristicPattern}))\\b`, 'gi');
 			text = text.replace(regex, (match, value, characteristicToken) => {
 				const charRef = AbilityLogic.getCharacteristicReference(characteristicToken);
 				if (!charRef) {
 					return match;
 				}
 
-				return addCharacteristic(value, HeroLogic.getCharacteristic(hero, charRef.characteristic) * charRef.multiplier);
+				return addCharacteristic(value, Math.max(...charRef.characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch))) * charRef.multiplier);
 			});
 		}
 

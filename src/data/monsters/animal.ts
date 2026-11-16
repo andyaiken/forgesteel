@@ -249,7 +249,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						name: 'Natural Weapon',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [

@@ -44,6 +44,7 @@ Jackson Bootblack`,
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-3',
+					options: [ 'Read Person' ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

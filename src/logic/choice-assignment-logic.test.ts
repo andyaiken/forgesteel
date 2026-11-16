@@ -6,6 +6,51 @@ const slot = (id: string, rank: number, accepts: string[], selected: string[] = 
 });
 
 describe('ChoiceAssignmentLogic', () => {
+	test('allows an override in a free slot without changing its default options', () => {
+		const slots = [ slot('culture', 1, [ 'Kalliak' ]) ];
+		expect(ChoiceAssignmentLogic.selectWithOverride(slots, 'Ananjali', false)).toBeNull();
+		const selected = ChoiceAssignmentLogic.selectWithOverride(slots, 'Ananjali', true);
+		expect(selected).toEqual({ culture: [ 'Ananjali' ] });
+		const updated = slots.map(s => ({ ...s, selected: selected![s.id] }));
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections(updated)).toEqual([ 'Ananjali' ]);
+		expect(ChoiceAssignmentLogic.selectWithOverride(updated, 'Another', true)).toBeNull();
+		expect(ChoiceAssignmentLogic.deselect(updated, 'Ananjali')).toEqual({ culture: [] });
+	});
+
+	test('prefers a standard choice slot before overriding a restricted slot', () => {
+		const slots = [ slot('culture', 1, [ 'Kalliak' ]), slot('career', 2, [ 'Kalliak', 'Ananjali' ]) ];
+		expect(ChoiceAssignmentLogic.selectWithOverride(slots, 'Ananjali', true)).toEqual({ culture: [], career: [ 'Ananjali' ] });
+	});
+
+	test('a career language choice cannot also cover an overridden ancestral language', () => {
+		const slots = [
+			slot('culture', 1, [ 'Kalliak' ], [ 'Ananjali' ]),
+			slot('career', 3, [ 'Kalliak', 'Ananjali', 'The First Language' ], [ 'The First Language' ]),
+			slot('default', 1, [ 'Caelian' ], [ 'Caelian' ])
+		];
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections(slots)).toEqual([ 'Ananjali' ]);
+	});
+
+	test('allows a valid swap between sources without changing the selections', () => {
+		const slots = [ slot('culture', 1, [ 'Kalliak' ], [ 'Ananjali' ]), slot('career', 2, [ 'Kalliak', 'Ananjali' ], [ 'Kalliak' ]) ];
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections(slots)).toEqual([]);
+		expect(slots.map(s => s.selected)).toEqual([ [ 'Ananjali' ], [ 'Kalliak' ] ]);
+	});
+
+	test('respects unlimited choices', () => {
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections([ slot('any', 1, [ 'A', 'B' ], [ 'A', 'B' ], -1) ])).toEqual([]);
+	});
+
+	test('accepts selected skills available through another source', () => {
+		const slots = [ slot('class', 1, [ 'Magic' ], [ 'Music' ]), slot('culture', 2, [ 'Music', 'Perform' ]) ];
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections(slots)).toEqual([]);
+	});
+
+	test('reports skills unavailable through any source once, including custom skills', () => {
+		const slots = [ slot('class', 1, [ 'Magic' ], [ 'Music', 'Custom' ]), slot('culture', 2, [ 'Perform' ], [ 'Music' ]) ];
+		expect(ChoiceAssignmentLogic.getUnsupportedSelections(slots)).toEqual([ 'Music', 'Custom' ]);
+	});
+
 	test('prefers the more restricted slot', () => {
 		const slots = [ slot('lore', 10, [ 'Music', 'History' ]), slot('music', 2, [ 'Music', 'Performance' ]) ];
 		expect(ChoiceAssignmentLogic.select(slots, 'Music')).toEqual({ lore: [], music: [ 'Music' ] });

@@ -224,6 +224,8 @@ export class FactoryLogic {
 			type: type,
 			language: FactoryLogic.feature.createLanguageChoice({
 				id: `${id}-language`,
+				options: type === CultureType.Ancestral && language ? [ language ] : [],
+				allowedTypes: type === CultureType.Ancestral && language ? [] : undefined,
 				selected: language ? [ language ] : []
 			}),
 			environment: environment || null,

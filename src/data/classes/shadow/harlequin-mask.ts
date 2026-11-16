@@ -15,6 +15,7 @@ export const harlequinMask: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-sub-3-1-1',
+					options: [ 'Lie' ],
 					selected: [ 'Lie' ]
 				}),
 				FactoryLogic.feature.createAbility({

@@ -15,6 +15,7 @@ export const auteur: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-auteur-1',
+					options: [ 'Brag' ],
 					selected: [ 'Brag' ]
 				}),
 				FactoryLogic.feature.createAbility({

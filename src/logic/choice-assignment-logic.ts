@@ -9,6 +9,32 @@ export interface ChoiceSlot {
 }
 
 export class ChoiceAssignmentLogic {
+	static selectWithOverride = (slots: ChoiceSlot[], name: string, allowAny: boolean): Record<string, string[]> | null => {
+		return ChoiceAssignmentLogic.select(slots, name)
+			|| (allowAny ? ChoiceAssignmentLogic.select(slots.map(slot => ({ ...slot, accepts: () => true })), name) : null);
+	};
+
+	static getUnsupportedSelections = (slots: ChoiceSlot[]): string[] => {
+		const names = [ ...new Set(slots.flatMap(slot => slot.selected)) ];
+		// Keep valid selections first, then try to fit choices made outside their
+		// original source. Reassignment must respect each source's capacity.
+		const ordered = [ ...names ].sort((a, b) => {
+			const validAtSource = (name: string) => slots.some(slot => slot.selected.includes(name) && slot.accepts(name));
+			return Number(validAtSource(b)) - Number(validAtSource(a));
+		});
+		let assigned = slots.map(slot => ({ ...slot, selected: [] as string[] }));
+		const unsupported = new Set<string>();
+		ordered.forEach(name => {
+			const placement = ChoiceAssignmentLogic.select(assigned, name);
+			if (placement) {
+				assigned = assigned.map(slot => ({ ...slot, selected: placement[slot.id] }));
+			} else {
+				unsupported.add(name);
+			}
+		});
+		return names.filter(name => unsupported.has(name));
+	};
+
 	static hasSpace = (slot: ChoiceSlot, selected: string[]) => {
 		return slot.capacity === -1 || selected.length < slot.capacity;
 	};

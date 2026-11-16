@@ -1,6 +1,7 @@
+import { Alert, Flex, Space, Tag } from 'antd';
 import { ChoiceAssignmentLogic, ChoiceSlot } from '@/logic/choice-assignment-logic';
 import { Feature, FeatureData, FeatureLanguageChoice, FeatureSkillChoice } from '@/models/feature';
-import { Flex, Space, Tag } from 'antd';
+import { SelectionLogic, SelectionWarnings } from '@/logic/selection-logic';
 import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -28,6 +29,11 @@ interface ChoiceItem {
 
 interface Props {
 	hero: Hero;
+	warnings: SelectionWarnings;
+	allowAnySkills: boolean;
+	allowAnyLanguages: boolean;
+	setAllowAnySkills: (value: boolean) => void;
+	setAllowAnyLanguages: (value: boolean) => void;
 	sourcebooks: Sourcebook[];
 	setFeaturesData: (updates: { featureID: string, data: FeatureData }[]) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -51,52 +57,48 @@ export const SkillsLanguagesSection = (props: Props) => {
 		});
 
 	// Skills
-	const skillFeatures = features
+	const allSkillFeatures = features
 		.map(f => ({ feature: f.feature as Feature, source: f.source }))
-		.filter(f => f.feature.type === FeatureType.SkillChoice && f.feature.data.selectAt === 'build') as { feature: FeatureSkillChoice, source: string }[];
+		.filter(f => f.feature.type === FeatureType.SkillChoice) as { feature: FeatureSkillChoice, source: string }[];
 
-	const skillSlots: ChoiceSlot[] = skillFeatures.map(f => {
-		const data = f.feature.data;
-		const accepts = (name: string) => {
-			if (data.options.includes(name)) {
-				return true;
-			}
-			const skill = allSkills.find(s => s.name === name);
-			return !!skill && data.listOptions.includes(skill.list);
-		};
-		return {
-			id: f.feature.id,
-			capacity: data.count,
-			selected: data.selected,
-			rank: allSkills.filter(s => accepts(s.name)).length + data.options.filter(o => !allSkills.some(s => s.name === o)).length,
-			accepts: accepts
-		};
-	});
+	const allSkillSlots = SelectionLogic.getSkillSlots(allSkillFeatures.map(f => f.feature), allSkills);
+	const skillFeatures = allSkillFeatures.filter(f => f.feature.data.selectAt === 'build');
+	const skillSlots = allSkillSlots.filter(slot => skillFeatures.some(f => f.feature.id === slot.id));
+	const unsupportedSkills = props.warnings.skills;
+	const skillWarning = unsupportedSkills.length > 0 && !props.allowAnySkills ?
+		<Alert
+			type='warning'
+			showIcon={true}
+			title='One or more selected skills are outside the default options. These choices require your Director’s approval.'
+			description={unsupportedSkills.join(', ')}
+		/>
+		: null;
 	const skillSources = Object.fromEntries(skillFeatures.map(f => [ f.feature.id, f.source ]));
 	const skillItems: ChoiceItem[] = allSkills
-		.filter(s => skillSlots.some(slot => slot.accepts(s.name)))
+		.filter(s => props.allowAnySkills || skillSlots.some(slot => slot.accepts(s.name) || slot.selected.includes(s.name)) || knownSkills.includes(s.name))
 		.map(s => ({ name: s.name, description: s.description, group: s.list }));
+	[ ...skillSlots.flatMap(slot => slot.selected), ...knownSkills ]
+		.filter((name, index, names) => names.indexOf(name) === index && !skillItems.some(item => item.name === name))
+		.forEach(name => skillItems.push({ name, description: '', group: SkillList.Custom }));
 	const skillGroups = [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ] as string[];
 
 	// Languages
-	const languageFeatures = features
+	const allLanguageFeatures = features
 		.map(f => ({ feature: f.feature as Feature, source: f.source }))
-		.filter(f => f.feature.type === FeatureType.LanguageChoice && f.feature.data.selectAt === 'build') as { feature: FeatureLanguageChoice, source: string }[];
+		.filter(f => f.feature.type === FeatureType.LanguageChoice) as { feature: FeatureLanguageChoice, source: string }[];
 
-	const languageSlots: ChoiceSlot[] = languageFeatures.map(f => {
-		const data = f.feature.data;
-		const accepts = (name: string) => {
-			const language = allLanguages.find(l => l.name === name);
-			return !!language && data.allowedTypes.includes(language.type);
-		};
-		return {
-			id: f.feature.id,
-			capacity: data.count,
-			selected: data.selected,
-			rank: allLanguages.filter(l => accepts(l.name)).length,
-			accepts: accepts
-		};
-	});
+	const allLanguageSlots = SelectionLogic.getLanguageSlots(allLanguageFeatures.map(f => f.feature), allLanguages);
+	const languageFeatures = allLanguageFeatures.filter(f => f.feature.data.selectAt === 'build');
+	const languageSlots = allLanguageSlots.filter(slot => languageFeatures.some(f => f.feature.id === slot.id));
+	const unsupportedLanguages = props.warnings.languages;
+	const languageWarning = unsupportedLanguages.length > 0 && !props.allowAnyLanguages ?
+		<Alert
+			type='warning'
+			showIcon={true}
+			title='One or more selected languages are outside the default options. These choices require your Director’s approval.'
+			description={unsupportedLanguages.join(', ')}
+		/>
+		: null;
 	const languageSources = Object.fromEntries(languageFeatures.map(f => [ f.feature.id, f.source ]));
 	const knownLanguages = features
 		.map(f => f.feature)
@@ -109,12 +111,12 @@ export const SkillsLanguagesSection = (props: Props) => {
 			}
 			return [];
 		});
-	// Granted languages are always listed, even if no choice feature could pick them
+	// Include named options even when they aren't in the sourcebooks' language catalog.
 	const languageItems: ChoiceItem[] = allLanguages
-		.filter(l => knownLanguages.includes(l.name) || languageSlots.some(slot => slot.accepts(l.name)))
+		.filter(l => props.allowAnyLanguages || knownLanguages.includes(l.name) || languageSlots.some(slot => slot.accepts(l.name) || slot.selected.includes(l.name)))
 		.map(l => ({ name: l.name, description: l.description, group: l.type }));
-	knownLanguages
-		.filter(name => !languageItems.some(i => i.name === name))
+	[ ...knownLanguages, ...languageFeatures.flatMap(f => f.feature.data.options), ...languageSlots.flatMap(slot => slot.selected) ]
+		.filter((name, index, names) => names.indexOf(name) === index && !languageItems.some(i => i.name === name))
 		.forEach(name => languageItems.push({ name: name, description: '', group: LanguageType.Custom }));
 	const languageGroups = [ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead, LanguageType.Custom ] as string[];
 
@@ -162,6 +164,8 @@ export const SkillsLanguagesSection = (props: Props) => {
 		content = (
 			<div className='hero-edit-content skills-languages-section'>
 				<div className='hero-edit-content-column selected' id='skill-selections'>
+					<Toggle label='Allow any skill (Consult with Director)' value={props.allowAnySkills} onChange={props.setAllowAnySkills} />
+					{skillWarning}
 					<HeaderText
 						level={1}
 						extra={
@@ -184,6 +188,8 @@ export const SkillsLanguagesSection = (props: Props) => {
 					{advancedSkills.length === 0 ? <Empty /> : null}
 				</div>
 				<div className='hero-edit-content-column selected' id='language-selections'>
+					<Toggle label='Allow any language (Consult with Director)' value={props.allowAnyLanguages} onChange={props.setAllowAnyLanguages} />
+					{languageWarning}
 					<HeaderText
 						level={1}
 						extra={
@@ -211,8 +217,11 @@ export const SkillsLanguagesSection = (props: Props) => {
 		content = (
 			<div className='hero-edit-content skills-languages-section'>
 				<div className='hero-edit-content-column selected' id='skill-selections'>
+					<Toggle label='Allow any skill (Consult with Director)' value={props.allowAnySkills} onChange={props.setAllowAnySkills} />
+					{skillWarning}
 					<ChoiceGroups
 						title='Skills'
+						allowAny={props.allowAnySkills}
 						slots={skillSlots}
 						slotSources={skillSources}
 						items={skillItems}
@@ -223,8 +232,11 @@ export const SkillsLanguagesSection = (props: Props) => {
 					/>
 				</div>
 				<div className='hero-edit-content-column selected' id='language-selections'>
+					<Toggle label='Allow any language (Consult with Director)' value={props.allowAnyLanguages} onChange={props.setAllowAnyLanguages} />
+					{languageWarning}
 					<ChoiceGroups
 						title='Languages'
+						allowAny={props.allowAnyLanguages}
 						slots={languageSlots}
 						slotSources={languageSources}
 						items={languageItems}
@@ -248,6 +260,7 @@ export const SkillsLanguagesSection = (props: Props) => {
 
 interface ChoiceGroupsProps {
 	title: string;
+	allowAny: boolean;
 	slots: ChoiceSlot[];
 	slotSources: Record<string, string>;
 	items: ChoiceItem[];
@@ -304,7 +317,7 @@ const ChoiceGroups = (props: ChoiceGroupsProps) => {
 										const placement = (known || isSelected || props.disabledNames.includes(item.name)) ?
 											null
 											:
-											ChoiceAssignmentLogic.select(props.slots, item.name);
+											ChoiceAssignmentLogic.selectWithOverride(props.slots, item.name, props.allowAny);
 										const disabled = !known && !isSelected && !placement;
 
 										return (

@@ -565,7 +565,7 @@ This long, ornate rod with a silver bulb head is braided with 33 green cords. A 
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The spiral shell of a fallen armory snail and whirlwinds captured from Quintessence',
-			source: 'Texts or lore in Kalliac',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 450
 		}),

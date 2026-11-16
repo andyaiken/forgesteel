@@ -15,6 +15,7 @@ export const guardian: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-sub-1-1-1',
+					options: [ 'Read Person' ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

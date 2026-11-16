@@ -1442,6 +1442,7 @@ As a beastheart, you face the world’s dangers alongside your wild companion. W
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-1-1a',
+					options: [ 'Handle Animals' ],
 					selected: [ 'Handle Animals' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -1781,6 +1782,7 @@ You and your companion both gain the benefits of the kit, with the following exc
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-9-1b',
+					options: [ 'Nature' ],
 					selected: [ 'Nature' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

@@ -15,6 +15,7 @@ export const virtuoso: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-virtuoso-1',
+					options: [ 'Music' ],
 					selected: [ 'Music' ]
 				}),
 				FactoryLogic.feature.createAbility({

@@ -1,4 +1,5 @@
 import { Culture } from '@/models/culture';
+import { CultureLogic } from '@/logic/culture-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -42,9 +43,9 @@ export const CulturePanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<div style={{ paddingTop: '10px' }}>
 							<FeaturePanel feature={props.culture.language} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							{props.culture.environment ? <FeaturePanel feature={CultureLogic.getAspectDisplay(props.culture.environment, 'environment')} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							{props.culture.organization ? <FeaturePanel feature={CultureLogic.getAspectDisplay(props.culture.organization, 'organization')} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+							{props.culture.upbringing ? <FeaturePanel feature={CultureLogic.getAspectDisplay(props.culture.upbringing, 'upbringing')} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 						</div>
 						: null
 				}

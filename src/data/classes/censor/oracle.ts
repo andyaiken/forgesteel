@@ -15,6 +15,7 @@ export const oracle: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-2-1-1',
+					options: [ 'Magic' ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

@@ -15,6 +15,7 @@ export const spark: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-sub-4-1-1',
+					options: [ 'Magic' ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

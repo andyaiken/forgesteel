@@ -15,6 +15,7 @@ export const blackAsh: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-sub-1-1-1',
+					options: [ 'Magic' ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createAbility({

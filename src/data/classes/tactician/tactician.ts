@@ -71,6 +71,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-1',
+					options: [ 'Lead' ],
 					selected: [ 'Lead' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

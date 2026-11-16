@@ -50,7 +50,8 @@
 					color: rgb(160, 0, 0);
 				}
 
-				&.in-progress {
+				&.in-progress,
+				&.needs-review {
 					color: rgb(255, 160, 0);
 				}
 			}

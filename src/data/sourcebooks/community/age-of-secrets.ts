@@ -110,6 +110,7 @@ While your Essence is negative you can't Overchannel; you climb back to positive
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'thaumaturge-skill-magic',
+					options: [ 'Magic' ],
 					selected: [ 'Magic' ],
 					count: 1
 				}),
@@ -646,7 +647,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'Your Arcane Bolt ignores cover and concealment, and can target a creature you can\'t see whose location you know.',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'cavendish-skill', selected: [ 'Read Person' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'cavendish-skill', options: [ 'Read Person' ], selected: [ 'Read Person' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'cavendish-auguries',
 							name: 'Auguries',
@@ -878,7 +879,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'Your Arcane Bolt bypasses damage immunity, and does double damage to objects.',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'collegium-skill', selected: [ 'Alchemy' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'collegium-skill', options: [ 'Alchemy' ], selected: [ 'Alchemy' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'collegium-ruinous-channeling',
 							name: 'Ruinous Channeling',
@@ -1179,7 +1180,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'When your Arcane Bolt damages a creature, you or an ally within 5 gains temporary Stamina equal to your Reason.',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'dashin-skill', selected: [ 'Alertness' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'dashin-skill', options: [ 'Alertness' ], selected: [ 'Alertness' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'dashin-sheltering-ward',
 							name: 'Sheltering Ward',
@@ -1404,7 +1405,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'Your Arcane Bolt can deal psychic damage instead of its usual type; when it does, on a tier 2+ the target can\'t make opportunity attacks until the end of its next turn, and on a tier 3 it is dazed (save ends).',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'ginnhall-skill', selected: [ 'Lie' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'ginnhall-skill', options: [ 'Lie' ], selected: [ 'Lie' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'ginnhall-mirror',
 							name: 'Mirror',
@@ -1684,7 +1685,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'Your Arcane Bolt opens gateways; on a tier 3, you can teleport the target up to 5 squares.',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'hetaeria-skill', selected: [ 'Timescape' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'hetaeria-skill', options: [ 'Timescape' ], selected: [ 'Timescape' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'hetaeria-open-the-gate',
 							name: 'Open the Gate',
@@ -1946,7 +1947,7 @@ Once per round, when a creature within 10 squares uses an ability with the Magic
 							description: 'On a tier 3 result for your Arcane Bolt, the target is weakened (save ends) as its substance frays.',
 							tag: 'arcane-bolt'
 						}),
-						FactoryLogic.feature.createSkillChoice({ id: 'magisterium-skill', selected: [ 'Architecture' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'magisterium-skill', options: [ 'Architecture' ], selected: [ 'Architecture' ], count: 1 }),
 						FactoryLogic.feature.create({
 							id: 'magisterium-alteration',
 							name: 'Alteration',
@@ -5057,7 +5058,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoice({ id: 'hexbreaker-skill', selected: [ 'Magic' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'hexbreaker-skill', options: [ 'Magic' ], selected: [ 'Magic' ], count: 1 }),
 						FactoryLogic.feature.createAbility({ ability: FactoryLogic.createAbility({ id: 'hexbreaker-brace', name: 'Brace!', description: 'A command, drilled until it\'s spinal: when the air goes wrong, set your feet and weather it.', type: FactoryLogic.type.createTrigger('The target is targeted by a magic ability'), keywords: [ AbilityKeyword.Ranged ], distance: [ FactoryLogic.distance.createSelf(), FactoryLogic.distance.createRanged(10) ], target: 'Self or one ally', sections: [ FactoryLogic.createAbilitySectionText('The target halves the damage they take from the ability and gains a +2 bonus to any saving throw the ability forces on them. Spend 1: The target also can\'t be subjected to any condition or forced movement by that ability.') ] }) }),
 						FactoryLogic.feature.create({ id: 'hexbreaker-break-the-hex', name: 'Break the Hex', description: 'You read a spell the way a sapper reads a wall. When you mark a creature it suffers the normal Mark (your allies gain an edge and deal extra damage against it) and the potency of its magic abilities is reduced by 1.' })
 					]
@@ -5210,7 +5211,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoice({ id: 'watchful-skill', selected: [ 'Monsters' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'watchful-skill', options: [ 'Monsters' ], selected: [ 'Monsters' ], count: 1 }),
 						FactoryLogic.feature.create({ id: 'watchful-breach-watches-back', name: 'The Breach Watches Back', description: 'You can perceive creatures and objects that are invisible, ethereal, phased, or only partly across the Veil within your line of effect, and you sense when anything crosses the Veil within 10 squares of you. Once on each of your turns, you can step through a thin place - teleport up to 3 squares, passing through creatures and solid obstacles to do it. Your strikes deal additional corruption damage equal to your Agility to undead, horrors, and creatures from beyond the Veil.' }),
 						FactoryLogic.feature.create({ id: 'watchful-sentinel', name: 'Sentinel', description: 'Enemies adjacent to you can\'t teleport. The first time each round an enemy willingly leaves a square adjacent to you - or any enemy within 3 of you teleports - you can make a free strike against it without spending a triggered action.' }),
 						FactoryLogic.feature.createAbility({ ability: FactoryLogic.createAbility({ id: 'watchful-hold-the-threshold', name: 'Hold the Threshold', description: 'The way is closed.', type: FactoryLogic.type.createTrigger('A creature within 3 of you moves, is force moved, or teleports'), keywords: [ AbilityKeyword.Ranged ], distance: [ FactoryLogic.distance.createRanged(3) ], target: 'One creature', sections: [ FactoryLogic.createAbilitySectionText('That creature\'s movement immediately ends and it takes damage equal to twice your Agility. Spend 1 Insight: the creature is restrained until the end of its next turn. Spend 1 Insight: the creature can\'t teleport until the end of its next turn.') ] }) })
@@ -5259,7 +5260,7 @@ You are a member of the Hospitallers, and are trained in the field medicine of T
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoice({ id: 'winnower-skill', selected: [ 'Society' ], count: 1 }),
+						FactoryLogic.feature.createSkillChoice({ id: 'winnower-skill', options: [ 'Society' ], selected: [ 'Society' ], count: 1 }),
 						FactoryLogic.feature.create({ id: 'winnower-the-fire-spreads', name: 'The Fire Spreads', description: 'When your judgment moves to a new target because a creature judged by you was reduced to 0 Stamina, the new target immediately takes holy damage equal to twice your Presence score, and you gain 1 wrath.' })
 					]
 				},

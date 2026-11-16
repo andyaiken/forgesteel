@@ -67,5 +67,5 @@ export const orc: Ancestry = {
 		})
 	],
 	ancestryPoints: 3,
-	culture: FactoryLogic.createCulture('Orc', 'Wilderness, communal, creative.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.creative, 'Kalliac')
+	culture: FactoryLogic.createCulture('Orc', 'Wilderness, communal, creative.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.creative, 'Kalliak')
 };

@@ -519,7 +519,14 @@ ${encounter.objective.victories}`
 					feature.data.types.push('');
 				}
 				break;
+			case FeatureType.Language:
+				if (feature.data.language === 'Kalliac') {
+					feature.data.language = 'Kalliak';
+				}
+				break;
 			case FeatureType.LanguageChoice:
+				feature.data.options = feature.data.options.map(name => name === 'Kalliac' ? 'Kalliak' : name);
+				feature.data.selected = feature.data.selected.map(name => name === 'Kalliac' ? 'Kalliak' : name);
 				if (feature.data.allowedTypes === undefined) {
 					feature.data.allowedTypes = [ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ];
 				}

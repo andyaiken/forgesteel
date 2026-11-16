@@ -16,6 +16,7 @@ export const exorcist: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-1-1-1',
+					options: [ 'Read Person' ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

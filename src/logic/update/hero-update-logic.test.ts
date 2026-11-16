@@ -20,8 +20,69 @@ import { conduit } from '@/data/classes/conduit/conduit';
 import { core } from '@/data/sourcebooks/official/core';
 import { fury } from '@/data/classes/fury/fury';
 import { life } from '@/data/domains/life';
+import { orc } from '@/data/ancestries/orc';
 import { orden } from '@/data/sourcebooks/official/orden';
 import { stormwight } from '@/data/classes/fury/stormwight';
+
+describe('default culture languages', () => {
+	it('normalizes the legacy Orc language spelling when loading a hero', () => {
+		const hero = FactoryLogic.createHero();
+		hero.culture = Utils.copy(orc.culture!);
+		hero.culture.language.data.options = [ 'Kalliac' ];
+		hero.culture.language.data.selected = [ 'Kalliac' ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(hero.culture!.language.data.options).toEqual([ 'Kalliak' ]);
+		expect(hero.culture!.language.data.selected).toEqual([ 'Kalliak' ]);
+		expect(SourcebookLogic.getLanguage('Kalliak', [ core, orden ])?.type).toBe('Cultural');
+	});
+
+	it('refreshes language options while preserving a nonstandard selection', () => {
+		const hero = FactoryLogic.createHero();
+		hero.culture = Utils.copy(orc.culture!);
+		hero.culture.language.data.options = [];
+		hero.culture.language.data.selected = [ 'Caelian' ];
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		expect(hero.culture!.language.data.options).toEqual([ 'Kalliak' ]);
+		expect(hero.culture!.language.data.allowedTypes).toEqual([]);
+		expect(hero.culture!.language.data.selected).toEqual([ 'Caelian' ]);
+	});
+});
+
+describe('default class skills', () => {
+	it('refreshes class and subclass options while preserving nonstandard selections', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(fury);
+		const subclass = hero.class.subclasses.find(sc => sc.id === berserker.id)!;
+		subclass.selected = true;
+		const defaults = HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SkillChoice && [ 'fury-1-1', 'fury-sub-1-1-1' ].includes(f.id));
+		expect(defaults).toHaveLength(2);
+		defaults.forEach(f => {
+			if (f.type === FeatureType.SkillChoice) {
+				f.data.options = [];
+				f.data.selected = [ 'Music' ];
+			}
+		});
+
+		HeroUpdateLogic.updateHero(hero, [ core, orden ]);
+
+		const updated = HeroLogic.getFeatures(hero).map(f => f.feature);
+		for (const [ id, skill ] of [ [ 'fury-1-1', 'Nature' ], [ 'fury-sub-1-1-1', 'Lift' ] ]) {
+			const feature = updated.find(f => f.id === id);
+			expect(feature?.type).toBe(FeatureType.SkillChoice);
+			if (feature?.type === FeatureType.SkillChoice) {
+				expect(feature.data.options).toEqual([ skill ]);
+				expect(feature.data.listOptions).toEqual([]);
+				expect(feature.data.selected).toEqual([ 'Music' ]);
+			}
+		}
+	});
+});
 
 describe('complications added through customize', () => {
 	const buildHeroWithComplication = (complication: Complication) => {

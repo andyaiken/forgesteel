@@ -438,11 +438,14 @@ export class FactoryFeatureLogic {
 		const allowedTypes = data.allowedTypes || [ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ];
 		const count = data.count || 1;
 
-		const source = (allowedTypes.length === 4) ? '' : allowedTypes.join(', ');
+		const source = [
+			...(data.options || []),
+			...(allowedTypes.length === 4 ? [ 'any language' ] : allowedTypes.map(type => `any ${type} language`))
+		].join(', ');
 		const description = data.description || (count > 1 ?
-			`Choose ${count} ${source} languages.`
+			`Choose ${count} languages from: ${source}.`
 			:
-			`Choose a ${source} language.`);
+			`Choose a language from: ${source}.`);
 
 		return {
 			id: data.id,

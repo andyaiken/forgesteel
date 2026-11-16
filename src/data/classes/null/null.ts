@@ -72,6 +72,7 @@ As a null, you resist the supernatural forces of the universe with composure and
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-1',
+					options: [ 'Psionics' ],
 					selected: [ 'Psionics' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

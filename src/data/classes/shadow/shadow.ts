@@ -67,6 +67,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-1',
 					count: 2,
+					options: [ 'Hide', 'Sneak' ],
 					selected: [ 'Hide', 'Sneak' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

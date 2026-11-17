@@ -447,14 +447,6 @@ If you have a kit, you can’t take this enchantment.`,
 						},
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
-								id: 'elementalist-4-1bc',
-								characteristic: Characteristic.Reason,
-								value: 1
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createCharacteristicBonus({
 								id: 'elementalist-4-1bd',
 								characteristic: Characteristic.Intuition,
 								value: 1

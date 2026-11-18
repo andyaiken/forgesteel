@@ -459,6 +459,9 @@ ${encounter.objective.victories}`
 				if (feature.data.levels === undefined) {
 					feature.data.levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 				}
+				if (feature.data.selectAt === undefined) {
+					feature.data.selectAt = 'build';
+				}
 				feature.data.selected.forEach(d => {
 					if (d.resourceGains === undefined) {
 						d.resourceGains = [];

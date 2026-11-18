@@ -34,6 +34,7 @@ import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { beastheartSourcebook } from '@/data/sourcebooks/official/beastheart';
 import { berserker } from '@/data/classes/fury/berserker';
 import { boren } from '@/data/kits/stormwight/boren';
+import { censor } from '@/data/classes/censor/censor';
 import { conduit } from '@/data/classes/conduit/conduit';
 import { core } from '@/data/sourcebooks/official/core';
 import { corven } from '@/data/kits/stormwight/corven';
@@ -521,6 +522,19 @@ describe('conditional features', () => {
 
 		const mode = features.find(f => f.type === FeatureType.MovementMode) as FeatureMovementMode;
 		expect(mode.data.mode).toBe('Fly');
+	});
+
+	it('surfaces a domain choice that is selected in play, but not one selected at build time', () => {
+		const hero = FactoryLogic.createHero();
+		hero.class = Utils.copy(censor);
+		hero.class.level = 10;
+
+		const domainChoiceIDs = HeroLogic.getConditionalFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.map(f => f.id);
+
+		expect(domainChoiceIDs).toEqual([ 'censor-10-5b' ]);
 	});
 });
 

@@ -154,6 +154,7 @@ export interface FeatureDomainData extends _FeatureData {
 	characteristic: Characteristic;
 	levels: number[];
 	count: number;
+	selectAt: 'build' | 'respite' | 'play';
 	selected: Domain[];
 };
 export type FeatureDomain = FeatureOf<FeatureType.Domain, FeatureDomainData>;

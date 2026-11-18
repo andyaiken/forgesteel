@@ -287,6 +287,7 @@ export class HeroLogic {
 			.filter(f => {
 				switch (f.feature.type) {
 					case FeatureType.Choice:
+					case FeatureType.Domain:
 					case FeatureType.LanguageChoice:
 					case FeatureType.SkillChoice:
 						return f.feature.data.selectAt === 'play';

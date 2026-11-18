@@ -151,10 +151,14 @@ const bear = FactoryLogic.createSummon({
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
-				id: 'beastheart-companion-2-5',
-				name: 'Strong Like Bear',
-				description: 'You gain a +1 bonus to your stability.'
+			FactoryLogic.feature.createForController({
+				feature: FactoryLogic.feature.createBonus({
+					id: 'beastheart-companion-2-5',
+					name: 'Strong Like Bear',
+					description: 'You gain a +1 bonus to your stability.',
+					field: FeatureField.Stability,
+					value: 1
+				})
 			})
 		]
 	}),
@@ -950,10 +954,19 @@ const hellhound = FactoryLogic.createSummon({
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
-				id: 'beastheart-companion-8-6',
-				name: 'Hellish Pact',
-				description: 'You have fire immunity equal to the hellhound’s fire immunity.'
+			FactoryLogic.feature.createForController({
+				feature: FactoryLogic.feature.createDamageModifier({
+					id: 'beastheart-companion-8-6',
+					name: 'Hellish Pact',
+					description: 'You have fire immunity equal to the hellhound’s fire immunity.',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
+				})
 			})
 		]
 	}),

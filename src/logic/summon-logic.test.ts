@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
@@ -87,8 +89,8 @@ describe('Elite Formation', () => {
 	});
 });
 
-// A beastheart with the basilisk as their companion
-const buildBeastheart = (level = 1): Hero => {
+// A beastheart with the basilisk (or another named companion) as their companion
+const buildBeastheart = (level = 1, companionName = 'Basilisk'): Hero => {
 	const hero = FactoryLogic.createHero();
 
 	hero.class = Utils.copy(beastheart);
@@ -98,7 +100,7 @@ const buildBeastheart = (level = 1): Hero => {
 		.flatMap(lvl => lvl.features)
 		.filter(f => f.id === 'beastheart-1-2a')
 		.filter(f => f.type === FeatureType.SummonChoice)
-		.forEach(f => f.data.selected = f.data.options.filter(o => o.name === 'Basilisk').map(o => Utils.copy(o)));
+		.forEach(f => f.data.selected = f.data.options.filter(o => o.name === companionName).map(o => Utils.copy(o)));
 
 	return hero;
 };
@@ -127,5 +129,24 @@ describe('Beastheart companion', () => {
 		expect(after.name).toBe('Gorgon');
 		expect(HeroLogic.getStamina(hero)).toBeGreaterThan(MonsterLogic.getStamina(companion));
 		expect(MonsterLogic.getStamina(after)).toBe(HeroLogic.getStamina(hero));
+	});
+
+	// Strong Like Bear: the beastheart gains +1 stability, not the bear
+	it('gives the beastheart, not the bear, the bear\'s stability bonus', () => {
+		const withBasilisk = buildBeastheart();
+		const withBear = buildBeastheart(1, 'Bear');
+		expect(HeroLogic.getStability(withBear)).toBe(HeroLogic.getStability(withBasilisk) + 1);
+
+		const bear = HeroLogic.getSummons(withBear).find(s => s.monster.id === 'beastheart-companion-2')!.monster;
+		expect(MonsterLogic.getStability(bear)).toBe(bear.stability);
+	});
+
+	// Hellish Pact: the beastheart shares the hellhound's fire immunity
+	it('gives the beastheart the hellhound\'s fire immunity', () => {
+		const fireImmunity = (hero: Hero) => HeroLogic.getDamageModifiers(hero)
+			.find(dm => (dm.damageType === DamageType.Fire) && (dm.modifierType === DamageModifierType.Immunity))?.value || 0;
+
+		expect(fireImmunity(buildBeastheart())).toBe(0);
+		expect(fireImmunity(buildBeastheart(1, 'Hellhound'))).toBe(3);
 	});
 });

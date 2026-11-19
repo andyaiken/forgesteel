@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMultiple, FeaturePackage, FeaturePerk, FeaturePotencyResistance, FeatureSkillChoice, FeatureSurgeGain, FeatureText } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceThreshold, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMultiple, FeaturePackage, FeaturePerk, FeaturePotencyResistance, FeatureSkillChoice, FeatureSummonChoice, FeatureSurgeGain, FeatureText } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -42,10 +42,10 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeatureItemChoice, hero?: Hero) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeatureItemChoice | FeatureSummonChoice, hero?: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
-		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
+		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : 'monster' in s ? s.monster.name : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
 	} else {
@@ -495,7 +495,11 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.LanguageChoice:
 		case FeatureType.Choice:
 		case FeatureType.ItemChoice:
+		case FeatureType.SummonChoice:
 			content = ChoiceFeatureComponent(feature, hero);
+			break;
+		case FeatureType.Fixture:
+			content = <div className='feature-line'><strong>• Fixture: </strong>{feature.data.fixture.name}</div>;
 			break;
 		case FeatureType.AncestryChoice:
 			content = AncestryChoiceFeatureComponent(feature);

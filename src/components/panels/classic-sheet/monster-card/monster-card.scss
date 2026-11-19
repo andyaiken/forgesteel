@@ -48,6 +48,8 @@
 main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.monster.card, .terrain.card) {
     padding: 10px;
     display: grid;
+    align-content: start;
+    align-self: start;
     justify-self: stretch;
 
     &.card {
@@ -326,6 +328,7 @@ main#classic-sheet :is(.encounter-sheet, .hero-sheet, .library-item-sheet) :is(.
     }
 }
 
+main#classic-sheet .hero-sheet .terrain.card,
 main#classic-sheet .library-item-sheet .terrain.card,
 main#classic-sheet .encounter-sheet .terrain.card {
     

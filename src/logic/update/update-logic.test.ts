@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { Options } from '@/models/options';
 import { UpdateLogic } from '@/logic/update/update-logic';
 
@@ -10,6 +11,40 @@ describe('updateOptions', () => {
 		UpdateLogic.updateOptions(options);
 
 		expect(options.showTips).toBe(true);
+	});
+
+	it('keeps all values visible for settings saved before value hiding existed', () => {
+		const options = {} as Options;
+
+		UpdateLogic.updateOptions(options);
+
+		expect(options.hiddenHeroSheetValues).toEqual([]);
+	});
+
+	it('converts the previous print setting to the recommended hidden values', () => {
+		const options = { hideChangingValues: true } as unknown as Options;
+
+		UpdateLogic.updateOptions(options);
+
+		expect(options.hiddenHeroSheetValues).toEqual([
+			HeroSheetValue.Wealth,
+			HeroSheetValue.Renown,
+			HeroSheetValue.XP,
+			HeroSheetValue.StaminaDying,
+			HeroSheetValue.StaminaMax,
+			HeroSheetValue.StaminaWinded,
+			HeroSheetValue.RecoveriesStamina
+		]);
+		expect(options).not.toHaveProperty('hideChangingValues');
+	});
+
+	it('preserves custom hidden values when updating saved settings', () => {
+		const options = FactoryLogic.createOptions();
+		options.hiddenHeroSheetValues = [ HeroSheetValue.Might, HeroSheetValue.RecoveriesMax ];
+
+		UpdateLogic.updateOptions(options);
+
+		expect(options.hiddenHeroSheetValues).toEqual([ HeroSheetValue.Might, HeroSheetValue.RecoveriesMax ]);
 	});
 });
 

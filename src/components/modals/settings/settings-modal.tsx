@@ -12,6 +12,8 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
+import { HeroSheetValuesControl } from '@/components/controls/hero-sheet-values/hero-sheet-values-control';
 import { LabelControl } from '@/components/controls/label-control/label-control';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -247,6 +249,13 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getHeroesClassic = () => {
+		const setHiddenHeroSheetValues = (values: HeroSheetValue[]) => {
+			const copy = Utils.copy(options);
+			copy.hiddenHeroSheetValues = values;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
 		const setIncludePlayState = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.includePlayState = value;
@@ -272,6 +281,7 @@ export const SettingsModal = (props: Props) => {
 			<Expander title='Heroes - Classic View'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
+					<HeroSheetValuesControl hiddenValues={options.hiddenHeroSheetValues} onChange={setHiddenHeroSheetValues} />
 					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
 					<LabelControl
 						label='Show class features'

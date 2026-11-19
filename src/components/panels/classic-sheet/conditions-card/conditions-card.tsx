@@ -2,6 +2,7 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { useOptions } from '@/contexts/data-context';
 
@@ -105,7 +106,7 @@ export const ConditionsCard = (props: Props) => {
 					/>
 				</div>
 			</div>
-			<div className='save-ends-description'>* Save Ends = <span className='save-target'>{getSaveTarget()}</span> or higher on 1d10 at the end of your turn removes the effect.</div>
+			<div className='save-ends-description'>* Save Ends = <span className='save-target'>{options.hiddenHeroSheetValues.includes(HeroSheetValue.ConditionsSaveEnds) ? <>&nbsp;</> : getSaveTarget()}</span> or higher on 1d10 at the end of your turn removes the effect.</div>
 		</div>
 	);
 };

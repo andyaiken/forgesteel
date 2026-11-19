@@ -1,5 +1,6 @@
 import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { useOptions } from '@/contexts/data-context';
 
@@ -59,23 +60,23 @@ export const HeroHeaderCard = (props: Props) => {
 					</div>
 					<LabeledTextField
 						label='Level'
-						content={character.level}
+						content={options.hiddenHeroSheetValues.includes(HeroSheetValue.Level) ? '' : character.level}
 						additionalClasses={[ 'level', 'label-above', 'no-box' ]}
 					/>
 				</div>
 				<LabeledTextField
 					label='Wealth'
-					content={character.wealth}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.Wealth) ? '' : character.wealth}
 					additionalClasses={[ 'label-above', 'box-both' ]}
 				/>
 				<LabeledTextField
 					label='Renown'
-					content={character.renown}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.Renown) ? '' : character.renown}
 					additionalClasses={[ 'label-above', 'box-both' ]}
 				/>
 				<LabeledTextField
 					label={character.level === 10 ? 'Epic' : 'XP'}
-					content={character.xp}
+					content={options.hiddenHeroSheetValues.includes(HeroSheetValue.XP) ? '' : character.xp}
 					additionalClasses={[ 'xp', 'label-above', 'box-both' ]}
 				/>
 			</section>

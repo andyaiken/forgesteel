@@ -12,6 +12,8 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
+import { HeroSheetValue } from '@/enums/hero-sheet-value';
+import { HeroSheetValuesControl } from '@/components/controls/hero-sheet-values/hero-sheet-values-control';
 import { Options } from '@/models/options';
 import { SettingOutlined } from '@ant-design/icons';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -87,6 +89,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const setIncludePlayState = (value: boolean) => {
 		const copy = Utils.copy(options);
 		copy.includePlayState = value;
+		saveOptions(copy);
+	};
+
+	const setHiddenHeroSheetValues = (values: HeroSheetValue[]) => {
+		const copy = Utils.copy(options);
+		copy.hiddenHeroSheetValues = values;
 		saveOptions(copy);
 	};
 
@@ -326,6 +334,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					style={{ padding: '10px' }}
 				>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
+					<HeroSheetValuesControl hiddenValues={options.hiddenHeroSheetValues} onChange={setHiddenHeroSheetValues} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
 					<Divider size='small'>Text Color</Divider>
 					<Segmented

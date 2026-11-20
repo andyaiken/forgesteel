@@ -17,7 +17,7 @@ describe('updateOptions', () => {
 
 		UpdateLogic.updateOptions(options);
 
-		expect(options.show3DDice).toBe(true);
+		expect(options.show3DDice).toBe(false);
 	});
 });
 

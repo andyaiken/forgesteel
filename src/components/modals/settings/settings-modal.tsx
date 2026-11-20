@@ -77,6 +77,13 @@ export const SettingsModal = (props: Props) => {
 			saveOptions(copy);
 		};
 
+		const setShow3DDice = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.show3DDice = value;
+			setOptions(copy);
+			saveOptions(copy);
+		};
+
 		return (
 			<Expander title='Appearance'>
 				<Space orientation='vertical' style={{ width: '100%' }}>
@@ -91,6 +98,7 @@ export const SettingsModal = (props: Props) => {
 						]}
 					/>
 					<Toggle label='Show data source' value={options.showDataSource} onChange={setShowDataSource} />
+					<Toggle label='Show 3D dice when rolling' value={options.show3DDice} onChange={setShow3DDice} />
 				</Space>
 			</Expander>
 		);

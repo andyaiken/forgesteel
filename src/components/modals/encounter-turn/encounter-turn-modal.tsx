@@ -4,6 +4,9 @@ import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo } from '@/components/panels/token/token';
 import { Condition } from '@/models/condition';
 import { ConditionLogic } from '@/logic/condition-logic';
+import { DiceTray } from '@/components/panels/dice-tray/dice-tray';
+import { DieResult } from '@/models/die-result';
+import { DieType } from '@/enums/die-type';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { FactionType } from '@/enums/faction-type';
 import { Field } from '@/components/controls/field/field';
@@ -16,6 +19,7 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Random } from '@/utils/random';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
+import { useOptions } from '@/contexts/data-context';
 import { useState } from 'react';
 
 import './encounter-turn-modal.scss';
@@ -446,19 +450,50 @@ interface SimpleRollPanelProps {
 
 const SimpleRollPanel = (props: SimpleRollPanelProps) => {
 	const [ roll, setRoll ] = useState<number | null>(null);
+	const [ dice, setDice ] = useState<DieResult[] | null>(null);
+	const [ rolling, setRolling ] = useState<boolean>(false);
+	const options = useOptions();
+
+	const rollDie = () => {
+		const value = Random.die(10);
+		setRoll(value);
+
+		if (options.show3DDice) {
+			// The result is revealed once the die comes to rest
+			setDice([ { type: DieType.D10, value: value } ]);
+			setRolling(true);
+		}
+	};
 
 	return (
 		<div className='simple-roll-panel'>
 			{
 				roll === null ?
-					<Button block={true} onClick={() => setRoll(Random.die(10))}>
+					<Button block={true} onClick={rollDie}>
 						{props.label}: Roll 1d10
 					</Button>
-					:
+					: null
+			}
+			{
+				dice ?
+					<DiceTray
+						dice={dice}
+						height={140}
+						onSettled={values => {
+							setRoll(values[0]);
+							setRolling(false);
+						}}
+						onReroll={() => setRolling(true)}
+					/>
+					: null
+			}
+			{
+				(roll !== null) && !rolling ?
 					<Field
 						label={roll}
 						value={<Markdown text={roll <= 5 ? props.text1to5 : props.text6to0} useSpan={true} />}
 					/>
+					: null
 			}
 		</div>
 	);

@@ -1,4 +1,5 @@
 import { Collections } from '@/utils/collections';
+import { DieType } from '@/enums/die-type';
 import { RollState } from '@/enums/roll-state';
 
 export class RollLogic {
@@ -46,6 +47,20 @@ export class RollLogic {
 		}
 
 		return results;
+	};
+
+	// The 3D dice tray can show these; anything else is rolled without dice
+	static getDieType = (sides: number) => {
+		switch (sides) {
+			case 3:
+				return DieType.D3;
+			case 6:
+				return DieType.D6;
+			case 10:
+				return DieType.D10;
+		}
+
+		return null;
 	};
 
 	static getBonus = (rollState: RollState, type: string = 'Power Roll') => {

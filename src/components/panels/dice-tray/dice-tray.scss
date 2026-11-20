@@ -1,0 +1,25 @@
+// The same mid-grey in both themes, so that dark and light dice both stand out against it
+.dice-tray {
+	position: relative;
+	width: 100%;
+	border-radius: 10px;
+	background-color: rgb(128, 128, 128);
+	overflow: hidden;
+
+	canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	// The tray's rim; drawn over the dice, so a die resting against a wall sits in its shade.
+	// Deepest along the top edge, as the app's raised shadows fall downwards; the bottom edge catches the light.
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.35), inset 0 0 16px rgba(0, 0, 0, 0.18), inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+		pointer-events: none;
+	}
+}

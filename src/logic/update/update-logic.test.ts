@@ -11,6 +11,14 @@ describe('updateOptions', () => {
 
 		expect(options.showTips).toBe(true);
 	});
+
+	it('shows 3D dice by default when updating existing options', () => {
+		const options = {} as Options;
+
+		UpdateLogic.updateOptions(options);
+
+		expect(options.show3DDice).toBe(true);
+	});
 });
 
 describe('updateSourcebook', () => {

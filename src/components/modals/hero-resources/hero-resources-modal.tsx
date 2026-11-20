@@ -1,6 +1,9 @@
 import { Alert, Button, Drawer, Flex, Progress, Space } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { DiceTray } from '@/components/panels/dice-tray/dice-tray';
+import { DieResult } from '@/models/die-result';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -17,6 +20,7 @@ import { Pill } from '@/components/controls/pill/pill';
 import { Random } from '@/utils/random';
 import { ResourceGainFrequency } from '@/enums/resource-gain-frequency';
 import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
+import { RollLogic } from '@/logic/roll-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -47,9 +51,49 @@ interface Props {
 export const HeroResourcesModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ expression, setExpression ] = useState<Expression | null>(null);
+	const [ dice, setDice ] = useState<DieResult[] | null>(null);
+	const [ rolling, setRolling ] = useState<boolean>(false);
 	const [ showLevelUp, setShowLevelUp ] = useState<boolean>(false);
 	const [ showRetainers, setShowRetainers ] = useState<boolean>(false);
 	const options = useOptions();
+
+	const openExpression = (exp: Expression) => {
+		setDice(null);
+		setRolling(false);
+		setExpression(exp);
+	};
+
+	const rollExpression = (exp: Expression) => {
+		const rolls: number[] = [];
+		for (let n = 0; n < exp.throws; ++n) {
+			rolls.push(Random.die(exp.sides));
+		}
+
+		const copy = Utils.copy(exp);
+		copy.result = Collections.sum(rolls, r => r) + copy.constant;
+		setExpression(copy);
+
+		const type = RollLogic.getDieType(exp.sides);
+		if (options.show3DDice && type) {
+			// The result is revealed once the dice come to rest
+			setDice(rolls.map(r => ({ type: type, value: r })));
+			setRolling(true);
+		} else {
+			setDice(null);
+			setRolling(false);
+		}
+	};
+
+	// Called after the first throw, and again after each die the user rerolls
+	const onDiceSettled = (values: number[]) => {
+		setRolling(false);
+
+		if (expression) {
+			const copy = Utils.copy(expression);
+			copy.result = Collections.sum(values, v => v) + copy.constant;
+			setExpression(copy);
+		}
+	};
 
 	const gainSurges = (tag: string, value: number) => {
 		const copy = Utils.copy(hero);
@@ -198,7 +242,7 @@ export const HeroResourcesModal = (props: Props) => {
 													<div className={g.used ? 'gain used' : 'gain'} key={n}>
 														<div style={{ flex: '1 1 0' }}>{g.trigger}</div>
 														{g.frequency !== ResourceGainFrequency.AtWill ? <Pill>{g.frequency}</Pill> : null}
-														{getGainButton(g, (_, value) => gainResource(hr.id, n, value), setExpression, hr.id, hr.name, 'resource', n)}
+														{getGainButton(g, (_, value) => gainResource(hr.id, n, value), openExpression, hr.id, hr.name, 'resource', n)}
 													</div>
 												))
 											}
@@ -264,7 +308,7 @@ export const HeroResourcesModal = (props: Props) => {
 									<div className='expression'>
 										<div className='expression-result'>
 											{
-												expression.result === null ?
+												(expression.result === null) || rolling ?
 													expression.constant !== 0 ?
 														`+${expression.throws}d${expression.sides} +${expression.constant} ${expression.resourceName}`
 														:
@@ -274,13 +318,14 @@ export const HeroResourcesModal = (props: Props) => {
 											}
 										</div>
 									</div>
+									{
+										dice ?
+											<DiceTray dice={dice} onSettled={onDiceSettled} onReroll={() => setRolling(true)} />
+											: null
+									}
 									<Button
 										block={true}
-										onClick={() => {
-											const copy = Utils.copy(expression);
-											copy.result = Random.dieRoll(copy.throws, copy.sides) + copy.constant;
-											setExpression(copy);
-										}}
+										onClick={() => rollExpression(expression)}
 									>
 										Roll
 									</Button>
@@ -288,7 +333,7 @@ export const HeroResourcesModal = (props: Props) => {
 										block={true}
 										className='tall-button'
 										type='primary'
-										disabled={expression.result === null}
+										disabled={(expression.result === null) || rolling}
 										onClick={() => {
 											if (expression.result !== null) {
 												if (expression.kind === 'surge') {
@@ -300,7 +345,7 @@ export const HeroResourcesModal = (props: Props) => {
 											}
 										}}
 									>
-										Gain {expression.result || 0} {expression.resourceName}
+										Gain {rolling ? '…' : (expression.result || 0)} {expression.resourceName}
 									</Button>
 								</Space>
 								: null
@@ -400,7 +445,7 @@ export const HeroResourcesModal = (props: Props) => {
 								}
 							</div>
 							{f.data.frequency !== ResourceGainFrequency.AtWill ? <Pill>{f.data.frequency}</Pill> : null}
-							{getGainButton(f.data, gainSurges, setExpression, '', 'Surges', 'surge')}
+							{getGainButton(f.data, gainSurges, openExpression, '', 'Surges', 'surge')}
 						</div>
 					))
 				}
